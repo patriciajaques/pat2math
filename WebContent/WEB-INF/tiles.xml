@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<!-- Blank template -->
+	<definition name="blank" template="/public/app-blank.jsp"> 
+    </definition>    
+	
+	<!-- Admin template -->
+    <definition name="admin.page" template="/public/app-admin.jsp">
+        <put-attribute name="header" value="/public/header-admin.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
+    </definition>
+
+	<!-- Student template -->
+    <definition name="student.page" template="/public/app-student.jsp">
+        <put-attribute name="header" value="/public/header-home.jsp" />
+        <put-attribute name="footer" value="/public/footer.jsp"/>
+    </definition>
+
+	<definition name="terms" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/terms.jsp"/>
+	</definition>
+
+	<definition name="home" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
+	</definition>
+
+	<definition name="user.forgotPassword" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/user/forgotPassword.jsp"/>
+	</definition>
+
+	<!-- contents templates -->
+	<definition name="content.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/content/list.jsp" />
+	</definition>
+	
+	<definition name="content.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/content/show.jsp" />
+	</definition>
+
+	<definition name="content.added" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/content/addedWithSuccess.jsp" />
+	</definition>
+
+	<definition name="set.tasks" extends="blank">
+        <put-attribute name="body" value="/WEB-INF/views/setOfTasks/tasks.jsp"/>
+    </definition>
+
+
+	<!--  Mail send templates -->
+    
+	<definition name="invite.new" extends="admin.page">
+        <put-attribute name="body" value="/WEB-INF/views/invite/new.jsp"/>
+    </definition>
+
+	<definition name="invite.success" extends="admin.page">
+        <put-attribute name="body" value="/WEB-INF/views/invite/success.jsp"/>
+    </definition>
+
+    <!--  Topic templates -->
+    <definition name="topic.new" extends="admin.page">
+        <put-attribute name="body" value="/WEB-INF/views/topic/new.jsp"/>
+    </definition>
+
+	<!-- Student templates -->
+	<definition name="student.show" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/student/show.jsp"/>
+	</definition>
+
+
+	<!-- Student templates -->
+	<definition name="student.success" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/student/success.jsp"/>
+	</definition>
+
+	<definition name="student.new" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/student/new.jsp"/>
+	</definition>
+
+	<definition name="student.home" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/patequation/index.jsp"/>
+		<put-attribute name="header" value="/public/header-home.jsp"/>
+	</definition>
+
+
+
+	<!-- Videos templates -->
+	<definition name="video.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/video/new.jsp"/>
+	</definition>
+
+	<definition name="video.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/video/show.jsp"/>
+	</definition>
+
+	<definition name="video.watch" extends="blank">
+		<put-attribute name="body" value="/WEB-INF/views/video/watch.jsp"/>
+    </definition>
+
+	<!-- Exercises templates -->
+	<definition name="exercise.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/exercise/new.jsp"/>
+	</definition>
+
+	<definition name="exercise.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/exercise/show.jsp"/>
+	</definition>
+
+	<definition name="loadExercises" extends="blank">
+		<put-attribute name="body" value="/WEB-INF/views/exercise/listByTopic.jsp"/>
+	</definition>
+
+	
+
+
+
+	<!-- Sets templates -->
+	<definition name="set.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/setOfTasks/new.jsp"/>
+	</definition>
+	
+	<definition name="set.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/setOfTasks/show.jsp"/>
+	</definition>
+	
+	<definition name="set.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/setOfTasks/list.jsp"/>
+	</definition>
+
+
+	<!-- tasks templates -->
+	<definition name="task.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/task/new.jsp"/>
+	</definition>
+	
+	<definition name="task.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/task/show.jsp"/>
+	</definition>
+	
+	<definition name="task.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/task/list.jsp"/>
+	</definition>
+	
+
+	<!-- plans templates -->
+	<definition name="plan.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/plan/new.jsp"/>
+	</definition>
+	
+	<definition name="plan.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/plan/show.jsp"/>
+	</definition>
+	
+	<definition name="plan.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/plan/list.jsp"/>
+	</definition>
+
+	<definition name="plan.listAll" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/plan/listAll.jsp"/>
+	</definition>
+
+	<!-- teacher templates -->
+	<definition name="teacher.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/teacher/new.jsp"/>
+	</definition>
+	
+	<definition name="teacher.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/teacher/show.jsp"/>
+	</definition>
+	
+	<definition name="teacher.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/teacher/list.jsp"/>
+	</definition>
+
+	<definition name="teacher.accessdenied" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/teacher/accessdenied.jsp"/>
+	</definition>
+
+
+	<definition name="user.login" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
+		<put-attribute name="header" value=""/>
+		<put-attribute name="footer" value=""/>
+	</definition>
+
+
+	<!-- groups templates -->
+	<definition name="group.new" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/group/new.jsp"/>
+	</definition>
+	
+	<definition name="group.show" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/group/show.jsp"/>
+	</definition>
+	
+	<definition name="group.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/group/list.jsp"/>
+	</definition>
+
+
+
+
+
+	<!-- resolver response -->
+	<definition name="resolverResponse" extends="blank">
+		<put-attribute name="body" value="/WEB-INF/views/resolver/response.jsp"/>
+	</definition>
+</tiles-definitions>

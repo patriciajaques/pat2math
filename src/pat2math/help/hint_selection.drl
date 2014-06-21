@@ -1,0 +1,172 @@
+#created on: 10/08/2011
+package pat2math.help
+
+#list any import classes here.
+
+import pat2math.help.hintFunctions;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import pat2math.regras.Operacao;
+import pat2math.help.*;
+import pat2math.expressao.Expression;
+import pat2math.expressao.arvore.*;
+import pat2math.util.Funcoes;
+
+
+
+#declare any global variables here
+
+rule "Somar"
+	no-loop true
+	dialect "java"
+	when
+		e: Expression (tipo == Expression.SOLVER);
+		eval (e.isHint());
+		eval (e.getnewexpression().contains("="));
+		eval (!hintFunctions.canOperateByX("+", e).isEmpty());
+	then
+		List<BTNode> soma=hintFunctions.canOperateByX("+", e);
+		List<BTNode> termosSoma=new ArrayList<BTNode>();
+		List<BTNode> termosOriginais= new ArrayList<BTNode>();
+		String nEq="";
+		BTNode n1,n2;
+		n1=n2=null;
+		for(Iterator<BTNode> i=soma.iterator();i.hasNext();){
+			if (i.hasNext())n1=i.next();
+			if (i.hasNext())n2=i.next();
+			if (n1!=null && n2!=null){
+				termosSoma.add(new BTNode ("+",(BTNode)n1.clone(),(BTNode)n2.clone()));
+				termosOriginais.add(n1);
+				termosOriginais.add(n2);
+			}	
+		}
+		insert(new OperacaoHint(Operacao.SOMA,termosSoma, termosOriginais));
+end
+	
+rule "Subtrair"
+	no-loop true
+	dialect "java"
+	when
+		e:Expression (tipo == Expression.SOLVER);
+		eval (e.isHint());
+		eval (e.getnewexpression().contains("="));
+		eval (!hintFunctions.canOperateByX("-", e).isEmpty());
+	then
+		List<BTNode> subtracao=hintFunctions.canOperateByX("-", e);
+		List<BTNode> termosSub=new ArrayList<BTNode>();
+		List<BTNode> termosOriginais= new ArrayList<BTNode>();
+		String nEq="";
+		BTNode n1,n2;
+		BTNode nClone1,nClone2;
+		n1=n2=null;
+		for(Iterator<BTNode> i=subtracao.iterator();i.hasNext();){
+			if (i.hasNext())n1=i.next();
+			if (i.hasNext())n2=i.next();
+			if (n1!=null && n2!=null){
+				nClone1=(BTNode)n1.clone();
+				nClone2=(BTNode)n2.clone();
+				if (n2.getPai().getValue().equals("+")){			
+					nClone2.setValue(Funcoes.trocaSinal(n2.getValue()));
+				}
+				termosSub.add(new BTNode("-",nClone1,nClone2));
+				termosOriginais.add(n1);
+				termosOriginais.add(n2);
+			}	
+		}
+		insert(new OperacaoHint(Operacao.SUBTRACAO,termosSub, termosOriginais));
+end
+
+rule "Multiplicar"
+	no-loop true
+	dialect "java"
+	when
+		e:Expression (tipo == Expression.SOLVER);
+		eval (e.isHint());
+		eval (e.getnewexpression().contains("="));
+		eval (!hintFunctions.canOperateByX("*", e).isEmpty());
+	then
+		List<BTNode> multiplicacao=hintFunctions.canOperateByX("*", e);
+		List<BTNode> termosMult=new ArrayList<BTNode>();
+		List<BTNode> termosOriginais= new ArrayList<BTNode>();
+		String nEq="";
+		BTNode n1,n2;
+		n1=n2=null;
+		for(Iterator<BTNode> i=multiplicacao.iterator();i.hasNext();){
+			if (i.hasNext())n1=i.next();
+			if (i.hasNext())n2=i.next();
+			if (n1!=null && n2!=null){
+				termosMult.add(new BTNode ("*",(BTNode)n1.clone(),(BTNode)n2.clone()));
+				termosOriginais.add(n1);
+				termosOriginais.add(n2);
+			}	
+		}
+		insert(new OperacaoHint(Operacao.MULTIPLICACAO,termosMult, termosOriginais));
+end
+
+rule "Multiplicar - Distributiva"
+	no-loop true
+	dialect "java"
+	when
+		e:Expression( tipo == Expression.SOLVER );
+		eval (e.isHint());
+		eval (e.getnewexpression().contains("="));
+		eval (!hintFunctions.findDistributiva(e).isEmpty())
+	then
+		List<BTNode> distributiva=hintFunctions.findDistributiva(e);
+		List<BTNode> termosMult=new ArrayList<BTNode>();
+		List<BTNode> termosOriginais= new ArrayList<BTNode>();
+		BTNode n1=null;
+		for(Iterator<BTNode> i=distributiva.iterator();i.hasNext();){
+			if (i.hasNext())n1=i.next();
+			if (n1!=null){
+				termosMult.add((BTNode)n1.clone());
+				termosOriginais.add(n1);
+			}	
+		}
+		insert(new OperacaoHint(Operacao.DISTRIBUTIVA,termosMult, termosOriginais));
+end		
+
+rule "Potência"
+	no-loop true
+	dialect "java"
+	when
+		e:Expression (tipo == Expression.SOLVER);
+		eval (e.isHint());
+		eval (e.getnewexpression().contains("="));
+		eval (!hintFunctions.operatePotSqrt("^", e).isEmpty());
+	then
+		List<BTNode> potencia=hintFunctions.operatePotSqrt("^", e);
+		List<BTNode> termosPot=new ArrayList<BTNode>();
+		List<BTNode> termosOriginais= new ArrayList<BTNode>();
+		String nEq="";
+		BTNode n1;
+		for(Iterator<BTNode> i=potencia.iterator();i.hasNext();){
+			n1=i.next();
+			termosPot.add((BTNode)n1.clone());
+			termosOriginais.add(n1);
+		}
+		insert(new OperacaoHint(Operacao.POTENCIACAO,termosPot, termosOriginais));
+end
+
+rule "Raiz Quadrada"
+	no-loop true
+	dialect "java"
+	when
+		e:Expression (tipo == Expression.SOLVER);
+		eval (e.isHint());
+		eval (e.getnewexpression().contains("="));
+		eval (!hintFunctions.operatePotSqrt("R", e).isEmpty());
+	then
+		List<BTNode> potencia=hintFunctions.operatePotSqrt("R", e);
+		List<BTNode> termosPot=new ArrayList<BTNode>();
+		List<BTNode> termosOriginais= new ArrayList<BTNode>();		
+		String nEq="";
+		BTNode n1;
+		for(Iterator<BTNode> i=potencia.iterator();i.hasNext();){
+			n1=i.next();
+			termosPot.add((BTNode)n1.clone());
+			termosOriginais.add(n1);	
+		}
+		insert(new OperacaoHint(Operacao.RAIZ,termosPot, termosOriginais));
+end

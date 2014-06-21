@@ -1,0 +1,43 @@
+.html
+{
+	background-color: #FFFFFF;
+}
+
+#page
+{
+	z-index: 1;
+	width: 956px;
+	min-height: 500px;
+	background-image: none;
+	border-style: none;
+	border-color: transparent;
+	background-color: #FFFFFF;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#page_position_content
+{
+	margin-top: 62px;
+	margin-bottom: 62px;
+}
+
+#u108
+{
+	z-index: 2;
+	width: 1155px;
+	left: -100px;
+	position: relative;
+}
+
+#u114-5
+{
+	z-index: 4;
+	width: 45px;
+	min-height: 22px;
+	font-size: 16px;
+	line-height: 19px;
+	margin-left: 554px;
+	position: relative;
+}
+

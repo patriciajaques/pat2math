@@ -1,0 +1,7 @@
+target
+build
+.classpath
+.project
+.settings
+WebContent/patequation/divalite
+WebContent/WEB-INF/lib

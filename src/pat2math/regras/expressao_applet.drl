@@ -1,0 +1,3565 @@
+#created on: 26/06/2008
+package pat2math.regras
+
+#list any import classes here.
+import java.lang.String;
+import java.lang.Integer;
+import pat2math.expressao.Expression;
+import pat2math.expressao.arvore.*;
+import pat2math.resolvedor.Equacoes;
+import pat2math.util.Funcoes;
+import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Collections;
+#functions
+global Vector listresult;
+
+
+function BTNode simpl(BTNode arv1, BTNode arv2){
+	BTNode a,b,p,p2;
+	a=arv1.getPai();
+	b=arv2.getPai();
+	p=a.getPai();
+	p2=b.getPai();
+	if (Expression.igual(arv1, arv2)){
+		if (arv1.getPai().getEsq().equals(arv1)){
+			if (p.getEsq().equals(a)){
+				p.setEsq(a.getDir());
+			}else p.setDir(a.getDir());
+		}else{
+			if (p.getEsq().equals(a)){
+				p.setEsq(a.getEsq());
+			}else p.setDir(a.getEsq());
+		}
+		if (arv2.getPai().getEsq().equals(arv2)){
+			if (p2.getEsq().equals(b)){
+				p2.setEsq(b.getDir());
+			}else p2.setDir(b.getDir());
+		}else{
+			if (p2.getEsq().equals(b)){
+				p2.setEsq(b.getEsq());
+			}else p2.setDir(b.getEsq());
+		} 
+	}
+	while(p.getPai()!=null){
+		p=p.getPai();	
+	}
+	return p;
+}
+/** arv obrigatoriamente deve possuir o valor igual a "/"
+*/
+function boolean isSimp(Expression e, BTNode arv){
+	Funcoes.t();
+	if (arv!=null){
+		if(arv.getEsq().eFolha() && arv.getDir().eFolha()){
+			try{
+				int v1=Integer.parseInt(arv.getEsq().getValue());
+				int v2=Integer.parseInt(arv.getDir().getValue());
+				if (v2==0)return false;
+				int valInt=v1/v2;
+				double valDouble=(double)v1/v2;
+				if (valInt==valDouble)return true;
+				else{
+					Vector <Integer> v=Funcoes.isS(arv);
+						if (!v.isEmpty())return true;
+				}
+			}catch(NumberFormatException nfe){
+				int v1,v2;
+				String inc="",inc2="",esq,dir;
+				esq=arv.getEsq().getValue();
+				dir=arv.getDir().getValue();
+				if (Funcoes.isInc(esq.substring(esq.length()-1))){
+					inc=esq.charAt(esq.length()-1)+"";
+					esq=esq.substring(0,esq.length()-1);
+					if (esq.equals(""))esq="1";
+					if (esq.equals("-"))esq="-1";
+					v1=Integer.parseInt(esq);
+				}else v1=Integer.parseInt(esq);
+				if (Funcoes.isInc(dir.substring(dir.length()-1))){
+					inc2=dir.charAt(dir.length()-1)+"";
+					dir=dir.substring(0,dir.length()-1);
+					if (dir.equals(""))dir="1";
+					if (dir.equals("-"))dir="-1";
+					v2=Integer.parseInt(dir);
+				}else v2=Integer.parseInt(dir);
+				if (v2==0)return false;
+				if ((v1==1) && Funcoes.isInc(inc) && !Funcoes.isInc(inc2)
+					&& v2!=1) return false; // pos se for v2 ==1 pode, vai eliminar o "sobre 1";
+				if ((v2==1) && Funcoes.isInc(inc2) && !Funcoes.isInc(inc)) return false;
+				int valInt=v1/v2;
+				double valDouble=(double)v1/v2;
+				if (valInt==valDouble)return true;
+				else{
+					Vector <Integer> v=Funcoes.isS(arv);
+						if (!v.isEmpty())return true;
+				}
+				if (Funcoes.isInc(inc)&& inc.equals(inc2))return true;
+				return false;
+			}
+		}else if ((arv.getEsq().getValue().equals("x") || arv.getEsq().getValue().equals("^")) && 
+					(arv.getDir().getValue().equals("x") || arv.getDir().getValue().equals("^"))){
+					return true;
+		//valida simplidifacacao de um inteiro com uma incongita ao quadrado
+		}else if (canSimpINTSquaredINT(arv.getEsq(),arv.getDir()))return true;
+		else if (Expression.find(arv.getDir(),"R")!=null){
+			return false;
+		}else if (arv.getValue().equals("/")){
+			//verificar se ha apenas sinal de * entre o nodo e o sinal de "/"
+			BTNode []nodos=e.compara(arv.getEsq(),arv.getDir());
+			if (nodos!=null){
+				if (Funcoes.verificaCaminho(nodos[0],arv,"*") &&
+					Funcoes.verificaCaminho(nodos[1],arv,"*"))return true;
+			}
+		}
+	}
+	return false;
+}			
+
+//valida simplificações tipo 2x^2/2
+function boolean canSimpINTSquaredINT(BTNode n1, BTNode n2){
+	BTNode squared,integer;
+	squared=null;
+	integer=null;
+	//encontrar o quadrado
+	if (Funcoes.isSquaredInc(n1))squared=n1;
+	else if (Funcoes.isSquaredInc(n2))squared=n2;
+	//encontrar o inteiro
+	if (Funcoes.isInteger(n1.getValue()))integer=n1;
+	else if (Funcoes.isInteger(n2.getValue()))integer=n2;
+	if (squared!=null && integer!=null){
+		// checa se pode ser simplificado
+		int maior= Funcoes.getINT(squared.getEsq().getValue());
+		int menor= Funcoes.getINT(integer.getValue());
+		int temp=0;
+		if (menor>maior){
+			temp=maior;
+			maior=menor;
+			menor=temp;
+		}
+		if (maior%menor==0)return true;
+	}
+	return false;
+}
+
+function BTNode filhosIguais(Vector b){
+	BTNode no=null;
+	int i=0;
+	if (b!=null){
+		while(i<b.size()){
+			no=(BTNode)b.get(i);
+			if(Expression.igual(no.getEsq(), no.getDir()))return no;
+			else i++;
+		}
+	}
+	return null;
+}
+/**
+ * Verifica se as raizes podem se cancelarem, ou seja, retona true se
+ *forem "aRb - aRb", "(-aRb) - (-aRb)", "aRb + (-aRb)" ou "(-aRb) + aRb"
+ */ 
+function boolean anulaRaiz(BTNode raizes){
+	BTNode raiz1=raizes.getEsq();
+	BTNode raiz2=raizes.getDir();
+	if (raizes.getValue().equals("*")){
+		if (raiz1.getValue().equals("0") || raiz2.getValue().equals("0")) return true;
+	}
+	if (raiz1.getValue().equals("R") && raiz2.getValue().equals("R")){
+		boolean igual=false;
+		if (Expression.igual(raiz1,raiz2)) igual=true;
+		else{
+			String radicando[]={raiz1.getEsq().getValue(),raiz2.getEsq().getValue()};
+			String radical[]={raiz1.getDir().getValue(),raiz2.getDir().getValue()};
+			for (int i=0;i<radicando.length;i++){
+				if (radicando[i].startsWith("-")) radicando[i]=radicando[1].substring(1);
+				if (radical[i].startsWith("-")) radical[i]=radical[1].substring(1);
+			}
+			if (radicando[0].equals(radicando[1]) && 
+				radical[0].equals(radical[1])) igual=true;
+		}
+		if (igual){
+			if (raizes.getValue().equals("-")){
+				if (raiz1.getEsq().getValue().startsWith("-") &&
+					raiz2.getEsq().getValue().startsWith("-")) return true;
+				else if (!raiz1.getEsq().getValue().startsWith("-") &&
+						 !raiz2.getEsq().getValue().startsWith("-")) return true;
+				else return false;
+			}else if (raizes.getValue().equals("+")){
+				if ((raiz1.getEsq().getValue().startsWith("-") &&
+					!raiz2.getEsq().getValue().startsWith("-")) ||
+					(!raiz1.getEsq().getValue().startsWith("-") &&
+					raiz2.getEsq().getValue().startsWith("-"))) return true;
+				else return false;
+			}
+		}
+	}
+	return false;
+}
+/**
+Verifica se a subarvore pode ser operável ou seja
+se ha valores compativeis que podem de somado, subtraídos ou 
+multiplicados ou divididos.
+@return 
+0-se não é possivel operar;
+1- se é possivel e são dois inteiros;
+2- se é possivel operar e contém incógnitas iguais(ou é multiplicação
+	de inteiro com incognita;
+3 -é possivel operar com a propriedade distributiva;
+4-soma e subtracao de potências com incognitas; 
+5-multiplicacao e divisão de potências;
+6-multiplicacao de potencias com inteiros;
+7-multiplicacao de raizes;
+*/
+function int canOp(BTNode b){ 
+	int v1,v2;
+	if (b!=null){
+		BTNode esq=b.getEsq();
+		BTNode dir=b.getDir();
+		String i1,i2;
+		if (esq!=null && dir!=null){
+			try{
+				if (esq.eFolha() && dir.eFolha()){
+					v1=Integer.parseInt(esq.getValue());
+					v2=Integer.parseInt(dir.getValue());
+					if (b.getValue().equals("R")){
+						double resDouble=0.0;
+						int resInt=0;
+						switch (v2){
+							case 2:
+								resDouble=Math.sqrt(v1);
+								resInt=(int)Math.sqrt(v1);
+								if (resInt==resDouble) return 1;
+								else return 0;
+							case 3:
+								resDouble=Math.cbrt(v1);
+								resInt=(int)Math.cbrt(v1);
+								if (resInt==resDouble) return 1;
+								else return 0;
+							default:
+								return 0;
+						}
+					}
+/*novo codigo*/		if(b.getValue().equals("/")) return 0;
+					return 1;
+				}else if (anulaRaiz(b)){
+						return 7;
+				}else if(b.getValue().equals("*") && !b.getEsq().getValue().equals("^")
+							&& !b.getDir().getValue().equals("^") && (Expression.find(b.getEsq(),"*")==null) 
+							&& (Expression.find(b.getDir(),"*")==null)) {
+						if (esq.getValue().equals("/") && dir.getValue().equals("/")) return 0;
+						if(esq.getValue().equals("/") && esq.getDir().getValue().equals("R")) return 0;
+						else if(dir.getValue().equals("/") && dir.getDir().getValue().equals("R")) return 0;
+						//ambos possuem raiz, verifica se ambos possuiem o mesmo indice do radical
+						if (esq.getValue().equals("R")&&dir.getValue().equals("R")){
+							if (esq.getDir().getValue().equals(dir.getDir().getValue())){
+								return 7;
+							}
+						}else if (esq.getValue().equals("R")||dir.getValue().equals("R")){
+							if (esq.getValue().equals("1")||dir.getValue().equals("1")){
+								return 7;
+							}
+							if ((dir.getValue().equals("+")|| dir.getValue().equals("-")) &&
+								(Expression.find(dir.getEsq(),"R")!=null || Expression.find(dir.getDir(),"R")!=null)){
+									if (b.getEsq().getValue().equals("/") ||b.getDir().getValue().equals("/")) return 0;
+									else return 3;
+							}
+							return 0;
+						}
+						Vector <BTNode>potRaiz=Expression.buscaXall("^",b);
+						if (potRaiz!=null){
+							v1=0;
+							while(v1<potRaiz.size()){
+								if (!potRaiz.get(v1).equals(b)){
+									// se for possivel operar então tem que verificar esse antes portanto retorna zero
+									if (canOp(potRaiz.get(v1))!=0) return 0;
+								}
+								v1++;
+							}
+						}
+						if (canOp(Expression.find(esq,"^"))!=0 || canOp(Expression.find(dir,"^"))!=0) return 0;
+						if(canOp(b.getEsq())==0 && canOp(b.getDir())==0){
+							if (b.getEsq().getValue().equals("/") ||b.getDir().getValue().equals("/")) return 0;
+							else return 3;
+						}
+				}else if (esq.getValue().equals("^") && dir.getValue().equals("^")){
+					if (b.getValue().equals("+")||b.getValue().equals("-")){
+						//checar se ha incognita nos filahs esquerdos de "^", pois o direito
+						// 99% das vezes será 2
+						i1=esq.getEsq().getValue().substring(esq.getValue().length()-1);
+						i2=dir.getEsq().getValue().substring(dir.getValue().length()-1);						
+						if(i1.equals(i2) && esq.getDir().getValue().equals(dir.getDir().getValue()))return 4;
+					}else if (b.getValue().equals("*")||b.getValue().equals("/")){
+						return 5;
+					}
+					//se esq ou dir possuem a potencia e o outro possui um valor sem potencia como (x^2)*2
+					if (b.getValue().equals("*")){
+						if ((esq.eFolha()&&!dir.eFolha()) || (!esq.eFolha() && dir.eFolha())){
+							return 6;
+						} else { //distributiva envolvendo potência como (2x^2)*(x-1)
+							if (b.getEsq().getValue().equals("/") ||b.getDir().getValue().equals("/")) return 0;
+							else return 3;
+						}
+					}
+				}else if (b.getValue().equals("*")){
+					if (esq.getValue().equals("^")){
+							if (canOp(esq)!=0)return 0;
+							if (esq.getEsq().getValue().contains("x")){
+								if (dir.eFolha()) return 6;
+								else return 0;
+							}else return 5;
+					}else if (dir.getValue().equals("^")){
+							if (canOp(dir)!=0)return 0;
+							if (dir.getEsq().getValue().contains("x")){
+								if (esq.eFolha()) return 6;
+								else return 0;
+							}else return 5;
+					}
+				}
+			}catch (NumberFormatException e){
+				// caso haja 1 incognita em cada operando
+				i1=esq.getValue().substring(esq.getValue().length()-1);
+				i2=dir.getValue().substring(dir.getValue().length()-1);
+				if (i1.equals(i2) && !b.getValue().equals("=") && 
+					!b.getValue().equals("/")) return 2;
+/*novo codigo*/	else if (b.getValue().equals("*")) return 2; //pos na multiplicação se pode juntar valore com e sem incognita
+				else return 0;
+			}
+		}
+	}
+	return 0;
+}
+
+/*
+	Busca na arvore qualquer sub arvoer que pode ser operada e 
+	que possua a operação especificada.
+*/
+function Object[] buscaOp(BTNode r){
+	Object[] op=null;
+	if(r!=null){
+		op=buscaOp(r.getEsq());
+		if (r.eFolha()){
+			return null;
+		}else if(op==null){
+			op=new Object[2];
+			op[0]=new Integer(canOp(r));
+			if (Integer.parseInt(String.valueOf(op[0]))>0){
+				op[1]=r;
+				return op;
+			}else op=null;
+			op=buscaOp(r.getDir());
+		}
+	}
+	return op;
+}
+
+function boolean op(BTNode op){
+	Funcoes.t();
+	if (buscaOp(op)==null)return false;
+	else return true;
+}
+
+
+function BTNode buscaInt(BTNode r,boolean zero){
+	BTNode real=null;
+	if (r!=null){
+		real=buscaInt(r.getEsq(),zero);
+		if (Funcoes.isInteger(r.getValue()) && !r.getPai().getValue().equals("^")
+			&& !r.getPai().getValue().equals("R")){
+				//zero - se true levar em conta o zero, se false ignorar o zero
+				if (zero && r.getValue().equals("0"))return r;
+				else if(!r.getValue().equals("0")) return r;
+			 }
+		if(real==null){
+			real=buscaInt(r.getDir(),zero);
+		}
+	}
+	return real;
+}
+
+/**
+Faz a busca de inteiros para a regra moveINT
+*/
+function BTNode buscaMoveINT (BTNode r, boolean zero){
+	BTNode real=null;
+	if (r!=null){
+		real=buscaMoveINT(r.getEsq(),zero);
+		if (Funcoes.isInteger(r.getValue()) && !r.getPai().getValue().equals("^")
+			&& !r.getPai().getValue().equals("R") && !r.getPai().getValue().equals("*")
+			&& !r.getPai().getValue().equals("/")){
+				//zero - se true levar em conta o zero, se false ignorar o zero
+				if ((zero && r.getValue().equals("0")) ||
+				(!r.getValue().equals("0"))){
+					BTNode temp=r;
+					while(temp.getPai()!=null){
+						if (!Funcoes.isInteger(temp.getValue())){
+							if (!temp.getValue().equals("+") &&
+							!temp.getValue().equals("-")&&
+							!temp.getValue().equals("=")) return null;
+						}
+						temp=temp.getPai();
+					}
+					return r;
+				}
+			 }
+		if(real==null){
+			real=buscaMoveINT(r.getDir(),zero);
+		}
+	}
+	return real;
+}
+
+function BTNode buscaIsolaX(BTNode r){
+	Funcoes.t();
+	Vector<BTNode> folhas=Funcoes.getIncognitas(r,new Vector<BTNode>());
+	BTNode inc=null, tmp=null, temp=null;
+	String valor;
+	Iterator<BTNode> i=folhas.iterator();
+	boolean podeMover=true;
+	while(inc==null && i.hasNext()){
+		tmp=i.next();
+		if (tmp.getPai().getValue().equals("^") ||
+			tmp.getPai().getValue().equals("R")){
+			tmp=tmp.getPai();
+			temp=tmp;
+			temp=temp.getPai();
+		}else temp=tmp;
+		while(temp.getPai()!=null){
+			valor=temp.getValue();
+			if (!Funcoes.isInteger(valor)
+				&& !Funcoes.isInc(valor.substring(valor.length()-1))){
+				if (!temp.getValue().equals("+") &&
+					!temp.getValue().equals("-")&&
+					!temp.getValue().equals("=")) podeMover=false;
+			}
+			temp=temp.getPai();
+		}
+		if (podeMover)inc=tmp;
+	}
+	return inc;
+}
+
+
+function boolean existeInteger(BTNode nodo,boolean zero){
+	if (buscaInt(nodo,zero)==null)return false;
+	return true;
+}
+	
+function BTNode[] findEquals(BTNode r){
+	return findIguais(r,r);
+}
+
+function BTNode[] findIguais(BTNode r, BTNode arvBusca){
+	BTNode[] ig=null;
+	if(r!=null){
+		if(!r.getValue().equals("*") && !r.getValue().equals("/")){
+			if (r.getValue().equals("^")){
+				ig=buscaPotRaizArv(0,arvBusca,r);
+			}else if (r.getValue().equals("R")){
+				ig=buscaPotRaizArv(1,arvBusca,r);
+			}else{
+				ig=findIguais(r.getEsq(),arvBusca);
+				if(ig==null){
+					if(r.eFolha()){
+						if(Funcoes.isInteger(r.getValue())){
+							ig=buscaIntArv(arvBusca,r);
+						}else ig=buscaIncInt(arvBusca,r);
+					}else ig=findIguais(r.getDir(),arvBusca);
+				}
+			}
+		}else if (r.getValue().equals("/")){
+			ig=findEquals(r.getEsq());
+			if (ig==null) ig=findEquals(r.getDir());
+		}
+	}
+	return ig;
+}
+
+function BTNode[] buscaIntArv(BTNode arv, BTNode target){
+	BTNode []ig=null;
+	if(arv!=null && target!=null){
+	if(!arv.getValue().equals("*") && !arv.getValue().equals("/") &&
+		!arv.getValue().equals("^") && !arv.getValue().equals("R")){
+			ig=buscaIntArv(arv.getEsq(),target);
+			if(ig==null){
+				if(arv.eFolha() && !arv.equals(target) && Funcoes.isInteger(arv.getValue()) &&
+				!arv.getPai().equals(target.getPai())){
+					ig=new BTNode[2];
+					ig[0]=target;
+					ig[1]=arv;				
+				}else ig=buscaIntArv(arv.getDir(),target);
+			}
+		}
+	}
+	return ig;
+}
+
+/**
+* Busca por raiz ou por potencias iguai na arvore dependendo do parâmetro tipo
+* 0-Potencia
+* 1-Raiz
+*/
+function BTNode[] buscaPotRaizArv(int tipo,BTNode arv, BTNode target){
+	String eq;
+	String neq;
+	if (tipo==0){
+		eq="^";
+		neq="R";
+	}
+	else{
+		eq="R";
+		neq="^";
+	}
+	BTNode ig[]=null;
+	if(arv!=null && target!=null){
+	if(!arv.getValue().equals("*") && !arv.getValue().equals("/") &&
+		!arv.getValue().equals(neq)){
+			ig=buscaPotRaizArv(tipo,arv.getEsq(),target);
+			if (ig==null){
+				if(!arv.eFolha() && arv.getValue().equals(eq) && !arv.equals(target) &&
+				!arv.getPai().equals(target.getPai())){
+					String i1,i2;
+					i1=i2="";
+					i1=arv.getEsq().getValue();
+					i1=i1.substring(i1.length()-1);
+					i2=arv.getEsq().getValue();
+					i2=i2.substring(i2.length()-1);
+					//verifica se as incógnitas e as potencias são iguais
+					if(i1.equals(i2) && arv.getDir().getValue().equals(target.getDir().getValue())){
+						ig =new BTNode[2];
+						ig[0]=target;
+						ig[1]=arv;
+					}else ig=buscaPotRaizArv(tipo,arv.getDir(),target);
+				}else ig=buscaPotRaizArv(tipo,arv.getDir(),target);
+			}
+		}
+	}
+	return ig;
+}
+
+function BTNode[] buscaIncInt(BTNode arv, BTNode target){
+	BTNode []ig=null;
+	if(arv!=null && target!=null){
+	if(!arv.getValue().equals("*") && !arv.getValue().equals("/") &&
+		!arv.getValue().equals("^") && !arv.getValue().equals("R")){
+			ig=buscaIncInt(arv.getEsq(),target);
+			if(ig==null){
+				if(arv.eFolha() && !arv.equals(target)){
+					String arvVal=arv.getValue();
+					String i1=arvVal.substring(arvVal.length()-1);
+					String i2=target.getValue().substring(target.getValue().length()-1);
+					if(i1.equals(i2) && !arv.getPai().equals(target.getPai())){
+						ig=new BTNode[2];
+						ig[0]=target;
+						ig[1]=arv;
+					}else ig=buscaIncInt(arv.getDir(),target);				
+				}else ig=buscaIncInt(arv.getDir(),target);
+			}
+		}
+	}
+	return ig;
+}
+
+/**
+* se o nodo pai for + ou - troca quando for adicionar um novo valor
+* a fim de evitar coisas do tipo: 2--4x ou 2+-4x
+*/
+function BTNode arrumaSinal(BTNode r){
+	BTNode pai=r.getPai();
+	if (pai.getValue().equals("+")||
+		pai.getValue().equals("-")){
+		if (r.getValue().startsWith("-")){
+			if (pai.getValue().equals("-")){
+				pai.setValue("+");
+			}else{
+				pai.setValue("-");
+			}
+			r.setValue(r.getValue().substring(1));
+		}
+	}
+	return r;
+}
+
+function boolean checkOperators(BTNode r,ArrayList opValidos){
+	if (r!=null){
+		String s;
+		boolean valido,validoEsq,validoDir;
+		if (Funcoes.isOp(r.getValue())){
+			valido=false;
+			for (Object op:opValidos){
+				s=(String)op;
+				if (s.equals(r.getValue()))valido=true;
+			}
+		}else valido=true;
+		if (!r.eFolha() && !r.getEsq().eFolha())validoEsq=checkOperators(r.getEsq(),opValidos);
+		else validoEsq=true;
+		if (!r.eFolha() && !r.getDir().eFolha())validoDir=checkOperators(r.getDir(),opValidos);
+		else validoDir=true;
+		return(valido&&validoEsq&&validoDir);
+		
+	}return false;
+}
+
+function boolean canMMC(Expression e){
+	BTNode root=e.getRoot();
+	Funcoes.t();
+	// as linhas abaixo evitam que seja confundido o "Resultado" com uma
+	// possivel aplicação de mmc, ou seja, se for x=a/b ou a/b=x onde
+	// a e b são inteiros
+	if (!e.getRoot().getValue().equals("="))return false;
+	if (Funcoes.isInc(root.getEsq().getValue())){
+		if(Funcoes.isInteger(root.getDir().getValue()))return false;
+		if (root.getDir().getValue().equals("/")){
+			root=root.getDir();
+			if (Funcoes.arvINT(root)) return false;
+		}
+	}
+	if (Funcoes.isInc(root.getDir().getValue())){
+		if(Funcoes.isInteger(root.getEsq().getValue()))return false;
+		if (root.getEsq().getValue().equals("/")){
+			root=root.getEsq();
+			if (Funcoes.arvINT(root)) return false;
+		}
+	}
+	Vector<BTNode> noList=e.buscaChaveX(e.getRoot(),"/");
+	Vector<BTNode> mults;
+	BTNode no=null;
+	boolean result=false;
+	boolean denDifUm=false; // utilizada para impedir o MMC caso haver somete denominador 1
+	//sera true somente se haver um denominador diferete de um
+	for (int i=0;i<noList.size();i++){
+		no=noList.get(i);
+		//checar se n há multiplicaco por 1 pois isso causa loop
+		mults=e.buscaChaveX(no,"*");
+		for (BTNode mul:mults){
+			if (mul.getEsq().getValue().equals("1") ||
+				mul.getDir().getValue().equals("1") ||
+				mul.getEsq().getValue().equals("-1") ||
+				mul.getDir().getValue().equals("-1")
+				) return false;
+		}
+		if (!no.getDir().getValue().equals("1")) denDifUm=true;		
+		if (Expression.find(e.getRoot(),"R")!=null)return false;
+		//if (e.getRoot().getEsq().eFolha() && Funcoes.isInc(e.getRoot().getEsq().getValue())) return false;
+		if (no.getPai()!=null){
+			BTNode pai=no.getPai();
+			if (!pai.getValue().equals("*")){
+				if (/*!pai.getValue().equals("=")&&*/pai.getEsq().getValue().equals("/") || pai.getDir().getValue().equals("/")){
+					BTNode esq=pai.getEsq();	
+					BTNode dir=pai.getDir();
+/*novo codigo*/		Object opEsq[]=buscaOp(esq.getDir()); //busca no denominado da fração 
+					if (opEsq==null)opEsq=buscaOp(esq.getEsq()); //teste: não permitir se tiver algo para fazer no numrador
+					Object opDir[]=buscaOp(dir.getDir());
+					if (opDir==null)opDir=buscaOp(dir.getEsq());//teste: não permitir se tiber ago para fazer no numrador
+					if (opEsq==null){
+						opEsq=new Object[2];
+						opEsq[0]=0;
+					}
+					if (opDir==null){
+						opDir=new Object[2];
+						opDir[0]=0;
+					}
+					int oEsq=Integer.parseInt(opEsq[0]+"");
+					int oDir=Integer.parseInt(opDir[0]+"");
+					if ((oEsq!=1) && (oDir!=1)){
+						result=true;
+					}else return false;
+				}else if (!op(no)) result=true;
+			}
+		}
+	}
+	
+	if (!denDifUm)return false;
+	return result;
+}
+
+
+
+
+function String somaInc(String a, String b){
+	String pref=a.substring(0,a.indexOf("x"));
+	int i=0;
+	if (!Funcoes.isInteger(pref)) pref="";
+	else i=Integer.parseInt(pref);
+	pref=b.substring(0,b.indexOf("x"));
+	if (Funcoes.isInteger(pref))i+=Integer.parseInt(pref);
+	else pref="";
+	if (i!=0)pref=String.valueOf(i);
+	return pref;
+}
+
+function BTNode fracionar (BTNode r){
+	if (r!=null){
+		if (r.getValue().equals("/")||r.getValue().equals("0")) return null;
+		else if (r.eFolha()||r.getValue().equals("^")||r.getValue().equals("^")){
+			BTNode esq,dir;
+			esq=r.getEsq();
+			dir=r.getDir();
+			r.setEsq(null);
+			r.setDir(null);
+			r.setEsq(new BTNode(r.getValue(),esq,dir));
+			r.setValue("/");
+			r.setDir(new BTNode("1",null,null));
+			return r;
+		}
+		fracionar(r.getEsq());
+		fracionar(r.getDir());
+		return r;
+	}
+	return null;
+}
+
+function boolean validaXResult(BTNode r){
+	Funcoes.t();
+	BTNode x=Expression.findX(r,"x");
+	BTNode pot= Expression.findX(r,"^");
+	boolean b=false;
+	if (x!=null){
+		if (x.getValue().length()>1)b=true;
+	} 
+	if (pot!=null){
+		if(pot.getEsq().getValue().length()>1)b=true;
+	}
+	return b;
+}
+
+function boolean naoContemOperador(String exp){
+	if (exp.charAt(0)=='(')exp=exp.substring(2);
+	else exp=exp.substring(1);
+	if (exp.length()<=1) return true;
+	if (exp.contains("+"))return false;
+	else if (exp.contains("-"))return false;
+	else if (exp.contains("*"))return false;
+	else if (exp.contains("/"))return false;
+	else if (exp.contains("R"))return false;
+	return true;
+}
+
+/**
+	Busca a ocorrencia de uma multiplicações de frações
+ */
+function BTNode findMultFrac(BTNode root){
+	BTNode result=null;
+	if (root!=null){
+		if (root.getValue().equals("*")){
+			if (root.getEsq().getValue().equals("/")){
+				BTNode dir=root.getDir();
+				if (dir.eFolha() ||dir.getValue().equals("^") ||dir.getValue().equals("R") ||
+				dir.getValue().equals("/") || dir.getValue().equals("+") || dir.getValue().equals("-")) return root;
+			}else if (root.getDir().getValue().equals("/")){
+				BTNode esq=root.getEsq();
+				if (esq.eFolha() || esq.getValue().equals("^") ||esq.getValue().equals("R") ||
+				esq.getValue().equals("/") || esq.getValue().equals("+") || esq.getValue().equals("-")) return root;
+			}
+		}else{
+		 	result=findMultFrac(root.getEsq());
+		 	if (result==null){
+		 		if (!root.getValue().equals("^") || !root.getValue().equals("R")){
+		 			result=findMultFrac(root.getDir());
+		 		}
+		 	}
+		 }
+	}
+	return result;
+}
+
+// se pode multiplicar as frações contidas em arv
+function boolean canMultFrac(BTNode arv){
+	Funcoes.t();
+	arv=findMultFrac(arv);
+	if (arv!=null){
+		BTNode esq=arv.getEsq();
+		BTNode dir=arv.getDir();
+		if (canOp(esq)<=1 && canOp(dir)<=1){
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Busca soma/subtração de frações, se e somente se, haver frações em apenas um lado da equação
+ */
+function BTNode getSomaSubFrac(Expression e){
+	Funcoes.t();
+	BTNode root =e.getRoot();
+	List<BTNode> fracEsq= Expression.buscaXall("/",root.getEsq());
+	List<BTNode> fracDir= Expression.buscaXall("/",root.getDir());
+	// bloqueia caso haja fração no 2 lados da equação, isso é da regra "MMC"
+	if (!fracEsq.isEmpty() && !fracDir.isEmpty()) return null;	
+	else if (fracEsq.isEmpty() || fracDir.isEmpty()){
+		List<BTNode> fracs= fracEsq;
+		if (fracs.isEmpty())fracs=fracDir;
+		if (fracs.size()<=1) return null;
+		BTNode n1=null, n2=null;
+		for (Iterator<BTNode> it= fracs.iterator();it.hasNext();){
+			//selecionar os candidatos: os 2 primeiros nodo se são filhos do mesmo pai
+			// + ou -, como a busca é esq folha dir os valores da lista estarão conforme
+			// os nodo esta na arvore, portanto os novos compatives serão proximos, ou seja,
+			// i e i+1
+			if ( it.hasNext() &&n1==null) n1=it.next();
+			if ( it.hasNext() &&n2==null) n2=it.next();
+			if (n1.getPai().equals(n2.getPai())){
+				//checar o sinal
+				if (n1.getPai().getValue().equals("+") ||
+					n1.getPai().getValue().equals("-")){
+					//verificar a existencia de multiplicação por 1 e -1
+					if (checkForONEMult(n1,e) || checkForONEMult(n2,e))return null;
+					else return n1.getPai();
+				}
+			}else{
+				n1=n2;
+				n2=null;
+			}
+		}
+	}
+	return null;
+}
+
+// verifica a existência de multiplicação por -1 ou 1 em b ou nos filhos
+function boolean checkForONEMult(BTNode b, Expression e){
+	List<BTNode> mults=e.buscaChaveX(b,"*");
+	for (BTNode mul:mults){
+		if (mul.getEsq().getValue().equals("1") ||
+			mul.getDir().getValue().equals("1") ||
+			mul.getEsq().getValue().equals("-1") ||
+			mul.getDir().getValue().equals("-1")
+		)return true;
+	}
+	return false;
+}
+
+/**
+* Verifica se a expressão contém qualquer coisa sobre 1, exe: (2x+5)/1
+* retorna true se tiver e false casom contrário
+*/
+function boolean canDivideBy1(BTNode b){
+	BTNode r=Expression.find(b,"/");
+	if (r!=null){
+		if (r.getDir().getValue().equals("1")) return true;
+	}
+	return false;
+}
+
+/**
+ * Verifica a existência de uma divisão por zero
+ * @return true se houver e false caso contrário
+ */
+function boolean divideByZero(BTNode b){
+	Vector<BTNode> r =Expression.buscaXall("/",b);
+	if (r!=null){
+		for (int i=0;i<r.size();i++){
+			if (r.get(i).getDir().getValue().equals("0")) return true;
+		}
+	}
+	return false;
+}
+
+function boolean raizNegativa(BTNode b){
+	BTNode r=Expression.find(b,"R");
+	Funcoes f=new Funcoes();
+	BTNode maisEsq;
+	if (r!=null){
+		maisEsq=f.getMaisAEsquerda(r.getEsq());
+		if (maisEsq.getValue().startsWith("-") &&
+			!op(r.getEsq())) return true;
+	}
+	return false;
+}
+
+/*
+ * valida equações do tipo 0x=a onde a é qualquer coisa
+ */
+function boolean multiplicaIncZero(BTNode b){
+	if (b!=null){
+		if (b.getValue().equals("=")){
+			BTNode esq= b.getEsq();
+			String valEsq=esq.getValue();
+			if (valEsq.equals("^")){
+				esq=esq.getEsq();
+				valEsq=esq.getValue();
+			}
+			if (valEsq.startsWith("0") &&
+					Funcoes.isInc(String.valueOf(valEsq.charAt(valEsq.length()-1)))){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function boolean igualdadeImpossivel(Expression e){
+	BTNode bt=e.getRoot();
+	if (Funcoes.isInteger(bt.getEsq().getValue()) &&
+		Funcoes.isInteger(bt.getDir().getValue())){
+		return true;
+	}
+	return false;
+}
+
+
+/**
+*retorna true se é possivel aplicar a regra de ptoencia sobre um polinomio
+*do tipo (x-1)^2
+*/
+function BTNode potenciaPolinomio(BTNode r){
+	BTNode pol=null;
+	if (r!=null){
+		if (r.getValue().equals("^") && r.getDir().getValue().equals("2")){
+			BTNode esq=r.getEsq(); //esq=(x-1) ou (x+1)
+			/*valida se se esq não for folha e se seus filhas forem folhas,
+			 * ou seja, valida se a subequação tive somente 2 termos
+			 */
+			if (!esq.eFolha()&& esq.getEsq().eFolha() && esq.getDir().eFolha())return r;
+		}
+		pol= potenciaPolinomio(r.getEsq());
+		if (pol==null)pol= potenciaPolinomio(r.getDir());
+	}
+	return pol;
+}
+
+/**
+ * Testa a possibilidade de aplicação da regra do produto da soma pela diferença
+ * caso posistivo retorna a subarvore que ocorre.
+ */
+function BTNode produtoSomaDif(BTNode r){
+	BTNode psd=null;
+	Funcoes.t();
+	if (r!=null){
+		if (checkSignalProdSomDifTree(r)){
+			List<BTNode> fEsq=Expression.getAllFolhas(r.getEsq());
+			List<BTNode> fDir=Expression.getAllFolhas(r.getDir());
+			if (fEsq.size()==fDir.size()){
+				for (int i=fEsq.size()-1;i>=0;i--){
+					for (int j= fDir.size()-1;j>=0;j--){
+						String e = fEsq.get(i).getValue();
+						String d = fDir.get(j).getValue();
+						e = e.replaceAll("-","");
+						d = d.replaceAll("-","");
+						if (e.equals(d)){
+							fEsq.remove(i);
+							fDir.remove(j);
+							j=-1;
+						}
+					}
+				}
+				if (fEsq.isEmpty() && fDir.isEmpty())psd=r;
+			}
+		}
+		if (psd==null)psd=produtoSomaDif(r.getEsq());
+		if (psd==null)psd=produtoSomaDif(r.getDir());
+	}
+	return psd;
+}
+
+function boolean checkSignalProdSomDifTree(BTNode bt){
+	if (bt.getValue().equals("*") && 
+		!bt.getEsq().eFolha() &&
+		!bt.getDir().eFolha() &&
+		!Funcoes.isSquaredLeaf(bt.getEsq()) &&
+		!Funcoes.isSquaredLeaf(bt.getDir())){
+		boolean positivo =checkSignalProdSomDif(bt.getEsq(),false);
+		boolean negativo=false;
+		if (!positivo){
+			negativo=checkSignalProdSomDif(bt.getEsq(),true);
+			positivo=checkSignalProdSomDif(bt.getDir(),false);
+		}else negativo=checkSignalProdSomDif(bt.getDir(),true);
+		
+		return positivo && negativo;
+	}
+	return false;
+}
+
+/*
+ * verifica a validade do nodo para "Produto da soma pela difenrenca"
+ * ou seja verifica se o nodo eh + ou menos, (a+b) ou (a-b).
+ * O valor booleano indica que é o (a-b) que esta queredo se validar,
+ * pois pode haver também (a + -b) que também é considerado valido.
+ */
+ 
+function boolean checkSignalProdSomDif(BTNode bt, boolean valNegativo){
+	if ((bt.getEsq().eFolha() || Funcoes.isSquaredLeaf(bt.getEsq())) &&
+		(bt.getDir().eFolha() || Funcoes.isSquaredLeaf(bt.getDir()))){
+		if (valNegativo){
+			if (bt.getValue().equals("-"))return true;
+		}else{
+			if (bt.getValue().equals("+"))return true;
+			
+		}
+	}
+	return false;
+}
+
+//sem utilidade, por enquanto
+// @deprecated
+function BTNode buscaFolhaN(BTNode arv, int n){
+	BTNode r=null;
+	if (arv!=null && n!=0){
+		if (arv.eFolha()){
+			n--;
+		}else if (n!=0){
+			r= buscaFolhaN (arv.getEsq(),n);
+			if (r!=null)r=buscaFolhaN (arv.getDir(),n); 
+		}
+	}
+	return r;
+}
+/**
+* Compara bases de 2 potencias ou raizes e as retorn em um vetor
+* de 2 posições de forem iguais ou null se n forem
+*/
+function BTNode [] compPotRaiz(BTNode arv1, BTNode arv2){
+	String sinal=arv1.getValue();
+	BTNode temp;
+	if (!sinal.equals("R") && !sinal.equals("^")){
+		sinal=arv2.getValue();
+		//busca em arv1 o sinal de arv2 
+		temp=Expression.find(arv1,sinal);
+		if (temp!=null)arv1=temp;
+	}else{
+		//busca em arv2 o sinal de arv1
+		temp=Expression.find(arv2,sinal);
+		if (temp!=null)arv2=temp;
+	}
+	BTNode [] iguais=null;
+	if (!arv1.getValue().equals("*")){
+		if ((arv1.getValue().equals("^") && arv2.getValue().equals("^"))||
+			(arv1.getValue().equals("R") && arv2.getValue().equals("R"))){
+			if (Expression.igual(arv1.getEsq(),arv2.getEsq())){
+				iguais=new BTNode[2];
+				iguais[0]=arv1;
+				iguais[1]=arv2;
+			}					
+		}
+	}
+	return iguais;
+}
+
+/**
+*realiza o MMC de expressoes no denominador
+*@param den lista de frações com denominadores
+*@ e a equacao
+*/
+function BTNode mmc_Maiores (Vector vec, Expression e){
+	Vector<BTNode> den=(Vector<BTNode>)vec;
+	den=BTNode.clone(den);
+	BTNode temp,fact;
+	for (int index=den.size()-1;index>=0;index--){
+		temp=den.remove(index);
+		temp=temp.getDir();
+		if (!temp.getValue().equals("1")){
+			den.add(index,temp);
+		}
+	}
+	BTNode mmc= (BTNode)den.get(0);
+	Vector <BTNode> others=new Vector (den.subList(1,den.size()));
+	BTNode iguais[]=null;
+	int atual, novo; // potencias dos valores iguais onde atual esta em iguais[0]
+	//  e novo em iguais[1], se n tiver potencia sera então valor 1
+	for(int i=0;i<others.size();i++){
+		iguais=e.compara(mmc,others.get(i));
+		if (iguais==null) iguais=compPotRaiz(mmc,others.get(i));
+		while (iguais!=null){
+			if (iguais[0].getPai().getValue().equals("^")){
+				atual=Integer.parseInt(iguais[0].getPai().getDir().getValue());
+			}else if (iguais[0].getValue().equals("^")){
+				atual=Integer.parseInt(iguais[0].getDir().getValue());
+			}else atual=1;
+			if (iguais[1].getPai().getValue().equals("^")){
+				novo=Integer.parseInt(iguais[1].getPai().getDir().getValue());
+				iguais[1]=iguais[1].getPai();
+			}else if (iguais[1].getValue().equals("^")){
+				novo=Integer.parseInt(iguais[1].getDir().getValue());
+			}else novo=1;
+			if (atual<novo){
+				if (atual<=1){
+					temp=(BTNode)iguais[0].clone();
+					iguais[0].setValue("^");
+					iguais[0].setDir(new BTNode (String.valueOf(novo)));
+					iguais[0].setEsq(temp);
+				}else{
+					if (iguais[0].getValue().equals("^")||iguais[0].getValue().equals("R")){
+						iguais[0].getDir().setValue(String.valueOf(novo));
+						// como ja foram copiados o valores da potencias prepara par o
+						//nó "^" ou o nó "R" é ser removido da arvore pelo removeDaArvore()
+						// por isso torna-o folha
+						iguais[1].setEsq(null);
+						iguais[1].setDir(null);
+					}else iguais[0].getPai().getDir().setValue(String.valueOf(novo));
+				}
+			}else if (iguais[0].getValue().equals("^")||iguais[0].getValue().equals("R")){
+				iguais[1].setEsq(null);
+				iguais[1].setDir(null);
+			}
+			e.removeDaArvore(iguais[1]);
+			
+			//pois se o pai for null ele ja foi removido da arvore
+			if (others.get(i).getPai()==null){
+				iguais=null;
+				others.get(i).setValue("noValue");
+			}
+			iguais=e.compara(mmc,others.get(i));
+			if (iguais==null) iguais=compPotRaiz(mmc,others.get(i)); 
+		}
+	}
+	//a partir daqui não deve ter mais sub arvores iguais nas expressões do denominador
+	temp=null;
+	BTNode dir,esq;
+	for (int index=0; index<others.size();index++){
+		if (Funcoes.isOp(others.get(index).getValue())){
+			if (mmc.getValue().equals("^")||mmc.getValue().equals("R")){
+				temp=mmc.getPai();
+				temp.setDir(null);
+				temp.setDir(new BTNode("*",mmc,others.get(index)));
+				mmc=mmc.getPai();
+			}else if (mmc.getValue().equals("+")||mmc.getValue().equals("-")){
+				dir=mmc.getDir();
+				temp=mmc.getEsq();
+				mmc.setEsq(null);
+				mmc.setDir(null);
+				mmc.setEsq(new BTNode(mmc.getValue(),temp,dir));
+				mmc.setDir(e.removeDaArvore(others.get(index)));
+				mmc.setValue("*");
+			}else if (mmc.getValue().equals("*") && mmc.getDir().getValue().equals("^")){
+				temp=mmc.getEsq();
+				dir=mmc.getDir();
+				mmc.setEsq(null);
+				mmc.setDir(null);
+				mmc.setEsq(new BTNode("*",temp,dir));
+				mmc.setDir(e.removeDaArvore(others.get(index)));
+				mmc.setValue("*");
+			}else if (mmc.eFolha()){
+				mmc.setEsq(new BTNode(mmc.getValue()));
+				mmc.setDir(e.removeDaArvore(others.get(index)));
+				mmc.setValue("*");
+			}else {
+				dir=mmc.getDir();
+				mmc.setDir(null);
+				mmc.setDir(new BTNode("*",dir,e.removeDaArvore(others.get(index))));
+			}
+		}else if (!others.get(index).getValue().equals("noValue")){
+			temp=mmc;//.getEsq();
+			while (!temp.eFolha() && !temp.getValue().equals("^")){
+				temp=temp.getEsq();
+			}
+			if (temp.getPai().getValue().equals("*") && temp.getPai().getDir().getValue().equals("^") &&
+				Funcoes.isInc(temp.getPai().getDir().getEsq().getValue())){
+				/*
+					cai aqui quando for uma arvore do tipo    *   por exemplo.
+															3	^
+															  x  1															
+				*/ 
+				temp=temp.getPai();
+				dir =temp.getDir();
+				temp.setDir(null);
+				temp.getEsq().setEsq((BTNode)temp.getEsq().clone());
+				temp.getEsq().setValue("*");
+				temp.getEsq().setDir(dir);
+				temp.setDir(e.removeDaArvore(others.get(index)));
+			}else if (temp.getPai().getValue().equals("*")|| (temp.getPai().getValue().equals("^")&& temp.getPai().getDir().getValue().equals("1"))){
+				temp=temp.getPai();
+				temp.setEsq(new BTNode("*",e.removeDaArvore(others.get(index)),(BTNode)temp.getEsq().clone()));
+			}else if (temp.getValue().equals("^")){
+				esq=temp.getEsq();
+				dir=temp.getDir();
+				if (Funcoes.isInteger(others.get(index).getValue())){
+					temp.setEsq(null);
+					temp.setEsq(e.removeDaArvore(others.get(index)));
+					dir.setEsq(esq);
+					dir.setDir(new BTNode(dir.getValue()));
+					dir.setValue(temp.getValue());
+					temp.setValue("*");
+				}else{
+					temp.setDir(null);
+					temp.setDir(e.removeDaArvore(others.get(index)));
+					esq.setDir(dir);
+					esq.setEsq(new BTNode(esq.getValue()));
+					esq.setValue(temp.getValue());
+					temp.setValue("*");
+				}
+			}else{
+				while(!temp.getValue().equals("*") && temp!=mmc){
+					temp=temp.getPai();
+				}
+				dir=temp.getDir();
+				temp.setDir(null);
+				temp.setDir(new BTNode ("*",e.removeDaArvore(others.get(index)),dir));
+			}
+		}
+	}
+	return mmc;
+}
+
+
+
+
+
+function BTNode getSimp(Expression e){
+	Vector <BTNode> frac=e.buscaChaveX(e.getRoot(),"/");
+	Iterator<BTNode> i=frac.iterator();
+	BTNode simp=null;
+	while(i.hasNext() && simp==null){
+		simp=i.next();
+		if (isSimp(e,simp))simp=simp;
+		else simp=null;
+	}
+	return simp;
+}
+
+function BTNode getDivSin(Expression e){
+	Vector <BTNode> frac=e.buscaChaveX(e.getRoot(),"/");
+	Iterator<BTNode> i=frac.iterator();
+	BTNode dSin=null;
+	String vEsq,vDir;
+	while(i.hasNext() && dSin==null){
+		dSin=i.next();
+		// divisao de sinais APENAS para fracoes simples, leia-se nodo da divisão com dois filhos-folha
+		if (dSin.getEsq().eFolha() && dSin.getDir().eFolha()){
+			vEsq=dSin.getEsq().getValue();
+			vDir=dSin.getDir().getValue();
+			if (vEsq.startsWith("-") && vDir.startsWith("-"))dSin=dSin;
+			else dSin=null; 
+		}else dSin=null;
+	}
+	return dSin;
+}
+	
+		
+/**
+ * função que verifica se há potencias maiores que 2 a fim de evitar a execução
+ * da regra prepara Bhaskara e causar loop com moveINT
+ */
+function boolean verificaPotBhaskara(String exp){
+	int pot=0;
+	int valPot;
+	boolean canB=false;
+	while (pot!=-1){
+		pot=exp.indexOf("^");
+		if (pot!=-1){
+			valPot=Integer.parseInt(exp.substring(pot+1,pot+2));
+			if (valPot>2)return false;
+			else if (valPot==2)canB=true;
+			if (pot+2<exp.length())exp=exp.substring(pot+2);// comeca apartir do valor apos o valor da potencia
+			else pot=-1;
+		}
+	}
+	return canB;
+}
+ 
+/**
+ * Função que testa uma equação e caso houves pelomenos dois inteiros,
+ * um em cada lado da equação, e desses dois interios um deles ser
+ * diferente de 0 retorna true e caso contrário retorna false.
+ */
+function boolean validarMoveInt(Expression e){
+	BTNode root=e.getRoot();
+	BTNode nodoEsq=buscaMoveINT(root.getEsq(),true);
+	BTNode nodoDir=buscaMoveINT(root.getDir(),true);
+	if (nodoEsq!=null&&nodoDir!=null){
+		String esq= nodoEsq.getValue();
+		String dir= nodoDir.getValue();
+		if (!esq.equals("0")&&!dir.equals("0"))return true;
+		else if (!esq.equals("0")&&dir.equals("0"))return true;
+		else if (esq.equals("0")&&!dir.equals("0"))return true;
+		else{
+			esq=buscaMoveINT(root.getEsq(),false).getValue();
+			dir=buscaMoveINT(root.getDir(),false).getValue();
+			if (esq!=null && dir!=null) return true;
+			else return false;
+		}
+	}else return false;
+}
+
+/**
+ * Verifica se o lado esquerdo da equação possui a maior incognita, ou se é igual
+ */
+function boolean incEsqMaior(Expression e){
+	BTNode root=e.getRoot();
+	BTNode nodoDir=root.getDir();
+	BTNode nodoEsq=root.getEsq();
+	IncComparator iC=new IncComparator();
+	Vector<BTNode> incDir=Funcoes.getIncognitas(nodoDir, new Vector<BTNode>());
+	Vector<BTNode> incEsq=Funcoes.getIncognitas(nodoEsq, new Vector<BTNode>());
+	Collections.sort(incDir,iC);
+	Collections.sort(incEsq,iC);
+	/*
+	 * numa equação é obrigatorio ter pelomenos uma incognita
+	 * logo um dos Verctors NãO ESTARÁ VAZIO
+	  */  
+	if (incEsq.isEmpty())return false;
+	if (incDir.isEmpty())return true;
+	BTNode maiorEsq,maiorDir;
+	maiorEsq=incEsq.lastElement();
+	maiorDir=incDir.lastElement();
+	/*
+	 * Em caso de numero de incognitas iguais mover mesmo assim para o direito, que é o mais comum
+	 */
+	if (iC.compare(maiorEsq,maiorDir)>=0){
+		return true;
+	}else return false;
+}
+
+function boolean incDirMaior(Expression e){
+	BTNode root=e.getRoot();
+	BTNode nodoDir=root.getDir();
+	BTNode nodoEsq=root.getEsq();
+	IncComparator iC=new IncComparator();
+	Vector<BTNode> incDir=Funcoes.getIncognitas(nodoDir, new Vector<BTNode>());
+	Vector<BTNode> incEsq=Funcoes.getIncognitas(nodoEsq, new Vector<BTNode>());
+	Collections.sort(incDir,iC);
+	Collections.sort(incEsq,iC);
+	/*
+	 * numa equação é obrigatorio ter pelomenos uma incognita
+	 * logo um dos Verctors NÃO ESTARÁ VAZIO
+	  */  
+	if (incDir.isEmpty())return false;
+	if (incEsq.isEmpty())return true;
+	BTNode maiorEsq,maiorDir;
+	maiorEsq=incEsq.lastElement();
+	maiorDir=incDir.lastElement();
+	if (iC.compare(maiorDir,maiorEsq)>0){
+		return true;
+	}else return false;
+}
+
+
+
+/**
+ *Verifica se tem algum inteiro no lado direito da equação para mover para o esquerdo
+ * mover para a esquerda se e somente se a incognita direita for maior, ex:
+ * 2x-3=-4x+2 não move 2x-3=4x+2 move 
+ */
+ 
+function boolean validarMoveIntEsquerda(Expression e){
+	Funcoes.t();
+	if (incDirMaior(e)){
+		if (buscaMoveINT(e.getRoot().getDir(),false)!=null)return true;
+		else return false;
+	}else return false;
+}
+
+/**
+ *Verifica se tem algum inteiro no lado esquerdo da equação para mover para o direito
+ * mover para a direita se e somente se a incognita esquerda for maior, ex:
+ * 2x-3=-4x+2 move 2x-3=4x+2 não move 
+ */
+ 
+function boolean validarMoveIntDireita(Expression e){
+	Funcoes.t();
+	if (incEsqMaior(e)){
+		if (buscaMoveINT(e.getRoot().getEsq(),false)!=null)return true;
+		else return false;
+	}else return false;
+}
+
+function boolean validarIsolaXnaEsquerda(Expression e){
+	Funcoes.t();
+	if (incEsqMaior(e)){
+		if (buscaIsolaX(e.getRoot().getDir())!=null)return true;
+		else return false;
+	}else return false;
+}
+
+function boolean validarIsolaXnaDireita(Expression e){
+	Funcoes.t();
+	if (incDirMaior(e)){
+		if(buscaIsolaX(e.getRoot().getEsq())!=null)return true;
+		else return false;
+	}else return false;
+}
+
+/**
+ * Função que testa se em um dos filhos da raiz possui o valor "/"
+ * e se possui uma incognita retornando true se for a equação for 
+ * valida e false caso contrário
+ */
+function boolean validarMoverTermo(Expression e){
+	Funcoes.t();
+	BTNode root=e.getRoot();
+	BTNode possivel=null;
+	BTNode esq=root.getEsq();
+	if(esq.getValue().equals("/")){
+		Vector v= Funcoes.getIncognitas(esq.getEsq(),new Vector());
+		if (v!= null && v.size()>0)possivel=esq;
+		else{
+			v=Funcoes.getIncognitas(esq.getDir(),new Vector());
+			if (v!= null && v.size()>0)possivel=esq;
+		}
+	}
+	if ((possivel==null)&&(root.getDir().getValue().equals("/"))){
+		BTNode dir=root.getDir();
+		Vector v=Funcoes.getIncognitas(dir.getEsq(),new Vector());
+		if (v!= null && v.size()>0)possivel=dir;
+		else{
+			v=Funcoes.getIncognitas(dir.getDir(),new Vector());
+			if (v!= null && v.size()>0)possivel=dir;
+		}
+	}
+	if (possivel!=null /*&& !isSimp(e,possivel)*/)return true;
+	else return false;
+}
+
+function boolean validarSomaSub(Expression e){
+	Funcoes.t();
+	BTNode[] esq = findEquals(e.getRoot().getEsq());
+	Funcoes f=new Funcoes();
+	BTNode comum;
+	if (esq!=null){
+		comum = f.verificaPai(e,esq[0],esq[1]);
+		if (comum.equals(esq[0]) || comum.equals(esq[1]))return false;
+		if (esq[0].getPai().equals(esq[1].getPai()))return false;
+		if ((canOp(esq[0].getPai())!=0) || (canOp(esq[1].getPai())!=0))return false;
+		else return true;
+	}else{
+		BTNode[] dir = findEquals(e.getRoot().getDir());
+		if (dir!=null){
+			comum = f.verificaPai(e,dir[0],dir[1]);
+		if (comum.equals(dir[0]) || comum.equals(dir[1]))return false;	
+			if (dir[0].getPai().equals(dir[1].getPai()))return false;
+			if ((canOp(dir[0].getPai())!=0) || (canOp(dir[1].getPai())!=0))return false;
+			else return true;
+		}else return false;
+	}
+}
+
+function boolean validarResultadoX2(Expression e){
+	BTNode root=e.getRoot();
+	//x^2 está no lad esquerdo
+	if (root.getEsq().getValue().equals("^")){
+		if (root.getDir().eFolha() || root.getDir().getValue().equals("/")){
+			if (checkOperators(e.getRoot().getDir(),new ArrayList(Arrays.asList(new String[]{"-","/","="})))){
+				//se x^2 não possui um número antes de x
+				if (Funcoes.isInc(e.getRoot().getEsq().getEsq().getValue()) &&
+				!Funcoes.isInc(e.getRoot().getDir().getValue())) return true;
+			}
+		}
+	}else if (root.getDir().getValue().equals("^")){
+		if (root.getEsq().eFolha() || root.getEsq().getValue().equals("/")){
+			if (checkOperators(e.getRoot().getEsq(),new ArrayList(Arrays.asList(new String[]{"-","/","="})))){
+				//se x^2 não possui um número antes de x
+				if (Funcoes.isInc(e.getRoot().getDir().getEsq().getValue()) &&
+				!Funcoes.isInc(e.getRoot().getEsq().getValue())) return true;
+			}
+		}
+	}
+	return false;
+}
+
+function boolean validarX2positivo(Expression e){
+	BTNode x2=e.buscaX(e.getRoot(),"^");
+	if (x2!=null){
+		if (x2.getEsq().getValue().startsWith("-")|| (x2.getPai()!=null && 
+			x2.ehFilhoDir() && x2.getPai().getValue().equals("-"))) return true;
+	}
+	return false;
+}
+
+function Vector fatoracao(Expression e){
+	Vector<BTNode> candidatos=new Vector<BTNode>();
+	if (e.getnewexpression().contains("R")){	
+		int radical,radicando;
+		Vector <BTNode> rad=e.buscaXall("R",e.getRoot());
+		BTNode r;
+		for (Iterator<BTNode> it=rad.iterator();it.hasNext();){
+			try{
+				r=it.next();
+				if (Funcoes.isFactor(r))candidatos.add(r);
+			}catch(NumberFormatException nfe){}
+		}
+	}
+	return candidatos;
+}
+
+
+function Vector raiz(Expression e){
+	Funcoes.t();
+	Vector <BTNode> possiveis=new Vector<BTNode>();
+	if (e.getnewexpression().contains("R")){
+		Vector<BTNode> rad=e.buscaXall("R",e.getRoot());
+		BTNode r;
+		for (Iterator<BTNode> it=rad.iterator();it.hasNext();){
+			r=it.next();
+			if (Funcoes.isFolhasFact(r,0))possiveis.add(r);
+		}
+	}
+	return possiveis;
+}
+ 
+
+function boolean validarSimplifica(Expression e){
+	if (getSimp(e)!=null)return true;
+	else return false;
+}
+
+function boolean validarDivSin(Expression e){
+	if (getDivSin(e)!=null)return true;
+	else return false;
+}
+
+
+function boolean validarDivisaoFracoes(Expression e){
+	 return Funcoes.getDivFracao(e.getRoot())!=null; 
+}
+
+function boolean validarMultMenosUm(BTNode bt){
+	Funcoes.t();
+	return Funcoes.getMultMenosUm(bt)!=null;
+}
+
+/*
+rule "teste"
+	salience 100
+	dialect "java"
+	when
+		x: Expression( );
+		eval( true );
+	then 
+		System.out.println(canMMC(x));
+end
+*/
+
+
+rule "Simplifica"
+	salience 9
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval (e.getRoot().getValue().equals("="));
+		eval(e.getnewexpression().contains("="));
+		eval(validarSimplifica(e));	
+	then 
+		BTNode s= getSimp(e);
+		BTNode []b=e.compara(s.getEsq(), s.getDir());
+		//simplifica frações diferentes
+		if (b==null){
+			try{
+				String esq=s.getEsq().getValue(), dir=s.getDir().getValue(),inc1="",inc2="";
+				if (Funcoes.isInc(esq.substring(esq.length()-1))){
+					inc1=esq.charAt(esq.length()-1)+"";
+					esq=esq.substring(0,esq.length()-1);
+					if (esq.equals(""))esq="1";
+					if (esq.equals("-"))esq="-1";
+				}
+				if (Funcoes.isInc(dir.substring(dir.length()-1))){
+					inc2=dir.charAt(dir.length()-1)+"";
+					dir=dir.substring(0,dir.length()-1);
+					if (dir.equals(""))dir="1";
+					if (dir.equals("-"))dir="-1";
+				}
+				int v1=Integer.parseInt(esq);
+				int v2=Integer.parseInt(dir);
+				String resp;
+				Vector<Integer> v=Funcoes.isS(s);
+				if (v.isEmpty() && v1%v2==0){
+					System.out.println("# Simplificar");
+					listresult.add(new Equacoes("# Simplificar"));
+					v1=v1/v2;
+					//simplificar a incognita
+					if(Funcoes.isInc(inc1) && Funcoes.isInc(inc2)){
+						inc1="";
+						inc2="";
+					}
+					s.setEsq(null);
+					s.setDir(null);
+					if (!inc1.isEmpty() && v1==1)s.setValue(inc1);
+					else if (!inc1.isEmpty() && v1==-1)s.setValue("-"+inc1);
+					else s.setValue(v1+inc1);
+				}else if (!v.isEmpty()){
+					String re="# Simplificar";
+					System.out.println(re);
+				//	for(int i=0;i<v.size();i++){
+					v1=v1/v.get(0);
+					v2=v2/v.get(0);
+					//re+=v.get(i)+" ";
+				//	} uma simplificação por vez!!!
+					//System.out.println(re);
+				//	if(Funcoes.isInc(inc1) && inc1.equals(inc2)){
+			//			inc1="";
+			//			inc2="";
+			//		}
+					listresult.add(new Equacoes(re));
+					s.setEsq(null);
+					s.setDir(null);
+					if (!inc1.isEmpty() && v1==1)s.setEsq(new BTNode(inc1));
+					else if (!inc1.isEmpty() && v1==-1)s.setEsq(new BTNode("-"+inc1));
+					else s.setEsq(new BTNode(v1+inc1));
+					if (!inc2.isEmpty() && v2==1)s.setDir(new BTNode(inc2));
+					else if (!inc2.isEmpty() && v2==-1)s.setDir(new BTNode("-"+inc2));
+					else s.setDir(new BTNode(v2+inc2));
+				}else if (Funcoes.isInc(inc1) && inc1.equals(inc2)){
+					String re="# Simplificar";
+					System.out.println(re);
+					listresult.add(new Equacoes(re));
+					inc1="";
+					inc2="";
+					s.setEsq(null);
+					s.setDir(null);
+					s.setEsq(new BTNode(v1+""));					
+					s.setDir(new BTNode(v2+""));
+				}
+				
+			}catch(NumberFormatException nfe){
+				System.out.println("# Simplificar");
+				listresult.add(new Equacoes("# Simplificar"));
+				BTNode esq=e.findX(s.getEsq(),"x");
+				BTNode dir=e.findX(s.getDir(),"x");
+				//teste
+				BTNode maior=esq;
+				BTNode menor=dir;
+				//apenas para casos como 2x^2/2 onde esq é ^ e dir é 2
+				// para cair nos ifs abaixo sq ou dir não deven possuir incognita, logo a simplificação é somente pelo inteiro
+				if (esq==null || dir==null){
+					if (esq==null)esq=s.getEsq();
+					if (esq.getValue().equals("^") && esq.getEsq().eFolha())esq= esq.getEsq();
+						
+					if(dir ==null)dir=s.getDir();
+					if (dir.getValue().equals("^") && dir.getEsq().eFolha())dir= dir.getEsq();
+					
+					maior=esq;
+					menor=dir;
+					int vMai,vMen;
+					if (Funcoes.getINT(maior.getValue())<Funcoes.getINT(menor.getValue())){
+						vMen=Funcoes.getINT(maior.getValue());
+						vMai=Funcoes.getINT(menor.getValue());
+						maior=dir;
+						menor=esq;
+					}else{
+						vMai=Funcoes.getINT(maior.getValue());
+						vMen=Funcoes.getINT(menor.getValue());
+					}
+					if (vMai%vMen==0){
+						//ou maior ou menor terá x nunca os dois, pois se ambos tivessem, não cairiam aqui.
+						if (Funcoes.isInc(maior.getLast())){
+							BTNode pai=maior.getPai();
+							String res=String.valueOf((int)(vMai/vMen));
+							if (pai.getValue().equals("^")){
+								String potencia=pai.getDir().getValue();
+								pai=pai.getPai();
+								pai.setValue("^");
+								pai.setDir(null);
+								pai.setDir(new BTNode (potencia));
+								pai=pai.getEsq();						
+							}
+							pai.setValue(Funcoes.formatResultado(res+String.valueOf(maior.getLast())));
+							pai.setDir(null);
+							pai.setEsq(null);
+						}else{
+							maior.setValue(String.valueOf((int)(vMai/vMen)));
+							menor.setValue(String.valueOf(menor.getLast()));
+						}
+					}else{
+						Vector<Integer> valores=Funcoes.isS(new BTNode("/",new BTNode(maior.getValue()),new BTNode(menor.getValue())));
+						vMai=vMai/valores.get(0);
+						vMen=vMen/valores.get(0);
+						if (Funcoes.isInc(maior.getLast())){
+							maior.setValue(Funcoes.formatResultado(vMai+String.valueOf(maior.getLast())));
+							menor.setValue(vMen);
+						}else{
+							maior.setValue(vMai);
+							menor.setValue(Funcoes.formatResultado(vMen+String.valueOf(menor.getLast())));
+						}
+					}
+				}else{
+					
+					//fim do teste
+					maior=esq;
+					menor=dir;
+					String maiorV="",menorV="";
+					if (maior.eFolha())maiorV=maior.getValue();
+					else maiorV=maior.getEsq().getValue();
+					if (menor.eFolha())menorV=menor.getValue();
+					else menorV=menor.getEsq().getValue();
+					int potencia=0;
+					if (esq.getValue().equals("^")){
+						potencia=Integer.parseInt(esq.getDir().getValue());
+						//maior=esq;					
+						//menor=dir;
+					}else if (esq.getValue().equals("x"))potencia=1;
+					if (dir.getValue().equals("^")){
+						if (Integer.parseInt(dir.getDir().getValue())>potencia){
+							maior=dir;
+							menor=esq;
+							potencia=Integer.parseInt(dir.getDir().getValue())-potencia;
+							if (maior.eFolha())maiorV=maior.getValue();
+							else maiorV=maior.getEsq().getValue();
+							if (menor.eFolha())menorV=menor.getValue();
+							else menorV=menor.getEsq().getValue();
+						}else {
+							menor=dir;
+							if (menor.eFolha())menorV=menor.getValue();
+							else menorV=menor.getEsq().getValue();
+							potencia-=Integer.parseInt(dir.getDir().getValue());
+						}
+					}else if (dir.getValue().equals("x"))potencia--;
+					if (potencia==0){
+						//esq=esq.getPai();
+						//esq.setValue("1");
+						//esq.setEsq(null);
+						//esq.setDir(null);
+						//verificar se é apenas uma incognita se inteiro acompanhando
+						if (maior.getValue().equals("^")){
+							if (Funcoes.isInc(maior.getEsq().getValue()))maior.setValue("1");
+							else maior.setValue(maiorV.substring(0,maiorV.length()-1));
+						}else{
+							if (Funcoes.isInc(maior.getValue()))maior.setValue("1");
+							else maior.setValue(maiorV.substring(0,maiorV.length()-1));
+						}
+						if (menor.getValue().equals("^")){
+							if (Funcoes.isInc(menor.getEsq().getValue()))menor.setValue("1");
+							else menor.setValue(menorV.substring(0,menorV.length()-1));
+						}else{
+							if (Funcoes.isInc(menor.getValue()))menor.setValue("1");
+							else menor.setValue(menorV.substring(0,menorV.length()-1));
+						}
+						maior.setEsq(null);
+						maior.setDir(null);
+						menor.setEsq(null);
+						menor.setDir(null);
+					}else if (potencia==1){
+						//maior.setValue(maior.getEsq().getValue());
+						//maior.setEsq(null);
+						//maior.setDir(null);
+						//e.removeDaArvore(menor);
+						//potencia igual a 1 não necessita de simbolo de potencia			
+						maior.setValue(maiorV);
+						maior.setEsq(null);
+						maior.setDir(null);
+						// se for so a incognita remove da arvore senão remove só a incognita
+						if (menor.getValue().equals("^")){
+							if (Funcoes.isInc(menor.getEsq().getValue()))menor.setValue("1");
+							else menor.setValue(menorV.substring(0,menorV.length()-1));
+						}else{
+							if (Funcoes.isInc(menor.getValue()))menor.setValue("1");
+							else menor.setValue(menorV.substring(0,menorV.length()-1));
+						}
+						menor.setEsq(null);
+						menor.setDir(null);
+					}else if (potencia>1){
+						//maior.getDir().setValue(String.valueOf(potencia));
+						//e.removeDaArvore(menor);
+						maior.getDir().setValue(potencia+"");
+						if (menor.getValue().equals("^")){
+							if (Funcoes.isInc(menor.getEsq().getValue()))menor.setValue("1");
+							else menor.setValue(menorV.substring(0,menorV.length()-1));
+						}else{
+							if (Funcoes.isInc(menor.getValue()))menor.setValue("1");
+							else menor.setValue(menorV.substring(0,menorV.length()-1));
+						}
+						menor.setEsq(null);
+						menor.setDir(null);
+					}
+				}
+			}
+			while(s.getPai()!=null){
+				s=s.getPai();
+			}
+			e.setNewRoot(s);
+			listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		}else{
+			System.out.println("# Simplificar");
+			listresult.add(new Equacoes("# Simplificar"));
+			e.setNewRoot(simpl(b[0],b[1]));
+			listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		}
+		update(e);
+end
+
+rule "Divide iguais"
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(filhosIguais(e.buscaXall("/",e.getRoot()))!=null);
+	then
+		BTNode s =filhosIguais(e.buscaXall("/",e.getRoot()));
+		s.setValue("1");
+		s.setDir(null);
+		s.setEsq(null);
+		while(s.getPai()!=null){
+			s=s.getPai();
+		}
+		System.out.println("# Simplificar");
+		e.setNewRoot(s);
+		listresult.add(new Equacoes("# Simplificar"));
+		listresult.add(new Equacoes(e.getnewexpression(),
+						e.getCleanExpression(),e.getTeXExpression()));
+		update (e);
+end
+
+rule "Calculo"
+	salience 4
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		//not Expression (tipo==Expression.USER);
+		eval (!e.isHint());
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (op(e.getRoot()));
+		eval (!((BTNode)buscaOp(e.getRoot())[1]).getValue().equals("/"));
+	then 
+		Object [] arv= buscaOp(e.getRoot());
+		BTNode v=(BTNode) arv[1];
+		int tipo=Integer.parseInt(String.valueOf(arv[0]));
+		String i1="";
+		String i2="";
+		String res="";
+		String potencia="";
+		//em caso de não haver operadores no fim retirar a regra da memoria
+		boolean fim=false; 
+		int v1,v2;
+		v1=v2=0;
+		if (tipo==2 && !v.getValue().equals("*")){
+			i1=v.getEsq().getValue();
+			//reinsere o valor na arvore sem a incognita
+			if (i1.length()==1){
+				v.getEsq().setValue("1");
+			}else if (i1.length()==2 && i1.startsWith("-") && Funcoes.isInc(i1.substring(1))){
+				v.getEsq().setValue("-1");
+			}else v.getEsq().setValue(i1.substring(0,i1.length()-1));
+			i1=i1.substring(i1.length()-1);
+			i2=v.getDir().getValue();
+			if (i2.length()==1){
+				v.getDir().setValue("1");
+			}else if (i2.length()==2 && i2.startsWith("-") && Funcoes.isInc(i2.substring(1))){
+				v.getDir().setValue("-1");
+			}else v.getDir().setValue(i2.substring(0,i2.length()-1));
+			i2=i2.substring(i2.length()-1);
+		}else if (tipo==4 || tipo==5){
+			if (tipo==5){
+				i1=v.getEsq().getDir().getValue();
+				i2=v.getDir().getDir().getValue();
+				v1=(Integer.parseInt(i1))+(Integer.parseInt(i2));
+				potencia=String.valueOf(v1);
+			}
+			else potencia=v.getDir().getDir().getValue();
+			i1=v.getEsq().getEsq().getValue();
+			i2=v.getDir().getEsq().getValue();
+			if (i1.length()<=1){
+				v1=1;
+			}else {
+				if (i1.equals("-x")){
+					v1=-1;
+				}else v1=Integer.parseInt(i1.substring(0,i1.length()-1));
+			}
+			i1=i1.substring(i1.length()-1);
+			if (i2.length()<=1){
+				v2=1;
+			}else{
+			 	if (i2.equals("-x")){
+			 		v2=-1;
+			 	}else v2=Integer.parseInt(i2.substring(0,i2.length()-1));
+			 }
+			i2=i2.substring(i2.length()-1);
+		}else if (tipo==6){
+			if (v.getEsq().getValue().equals("^")){
+				i1=v.getDir().getValue();
+			}else i1=v.getEsq().getValue();
+			v=e.findX(v,"^");
+			potencia=v.getDir().getValue();
+			i2=v.getEsq().getValue();
+			v=v.getPai();
+		}else if (tipo==7){
+			if (!v.getEsq().getValue().equals("0") &&
+				!v.getDir().getValue().equals("0")){
+				//pega os filhos dos Rs
+				if (v.getEsq().getValue().equals("R")){
+					i1=v.getEsq().getEsq().getValue();
+				}else i1=v.getEsq().getValue();
+				if (v.getDir().getValue().equals("R")){
+					i2=v.getDir().getEsq().getValue();
+				}else i2=v.getDir().getValue();
+				potencia=v.getDir().getDir().getValue();
+			}
+		}
+		if (!v.getValue().equals("*") && tipo<3){
+			v1=Integer.parseInt(v.getEsq().getValue());
+			v2=Integer.parseInt(v.getDir().getValue());
+		}
+		if (v.getValue().equals("+")){
+			if (v2<0){
+				System.out.println("# Subtracao");
+				listresult.add(new Equacoes("# Subtracao"));
+			}else{
+				System.out.println("# Soma");
+				listresult.add(new Equacoes("# Soma"));
+			}
+			res=String.valueOf(v1+v2);
+			if (tipo==2 || tipo==4){
+				res=Funcoes.resultadoUm(res);
+				if (!res.equals("0"))res+=i1;
+			}
+		}else if (v.getValue().equals("-")){
+			System.out.println("# Subtracao");
+			listresult.add(new Equacoes("# Subtracao"));
+			res=String.valueOf(v1-v2);
+			if (tipo==2 || tipo==4){
+				if (res.equals("1"))res=i1;
+				else if (res.equals("-1"))res="-"+i1;
+				else if (!res.equals("0"))res+=i1;
+			}
+		}else if (v.getValue().equals("*")){
+			if (v.getEsq().getValue().equals("0") || v.getDir().getValue().equals("0")){
+				System.out.println("# Multiplicacao");
+				listresult.add(new Equacoes("# Multiplicacao"));
+				v.setValue("0");
+				v.setEsq(null);
+				v.setDir(null);
+				res="0";
+			}else{
+				if (tipo==3){
+					System.out.println("# Propriedade Distributiva");
+					listresult.add(new Equacoes("# Propriedade Distributiva"));
+					BTNode distr;
+					if(ArvoreExp.getAltura(v)<3)distr=e.distributiva(v);
+					else distr=e.distributivaDeN(v.getEsq(),v.getDir());
+				//	v.setValue(distr.getValue());
+				//	v.setEsq(null);
+				//	v.setDir(null);
+				//	v.setEsq(distr.getEsq());
+				//	v.setDir(distr.getDir());
+				}else if (tipo!=5) {
+					if (tipo!=6 && tipo!=7)i1=v.getEsq().getValue();
+					if (!Funcoes.isInteger(i1)){
+						if(i1.length()!=1){
+							//se a String é "-x"
+							if (i1.startsWith("-") && i1.length()==2){
+								v1=-1;
+							}else v1=Integer.parseInt(i1.substring(0,i1.length()-1));
+							i1=i1.substring(i1.length()-1);
+						}else v1=1;
+					}else{
+						v1=Integer.parseInt(i1);
+					}
+					if (tipo!=6 && tipo!=7)i2=v.getDir().getValue();
+					if (!Funcoes.isInteger(i2)){
+						if(i2.length()!=1){
+							//se a String é "-x"
+							if (i2.startsWith("-") && i2.length()==2){
+								v2=-1;
+							}else v2=Integer.parseInt(i2.substring(0,i2.length()-1));
+							i2=i2.substring(i2.length()-1);
+						}else v2=1;
+					}else{
+						v2=Integer.parseInt(i2);
+					} 
+				}
+				if (tipo!=3){
+					System.out.println("# Multiplicacao");
+					listresult.add(new Equacoes("# Multiplicacao"));
+					if (tipo==6){
+						if (v1*v2==1)res=i2;
+						else res=String.valueOf(v1*v2)+i2;
+						if (i1.equals(i2))potencia= String.valueOf(Integer.parseInt(potencia)+1);
+					}else if (tipo==5){
+						int b1,b2;
+						if (Funcoes.isInc(i1))b1=1;
+						else b1=v1;
+						if (Funcoes.isInc(i2))b2=1;
+						else b2=v2;						
+						//potencia igual base diferente: multiplica-se as bases
+						if (v.getEsq().getDir().getValue().equals(v.getDir().getDir().getValue()) &&
+							b1!=b2){ 
+							potencia= v.getEsq().getDir().getValue();
+							res=Funcoes.resultadoUm(String.valueOf(v1*v2))+i1;
+						//bases iguais soma-se o expoente, e bases iguais e exponentes iguais tbm
+						}else if (b1==b2 || v.getEsq().getDir().getValue().equals(v.getDir().getDir().getValue())){	
+							res=Funcoes.resultadoUm(String.valueOf(v1))+i1;  //potencia ja foi somada acima 
+						}
+					}else res=String.valueOf(v1*v2); 	
+				}
+			}
+		}else if (v.getValue().equals("^")){
+			System.out.println("# Resolver potencia");
+			listresult.add(new Equacoes("# Resolver potencia"));
+			res=String.valueOf((int)Math.pow(v1,v2));
+		}else if (v.getValue().equals("R")){
+			if (v2==2){
+				System.out.println("# Raiz quadrada");
+				listresult.add(new Equacoes("# Raiz quadrada"));
+				res=String.valueOf((int)Math.sqrt(v1));
+			} else{
+				System.out.println("# Raiz cubica");
+				listresult.add(new Equacoes("# Raiz cubica"));
+				res=String.valueOf((int)Math.cbrt(v1));
+			}
+		}else fim=true;
+		if (tipo!=3){
+			if (res.equals("0")){
+				//so pode remver da arvore se for soma
+				if (!v.getPai().equals(e.getRoot())
+						&& v.getPai().getValue().equals("+")){
+					BTNode pv=v.getPai();
+					Expression.removeDaArvore(v);
+					v=pv;
+				}else{
+					v.setValue(res);
+					v.setEsq(null);
+					v.setDir(null);
+				}
+			}else if (tipo==4||tipo==5||tipo==6||tipo==7){
+				if (tipo!=6 && tipo!=7)v.setValue(v.getEsq().getValue());
+				else if (tipo==6)v.setValue("^");
+				else if (tipo==7){
+					//if(v.getValue().equals("-") && res.equals("0")){
+						//e.removeDaArvore(v);
+					//}else 
+					v.setValue("R");
+				}
+				v.setEsq(null);
+				v.setDir(null);
+				v.setEsq(new BTNode(res));
+				v.setDir(new BTNode(potencia));
+			}else if (!v.getValue().equals("*") && !fim){
+				v.setValue(res);
+				v.setEsq(null);
+				v.setDir(null);
+				if (v.getPai().getDir().equals(v))v=arrumaSinal(v);
+			}else if(!fim){
+				if (i1.equals(i2) && !Funcoes.isInteger(i1) && !Funcoes.isInteger(i2)){
+					res=Funcoes.resultadoUm(res);
+					res+=i1;
+					v.setValue("^");
+					v.setEsq(new BTNode(res));
+					v.setDir(new BTNode("2"));
+				}else{
+					if (!Funcoes.isInteger(i1)){
+						if (res.equals("1"))res=i1;
+						else if (res.equals("-1"))res="-"+i1;
+						else res+=i1;
+					}
+					if (!Funcoes.isInteger(i2)){
+						if(res.equals("1"))res=i2;
+						else if (res.equals("-1"))res="-"+i2;
+						else res+=i2;
+					}
+					v.setValue(res);
+					v.setEsq(null);
+					v.setDir(null);
+					if (v.getPai().getDir().equals(v))v=arrumaSinal(v);
+				}
+			}
+		}
+		if (fim){
+			retract(e);
+		}else{
+			while(v.getPai()!=null){
+				v=v.getPai();
+			}
+			e.setNewRoot(v);
+			listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+			update (e);
+		}
+end
+
+
+//Atualizar para o novo modelo de demonstracao  ---  OK
+rule "Mover termo"
+	salience 5
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(e.getnewexpression().contains("/"));
+		eval(validarMoverTermo(e));
+		eval(!op(e.getRoot()));
+	then
+		System.out.println("# Operacao Inversa - Principio Multiplicativo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Multiplicativo"));
+		BTNode r=e.getRoot();
+		BTNode div= r.getEsq();
+		Vector v;
+		BTNode otherSide=r.getDir();
+		if (div.getValue().equals("/")){
+			v=Funcoes.getIncognitas(div,new Vector());
+			 //se entrou na regra e não é o equerdo logo é o direito
+			if (v==null || v.size()<=0){
+				div=r.getDir();
+				otherSide=r.getEsq();
+			}
+		}else{ 
+			div=r.getDir();
+			otherSide=r.getEsq();
+		}
+		BTNode divdir=div.getDir(); //número ou expressao que sera passada para o outro lado
+		BTNode n1, n2;
+		n1=(BTNode)divdir.clone();
+		n2=(BTNode)divdir.clone();
+		BTNode temp=r.getEsq();
+		r.setEsq(null);
+		r.setEsq(new BTNode ("*", n1, temp));
+		temp=r.getDir();
+		r.setDir(null);
+		r.setDir(new BTNode ("*", n2, temp));
+		//div.setDir(null);
+		//if (r.getEsq().equals(otherSide))r.setEsq(null);
+		//else r.setDir(null);
+		//BTNode dir = new BTNode ("*",divdir,otherSide); 
+		//BTNode esq=div.getEsq();
+		//div.setValue(esq.getValue());
+		//div.setEsq(esq.getEsq());
+		//div.setDir(esq.getDir());
+		//if (r.getEsq()==null)r.setEsq(dir);
+		//else r.setDir(dir);
+		e.setNewRoot(r);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+//Atualizar para o novo modelo de demonstracao  --- OK
+rule "Isola X na Esquerda"
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(!e.getnewexpression().contains("/"));
+		eval(validarIsolaXnaEsquerda(e));
+		
+	then
+		System.out.println("# Operacao Inversa - Principio Aditivo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Aditivo"));
+		BTNode root= e.getRoot();
+		Funcoes f=new Funcoes();
+		f.modificaSinal(root);
+		BTNode nodoDir=buscaIsolaX(root.getDir()); //nodo direito em relação a raiz "="
+		boolean potencia=false; //indica se a incognita x possui potência ou não
+		if (nodoDir.getValue().equals("^")){
+			potencia=true;
+		}
+		BTNode de,pdir;
+		de=null;
+		pdir=nodoDir.getPai();
+		BTNode n1,n2; //nodos que deverão somar/subtrair em ambos os lados
+		n1=(BTNode)nodoDir.clone();
+		n2=(BTNode)nodoDir.clone();
+		if (potencia){
+			n1.getEsq().setValue(f.trocaSinal(n1.getEsq().getValue()));
+			n2.getEsq().setValue(f.trocaSinal(n2.getEsq().getValue()));
+		}else{
+			n1.setValue(f.trocaSinal(n1.getValue()));
+			n2.setValue(f.trocaSinal(n2.getValue()));
+		}
+		BTNode tmp= root.getEsq();
+		root.setEsq(null);
+		root.setEsq(new BTNode ("+",n1,tmp));
+		tmp=root.getDir();
+		root.setDir(null);
+		root.setDir(new BTNode ("+",n2,tmp));
+		// ajusta o irmão do nodo que vai ser removido, fazendo-o assumir o lugar do pai
+//		if (pdir.getEsq().equals(nodoDir)){ //se o nodo a ser movido é o filho esquerdo de pdir
+//			if (pdir.equals(e.getRoot())){
+//				pdir.setEsq(new BTNode("0"));
+//			}else{
+//				de=pdir.getDir();
+//				if (pdir.getValue().equals("-")){
+//					if (de.getValue().equals("^") || de.getValue().equals("R")){
+//						de.getEsq().setValue(f.trocaSinal(de.getEsq().getValue()));
+//					}else if (de.eFolha()) de.setValue(f.trocaSinal(de.getValue()));
+//					else if (de.getEsq().eFolha()) de.getEsq().setValue(f.trocaSinal(de.getEsq().getValue()));
+//					else{
+//						// insere um -1* na equaçã em caso do nodo não for folha 
+//						// tipo 4x-(3+2x)*(3x-1) => -1*(3+2x)*(3x-1)
+//						BTNode dEsq=de.getEsq();
+//						de.setEsq(null);
+//						de.setEsq(new BTNode ("*", new BTNode ("-1"), dEsq));
+//					}
+//				}
+//			} 
+//		}else{
+//			if (pdir.getValue().equals("-")){
+//				if (nodoDir.getValue().equals("^") || nodoDir.getValue().equals("R")){
+//					nodoDir.getEsq().setValue(f.trocaSinal(nodoDir.getEsq().getValue()));
+//				}else if (nodoDir.eFolha())nodoDir.setValue(f.trocaSinal(nodoDir.getValue()));
+//				else if (nodoDir.getEsq().eFolha()) nodoDir.getEsq().setValue(f.trocaSinal(nodoDir.getEsq().getValue()));
+//				else{
+//					BTNode dEsq=nodoDir.getEsq();
+//					nodoDir.setEsq(null);
+//					nodoDir.setEsq(new BTNode("*", new BTNode ("-1"),dEsq));
+//				}
+//			}
+//			if (pdir.equals(e.getRoot())){
+//				pdir.setDir(new BTNode("0"));
+//			}else{
+//				de=pdir.getEsq();
+//			}
+//		}
+//		if (de!=null){
+//			pdir.setDir(null);
+//			pdir.setEsq(null);
+//			pdir.setValue(de.getValue());
+//			pdir.setEsq(de.getEsq());
+//			pdir.setDir(de.getDir());
+//		}
+//		String v="";
+//		if (potencia){
+//			v=nodoDir.getEsq().getValue();
+//		}else v=nodoDir.getValue();
+//		if(v.charAt(0)=='-'){
+//			if(potencia)nodoDir.getEsq().setValue(v.substring(1));
+//			else nodoDir.setValue(v.substring(1));
+//		}else{
+//			if (potencia)nodoDir.getEsq().setValue("-"+v);
+//			else nodoDir.setValue("-"+v);
+//		}
+//		BTNode n=e.getRoot().getEsq();
+//		e.getRoot().setEsq(null);
+//		String sinal="+";
+//		if (n.eFolha()){
+//			if (n.getValue().charAt(0)=='-'){
+//				sinal="-";
+//				n.setValue(n.getValue().substring(1));
+//			}else sinal="+";
+//		}
+//		BTNode newNode=new BTNode(sinal,nodoDir,n);
+////		BTNode maisEsq=Funcoes.getMaisAEsquerda(n);
+//		e.getRoot().setEsq(newNode);
+//		while(newNode.getPai()!=null){
+//			newNode=newNode.getPai();
+//		}
+		e.setNewRoot(root);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+//Atualizar para o novo modelo de demonstracao   --- OK
+rule "Isola X na Direita"
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(!e.getnewexpression().contains("/"));
+		eval(validarIsolaXnaDireita(e));
+		
+	then
+		System.out.println("# Operacao Inversa - Principio Aditivo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Aditivo"));
+		BTNode root = e.getRoot();
+		Funcoes f=new Funcoes();
+		f.modificaSinal(root);
+		BTNode nodoEsq=buscaIsolaX(root.getEsq()); //nodo esquerdo em relação a raiz "="
+		boolean potencia=false; //indica se a incognita x possui potência ou não
+		if (nodoEsq.getValue().equals("^")){
+			potencia=true;
+		}
+		BTNode n1,n2; //nodos que deverão somar/subtrair em ambos os lados
+		n1=(BTNode)nodoEsq.clone();
+		n2=(BTNode)nodoEsq.clone();
+		if (potencia){
+			n1.getEsq().setValue(f.trocaSinal(n1.getEsq().getValue()));
+			n2.getEsq().setValue(f.trocaSinal(n2.getEsq().getValue()));
+		}else{
+			n1.setValue(f.trocaSinal(n1.getValue()));
+			n2.setValue(f.trocaSinal(n2.getValue()));
+		}
+		BTNode tmp= root.getEsq();
+		root.setEsq(null);
+		root.setEsq(new BTNode ("+",n1,tmp));
+		tmp=root.getDir();
+		root.setDir(null);
+		root.setDir(new BTNode ("+",n2,tmp));
+		// ajusta o irmão do nodo que vai ser removido, fazendo-o assumir o logar do pai
+//		if (pdir.getEsq().equals(nodoDir)){ //se o nodo a ser movido é o filho esquerdo de pdir
+//			if (pdir.equals(e.getRoot())){
+//				pdir.setEsq(new BTNode("0"));
+//			}else{
+//				de=pdir.getDir();
+//				if (pdir.getValue().equals("-")){
+//					if (de.getValue().equals("^") || de.getValue().equals("R")){
+//						de.getEsq().setValue(f.trocaSinal(de.getEsq().getValue()));
+//					}else de.setValue(f.trocaSinal(de.getValue()));
+//				}
+//			} 
+//		}else{
+//			if (pdir.getValue().equals("-")){
+//				if (nodoDir.getValue().equals("^") || nodoDir.getValue().equals("R")){
+//					nodoDir.getEsq().setValue(f.trocaSinal(nodoDir.getEsq().getValue()));
+//				}else nodoDir.setValue(f.trocaSinal(nodoDir.getValue()));
+//			}
+//			if (pdir.equals(e.getRoot())){
+//				pdir.setDir(new BTNode("0"));
+//			}else{
+//				de=pdir.getEsq();
+//			}
+//		}
+//		if (de!=null){
+//			pdir.setDir(null);
+//			pdir.setEsq(null);
+//			pdir.setValue(de.getValue());
+//			pdir.setEsq(de.getEsq());
+//			pdir.setDir(de.getDir());
+//		}
+//		String v="";
+//		if (potencia){
+//			v=nodoDir.getEsq().getValue();
+//		}else v=nodoDir.getValue();
+//		if(v.charAt(0)=='-'){
+//			if(potencia)nodoDir.getEsq().setValue(v.substring(1));
+//			else nodoDir.setValue(v.substring(1));
+//		}else{
+//			if (potencia)nodoDir.getEsq().setValue("-"+v);
+//			else nodoDir.setValue("-"+v);
+//		}
+//		BTNode n=e.getRoot().getDir();
+//		e.getRoot().setDir(null);
+//		String sinal="+";
+//		if (n.eFolha()){
+//			if (n.getValue().charAt(0)=='-'){
+//				sinal="-";
+//				n.setValue(n.getValue().substring(1));
+//			}else sinal="+";
+//		}
+//		BTNode newNode=new BTNode(sinal,nodoDir,n);
+//		BTNode maisEsq=Funcoes.getMaisAEsquerda(n);
+//		e.getRoot().setDir(newNode);
+//		while(newNode.getPai()!=null){
+//			newNode=newNode.getPai();
+//		}
+		e.setNewRoot(root);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Bhaskara"
+	salience 2
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.FOR_BHASKARA);
+		delta: Expression (tipo == Expression.SOLVER)
+		eval (e.getnewexpression().contains("="));
+		eval (delta.getnewexpression().contains("d"));
+		//eval (delta.getRoot().getDir().eFolha());
+		eval (e.getRoot().getValue().equals("="));
+		eval (Funcoes.canBhaskara(e.getRoot()));
+	then
+		System.out.println("# Aplicar formula de Bhaskara");
+		listresult.add(new Equacoes("# Aplicar formula de Bhaskara"));
+		Funcoes f= new Funcoes();
+		f.modificaSinal(e.getRoot());
+		BTNode a,b,c;
+		String exp="";
+		a=b=c=null;
+		BTNode r;
+		if (e.getRoot().getDir().getValue().equals("0"))r=e.getRoot().getEsq();
+		else r=e.getRoot().getDir();
+		a=e.removeDaArvore(e.findX(r,"^"));
+		a=e.removeDaArvore(a.getEsq()); //recebe o ax de (ax^2)
+		if (a.getValue().length()==2 && a.getValue().startsWith("-") && Funcoes.isInc(a.getValue().substring(1))){
+			a.setValue("-1");
+		}else if (a.getValue().length()>1) a.setValue(a.getValue().substring(0,a.getValue().length()-1));
+		else a.setValue("1");
+		b=e.removeDaArvore(e.findX(r,"x"));
+		if (b.getValue().length()==2 && b.getValue().startsWith("-") && Funcoes.isInc(b.getValue().substring(1))){
+			b.setValue("-1");
+		}else if (b.getValue().length()>1) b.setValue(b.getValue().substring(0,b.getValue().length()-1));
+		else b.setValue("1");
+		if (e.getRoot().eFolha()) c=new BTNode ("0",null,null);
+		else c=e.removeDaArvore(buscaInt(r,true));
+		String de=delta.setmod(delta.getRoot().getDir());
+		String ex1="x=(-b+("+de+")R2)/(2*a)";
+		String ex2="x=(-b-("+de+")R2)/(2*a)";
+		Expression x1=new Expression(ex1);
+		Expression x2=new Expression(ex2);
+		x1.substituiValores("a",a.getValue());
+		x1.substituiValores("b",b.getValue());
+		x1.substituiValores("c",c.getValue());
+		x2.substituiValores("a",a.getValue());
+		x2.substituiValores("b",b.getValue());
+		x2.substituiValores("c",c.getValue());
+		x1.setmod();
+		x2.setmod();
+		System.out.println(x1.getnewexpression());
+		System.out.println(x2.getnewexpression());
+		e.setmod();
+		e.uselessBK();
+		retract(e);
+		delta.setmod();
+		retract(delta);
+		insert(x1);
+		insert(x2);
+		listresult.add(new Equacoes(x1.getnewexpression(),
+							x1.getCleanExpression(),x1.getTeXExpression()));
+		listresult.add(new Equacoes(x2.getnewexpression(),
+							x2.getCleanExpression(),x2.getTeXExpression()));
+end
+
+rule "Delta"
+	salience 3
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (Funcoes.canBhaskara(e.getRoot()));
+	then
+		String msg="# Calcular o delta";
+		retract (e);
+		Funcoes f= new Funcoes();
+		f.modificaSinal(e.getRoot());
+		// pega o a,b,c. há pelomenos 2 destes senão não passaria pela condição
+		List<BTNode> nodos=Expression.getFolhas(e.getRoot());
+		//remove o zero que esta sozinho no outro lado da equação e que não faz parte do Delta
+		BTNode zero=e.getRoot().getDir();
+		if (!zero.getValue().equals("0"))zero=e.getRoot().getEsq();
+		nodos.remove(zero);
+		BTNode nA=null,nB=null,nC=null;
+		for (BTNode n:nodos){
+			if (n.getValue().equals("^")) nA=n;
+			else if (Funcoes.isInc(n.getLast()))nB=n;
+			else nC=n;
+		}
+		if (nC==null)nC=new BTNode("0");
+		int a=Funcoes.getINT(nA.getEsq().getValue());
+		int b=Funcoes.getINT(nB.getValue());
+		int c=Funcoes.getINT(nC.getValue());
+		String delta="d=("+b+"^2)-4*"+a+"*"+c;
+		System.out.println(msg);
+		Expression d=new Expression(delta);
+		e=new Expression (e.getRoot(),Expression.FOR_BHASKARA);
+		System.out.println(d.getnewexpression());
+		listresult.add(new Equacoes (msg));
+		listresult.add(new Equacoes (d.getnewexpression(),
+										d.getCleanExpression(),
+										d.getTeXExpression()));
+		insert(e);
+		insert(d);
+end
+
+rule "x^2 positivo"
+	salience 4
+	no-loop true
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER)
+		eval(e.getnewexpression().contains("="))
+		eval (e.getRoot().getValue().equals("="));
+		eval(Funcoes.canBhaskara(e.getRoot()));
+		eval(validarX2positivo(e));
+	then
+		System.out.println("# Multiplicacao da equacao por -1");
+		listresult.add(new Equacoes("# Multiplicacao da equacao por -1"));
+		e.inverteSinalArvore();
+		BTNode raiz=e.getRoot();
+		while(raiz.getPai()!=null){
+			raiz=raiz.getPai();
+		}
+		e.setNewRoot(raiz);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Multiplicar por -1"
+	salience 4
+	no-loop true
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER)
+		not Expression (tipo==Expression.USER)
+		eval(e.getnewexpression().contains("="))
+		eval (e.getRoot().getValue().equals("="));
+		eval (validarMultMenosUm(e.getRoot()));
+	then
+		System.out.println("# Multiplicacao da equacao por -1");
+		listresult.add(new Equacoes("# Multiplicacao da equacao por -1"));
+		BTNode selected = Funcoes.getMultMenosUm(e.getRoot());
+		//se passou pela condição então obrigatoriamente selectes é filho direto de -
+		BTNode pai=selected.getPai();
+		pai.setDir(null);
+		pai.setDir(new BTNode("*",new BTNode("-1"),selected));
+		pai.setValue("+");
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Divisao de Sinais"
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER)
+		not Expression (tipo==Expression.USER);
+		eval(e.getnewexpression().contains("="))
+		eval(e.getRoot().getValue().equals("="));
+		eval(validarDivSin(e));
+	then
+		String msg="# Divisao de sinais";
+		BTNode frac=getDivSin(e);
+		String ve=frac.getEsq().getValue();
+		String vd=frac.getDir().getValue();
+		ve=ve.substring(1);
+		vd=vd.substring(1);
+		frac.getEsq().setValue(ve);
+		frac.getDir().setValue(vd);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(msg));
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(), e.getTeXExpression()));
+		update(e);		
+end
+
+
+//Atualizar para o novo modelo de demonstracao --- OK
+rule "Move INT EsqDir"
+	salience 2
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(validarMoveIntDireita(e));
+		eval(!Funcoes.canBhaskara(e.getRoot()));
+	then
+		System.out.println("# Operacao Inversa - Principio Aditivo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Aditivo"));
+		BTNode root= e.getRoot();
+		Funcoes f=new Funcoes();
+		f.modificaSinal(root);
+		BTNode i=buscaMoveINT(root.getEsq(),false);
+		BTNode n1,n2;
+		n1=(BTNode) i.clone();
+		n2=(BTNode) i.clone();
+		n1.setValue(Funcoes.trocaSinal(n1.getValue()));
+		n2.setValue(Funcoes.trocaSinal(n2.getValue()));
+		BTNode temp=root.getEsq();
+		root.setEsq(null);
+		root.setEsq(new BTNode ("+",n1,temp));
+		temp=root.getDir();
+		root.setDir(null);
+		root.setDir(new BTNode ("+",n2,temp)); 
+//		BTNode pi=i.getPai();
+//		BTNode filhoRoot=e.getRoot().getDir(); // nova posição de i
+//		if (i.getValue().charAt(0)=='-'){
+//			i.setValue(i.getValue().substring(1));		
+//		}else if (pi.getValue().equals("-") && pi.getDir().equals(i)){
+//			i.setValue(i.getValue());
+//		}else i.setValue("-"+i.getValue());
+//		if (i.getPai().getEsq().equals(i)){
+//			i.getPai().setEsq(null);
+//		}else i.getPai().setDir(null);
+//		if (filhoRoot.getValue().equals("0")){
+//			e.getRoot().setDir(null);
+//			e.getRoot().setDir(i);
+//		}else{
+//			BTNode d=new BTNode ("+");
+//			e.getRoot().setDir(d);
+//			d.setEsq(i);
+//			d.setDir(filhoRoot);
+//		}
+		//Sobe o nodo que não foi removido
+//		if (!pi.equals(e.getRoot())){
+//			if (pi.getPai().getEsq().equals(pi)){
+//				if (pi.getEsq()!=null){
+//					pi.getPai().setEsq(pi.getEsq());
+//				}else {
+//					if (pi.getValue().equals("-")){
+//					 	//pi.getDir().setValue("-"+pi.getDir().getValue());
+//					 	pi.setEsq(new BTNode ("-1"));
+//					 	pi.setValue("*");
+//					}else pi.getPai().setEsq(pi.getDir());
+//				}
+//			}else{
+//				if (pi.getEsq()!=null){
+//					pi.getPai().setDir(pi.getEsq());
+//				}else {
+//					if (pi.getValue().equals("-")){
+//						 //pi.getDir().setValue("-"+pi.getDir().getValue());
+//						 pi.setDir(new BTNode("-1"));
+//						 pi.setValue("*");
+//					}else pi.getPai().setDir(pi.getDir());
+//				}
+//			}
+//		}else{
+//			if (pi.getEsq()==null) pi.setEsq(new BTNode("0"));
+//			else if (pi.getDir()==null)pi.setDir(new BTNode("0")); 
+//		}
+		e.setNewRoot(root);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+
+//Atualizar para o novo modelo de demonstracao --- OK
+rule "Move INT DirEsq"
+	salience 2
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		//eval(!op(e.getRoot())); //Confirmar remoção
+		//eval(!e.getnewexpression().contains("/"));
+		eval(validarMoveIntEsquerda(e));
+		eval(!Funcoes.canBhaskara(e.getRoot()));
+	then
+		System.out.println("# Operacao Inversa - Principio Aditivo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Aditivo"));
+		BTNode root=e.getRoot();
+		Funcoes f=new Funcoes();
+		f.modificaSinal(root);
+		BTNode i=buscaMoveINT(root.getDir(),false);
+		BTNode n1,n2;
+		n1=(BTNode) i.clone();
+		n2=(BTNode) i.clone();
+		n1.setValue(Funcoes.trocaSinal(n1.getValue()));
+		n2.setValue(Funcoes.trocaSinal(n2.getValue()));
+		BTNode temp=root.getEsq();
+		root.setEsq(null);
+		root.setEsq(new BTNode ("+",n1,temp));
+		temp=root.getDir();
+		root.setDir(null);
+		root.setDir(new BTNode ("+",n2,temp)); 
+//		BTNode pi=i.getPai();
+//		BTNode filhoRoot=e.getRoot().getEsq(); // nova posição de i
+//		if (i.getValue().charAt(0)=='-'){
+//			i.setValue(i.getValue().substring(1));		
+//		}else if (pi.getValue().equals("-") && pi.getDir().equals(i)){
+//			i.setValue(i.getValue());
+//		}else i.setValue("-"+i.getValue());
+//		if (i.getPai().getEsq().equals(i)){
+//			i.getPai().setEsq(null);
+//		}else i.getPai().setDir(null);
+//		if (filhoRoot.getValue().equals("0")){
+//			e.getRoot().setEsq(null);
+//			e.getRoot().setEsq(i);
+//		}else{
+//			BTNode d=new BTNode ("+");
+//			e.getRoot().setEsq(d);
+//			d.setEsq(i);
+//			d.setDir(filhoRoot);
+//		}
+//		//Sobe o nodo que não foi removido
+//		if (!pi.equals(e.getRoot())){
+//			if (pi.getPai().getEsq().equals(pi)){
+//				if (pi.getEsq()!=null){
+//					pi.getPai().setEsq(pi.getEsq());
+//				}else {
+//					if (pi.getValue().equals("-")) pi.getDir().setValue(
+//								"-"+pi.getDir().getValue());
+//					pi.getPai().setEsq(pi.getDir());
+//				}
+//			}else{
+//				if (pi.getEsq()!=null){
+//					pi.getPai().setDir(pi.getEsq());
+//				}else {
+//					if (pi.getValue().equals("-")) pi.getDir().setValue(
+//								"-"+pi.getDir().getValue());
+//					pi.getPai().setDir(pi.getDir());
+//				}
+//			}
+//		}else{
+//			if (pi.getEsq()==null) pi.setEsq(new BTNode("0"));
+//			else if (pi.getDir()==null)pi.setDir(new BTNode("0")); 
+//		}
+		e.setNewRoot(root);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+
+rule "Prepara Bhaskara"
+	dialect "java"
+	no-loop true
+	when
+		e:Expression(tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (!op(e.getRoot()));
+		eval (Funcoes.hasTermosBhaskara(e.getRoot()));
+		eval (checkOperators(e.getRoot(),new ArrayList(Arrays.asList(new String[]{"+","-","^","="}))));
+		eval ((e.getRoot().getEsq().eFolha() || e.getRoot().getEsq().getValue().equals("^")) ||
+				(e.getRoot().getDir().eFolha() || e.getRoot().getDir().getValue().equals("^")));
+		eval (!e.getRoot().getDir().getValue().equals("0"));
+		eval (verificaPotBhaskara(e.getnewexpression()));
+	then
+		System.out.println("# Unir termos semelhantes");
+		listresult.add(new Equacoes("# Unir termos semelhantes"));
+		BTNode troca;
+		if (e.getRoot().getEsq().eFolha() || e.getRoot().getEsq().getValue().equals("^")){
+			troca=e.getRoot().getEsq();
+			e.getRoot().setEsq(new BTNode("0"));
+			BTNode rootDir=e.getRoot().getDir();
+			e.getRoot().setDir(null);
+			if (troca.getValue().startsWith("-")){
+				troca=e.trocaSinal(troca);
+				e.getRoot().setDir(new BTNode("+",rootDir,troca));
+			}else e.getRoot().setDir(new BTNode("-",rootDir,troca));
+		}else{
+			troca =e.getRoot().getDir();
+			e.getRoot().setDir(new BTNode("0"));
+			BTNode rootEsq=e.getRoot().getEsq();
+			e.getRoot().setEsq(null);
+			//se troca for negativo instancia um novo positivo e vice-versa
+			// por causa da troca de sinal ao mudar de lado
+			if (troca.getValue().startsWith("-")){
+				troca=e.trocaSinal(troca);
+				e.getRoot().setEsq(new BTNode("+",rootEsq,troca));
+			}else e.getRoot().setEsq(new BTNode("-",rootEsq,troca));
+		}
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end;
+		
+		
+//Atualizar para o novo modelo de demonstracao  --- OK
+rule "Resultado"
+	dialect "java"
+	no-loop true
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		//not Expression(tipo==Expression.USER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (!op(e.getRoot()));
+		eval ((existeInteger(e.getRoot().getDir(),true)&& !existeInteger(e.getRoot().getEsq(),true)) ||
+				!(existeInteger(e.getRoot().getDir(),true)&& existeInteger(e.getRoot().getEsq(),true)));
+		eval (validaXResult(e.getRoot()));
+		eval ((e.getRoot().getEsq().eFolha() || e.getRoot().getEsq().getValue().equals("^"))&&
+				(e.getRoot().getDir().eFolha() || e.getRoot().getDir().getValue().equals("^")));
+		eval (e.getnewexpression().substring(0,e.getnewexpression().indexOf("=")).contains("x") &&
+				!e.getnewexpression().substring(e.getnewexpression().indexOf("=")+1).contains("x") ||
+				!e.getnewexpression().substring(0,e.getnewexpression().indexOf("=")).contains("x") &&
+				e.getnewexpression().substring(e.getnewexpression().indexOf("=")+1).contains("x"));
+	then
+		System.out.println("# Operacao Inversa - Principio Multiplicativo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Multiplicativo"));
+		BTNode x=e.findX(e.getRoot(),"x");
+		String val=x.getValue();
+		if(val.equals("^")){
+			val=x.getEsq().getValue();
+//			x.getEsq().setValue(val.substring(val.length()-1));
+		}//else x.setValue(val.substring(val.length()-1));
+		String valor=val.substring(0,val.length()-1);
+		if (valor.equals("-"))valor="-1";
+		BTNode n1,n2;
+		n1=new BTNode (valor);
+		n2=new BTNode (valor);
+		BTNode temp, root=e.getRoot();
+		temp=root.getEsq();
+		root.setEsq(null);
+		root.setEsq(new BTNode("/",temp,n1));
+		temp=root.getDir();
+		root.setDir(null);
+		root.setDir(new BTNode("/",temp,n2));
+		//if (!valor.equals("1")){
+		//	if(x.ehFilhoEsq()){ 
+		//		BTNode r=new BTNode("/",(BTNode)e.getRoot().getDir().clone(),new BTNode(valor));
+	//			e.getRoot().setDir(r);
+//			}else{
+//				BTNode r=new BTNode ("/",(BTNode)e.getRoot().getEsq().clone(),new BTNode (valor));
+//				e.getRoot().setEsq(r);
+//			}
+//		}
+		e.setNewRoot(root);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Soma Subtracao subarvores diferentes"
+	salience 3
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval(!e.isHint());
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(validarSomaSub(e));
+	then
+		System.out.println("# Unir termos semelhantes");
+		listresult.add(new Equacoes("# Unir termos semelhantes"));
+		BTNode[] ig =findEquals(e.getRoot().getEsq());
+		if(ig==null){
+			ig=findEquals(e.getRoot().getDir());
+		}
+		BTNode pai1=ig[0].getPai();
+		BTNode pai2=ig[1].getPai();
+		Funcoes f=new Funcoes ();
+		boolean filho=false;//usado para indicar se pai2 é filho de pai1
+		BTNode comum=f.verificaPai(e,ig[0],ig[1]);
+		String sinalComum=comum.getValue();
+		if (pai1.getPai().getDir().equals(pai1) && pai1.getPai().getValue().equals("-")){
+			pai1.getPai();
+			pai1.setDir(f.trocaSinalARV(pai1.getDir()));
+		}
+		if (pai2.getPai().getDir().equals(pai2) && pai2.getPai().getValue().equals("-")){
+			pai2.getPai();
+			pai2.setDir(f.trocaSinalARV(pai2.getDir()));
+		}
+		//se ig[1] for o filho direito e se seu pai for o nodo comum entre ig[0] e ig[1] seta
+		//filho como true afim de impedir o ig[1] de sair na expressao : --valor; 
+		//aplica-se somte a ig[1] pois no novo nodo ig[1] sempres sera o nodo direito, portanto suscetivel
+		//a troca de sinais
+		if (pai2.getDir().equals(ig[1]) && pai2.equals(comum) && pai2.getValue().equals("-")) {
+			filho=true;
+		}
+		if (!ig[0].getPai().getDir().eFolha())f.trocaSinalARV(ig[0].getPai()); //troca o sinal da arvore filha direita seo valor do pai for "-" 
+		if (!ig[1].getPai().getDir().eFolha())f.trocaSinalARV(ig[1].getPai()); //troca o sinal da arvore filha direita seo valor do pai for "-"
+		ig[0]=e.removeDaArvore(ig[0]);
+		ig[1]=e.removeDaArvore(ig[1]); //<- 1ª troca
+		BTNode p=comum.getPai();
+		BTNode novo=new BTNode("+",ig[0],ig[1]);
+		if (sinalComum.equals("-") && !filho) novo.setValue("-"); //<-2ª troca
+		if (p.getEsq().equals(comum)){
+			p.setEsq(null);
+			p.setEsq(new BTNode ("+",novo,comum));
+		}else{
+			p.setDir(null);
+			p.setDir(new BTNode ("+",novo,comum));
+		}
+		while(p.getPai()!=null){
+			p=p.getPai();
+		}
+		e.setNewRoot(p);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "MMC"
+	no-loop true
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getRoot().getValue().equals("="));
+		eval(e.getnewexpression().contains("="));
+		eval(e.getnewexpression().contains("/"));
+		eval(canMMC(e));
+	then
+		System.out.println("# Calcular MMC");
+		listresult.add(new Equacoes("# Calcular MMC"));
+		BTNode bt=fracionar(e.getRoot());
+		System.out.println(e.setmod(bt));
+		Vector <BTNode> oldV= e.buscaChaveX(bt,"/");
+		Vector <BTNode> newV=new Vector<BTNode> ();
+		boolean inteiro=true; //indica se o mmc será ou não de inteiros
+		boolean igual=false;
+		int i;
+		int v1,v2;
+		String exp="";
+		String aux="";
+		BTNode fact;
+		//coleta os denominadores das frações que sejam diferentes 
+		//entre si e diferente de 1		
+		for (i=0;i<oldV.size();i++){
+			bt=oldV.get(i); //como bt é referencia não há necessidade de readicionar em oldV
+			bt=bt.getDir();
+			if (!Funcoes.isInteger(bt.getValue())) inteiro=false;
+			if (Funcoes.canFatorComum(bt,e.setmod(bt))){
+				//função de fatoração exige raiz "="
+				fact=new BTNode("=",(BTNode)bt.clone(),new BTNode("0"));
+				fact=new Expression(Funcoes.fatorar(fact)).getRoot();
+				//dir pois é o denominador
+				oldV.set(i,fact);
+				e.setmod();
+				bt=fact;		
+			}
+		}
+		//monta o mmc sob toda a equação
+		if (!inteiro){
+			bt=Funcoes.mmcPolinomios(oldV,e);//mmc_Maiores(oldV,e);
+			exp=e.setmod(bt); //contem somente o mmc
+		}else{
+			int[]v=new int[oldV.size()];
+			for(int index=0;index<oldV.size();index++){
+				v[index]=Integer.parseInt(oldV.get(index).getDir().getValue());
+			}
+			exp=String.valueOf(Funcoes.mmc(v)); //contem somete o mmc
+		}
+		if (!inteiro){
+			bt=new BTNode("/",e.getRoot(),bt);
+		}else bt=new BTNode("/",e.getRoot(),new BTNode(exp));
+		BTNode n;
+		oldV.addElement(bt);
+		boolean change=false;
+		e.setNewRoot(bt);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update (e);
+end
+
+rule "Calculo MMC"
+	no-loop true
+	dialect "java"
+	when
+		e : Expression (tipo==Expression.SOLVER);
+		eval (e.getRoot().getValue().equals("/"));
+		eval (!e.buscaChaveX(e.getRoot().getEsq(),"/").isEmpty());
+	then
+		System.out.println("# Resolver MMC");
+		listresult.add(new Equacoes("# Resolver MMC"));
+		BTNode bt=e.getRoot();
+		bt=Funcoes.calculaMMC(bt,e);
+		bt=bt.getPai();
+		e.setNewRoot(bt);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Elimina Denominador"
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getRoot().getValue().equals("/"));
+		eval (e.buscaChaveX(e.getRoot().getEsq(),"/").isEmpty());
+	then
+		String msg="# Resolver MMC";
+		BTNode root=e.getRoot();
+		BTNode oldRoot=root;
+		root=root.getEsq();
+		oldRoot.setEsq(null);
+		oldRoot.setDir(null);
+		System.out.println(msg);
+		listresult.add(new Equacoes(msg));
+		e.setNewRoot(root);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+
+//Atualizar para o novo modelo de demonstracao
+rule "Resultado x^2"
+	//sem isso pode dar loop em equações do tipo (4x^2)=2 com a regra mmc
+	salience 7
+	dialect "java"
+	no-loop true
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(validarResultadoX2(e));
+	then
+		System.out.println("# Extrair raiz quadrada");
+		listresult.add(new Equacoes("# Extrair raiz quadrada"));
+		BTNode esq; //no que guarda a potencia
+		BTNode dir;// no que guarda o inteiro
+		if (e.getRoot().getEsq().getValue().equals("^")){
+			esq=e.getRoot().getEsq();
+			dir=e.getRoot().getDir();
+		}
+		else{
+			dir=e.getRoot().getEsq();
+			esq=e.getRoot().getDir(); 
+		}
+		//int raiz=Integer.parseInt(e.removeDaArvore(esq.getDir()).getValue());
+		
+		//novo codigo: extrair a raiz quadrada de ambos os lados ao inve de "mover"
+		int raiz=Integer.parseInt(esq.getDir().getValue());
+		BTNode clone=(BTNode)esq.clone();
+		esq.setValue("R");
+		//não é necessario setar o 2 da raiz pos este ja esta no lugar devido a potencia
+		esq.setEsq(null);
+		esq.setEsq(clone);
+		
+		//fim do novo código
+		boolean done=true;
+		if (dir.getValue().equals("/")){
+			dir=dir.getEsq();
+			done=false;
+		}
+		do{
+			dir.setEsq(new BTNode(dir.getValue()));
+			dir.setValue("R");
+			dir.setDir(new BTNode(String.valueOf(raiz)));
+			if (!done){
+				if (dir.getPai().getDir().equals(dir)){
+					done=true;
+				}else{
+					dir=dir.getPai().getDir();
+				}
+			}
+		}while(!done);
+		while (dir.getPai()!=null){
+			dir=dir.getPai();
+		}
+		e.setNewRoot(dir);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Raiz Denominador"
+	dialect "java"
+	no-loop true
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getRoot().getValue().equals("="));
+		eval(e.getnewexpression().contains("="));
+		//so chame se não ha mais nada a fazer no denominador
+		eval (!op(e.getRoot()));
+		eval (e.getRoot().getEsq().getValue().equals("x") &&
+				e.getRoot().getDir().getValue().equals("/") &&
+				e.find(e.getRoot().getDir().getDir(),"R")!=null
+								||
+				e.getRoot().getDir().getValue().equals("x") &&
+				e.getRoot().getEsq().getValue().equals("/") &&
+				e.find(e.getRoot().getEsq().getDir(),"R")!=null);
+	then
+		System.out.println("# Racionalizar");
+		listresult.add(new Equacoes("# Racionalizar"));
+		BTNode r=e.getRoot();
+		BTNode divEsq=r.getDir();
+		if (!divEsq.getValue().equals("/"))divEsq=r.getEsq();
+		BTNode raiz;
+		if(divEsq.getDir().getEsq().getValue().equals("R") &&
+			divEsq.getDir().getDir().getValue().equals("R")){
+			raiz=(BTNode)divEsq.getDir().clone();
+			if (raiz.getValue().equals("+")) raiz.setValue("-");
+			else if (raiz.getValue().equals("-")) raiz.setValue("+");			
+		}else{
+			raiz=e.find(divEsq,"/");
+			raiz=e.find(raiz.getDir(),"R");
+		}
+		BTNode divDir=new BTNode("/",(BTNode)raiz.clone(),(BTNode)raiz.clone());
+		BTNode mult=new BTNode ("*",(BTNode)divEsq.clone(),divDir);
+		if (Funcoes.isInc(r.getEsq().getValue()))r.setDir(mult);
+		else r.setEsq(mult);
+		e.setNewRoot(r);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Soma e Subtracao de fracoes"
+	salience 6
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (getSomaSubFrac(e)!=null);
+	then
+		System.out.println("# Soma");
+		listresult.add(new Equacoes("# Soma"));
+		//primeria etapa - calcular o mmc
+		BTNode operacao=getSomaSubFrac(e),bt=null,fact=null;
+		List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
+		for (int i=0;i<fracs.size();i++){
+			bt=fracs.get(i);
+			bt=bt.getDir();
+			if (Funcoes.canFatorComum(bt,e.setmod(bt))){
+				//função de fatoração exige raiz "="
+				fact=new BTNode("=",(BTNode)bt.clone(),new BTNode("0"));
+				fact=new Expression(Funcoes.fatorar(fact)).getRoot();
+				//dir pois é o denominador
+				fracs.set(i,fact);
+				e.setmod();
+				bt=fact;
+			}
+		}
+		//calcula o mmc
+		bt=Funcoes.mmcPolinomios(new Vector(fracs),e);
+		// pega a operação para poder montar uma nova equação apenas para aplicar a multiplicação
+		//do MMC pelo numerador
+		BTNode pai=operacao.getPai();
+		if (operacao.ehFilhoEsq())pai.setEsq(null);
+		else pai.setDir(null); 
+		//segunda etapa dividir o denominado da nova fração
+		//cria uma equação nova apenas para executar a multplicação do mmc pelos numraodores
+		// modelo:  (Fração1+Fração2=0)/(variável bt)
+		BTNode newEq=new BTNode ("=",operacao,new BTNode ("0"));
+		newEq=new BTNode ("/",newEq,bt);
+		Expression expr=new Expression(newEq); 
+		//newEq apontara para o mmc
+		newEq=Funcoes.calculaMMC(expr.getRoot(),expr);
+		//ir até o resultado das multiplicações,
+		// ou seja, filho esquerdo do filho esquerdo da raiz,
+		// onde raiz é "/" e o filho esquerdo é "="
+		newEq=newEq.getPai().getEsq().getEsq();
+		newEq.getPai().setEsq(null);
+		//montar a divisão
+		newEq=new BTNode("/",newEq,bt);
+		if (pai.getEsq()==null)pai.setEsq(newEq);
+		else pai.setDir(newEq);
+		// pelo denominador da fração que esta somando e multiplicar pelo numerador
+		//a função aki!!!
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+		
+
+rule "Multiplicacao fracoes"
+	salience 6
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (Expression.find(e.getRoot(),"*")!=null);
+		eval (canMultFrac(e.getRoot()));
+	then
+		System.out.println("# Multiplicar fracoes");
+		listresult.add(new Equacoes("# Multiplicar fracoes"));
+		BTNode r=findMultFrac(e.getRoot());
+		BTNode esq=r.getEsq();
+		BTNode dir=r.getDir();
+		if (esq.getValue().equals("+")|| esq.getValue().equals("-")){
+			r.setEsq(null);
+			r.setEsq(new BTNode("/",esq,new BTNode("1")));
+			esq=esq.getPai(); //posiciona no "/" senão não funciona
+		}
+		if (dir.getValue().equals("+")|| dir.getValue().equals("-")){
+			r.setDir(null);
+			r.setDir(new BTNode("/",dir,new BTNode("1")));
+			dir=dir.getPai();
+		}
+		// se for 2*(1/2) transforma em (2/1)*(1/2)
+		if (esq.eFolha()){
+			esq.setEsq(new BTNode(esq.getValue()));
+			esq.setDir(new BTNode("1"));
+			esq.setValue("/");
+		}
+		if (dir.eFolha()){
+			dir.setEsq(new BTNode(dir.getValue()));
+			dir.setDir(new BTNode("1"));
+			dir.setValue("/");
+		}
+		System.out.println(e.setmod(e.getRoot()));
+		BTNode aux;
+		aux=(BTNode)esq.getDir().clone();
+		esq.setDir((BTNode)dir.getEsq().clone());
+		if (aux.getValue().equals("*")){
+			dir.setEsq((BTNode)aux.getEsq().clone());
+			dir.setDir(new BTNode("*",(BTNode)aux.getDir().clone(),(BTNode)dir.getDir().clone()));
+		}else dir.setEsq(aux);
+		r.setValue("/");
+		esq.setValue("*");
+		dir.setValue("*");
+		while(r.getPai()!=null){
+			r=r.getPai();
+		}
+		e.setNewRoot(r);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
+
+rule "Divide por 1"
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getRoot().getValue().equals("="));
+		eval (e.getnewexpression().contains("="));
+		eval (canDivideBy1(e.getRoot()));
+	then
+		System.out.println("# Simplificar");
+		listresult.add(new Equacoes("# Simplificar"));
+		e.removeDaArvore(e.find("/").getDir());
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end;
+
+rule "Potencia de polinomio"
+	salience 5
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (potenciaPolinomio(e.getRoot())!=null);
+	then
+		String msg="# Produto notavel - ";
+		BTNode a,b,c;
+		BTNode r=potenciaPolinomio(e.getRoot());
+		r=r.getEsq();
+		if (r.getValue().equals("+"))msg+="Quadrado da soma";
+		else msg+="Quadrado da diferenca";
+		System.out.println(msg);
+		String inc,valor;
+		int val,pot;
+		listresult.add(new Equacoes(msg));
+		a=(BTNode)r.getEsq().clone();
+		b=(BTNode)r.getDir().clone();
+		//3-o segundo ao quadrado
+		valor=b.getValue();
+		// na contidição da regra ha um restrição quanto a potencias com filhos esquerdos folha
+		// log não é necessário restingir aqui também
+		if (valor.equals("^")){
+			valor=b.getEsq().getValue();
+		}
+		inc=Funcoes.getInc(b.getValue());
+		val=Funcoes.getINT(b.getValue());
+		pot=Funcoes.getPotencia(b);
+		if (pot==0)pot=1;
+		if (inc.isEmpty() || val==0)c=new BTNode("^",new BTNode(val),new BTNode((pot*2)+""));
+		else if (val==1 || val==-1)c=new BTNode("^",new BTNode(inc),new BTNode ((pot*2)+""));
+		else c=new BTNode("*", new BTNode("^", new BTNode (val),new BTNode((pot*2)+"")),
+								new BTNode("^",new BTNode (inc),new BTNode((pot*2)+"")));
+		//2-mais 2X o primeiro pelo segundo
+		b=new BTNode("*",new BTNode("2"),new BTNode("*",(BTNode)a.clone(),(BTNode)b.clone()));
+		//1-primeiro ao qudrado
+		valor=a.getValue();
+		if (valor.equals("^")){
+			valor=a.getEsq().getValue();
+		}
+		inc=Funcoes.getInc(a.getValue());
+		val=Funcoes.getINT(a.getValue());
+		pot=Funcoes.getPotencia(a);
+		if (pot==0)pot=1;
+		if (inc.isEmpty() || val==0)a=new BTNode("^",new BTNode(val),new BTNode((pot*2)+""));
+		else if (val==1 || val==-1)a=new BTNode("^",new BTNode(inc),new BTNode ((pot*2)+""));
+		else a=new BTNode("*", new BTNode("^", new BTNode (val),new BTNode((pot*2)+"")),
+								new BTNode("^",new BTNode (inc),new BTNode((pot*2)+"")));
+		r=r.getPai();
+		String o= r.getEsq().getValue();
+		r.setValue("+");
+		r.setEsq(null);
+		r.setDir(null);
+		r.setEsq(new BTNode(o,a,b));
+		r.setDir(c);
+		e.setNewRoot(e.getRoot());
+		System.out.println(msg);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end;
+//Ver porque nao funciona!!!
+rule "Produto da soma pela diferenca"
+	salience 5
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (produtoSomaDif(e.getRoot())!=null);
+	then
+		String msg = "# Produto notavel - Produto da soma pela diferenca";
+		BTNode mult = produtoSomaDif(e.getRoot());
+		BTNode soma;
+		BTNode esq;
+		BTNode dir;
+		if (mult.getEsq().getValue().equals("+")){
+			soma=mult.getEsq();
+		}else {
+			soma=mult.getDir();
+		}
+		esq=soma.getEsq();
+		dir=soma.getDir();
+		soma.setEsq(null);
+		soma.setDir(null);
+		mult.setEsq(null);
+		mult.setDir(null);
+		mult.setValue("-");
+		int val;
+		String inc;
+		esq=Funcoes.potenciaINTinc(esq);
+		dir=Funcoes.potenciaINTinc(dir);
+		mult.setEsq(esq);
+		mult.setDir(dir);
+		System.out.println(msg);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end	
+
+rule "Fator Comum"
+	salience 3
+	dialect "java"
+	when
+		e:Expression( tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		//eval (Funcoes.canBhaskara(e.getRoot()));
+		eval (Funcoes.validarFatorComum(e));
+	then
+		String msg= "# Fator Comum - Colocar termo em Evidencia";
+		System.out.println(msg);
+		listresult.add(new Equacoes(msg));
+		String nExp=Funcoes.fatorar(e.getRoot());
+		e.setmod();
+		String valor=e.getnewexpression();
+		if (e.getRoot().getDir()!=null){ //&& e.getRoot().getDir().getValue().equals("0")){
+			if (valor.indexOf("=")!=0)nExp+="+";
+			nExp+=valor;
+		}else{ //se for uma equação invertida: "0="
+			if (valor.indexOf("=")!=valor.length()-1)nExp+="+";
+			nExp=valor+nExp;
+		}
+		Expression nE=new Expression(nExp);
+		retract(e);
+		e.clear();
+		System.out.println(nE.getnewexpression());
+		insert(nE);
+		listresult.add(new Equacoes(nE.getnewexpression(),
+							nE.getCleanExpression(),nE.getTeXExpression()));
+		
+end;
+
+rule "Fatorar"
+	salience 5
+	dialect "java"
+	when
+		e:Expression( tipo==Expression.SOLVER );
+		not Expression (tipo==Expression.USER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (!fatoracao(e).isEmpty());
+	then
+		Vector<BTNode> raizes=fatoracao(e);
+		BTNode raiz=raizes.get(0);
+		BTNode fatPrimo=Funcoes.fatorarRaiz(raiz);
+		raiz.setEsq(null);
+		raiz.setEsq(fatPrimo);
+		String msg="# Fatoracao";
+		System.out.println(msg);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(msg));
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end;
+
+rule "Raiz"
+	salience 5
+	dialect "java"
+	when
+		e:Expression( tipo==Expression.SOLVER );
+		not Expression (tipo==Expression.USER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (!raiz(e).isEmpty());
+	then
+		Vector <BTNode> raizes=raiz(e);
+		BTNode raiz=raizes.get(0);
+		String msg="# Raiz";
+		Vector <BTNode> pot=e.buscaXall("^",raiz.getEsq());
+		BTNode fora=null;//nodos fora da raiz
+		BTNode pt;
+		int radical=Integer.parseInt(raiz.getDir().getValue()),
+					expoente, base,novaPot; 
+		//navaPot: caso nao de para extrair totalmete esta valriavel ficara com a diferenca
+		for (Iterator<BTNode> it=pot.iterator();it.hasNext();){
+			pt=it.next();
+			do{
+				expoente=Integer.parseInt(pt.getDir().getValue());
+				novaPot=radical-expoente;
+				//Caso 1: exemplo: (2^3)R3= 2
+				if (novaPot==0){
+					Expression.removeDaArvore(pt.getDir());
+					if (pt.getPai().getValue().equals("R"))pt.getPai().setEsq(null);//dir eh o radical
+					else Expression.removeNoArvore(pt);
+					fora=Funcoes.addSubArvore(fora, pt,"*");
+				}
+				//Caso 2: exemplo (2^3)R2=2R2
+				else if (novaPot<0){
+					pt.getDir().setValue(-novaPot+"");
+					fora=Funcoes.addSubArvore(fora,new BTNode(pt.getEsq().getValue()),"*");
+				}
+			}while (-novaPot>=radical);
+		}
+		BTNode pai=raiz.getPai();
+		if (raiz.ehFilhoEsq()){
+			if (raiz.getEsq()==null){
+					pai.setEsq(fora);
+			}else{
+				pai.setEsq(null);
+				pai.setEsq(new BTNode("*",fora,raiz));
+			}
+		}else{
+			if (raiz.getEsq()==null){
+					pai.setDir(fora);
+			}else{
+				pai.setDir(null);
+				pai.setDir(new BTNode("*",fora,raiz));
+			}
+		}
+		System.out.println(msg);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(msg));
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update (e);
+end;
+
+rule "Processa Fator Comum"
+	salience 5
+	dialect "java"
+	when
+		e:Expression( tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval (Funcoes.getTermosEmEvidencia(e)!=null);
+		eval (e.getRoot().getEsq().getValue().equals("0") ||
+				e.getRoot().getDir().getValue().equals("0"))
+	then
+		String msg= "# Fator Comum - Calculando as raizes";
+		listresult.add(new Equacoes(msg));
+		boolean fEsq=false;
+		BTNode root1=e.getRoot();
+		String exp1;
+		String exp2;
+		BTNode root2=Funcoes.getTermosEmEvidencia(e);
+		BTNode dir=root2.getDir();
+		BTNode esq=root2.getEsq();
+		root2.setDir(null);
+		root2.setEsq(null);
+		root2.setDir(esq.getDir());
+		root2.setEsq(esq.getEsq());
+		root2.setValue(esq.getValue());
+		if (root2.ehFilhoEsq())fEsq=true;
+		else fEsq=false;
+		root2=dir;
+		exp1=e.setmod(root1);
+		//se fEsq for true significa que o "outro lado" da equação é filho direito
+		if (fEsq){
+			exp2=e.setmod(root2)+ "=0";//exp1.substring(exp1.indexOf("="));
+			
+		}else exp2="0="+e.setmod(root2);//exp1.substring(0,exp1.indexOf("=")+1)+e.setmod(root2);
+		System.out.println(msg);
+		Expression e1=new Expression(exp1);
+		Expression e2=new Expression(exp2);
+		System.out.println(e1.getnewexpression());
+		System.out.println(e2.getnewexpression());
+		listresult.add(new Equacoes(e1.getnewexpression(),
+							e1.getCleanExpression(),e1.getTeXExpression()));
+		listresult.add(new Equacoes(e2.getnewexpression(),
+							e2.getCleanExpression(),e2.getTeXExpression()));
+		retract(e);
+		e.clear();
+		insert (e1);
+		insert (e2);
+end;
+
+rule "Divisao de Fracoes"
+	salience 6
+	dialect "java"
+	when
+		e:Expression (tipo==Expression.SOLVER);
+		eval(e.getnewexpression().contains("="));
+		eval(e.getRoot().getValue().equals("="));
+		eval(validarDivisaoFracoes(e));
+	then
+		String msg="# Divisao de Fracoes";
+		BTNode divFrac=Funcoes.getDivFracao(e.getRoot());
+		//mater a primera, inverter a segunda e trocar o sinal que divide as duas fracoes por "*"
+		BTNode segunda=divFrac.getDir();
+		BTNode aux1=segunda.getDir();
+		BTNode aux2=segunda.getEsq();
+		segunda.setDir(null);
+		segunda.setEsq(null);
+		segunda.setEsq(aux1);
+		segunda.setDir(aux2);
+		divFrac.setValue("*");
+		System.out.println(msg);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(msg));
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update (e);
+end
+
+rule "Remover Zero"
+	dialect "java"
+	when
+		e: Expression( tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
+		eval (e.getnewexpression().contains("="));
+		eval (Funcoes.getZEROtoBeRemoved(e.getRoot())!=null);
+	then
+		String msg="# Remover zeros";
+		BTNode nodo=Funcoes.getZEROtoBeRemoved(e.getRoot());
+		BTNode zero=nodo;
+		if (zero.getPai().getValue().equals("+"))msg="# Soma";
+		else msg="# Subtracao"; 
+		Funcoes.removeNoArvore(nodo,e);
+		System.out.println(msg);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes(msg));
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update (e);
+end
+
+rule "Divisao por zero"
+	salience 10
+	dialect "java"
+	when
+		e: Expression( tipo==Expression.SOLVER);
+		eval (e.getnewexpression().contains("="));
+		eval (divideByZero(e.getRoot()));
+	then
+		System.out.println("# Nao existe divisao por zero");
+		listresult.add(new Equacoes("# Nao existe divisao por zero"));
+		retract(e);
+		insert(new EquationError("# Nao existe divisao por zero"));
+end;
+
+rule "Raiz Negativa"
+	salience 9
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER );
+		eval (e.getnewexpression().contains("="));
+		eval (raizNegativa(e.getRoot()));
+		
+	then
+		System.out.println("# Raiz negativa esta fora do dominio dos numeros reais");
+		listresult.add(new Equacoes("# Raiz negativa esta fora do dominio dos numeros reais"));
+		retract(e);
+		insert(new EquationError("# Raiz negativa esta fora do dominio dos numeros reais"));
+end;
+
+rule "Multiplicacao da incognita por zero"
+	salience 9
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER );
+		eval (e.getnewexpression().contains("="));
+		eval (multiplicaIncZero(e.getRoot()));
+	then
+		String msg;
+		if (e.getRoot().getDir().getValue().equals("0")){
+			msg="# Qualquer numero real eh solucao" ;
+		}else{
+			msg="# Nao existe solucao que valide a igualdade";
+		}
+		System.out.println(msg);
+		listresult.add(new Equacoes(msg));
+		retract(e);
+		insert(new EquationError(msg));
+end;
+
+rule "Igualdade impossivel"
+	salience 9
+	dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER );
+		eval (e.getnewexpression().contains("="));
+		eval (igualdadeImpossivel(e));
+	then	
+		String msg="# Solucao Impossivel";
+		System.out.println(msg);
+		listresult.add(new Equacoes (msg));
+		retract (e);
+		insert(new EquationError(msg));
+end;

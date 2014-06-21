@@ -1,0 +1,661 @@
+#created on: 14/06/2010
+package pat2math.regras;
+
+import pat2math.expressao.Expression;
+import pat2math.expressao.arvore.BTNode;
+import pat2math.modeloAluno.Misconseption;
+import pat2math.modeloAluno.EquacaoMisc;
+import pat2math.modeloAluno.ModeloAluno;
+import pat2math.util.Funcoes;
+import java.util.List;
+import java.util.Iterator;
+
+
+function String getSinalMisc(BTNode bt){
+	if (bt.getValue().equals("^"))bt=bt.getEsq();
+	if (bt.getFirst()=='-')return Misconseption.Negativo;
+	return Misconseption.Positivo;
+}
+
+function String getOperacaoSomaSub(BTNode bt){
+	String misc;
+	if (bt.getValue().equals("-") || (!bt.eFolha() && Funcoes.getMaisAEsquerda(bt.getDir()).getValue().startsWith("-"))){
+			misc=Misconseption.Subtracao;
+	}else misc=Misconseption.Adicao;
+	return misc;
+}
+
+rule "Misconseption Operacao Inversa - Soma e Subtracao"
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc( );
+		eval (!MiscFunctions.ehMiscOISomaSub(em).isEmpty());
+	then
+		System.out.println("# Equacao escolhida: "+ em.getEquacao());
+		// como para entrar nesta regra os nodos tem que ser iguais não é necessario pegar
+		//o outro nodo
+		List<BTNode> nodos=MiscFunctions.ehMiscOISomaSub(em);
+		String termo=MiscFunctions.ajustarSinalTermo(nodos.get(0));
+		String [] mis=new String [2];
+		if (Funcoes.getFirst(termo)=='-'){
+			mis[0]=Misconseption.Subtracao;
+			mis[1]=Misconseption.Subtracao;
+		}else{
+			mis[0]=Misconseption.Adicao;
+			mis[1]=Misconseption.Adicao;
+		}
+		Misconseption m=new Misconseption(Misconseption.OperacaoInversa,mis);
+	//	m.setWrong(nodos.get(0));
+	//	m.setCorrect(new BTNode(Funcoes.trocaSinal(nodos.get(0).getValue())));
+		insert(m);
+end
+
+rule "Misconseption Operacao Inversa - Multiplicacao e Divisao (Inversao de Sinal)"
+	// valida misconseptions do tipo 3x=4 => x=4/-3
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc(  );
+		eval (!MiscFunctions.ehMiscOIMultDivInvSinal(em).isEmpty());
+	then
+		System.out.println("# Equacao escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscOIMultDivInvSinal(em);
+		String misc[]= new String[2];
+		if (nodos.get(0).getPai().getValue().equals("*") ||
+			nodos.get(0).getPai().getValue().equals("="))misc[0]=Misconseption.Multiplicacao;
+		else misc[0]=Misconseption.Divisao;
+		misc[0]+=getSinalMisc(nodos.get(0));
+		if (nodos.get(1).getPai().getValue().equals("*") ||
+			nodos.get(1).getPai().getValue().equals("="))misc[1]=Misconseption.Multiplicacao;
+		else misc[1]=Misconseption.Divisao;
+		misc[1]+=getSinalMisc(nodos.get(1));
+	//	retract(em);
+		insert(new Misconseption(Misconseption.OperacaoInversa,misc));
+end
+
+rule "Misconseption Operacao Inversa - Multiplicacao e Divisao (Operacao Igual)"
+	//valida misconsepions do tipo 3x/4=3 => 3x=3/4
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption(  );
+		em: EquacaoMisc(  );
+		eval (!MiscFunctions.ehMiscOIMultDivOPIgual(em).isEmpty());
+	then
+		System.out.println("# Equacao escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscOIMultDivOPIgual(em);
+		String misc[]= new String[2];
+		if (nodos.get(0).getPai().getValue().equals("*")||
+			nodos.get(0).getPai().getValue().equals("="))misc[0]=misc[1]=Misconseption.Multiplicacao;
+		else misc[0]=misc[1]=Misconseption.Divisao;
+		misc[0]+=getSinalMisc(nodos.get(0));
+		misc[1]+=getSinalMisc(nodos.get(1));
+	//	retract(em);
+		Misconseption m=new Misconseption(Misconseption.OperacaoInversa,misc);
+//		m.setWrong(nodos.get(0).getPai());
+//		BTNode correct= (BTNode)nodos.get(0).getPai().clone();
+//		if (misc[0].contains(Misconseption.Multiplicacao))correct.setValue("/");
+///		else correct.setValue("*"); 
+//		m.setCorrect(correct);
+		insert(m);
+end
+
+rule "Misconseption Operacao Inversa - Multiplicacao e Divisao (Soma e Sub)"
+	//valida misconsptions do tipo 3x/4=3 => 3x=4+3 ou 3x=4-3
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption(  );
+		em: EquacaoMisc(  );
+		eval (!MiscFunctions.ehMiscOIMultDivOPSomaSub(em).isEmpty());
+	then
+		System.out.println("# Equacao escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscOIMultDivOPSomaSub(em);
+		String misc[]= new String[2];
+		if (nodos.get(0).getPai().getValue().equals("*") ||
+			nodos.get(0).getPai().getValue().equals("="))misc[0]=Misconseption.Multiplicacao;
+		else misc[0]=Misconseption.Divisao;
+		// verificar o sinal no filho direito pois se for subtração o sinal
+		//estara com ele
+		BTNode somaSub= nodos.get(1);
+		if (somaSub.getPai().getValue().equals("+") || somaSub.getPai().getValue().equals("-")){
+			if (somaSub.getPai().getDir().getFirst()=='-'){
+				misc[1]=Misconseption.Subtracao;
+			}else misc[1]=Misconseption.Adicao;
+		}
+		misc[0]+=getSinalMisc(nodos.get(0));
+//		retract(em);
+		insert(new Misconseption(Misconseption.OperacaoInversa,misc));
+end
+
+rule "Misconseption Operacao Inversa - Multiplicacao e Divisao (Nao completa)"
+	//valida misconseptions do tipo x/3=4+5x => x=4+5x*3 ou x=4*3+5x
+	// EqSec_Distrib_MtTerm ou EqSec_Distrib_DvTerm 
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption (  );
+		em: EquacaoMisc(  );
+		eval (!MiscFunctions.ehMiscOIMultDivNaoCompleta(em).isEmpty());
+	then
+		System.out.println("# Equacao escolhida: "+ em.getEquacao());
+		List<BTNode> nodos =MiscFunctions.ehMiscOIMultDivNaoCompleta(em);
+		String misc[]=new String[2]; 
+		misc[0]=Misconseption.Distributiva;
+		if (nodos.get(1).getPai().getValue().equals("*")){
+			misc[1]=Misconseption.Multiplicacao;
+		}else if (nodos.get(1).getPai().getValue().equals("/")){
+			misc[1]=Misconseption.Divisao;
+		}
+		misc[1]+=Misconseption.Termos;
+	//	retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+		
+rule "Misconseption Matematica Basica"
+	//valida misconseptions de matematica basica
+	// tais como, erros de soma,subreação multiplicação, divisão, potencia e raiz
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+//		not Misconseption (  );
+		em: EquacaoMisc (  );
+		eval (!MiscFunctions.ehMiscMatBasica(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscMatBasica(em);
+		while(!nodos.isEmpty()){
+			String misc[]=new String[2];
+			//misc[0]=Misconseptions.Equacao+Misconseptions.Primaria;
+			BTNode opOriginal=nodos.get(0);
+			String rCerta=MiscFunctions.ajustarPotencia(nodos.get(1)),rAluno=MiscFunctions.ajustarPotencia(nodos.get(2));
+			char op=opOriginal.getValue().charAt(0);
+			if (rCerta.equals("null") && (opOriginal.getValue().equals("+") ||
+					opOriginal.getValue().equals("-"))){
+				misc=new String [3];	
+				misc[0]=Misconseption.Operacao+Misconseption.Primaria;
+				misc[1]=getOperacaoSomaSub(nodos.get(0));
+				misc[2]=Misconseption.Numero+"/"+Misconseption.Incognita;
+			}else{
+				switch (op) {
+				case '+':
+					misc[0]=Misconseption.Adicao;
+					break;
+				case '-':
+					misc[0]=Misconseption.Subtracao;
+					break;
+				case '*':
+					misc[0]=Misconseption.Multiplicacao;
+					break;
+				case '/':
+					misc[0]=Misconseption.Divisao;
+					break;
+				case '^':
+					misc[0]=Misconseption.Potenciacao;
+					break;
+				case 'R':
+					misc[0]=Misconseption.Radiciacao;
+					break;
+				}
+				int vIntCerta=Funcoes.getINT(rCerta), vIntAluno=Funcoes.getINT(rAluno);
+				if (vIntCerta==vIntAluno){
+						misc[1]=Misconseption.Incognita;
+				}else{
+					if(Math.abs(vIntCerta)==Math.abs(vIntAluno)){
+						misc[1]=Misconseption.Sinal;
+					} else	misc[1]=Misconseption.Numero;
+				}
+			}
+			nodos.remove(0);
+			nodos.remove(0);
+			nodos.remove(0);
+			insert(new Misconseption(Misconseption.Equacao+Misconseption.Primaria,misc));
+		}
+end
+
+rule "Misconseption Simplificacao"
+	//valida misconseptions envolvendo simplificação de frações que originam outra fração
+	// e simplificação de incognitas
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption (  );
+		em: EquacaoMisc (  );
+		eval (!MiscFunctions.ehMiscSimplificacao(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscSimplificacao(em);
+		String misc[]=new String[2];
+		misc[0]=Misconseption.Divisao;
+		misc[1]=Misconseption.Simplificacao;
+	//	retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Primaria,misc));
+end
+
+rule "Misconseption MMC - Denominador Comum"
+	//valida misconseptions de denominador comum errado
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption (  );
+		em: EquacaoMisc (  );
+		eval (!MiscFunctions.ehMiscMMCDenComum(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscMMCDenComum(em);
+		String misc[]=new String[4];		
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.MMC;
+		misc[2]=Misconseption.Denominador;
+		misc[3]=Misconseption.Numero+"/"+ Misconseption.Incognita;
+	//	retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption MMC - Soma Subtracao Linear"
+	//valida misconseptions de soma/subtração de frações onde
+	// o aluno soma/subtrar numerador com numerador e denominador
+	// com denominador
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption ( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscMMCSomaSubLinear(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscMMCSomaSubLinear(em);
+		String []misc= new String[4];
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.MMC;
+		misc[2]=Misconseption.Denominador;
+		misc[3]=getOperacaoSomaSub(nodos.get(nodos.size()-1))+"-"+Misconseption.Linear;
+	//	retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption MMC - Soma e Subtracao de fração"
+	//valida misconseptions relacionadas a soma/subtração
+	// de frações: mmc e a multiplicação no numerador
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption ( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscMMCSomaFrac(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscMMCSomaFrac(em);
+		String[] misc=new String[4];
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.MMC;
+		//se for folha é o mmc que está errado, caso contrário é a multplicação no numerador
+		if (nodos.get(0).eFolha()){
+			misc[2]=Misconseption.Denominador;
+			misc[3]=Misconseption.Numero+"/"+ Misconseption.Incognita;
+		}else{
+			misc[2]=Misconseption.Multiplicacao+Misconseption.Numerador;
+		}
+	//	retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption MMC - Multiplicacao do numerador"
+	//valida misconseptions relacionadas ao passo de dividir o MMC
+	//sobre a equação pelos denominadores e depoi multiplicar pelo numerador
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption ( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscMMCMTNumerador(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscMMCMTNumerador(em);
+		String []misc= new String [3];
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.MMC;
+		misc[2]=Misconseption.Multiplicacao+Misconseption.Numerador;
+		//retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption Mult Fracao - Regra da Tesoura"
+	// valida misconseptions relacionadas a resolver
+	// uma multiplicação multiplicando o numerador de uma fração com
+	// o denominador da outra e vica versa
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption ( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscMTFracInversa(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscMTFracInversa(em);
+		String [] misc=new String[3];
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.Multiplicacao;
+		misc[2]=Misconseption.Inverso;
+		//retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+//a testar
+rule "Misconseption Div - Divisao Linear"
+	//validar misconseption, no quala
+	//na divisão de frações os numeradores são divididos com os numeradores
+	// e os denominadores são divididos com os numeradores
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscDivLin(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscDivLin(em);
+		String [] misc=new String[3];
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.Divisao;
+		misc[2]=Misconseption.Linear;
+	//	retract(em);
+		insert (new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption Mult Fracao - INT com Fração"
+	//validar misconseption de inteiro com numero inteiro
+	// no qual a misconseption é: a*(b/c)=>(a*b)/(a*d)
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		//not Misconseption( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscMultFracINTFrac(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos= MiscFunctions.ehMiscDivLin(em);
+		String [] misc= new String [3];
+		misc[0]=Misconseption.Operacao+Misconseption.Fracao;
+		misc[1]=Misconseption.Numero;
+		misc[2]=Misconseption.Fracao;
+	//	retract(em);
+		insert (new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption Distributiva"
+	//validar erros na distributiva como:
+	// (a+b)*c => a*c+b ou a+b*c
+	// ou erro de sinal:
+	//-c*(a-b) -ac -bc 
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+	//	not Misconseption ( );
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscDistrib(em).isEmpty());
+	then
+		// fazer validar para a equação -5*(x^2-2)=0 => -5x^2-10=0
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<List<BTNode>> nodos= MiscFunctions.ehMiscDistrib(em);
+		String [] misc= new String [2];
+		//verificar o resultado de nodos para decidir se será misc de distributiva ou de sinal
+		//iterar sobre as diferencas e comparar os valores ingorando o sinal
+		// se as listas ficerm vazias é misc de sinal!!!
+		//senão é misc de ditrib
+		List<BTNode> eq1=nodos.get(0);
+		List<BTNode> eq2=nodos.get(1);
+		BTNode e1,e2;
+		String s1,s2;
+		int p1=1,p2=1;
+		misc[0]=Misconseption.Distributiva;
+		if (eq1.size()<eq2.size()){
+			BTNode n1=null,n2=null;
+			boolean repeat=true;
+			int yOr; //y original
+			int n1Pos=0;
+			int n2Pos=0;
+			s1=s2="";
+			p1=p2=1;
+			while(repeat){
+				s1=s2="";
+				p1=p2=1;
+				repeat=false;
+				for(int y=0;y<eq2.size();y++){
+					yOr=y;
+					if (n1==null && y<eq2.size()){
+						n1=eq2.get(y);
+						n1Pos=y;
+						y++;
+					}
+					if (n2==null && y<eq2.size()){
+						n2=eq2.get(y);
+						n2Pos=y;
+						y++;
+					}
+					if (n1!=null && n2!=null){
+						if (n1.getPai().equals(n2.getPai())){
+							BTNode res=MiscFunctions.getResult(n1.getPai());
+							s1=res.getValue();
+							if (s1.equals("^")){
+								s1=res.getEsq().getValue();
+								p1=res.getDir().getIntValue();
+							}
+							if (s1.startsWith("-"))s1=s1.substring(1);
+							for (int x=0;x<eq1.size();x++){
+								e2=eq1.get(x);
+								s2=e2.getValue();
+								if (s2.equals("^")){
+									s2=e2.getEsq().getValue();
+									p2=e2.getDir().getIntValue();
+								}
+								if (s2.startsWith("-"))s2=s2.substring(1);
+								if(s1.equals(s2) && p1==p2){
+									eq1.remove(x);
+									eq2.remove(n2Pos);
+									eq2.remove(n1Pos);
+									y=y-(y-yOr);
+									y--; //para compensar o acrescimo do for
+									x=eq1.size();
+									repeat=true;
+								}												
+							}
+						}
+					}
+					n1=null;
+					n2=null;
+				}
+			}
+		}
+		if(eq1.isEmpty() && eq2.isEmpty())misc[1]=Misconseption.Sinal+Misconseption.Termos;
+		//verifica se os nodos remanecentes não podem ser combinado em solver para resultar em user
+		//pois pode ser um passo além
+		else{ for (int i=eq1.size()-1;i>=0;i--){
+			e1=eq1.get(i);
+			s1=e1.getValue();
+			if (s1.equals("^")){
+				s1=e1.getEsq().getValue();
+				p1=e1.getDir().getIntValue();
+			}
+			if (s1.startsWith("-"))s1=s1.substring(1);
+			for(int j=eq2.size()-1;j>=0;j--){
+				e2=eq2.get(j);
+				s2=e2.getValue();
+				if (s2.equals("^")){
+					s2=e2.getEsq().getValue();
+					p2=e2.getDir().getIntValue();
+				}
+				if (s2.startsWith("-"))s2=s2.substring(1);
+				if (s1.equals(s2) && p1==p2){
+					eq1.remove(i);
+					eq2.remove(j);
+					j=-1;
+				}
+			}
+		}
+			if(eq1.isEmpty() && eq2.isEmpty())misc[1]=Misconseption.Sinal+Misconseption.Termos;
+			else misc[1]=Misconseption.Multiplicacao+Misconseption.Termos;
+		}//else misc[1]=Misconseption.Multiplicacao+Misconseption.Termos;
+		//retract(em);
+		insert (new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+
+rule "Misconseption Fator Comum"
+	//validar 9x^2+3x=0 => 3(3x+1)=0 ou x(3x+1)=0
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscFatCom(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos= MiscFunctions.ehMiscFatCom(em);
+		String [] misc= new String [2];
+		boolean haInt=false,haInc=false;
+		String inc;
+		int v;
+		for (BTNode nodo:nodos){
+			inc=MiscFunctions.ajustarPotencia(nodo);
+			v=Funcoes.getINT(inc);
+			inc=Funcoes.getInc(inc);
+			if (v!=0)haInt=true;
+			if (!inc.isEmpty())haInc=true;
+		}
+		misc[0]=Misconseption.FatorComum;
+		Misconseption m1=null;
+		Misconseption m2=null;
+		if (haInt){
+			misc[1]=Misconseption.Numero;
+			m1=new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc);
+		}
+		if (haInc){
+			misc[1]=Misconseption.Incognita;
+			m2=new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc);
+		}
+		if (m1!=null)insert(m1);
+		if (m2!=null)insert(m2);
+end
+
+rule "Misconseption Fatoracao Raiz - Um numero"
+	//validar aR2 => (b*c*d)R2, onde "b", "c" e "d" NÃO são os fatores de "a"
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when 
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscFatRaizUmNum(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos= MiscFunctions.ehMiscFatRaizUmNum(em);
+		String [] misc= new String [2];
+		misc[0]=Misconseption.Raiz;
+		misc[1]=Misconseption.Fatoracao;
+		insert (new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption Fatoracao Raiz - Soma e Subtracao"
+	//validar x=(4+16)R2 => x=2+4
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscFatRaizSomaSub(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos= MiscFunctions.ehMiscFatRaizSomaSub(em);
+		String [] misc=new String [2];
+		misc[0]=Misconseption.Raiz;
+		misc[1]=Misconseption.Extracao+"-";
+		BTNode bt=nodos.get(0); 
+		misc[1]+=getOperacaoSomaSub(bt);
+		insert (new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption Precedência de Operadores"
+	//validar o uso incorreto da precedência de operadores
+	// como x=3+5*6 => x=8*6
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc ( );
+		eval (!MiscFunctions.ehMiscProcedenciaOP(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos= MiscFunctions.ehMiscProcedenciaOP(em);
+		String []misc=new String[2];
+		misc[0]=Misconseption.Parentesis;
+		misc[1]=Misconseption.nao+Misconseption.Sinal+Misconseption.Preferencia;
+		insert (new Misconseption(Misconseption.Equacao+Misconseption.Secundaria,misc));
+end
+
+rule "Misconseption Bhaskara - Reconhecimento de termos"
+	// validar o reconhecimento dos termos da bhaskara: a, b e c
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc( );
+		eval (!MiscFunctions.ehMiscBhaskaraTermos(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.ehMiscBhaskaraTermos(em);
+		// a, b, c + "Coef"
+		String [] misc=new String[4];
+		misc[0]=Misconseption.Coeficientes;
+		int i=1;
+		boolean a,b,c;
+		a=b=c=false;
+		if (nodos.size()<3){
+			misc[0]=Misconseption.AplicaBhaskara;
+			misc[1]=Misconseption.Deletar+Misconseption.Termos;
+		}else{
+			for (BTNode bt:nodos){
+				if (bt.getValue().equals("^")){
+					misc[i]=Misconseption.a;
+					a=true;
+				}else if (Funcoes.isInc(bt.getLast())){
+					misc[i]=Misconseption.b;
+					b=true;
+				}else{
+					misc[i]=Misconseption.c;
+					c=true;
+				}
+				i++;
+			}
+			// ser alguma destas condições for verdadeira significa que o termo está
+			// na posção correta portanto a letra vai na posição corespondente 
+			if (!a){
+				misc[0]=Misconseption.a;
+				i++;
+			}
+			if (!b){
+				misc[1]=Misconseption.b;
+				i++;
+			}
+			if (!c){
+				misc[2]=Misconseption.c;
+				i++;
+			}
+		}
+		insert(new Misconseption(Misconseption.Bhaskara,misc));
+end;
