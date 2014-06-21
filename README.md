@@ -1,10 +1,6 @@
-# README #
+# README
 
-PAT2Math
-
-# PAT2Math
-
-Sitema Tutor Inteligente para equações algébricas
+O PAT2Math é um Sitema Tutor Inteligente voltado para equações algébricas.
 
 ## Como rodar
 
