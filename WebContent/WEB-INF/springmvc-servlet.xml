@@ -70,7 +70,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
     	<property name="url" value="jdbc:mysql://localhost/pat2math" />
     	<property name="username" value="root" />
-    	<property name="password" value="r#5vj@t6%" />
+    	<property name="password" value="" />
     </bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -106,8 +106,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.live.com"/>
 	    <property name="port" value="587"/>
-	    <property name="username" value="cassioghilardi@hotmail.com"/>
-	    <property name="password" value="pra*cem*pa*"/>
+	    <property name="username" value="pat2math@gmail.com"/>
+	    <property name="password" value="pat2mathadmingmail"/>
 	    <property name="javaMailProperties">
 	        <props>
 	            <!-- Use SMTP-AUTH to authenticate to SMTP server -->
