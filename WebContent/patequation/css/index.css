@@ -21,10 +21,16 @@
 
 #book {
     background: url("../img/background.png") repeat scroll left top transparent;
-    box-shadow: 1px -1px 6px #aaa;
+    box-shadow: 3px -3px 6px #222222;
     margin-top: 3%;
     max-width: 1000px;
     width: 100%;
+    display: none;
+}
+
+#loadingImage{
+    width: 3%;
+    margin-top: 300px;
 }
 
 .systemHelp {
@@ -56,7 +62,7 @@
     margin-left: 955px;
     margin-top: 675px; //443px;
     cursor: pointer;
-    
+
 }
 
 #noteAccess{
@@ -160,41 +166,9 @@
     width: 150px;
 }
 
-/* antigo
-.tape{
-    float: right;
-    margin-right: -20px;
-    width: 150px;
-    height: 25px;
-    background-color: rgba(200, 200, 200, 0.2);
-    border: 1px solid black;
-    -webkit-transform:rotate(-55deg);
-    transform:rotate(-55deg);
-    border-style: none dotted;
-    border-color: rgba(220, 220, 220, 0.2);
-    margin-left: -156px;
-    margin-top: 50px;
-    color: #555;
-}*/
-/* antigo
-.note {
-    margin-top: -15px;
-    margin-left: -10px;
-    float: left;
-    position:relative;
-    width:85%;
-    padding:1em 1.5em;    
-    color:#000;
-    background:yellow;                
-    overflow:hidden;
-    -webkit-transform:rotate(-10deg);
-    transform:rotate(-10deg);
-    box-shadow: -3px -3px 6px #222; posicionamento x, y, expessura, cor 
-}*/
-
 #note {
-    background: #fff;
-    box-shadow: -3px -3px 6px #999;
+    background: none repeat scroll 0 0 yellow;
+    box-shadow: -3px -3px 6px #222222;
     color: #000000;
     margin-left: 100px;
     margin-top: -15px;
@@ -260,22 +234,6 @@ span.kbd {
 .modal-body {
     max-height: 500px;
 }
-
-
-/*.note:before {
-    content:"";
-    position:absolute;
-    top:-1px;
-    right:-1px;
-    border-width:0 16px 16px 0;
-    border-style:solid;
-    border-color:activecaption activecaption #fbe54e #fbe54e;
-    background:#fbe54e;
-    -webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
-                    -moz-box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
-                    box-shadow:0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
-                    display:block; width:0;  Firefox 3.0 damage limitation 
-}*/
 
 .cool {
     background-image: url('../img/cool.png');
@@ -522,12 +480,6 @@ span.kbd {
     position: fixed;
 }*/
 
-#textBoard {
-    text-align: center; 
-    color: white; 
-    font-family: cursive
-}
-
 body {
     background: url('../img/wood texture 2.jpg') repeat left top;
 }
@@ -554,54 +506,6 @@ input[type="text"] {
     /*    background-color: #CCCCCC;
         padding-top: 4px;*/
 }
-
-/*#paper-1 .labelDefault{
-    border-color: #EEE8AA !important;  cor media 
-}
-
-#paper-2 .labelDefault{
-    border-color: #61bdcd !important;  cor media 
-}
-
-#paper-3 .labelDefault{
-    border-color: #ffc97c !important;  cor media 
-}
-
-#paper-4 .labelDefault{
-    border-color: #7dff86 !important;  cor media 
-}
-
-#paper-5 .labelDefault{
-    border-color: #ff7dbd !important;  cor media 
-}
-
-#paper-6 .labelDefault{
-    border-color: #8199ff !important;  cor media 
-}
-
-#paper-7 .labelDefault{
-    border-color: #ff8181 !important;  cor media 
-}
-
-#paper-8 .labelDefault{
-    border-color: #ff82dd !important;  cor media 
-}
-#paper-9 .labelDefault{
-    border-color: #81ffcb !important;  cor media 
-}
-
-#paper-10 .labelDefault{
-    border-color: #ffbe7f !important;  cor media 
-}*/
-
-
-/*.canMove li {
-    cursor: text;  
-}
-
-.labelDefault {
-    cursor: text;  
-}*/
 
 math {
     /*font-family: 'Petit Formal Script', serif;*/
@@ -703,14 +607,6 @@ math {
     border-bottom: 7px solid transparent;
     border-right: 12px solid #bce8f1;
 }
-
-/*.placeHolder{
-    width: 10px;
-    height: 30px;
-    border: 1px solid #fcefa1; 
-    background: #fbf9ee 50% 50% repeat-x; 
-    color: #363636; 
-}*/
 
 .hLine ul{ 
     list-style-type: none; 
@@ -928,46 +824,6 @@ msqrt mfrac{
     background-repeat: no-repeat
 }*/
 
-#board {
-    display: none;
-}
-
-#chalkboard {
-    /*background-image: url('GH_AC48_Green.jpg');*/
-    background-color: #004b00;
-    border: solid 10px #9a5d27;
-    border-radius: 4px 4px 0 0;
-    border-bottom-width: 6px;
-    -moz-border-image: url('../img/border texture 3.jpg') 10 10 round;
-    background-position: center center; 
-    background-repeat: no-repeat; 
-    width: 800px; 
-    height: 341px;
-    margin-left: 300px;
-    margin-bottom: 10px;
-    box-shadow: 3px -3px 6px #222, inset 0px 0px 5px #888888;
-}
-
-#border {
-    width: 820px;
-    height: 0;
-    margin-left: 295px;
-    margin-top: -15px;
-    border: solid 5px transparent;
-    border-bottom-color: #231f20;
-}
-
-#afterBorder {
-    border: 7px solid #9A5D27;
-    border-radius: 4px;
-    box-shadow: 3px 3px 6px #222;
-    -moz-border-image: url('../img/border texture 3.jpg') 10 10 round;
-    height: 0;
-    margin-left: 285px;
-    margin-top: 0px;
-    width: 840px;    
-    margin-bottom: 20px;
-}
 
 .dropdown a {
     cursor: pointer;

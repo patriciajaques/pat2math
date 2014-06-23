@@ -1,11 +1,12 @@
 #paper-1, #paper-2, #paper-3, #paper-4, #paper-5, #paper-6, #paper-7, #paper-8, #paper-9, #paper-10, #paper-help {
     border: 2px solid;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
     box-shadow: -5px 0 10px #888888;
     float: right;
     height: 800px;
     max-width: 700px;
     width: 100%;
+    margin-right: 6px;
 }
 
 #paper-1 {
@@ -23,7 +24,7 @@
     border-color: #EEE8AA; /* cor media */
 }
 #paper-1 #logo {
-    background-image: url('../img/logoPaper1.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //logoPaper1.png
 }
 
 
@@ -43,7 +44,7 @@
     border-color: #61bdcd; /* cor media */
 }
 #paper-2 #logo {
-    background-image: url('../img/logoPaper2.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper2.png'); 
 }
 
 
@@ -62,7 +63,7 @@
     border-color: #ffc97c; /* cor media */
 }
 #paper-3 #logo {
-    background-image: url('../img/logoPaper3.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper3.png'); 
 }
 
 
@@ -82,7 +83,7 @@
     border-color: #7dff86; /* cor media */
 }
 #paper-4 #logo {
-    background-image: url('../img/logoPaper4.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper4.png'); 
 }
 
 
@@ -101,7 +102,7 @@
     border-color: #ff7dbd; /* cor media */
 }
 #paper-5 #logo {
-    background-image: url('../img/logoPaper5.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper5.png'); 
 }
 
 
@@ -120,7 +121,7 @@
     border-color: #8199ff; /* cor media */
 }
 #paper-6 #logo {
-    background-image: url('../img/logoPaper6.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper6.png'); 
 }
 
 #paper-7 {
@@ -138,7 +139,7 @@
     border-color: #ff8181; /* cor media */
 }
 #paper-7 #logo {
-    background-image: url('../img/logoPaper7.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper7.png'); 
 }
 
 #paper-8 {
@@ -156,7 +157,7 @@
     border-color: #ff82dd; /* cor media */
 }
 #paper-8 #logo {
-    background-image: url('../img/logoPaper8.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper8.png'); 
 }
 
 #paper-9 {
@@ -174,7 +175,7 @@
     border-color: #81ffcb; /* cor media */
 }
 #paper-9 #logo {
-    background-image: url('../img/logoPaper9.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper9.png'); 
 }
 
 #paper-10 {
@@ -192,7 +193,7 @@
     border-color: #ffbe7f; /* cor media */
 }
 #paper-10 #logo {
-    background-image: url('../img/logoPaper10.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper10.png'); 
 }
 
 #paper-help {
@@ -210,7 +211,7 @@
     border-color: #cccccc; /* cor media */
 }
 #paper-help #logo {
-    background-image: url('../img/logoPaperHelp.png'); 
+    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaperHelp.png'); 
 }
 
 

@@ -3,17 +3,6 @@ $(document).ready(function() {
 });
 
 function loadPaper(selectedSheet){
-//    $("#paper-1").position({
-//        of: $("body"),
-//        my: "center top",
-//        at: "center top"
-//    });
-
-//    $("#paper-2").position({
-//        of: $("body"),
-//        my: "center top",
-//        at: "center top"
-//    });
 
     $(selectedSheet + " #logo").tooltip();
 
