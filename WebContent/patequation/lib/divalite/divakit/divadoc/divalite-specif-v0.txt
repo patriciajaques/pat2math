@@ -1,0 +1,200 @@
+SANSONNET 10 feb 2011 -- DIVAlite character specification V0
+============================================================
+
+This is a first attempt at specifying a jquery object character for DIVAlite
+
+
+
+
+// In the following, 'char' is an abridgement for 'character' that refers to a graphic animated object
+// created char objects are put in the   DIVA_charlist = [charobject0, charobject1, charobject1]   (latest created is charobject0)
+
+
+// Syntax: 
+
+// Globals DIVAlite var and functions are of the form DIVA_xxxxx
+
+// below, attributes and methods are mixed and ordered by theme
+// attributes  = are given with possible values -- often fisrt one is the default value
+// methods ()  are given with exhaustive or example arguments
+// onmethods () provide empty functions triggered on events that can be defined by the application programmer
+// below, a line like posx = "100px"  must be read like mychar.posx = "100px" (that is each line is preceded by a .)
+// below, a line like dragto(newx,newy)  must be read like mychar.dragto(newx,newy)
+    
+
+
+mychar = new DIVA_character()	 // creates a char object with default values and prepends it to DIVACHARLIST 
+// ********************************************************************************************************************************************
+
+
+delete()			// deletes char object from the DIVA_charlist 
+
+agent.name    = "John"		// external name of the agent      - used for chat
+agent.surname = "Smith"		// external surname of the agent   - used for chat
+agent.gender  = "male"		// additional info about the agent - used for chat
+agent.age     = 20 		// additional info about the agent - used for chat
+
+
+
+charname =			// internal name of the graphic character 
+	"elsi"
+	"cyril"
+	"nadege" 		// provided later
+
+
+
+resolution = 
+	"tiny"			// 100x100px  provided later
+	"small"			// 200x200px  provided later
+	"normal"		// 500x500px  actual
+	"large" 		// 1000x100px provided later
+
+
+posx = "100px" 			// current horizontal position in pixels from left page border of top-left of div id="drag*"
+posy = "100px" 			// current vertical position in pixels from top page border of top-left of of div id="drag*"
+
+
+scrollable = true | false	// tells if the char must be scrolled when the page is scrolled
+
+
+framed = 0 to n			// tells if div drag* is framed with border of size n in pixels
+framecolor = "xxx"		// color of the frame
+
+
+draggable = true | false	// tells if drag is authorized
+dragframed = true | false	// tells if char is framed during a drag operation (use framecolor)
+dragto(newx,newy)		// moves the char to new position by programm (normally it is done with the mouse) - triggers ondragged 
+ondragged (newposx, newposy)	// is called when a drag operation stops
+
+
+resizable = true | false	// tells if resize is authorized
+ratio = ratiomin to ratiomax	// size % applied to the char image resolution (1. = 100% of the chosen resolution)
+ratiomin = 0.1			// constrains when resize down 
+ratiomax = 3.0			// constrains when resize up
+resizeto(newratio)		// resizes the char to ratio by program (normally it is done with the mouse) - triggers onresized
+onresized(newratio) 		// is called when a resize operation stops
+
+
+iconifiable = true | false	// tells if iconify is authorized
+iconified = true | false	// tells if char has been iconified
+iconratio = 0.2			// ratio applied when char is iconified
+iconposx = "800px"		// current horizontal position in pixels from left page border of top-left of div drag* when iconified
+iconposy = "20px"		// current vertical position in pixels from top page border of top-left of of div drag* when iconified
+iconify()			// iconifies the char - triggers oniconified
+disiconify()			// disiconifies the char - triggers ondisiconified
+oniconified()			// is called when an iconify operation is done
+ondisiconified()		// is called when a disiconify operation is done
+
+
+hiddable = true | false		// tells if hide is authorized
+visible = true | false		// tells if char graphics is visible
+hide()				// hides char graphics but char object still exists (visible <- false)  - triggers onhidden
+show()				// shows char graphics (visible <- true) - triggers onshowed
+onhidden()			// is called when a hide operation is done
+onshowed()			// is called when a show operation is done
+
+
+selected = true | false		// tells if char graphics is selected (only one char can be selected - it is frontmost and index ==0)
+charlistindex = 0 to n		// is the position of char in the DIVA_charlist  (changed by select for example) 
+select()			// selects a char and places it in frontmost position on screen (handles z-index) and DIVA_charlist
+onselected()			// is called when a select operation is done  - triggers onselected and ondeselected
+ondeselected()			// is called when another char is selected and this char was the former selected one
+
+
+clickable = true | false	// tells if clicks are authorized upon div id="body*" 
+onclick (x,y)			// default = select() can be overridden
+ondoubleclick (x,y)		// default = iconify()/disiconify() can be overridden
+onshiftclick (x,y)		// to be defined by application programmer
+
+
+balloonhandled = true | false	// tells if the char handles a balloon linked to the char
+balloonx = -50			// current horizontal position relative to div id="drag*" in pixels of div id="balloon*" 
+balloony = -100			// current vertical   position relative to div id="drag*" in pixels of div id="balloon*" 
+balloonw = 400			// current width  of div id="balloon*" 
+balloonh = 100			// current height of div id="balloon*" 
+balloonfont = "times"		// balloon font 
+balloonfontsize = "times"	// balloon font size
+balloonfontcolor = black	// balloon font color
+balloonbkgcolor = "xxx"		// balloon background color of div id="balloon*"
+balloonshow("text", duration)	// shows balloon with a text "text" in the balloon for a duration of = 1000 milliseconds 
+balloonhide()			// hides currently displayed balloon 
+
+
+picthandled = true | false	// tells if the char handles a pict linked to the char
+pictx = -50			// current horizontal position relative to div id="drag*" in pixels of div id="pict*" 
+picty = -100			// current vertical   position relative to div id="drag*" in pixels of div id="pict*" 
+pictw = 400			// current width  of div id="pict*" 
+picth = 100			// current height of div id="pict*" 
+pictsrc = "url"			// url of the pict gif, png etc. (static or animated gif)
+pictshow(duration)		// shows pict of url in pictsrc into div id="pict*" for: duration = 1000 ms or duration = "" infinite 
+picthide()			// hides currently displayed balloon text
+ 
+
+
+moviename = "hello"							// name of the currently played movie ( = "" if char is still)
+moviefolderpath = "charpicts/cyril/normal/"hello/"			// folder path of the currently played movie ( = "" if char is still)
+movieframeindex = 0 to n						// index of the currently displayed movie frame (n = 6, 15, 29, ...)
+movieframenumber =  n							// number of frames in the movie frame (n = 6, 15, 29, ...)
+movieframeurl = "charpicts/cyril/normal/"hello/hello0009.png"		// url of the currently displayed movie frame
+movieframestaticturl ="charpicts/cyril/normal/"stand/stand0000.png"	// url of the frame displayed as the first static pict of the char
+movietimeout = internalobject						// technical internal variable for movie animation loop
+moviechain = ["stand1", "stand2", "stand3"]				// currently played chain
+moviechainmode = "sequence"  | "random"					// chain animation mode
+moviechainloop = true | false						// tells if the animation loops over the current moviechain or stops at the end
+moviechainindex = 0 to n						// index of current movie in current moviechain
+moviechainstart()			// starts animation of moviechain at moviechainindex = 0  moviechainactive <- true
+moviechainstop()			// stops definitively the current animation of moviechain (cannot be resumed) moviechainactive <- false
+moviechainhalt()			// halts the current animation of moviechain (so that it can be resumed) moviechainhalted <- true
+moviechainresume()			// resume current animation of moviechain (at next movie with movieframeindex = 0) moviechainhalted <- false
+moviechainactive = true | false		// tells if the current moviechain has been started
+moviechainhalted = true | false		// tells if the current moviechain has been halted
+movieplay(moviename)			// plays an individual movie    - IF moviechainactive THEN halts the moviechain and resumes it afterwards
+
+
+// *************************************************************************************************************************************************
+
+
+
+
+
+
+// MOVIE MANAGEMENT
+-------------------
+
+// movies are referred to by a moviename like "stand1", "hello", "anger", ...
+// a movie chain is a list of movienames that are animated in a "sequence" or "random" mode, with a looping or not when the chain is played.
+// Examples:
+// var DIVA_standchain = ["stand1", "stand2", "stand3"]
+// var DIVA_allchains  = ["stand1", "stand2", "stand3", all other movies ....]
+
+
+
+// a system function defines the movieframenumber for each existing movie
+
+function DIVA_getmovieframenumber(moviename) { 
+	returns 0 to n
+ }
+
+
+
+
+// movies are loaded on demand (when a movieframeurl is referenced) but they can also be preloaded:
+
+function DIVA_movielistpreload([list of movienames]) { 
+	preloads the movies in the list without any animation
+ 	at startup of the web page with a WAITING bar .... 
+	so that they are in the navigator cache afterwards for fast access
+ }
+
+
+
+
+
+// end of file.
+
+
+
+
+
+
+

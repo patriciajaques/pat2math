@@ -1,0 +1,121 @@
+<!DOCTYPE html >
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>TEST</title>
+<link href="../divakit/divajquery/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="../divakit/divacharkit/divalite.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="../divakit/divajquery/jquery-1.5.2.js"></script>
+<script type="text/javascript" src="../divakit/divajquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../divakit/divacharkit/charcode.js"> </script>
+<script type="text/javascript" src="../divakit/divacharkit/charcodeControls.js"> </script>
+<script type="text/javascript" src="../divakit/divacharkit/charagent.js"> </script>
+<script type="text/javascript" src="../divakit/divacharkit/charbot.js"> </script>
+<script type="text/javascript" src="../divakit/divacharkit/movementFactory.js"> </script>
+
+
+
+	
+	
+
+
+<script>
+
+var char1;
+
+function init() {
+
+    
+	//===========================================================
+	//Example 1 -> creates a char without a chatterbot
+	var conf1 = {
+	     name: 'cyril big',
+	     z_index: 3,
+	     framed: 1,
+	     posx: 300,
+	     posy: 60,
+	     debug: true,
+	     containerWidth: 250,
+	     showControls: true,
+	     animationChangePos: true,
+	     corporalMovements: [ {action: 'thinking', priority:30, width:250}, {action: 'stand1_', priority:70} ],
+	     preLoadMovements: [ {action:'hello', background: true}, {action:'applause', background:true} ],
+		 dblclick:               function() {alert('dblclick');},
+		 //mouseover:				function() {alert('mouseover');}, 
+		 //mouseout:				function() {alert('mouseout');},
+		 //dragStop:  function(event,ui) { alert('The new top position is: '+ui.position.top); } 
+	};
+
+	char1 = new DIVA_character(conf1);
+	char1.create();
+	//===========================================================
+		
+	//===========================================================
+	//Example 2 -> creates a char without a chatterbot	
+	var conf2 = {
+	     name: 'elsi medium',
+	     charname: 'elsi',
+	     pictw: 250,
+	     picth: 250,
+	     posx: 650,
+	     posy: 100,
+	     z_index: 2,
+	     framed: 1,	
+	     debug: true,
+	     corporalMovements: [ {action: 'stand1_', priority:15}, {action: 'thinking', priority:15} ],
+	     //preLoadMovements: [ {action:'hello', background:true}, {action:'applause', background:true} ]
+	};	
+
+	char2 = new DIVA_character(conf2);
+	//char2.create();
+	//===========================================================
+
+}
+
+
+</script>
+</head>
+
+<body onload="init()">
+<BR><BR><BR><BR><BR><BR><BR>
+Cyril<br>
+<input type="button" value="Framed 0" onclick="char1.setOption('framed','0');"><BR>
+<input type="button" value="Framed 10" onclick="char1.setOption('framed','10');"><BR>
+<input type="button" value="isIconify" onclick="alert(char1.isIconify());">
+<input type="button" value="Iconify/Desiconfy" onclick="char1.toggleIconify()">
+<input type="button" value="Iconify/Desiconfy 500x500" onclick="char1.toggleIconify(500,500)"><br>
+<input type="button" value="isVisible" onclick="alert(char1.isVisible());">
+<input type="button" value="isHidden" onclick="alert(char1.isHidden());">
+<input type="button" value="Show" onclick="char1.charShow();">
+<input type="button" value="Hide" onclick="char1.charHide();"><br>
+<input type="button" value="Position Top" onclick="alert(char1.getPosition().top);"><br>
+<input type="button" value="Position Left" onclick="alert(char1.getPosition().left);"><br>
+<input type="button" value="One movement/width=300" onclick="char1.movementFactory.doMovement({action:'applause',text:'Good!',width:300});"><br>
+<input type="button" value="One movement/width=700" onclick="char1.movementFactory.doMovement({action:'applause',text:'Good!',width:700});"><br>
+<input type="button" value="Two movement" onclick="char1.movementFactory.doMovement([{action:'hello'},{action:'applause',callback:function(){alert('Finish alert!');}}]);"><br>
+<input type="button" value="Change Width/Height" onclick="char1.setOption('pictw','200');char1.setOption('picth','200')"><br>
+<input type="button" value="Change Position (animate)" onclick="char1.moveTo(10,10,1000,function() { alert('Animation complete') })"><br>
+<input type="button" value="Change Position" onclick="char1.goTo(100,50)"><br>
+<input type="button" value="addCorporalMovement" onclick="char1.movementFactory.addCorporalMovement('stand1_',15)"><br>
+<input type="button" value="addCorporalMovement2" onclick="char1.movementFactory.addCorporalMovement('thinking',1)"><br>
+<input type="button" value="removeCorporalMovement" onclick="char1.movementFactory.removeCorporalMovement('hello')"><br>
+<input type="button" value="removeCorporalMovement2" onclick="char1.movementFactory.removeCorporalMovement('applause')"><br>
+
+<BR><BR>
+Elsi</br>
+<input type="button" value="addCorporalMovement" onclick="char2.movementFactory.addCorporalMovement('hello',2)"><br>
+<input type="button" value="addCorporalMovement2" onclick="char2.movementFactory.addCorporalMovement('applause',1)"><br>
+<input type="button" value="removeCorporalMovement" onclick="char2.movementFactory.removeCorporalMovement('hello')"><br>
+<input type="button" value="removeCorporalMovement2" onclick="char2.movementFactory.removeCorporalMovement('applause')"><br>
+
+   
+ </body>
+
+
+
+
+
+
+</html>

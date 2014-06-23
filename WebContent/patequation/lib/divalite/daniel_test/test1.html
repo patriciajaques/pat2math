@@ -1,0 +1,83 @@
+<!DOCTYPE html >
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>TEST</title>
+<link href="http://dl.dropbox.com/u/1260101/DivaLite/divakit/divajquery/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://dl.dropbox.com/u/1260101/DivaLite/divakit/divajquery/jquery-1.5.2.js"></script>
+<script type="text/javascript" src="http://dl.dropbox.com/u/1260101/DivaLite//divakit/divajquery/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="http://dl.dropbox.com/u/1260101/DivaLite/divakit/divalite.js"> </script>
+
+
+
+<script>
+
+var char1;
+
+
+function initDivaLite() {
+
+
+	//===========================================================
+	//Example 1 -> creates a char without a chatterbot
+	var conf1 = {
+	     name: 'cyril big',
+	     z_index: 3,
+	     framed: 0,
+	     posx: 300,
+	     posy: 60,
+	     debug: true,
+	     containerWidth: 350,
+	     showControls: true,
+	     showSpeed: true,
+	   		
+	     corporalMovements: [ {action: 'thinking', priority:30}, {action: 'stand1_', priority:70} ],
+	     //preLoadMovements: [ {action:'hello', background: true}, {action:'applause', background:true} ],
+		 dblclick:               function() {alert('dblclick');},
+		 //mouseover:				function() {alert('mouseover');}, 
+		 //mouseout:				function() {alert('mouseout');},
+		 //dragStop:  function(event,ui) { alert('The new top position is: '+ui.position.top); } 
+	};
+
+	char1 = new DIVA_character(conf1);
+	char1.create();
+	//===========================================================
+		
+}
+</script>
+</head>
+
+<body>
+<BR><BR><BR><BR><BR><BR><BR>
+Cyril<br>
+<input type="button" value="Track(enable/disable)" onclick="char1.movementFactory.setEnableTrack(!char1.movementFactory.getEnableTrack());"><BR>
+<input type="button" value="TrackPointer(show/hide)" onclick="char1.toggleTrackPointer();"><BR>
+<input type="button" value="Change Track Pointer" onclick="char1.setOption('trackPointerLeft','30%'); char1.setOption('trackPointerTop','90%');"><BR>
+<input type="button" value="Framed 0" onclick="char1.setOption('framed','0');"><BR>
+<input type="button" value="Framed 10" onclick="char1.setOption('framed','10');"><BR>
+<input type="button" value="isIconify" onclick="alert(char1.isIconify());">
+<input type="button" value="Iconify/Desiconfy" onclick="char1.toggleIconify()">
+<input type="button" value="Iconify/Desiconfy 500x500" onclick="char1.toggleIconify(500,500)"><br>
+<input type="button" value="isVisible" onclick="alert(char1.isVisible());">
+<input type="button" value="isHidden" onclick="alert(char1.isHidden());">
+<input type="button" value="Show" onclick="char1.charShow();">
+<input type="button" value="Hide" onclick="char1.charHide();"><br>
+<input type="button" value="Position Top" onclick="alert(char1.getPosition().top);"><br>
+<input type="button" value="Position Left" onclick="alert(char1.getPosition().left);"><br>
+<input type="button" value="One movement/width=300" onclick="char1.movementFactory.doMovement({action:'applause',text:'Good!',width:300});"><br>
+<input type="button" value="One movement/width=700" onclick="char1.movementFactory.doMovement({action:'applause',text:'Good!',width:700});"><br>
+<input type="button" value="Two movement" onclick="char1.movementFactory.doMovement([{action:'hello'},{action:'applause',callback:function(){alert('Finish alert!');}}]);"><br>
+<input type="button" value="Change Width/Height" onclick="char1.setOption('pictw','200');char1.setOption('picth','200')"><br>
+<input type="button" value="Change Position (animate)" onclick="char1.moveTo(10,10,1000,function() { alert('Animation complete') })"><br>
+<input type="button" value="Change Position" onclick="char1.goTo(100,50)"><br>
+<input type="button" value="addCorporalMovement" onclick="char1.movementFactory.addCorporalMovement('stand1_',15)"><br>
+<input type="button" value="addCorporalMovement2" onclick="char1.movementFactory.addCorporalMovement('thinking',1)"><br>
+<input type="button" value="removeCorporalMovement" onclick="char1.movementFactory.removeCorporalMovement('hello')"><br>
+<input type="button" value="removeCorporalMovement2" onclick="char1.movementFactory.removeCorporalMovement('applause')"><br>
+<input type="button" value="set font size 12px" onclick="char1.setOption('speechBubbleFontSize','12px')"><br>
+<input type="button" value="set font color red" onclick="char1.setOption('speechBubbleFontColor','red')"><br>
+</body>
+
+</html>

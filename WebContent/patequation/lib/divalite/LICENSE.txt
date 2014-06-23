@@ -1,0 +1,15 @@
+DIVAlite licensing information 10 feb 2011
+===========================================
+
+Version 0.1
+date 10 feb 2011
+
+The DIVAlite toolkit cannot be used in commercial applications
+The DIVAlite toolkit can be freely doownloaded for use in research and teaching applications
+
+The code in folder divakit 0.1 is the property of Unisinos University
+The picts in folder divapicts 0.1 are the property of LIMSI-CNRS
+
+===
+
+
