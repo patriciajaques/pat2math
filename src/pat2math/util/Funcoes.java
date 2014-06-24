@@ -785,7 +785,7 @@ public class Funcoes {
 		int cont=0;
 		int[] p=Funcoes.PRIMOS;
 		ArrayList<Integer> f=new ArrayList<Integer>();
-		while((i>1||i<1) && cont<Funcoes.PRIMOS.length){
+		while((i!=1 && i!=-1) && cont<Funcoes.PRIMOS.length){
 			if(i%p[cont]==0){
 				f.add(p[cont]);
 				i=i/p[cont];
@@ -793,7 +793,7 @@ public class Funcoes {
 				cont++;
 			}
 		}
-		if(i==1 && f.isEmpty())f.add(1);
+		if((i==1 || i==-1) && f.isEmpty())f.add(i);
 		return f;
 	}
 			
