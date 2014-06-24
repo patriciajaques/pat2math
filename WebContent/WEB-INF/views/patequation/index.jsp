@@ -32,7 +32,7 @@
 		<div class="left">
 			<a href="account" class="white-link">Perfil</a></p>
 			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p><br><br><br>
-			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Esconder esta aba</a></p>
+			<!-- <p><a href="/pat2math/j_spring_security_logout" class="white-link">Esconder esta aba</a></p> -->
 		</div>
 		<br>
 	</div>
