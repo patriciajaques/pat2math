@@ -11,7 +11,7 @@
 
         <link rel="shortcut icon" href="img/iconeLogo.ico" type="image/x-icon">
 
-        <script src="/pat2math/patequation/js/loader.js" type="text/javascript" charset="utf-8"></script>
+        <!-- <script src="/pat2math/patequation/js/loader.js" type="text/javascript" charset="utf-8"></script> -->
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/pat2math/patequation/assets/css/bootstrap-responsive.css" rel="stylesheet">

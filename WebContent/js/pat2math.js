@@ -1,19 +1,5 @@
 var appContext = "/pat2math/";
 
-$(document).ready(
-	function() {
-		$('.focus').focus();
-		$("html").mousemove(function(p){
-			if(p.clientX < 20) {
-				$("#topics").show();
-			}
-			if(p.clientX > 300) {
-				$("#topics").hide();
-			}
-		});
-	}
-);
-
 function enableContent(id) {
 	$.post(
 		appContext + "content/enable",
@@ -37,7 +23,7 @@ function loadTasks(id) {
 					newEquations[i] = new Equation(" ", NORMAL_STEP);
 					if(data[i] != null) {
 						equation = new Equation(data[i].equation, 100);
-						equation.id=data[i].id;
+						equation.id = data[i].id;
 						for(var j = 0; j < data[i].steps.length; j++) {
 							equation.steps[j] = new Step(data[i].steps[j], 0);
 						}
@@ -45,7 +31,6 @@ function loadTasks(id) {
 						if(data[i].performed) {
 							equation.isComplete = true;
 						}
-						
 						newEquations[i] = equation;
 					}
 				}

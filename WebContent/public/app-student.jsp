@@ -8,7 +8,8 @@
 		<title><spring:message code="project.title" /></title>
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		
+		<script src="/pat2math/patequation/js/loader.js" type="text/javascript" charset="utf-8"></script>
+				
         <script src="http://code.jquery.com/jquery-1.9.1.js" charset="utf-8"></script>
        	<script src="<c:url value='/js/bootstrap.js' />" charset="utf-8"></script>
         <link href="<c:url value='/css/bootstrap.css'  />" rel="stylesheet"/>

@@ -260,14 +260,13 @@ textarea:focus {
 	z-index: 9999999999;
 	padding: 0 0 0 30px;
 	text-align: center;
-	/* display: none; */
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 280px;
 	background: #76bdda;
 	background: #fff;
-	background: #f77;
+	background: #bbb;
 	height: 100%;
 	overflow: scroll;
 }
