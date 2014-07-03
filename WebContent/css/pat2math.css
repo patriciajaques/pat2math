@@ -265,8 +265,6 @@ textarea:focus {
 	left: 0;
 	width: 280px;
 	background: #76bdda;
-	background: #fff;
-	background: #bbb;
 	height: 100%;
 	overflow: scroll;
 }

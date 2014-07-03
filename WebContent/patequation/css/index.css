@@ -20,8 +20,9 @@
 }
 
 #book {
-    background: url("../img/background.png") repeat scroll left top transparent;
-    box-shadow: 3px -3px 6px #222222;
+    /* background: url("../img/background.png") repeat scroll left top transparent; */
+    background: #ccc;
+    box-shadow: 3px -3px 6px #888;
     margin-top: 3%;
     max-width: 1000px;
     width: 100%;
@@ -167,7 +168,8 @@
 }
 
 #note {
-    background: none repeat scroll 0 0 yellow;
+    /* background: none repeat scroll 0 0 yellow; */
+    background: #fff;
     box-shadow: -3px -3px 6px #222222;
     color: #000000;
     margin-left: 100px;

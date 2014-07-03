@@ -7,15 +7,15 @@
 			<span class="task" onclick="watchVideo(${task.content.id})">
 				${task.content.name}
 			</span>
-			<i style="margin-right: 6px" class="icon-film"></i>
-			<i class="icon-ok"></i>
+			<i style="margin-right: 6px" class="icon-film icon-white"></i>
+			<i class="icon-ok icon-white"></i>
 			<br>
 		</c:if>
 		<c:if test="${!task.performed}">
 			<span class="task" onclick="watchVideo(${task.content.id})">
 				${task.content.name}
 			</span>
-			<i style="margin-right: 6px" class="icon-film"></i>
+			<i style="margin-right: 6px" class="icon-film icon-white"></i>
 			<i class="icon-ok" style="visibility: hidden;"></i>
 			<br>
 		</c:if>
@@ -26,15 +26,15 @@
 			<span class="task" onclick="paperClick()">
 				${task.content.name}
 			</span>
-			<i style="margin-right: 6px" class="icon-pencil"></i>
-			<i class="icon-ok"></i>
+			<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
+			<i class="icon-ok  icon-white"></i>
 			<br>
 		</c:if>
 		<c:if test="${!task.performed}">
 			<span class="task" onclick="">
 				${task.content.name}
 			</span>
-			<i style="margin-right: 6px" class="icon-pencil"></i>
+			<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
 			<i class="icon-ok" style="visibility: hidden;"></i>
 			<br>
 		</c:if>

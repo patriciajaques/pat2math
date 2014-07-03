@@ -1,4 +1,4 @@
-//some references about mathml
+//-some references about mathml
 //http://www.w3.org/TR/MathML3/chapter3.html
 //http://www.xmlmind.com/tutorials/MathML/index.html
 //msg de dica: cassio5;d;2x-3x=0
@@ -26,7 +26,7 @@ var DELTA_SOLUTION = 2; //To represent a delta solution (for second degree equat
 var x1_SOLUTION = 3; //To represent the x'solution (for second degree equations)
 var x2_SOLUTION = 4; //To represent the x"solution (for second degree equations)
 
-var eq = new Equation(" ", 100);
+var eq = new Equation("ss", 100);
 
 //eq.steps = [
 //    new Step("a=1;b=3;c=-4", NORMAL_STEP),
@@ -40,7 +40,7 @@ var eq = new Equation(" ", 100);
 //    ];
 //eq.addPoints(-23);
 
-var eq2 = new Equation("3x+7=19", 70);
+var eq2 = new Equation("ss", 70);
 //eq2.steps = [
 //    new Step("3x=19-7", NORMAL_STEP),
 //    new Step("3x=12", NORMAL_STEP),
@@ -50,14 +50,14 @@ var eq2 = new Equation("3x+7=19", 70);
 var newEquations = [// contains the most updated array of equations
     eq,
     eq2,
-    new Equation("(4+x)/(x*(x+3))=25", 50),
-    new Equation("3x+7=19", 40),
-    new Equation("x=(2)/(3)+(5)/(7x)", 60),
-    new Equation("18x-43=65", 50),
-    new Equation("4x*(x+6)-x^2=5x^2", 70),
-    new Equation("10x-5*(1+x)=3*(2x-2)-20", 60),
-    new Equation("x*(x+4)+x*(x+2)=2x^2+12", 80),
-    new Equation("(x-5)/(10)+(1-2x)/(5)=(-3x)/(4)", 100)];
+    new Equation("ss", 50),
+    new Equation("ss", 40),
+    new Equation("ss", 60),
+    new Equation("ss", 50),
+    new Equation("ss", 70),
+    new Equation("ss", 60),
+    new Equation("ss", 80),
+    new Equation("ss", 100)];
 
 var equations = [// contains the current array of equations
     new Equation("x=1", 50),
@@ -85,8 +85,7 @@ var concluded = 0;
 //    new Equation("x+4=3*2", 70)];
 
 
-$(document).ready(function() {
-    
+$(document).ready(function() {    
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
     loadScript("/pat2math/patequation/js/paper.js");
