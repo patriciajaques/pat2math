@@ -3,7 +3,8 @@ var config = {
 		//ABSOLUTE_PATH: 'http://dl.dropbox.com/u/1260101/DivaLite/'
 		//ABSOLUTE_PATH: 'file:///E:/PATtoPhysics/PATtoPhysics/dist/divalite/'
 		//ABSOLUTE_PATH: 'file:///C:/Users/user/Documents/NetBeansProjects/PATEquationHTML/public_html/divalite/'
-                ABSOLUTE_PATH: '/PATEquationHTML/lib/divalite/'
+        //ABSOLUTE_PATH: '/PATEquationHTML/lib/divalite/'
+		ABSOLUTE_PATH: '/pat2math/patequation/divalite/'
 };
 
 //dynamically loads the CSS and Scripts
@@ -37,7 +38,6 @@ link1.rel= 'stylesheet';
 link1.href= config.ABSOLUTE_PATH+'divakit/divacharkit/divalite.css';
 head.appendChild(link1);
 
-
 loadScript(config.ABSOLUTE_PATH+'divakit/divajquery/plugins/jquery.slider.js', function() {
 	
 	loadScript(config.ABSOLUTE_PATH+'divakit/divajquery/plugins/jquery.dependClass.js', function() {
@@ -63,7 +63,3 @@ loadScript(config.ABSOLUTE_PATH+'divakit/divajquery/plugins/jquery.slider.js', f
 	});
 	
 });
-
-
-
-
