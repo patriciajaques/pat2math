@@ -32,5 +32,5 @@
 	</c:if>
 	<input class="btn btn-large" value="login" type="submit"><br>
 	<p class="left"><a href="/pat2math/student/new">cadastrar</a></p> 
-	<p class="left"><a href="user/forgotPassword">esqueci minha senha</a></p>
+	<!-- <p class="left"><a href="user/forgotPassword">esqueci minha senha</a></p> -->
 </form>
