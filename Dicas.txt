@@ -39,7 +39,7 @@ MM
 OI
 1 Há dois termos que podem ser operados, no entanto esses estão em lados opostos da igualdade. O que pode ser feito para operá-los?#LE
 2 Como operar <eq tOI> e <eq OIt> ?#TE
-3 Qual a operação inversa do termo <eq OIt> e <eq tOI>?#TE
+3 Qual a operação inversa do termo <eq OIt> ?#TE
 4 Aplique a operação inversa em <eq tOI>. Resultando em <PP>.#ER
 
 SP
