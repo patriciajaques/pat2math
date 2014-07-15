@@ -630,7 +630,7 @@ function boolean canMMC(Expression e){
 	Vector<BTNode> mults;
 	BTNode no=null;
 	boolean result=false;
-	boolean denDifUm=false; // utilizada para impedir o MMC caso haver somete denominador 1
+	boolean denDifUm=false; // utilizada para impedir o MMC caso haver somente denominador 1
 	//sera true somente se haver um denominador diferete de um
 	for (int i=0;i<noList.size();i++){
 		no=noList.get(i);
@@ -652,10 +652,10 @@ function boolean canMMC(Expression e){
 				if (/*!pai.getValue().equals("=")&&*/pai.getEsq().getValue().equals("/") || pai.getDir().getValue().equals("/")){
 					BTNode esq=pai.getEsq();	
 					BTNode dir=pai.getDir();
-/*novo codigo*/		Object opEsq[]=buscaOp(esq.getDir()); //busca no denominado da fração 
-					if (opEsq==null)opEsq=buscaOp(esq.getEsq()); //teste: não permitir se tiver algo para fazer no numrador
+/*novo codigo*/		Object opEsq[]=buscaOp(esq.getDir()); //busca no denominador da fração 
+					if (opEsq==null)opEsq=buscaOp(esq.getEsq()); //teste: não permitir se tiver algo para fazer no numerador
 					Object opDir[]=buscaOp(dir.getDir());
-					if (opDir==null)opDir=buscaOp(dir.getEsq());//teste: não permitir se tiber ago para fazer no numrador
+					if (opDir==null)opDir=buscaOp(dir.getEsq());//teste: não permitir se tiber ago para fazer no numerador
 					if (opEsq==null){
 						opEsq=new Object[2];
 						opEsq[0]=0;
@@ -783,43 +783,121 @@ function boolean canMultFrac(BTNode arv){
 }
 
 /**
- * Busca soma/subtração de frações, se e somente se, haver frações em apenas um lado da equação
+ * @Not: Busca soma/subtração de frações, se e somente se, haver frações em apenas um lado da equação
+ * @Nova_Funcao: Busca a ocorrencia de uma soma/subração envolvendo frações, seja frações ou inteiros
+ * Esta função impede que a regra seja ativada se haver frações em ambos os lados da equação, isto é dever da regra MMC  
  */
 function BTNode getSomaSubFrac(Expression e){
-	Funcoes.t();
+	Funcoes.j();
 	BTNode root =e.getRoot();
 	List<BTNode> fracEsq= Expression.buscaXall("/",root.getEsq());
 	List<BTNode> fracDir= Expression.buscaXall("/",root.getDir());
+	BTNode somaPai=null;// nodo que armazena a raiz da soma, ou seja, é possivel aplicar a regra de soma de frações
+	//nas subarvores-filhas deste nodo
 	// bloqueia caso haja fração no 2 lados da equação, isso é da regra "MMC"
 	if (!fracEsq.isEmpty() && !fracDir.isEmpty()) return null;	
 	else if (fracEsq.isEmpty() || fracDir.isEmpty()){
 		List<BTNode> fracs= fracEsq;
 		if (fracs.isEmpty())fracs=fracDir;
-		if (fracs.size()<=1) return null;
+	//	if (fracs.size()<=1) return null; fazia parte da outra versao desta funcao
 		BTNode n1=null, n2=null;
-		for (Iterator<BTNode> it= fracs.iterator();it.hasNext();){
+		Iterator<BTNode> it= fracs.iterator();
+		//pegar a fração e verificar se é filha de um + ou - e se é possivel operar com o "irmão"
+		while (it.hasNext() && somaPai==null){
 			//selecionar os candidatos: os 2 primeiros nodo se são filhos do mesmo pai
 			// + ou -, como a busca é esq folha dir os valores da lista estarão conforme
 			// os nodo esta na arvore, portanto os novos compatives serão proximos, ou seja,
 			// i e i+1
-			if ( it.hasNext() &&n1==null) n1=it.next();
-			if ( it.hasNext() &&n2==null) n2=it.next();
-			if (n1.getPai().equals(n2.getPai())){
+			//if ( it.hasNext() &&n1==null) n1=it.next();
+			//if ( it.hasNext() &&n2==null) n2=it.next();
+			//if (n1.getPai().equals(n2.getPai())){
 				//checar o sinal
-				if (n1.getPai().getValue().equals("+") ||
-					n1.getPai().getValue().equals("-")){
+		//		if (n1.getPai().getValue().equals("+") ||
+	//				n1.getPai().getValue().equals("-")){
 					//verificar a existencia de multiplicação por 1 e -1
-					if (checkForONEMult(n1,e) || checkForONEMult(n2,e))return null;
-					else return n1.getPai();
+	//				if (checkForONEMult(n1,e) || checkForONEMult(n2,e))return null;
+	//				else return n1.getPai();
+	//			}
+	//		}else{
+	//			n1=n2;
+	//			n2=null;
+	//		}
+			if (it.hasNext())n1=it.next();
+			//checar o sinal
+			if (n1.getPai().getValue().equals("+") ||
+					n1.getPai().getValue().equals("-")){
+				//checar se a fração não possui operações
+				Object[] num= buscaOp(n1.getEsq());
+				Object[] den= buscaOp(n1.getDir());
+				if (num==null && den==null){
+					//verificar o irmao
+					BTNode brother;
+					if (n1.ehFilhoEsq())brother=n1.getPai().getDir();
+					else brother=n1.getPai().getEsq();
+					//se eh outra fracao
+					if (brother.getValue().equals("/")){
+						num= buscaOp(brother.getEsq());
+						den= buscaOp(brother.getDir());
+						if (num==null && den==null) somaPai=n1.getPai();
+					}else if (brother.eFolha() || brother.getValue().equals("^"))somaPai=n1.getPai();
 				}
-			}else{
-				n1=n2;
-				n2=null;
 			}
+			
 		}
 	}
-	return null;
+	return somaPai;
 }
+
+/*
+ * Uma vez que se sabe que um dos lados de somaPai é possivel aplicar a soma/sub de frações, com frações ou inteiros,
+ * verifica se é possivel aplicar também com o outro filho de somaPai. Se sim continua esta verificação no pai de somaPai,
+ * caso contrario retorna somaPai, se for polivel operar os doi filhos, ou apenas o filho que é possivel operar.
+ * o parâmetro somaPai deve possuir os dois filhos operaveis. 
+ */
+//function BTNode checkSomaSubFracUpperLevels(BTNode somaPai){
+//	BTNode validSomaPai= somaPai;
+//	boolean esqValid=somaPai().ehFilhoEsq(); //true se o nodo valido até o momento é o esquerdo, se false é o direito
+//	if (somaPai.getPai()!=null && !somaPai.getPai().getValue().equals("=")){
+//		somaPai=somaPai().getPai();
+//		BTNode brother;
+//		if (esqValid) brother=somaPai.getDir();
+//		else brother=somaPai.getEsq();
+//		
+//	}
+//	return somaPai;
+//}
+
+
+
+//VErifica a existencia de uma soma de fracoes com inteiros e retorna
+// os valores inteiros que fezem parte desta soma
+function BTNode[] getSomaSubFracINT(Expression e){
+	Funcoes.t();
+	ArrayList<BTNode> integers= new ArrayList<BTNode>();
+	BTNode root =e.getRoot();
+	List<BTNode> fracEsq= Expression.buscaXall("/",root.getEsq());
+	List<BTNode> fracDir= Expression.buscaXall("/",root.getDir());
+	List<BTNode> frac=fracEsq;
+	if (fracEsq.isEmpty())frac=fracDir;
+	BTNode n1=null;
+	for (Iterator<BTNode> it= frac.iterator();it.hasNext();){
+		//para cada fracao verificar se é filha de um + ou de um - e verificar se
+		// o outro filho é um inteiro
+		n1=it.next();
+		if (Funcoes.isSingleFraction(n1) && 
+		(n1.getPai().getValue().equals("+") ||n1.getPai().getValue().equals("-"))){
+			BTNode brother;
+			if (n1.ehFilhoEsq())brother=n1.getPai().getDir();
+			else brother = n1.getPai().getEsq();
+			
+			if (brother.eFolha())integers.add(brother);
+		} 
+	}
+	if (integers.isEmpty()) return null;
+	else return integers.toArray(new BTNode[integers.size()]);
+}
+
+
 
 // verifica a existência de multiplicação por -1 ou 1 em b ou nos filhos
 function boolean checkForONEMult(BTNode b, Expression e){
@@ -836,7 +914,7 @@ function boolean checkForONEMult(BTNode b, Expression e){
 
 /**
 * Verifica se a expressão contém qualquer coisa sobre 1, exe: (2x+5)/1
-* retorna true se tiver e false casom contrário
+* retorna true se tiver e false caso contrário
 */
 function BTNode canDivideBy1(BTNode b, Expression e){
 	List<BTNode> division=e.buscaChaveX(b, "/");
@@ -3182,11 +3260,17 @@ rule "Soma e Subtracao de fracoes"
 	then
 		System.out.println("# Soma");
 		listresult.add(new Equacoes("# Soma"));
+		Funcoes.j();
 		//primeria etapa - calcular o mmc
 		BTNode operacao=getSomaSubFrac(e),bt=null,fact=null;
 		List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
 		for (int i=0;i<fracs.size();i++){
 			bt=fracs.get(i);
+			if (bt.eFolha()){
+				bt.setEsq(new BTNode (bt.getValue()));
+				bt.setDir(new BTNode ("1"));
+				bt.setValue("/");
+			}
 			bt=bt.getDir();
 			if (Funcoes.canFatorComum(bt,e.setmod(bt))){
 				//função de fatoração exige raiz "="
@@ -3209,8 +3293,8 @@ rule "Soma e Subtracao de fracoes"
 		BTNode pai=operacao.getPai();
 		if (operacao.ehFilhoEsq())pai.setEsq(null);
 		else pai.setDir(null); 
-		//segunda etapa dividir o denominado da nova fração
-		//cria uma equação nova apenas para executar a multplicação do mmc pelos numraodores
+		//segunda etapa dividir o denominador da nova fração
+		//cria uma equação nova apenas para executar a multplicação do mmc pelos numeradores
 		// modelo:  (Fração1+Fração2=0)/(variável bt)
 		BTNode newEq=new BTNode ("=",operacao,new BTNode ("0"));
 		newEq=new BTNode ("/",newEq,bt);
@@ -3233,7 +3317,41 @@ rule "Soma e Subtracao de fracoes"
 							e.getCleanExpression(),e.getTeXExpression()));
 		update(e);
 end
-		
+
+/* @Deprecated a regra acima "Soma e Subtracao de fracoes" já trata o que esta regra fazia.
+ */		
+//rule "Preparar Soma e Subtracao de fracoes"
+	// permite a soma de fracoes com inteiros, torando um inteiro em uma fracao
+	// ex: 4/2+1=x => (4/2)+(1/1)=x
+	//salience 6
+	//dialect "java"
+//	when
+//		e: Expression(tipo==Expression.SOLVER);
+//		eval (e.getnewexpression().contains("="));
+//		eval (e.getRoot().getValue().equals("="));
+//		eval (getSomaSubFracINT(e)!=null);
+//	then
+//		System.out.println("# Unir termos semelhantes");
+//		listresult.add(new Equacoes("# Unir termos semelhantes"));
+//		//primeria etapa - calcular o mmc
+//		Funcoes.j();
+//		BTNode operacao[]=getSomaSubFracINT(e);
+//		BTNode intToFrac, esq,dir;
+//		for (int i=0;i<operacao.length;i++){
+//			intToFrac=operacao[i];
+//			dir =new BTNode("1");
+//			esq=(BTNode) intToFrac.clone();
+//			intToFrac.setEsq(null);
+//			intToFrac.setDir(null);
+//			intToFrac.setEsq(esq);
+///			intToFrac.setDir(dir);
+//			intToFrac.setValue("/");
+//		}
+//		e.setNewRoot(e.getRoot());
+//		listresult.add(new Equacoes(e.getnewexpression(),
+//							e.getCleanExpression(),e.getTeXExpression()));
+//		update(e);
+//end
 
 rule "Multiplicacao fracoes"
 	salience 6

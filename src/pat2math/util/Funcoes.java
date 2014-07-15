@@ -2226,6 +2226,30 @@ public static String getTermoComum(BTNode root){
 	}
 	
 	/**
+	 * Verifica se é uma fração simples com apenas um termo no numerador e
+	 * um termo no denominador
+	 * @param bt o nodo contendo o "/" da fração
+	 * @return <code>true</code> se bt for este tipo de fração e <code>false</code> caso contrario
+	 */
+	public static boolean isSingleFraction(BTNode bt){
+		if (bt.getValue().equals("/")){
+			BTNode esq= bt.getEsq();
+			BTNode dir= bt.getDir();
+			boolean leafE,leafD, leafSquareE, leafSquareD;
+			leafE=leafD=leafSquareD=leafSquareE=false;
+			if (esq.eFolha()) leafE=true;
+			if (dir.eFolha()) leafD=true;
+			
+			if (!leafE && isSquaredLeaf(esq))leafSquareE=true;
+			if (!leafD && isSquaredLeaf(dir))leafSquareD=true;
+			
+			return (leafE || leafSquareE) && (leafD || leafSquareD);
+		}
+		return false;
+		
+	}
+	
+	/**
 	 * Realiza a operação de potenciação (ao quadrado) do valor contido em BT
 	 * @param bt o nodo que sera elevado ao quadrado, seja folha ou ^
 	 * @return o nodo contendo a aplicação da operação de potenciação.
@@ -2261,6 +2285,27 @@ public static String getTermoComum(BTNode root){
 			System.out.println(s);
 		}
 		System.out.println("***************");
+	}
+	
+	/**
+	 * Verifica se uma fração está compondo uma soma de uma fração com um "numero inteiro",
+	 * leia-se denomandor = 1. Inserido pela regra Prepara Soma Subtracao de Fracoes
+	 * @param frac a fração a ser analizada
+	 * @return <code>true</code> se a fração faz parte desta soma/subtração e <code>false</code>
+	 * caso contrario.
+	 */
+	public static boolean checkForSomaSubFracINT(BTNode frac){
+		if (frac.getValue().equals("/")){
+			if (isSingleFraction(frac) && 
+					(frac.getPai().getValue().equals("+") ||frac.getPai().getValue().equals("-"))){
+				BTNode brother;
+				if (frac.ehFilhoEsq())brother=frac.getPai().getDir();
+				else brother = frac.getPai().getEsq();
+				
+				if (brother.getValue().equals("/") && brother.getDir().getValue().equals("1")) return true;
+			}
+		}
+		return false;
 	}
 	
 	/**

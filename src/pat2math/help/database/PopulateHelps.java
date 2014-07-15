@@ -114,11 +114,11 @@ public class PopulateHelps {
 								Animation anime = new Animation();
 								anime.setCode(animation);
 								em.persist(anime);
-								
+						
 								h.setAnimation(anime);
 							}else {desc=line.substring(line.indexOf(" ")+1);
 								Animation anime = new Animation();
-								anime.setCode("NO");
+							//	anime.setCode("NO");
 								em.persist(anime);
 								h.setAnimation(anime);
 							}
@@ -145,8 +145,8 @@ public class PopulateHelps {
 			}
 		}
 		
-	//	em.getTransaction().commit();
-	//	em.getTransaction().begin();
+		em.getTransaction().commit();
+		em.getTransaction().begin();
 		
 		scan.close();
 	}
@@ -171,7 +171,7 @@ public class PopulateHelps {
 		return ajudas;
 	}
 
-	public static void main(String[] args) throws Exception {
+/*	public static void main(String[] args) throws Exception {
 		PopulateHelps ph= new PopulateHelps("Dicas.txt");
 		try {
 			
@@ -204,5 +204,5 @@ public class PopulateHelps {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
