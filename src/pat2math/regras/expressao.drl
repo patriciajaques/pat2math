@@ -3261,58 +3261,59 @@ rule "Soma e Subtracao de fracoes"
 		System.out.println("# Soma");
 		listresult.add(new Equacoes("# Soma"));
 		Funcoes.j();
+		BTNode operacao=getSomaSubFrac(e);
+		
+		BTNode somaFrac= Funcoes. makeAddSubFactions(operacao, e);
+		//List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
 		//primeria etapa - calcular o mmc
-		BTNode operacao=getSomaSubFrac(e),bt=null,fact=null;
-		List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
-		for (int i=0;i<fracs.size();i++){
-			bt=fracs.get(i);
-			if (bt.eFolha()){
-				bt.setEsq(new BTNode (bt.getValue()));
-				bt.setDir(new BTNode ("1"));
-				bt.setValue("/");
-			}
-			bt=bt.getDir();
-			if (Funcoes.canFatorComum(bt,e.setmod(bt))){
-				//função de fatoração exige raiz "="
-				fact=new BTNode("=",(BTNode)bt.clone(),new BTNode("0"));
-				fact=new Expression(Funcoes.fatorar(fact)).getRoot();
-				//dir pois é o denominador
-				fracs.set(i,fact);
-				e.setmod();
-				bt=fact;
-			}
-			else{
-				fracs.set(i,bt);
-				e.setmod();
-			}
-		}
-		//calcula o mmc
-		bt=Funcoes.mmcPolinomios(new Vector(fracs),e);
+	//	for (int i=0;i<fracs.size();i++){
+	//	bt=fracs.get(i);
+		//	if (bt.eFolha()){
+		//		bt.setEsq(new BTNode (bt.getValue()));
+		//		bt.setDir(new BTNode ("1"));
+		//		bt.setValue("/");
+		//	}
+		//	bt=bt.getDir();
+		//	if (Funcoes.canFatorComum(bt,e.setmod(bt))){
+		//		//função de fatoração exige raiz "="
+		//		fact=new BTNode("=",(BTNode)bt.clone(),new BTNode("0"));
+		//		fact=new Expression(Funcoes.fatorar(fact)).getRoot();
+		//dir pois é o denominador
+		//		fracs.set(i,fact);
+		//	e.setmod();
+		//		bt=fact;
+		//	}
+		//	else{
+		//		fracs.set(i,bt);
+		//		e.setmod();
+		//	}
+		//}
+		////calcula o mmc
+		//bt=Funcoes.mmcPolinomios(new Vector(fracs),e);
 		// pega a operação para poder montar uma nova equação apenas para aplicar a multiplicação
 		//do MMC pelo numerador
-		BTNode pai=operacao.getPai();
-		if (operacao.ehFilhoEsq())pai.setEsq(null);
-		else pai.setDir(null); 
+	//	BTNode pai=operacao.getPai();
+	//	if (operacao.ehFilhoEsq())pai.setEsq(null);
+	//	else pai.setDir(null); 
 		//segunda etapa dividir o denominador da nova fração
 		//cria uma equação nova apenas para executar a multplicação do mmc pelos numeradores
 		// modelo:  (Fração1+Fração2=0)/(variável bt)
-		BTNode newEq=new BTNode ("=",operacao,new BTNode ("0"));
-		newEq=new BTNode ("/",newEq,bt);
-		Expression expr=new Expression(newEq); 
+	//	BTNode newEq=new BTNode ("=",operacao,new BTNode ("0"));
+	//	newEq=new BTNode ("/",newEq,bt);
+	//	Expression expr=new Expression(newEq); 
 		//newEq apontara para o mmc
-		newEq=Funcoes.calcularMMC(expr.getRoot(),expr);
+	//	newEq=Funcoes.calcularMMC(expr.getRoot(),expr);
 		//ir até o resultado das multiplicações,
 		// ou seja, filho esquerdo do filho esquerdo da raiz,
 		// onde raiz é "/" e o filho esquerdo é "="
-		newEq=newEq.getPai().getEsq().getEsq();
-		newEq.getPai().setEsq(null);
+	//	newEq=newEq.getPai().getEsq().getEsq();
+	//	newEq.getPai().setEsq(null);
 		//montar a divisão
-		newEq=new BTNode("/",newEq,bt);
-		if (pai.getEsq()==null)pai.setEsq(newEq);
-		else pai.setDir(newEq);
-		// pelo denominador da fração que esta somando e multiplicar pelo numerador
-		//a função aki!!!
-		e.setNewRoot(e.getRoot());
+//		newEq=new BTNode("/",newEq,bt);
+//		if (pai.getEsq()==null)pai.setEsq(newEq);
+//		else pai.setDir(newEq);
+		
+		e.setNewRoot(somaFrac);
 		listresult.add(new Equacoes(e.getnewexpression(),
 							e.getCleanExpression(),e.getTeXExpression()));
 		update(e);

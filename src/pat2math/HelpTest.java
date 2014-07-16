@@ -14,7 +14,7 @@ public class HelpTest {
 	
 	public static void main(String[] args) throws Exception {
 		PopulateHelps ph = new PopulateHelps("Dicas.txt");
-		ph.createList();
+		//ph.createList();
 		ModeloAluno ma = new ModeloAluno();
 		ma.setNome("teste", ph.getHelp());
 		//Help h = new Help(,ph.getHelp());

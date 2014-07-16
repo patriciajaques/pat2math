@@ -2309,6 +2309,82 @@ public static String getTermoComum(BTNode root){
 	}
 	
 	/**
+	 * VErifica se no caminho de frac até destino ha somete os valores presentes na whiteList,
+	 * a busca é exclusiva-inclusiva
+	 * @param frac o inicio da busca
+	 * @param destino o ultimo nodo da busca
+	 * @param whiteList os valores permitidos de conter entre 
+	 * @return <code>true</code> se há somente os nodos presentes em whiteList e <code>false</code>
+	 * caso contrario.
+	 */
+	public static boolean checkFathers(BTNode origem,BTNode destino, List<String> whiteList){
+		boolean result=false;
+		do{
+			origem = origem.getPai();
+			if (find(whiteList,origem.getValue())!=null)result=true;
+			else result=false;
+			
+		}while (origem!=null && origem!=destino);
+		return result;
+	}
+	
+	public static BTNode makeAddSubFactions(BTNode operacao, Expression e){
+		BTNode bt=null, fact=null;
+		List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
+		//primeria etapa - calcular o mmc
+		for (int i=0;i<fracs.size();i++){
+			bt=fracs.get(i);
+			if (bt.eFolha()){
+				bt.setEsq(new BTNode (bt.getValue()));
+				bt.setDir(new BTNode ("1"));
+				bt.setValue("/");
+			}
+			bt=bt.getDir();
+			if (Funcoes.canFatorComum(bt,e.setmod(bt))){
+				//função de fatoração exige raiz "="
+				fact=new BTNode("=",(BTNode)bt.clone(),new BTNode("0"));
+				try {
+					fact=new Expression(Funcoes.fatorar(fact)).getRoot();
+				} catch (InvalidValueException e1) {e1.printStackTrace();}
+				//dir pois é o denominador
+				fracs.set(i,fact);
+				e.setmod();
+				bt=fact;
+			}
+			else{
+				fracs.set(i,bt);
+				e.setmod();
+			}
+		}
+		//calcula o mmc
+		bt=Funcoes.mmcPolinomios(new Vector(fracs),e);
+		// pega a operação para poder montar uma nova equação apenas para aplicar a multiplicação
+		//do MMC pelo numerador
+		BTNode pai=operacao.getPai();
+		if (operacao.ehFilhoEsq())pai.setEsq(null);
+		else pai.setDir(null); 
+		//segunda etapa dividir o denominador da nova fração
+		//cria uma equação nova apenas para executar a multplicação do mmc pelos numeradores
+		// modelo:  (Fração1+Fração2=0)/(variável bt)
+		BTNode newEq=new BTNode ("=",operacao,new BTNode ("0"));
+		newEq=new BTNode ("/",newEq,bt);
+		Expression expr=new Expression(newEq); 
+		//newEq apontara para o mmc
+		newEq=Funcoes.calcularMMC(expr.getRoot(),expr);
+		//ir até o resultado das multiplicações,
+		// ou seja, filho esquerdo do filho esquerdo da raiz,
+		// onde raiz é "/" e o filho esquerdo é "="
+		newEq=newEq.getPai().getEsq().getEsq();
+		newEq.getPai().setEsq(null);
+		//montar a divisão
+		newEq=new BTNode("/",newEq,bt);
+		if (pai.getEsq()==null)pai.setEsq(newEq);
+		else pai.setDir(newEq);
+		return e.getRoot();
+	}
+	
+	
+	/**
 	 * Método utilizado apenas para debug da funções do Drools pois estas não se pode por 
 	 * um breakpoint.
 	 * @return <code>true</code>
