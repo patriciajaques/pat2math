@@ -141,17 +141,16 @@ function divaLiteMoveTo(x, y) {
 var char1;
 
 function init() {
-
 //    var bookPosition = $("#book").css("margin-left");
 //    alert(bookPosition);
 
     //===========================================================
     //Example 1 -> creates a char without a chatterbot
     var conf1 = {
-//        charname: 'pat',                
-        charname: 'pepe',
-        z_index: 1000,
-        pictw: 226,
+//    		charname: 'pat',            
+      charname: 'pepe',
+        z_index: 9999999999999999999999999,
+        pictw: 264,
         picth: 295,
         containerWidth: 226,
         speechBubbleWidth: 200,
@@ -161,8 +160,8 @@ function init() {
         framed: 0,
         movieSpeed: 97,
         showSpeed: false,
-        posy: 100,
-        posx: 20,
+        posy: 1000,
+        posx: 1000,
         debug: false,
         frameColor: '#cccccc',
         corporalMovements: [
@@ -214,12 +213,17 @@ function init() {
 
     char1 = new DIVA_character(conf1);
     char1.create();
+    
     //===========================================================
 
     $(".divaContainer").position({
         of: $("#book"),
-        my: "right top",
-        at: "left top",
+        //my: "right top",
+        //at: "left top",
+        position: "absolute",
+        top: "100px",
+        left: "400px",
+        opacity: "0.7",
         collision: "fit fit"
     });
 }

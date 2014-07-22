@@ -720,7 +720,7 @@
                                         5+x <b>-></b> 5+x
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de adiÃ§Ã£o: tecla <span class="kbd">+</span>
+                                        Operação de adição: tecla <span class="kbd">+</span>
                                     </td>
                                 </tr>
                             </table>
@@ -732,7 +732,7 @@
                                         x-6 <b>-></b> x-6
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de subtraÃ§Ã£o: tecla <span class="kbd">-</span>
+                                        Operação de subtração: tecla <span class="kbd">-</span>
                                     </td>
                                 </tr>
                             </table>
@@ -741,10 +741,10 @@
                             <table class="systemHelp">
                                 <tr>
                                     <td class="example">
-                                        4*3 <b>-></b> 4Ã3
+                                        4*3 <b>-></b> 4*3
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de multiplicaÃ§Ã£o: tecla <span class="kbd">*</span>
+                                        Operação de multiplicação: tecla <span class="kbd">*</span>
                                     </td>
                                 </tr>
                             </table>
@@ -756,14 +756,14 @@
                                         8+3/x+5 <b>-></b> <math><mn>8</mn><mo>+</mo><mfrac><mn>3</mn><mn>x</mn></mfrac><mo>+</mo><mn>5</mn></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de divisÃ£o (um elemento): tecla <span class="kbd">/</span>
+                                        Operação de divisão (um elemento): tecla <span class="kbd">/</span>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="hLine"></div>
                         <div class="hLine">
-                            <svg class="hole">                
+                            <svg class="hole">
                             <circle cx="15" cy="15" r="12" fill="url(#gradHelp)" />
                             </svg>
                             <table class="systemHelp">
@@ -772,7 +772,7 @@
                                         (7+x)/(x*4) <b>-></b> <math><mfrac><mrow><mn>7</mn><mo>+</mo><mn>x</mn></mrow><mrow><mn>x</mn><mo>*</mo><mn>4</mn></mrow></mfrac></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de divisÃ£o (vÃ¡rios elementos): teclas <span class="kbd">/</span> e <span class="kbd">(</span> <span class="kbd">)</span>
+                                        Operação de divisão (vários elementos): teclas <span class="kbd">/</span> e <span class="kbd">(</span> <span class="kbd">)</span>
                                     </td>
                                 </tr>
                             </table>
@@ -782,10 +782,10 @@
                             <table class="systemHelp">
                                 <tr>
                                     <td class="example">
-                                        x=+-7 <b>-></b> <math><mn>x</mn><mo>=</mo><mo>Â±</mo><mn>7</mn></math>
+                                        x=+-7 <b>-></b> <math><mn>x</mn><mo>=</mo><mo>±</mo><mn>7</mn></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de mais e menos: teclas <span class="kbd">+</span> e <span class="kbd">-</span>
+                                        Operação de mais e menos: teclas <span class="kbd">+</span> e <span class="kbd">-</span>
                                     </td>
                                 </tr>
                             </table>
@@ -797,7 +797,7 @@
                                         r4+x <b>-></b> <math><msqrt><mn>4</mn></msqrt><mo>+</mo><mn>x</mn></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de raÃ­z quadrada (um elemento): tecla <span class="kbd">r</span>
+                                        Operação de raíz quadrada (um elemento): tecla <span class="kbd">r</span>
                                     </td>
                                 </tr>
                             </table>
@@ -809,7 +809,7 @@
                                         r(5+x) <b>-></b> <math><msqrt><mrow><mn>5</mn><mo>+</mo><mn>x</mn></mrow></msqrt></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de raÃ­z quadrada (vÃ¡rios elementos): tecla <span class="kbd">r</span>
+                                        Operação de raí­z quadrada (vários elementos): tecla <span class="kbd">r</span>
                                     </td>
                                 </tr>
                             </table>
@@ -821,7 +821,7 @@
                                         3-x^2 <b>-></b> <math><msup><mn>x</mn><mn>2</mn></msup></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de potÃªnciaÃ§Ã£o (um elemento): teclas <span class="kbd">^</span> + <span class="kbd">2</span>
+                                        Operação de potenciação (um elemento): teclas <span class="kbd">^</span> + <span class="kbd">2</span>
                                     </td>
                                 </tr>
                             </table>
@@ -833,7 +833,7 @@
                                         (3-x)^2  <b>-></b> <math><msup><mrow><mo>(</mo><mn>3</mn><mo>-</mo><mn>x</mn><mo>)</mo></mrow><mn>2</mn></msup></math>
                                     </td>
                                     <td>
-                                        OperaÃ§Ã£o de potÃªnciaÃ§Ã£o (vÃ¡rios elementos): teclas <span class="kbd">^</span> + <span class="kbd">2</span>
+                                        Operação de potenciaçãoo (vários elementos): teclas <span class="kbd">^</span> + <span class="kbd">2</span>
                                     </td>
                                 </tr>
                             </table>
@@ -844,7 +844,7 @@
                             </svg>
                         </div>
                         <div class="hLine">
-                            <h4>PontuaÃ§Ã£o</h4>
+                            <h4>Pontuação</h4>
                         </div>
                         <div class="hLine">
                             <table class="systemHelp">
@@ -853,7 +853,7 @@
                                         + pontos
                                     </td>
                                     <td>
-                                        Acertar os passos e a resposta final da equaÃ§Ã£o (+10 pontos ou mais).
+                                        Acertar os passos e a resposta final da equação (+10 pontos ou mais).
                                     </td>
                                 </tr>
                             </table>
@@ -874,7 +874,7 @@
                         <div class="hLine"></div>
                         <div class="hLine"></div>
                         <div class="hLine">
-                            <svg class="hole">                
+                            <svg class="hole">
                             <circle cx="15" cy="15" r="12" fill="url(#gradHelp)" />
                             </svg>
                         </div>
@@ -887,7 +887,7 @@
             <div id="noteAccess"> </div>
         </div>
     </center>
-
+    
     <div style="position: fixed; top: 0; left: 0">
         <svg>
         <defs>
