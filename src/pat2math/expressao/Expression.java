@@ -939,6 +939,27 @@ public class Expression implements Cloneable{
 		}
 		return folhas;
 	}
+	
+	/**
+	 * Obtem todas as folhas de uma arvore, neste método, folhas são valores inteiros
+	 * (com potência/raiz ou não) com ou sem incógnita, ou frações. 
+	 * @param r a raiz da arvore a ser buscada
+	 * @param folhas o <code>Vector</code> que serão adicionadas as folhas. 
+	 * @return o <code>Vector</code> com todas as "folha" da árvore r. 
+	 */
+	public static Vector<BTNode> getFolhasFracoes(BTNode r, Vector<BTNode> folhas){
+		if (r!=null){
+			if (r.eFolha() ||
+						r.getValue().equals("^") ||
+						r.getValue().equals("R") ||
+						r.getValue().equals("/"))	folhas.add(r);
+			else{
+				folhas = getFolhasFracoes(r.getEsq(), folhas);
+				folhas = getFolhasFracoes(r.getDir(), folhas);
+			}
+		}
+		return folhas;
+	}
 	/**
 	 * Obtem a raiz da arvore
 	 * @return a raiz da arvore

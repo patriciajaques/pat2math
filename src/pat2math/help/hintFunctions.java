@@ -52,6 +52,8 @@ public class hintFunctions {
 					n2=folhas.get(j);
 					if (n1!=n2){
 						if (x.equals("+") || x.equals("-")){
+							//verifica se ambos são valores compativeis de serem somados/subtraidos
+							//se são 2 inteiros, ou 2 incognitas ou duas incognitas quadradas
 							can=Funcoes.isInteger(n1.getValue()) && Funcoes.isInteger(n2.getValue());
 							if (!can)can=Funcoes.isInc(n1.getLast()) && Funcoes.isInc(n2.getLast());
 							if (!can)can=Funcoes.isSquaredInc(n1) && Funcoes.isSquaredInc(n2);
@@ -59,12 +61,35 @@ public class hintFunctions {
 						}else if (x.equals("*")) can=true;
 						if (can && n1!=null && n2!=null){
 							BTNode pai=f.verificaPai(e, n1, n2);
-							boolean canOp=checkNode(n1, x, pai);
+							
+							/* checar o caminho de n1 e n2:
+							 * na soma = deve haver apenas +  caminho
+							 * na sub = uma + e um numero negativo, ou apenas -
+							 * na mult = deve haver apenas apenas *
+							 */
+							/*boolean canOp=checkNode(n1, x, pai);
 							// pois o sinal de - da subtração pode estar no operando direito
 							if (!canOp && x.equals("-") && n2.getFirst()=='-')canOp=checkNode(n1, "+", pai);
 							// se o primeiro ja for false não é necessario verificar o segundo
 							if (canOp)canOp=checkNode(n2, x, pai);
 							if (!canOp && x.equals("-") && n2.getFirst()=='-' )canOp=checkNode(n2, "+", pai);
+							*/
+							boolean canOp = pai.getValue().equals(x);
+							if (!canOp && x.equals("-") && pai.getValue().equals("+"))canOp=true;
+							if (canOp){
+								boolean esq,dir;
+								if (x.equals("*") || x.equals("+")){
+									esq=Funcoes.caminho(n1,pai,x);
+									dir=Funcoes.caminho(n2,pai,x);
+									canOp=esq&&dir;
+								}else if (x.equals("-")){
+									esq=Funcoes.caminho(n1,pai,x);
+									dir=Funcoes.caminho(n2,pai,x);
+									canOp=esq&&dir;
+									//ou seja a+(-b) => a-b
+									if (!canOp && esq && n2.getValue().startsWith("-"))dir=Funcoes.caminho(n2,pai,"+");
+								}
+							}
 							if (canOp){
 								op.add(n1);
 								op.add(n2);

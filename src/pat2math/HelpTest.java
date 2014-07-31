@@ -31,11 +31,11 @@ public class HelpTest {
 		tip.setContent("AD");
 		tip.setLevel(2);
 		t.add(tip);
-		//Tip hint=ma.hints("x=3+2",t,c);
-		ma.setExpressao("x=7x+x");
-		ma.setOperacao("AD");
-		Mensagem hint = ma.iniciaResolucao("x=4x", t, c);
-		System.out.println(hint.getFeedback());
+		Tip hint=ma.hints("2*(x-7)-6=24",t,c);
+	//	ma.setExpressao("x=7x+x");
+	//	ma.setOperacao("AD");
+	//	Mensagem hint = ma.iniciaResolucao("x=4x", t, c);
+		//System.out.println(hint.getFeedback());
 	}
 	
 	/*

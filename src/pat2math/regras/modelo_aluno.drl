@@ -223,6 +223,83 @@ function List[] getNodosCalculo (Expression usr, Expression solver){
 	return calculos;
 }
 
+function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
+	Funcoes f=new Funcoes();
+	//f.j();
+	BTNode us,sv;
+	if (user.isRootMMC())us=user.getRoot().getEsq();
+	else us=user.getRoot();
+	if (solver.isRootMMC())sv=solver.getRoot().getEsq();
+	else sv=solver.getRoot();
+	f.modificaSinal(us);
+	f.modificaSinal(sv);
+	List<BTNode> folhasUEsq=Expression.getFolhasFracoes(us.getEsq(),new Vector<BTNode>());
+	List<BTNode> folhasUDir=Expression.getFolhasFracoes(us.getDir(),new Vector<BTNode>());
+	List<BTNode> folhasSEsq=Expression.getFolhasFracoes(sv.getEsq(),new Vector<BTNode>());
+	List<BTNode> folhasSDir=Expression.getFolhasFracoes(sv.getDir(),new Vector<BTNode>());
+	
+	List<BTNode> folhasUEsqInt= Conjuntos.getIntegers(folhasUEsq,true);
+	List<BTNode> folhasUDirInt= Conjuntos.getIntegers(folhasUDir,true);
+	List<BTNode> folhasSEsqInt= Conjuntos.getIntegers(folhasSEsq,true);
+	List<BTNode> folhasSDirInt= Conjuntos.getIntegers(folhasSDir,true);
+	
+	folhasUEsqInt.addAll(Conjuntos.getIncognitas(folhasUEsq,true));
+	folhasUDirInt.addAll(Conjuntos.getIncognitas(folhasUDir,true));
+	folhasSEsqInt.addAll(Conjuntos.getIncognitas(folhasSEsq,true));
+	folhasSDirInt.addAll(Conjuntos.getIncognitas(folhasSDir,true));
+	
+	folhasUEsq = filterSimpleFractions(folhasUEsq);
+	folhasUDir = filterSimpleFractions(folhasUDir);
+	folhasSEsq = filterSimpleFractions(folhasSEsq);
+	folhasSDir = filterSimpleFractions(folhasSDir);
+	
+	List calculos[]= new List[2];
+	if (folhasUEsq.isEmpty() && folhasUDir.isEmpty() && folhasSEsq.isEmpty() &&folhasSDir.isEmpty()){
+		calculos[0]=new ArrayList<BTNode>();
+		calculos[1]=new ArrayList<BTNode>();
+		return calculos;
+	}
+	
+	 
+	//Obtem os nos de solver que nao estao presentes em usr 
+	List<BTNode> folhasDifEsq=Conjuntos.diferencaFracao(folhasSEsq,folhasUEsq);
+	List<BTNode> folhasDifDir=Conjuntos.diferencaFracao(folhasSDir,folhasUDir);
+	
+	List<BTNode> folhasDifEsqInt=Conjuntos.diferenca(folhasSEsqInt,folhasUEsqInt);
+	List<BTNode> folhasDifDirInt=Conjuntos.diferenca(folhasSDirInt,folhasUDirInt);
+	
+	folhasDifEsq.addAll(folhasDifEsqInt);
+	folhasDifDir.addAll(folhasDifDirInt);
+
+	calculos[0]= nodosSomaFrac(folhasDifEsq,solver);
+	calculos[1]= nodosSomaFrac(folhasDifDir,solver);
+	return calculos;
+}
+
+function List nodosSomaFrac(List folhasDif, Expression e){
+	Funcoes f=new Funcoes();
+	BTNode n1,n2,father;
+	List<String> whiteList=  Arrays.asList("+","-");
+	List<BTNode> result = new ArrayList<BTNode>();
+	//f.j();
+	for (int i=0; i<folhasDif.size();i++){
+		n1= (BTNode)folhasDif.get(i);
+		for (int j=0; j<folhasDif.size();j++){
+			n2= (BTNode)folhasDif.get(j);
+			if (n1!=n2){
+				father = f.verificaPai(e,n1, n2);
+				if (Funcoes.checkFathers(n1, father, whiteList) && 
+					Funcoes.checkFathers(n2, father, whiteList)){
+					result.add(n1);
+					result.add(n2);
+					i=j=folhasDif.size();
+				}
+			}
+		}
+	}
+	return result;
+}
+
 function List [] nodosCalculo(List folhasDifEsq,List folhasDifDir, Expression solver){
 	List <BTNode> folhasSEsq=Conjuntos.getIncognitas(folhasDifEsq,false);
 	List <BTNode> folhasSDir=Conjuntos.getIncognitas(folhasDifDir,false);
@@ -308,7 +385,7 @@ function List[] nodosPotRaizINT(List folhasDifEsq,List folhasDifDir, String op){
 	return pot;
 }
 
-function List []getNodosSimplificaveisINT(Expression usr, Expression solver){
+function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
 	f.t();
 	BTNode us,sv;
@@ -1690,6 +1767,15 @@ function boolean validarRealizaCalculo(Expression user,Expression solver){
 	}else return true;
 }
 
+function boolean validarRealizaCalculoSomaFrac(Expression user,Expression solver){
+	Funcoes.j();
+	List[] l=getNodosCalculoSomaFrac(user, solver);
+	if (l[0].isEmpty()){
+		if (l[1].isEmpty())return false;
+		return true;
+	}else return true;
+}
+
 function boolean validarCalculoMultiplicacao(Expression user, Expression solver){
 	List[] l=getNodosMult(user,solver);
 	if (l[0].isEmpty()){
@@ -2006,6 +2092,60 @@ rule "Calculo Soma e Subtracao"
 		update(solver);
 end
 
+rule "Calculo Soma Subtracao de Fracoes"
+	salience 4
+	dialect "java"
+	when
+		solver: Expression (tipo==Expression.SOLVER);
+		user: Expression (tipo==Expression.USER);
+		eval (solver.getnewexpression().contains("="));
+		eval (solver.getRoot().getValue().equals("="));
+		eval (validarRealizaCalculoSomaFrac(user,solver));	
+	then
+		List[] v=getNodosCalculoSomaFrac(user,solver);
+		List<BTNode> chosen= v[0];
+		BTNode root=solver.getRoot();
+		boolean sideLeft=true;
+		if (chosen.isEmpty()) {
+			chosen=v[1];
+			sideLeft=false;
+		}
+		String msg="# Soma";
+		Funcoes.j();
+		BTNode temp1=null,temp2=null;
+		//agrupar as frações
+		while (chosen.size()>1){
+			if (temp1==null ||temp1.getPai()!=null){
+				temp1=chosen.remove(0);
+				removeNoArvore(temp1,solver);
+			}
+			if (temp2==null || temp2.getPai()!=null){
+				temp2=chosen.remove(0);
+				removeNoArvore(temp2,solver);
+			}
+			chosen.add(0,new BTNode("+",temp1,temp2));
+		} 
+		BTNode aux;
+		if (sideLeft){
+			aux=root.getEsq();
+			root.setEsq(null);
+			if (aux.getValue().equals("0")) root.setEsq(chosen.get(0));
+			else root.setEsq(new BTNode("+",chosen.get(0),aux));
+		}else{
+			aux=root.getDir();
+			root.setDir(null);
+			if (aux.getValue().equals("0")) root.setDir(chosen.get(0));
+			else root.setDir(new BTNode("+",chosen.get(0),aux));
+		}
+		root= Funcoes.makeAddSubFactions(chosen.get(0),solver);
+		System.out.println(msg);
+		solver.setNewRoot(root);
+		listresult.add(new Equacoes (msg));
+		listresult.add(new Equacoes(solver.getnewexpression(),
+								solver.getCleanExpression(),
+								solver.getTeXExpression()));
+		update(solver);
+end
 
 rule "Calculo Multiplicacao"
 	salience 4
