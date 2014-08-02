@@ -467,6 +467,7 @@ public class ModeloAluno extends Resolvedor{
 		Expression atual=new Expression(original);
 		Funcoes f=new Funcoes();
 		f.modificaSinal(atual.getRoot());
+		f.modificaSinal(usrClone.getRoot());
 		atual.setmod();
 		Date d= new Date();
 		System.out.println("Resolucao iniciada: "+d.toString());
@@ -475,7 +476,8 @@ public class ModeloAluno extends Resolvedor{
 		resp.add(new Equacoes(atual.getnewexpression(),
 				atual.getCleanExpression(),
 				atual.getTeXExpression()));
-		boolean igual=Expression.igual(usr.getRoot(), atual.getRoot());
+		boolean igual=Expression.igual(usrClone.getRoot(), atual.getRoot());
+		usrClone=(Expression)usr.clone();
 		boolean certa=false;
 		if (!igual)certa=resolucao(usr, usrClone, atual,null);
 		boolean passoCerto=false;
@@ -536,7 +538,9 @@ public class ModeloAluno extends Resolvedor{
 		boolean requestHint=this.requestHint;
 		this.requestHint=false;
 		if (igual && !operacao.equals(Operacao.REESCREVER_EQUACAO)) {
-			Mensagem m=new Mensagem("0",true,false,false,requestHint,"O passo informado é igual a equação.");
+			// 2/08/2014: Estou considerando resposta igual como resposta errada
+			// só troquei o primeiro boolean da mensagem de true para false
+			Mensagem m=new Mensagem("0",false,false,false,requestHint,"O passo informado é igual a equação.");
 			
 			//monitor.logEquacao(original, usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
 					// m.isOperacaoCerta(), m.isUltimoPasso());

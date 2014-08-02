@@ -286,7 +286,10 @@ function List nodosSomaFrac(List folhasDif, Expression e){
 		n1= (BTNode)folhasDif.get(i);
 		for (int j=0; j<folhasDif.size();j++){
 			n2= (BTNode)folhasDif.get(j);
-			if (n1!=n2){
+			if (n1!=n2 && ((n1.getValue().equals("/") && !n1.getDir().equals("1")
+													&& !n1.getDir().equals("0")		)||
+							 n2.getValue().equals("/") && !n2.getDir().equals("1")
+							 						&&	!n2.getDir().equals("0")	)){
 				father = f.verificaPai(e,n1, n2);
 				if (Funcoes.checkFathers(n1, father, whiteList) && 
 					Funcoes.checkFathers(n2, father, whiteList)){
@@ -1768,7 +1771,7 @@ function boolean validarRealizaCalculo(Expression user,Expression solver){
 }
 
 function boolean validarRealizaCalculoSomaFrac(Expression user,Expression solver){
-	Funcoes.j();
+	//Funcoes.j();
 	List[] l=getNodosCalculoSomaFrac(user, solver);
 	if (l[0].isEmpty()){
 		if (l[1].isEmpty())return false;
@@ -1940,6 +1943,7 @@ function BTNode moverNodos(Expression solver,List[] v){
 }
 
 rule "Move INT"
+	salience 7
 	dialect "java"
 	when
 		solver: Expression (tipo==Expression.SOLVER);
@@ -1964,6 +1968,7 @@ rule "Move INT"
 end
 
 rule "Isola X"
+	salience 7
 	dialect "java"
 	when
 		solver: Expression (tipo==Expression.SOLVER);
@@ -1995,7 +2000,7 @@ rule "Mover Termo Soma Subtracao"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (!validarMoverTermoSomaSub(user,solver));
 	then
-	Funcoes.j();
+	//Funcoes.j();
 		String msg="# Operacao Inversa - Principio Aditivo";
 		List<BTNode> somaSub= getNodosMoverTermoSomaSub(user,solver);
 		BTNode n1,n2, op;
@@ -3223,7 +3228,7 @@ rule "Gera Resultado"
 		eval (e.getRoot().getValue().equals("="));
 		eval(Funcoes.canGenerateResult(e.getRoot())!=0);
 	then
-	Funcoes.j();
+	//Funcoes.j();
 		//1= mover para a direita, 2= mover para a esquerda, 0= false.
 		int moveTo=	Funcoes.canGenerateResult (e.getRoot());
 		Vector<BTNode> folhas;
