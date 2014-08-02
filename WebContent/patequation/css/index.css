@@ -493,7 +493,6 @@ input[type="text"] {
     width: 30px;
     min-width: 30px;
     max-width: 300px;
-    text-align:center;
 }
 
 .labelDefault {
