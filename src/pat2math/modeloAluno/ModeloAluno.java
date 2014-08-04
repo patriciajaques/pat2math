@@ -893,6 +893,8 @@ public class ModeloAluno extends Resolvedor{
 											expressoes.getAgenda().getActivations()));
 									Activation act=getNextActivation(actList,newActList);
 									if (act!=null){
+										//descomentar somete em debug
+									//	System.out.println("*******************Regra: " +act.getRule().getName());
 										((DefaultAgenda)expressoes.getAgenda()).fireActivation(act);
 										forBhaskara=remakeBK(forBhaskara); 
 										actList.remove(0); //remove a regra utilizada

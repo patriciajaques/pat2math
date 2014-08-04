@@ -1498,6 +1498,7 @@ function List getPotRaizINT(List l, String op){
 function List getFracaoSimpINT(List l, List user){
 	Vector<BTNode> fracao=new Vector <BTNode>();
 	BTNode aux;
+	Funcoes.j();
 	for (int i=l.size()-1;i>=0;i--){
 		aux=(BTNode)l.get(i);
 		//bloqueia simplificação de frações com raízes
@@ -1569,12 +1570,13 @@ function List getFracaoSimpINT(List l, List user){
 							// por isso n faz nada e segue para o priximo valor 
 						}
 					}
-					if (fracao.isEmpty()){
+					/*if (fracao.isEmpty()){
 						if (v1%v2==0){
 							fracao.add(aux);
 							fracao.add(new BTNode((int)v2+""));
 						}
-					}
+					}*/ //Removido o suporte a divisão de numerador por denominador, devido a falta de suporte
+						//por parte da regra e por estar fora do escopo da mesma
 					//ate aqui vai o teste
 				}
 			}
@@ -2363,6 +2365,7 @@ rule "Simplificacao de Inteiros"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarSimplificacaoINT(user,solver));
 	then
+		Funcoes.j();
 		String msg="# Simplificar";
 		List<BTNode>[] simplificaveis=getNodosSimplificaveisINT(user,solver);
 		List<BTNode> simplifica= simplificaveis[0];
@@ -2457,6 +2460,7 @@ rule "Simplificacao de Incognitas e Potencias"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarSimplificacaoINC(user,solver));
 	then
+		Funcoes.j();
 		String msg="# Simplificar";
 		List<BTNode>[] simplificaveis=getNodosSimplificaveisINC(user,solver);
 		List<BTNode> simplifica= simplificaveis[0];
@@ -3171,6 +3175,8 @@ rule "Operacao Inversa com fracao"
 		update(solver);
 end
 
+/*Utizado para ativar as regras de cálculo da bhaskara e delta
+*/
 rule "Igualar a zero"
 	dialect "java"
 	when
@@ -3178,11 +3184,11 @@ rule "Igualar a zero"
 		user: Expression (tipo==Expression.COEFICIENTES_BK || tipo==Expression.USER);
 		eval(e.getnewexpression().contains("="));
 		eval (e.getRoot().getValue().equals("="));
-		eval (Funcoes.canEqualZERO (e.getRoot())!=0);
+		eval (Funcoes.canEqualZERO (user,e)!=0);
 	then
 	
 		//1= mover para a direita, 2= mover para a esquerda, 0= false.
-		int moveTo=	Funcoes.canEqualZERO (e.getRoot());
+		int moveTo=	Funcoes.canEqualZERO (user,e);
 		Vector<BTNode> folhas;
 		BTNode root= e.getRoot();
 		BTNode n;

@@ -436,7 +436,18 @@ public class Funcoes {
 	 * @param root
 	 * @return 1= mover para a direita, 2= mover para a esquerda, 0= false.
 	 */
-	public static int canEqualZERO(BTNode root){
+	public static int canEqualZERO(Expression user, Expression solver){
+		BTNode usrRoot=user.getRoot();
+		boolean can=false;
+		if (user.getTipo().equals(Expression.COEFICIENTES_BK))can=true;
+		else if (usrRoot.getEsq().getValue().equals("d") ||usrRoot.getDir().getValue().equals("d")) can=true;
+		else if (user.getnewexpression().contains("±"))can=true;
+		//sem .getLast pq tem que ser apenas a incaognita em dum dos lados do resultado ao aluno
+		// para representar que ele esta apontado o resultado final da bhasakara
+		else if (Funcoes.isInc(usrRoot.getEsq().getValue()) || Funcoes.isInc(usrRoot.getDir().getValue())) can=true;
+		
+		if (can){
+		BTNode root = solver.getRoot();
 		if ((root.getDir().eFolha() && root.getDir().getValue().equals("0")) ||
 			(root.getEsq().eFolha() && root.getEsq().getValue().equals("0"))){
 				return 0;
@@ -455,6 +466,8 @@ public class Funcoes {
 		if (!moveEsq && !moveDir) return 0;
 		if (moveEsq) return 1;
 		else return 2;
+		}
+		return 0;
 	}
 	
 	/**

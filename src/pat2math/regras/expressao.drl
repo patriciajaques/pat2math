@@ -1648,6 +1648,7 @@ rule "Simplifica"
 			b=e.findLeafSimp(s.getEsq(),s.getDir(),s);
 			if (b[0]==null)b=null;
 		}
+		Funcoes.j();
 		//simplifica frações diferentes
 		if (b==null){
 			try{
@@ -1892,6 +1893,7 @@ rule "Divide iguais"
 		eval (e.getRoot().getValue().equals("="));
 		eval(filhosIguais(e.buscaXall("/",e.getRoot()))!=null);
 	then
+		Funcoes.j();
 		BTNode s =filhosIguais(e.buscaXall("/",e.getRoot()));
 		s.setValue("1");
 		s.setDir(null);
@@ -3426,6 +3428,7 @@ rule "Divide por 1"
 		eval (e.getnewexpression().contains("="));
 		eval (canDivideBy1(e.getRoot(),e)!=null);
 	then
+		Funcoes.j();
 		System.out.println("# Simplificar");
 		listresult.add(new Equacoes("# Simplificar"));
 		e.removeDaArvore(canDivideBy1(e.getRoot(),e).getDir());
