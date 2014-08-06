@@ -875,7 +875,7 @@ function BTNode getSomaSubFrac(Expression e){
 // os valores inteiros que fezem parte desta soma
 // @Deprecated 
 function BTNode[] getSomaSubFracINT(Expression e){
-	Funcoes.j();
+	//Funcoes.j();
 	ArrayList<BTNode> integers= new ArrayList<BTNode>();
 	BTNode root =e.getRoot();
 	List<BTNode> fracEsq= Expression.buscaXall("/",root.getEsq());
@@ -1648,7 +1648,7 @@ rule "Simplifica"
 			b=e.findLeafSimp(s.getEsq(),s.getDir(),s);
 			if (b[0]==null)b=null;
 		}
-		Funcoes.j();
+		//Funcoes.j();
 		//simplifica frações diferentes
 		if (b==null){
 			try{
@@ -1893,7 +1893,7 @@ rule "Divide iguais"
 		eval (e.getRoot().getValue().equals("="));
 		eval(filhosIguais(e.buscaXall("/",e.getRoot()))!=null);
 	then
-		Funcoes.j();
+	//	Funcoes.j();
 		BTNode s =filhosIguais(e.buscaXall("/",e.getRoot()));
 		s.setValue("1");
 		s.setDir(null);
@@ -3428,7 +3428,7 @@ rule "Divide por 1"
 		eval (e.getnewexpression().contains("="));
 		eval (canDivideBy1(e.getRoot(),e)!=null);
 	then
-		Funcoes.j();
+		//Funcoes.j();
 		System.out.println("# Simplificar");
 		listresult.add(new Equacoes("# Simplificar"));
 		e.removeDaArvore(canDivideBy1(e.getRoot(),e).getDir());

@@ -27,7 +27,7 @@ MM	2	MM	Observe que as frações a serem operadas possuem denominadores diferent
 MM	3	MM	Calcule o Mínimo Múltiplo Comum dos termos <eq MM>.	TE
 OI	1	OI	Há dois termos que podem ser operados, no entanto esses estão em lados opostos da igualdade. O que pode ser feito para operá-los?	LE
 OI	2	OI	Como operar <eq tOI> e <eq OIt> ?	TE
-OI	3	OI	Qual a operação inversa do termo <eq OIt> e <eq tOI>?	TE
+OI	3	OI	Qual a operação inversa do termo <eq OIt>?	TE
 OI	4	OI	Aplique a operação inversa em <eq tOI>. Resultando em <PP>.	ER
 SP	1	SP	Há uma operação possível de ser aplicada sobre a fração <eq t/t>.	TE
 SP	2	SP	Nesta situação há termos equivalentes. Qual operação aplicar para que esta fração se torne irredutível?	EQ

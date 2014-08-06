@@ -398,6 +398,17 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
+	
+	//obetem as folhas inteiras a fim de verificar se a simplificação resultou em um numero inteiro
+	List<BTNode> folhasUEsqINT=Conjuntos.getIntegers(Expression.getFolhas(us.getEsq(),new Vector<BTNode>()),false);
+	List<BTNode> folhasUDirINT=Conjuntos.getIntegers(Expression.getFolhas(us.getDir(),new Vector<BTNode>()),false);
+	List<BTNode> folhasSEsqINT=Conjuntos.getIntegers(Expression.getFolhas(sv.getEsq(),new Vector<BTNode>()),false);
+	List<BTNode> folhasSDirINT=Conjuntos.getIntegers(Expression.getFolhas(sv.getDir(),new Vector<BTNode>()),false);
+	
+	//Obtem os nos de user que nao estao presentes em solver 
+	List<BTNode> folhasDifEsqINT=Conjuntos.diferenca(folhasUEsqINT,folhasSEsqINT);
+	List<BTNode> folhasDifDirINT=Conjuntos.diferenca(folhasUDirINT,folhasSDirINT);
+	
 	List<BTNode> folhasUEsq=usr.buscaChaveX(us.getEsq(),"/");
 	List<BTNode> folhasUDir=usr.buscaChaveX(us.getDir(),"/");
 	List<BTNode> folhasSEsq=solver.buscaChaveX(sv.getEsq(),"/");
@@ -409,7 +420,7 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	List<BTNode> folhasUDifEsq=Conjuntos.diferencaFracao(folhasUEsq, folhasSEsq);
 	List<BTNode> folhasUDifDir=Conjuntos.diferencaFracao(folhasUDir, folhasSDir);
 	List fracaoSimp[]=new List[2];
-	fracaoSimp=simplificaveisINT(folhasUDifEsq,folhasUDifDir,folhasDifEsq,folhasDifDir);
+	fracaoSimp=simplificaveisINT(folhasUDifEsq,folhasUDifDir,folhasDifEsq,folhasDifDir,folhasDifEsqINT,folhasDifDirINT);
 	/*if(fracaoSimp[0].isEmpty() && fracaoSimp[1].isEmpty()){
 		folhasDifEsq=Conjuntos.diferencaFracao(folhasSEsq,folhasUDir);
 		folhasDifDir=Conjuntos.diferencaFracao(folhasSDir,folhasUEsq);
@@ -423,7 +434,7 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	return fracaoSimp;
 }
 
-function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List folhasDifEsq, List folhasDifDir){	
+function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List folhasDifEsq, List folhasDifDir, List folhasDifEsqINT, List folhasDifDirINT ){	
 	//isso ja tinha
 	folhasDifEsq=Conjuntos.getFracao(folhasDifEsq);
 	folhasDifDir=Conjuntos.getFracao(folhasDifDir);
@@ -433,7 +444,57 @@ function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List fol
 	List fracaoSimp[]=new List[2];
 	fracaoSimp[0]=getFracaoSimpINT(folhasDifEsq,folhasUDifEsq);
 	fracaoSimp[1]=getFracaoSimpINT(folhasDifDir,folhasUDifDir);
+	if (fracaoSimp[0].isEmpty() && fracaoSimp[1].isEmpty()){// verificar se a divisao resultou em um inteiro
+		fracaoSimp[0]=getFracaoToINT(folhasDifEsq,folhasDifEsqINT);
+		fracaoSimp[1]=getFracaoToINT(folhasDifDir,folhasDifDirINT);
+	}
 	return fracaoSimp;
+}
+
+function List getFracaoToINT(List folhasDifS, List folhasDifUINT){
+	List<BTNode> fracao = new ArrayList<BTNode>();
+	Funcoes.j();
+	BTNode aux,usr;
+	for (int i=0;i<folhasDifS.size();i++){
+		aux=(BTNode)folhasDifS.get(i);
+		if ((aux.getEsq().eFolha() ||(aux.getEsq().getValue().equals("^") && aux.getEsq().getEsq().eFolha())) &&
+			 (aux.getDir().eFolha() || (aux.getDir().getValue().equals("^") && aux.getDir().getEsq().eFolha()))){
+			String inc1="",inc2="", esq,dir;
+			int v1,v2,resultado;
+			if (aux.getEsq().getValue().equals("^"))esq=aux.getEsq().getEsq().getValue();
+			else esq=aux.getEsq().getValue();
+			if (aux.getDir().getValue().equals("^"))dir=aux.getDir().getEsq().getValue();
+			else dir=aux.getDir().getValue();
+			if (Funcoes.isInc(esq.charAt(esq.length()-1))){
+				inc1=esq.charAt(esq.length()-1)+"";
+				esq=esq.substring(0,esq.length()-1);
+				if (esq.equals(""))esq="1";
+				if (esq.equals("-"))esq="-1";
+			}
+			if (Funcoes.isInc(dir.charAt(dir.length()-1))){
+				inc2=dir.charAt(dir.length()-1)+"";
+				dir=dir.substring(0,dir.length()-1);
+				if (dir.equals(""))dir="1";
+				if (dir.equals("-"))dir="-1";
+			}
+			v1=Integer.parseInt(esq);
+			v2=Integer.parseInt(dir);
+			if (v1%v2==0 && inc1.equals(inc2)){ // se a divisao de va por v2 não deixar resto e ambos o valores
+				resultado=v1/v2;				// possuirem ou não incógnitas
+				//buscar resultado em folhasDifUINT
+				for(int j=0;j<folhasDifUINT.size();j++){
+					usr=(BTNode)folhasDifUINT.get(j);
+					if (usr.getValue().equals(String.valueOf(resultado))){
+						fracao.add(aux);
+						fracao.add(new BTNode((int)v2+""));
+						j=folhasDifUINT.size();
+					}
+				}				
+				
+			}		
+		}
+	}
+	return fracao;
 }
 
 function List[] getNodosSimplificaveisINC (Expression usr, Expression solver){
@@ -458,6 +519,7 @@ function List[] getNodosSimplificaveisINC (Expression usr, Expression solver){
 	List fracaoSimp[]=new List[2];
 	fracaoSimp[0]=getFracaoSimpINC(folhasDifEsq);
 	fracaoSimp[1]=getFracaoSimpINC(folhasDifDir);
+	
 	return fracaoSimp;
 }
 
@@ -1498,7 +1560,7 @@ function List getPotRaizINT(List l, String op){
 function List getFracaoSimpINT(List l, List user){
 	Vector<BTNode> fracao=new Vector <BTNode>();
 	BTNode aux;
-	Funcoes.j();
+	//Funcoes.j();
 	for (int i=l.size()-1;i>=0;i--){
 		aux=(BTNode)l.get(i);
 		//bloqueia simplificação de frações com raízes
@@ -2118,7 +2180,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 			sideLeft=false;
 		}
 		String msg="# Soma";
-		Funcoes.j();
+		//Funcoes.j();
 		BTNode temp1=null,temp2=null;
 		//agrupar as frações
 		while (chosen.size()>1){
@@ -2365,7 +2427,7 @@ rule "Simplificacao de Inteiros"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarSimplificacaoINT(user,solver));
 	then
-		Funcoes.j();
+		//Funcoes.j();
 		String msg="# Simplificar";
 		List<BTNode>[] simplificaveis=getNodosSimplificaveisINT(user,solver);
 		List<BTNode> simplifica= simplificaveis[0];
@@ -2423,21 +2485,34 @@ rule "Simplificacao de Inteiros"
 			//	else aux.setValue(v1+inc1);
 		//	}else{
 				v2=v2/simplificador;//s.get(0);
-				if (!inc1.isEmpty() && v1==1)aux.setEsq(new BTNode(inc1));
-				else if (!inc1.isEmpty() && v1==-1)aux.setEsq(new BTNode("-"+inc1));
-				else aux.setEsq(new BTNode(v1+inc1));
-				if (!inc2.isEmpty() && v2==1)aux.setDir(new BTNode(inc2));
-				else if (!inc2.isEmpty() && v2==-1)aux.setDir(new BTNode("-"+inc2));
-				else aux.setDir(new BTNode(v2+inc2));
-				if (pot1>0){
-					aux.getEsq().setEsq(new BTNode(aux.getEsq().getValue()));
-					aux.getEsq().setDir(new BTNode(pot1+""));
-					aux.getEsq().setValue("^");
-				}
-				if (pot2>0){
-					aux.getDir().setEsq(new BTNode(aux.getDir().getValue()));
-					aux.getDir().setDir(new BTNode(pot1+""));
-					aux.getDir().setValue("^");
+				//se a/b=c, ou seja c não é fração
+				if (inc2.isEmpty() && v2==1){
+					if (!inc1.isEmpty() && v1==1)aux.setValue(inc1);
+					else if (!inc1.isEmpty() && v1==-1)aux.setValue("-"+inc1);
+					else aux.setValue(v1+inc1);
+					
+					if (pot1>0){
+						aux.setEsq(new BTNode(aux.getValue()));
+						aux.setDir(new BTNode(pot1+""));
+						aux.setValue("^");
+					}
+				}else{
+					if (!inc1.isEmpty() && v1==1)aux.setEsq(new BTNode(inc1));
+					else if (!inc1.isEmpty() && v1==-1)aux.setEsq(new BTNode("-"+inc1));
+					else aux.setEsq(new BTNode(v1+inc1));
+					if (!inc2.isEmpty() && v2==1)aux.setDir(new BTNode(inc2));
+					else if (!inc2.isEmpty() && v2==-1)aux.setDir(new BTNode("-"+inc2));
+					else aux.setDir(new BTNode(v2+inc2));
+					if (pot1>0){
+						aux.getEsq().setEsq(new BTNode(aux.getEsq().getValue()));
+						aux.getEsq().setDir(new BTNode(pot1+""));
+						aux.getEsq().setValue("^");
+					}
+					if (pot2>0){
+						aux.getDir().setEsq(new BTNode(aux.getDir().getValue()));
+						aux.getDir().setDir(new BTNode(pot1+""));
+						aux.getDir().setValue("^");
+					}
 				}
 		//	}
 //		}
@@ -2460,7 +2535,7 @@ rule "Simplificacao de Incognitas e Potencias"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarSimplificacaoINC(user,solver));
 	then
-		Funcoes.j();
+		//Funcoes.j();
 		String msg="# Simplificar";
 		List<BTNode>[] simplificaveis=getNodosSimplificaveisINC(user,solver);
 		List<BTNode> simplifica= simplificaveis[0];

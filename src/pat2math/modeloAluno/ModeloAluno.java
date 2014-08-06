@@ -31,6 +31,7 @@ import pat2math.util.Conjuntos;
 import pat2math.util.Funcoes;
 import pat2math.util.Teclado;
 import baseDominio.POJO.MaterialInstrucionalPOJO;
+import br.com.pat2math.studentModel.Animation;
 import br.com.pat2math.studentModel.Knowledge;
 import br.com.pat2math.studentModel.Tip;
 
@@ -544,6 +545,10 @@ public class ModeloAluno extends Resolvedor{
 			
 			//monitor.logEquacao(original, usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
 					// m.isOperacaoCerta(), m.isUltimoPasso());
+			//Tip h2 = m.getFeedbackOBJ();
+			//h2.setDescription("O passo informado é igual a equação.");
+			//h2.setId(-1L);
+			
 			m.setOperacao(operacao.getOperacao());
 			m.setRespostaAluno(usrExpression);
 			m.setSegGrau(segGrau);
