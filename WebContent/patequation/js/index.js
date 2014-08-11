@@ -26,7 +26,7 @@ var DELTA_SOLUTION = 2; //To represent a delta solution (for second degree equat
 var x1_SOLUTION = 3; //To represent the x'solution (for second degree equations)
 var x2_SOLUTION = 4; //To represent the x"solution (for second degree equations)
 
-var eq = new Equation("ss", 100);
+var eq = new Equation("patequation", 100);
 
 //eq.steps = [
 //    new Step("a=1;b=3;c=-4", NORMAL_STEP),
@@ -40,7 +40,7 @@ var eq = new Equation("ss", 100);
 //    ];
 //eq.addPoints(-23);
 
-var eq2 = new Equation("ss", 70);
+var eq2 = new Equation("patequation", 70);
 //eq2.steps = [
 //    new Step("3x=19-7", NORMAL_STEP),
 //    new Step("3x=12", NORMAL_STEP),
@@ -50,14 +50,14 @@ var eq2 = new Equation("ss", 70);
 var newEquations = [// contains the most updated array of equations
     eq,
     eq2,
-    new Equation("ss", 50),
-    new Equation("ss", 40),
-    new Equation("ss", 60),
-    new Equation("ss", 50),
-    new Equation("ss", 70),
-    new Equation("ss", 60),
-    new Equation("ss", 80),
-    new Equation("ss", 100)];
+    new Equation("patequation", 50),
+    new Equation("patequation", 40),
+    new Equation("patequation", 60),
+    new Equation("patequation", 50),
+    new Equation("patequation", 70),
+    new Equation("patequation", 60),
+    new Equation("patequation", 80),
+    new Equation("patequation", 100)];
 
 var equations = [// contains the current array of equations
     new Equation("x=1", 50),
@@ -85,7 +85,21 @@ var concluded = 0;
 //    new Equation("x+4=3*2", 70)];
 
 
-$(document).ready(function() {    
+$(document).ready(function() {	
+	$("#hide-menu").click(
+		function() {
+			$("#topics").fadeOut();
+			$("#show-menu").fadeIn();
+		}
+	);
+	
+	$("#show-menu-link").click(
+			function() {
+				$("#show-menu").fadeOut();
+				$("#topics").fadeIn();
+			}
+		);
+	
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
     loadScript("/pat2math/patequation/js/paper.js");

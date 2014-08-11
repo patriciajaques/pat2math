@@ -2,25 +2,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="author" content="Felipe de Morais">
-        <title>..:: PAT2Math ::.. </title> 
-
-        <link rel="shortcut icon" href="img/iconeLogo.ico" type="image/x-icon">
-
-        <!-- <script src="/pat2math/patequation/js/loader.js" type="text/javascript" charset="utf-8"></script> -->
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="/pat2math/patequation/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <head>     
+    	<style>
+    		input[type="text"] {
+				text-align: center;
+				font-size: 18px;
+				font-weight: bold;
+				margin-top: 0px;
+				height: 20px;
+			}	
+    	</style>
     </head>
     <body>
     
     <div id="topics">
 		<br>
-		
 		<c:forEach items="${topics}" var="topic">
 			<span class="topic" onclick="loadTasks(${topic.set.id})">
 				${topic.set.name}
@@ -32,10 +29,13 @@
 		<div class="left">
 			<a href="account" class="white-link">Perfil</a></p>
 			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p><br><br><br>
-			<!-- <p><a href="/pat2math/j_spring_security_logout" class="white-link">Esconder esta aba</a></p> -->
+			<p><a id="hide-menu" href="#" class="white-link">Esconder o menu</a></p>
 		</div>
 		<br>
 	</div>
+	<p id="show-menu">
+		<a id="show-menu-link" href="#">Mostrar o menu</a>
+	</p>
 	
     <center>
         <img id="loadingImage" src="img/loading.gif"/>
@@ -883,8 +883,8 @@
                 </div>
 
             </div>
-            <div id="calculatorAccess"> </div>
-            <div id="noteAccess"> </div>
+            <!-- <div id="calculatorAccess"> </div>
+            <div id="noteAccess"> </div> -->
         </div>
     </center>
     

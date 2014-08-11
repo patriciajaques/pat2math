@@ -91,8 +91,9 @@ function requestServer(type, last, next, typeOperation, element) {
                 //alert(result);
 
 
-                divaLiteTipAction(hint);
-
+                //divaLiteTipAction(hint);
+                showHint(hint);
+                
                 var x = $("#hint").offset().left;
                 var y = $("#hint").offset().top;
 
@@ -269,7 +270,7 @@ function requestServer(type, last, next, typeOperation, element) {
 
                         $("#newPoints").show("puff", 500, callbackAddPoints(result));
 
-                        divaLiteAction("happy;Parabéns! Continue assim amigo...");
+                        //divaLiteAction("happy;Parabéns! Continue assim amigo...");
                     }
                     selectedEquation.steps.push(step);
 
@@ -371,7 +372,8 @@ function requestServer(type, last, next, typeOperation, element) {
                         hint = split[4];
                     }
 
-                    divaLiteTipAction(hint);
+                    // divaLiteTipAction(hint);
+                    showHint(hint);
 
 //                    $("#hintText").hide('blind', 200);
 //                    $(".verticalTape").hide('blind', 200);

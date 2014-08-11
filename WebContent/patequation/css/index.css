@@ -1,4 +1,3 @@
-
 /* Large desktop */
 @media (min-width: 1000px) { 
 
@@ -20,7 +19,6 @@
 }
 
 #book {
-    /* background: url("../img/background.png") repeat scroll left top transparent; */
     background: #ccc;
     box-shadow: 3px -3px 6px #888;
     margin-top: 3%;
@@ -493,6 +491,13 @@ input[type="text"] {
     width: 30px;
     min-width: 30px;
     max-width: 300px;
+}
+
+#show-menu {
+	position: absolute;
+	top: 10px;
+	left: 80%;
+	display: none;
 }
 
 .labelDefault {

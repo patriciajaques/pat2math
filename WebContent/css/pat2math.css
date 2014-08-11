@@ -227,12 +227,18 @@ input[type=checkbox] {
 }
 
 input[type=text], input[type=password] , textarea {
-	margin-bottom: 2px;
+	margin-bottom: 4px;
 	height: 25px;
 	width: 300px;
 	border-radius: 0;
 	border: 1px solid #aaa;
 	box-shadow: 1px 1px 2px #999;
+}
+
+select {
+	margin-bottom: 4px;
+	width: 300px;
+	height: 30px;
 }
 
 input[type=text]:focus, input[type=password]:focus, textarea:focus {
