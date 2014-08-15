@@ -390,7 +390,7 @@ function List[] nodosPotRaizINT(List folhasDifEsq,List folhasDifDir, String op){
 
 function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
+	//f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -404,6 +404,14 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	List<BTNode> folhasUDirINT=Conjuntos.getIntegers(Expression.getFolhas(us.getDir(),new Vector<BTNode>()),false);
 	List<BTNode> folhasSEsqINT=Conjuntos.getIntegers(Expression.getFolhas(sv.getEsq(),new Vector<BTNode>()),false);
 	List<BTNode> folhasSDirINT=Conjuntos.getIntegers(Expression.getFolhas(sv.getDir(),new Vector<BTNode>()),false);
+	
+	//nesta funcao o termo inteiro também se refere a numeros acompanhados de incpognitas
+	// portanto buscar também as incognitas
+	folhasUEsqINT.addAll(Conjuntos.getIncognitas(Expression.getFolhas(us.getEsq(),new Vector<BTNode>()),true));
+	folhasUDirINT.addAll(Conjuntos.getIncognitas(Expression.getFolhas(us.getDir(),new Vector<BTNode>()),true));
+	folhasSEsqINT.addAll(Conjuntos.getIncognitas(Expression.getFolhas(sv.getEsq(),new Vector<BTNode>()),true));
+	folhasSDirINT.addAll(Conjuntos.getIncognitas(Expression.getFolhas(sv.getDir(),new Vector<BTNode>()),true));
+	
 	
 	//Obtem os nos de user que nao estao presentes em solver 
 	List<BTNode> folhasDifEsqINT=Conjuntos.diferenca(folhasUEsqINT,folhasSEsqINT);
@@ -459,12 +467,16 @@ function List getFracaoToINT(List folhasDifS, List folhasDifUINT){
 		aux=(BTNode)folhasDifS.get(i);
 		if ((aux.getEsq().eFolha() ||(aux.getEsq().getValue().equals("^") && aux.getEsq().getEsq().eFolha())) &&
 			 (aux.getDir().eFolha() || (aux.getDir().getValue().equals("^") && aux.getDir().getEsq().eFolha()))){
-			String inc1="",inc2="", esq,dir;
-			int v1,v2,resultado;
-			if (aux.getEsq().getValue().equals("^"))esq=aux.getEsq().getEsq().getValue();
-			else esq=aux.getEsq().getValue();
-			if (aux.getDir().getValue().equals("^"))dir=aux.getDir().getEsq().getValue();
-			else dir=aux.getDir().getValue();
+			String inc1="",inc2="", esq,dir,resultINC="";
+			int v1,v2,resultado, pot1=1,pot2=1, resultPOT=1;
+			if (Funcoes.isSquaredLeaf(aux.getEsq())){
+				esq=aux.getEsq().getEsq().getValue();
+				pot1=aux.getEsq().getDir().getIntValue();
+			}else esq=aux.getEsq().getValue();
+			if (Funcoes.isSquaredLeaf(aux.getDir())){
+				dir=aux.getDir().getEsq().getValue();
+				pot2=aux.getDir().getDir().getIntValue();
+			}else dir=aux.getDir().getValue();
 			if (Funcoes.isInc(esq.charAt(esq.length()-1))){
 				inc1=esq.charAt(esq.length()-1)+"";
 				esq=esq.substring(0,esq.length()-1);
@@ -479,12 +491,22 @@ function List getFracaoToINT(List folhasDifS, List folhasDifUINT){
 			}
 			v1=Integer.parseInt(esq);
 			v2=Integer.parseInt(dir);
-			if (v1%v2==0 && inc1.equals(inc2)){ // se a divisao de va por v2 não deixar resto e ambos o valores
-				resultado=v1/v2;				// possuirem ou não incógnitas
+			//inc1 / inc2 resulta em " " - vazio 
+			if (inc1.equals(inc2)) resultINC="";
+			else if (!inc1.isEmpty())resultINC=inc1;
+			else if (inc1.isEmpty() && !inc2.isEmpty())resultINC="NOT";
+			
+			//nesta funcao não pode resultar em inc1=="" e inc2=="x" pois ai não resulta em um
+			// numero inteiro (sem denominador) que não é o foco desta função
+			
+			if (v1%v2==0 && !resultINC.equals("NOT")){ // se a divisao de va por v2 não deixar resto e ambos o valores
+				resultado=v1/v2;
+				resultINC=Funcoes.formatResultado(resultado+resultINC);				
 				//buscar resultado em folhasDifUINT
 				for(int j=0;j<folhasDifUINT.size();j++){
 					usr=(BTNode)folhasDifUINT.get(j);
-					if (usr.getValue().equals(String.valueOf(resultado))){
+					if (usr.getValue().equals("^"))usr=usr.getEsq();
+					if (usr.getValue().equals(resultINC)){
 						fracao.add(aux);
 						fracao.add(new BTNode((int)v2+""));
 						j=folhasDifUINT.size();
