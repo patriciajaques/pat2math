@@ -635,6 +635,7 @@ function boolean canMMC(Expression e){
 	for (int i=0;i<noList.size();i++){
 		no=noList.get(i);
 		//checar se n há multiplicaco por 1 pois isso causa loop
+		
 		mults=e.buscaChaveX(no,"*");
 		for (BTNode mul:mults){
 			if (mul.getEsq().getValue().equals("1") ||
@@ -645,6 +646,11 @@ function boolean canMMC(Expression e){
 		}
 		if (!no.getDir().getValue().equals("1")) denDifUm=true;		
 		if (Expression.find(e.getRoot(),"R")!=null)return false;
+		//negar mmc de numero negativo
+		if (Funcoes.isInteger(no.getDir().getValue())){
+			int den= no.getDir().getIntValue();
+			if (den<=0)return false;
+		}
 		//if (e.getRoot().getEsq().eFolha() && Funcoes.isInc(e.getRoot().getEsq().getValue())) return false;
 		if (no.getPai()!=null){
 			BTNode pai=no.getPai();
