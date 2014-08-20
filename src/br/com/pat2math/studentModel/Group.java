@@ -31,7 +31,7 @@ public class Group {
 	private String maxOfStudents;
 	
 	@OneToMany(mappedBy="group", targetEntity=Student.class)
-	private List<Student> student;
+	private List<Student> students;
 	
 	@ManyToOne
 	@JoinColumn(name="id_plan", referencedColumnName="id")
@@ -61,12 +61,12 @@ public class Group {
 		this.name = name;
 	}
 
-	public List<Student> getStudent() {
-		return student;
+	public List<Student> getStudents() {
+		return students;
 	}
 
-	public void setStudent(List<Student> student) {
-		this.student = student;
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 	public School getSchool() {

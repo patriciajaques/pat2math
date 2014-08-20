@@ -18,6 +18,8 @@ public class SignUpConfirmation {
 	
 	private String hash;
 	
+	private SignUpConfirmation() {}
+	
 	public static SignUpConfirmation generateForUser(User user) {
 		SignUpConfirmation confirmation = new SignUpConfirmation();
 		confirmation.user = user;
@@ -28,20 +30,6 @@ public class SignUpConfirmation {
 	private static String generateHash() {
 		return UUID.randomUUID().toString();
 	}
-	
-	/*public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	
-
-	public void setHash(String hash) {
-		this.hash = hash;
-	}*/
 	
 	public String getHash() {
 		return hash;

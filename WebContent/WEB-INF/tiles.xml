@@ -31,6 +31,14 @@
 		<put-attribute name="body" value="/WEB-INF/views/user/forgotPassword.jsp"/>
 	</definition>
 
+	<definition name="user.recoverPasswordSended" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/user/recoverPasswordSended.jsp"/>
+	</definition>
+
+	<definition name="user.editPassword" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/user/editPassword.jsp"/>
+	</definition>
+	
 	<!-- contents templates -->
 	<definition name="content.list" extends="admin.page">
 		<put-attribute name="body" value="/WEB-INF/views/content/list.jsp" />

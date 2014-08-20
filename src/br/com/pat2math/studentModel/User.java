@@ -1,5 +1,7 @@
 package br.com.pat2math.studentModel;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -9,9 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.Email;
+
+import br.com.pat2math.formBeans.PasswordRecoveryForm;
+
 
 @Entity
 @Table(name="user")
@@ -38,10 +45,13 @@ public class User {
 	@Size(min=5, max=120)
 	@Column(unique=true)
 	private String email;
-
+	
+	@OneToMany(mappedBy="user", targetEntity=PasswordRecovery.class)
+	private List<PasswordRecovery> passwordRecoveries;
+	
 	@Size(min=4, max=1000)
 	private String password;
-	
+
 	private String role;
 	
 	private boolean enable;
@@ -57,6 +67,15 @@ public class User {
 	
 	public void activate() {
 		enable = true;
+	}
+	
+	public User updatePassword(String password) {
+		this.setPassword(password);
+		return this;
+	}
+	
+	public PasswordRecovery getLastPasswordRecovery() {
+		return passwordRecoveries.get(passwordRecoveries.size() -1);
 	}
 
 	public Long getId() {
@@ -113,6 +132,14 @@ public class User {
 
 	public void setEnable(boolean enable) {
 		this.enable = enable;
+	}
+
+	public List<PasswordRecovery> getPasswordRecoveries() {
+		return passwordRecoveries;
+	}
+
+	public void setPasswordRecoveries(List<PasswordRecovery> passwordRecoveries) {
+		this.passwordRecoveries = passwordRecoveries;
 	}
 	
 }

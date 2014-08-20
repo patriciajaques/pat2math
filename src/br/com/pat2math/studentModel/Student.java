@@ -1,5 +1,6 @@
 package br.com.pat2math.studentModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
@@ -11,8 +12,10 @@ import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("student")
-public class Student extends User {
+public class Student extends User implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@ManyToOne
 	@JoinColumn(name="id_group", referencedColumnName="id", nullable=true)
 	private Group group;

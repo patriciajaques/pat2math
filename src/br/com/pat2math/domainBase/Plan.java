@@ -25,10 +25,10 @@ public class Plan {
 	@Size(min=3, max=30)
 	private String name;
 	
-	@OneToMany(mappedBy="plan", targetEntity=Topic.class)				 
+	@OneToMany(mappedBy="plan", targetEntity=Topic.class)
 	private List<Topic> topics = new ArrayList<Topic>();
 	
-	@OneToMany(mappedBy="plan", targetEntity=Group.class)					 
+	@OneToMany(mappedBy="plan", targetEntity=Group.class)
 	private List<Group> groups = new ArrayList<Group>();
 	
 	@ManyToOne

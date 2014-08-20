@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import br.com.pat2math.repository.GroupRepository;
 import br.com.pat2math.service.GroupService;
 import br.com.pat2math.service.PlanService;
 import br.com.pat2math.studentModel.Group;
@@ -25,6 +27,7 @@ import br.com.pat2math.studentModel.Teacher;
 public class GroupController {
 	
 	@Autowired private GroupService groupService;
+	@Autowired private GroupRepository groups;
 	@Autowired private PlanService planService;
 	
 	@RequestMapping(value="new", method = RequestMethod.GET)
@@ -45,7 +48,7 @@ public class GroupController {
 	
 	@RequestMapping(value="{id}", method = RequestMethod.GET)
 	public String show(@PathVariable Long id, Model model) {
-		model.addAttribute("group", groupService.getGroup(id));
+		model.addAttribute("group", groups.getWithStudents(id));
 		model.addAttribute("plans", planService.getPlans());
 		return "group.show";
 	}

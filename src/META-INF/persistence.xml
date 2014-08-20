@@ -26,6 +26,7 @@
 	    <class>br.com.pat2math.studentModel.Knowledge</class>
 	    <class>br.com.pat2math.studentModel.Operation</class>
 	    <class>br.com.pat2math.studentModel.SignUpConfirmation</class>
+	    <class>br.com.pat2math.studentModel.PasswordRecovery</class>
 	    
 	    <properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

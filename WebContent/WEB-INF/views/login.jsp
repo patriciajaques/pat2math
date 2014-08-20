@@ -9,6 +9,9 @@
 <c:if test="${confirmed == true}">
 	<p class="msg">Conta confirmada com sucesso</p>
 </c:if>
+<c:if test="${param.recovery == true}">
+	<p class="msg">Senha atualizada com sucesso</p>
+</c:if>
 
 <form class="box" action="/pat2math/j_spring_security_check" method="post" accept-charset="utf-8">
 	<p>
@@ -32,5 +35,5 @@
 	</c:if>
 	<input class="btn btn-large" value="login" type="submit"><br>
 	<p class="left"><a href="/pat2math/student/new">cadastrar</a></p> 
-	<!-- <p class="left"><a href="user/forgotPassword">esqueci minha senha</a></p> -->
+ 	<p class="left"><a href="user/forgotPassword">esqueci minha senha</a></p>
 </form>

@@ -3,13 +3,11 @@ package br.com.pat2math.action;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,11 +19,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import pat2math.modeloAluno.Tutor;
 import br.com.pat2math.domainBase.Plan;
 import br.com.pat2math.domainBase.Topic;
 import br.com.pat2math.formBeans.StudentForm;
+import br.com.pat2math.repository.AllStudents;
 import br.com.pat2math.repository.AllUsers;
 import br.com.pat2math.repository.HelpRepository;
 import br.com.pat2math.repository.KnowledgeRepository;
@@ -42,7 +40,7 @@ import br.com.pat2math.studentModel.Student;
 @Transactional
 public class StudentController {
 	
-	@Autowired private StudentService studentService;
+	@Autowired private AllStudents allStudents;
 	@Autowired private GroupService groupService;
 	@Autowired private HelpRepository allHelps;
 	@Autowired private KnowledgeRepository allKnowledges;
@@ -74,14 +72,14 @@ public class StudentController {
 		
 		if(student.hasEmailOf(allUsers.withEmail(student.getEmail())))
 			result.rejectValue("email", "error.duplicate");
-		if(result.hasErrors()) 
+		if(result.hasErrors())
 			return "student.new";
 		
 		em.persist(student);
 		SignUpConfirmation confirmation = SignUpConfirmation.generateForUser(student);
 		em.persist(confirmation);
 		
-		emailService.sendMail(student, confirmation, "confirme sua conta");
+		emailService.sendConfirmationAccount(student, confirmation, "confirme sua conta");
 		model.addAttribute("user", student);
 		return "redirect:signUpSuccess";
 	}
@@ -93,14 +91,15 @@ public class StudentController {
 	
 	@RequestMapping("/student/changeGroup")
 	public @ResponseBody Long changeGroup(Long idGroup, HttpSession session) {
-		Student student = new CurrentUser(session).student();
-		studentService.changeGroup(student, idGroup);
+		//Student student = new CurrentUser(session).student();
+		//studentService.changeGroup(student, idGroup);
 		return idGroup;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/student/account")
 	public String account(Model model, HttpSession session) {
 		Student student = new CurrentUser(session).student();
+		student = allStudents.get(student.getId());
 		model.addAttribute("student", student);
 		model.addAttribute("groups", groupService.getGroups());
 		return "student.show";
