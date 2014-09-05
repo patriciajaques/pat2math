@@ -390,7 +390,7 @@ function List[] nodosPotRaizINT(List folhasDifEsq,List folhasDifDir, String op){
 
 function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	//f.j();
+	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -443,6 +443,7 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 }
 
 function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List folhasDifEsq, List folhasDifDir, List folhasDifEsqINT, List folhasDifDirINT ){	
+	Funcoes.j();
 	//isso ja tinha
 	folhasDifEsq=Conjuntos.getFracao(folhasDifEsq);
 	folhasDifDir=Conjuntos.getFracao(folhasDifDir);
@@ -503,15 +504,22 @@ function List getFracaoToINT(List folhasDifS, List folhasDifUINT){
 				resultado=v1/v2;
 				resultINC=Funcoes.formatResultado(resultado+resultINC);				
 				//buscar resultado em folhasDifUINT
-				for(int j=0;j<folhasDifUINT.size();j++){
-					usr=(BTNode)folhasDifUINT.get(j);
-					if (usr.getValue().equals("^"))usr=usr.getEsq();
-					if (usr.getValue().equals(resultINC)){
-						fracao.add(aux);
-						fracao.add(new BTNode((int)v2+""));
-						j=folhasDifUINT.size();
-					}
-				}				
+				//caso especifico de divisao de 0 com algo, como dá zero a resposta não vai estar em folhasDifUINT
+				//então é um caso especial
+				if (v1==0 && resultado==0){
+					fracao.add(aux);
+					fracao.add(new BTNode ((int)v2+""));
+				}else{
+					for(int j=0;j<folhasDifUINT.size();j++){
+						usr=(BTNode)folhasDifUINT.get(j);
+						if (usr.getValue().equals("^"))usr=usr.getEsq();
+						if (usr.getValue().equals(resultINC)){
+							fracao.add(aux);
+							fracao.add(new BTNode((int)v2+""));
+							j=folhasDifUINT.size();
+						}
+					}	
+				}			
 				
 			}		
 		}
