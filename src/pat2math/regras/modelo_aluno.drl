@@ -390,7 +390,7 @@ function List[] nodosPotRaizINT(List folhasDifEsq,List folhasDifDir, String op){
 
 function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.j();
+	//f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -443,7 +443,7 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 }
 
 function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List folhasDifEsq, List folhasDifDir, List folhasDifEsqINT, List folhasDifDirINT ){	
-	Funcoes.j();
+	//Funcoes.j();
 	//isso ja tinha
 	folhasDifEsq=Conjuntos.getFracao(folhasDifEsq);
 	folhasDifDir=Conjuntos.getFracao(folhasDifDir);
@@ -462,7 +462,7 @@ function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List fol
 
 function List getFracaoToINT(List folhasDifS, List folhasDifUINT){
 	List<BTNode> fracao = new ArrayList<BTNode>();
-	Funcoes.j();
+//	Funcoes.j();
 	BTNode aux,usr;
 	for (int i=0;i<folhasDifS.size();i++){
 		aux=(BTNode)folhasDifS.get(i);
@@ -1956,17 +1956,26 @@ function boolean validarDestruirZeros(Expression user, Expression solver){
 
 function boolean validarReverteEquacao(Expression user,Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
+	//f.j();
 	f.modificaSinal(user.getRoot());
 	f.modificaSinal(solver.getRoot());
+	boolean revert=false;
 	List<BTNode> folhasUEsq=Expression.getAllFolhas(user.getRoot().getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getAllFolhas(user.getRoot().getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getAllFolhas(solver.getRoot().getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasSDir=Expression.getAllFolhas(solver.getRoot().getDir(),new Vector<BTNode>());
 	if (folhasUEsq.size()==folhasSDir.size() && folhasUDir.size()==folhasSEsq.size()){
-		return checkIguais(folhasUEsq,folhasSDir) && checkIguais(folhasUDir,folhasSEsq);		
+		revert= checkIguais(folhasUEsq,folhasSDir) && checkIguais(folhasUDir,folhasSEsq);
+			
 	}
-	return false;
+	//TODO: fazer aqui para o caso de fração, ou seja, duas folhas filhas de /
+	f (!revert){
+		//caso especial, quando há um termo (ou 2 em caso de fração) em cada lado da equação, reverte de modo a manter a incognita e o 
+		// numero inteiro em lados iguais ao do aluno
+		revert= ((checkForINC(folhasUEsq,folhasSDir)&&checkForINT(folhasUDir,folhasSEsq)) ||
+			(checkForINT(folhasUEsq,folhasSDir)&&checkForINC(folhasUDir,folhasSEsq)));
+	}
+	return revert;
 }
 
 function boolean validarQuadSomDif(Expression user,Expression solver){
@@ -1997,6 +2006,26 @@ function boolean checkIguais(List user, List solver){
 		}
 	}
 	return folhasU.isEmpty() && folhasS.isEmpty();
+}
+
+function boolean checkForINC(List user, List solver){
+	BTNode auxU,auxS;
+	Funcoes.j();
+	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
+	if (folhasU.size()==1 && folhasS.size()==1){
+		return Funcoes.isInc(folhasU.get(0).getLast()) && Funcoes.isInc(folhasS.get(0).getLast());
+	}
+	return false;
+}
+
+function boolean checkForINT(List user, List solver){
+	BTNode auxU,auxS;
+	Funcoes.j();
+	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
+	if (folhasU.size()==1 && folhasS.size()==1){
+		return Funcoes.isInteger(folhasU.get(0).getValue()) && Funcoes.isInteger(folhasS.get(0).getValue());
+	}
+	return false;
 }
 
 function BTNode moverNodos(Expression solver,List[] v){
@@ -2516,17 +2545,17 @@ rule "Simplificacao de Inteiros"
 		//	}else{
 				v2=v2/simplificador;//s.get(0);
 				//se a/b=c, ou seja c não é fração
-				if (inc2.isEmpty() && v2==1){
-					if (!inc1.isEmpty() && v1==1)aux.setValue(inc1);
-					else if (!inc1.isEmpty() && v1==-1)aux.setValue("-"+inc1);
-					else aux.setValue(v1+inc1);
+				//if (inc2.isEmpty() && v2==1){
+				//	if (!inc1.isEmpty() && v1==1)aux.setValue(inc1);
+				//	else if (!inc1.isEmpty() && v1==-1)aux.setValue("-"+inc1);
+				//	else aux.setValue(v1+inc1);
 					
-					if (pot1>0){
-						aux.setEsq(new BTNode(aux.getValue()));
-						aux.setDir(new BTNode(pot1+""));
-						aux.setValue("^");
-					}
-				}else{
+				//	if (pot1>0){
+				//		aux.setEsq(new BTNode(aux.getValue()));
+				//		aux.setDir(new BTNode(pot1+""));
+				//		aux.setValue("^");
+				//	}
+			//	}else{
 					if (!inc1.isEmpty() && v1==1)aux.setEsq(new BTNode(inc1));
 					else if (!inc1.isEmpty() && v1==-1)aux.setEsq(new BTNode("-"+inc1));
 					else aux.setEsq(new BTNode(v1+inc1));
@@ -2543,7 +2572,7 @@ rule "Simplificacao de Inteiros"
 						aux.getDir().setDir(new BTNode(pot1+""));
 						aux.getDir().setValue("^");
 					}
-				}
+			//	}
 		//	}
 //		}
 		System.out.println(msg);
