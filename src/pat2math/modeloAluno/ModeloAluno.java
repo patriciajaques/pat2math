@@ -463,6 +463,7 @@ public class ModeloAluno extends Resolvedor{
 		validaEquacao val =new validaEquacao(usrExpression);
 		if (hint!=null)hint.getHintInfo().madeAction();
 		Expression usr=new Expression(val.getEquacao(),Expression.USER);
+		usr=Funcoes.removeAbstractTermInFractionResult(usr);
 		System.out.println(usrExpression);
 		Expression usrClone=(Expression)usr.clone();
 		Expression atual=new Expression(original);

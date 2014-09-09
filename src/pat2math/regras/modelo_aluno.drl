@@ -1969,7 +1969,7 @@ function boolean validarReverteEquacao(Expression user,Expression solver){
 			
 	}
 	//TODO: fazer aqui para o caso de fração, ou seja, duas folhas filhas de /
-	f (!revert){
+	if (!revert){
 		//caso especial, quando há um termo (ou 2 em caso de fração) em cada lado da equação, reverte de modo a manter a incognita e o 
 		// numero inteiro em lados iguais ao do aluno
 		revert= ((checkForINC(folhasUEsq,folhasSDir)&&checkForINT(folhasUDir,folhasSEsq)) ||
@@ -1989,6 +1989,7 @@ function boolean validarQuadSomDif(Expression user,Expression solver){
 function boolean validarFatorarQuadProdSomDif(Expression solver){
 	return getNodosFatorarQuadProdSomDif(solver)!=null;
 }
+
 
 function boolean checkIguais(List user, List solver){
 	BTNode auxU,auxS;
@@ -2011,9 +2012,17 @@ function boolean checkIguais(List user, List solver){
 function boolean checkForINC(List user, List solver){
 	BTNode auxU,auxS;
 	Funcoes.j();
+	BTNode rootU, rootS;
 	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
-	if (folhasU.size()==1 && folhasS.size()==1){
-		return Funcoes.isInc(folhasU.get(0).getLast()) && Funcoes.isInc(folhasS.get(0).getLast());
+	List<String> whiteList = Arrays.asList("/","^","R");
+	rootU=folhasU.get(0);
+	rootU=rootU.getNodeX("=");
+	rootS=folhasS.get(0);
+	rootS=rootS.getNodeX("=");
+	boolean folhasUValid= (folhasU.size()==1) ||(checkSides(rootU, whiteList));
+	boolean folhasSValid= (folhasS.size()==1) ||(checkSides(rootS, whiteList));	
+	if (folhasUValid && folhasSValid){
+		return !Conjuntos.getIncognitas(folhasU,true).isEmpty() && !Conjuntos.getIncognitas(folhasS,true).isEmpty();
 	}
 	return false;
 }
@@ -2021,11 +2030,36 @@ function boolean checkForINC(List user, List solver){
 function boolean checkForINT(List user, List solver){
 	BTNode auxU,auxS;
 	Funcoes.j();
+	BTNode rootU, rootS;
 	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
-	if (folhasU.size()==1 && folhasS.size()==1){
-		return Funcoes.isInteger(folhasU.get(0).getValue()) && Funcoes.isInteger(folhasS.get(0).getValue());
+	List<String> whiteList = Arrays.asList("/","^","R");
+	rootU=folhasU.get(0);
+	rootU=rootU.getNodeX("=");
+	rootS=folhasS.get(0);
+	rootS=rootS.getNodeX("=");
+	boolean folhasUValid= (folhasU.size()==1) ||(checkSides(rootU, whiteList));
+	boolean folhasSValid= (folhasS.size()==1) ||(checkSides(rootS, whiteList));	
+	if (folhasUValid && folhasSValid){
+		return !Conjuntos.getIntegers(folhasU,true).isEmpty() && !Conjuntos.getIntegers(folhasS,true).isEmpty();
 	}
 	return false;
+}
+
+/*
+ * Verifica se os nodos esquerdo e direito de root possuem eos valores na whitelist
+ */
+function boolean checkSides(BTNode root, List whiteList){
+	BTNode esq = root.getEsq();
+	BTNode dir = root.getDir();
+	boolean esqValid, dirValid;
+	esqValid=esq.eFolha();
+	dirValid=dir.eFolha();
+	List<String> wL= (List<String>)whiteList;
+	for (String op: wL){
+		esqValid = esqValid || op.equals(esq.getValue());
+		dirValid = dirValid || op.equals(dir.getValue());
+	}
+	return esqValid && dirValid;
 }
 
 function BTNode moverNodos(Expression solver,List[] v){
@@ -2043,7 +2077,8 @@ function BTNode moverNodos(Expression solver,List[] v){
 		else nodo.setValue(f.trocaSinal(nodo.getValue()));
 		if (nodo.getPai().getValue().equals("=")){
 			root.setDir(null);
-			root.setDir(new BTNode ("0"));
+			root.setDir(
+			new BTNode ("0"));
 		}else Expression.removeNoArvore(nodo);
 		if (novoLado.getValue().equals("0"))root.setEsq(nodo);
 		else root.setEsq(new BTNode("+",nodo,novoLado));
