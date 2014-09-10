@@ -1296,7 +1296,7 @@ function List getMoverTermoSomaSub(List esq, List dir, List uFolhasEsq, List uFo
 		for (int iE=es.size()-1;iE>=0;iE--){
 			e=es.get(iE);
 			cam=Funcoes.getNodeValues(e);
-			// eliminar o sinal de = do fim do caminho
+			// elimina o sinal de = do fim do caminho
 			cam=cam.subList(0,cam.size()-1);
 			if (e.getValue().equals("^") && e.getEsq().eFolha() && !cam.isEmpty())cam.remove(0);
 			if (!e.getValue().equals("0")&& MiscFunctions.checkForAssociativity(cam) && 

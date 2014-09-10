@@ -2408,27 +2408,26 @@ public static String getTermoComum(BTNode root){
 	public static Expression removeAbstractTermInFractionResult(Expression e){
 		BTNode root= e.getRoot();
 		BTNode esq = root.getEsq(), dir=root.getDir();
-		BTNode notX;
-		if (Funcoes.isInc(esq.getValue()))notX=dir;
-		else if (Funcoes.isInc(dir.getValue()))notX=esq;
-		else return e;
 		BTNode abs=e.getAbstract();
-		BTNode pai,notABS,result;
-		pai=abs.getPai();//pega o *, da expressão -1*a, sendo "a" uma expressão
-		esq=pai.getEsq();
-		dir=pai.getDir();
-		if (esq==abs)notABS=dir;
-		else notABS=esq;
-		//processar para a fração
-		if (notABS.getValue().equals("/")){
+		if ((Funcoes.isInc(esq.getValue()) || Funcoes.isInc(dir.getValue())) && abs!=null){
+			BTNode pai,notABS,result;
+			pai=abs.getPai();//pega o *, da expressão -1*a, sendo "a" uma expressão
+			esq=pai.getEsq();
+			dir=pai.getDir();
+			if (esq==abs)notABS=dir;
+			else notABS=esq;
+			//processar para a fração
+			if (notABS.getValue().equals("/")){
 			BTNode numerador=notABS.getEsq();
 			result=MiscFunctions.getResult(new BTNode ("*",(BTNode)abs.clone(),(BTNode)numerador.clone()));
-			numerador.setEsq(null);
-			numerador.setDir(null);
-			numerador.setValue(result.getValue());
-			numerador.setEsq(result.getEsq());
-			numerador.setDir(result.getDir());
-			Expression.removeDaArvore(abs);
+				numerador.setEsq(null);
+				numerador.setDir(null);
+				numerador.setValue(result.getValue());
+				numerador.setEsq(result.getEsq());
+				numerador.setDir(result.getDir());
+				Expression.removeDaArvore(abs);
+				e.setmod();
+			}
 		}
 		return e;
 	}
