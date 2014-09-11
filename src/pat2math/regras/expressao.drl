@@ -1467,7 +1467,7 @@ function boolean validarIsolaXnaDireita(Expression e){
 
 /**
  * Função que testa se em um dos filhos da raiz possui o valor "/"
- * e se possui uma incognita retornando true se for a equação for 
+ * e se possui uma incognita. Retornando true se for a equação for 
  * valida e false caso contrário
  */
 function boolean validarMoverTermo(Expression e){

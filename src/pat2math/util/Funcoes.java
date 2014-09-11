@@ -2437,6 +2437,7 @@ public static String getTermoComum(BTNode root){
 	 * um breakpoint.
 	 * @return <code>true</code>
 	 */
+	
 	public static boolean t(){
 		if (true) return true;
 		return false;

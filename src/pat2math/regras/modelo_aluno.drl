@@ -62,6 +62,7 @@ function List[] getOIMultDiv (Expression usr, Expression solver, String signal){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
+	//f.j();
 	List<BTNode> folhasUEsq=Expression.getFolhas(us.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getFolhas(us.getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getFolhas(sv.getEsq(),new Vector<BTNode>());
@@ -77,6 +78,45 @@ function List[] getOIMultDiv (Expression usr, Expression solver, String signal){
 	nodo[0]=folhasDifDir;
 	nodo[1]=folhasDifEsq;
 	return nodo;
+}
+
+//Valida por exemplo 2/x=90 => x=180
+function List[] getOIDiv (Expreddion usr, Expression solver){
+	Funcoes f=new Funcoes();
+	BTNode us,sv;
+	if (usr.isRootMMC())us=usr.getRoot().getEsq();
+	else us=usr.getRoot();
+	if (solver.isRootMMC())sv=solver.getRoot().getEsq();
+	else sv=solver.getRoot();
+	f.modificaSinal(us);
+	f.modificaSinal(sv);
+	//f.j();
+	BTNode rootS=solver.getRoot();
+	BTNode rootU=user.getRoot();
+	BTNode esq, dir;
+	esq=rootS.getEsq();
+	dir=rootS.getDir();
+	BTNode frac, integer, integerUser;
+	frac=integer=null;
+	if (esq.getValue().equals("/") && Funcoes.isSingleFraction(esq)){
+		frac=esq;
+		if (dir.eFolha() || (Funcoes.isSquaredLeaf(dir) && !dir.getValue().equals("R"))) integer=dir;
+	}
+	else if (dir.getValue().equals("/") && Funcoes.isSingleFraction(dir)){
+		frac=dir;
+		if (esq.eFolha() || (Funcoes.isSquaredLeaf(esq) && !esq.getValue().equals("R")))integer=esq/
+	}
+	esq=rootU.getEsq();
+	dir=rootU.getDir();
+	//checa se a equação do usuario em um dos lados é igual a equação do solver, apnes sem o denominador
+	if (esq.ig)//fazer: checar a equacao do aluno e depois comparar com result ali embaixo;
+	if (frac!=null && integer!=null){
+		BTNode den= frac.getDir();
+		den= (BTNode)den.clone();
+		integer=(BTNode)integer.clone();
+		BTNode result=MiscFuntions.getResult(new BTNode ("*",den, integer));
+		
+	}
 }
 
 function BTNode[] getPrincAdMult(Expression usr, Expression solver){
@@ -1130,6 +1170,7 @@ function List getNodosMover(List solver, List user){
 function List getNodosOIMultDiv(List solver, List user, String signal){
 	List<BTNode> slvr= new Vector<BTNode>(solver);
 	List<BTNode> usr= new Vector<BTNode>(user);
+	Funcoes.j();
 	String vS,vU;
 	ArrayList<BTNode> nodos=new ArrayList<BTNode>();
 	BTNode btS,btU;
@@ -1174,6 +1215,7 @@ function List getNodosOIMultDiv(List solver, List user, String signal){
 //valida se ax for filho de = ou ax^2 for filho de =
 function boolean canOIMult(BTNode btS, String vS, BTNode btU, String vU, String signal){
 	String btSV=btS.getValue();
+	//Funcoes.j();
 	if (btS.getValue().equals("^"))btSV=btS.getEsq().getValue();
 	if ((signal.equals("*") && btS.eFolha()||(btS.getValue().equals("^") && btS.getEsq().eFolha()) ) && (btU.eFolha() ||btU.getValue().equals("^"))){
 		String oiSignal= (signal.equals("*")) ? "/":"*";
@@ -1191,17 +1233,19 @@ function boolean canOIMult(BTNode btS, String vS, BTNode btU, String vU, String 
 
 //valida se b for filho de /
 function boolean canOIDiv(BTNode btS, String vS, BTNode btU, String vU, String signal){
+//	Funcoes.j();
+	boolean result=false;
 	if ((signal.equals("/") && btS.eFolha()||btS.getValue().equals("^") ) && (btU.eFolha() ||btU.getValue().equals("^"))){
 		String oiSignal= (signal.equals("*")) ? "/":"*";
 		if (btS.getPai().getValue().equals(signal) && btS.getPai().getPai().getValue().equals("=") && btS.ehFilhoDir()){ 
 			//if (vS.equals(vU) && ((btU.getPai().getValue().equals(oiSignal) && btU.getPai().getPai().getValue().equals("=")) ||
 			if (vS.equals(vU) && ((btU.getPai().getValue().equals(oiSignal) && canOIMove(btU,signal)) ||
 					(btU.getPai().getValue().equals("=") && Funcoes.isInc(btU.getValue().charAt(btU.getValue().length()-1))) )){
-				return true;
+				result=true;
 			}
 		}
 	}
-	return false;
+	return result;
 }
 
 // verifica se o nodo é filho de =, ou se é multplicação e há varias multiplicações encadeadas tipo x=2*x*(x+1) permite que 2 ou x seja movido
@@ -2011,7 +2055,7 @@ function boolean checkIguais(List user, List solver){
 
 function boolean checkForINC(List user, List solver){
 	BTNode auxU,auxS;
-	Funcoes.j();
+//	Funcoes.j();
 	BTNode rootU, rootS;
 	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
 	List<String> whiteList = Arrays.asList("/","^","R");
@@ -2029,7 +2073,7 @@ function boolean checkForINC(List user, List solver){
 
 function boolean checkForINT(List user, List solver){
 	BTNode auxU,auxS;
-	Funcoes.j();
+	//Funcoes.j();
 	BTNode rootU, rootS;
 	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
 	List<String> whiteList = Arrays.asList("/","^","R");
@@ -2883,6 +2927,7 @@ rule "Extrair raiz"
 end
 //fazer +testes com esta regra e a do principio aditivo-multiplicativo e aplicar as mesma alterações na da operação inversa da divisao
 rule "Operacao Inversa Multiplicacao"
+	salience 2
 	dialect "java"
 	when
 		solver: Expression (tipo==Expression.SOLVER);
@@ -2932,6 +2977,7 @@ rule "Operacao Inversa Multiplicacao"
 end
 
 rule "Operacao Inversa Divisao"
+	salience 2
 	dialect "java"
 	when
 		solver: Expression (tipo==Expression.SOLVER);
@@ -2940,10 +2986,10 @@ rule "Operacao Inversa Divisao"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarOIDiv(user,solver));
 	then
-		//testar por que a condição não ativa
 		String msg="# Operacao Inversa - Principio Multiplicativo";
 		List<BTNode>[] v= getOIMultDiv(user,solver,"/");
 		List<BTNode>l=v[0];
+		//Funcoes.j();
 		BTNode root=solver.getRoot();
 		if (l.isEmpty())l=v[1];
 		BTNode div=l.get(0);
