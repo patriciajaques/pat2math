@@ -1,10 +1,7 @@
 package pat2math;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import pat2math.expressao.Expression;
-import pat2math.expressao.arvore.BTNode;
+
 import pat2math.util.Funcoes;
 
 

@@ -2448,7 +2448,6 @@ public static String getTermoComum(BTNode root){
 		return false;
 	}
 
-	
 //	public static void main(String[] args) throws InvalidValueException {
 //		String i1="(x+1)^2-x*x=0";
 //		String i2="x^2+-(32)R2=0";

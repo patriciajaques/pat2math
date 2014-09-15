@@ -80,44 +80,7 @@ function List[] getOIMultDiv (Expression usr, Expression solver, String signal){
 	return nodo;
 }
 
-//Valida por exemplo 2/x=90 => x=180
-function List[] getOIDiv (Expreddion usr, Expression solver){
-	Funcoes f=new Funcoes();
-	BTNode us,sv;
-	if (usr.isRootMMC())us=usr.getRoot().getEsq();
-	else us=usr.getRoot();
-	if (solver.isRootMMC())sv=solver.getRoot().getEsq();
-	else sv=solver.getRoot();
-	f.modificaSinal(us);
-	f.modificaSinal(sv);
-	//f.j();
-	BTNode rootS=solver.getRoot();
-	BTNode rootU=user.getRoot();
-	BTNode esq, dir;
-	esq=rootS.getEsq();
-	dir=rootS.getDir();
-	BTNode frac, integer, integerUser;
-	frac=integer=null;
-	if (esq.getValue().equals("/") && Funcoes.isSingleFraction(esq)){
-		frac=esq;
-		if (dir.eFolha() || (Funcoes.isSquaredLeaf(dir) && !dir.getValue().equals("R"))) integer=dir;
-	}
-	else if (dir.getValue().equals("/") && Funcoes.isSingleFraction(dir)){
-		frac=dir;
-		if (esq.eFolha() || (Funcoes.isSquaredLeaf(esq) && !esq.getValue().equals("R")))integer=esq/
-	}
-	esq=rootU.getEsq();
-	dir=rootU.getDir();
-	//checa se a equação do usuario em um dos lados é igual a equação do solver, apnes sem o denominador
-	if (esq.ig)//fazer: checar a equacao do aluno e depois comparar com result ali embaixo;
-	if (frac!=null && integer!=null){
-		BTNode den= frac.getDir();
-		den= (BTNode)den.clone();
-		integer=(BTNode)integer.clone();
-		BTNode result=MiscFuntions.getResult(new BTNode ("*",den, integer));
-		
-	}
-}
+
 
 function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 	Funcoes f= new Funcoes();
@@ -167,6 +130,7 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 	return selected;
 }
 
+
 function List[] getIsolaX (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
 	f.t();
@@ -201,6 +165,59 @@ function List[] getIsolaX (Expression usr, Expression solver){
 	nodo[1]=folhasDifEsq;
 	return nodo;
 }
+
+//Valida por exemplo 2/x=90 => x=180
+	function List getOIDiv (Expression usr, Expression solver){
+		Funcoes f=new Funcoes();
+		BTNode us,sv;
+		List<BTNode> oiDIV= new ArrayList<BTNode>();
+		if (usr.isRootMMC())us=usr.getRoot().getEsq();
+		else us=usr.getRoot();
+		if (solver.isRootMMC())sv=solver.getRoot().getEsq();
+		else sv=solver.getRoot();
+		f.modificaSinal(us);
+		f.modificaSinal(sv);
+		f.j();
+		BTNode rootS=solver.getRoot();
+		BTNode rootU=usr.getRoot();
+		BTNode esq, dir;
+		esq=rootS.getEsq();
+		dir=rootS.getDir();
+		BTNode frac, integer, integerUser;
+		frac=integer=null;
+		if (esq.getValue().equals("/") && Funcoes.isSingleFraction(esq)){
+			frac=esq;
+			if (dir.eFolha() || (Funcoes.isSquaredLeaf(dir) && !dir.getValue().equals("R"))) integer=dir;
+		}
+		else if (dir.getValue().equals("/") && Funcoes.isSingleFraction(dir)){
+			frac=dir;
+			if (esq.eFolha() || (Funcoes.isSquaredLeaf(esq) && !esq.getValue().equals("R")))integer=esq;
+		}
+		esq=rootU.getEsq();
+		dir=rootU.getDir();
+		//checa se a equação do usuario em um dos lados é igual a equação do solver, apenas sem o denominador
+		if (frac!=null && integer!=null){
+			if (Expression.igual(frac.getEsq(),esq)){
+				integerUser=dir;
+			}else if (Expression.igual(frac.getEsq(),dir)){
+				integerUser=esq;
+			}
+			else{
+				integerUser=null;
+			}
+			
+			if(integerUser!=null){ 
+				BTNode den= frac.getDir();
+				den= (BTNode)den.clone();
+				integer=(BTNode)integer.clone();
+				BTNode result=MiscFunctions.getResult(new BTNode ("*",den, integer));
+				if(Expression.igual(result,integerUser))oiDIV.add(frac.getDir());
+			}
+		}
+		return oiDIV;
+	}
+
+
 
 function List getNodosMoverTermoSomaSub (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
@@ -1170,7 +1187,7 @@ function List getNodosMover(List solver, List user){
 function List getNodosOIMultDiv(List solver, List user, String signal){
 	List<BTNode> slvr= new Vector<BTNode>(solver);
 	List<BTNode> usr= new Vector<BTNode>(user);
-	Funcoes.j();
+	//Funcoes.j();
 	String vS,vU;
 	ArrayList<BTNode> nodos=new ArrayList<BTNode>();
 	BTNode btS,btU;
@@ -1189,7 +1206,7 @@ function List getNodosOIMultDiv(List solver, List user, String signal){
 			else vU=btU.getValue();
 			if (Funcoes.isInc(vU.charAt(vU.length()-1)) && vU.length() >1 &&
 				signal.equals("*") && btU.getPai().getValue().equals("="))vU=vU.substring(0,vU.length()-1);
-			// somete nodos folha ou potencias que possuem o mesm oexponte poie estas serão comparadas para ver se
+			// somente nodos folha ou potencias que possuem o mesmo exponte poie estas serão comparadas para ver se
 			// são iguais
 			/*if ((btS.eFolha()||btS.getValue().equals("^") ) && (btU.eFolha() ||btU.getValue().equals("^"))){
 				String oiSignal= (signal.equals("*")) ? "/":"*";
@@ -1883,7 +1900,7 @@ function boolean validarOIMult(Expression user, Expression solver){
 function boolean validarOIDiv(Expression user, Expression solver){
 	List[] l=getOIMultDiv(user,solver,"/");
 	if (l[0].isEmpty()){
-		if (l[1].isEmpty())return false;
+		if (l[1].isEmpty())return !getOIDiv (user, solver).isEmpty();
 		return true;
 	}else return true;
 }
@@ -2012,7 +2029,6 @@ function boolean validarReverteEquacao(Expression user,Expression solver){
 		revert= checkIguais(folhasUEsq,folhasSDir) && checkIguais(folhasUDir,folhasSEsq);
 			
 	}
-	//TODO: fazer aqui para o caso de fração, ou seja, duas folhas filhas de /
 	if (!revert){
 		//caso especial, quando há um termo (ou 2 em caso de fração) em cada lado da equação, reverte de modo a manter a incognita e o 
 		// numero inteiro em lados iguais ao do aluno
@@ -2988,10 +3004,14 @@ rule "Operacao Inversa Divisao"
 	then
 		String msg="# Operacao Inversa - Principio Multiplicativo";
 		List<BTNode>[] v= getOIMultDiv(user,solver,"/");
+		
 		List<BTNode>l=v[0];
-		//Funcoes.j();
+		
 		BTNode root=solver.getRoot();
+		
 		if (l.isEmpty())l=v[1];
+		if (l.isEmpty())l=getOIDiv(user,solver);
+		Funcoes.j();
 		BTNode div=l.get(0);
 		BTNode mult; // o lado oposto da equação
 		if (div.ehFilhoEsq(root)){
