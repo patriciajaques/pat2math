@@ -2425,6 +2425,8 @@ public static String getTermoComum(BTNode root){
 				numerador.setValue(result.getValue());
 				numerador.setEsq(result.getEsq());
 				numerador.setDir(result.getDir());
+				abs.setAbstractTerm(false);
+				pai.setAbstractTerm(false);
 				Expression.removeDaArvore(abs);
 				e.setmod();
 			}
