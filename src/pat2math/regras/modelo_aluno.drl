@@ -177,7 +177,7 @@ function List[] getIsolaX (Expression usr, Expression solver){
 		else sv=solver.getRoot();
 		f.modificaSinal(us);
 		f.modificaSinal(sv);
-		f.j();
+		//f.j();
 		BTNode rootS=solver.getRoot();
 		BTNode rootU=usr.getRoot();
 		BTNode esq, dir;
@@ -2017,7 +2017,7 @@ function boolean validarDestruirZeros(Expression user, Expression solver){
 
 function boolean validarReverteEquacao(Expression user,Expression solver){
 	Funcoes f=new Funcoes();
-	//f.j();
+	f.j();
 	f.modificaSinal(user.getRoot());
 	f.modificaSinal(solver.getRoot());
 	boolean revert=false;
@@ -2053,7 +2053,7 @@ function boolean validarFatorarQuadProdSomDif(Expression solver){
 
 function boolean checkIguais(List user, List solver){
 	BTNode auxU,auxS;
-	List<BTNode> folhasU=(List<BTNode>)user,folhasS=(List<BTNode>)solver;
+	List<BTNode> folhasU=new ArrayList((List<BTNode>)user),folhasS=new ArrayList((List<BTNode>)solver);
 	for (int uCont=folhasU.size()-1;uCont>=0;uCont--){
 		auxU=folhasU.get(uCont);
 		for (int sCont=folhasU.size()-1;sCont>=0;sCont--){
