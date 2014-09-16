@@ -19,12 +19,11 @@
 }
 
 #book {
-    background: #ccc;
+    background: #ddd;
     box-shadow: 3px -3px 6px #888;
     margin-top: 3%;
     max-width: 1000px;
-    width: 100%;
-    display: none;
+    
 }
 
 #loadingImage{
@@ -114,6 +113,7 @@
     color: green;
     font-weight: bold;
     text-shadow: 0px 2px 2px #888;
+    display: none;
 }
 
 
@@ -166,18 +166,8 @@
 }
 
 #note {
-    /* background: none repeat scroll 0 0 yellow; */
-    background: #fff;
-    box-shadow: -3px -3px 6px #222222;
-    color: #000000;
-    margin-left: 100px;
-    margin-top: -15px;
-    overflow: hidden;
-    padding: 1em 1.5em;
-    position: fixed;
-    transform: rotate(-10deg);
-    width: 160px;
-    cursor: default;
+    font-size: 18px;
+    padding: 5px 0;
 }
 
 .verticalTape{
@@ -203,16 +193,16 @@
 #hintText {
     background: none repeat scroll 0 0 #00FF7F;
     box-shadow: 3px 3px 6px #222222;
-    color: #000000;
-    float: left;
+    color: #000;
+    top: 25px;
+    left: 85%;
     height: auto;
     max-height: 50%;
-    margin-top: 200px;
     padding: 1em 1.5em;
     position: fixed;
-    transform: rotate(5deg);
     width: 10%;
     overflow: auto;
+    display: none;
 }
 
 span.kbd {
@@ -796,11 +786,8 @@ msqrt mfrac{
 }
 
 #hint{
-    width: auto;
-    height: 25px;
     text-align: center;
-    font-size: 12px;
-    /*text-shadow: 0 0 2px #888888;*/
+    font-size: 15px;
 }
 
 .text{
@@ -813,23 +800,6 @@ msqrt mfrac{
     border-radius:3px;
     text-align: center;
 }
-
-/*#logo {
-    background-image: url('logo.png'); 
-    background-position: center center; 
-    background-repeat: no-repeat; 
-    width: 322px; 
-    height: 105px
-}*/
-
-/*#paper {
-    background-image: url('Folha-de-caderno-no-Photoshop.jpg');
-    background-position: center center;
-    width: 799px; 
-    height: 1066px; 
-    background-repeat: no-repeat
-}*/
-
 
 .dropdown a {
     cursor: pointer;

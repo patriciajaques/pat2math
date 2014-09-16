@@ -1,219 +1,33 @@
-#paper-1, #paper-2, #paper-3, #paper-4, #paper-5, #paper-6, #paper-7, #paper-8, #paper-9, #paper-10, #paper-help {
-    border: 2px solid;
+#paper-1 {
+    border: 1px solid;
     border-radius: 10px;
     box-shadow: -5px 0 10px #888888;
-    float: right;
+    /* float: right; */
     height: 800px;
     max-width: 700px;
     width: 100%;
     margin-right: 6px;
+    background-color: #fff;
+    border-color:  #ddd;
+    margin-bottom: 20px;
 }
 
-#paper-1 {
-    background-color: #FFFFE0; /* cor fraca */
-    border-color:  #EEE8AA !important; /* cor media */
+#paper-1 .hLine {
+    border-color: #666;
 }
-#paper-1 .hLine{
-    border-color: #BDB76B !important; /* cor forte */
-}
+
 #paper-1 #date {
-    border-color: #EEE8AA; /* cor media */
-    color: #BDB76B; /* cor forte */
+    border-color: #aaa;
+    color: #bbb;
 }
-#paper-1 #dateMonthAux{
-    border-color: #EEE8AA; /* cor media */
+
+#paper-1 #dateMonthAux {
+    border-color: #aaa;
 }
+
 #paper-1 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //logoPaper1.png
+    background-image: url('../img/logo_horizontal_pt_br_20.png');
 }
-
-
-
-#paper-2 {
-    background-color: #e9fffd; /* cor fraca */
-    border-color: #61bdcd !important; /* cor media */
-}
-#paper-2 .hLine{
-    border-color: #008B8B !important; /* cor forte */
-}
-#paper-2 #date {
-    border-color: #61bdcd; /* cor media */
-    color: #008B8B; /* cor forte */
-}
-#paper-2 #dateMonthAux{
-    border-color: #61bdcd; /* cor media */
-}
-#paper-2 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper2.png'); 
-}
-
-
-#paper-3 {
-    background-color: #ffeebb;/* cor fraca */
-    border-color: #ffc97c !important; /* cor media */
-}
-#paper-3 .hLine{
-    border-color: #dba000 !important; /* cor forte */
-}
-#paper-3 #date {
-    border-color: #ffc97c; /* cor media */
-    color: #dba000; /* cor forte */
-}
-#paper-3 #dateMonthAux{
-    border-color: #ffc97c; /* cor media */
-}
-#paper-3 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper3.png'); 
-}
-
-
-
-#paper-4 {
-    background-color: #e6ffe3;/* cor fraca */
-    border-color: #7dff86 !important; /* cor media */
-}
-#paper-4 .hLine{
-    border-color: #00b10c !important; /* cor forte */
-}
-#paper-4 #date {
-    border-color: #7dff86; /* cor media */
-    color: #00b10c; /* cor forte */
-}
-#paper-4 #dateMonthAux{
-    border-color: #7dff86; /* cor media */
-}
-#paper-4 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper4.png'); 
-}
-
-
-#paper-5 {
-    background-color: #ffedf6;/* cor fraca */
-    border-color: #ff7dbd !important; /* cor media */
-}
-#paper-5 .hLine{
-    border-color: #b10057 !important; /* cor forte */
-}
-#paper-5 #date {
-    border-color: #ff7dbd; /* cor media */
-    color: #b10057; /* cor forte */
-}
-#paper-5 #dateMonthAux{
-    border-color: #ff7dbd; /* cor media */
-}
-#paper-5 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper5.png'); 
-}
-
-
-#paper-6 {
-    background-color: #e5eaff; /* cor fraca */
-    border-color: #8199ff !important; /* cor media */
-}
-#paper-6 .hLine{
-    border-color: #0026c8 !important; /* cor forte */
-}
-#paper-6 #date {
-    border-color: #8199ff; /* cor media */
-    color: #0026c8; /* cor forte */
-}
-#paper-6 #dateMonthAux{
-    border-color: #8199ff; /* cor media */
-}
-#paper-6 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper6.png'); 
-}
-
-#paper-7 {
-    background-color: #ffcfcf; /* cor fraca */
-    border-color: #ff8181 !important; /* cor media */
-}
-#paper-7 .hLine{
-    border-color: #b10000 !important; /* cor forte */
-}
-#paper-7 #date {
-    border-color: #ff8181; /* cor media */
-    color: #b10000; /* cor forte */
-}
-#paper-7 #dateMonthAux{
-    border-color: #ff8181; /* cor media */
-}
-#paper-7 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper7.png'); 
-}
-
-#paper-8 {
-    background-color: #fff4fc; /* cor fraca */
-    border-color: #ff82dd !important; /* cor media */
-}
-#paper-8 .hLine{
-    border-color: #ab007d !important; /* cor forte */
-}
-#paper-8 #date {
-    border-color: #ff82dd; /* cor media */
-    color: #ab007d; /* cor forte */
-}
-#paper-8 #dateMonthAux{
-    border-color: #ff82dd; /* cor media */
-}
-#paper-8 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper8.png'); 
-}
-
-#paper-9 {
-    background-color: #e7fff5; /* cor fraca */
-    border-color: #81ffcb !important; /* cor media */
-}
-#paper-9 .hLine{
-    border-color: #009b5b !important; /* cor forte */
-}
-#paper-9 #date {
-    border-color: #81ffcb; /* cor media */
-    color: #009b5b; /* cor forte */
-}
-#paper-9 #dateMonthAux{
-    border-color: #81ffcb; /* cor media */
-}
-#paper-9 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper9.png'); 
-}
-
-#paper-10 {
-    background-color: #ffecd9; /* cor fraca */
-    border-color: #ffbe7f !important; /* cor media */
-}
-#paper-10 .hLine{
-    border-color: #9d4e00 !important; /* cor forte */
-}
-#paper-10 #date {
-    border-color: #ffbe7f; /* cor media */
-    color: #9d4e00; /* cor forte */
-}
-#paper-10 #dateMonthAux{
-    border-color: #ffbe7f; /* cor media */
-}
-#paper-10 #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaper10.png'); 
-}
-
-#paper-help {
-    background-color: #ffffff; /* cor fraca */
-    border-color:  #cccccc !important; /* cor media */
-}
-#paper-help .hLine{
-    border-color: #999999 !important; /* cor forte */
-}
-#paper-help #date {
-    border-color: #cccccc; /* cor media */
-    color: #999999; /* cor forte */
-}
-#paper-help #dateMonthAux{
-    border-color: #cccccc; /* cor media */
-}
-#paper-help #logo {
-    background-image: url('../img/logo_horizontal_pt_br_20.png'); //background-image: url('../img/logoPaperHelp.png'); 
-}
-
 
 #lines, .lines{
     border-left: 1px solid #FA8072;
@@ -249,31 +63,16 @@
     background-position: center center; 
     background-repeat: no-repeat; 
     margin-top: 2%;
-    margin-left: -15%;
-    width: 185px; 
+    margin-left: 100px;
+    width: 185px;
     height: 50px
 }
 
-.dates{
-    width: 40px;                 
-    text-align: center;
-    /*color: #BDB76B;*/
-}
 
-#date, .date{
-    width: 130px; 
-    height: 30px;
-    border:2px solid #EEE8AA; /*borda com 2px de espessura solida da cor #EEE...*/
-    border-radius:15px; /*10px de arredondamento da borda*/
-    margin-top: 2%;
-    /*margin-left: 75%;*/
+#points {
     float: right;
-    margin-right: 5%;
-}
-
-#dateMonthAux, .dateMonthAux{
-    width: 40px; 
-    height: 22px;
-    border-left: 2px solid #EEE8AA;
-    border-right: 2px solid #EEE8AA;
+    margin-right: 15px;
+    margin-top: 15px;
+    color: #777;
+    font-size: 20px;
 }

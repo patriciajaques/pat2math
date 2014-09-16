@@ -1,13 +1,15 @@
 package br.com.pat2math.action;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import pat2math.modeloAluno.Tutor;
 import br.com.pat2math.domainBase.Plan;
+import br.com.pat2math.domainBase.SetOfTasks;
+import br.com.pat2math.domainBase.Task;
 import br.com.pat2math.domainBase.Topic;
 import br.com.pat2math.formBeans.StudentForm;
 import br.com.pat2math.repository.AllStudents;
@@ -28,13 +33,13 @@ import br.com.pat2math.repository.AllUsers;
 import br.com.pat2math.repository.HelpRepository;
 import br.com.pat2math.repository.KnowledgeRepository;
 import br.com.pat2math.repository.PlanRepository;
+import br.com.pat2math.repository.TaskPerformedRepository;
 import br.com.pat2math.service.GroupService;
 import br.com.pat2math.service.MailSenderService;
-import br.com.pat2math.service.StudentService;
 import br.com.pat2math.studentModel.Group;
-import br.com.pat2math.studentModel.Knowledge;
 import br.com.pat2math.studentModel.SignUpConfirmation;
 import br.com.pat2math.studentModel.Student;
+import br.com.pat2math.studentModel.TaskPerformed;
 
 @Controller
 @Transactional
@@ -49,6 +54,7 @@ public class StudentController {
 	@Autowired private MailSenderService emailService;
 	@PersistenceContext private EntityManager em;
 	@Autowired private BCryptPasswordEncoder encoder;
+	@Autowired private TaskPerformedRepository tasksPerformed;
 	
 	@RequestMapping("/home")
 	public String home() {
@@ -76,10 +82,11 @@ public class StudentController {
 			return "student.new";
 		
 		em.persist(student);
+		
 		SignUpConfirmation confirmation = SignUpConfirmation.generateForUser(student);
 		em.persist(confirmation);
-		
 		emailService.sendConfirmationAccount(student, confirmation, "confirme sua conta");
+		
 		model.addAttribute("user", student);
 		return "redirect:signUpSuccess";
 	}
@@ -115,9 +122,31 @@ public class StudentController {
 			plan = allPlans.getWithTopics(student.getGroup().getPlan().getId());
 		else
 			plan = allPlans.getWithTopics(1L);
+		
 		Collections.sort(plan.getTopics());
 		List<Topic> topics = plan.getTopics();
-		model.addAttribute("topics", topics);
+		
+		// TODO: puts this logic on outer loop API
+		// always add first
+		List<Topic> activeTopics = new ArrayList<Topic>();
+		activeTopics.add(topics.get(0));
+		
+		for(int i = 0; i < topics.size(); i++) {
+			SetOfTasks set = topics.get(i).getSet();
+			boolean finished = true;
+			for(Task task : set.getTasks()) {
+				TaskPerformed tp = tasksPerformed.get(task.getContent(), student);
+				if(tp == null || !tp.isFinished()) {
+					finished = false;
+				}
+			}
+			if(finished && i < (topics.size() -1)) {
+				activeTopics.add(topics.get(i+1));
+			} else {
+				break;
+			}
+		}
+		model.addAttribute("topics", activeTopics);
 		return "student.home";
 	}
 	

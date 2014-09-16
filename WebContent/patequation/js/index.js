@@ -1,89 +1,17 @@
-//-some references about mathml
-//http://www.w3.org/TR/MathML3/chapter3.html
-//http://www.xmlmind.com/tutorials/MathML/index.html
-//msg de dica: cassio5;d;2x-3x=0
-// post it - http://net.tutsplus.com/tutorials/html-css-techniques/create-a-sticky-note-effect-in-5-easy-steps-with-css3-and-html5/
-
-/////// Comments template
-/**
- * @author Felipe de Morais
- * 
- * @description 
- * 
- * @param {type} 
- *      
- * @return {type} 
- * */
-"use strict";
-
 var selectedSheet = "#paper-1";
 var selectedEquation;
 
 // variables for the Step object
-var NORMAL_STEP = 0; //To represent a normal step
-var NORMAL_SOLUTION = 1; //To represent a normal solution (for first degree equations)
-var DELTA_SOLUTION = 2; //To represent a delta solution (for second degree equations)
-var x1_SOLUTION = 3; //To represent the x'solution (for second degree equations)
-var x2_SOLUTION = 4; //To represent the x"solution (for second degree equations)
+var NORMAL_STEP = 0;
+var NORMAL_SOLUTION = 1;
+var DELTA_SOLUTION = 2;
+var x1_SOLUTION = 3;
+var x2_SOLUTION = 4;
 
-var eq = new Equation("patequation", 100);
+var newEquations = [new Equation("x=1", 0)];
+var equations = [new Equation("x=1", 0)];
 
-//eq.steps = [
-//    new Step("a=1;b=3;c=-4", NORMAL_STEP),
-//    new Step("d=3^2-4*1*-4", NORMAL_STEP),
-//    new Step("d=25", DELTA_SOLUTION),
-//    new Step("x=(-3±5)/(2*1)", NORMAL_STEP),
-//    new Step("x=(2)/(2)", NORMAL_STEP),
-//    new Step("x=1", x1_SOLUTION)
-////    new Step("x=(-8)/(2)", NORMAL_STEP),
-////    new Step("x=-4", x2_SOLUTION)
-//    ];
-//eq.addPoints(-23);
-
-var eq2 = new Equation("patequation", 70);
-//eq2.steps = [
-//    new Step("3x=19-7", NORMAL_STEP),
-//    new Step("3x=12", NORMAL_STEP),
-//    new Step("x=4", NORMAL_SOLUTION)
-//];
-
-var newEquations = [// contains the most updated array of equations
-    eq,
-    eq2,
-    new Equation("patequation", 50),
-    new Equation("patequation", 40),
-    new Equation("patequation", 60),
-    new Equation("patequation", 50),
-    new Equation("patequation", 70),
-    new Equation("patequation", 60),
-    new Equation("patequation", 80),
-    new Equation("patequation", 100)];
-
-var equations = [// contains the current array of equations
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50),
-    new Equation("x=1", 50)];
 var concluded = 0;
-
-//    new Equation("x^2+3x-4=0", 100),
-//    new Equation("x+4=3*2", 50),
-//    new Equation("x^2+4x-3=0", 100),
-//    new Equation("x+(14)/(7)=4", 60),
-//    new Equation("x^2=9", 40),
-//    new Equation("x-2=(35)/(7)", 50),
-//    new Equation("5+x=6-2", 50),
-//    new Equation("x=(5)/((5)R2)", 40),
-//    new Equation("x=(36)/(7)+(1)/(5)", 60),
-//    new Equation("5+x=6-2", 60),
-//    new Equation("x+4=3*2", 70)];
-
 
 $(document).ready(function() {	
 	$("#hide-menu").click(
@@ -103,16 +31,6 @@ $(document).ready(function() {
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
     loadScript("/pat2math/patequation/js/paper.js");
-
-    /*$("html").mousemove(function(p) {
-        $(".janela").html("X=" + p.clientX + " Y=" + p.clientY);
-        if (p.clientX < 4) {
-            $("#topics").show();
-        }
-        if (p.clientX > 300) {
-            $("#topics").hide();
-        }
-    });*/
 
     $("#mask").click(
             function() {
@@ -187,16 +105,17 @@ $(document).ready(function() {
         }
     };
 
-    $("#book").tabs({
+    /*$("#book").tabs({
         activate: function(event, ui) {
             //alert(ui.newTab.text() + " activated!");
         }
-    }).addClass("ui-tabs-vertical ui-helper-clearfix");
-    $("#book .tabs li").removeClass("ui-corner-top").addClass("ui-corner-all");
+    }).addClass("ui-tabs-vertical ui-helper-clearfix");*/
+    
+    // $("#book .tabs li").removeClass("ui-corner-top").addClass("ui-corner-all");
 
 
     $(selectedSheet + " #logo").tooltip();
-    $("#progressBar").tooltip();
+    //$("#progressBar").tooltip();
 //    $("#helpSystem").tooltip();
     $("#imgInformation").tooltip();
 
@@ -219,10 +138,10 @@ $(document).ready(function() {
         }
     }).disableSelection();
 
-    $("#newEquation").button().click(function() {
+   /* $("#newEquation").button().click(function() {
         newEquation();
     });
-
+*/
     $("#hint").button().click(function() {
         hint();
     });
@@ -238,22 +157,15 @@ $(document).ready(function() {
     buttonClick();
     focus();
 
-    $("#hintText").hide();
-    $(".verticalTape").hide();
-    $("#newPoints").hide();
-
-    reloadProgressBar();
+    // $("#hintText").hide();
+    // $(".verticalTape").hide();
+    // $("#newPoints").hide();
 });
 
 function reloadPaper(selected) {
-    $(selectedSheet).css("display", "none");
-    selectedSheet = "#paper-" + selected;
-    $(selectedSheet).css("display", "block");
-    //alert(selectedSheet);
-    loadPaper(selectedSheet);
-    if (selected !== 'help') {
-        loadEquation(selected - 1);
-    }
+	selectedSheet = "#paper-" + selected;
+    loadPaper(selectedSheet);    
+    loadEquation(selected - 1);
 
     centralizeCanMoveAndButton();
     sortable();
@@ -276,32 +188,24 @@ function reloadPaper(selected) {
  * */
 
 function loadEquation(index) {
-    var newEquation = newEquations[index];
+	var newEquation = newEquations[index];
     selectedEquation = equations[index];
     var go = false;
-    //if the newEquations contains the most recent value the equations array receives the newEquations
+    
     if (newEquation.equation !== selectedEquation.equation) {
-        var lineTest = $(selectedSheet + " .hLineAux").next();
-        for (var i = 0; i < lineTest.children().length; i++) {
-            var html = lineTest.html();
-            var svg = "";
-            if (html && html.indexOf("svg") !== -1) {
-                svg = html.substring(html.indexOf("<svg"), html.indexOf("</svg>") + 1);
-            }
-            lineTest.html(svg);
-            lineTest = lineTest.next();
-        }
+        $(selectedSheet + " .hLine").each(
+        	function() {
+        		$(this).empty();
+        		$(this).removeClass('canMove');
+        		$(this).removeClass('canCopy');
+        	}
+        );
         equations[index] = newEquations[index];
         selectedEquation = equations[index];
         go = true;
-        if (index === 0) {
-            //update the progress bar if the index is equals to 0
-            reloadProgressBar();
-        }
     }
 
     if (go) {
-
         // get the firs valid line to put content
         var line = $(selectedSheet + " .hLineAux").next();
 
@@ -414,12 +318,13 @@ function loadEquation(index) {
         }
 
         if ($(selectedSheet).html().indexOf("final") === -1) {
-            if (selectedEquation.isComplete || (selectedEquation.lastStep !== null && (selectedEquation.lastStep.type === x2_SOLUTION || selectedEquation.lastStep.type === NORMAL_SOLUTION))) {
+            
+        	if (selectedEquation.isComplete || (selectedEquation.lastStep !== null && (selectedEquation.lastStep.type === x2_SOLUTION || selectedEquation.lastStep.type === NORMAL_SOLUTION))) {
                 $(selectedSheet + " .canCopy li").css("color", "blue");
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
-                addProgressValue(10);
+                //addProgressValue(10);
                 //selectedEquation.lastStep = selectedEquation;
-                nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
+                nextLine.html("<div class='final'></div>");
 
                 var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                 selectedEquation.addPoints(result);
@@ -427,13 +332,13 @@ function loadEquation(index) {
             } else {
                 nextLine.addClass("canMove");
                 clearLine('');
-//                nextLine.html(
-//                        "<ul>" +
-//                        "<li class='labelDefault'><input type='text'></li>" + //autofocus='true'
-//                        "</ul>" +
-//                        "<div class='trash'></div>" +
-//                        "<button id='button'></button>");
-//
+                //nextLine.html(
+                  //      "<ul>" +
+                    //    "<li class='labelDefault'><input type='text'></li>" + //autofocus='true'
+                      //  "</ul>" +
+                     //   "<div class='trash'></div>" +
+                     //   "<button id='button'></button>");
+                
 //                centralizeCanMoveAndButton();
 //                sortable();
 //                draggable();
@@ -449,12 +354,12 @@ function loadEquation(index) {
     calculatePoints(selectedEquation);
 
     $("#hintText").hide('blind', 500);
-    $(".verticalTape").hide('blind', 500);
+    //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
 }
 
 function calculatePoints(equation) {
-    $("#amountPoins").text(equation.userPoints + " de " + equation.points + " pontos");
+    $("#points span").text(equation.userPoints + " de " + equation.points + " pontos");
 }
 
 function reloadProgressBar() {
@@ -1048,8 +953,8 @@ function nextEquationClick() {
 }
 
 function callbackAddPoints(value) {
-    var x = $("#note").offset().left;
-    var y = $("#note").offset().top;
+    var x = $("#points span").offset().left - 20;
+    var y = $("#points span").offset().top - 40;
     var scrollTop = $(document).scrollTop();
 
     setTimeout(function() {
@@ -1071,11 +976,6 @@ function showHint(hint) {
         lastHint = "<br><br>" + lastHint;
     }
     $("#hintText").hide('blind', 200);
-    $(".verticalTape").hide('blind', 200);
-
     $("#hintText").html("*Dica: " + hint + lastHint);
-    //$("#hintBox").fadeIn(1000); //.slideDown(); //.show('blind', 1000);
-    //$("#hintBox").show();
     $("#hintText").show('blind', 500);
-    $(".verticalTape").show('fold', 500);
 }

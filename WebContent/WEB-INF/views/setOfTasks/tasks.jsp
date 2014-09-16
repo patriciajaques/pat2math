@@ -23,16 +23,16 @@
 	
 	<c:if test="${task.content.type eq 'equation'}">
 		<c:if test="${task.performed}">
-			<span class="task" onclick="paperClick()">
-				${task.content.name}
+			<span class="task" onclick="loadExercise(${task.content.id})">
+				${task.content.equation}
 			</span>
 			<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
 			<i class="icon-ok  icon-white"></i>
 			<br>
 		</c:if>
 		<c:if test="${!task.performed}">
-			<span class="task" onclick="">
-				${task.content.name}
+			<span class="task" onclick="loadExercise(${task.content.id})">
+				${task.content.equation}
 			</span>
 			<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
 			<i class="icon-ok" style="visibility: hidden;"></i>
