@@ -23,7 +23,7 @@
 
 loadScript("/pat2math/patequation/lib/jquery-ui/jquery-1.10.2.js", function() {
     loadScript("/pat2math/patequation/lib/jquery-ui/ui/jquery-ui.js", function() {
-        loadScript("/pat2math/patequation/lib/divalite/divakit/divalite.js");
+        //loadScript("/pat2math/patequation/lib/divalite/divakit/divalite.js");
 
         loadScript("/pat2math/patequation/js/string.js", function() {
             loadScript("/pat2math/patequation/js/object.js", function() {
@@ -38,14 +38,14 @@ loadScript("/pat2math/patequation/lib/jquery-ui/jquery-1.10.2.js", function() {
         //loadScript("/pat2math/patequation/js/divaliteAux.js");
         
         loadScript("/pat2math/patequation/lib/bootstrap/bootstrap.js");
-        loadScript("/pat2math/patequation/lib/paint/paint.js");
-        loadScript("/pat2math/patequation/lib/calculator/calculator.js");
+        //loadScript("/pat2math/patequation/lib/paint/paint.js");
+        //loadScript("/pat2math/patequation/lib/calculator/calculator.js");
     });
 });
 
 loadScript("/pat2math/patequation/lib/jquery-ui/themes/base/jquery-ui.css");
 loadScript("/pat2math/patequation/lib/bootstrap/bootstrap.css");
-loadScript("/pat2math/patequation/lib/calculator/calculator.css");
+//loadScript("/pat2math/patequation/lib/calculator/calculator.css");
 loadScript("/pat2math/js/pat2math.js");
 //loadScript("/pat2math/patequation/lib/divalite/divakit/divacharkit/divalite.css");
 

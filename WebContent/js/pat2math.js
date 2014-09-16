@@ -12,32 +12,7 @@ function enableContent(id) {
 
 function loadTasks(id) {
 	var open = $("#tasks"+id).css("display");
-	
 	if(open == 'none') {
-		$.ajax({
-			type: 'POST',
-			url: appContext + "student/loadExercises",
-			data: {"idSet" : id},
-			success: function(data) {
-				for(var i = 0; i < 10; i++) {
-					newEquations[i] = new Equation(" ", NORMAL_STEP);
-					if(data[i] != null) {
-						equation = new Equation(data[i].equation, 100);
-						equation.id = data[i].id;
-						for(var j = 0; j < data[i].steps.length; j++) {
-							equation.steps[j] = new Step(data[i].steps[j], 0);
-						}
-						
-						if(data[i].performed) {
-							equation.isComplete = true;
-						}
-						newEquations[i] = equation;
-					}
-				}
-				$("#aPaper1").click();
-			}
-		});
-		
 		$.ajax({
 			type: "post",
 			url: appContext + "student/showTopic",
@@ -55,6 +30,29 @@ function loadTasks(id) {
 	} else {
 		$("#tasks"+id).slideUp(700);
 	}
+}
+
+function loadExercise(id) {
+	$.ajax({
+		type: 'POST',
+		url: appContext + "student/loadExercise",
+		data: {"exerciseId" : id},
+		success: function(data) {
+			if(data != null) {
+				equation = new Equation(data.equation, 100);
+				equation.id = data.id;
+				for(var j = 0; j < data.steps.length; j++) {
+					equation.steps[j] = new Step(data.steps[j], 0);
+				}
+					
+				if(data.performed) {
+					equation.isComplete = true;
+				}
+				newEquations[0] = equation;
+			}
+			reloadPaper(1);
+		}
+	});
 }
 
 function changePlan(idGroup, idPlan) {
@@ -100,7 +98,6 @@ function watchVideo(id) {
 	);
 }
 
-//confirm exclusions
 function msgBox(id, msg, action) {
 	if(confirm(msg)) {
 		location.href = action + "?group.id=" + id;
