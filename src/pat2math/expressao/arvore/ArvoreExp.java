@@ -457,4 +457,24 @@ public class ArvoreExp {
 		}
 		return null;
 	}
+	
+	/**
+	 * Varre a arvore e retorna o primeiro nodo abstract
+	 * @return o primeiro nodo abstract
+	 */
+	public BTNode getAbstract(){
+		return getAbstract(root);
+	}
+	
+	private BTNode getAbstract(BTNode bt){
+		BTNode abst=null;
+		if (bt!=null){
+			abst=getAbstract(bt.getEsq());
+			if (abst==null){
+				if (bt.isAbstract() && bt.eFolha())abst=bt;
+				if (abst==null)abst=getAbstract(bt.getDir());
+			}
+		}
+		return abst;
+	}
 }

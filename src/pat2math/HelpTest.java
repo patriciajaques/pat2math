@@ -14,7 +14,7 @@ public class HelpTest {
 	
 	public static void main(String[] args) throws Exception {
 		PopulateHelps ph = new PopulateHelps("Dicas.txt");
-		//ph.createList();
+		ph.createList();
 		ModeloAluno ma = new ModeloAluno();
 		ma.setNome("teste", ph.getHelp());
 		//Help h = new Help(,ph.getHelp());
@@ -26,16 +26,16 @@ public class HelpTest {
 		//	}else c.add(new Conhecimento(0.5f, s));
 		}
 		ArrayList<Tip> t =new ArrayList<Tip>();
-		Tip tip=new Tip();
-		tip.setOperation("EqPrim_Ad_Inc");
-		tip.setContent("AD");
-		tip.setLevel(2);
-		t.add(tip);
-		Tip hint=ma.hints("2*(x-7)-6=24",t,c);
+		//Tip tip=new Tip();
+		//tip.setOperation("EqPrim_Ad_Inc");
+		//tip.setContent("AD");
+		//tip.setLevel(2);
+	//	t.add(tip);
+		Tip hint=ma.hints("x=(-12/19)",t,c);
 	//	ma.setExpressao("x=7x+x");
 	//	ma.setOperacao("AD");
 	//	Mensagem hint = ma.iniciaResolucao("x=4x", t, c);
-		//System.out.println(hint.getFeedback());
+		System.out.println(hint.getDescription());
 	}
 	
 	/*

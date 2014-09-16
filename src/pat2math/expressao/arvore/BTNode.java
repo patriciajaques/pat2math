@@ -21,7 +21,6 @@ public class BTNode implements Cloneable{
 	/*
 	 *  true armazena um valor que deve ser convertido ao ser exibido
 	 * ex: -(-3x) => -1*(-3x)
-	 * TODO: achar um jeito do -1* não aparecer nos passos de solução da equação
 	 */ 
 	private boolean abstractTerm;
 	

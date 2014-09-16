@@ -1356,6 +1356,10 @@ public class Expression implements Cloneable{
 		return id;
 	}
 	
+	public BTNode getAbstract(){
+		return expressao.getAbstract();
+	}
+	
 	/*private int setIDNodes(BTNode bt, int id){
 		if (bt!=null){
 			id = setIDNodes(bt.getEsq(), id);

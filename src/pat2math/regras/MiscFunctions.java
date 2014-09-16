@@ -36,7 +36,7 @@ public class MiscFunctions {
 	 * @see EquacaoMisc
 	 */
 	public static List<BTNode> ehMiscOISomaSub(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -200,7 +200,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} dos nodos que satisfizeram esta regra.
 	 */
 	public static List<BTNode> ehMiscOIMultDivInvSinal(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+		//System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -303,7 +303,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendos os nodos afetados por esse misconseption
 	 */
 	public static List<BTNode> ehMiscOIMultDivOPIgual(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+//		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -382,7 +382,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendo os nodos que satifazeram a regra
 	 */
 	public static List<BTNode> ehMiscOIMultDivOPSomaSub(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -437,7 +437,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendo os temos que disparam a regra
 	 */
 	public static List<BTNode> ehMiscOIMultDivNaoCompleta(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+		//System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -516,7 +516,7 @@ public class MiscFunctions {
 	 * ne não for detectado nada.
 	 */
 	public static List<BTNode> ehMiscMatBasica(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+		//System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -953,7 +953,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendo as frações que geraram a misconseption
 	 */
 	public static List<BTNode> ehMiscSimplificacao(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+		//System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -1124,7 +1124,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendo o valor que gerou a misconseption
 	 */
 	public static List<BTNode> ehMiscMMCDenComum(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> nodos=checkForMiscMMCDenComum(em.getUser(),em.getSolver());
 		return nodos;
 	}
@@ -1165,7 +1165,7 @@ public class MiscFunctions {
 	 * se não for encontrado nada
 	 */
 	public static List<BTNode> ehMiscMMCSomaFrac(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -1244,7 +1244,7 @@ public class MiscFunctions {
 	 * @return os nodos que causaram a misconseption
 	 */
 	public static List<BTNode> ehMiscMMCSomaSubLinear (EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> nodos=checkForMiscMMCSomaSubLinear(em.getSolver(), 
@@ -1316,7 +1316,7 @@ public class MiscFunctions {
 	}
 
 	public static List<BTNode> ehMiscMMCMTNumerador (EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		return checkForMiscMTNumerador(em.getUser(), em.getSolver());
 	}
 
@@ -1374,7 +1374,7 @@ public class MiscFunctions {
 	}
 
 	public static List<BTNode> ehMiscMTFracInversa(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -1454,7 +1454,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendo as frações em misconseption
 	 */
 	public static List<BTNode> ehMiscDivLin(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		BTNode rootSolver=em.getSolver().getRoot();
 		List<BTNode> fracUser= em.getDiffEsqSolver();
 		List<BTNode> nodos;
@@ -1517,7 +1517,7 @@ public class MiscFunctions {
 	 * @return uma {@link List} contendo os nodos em misconseption
 	 */
 	public static List<BTNode> ehMiscMultFracINTFrac(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -1585,7 +1585,7 @@ public class MiscFunctions {
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
 		List<BTNode> difDirUser=em.getDiffDirUser();
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+//		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<List<BTNode>> nodos= checkForMiscDistrib(difEsqUser,difEsqSolver,em.getSolver());
 		if (nodos.isEmpty())nodos=checkForMiscDistrib(difDirUser,difDirSolver,em.getSolver());
 		return nodos;
@@ -1692,7 +1692,7 @@ public class MiscFunctions {
 	
 
 	public static List<BTNode> ehMiscFatCom(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		if (Funcoes.validarFatorComum(em.getSolver())){
 //			List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 //			List<BTNode> difDirSolver=em.getDiffDirSolver();
@@ -1756,7 +1756,7 @@ public class MiscFunctions {
 	}
 
 	public static List<BTNode> ehMiscFatRaizUmNum(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
 		List<BTNode> difEsqUser=em.getDiffEsqUser();
@@ -1800,7 +1800,7 @@ public class MiscFunctions {
 	}
 
 	public static List<BTNode> ehMiscFatRaizSomaSub(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		List<BTNode> difSolver=new ArrayList<BTNode>(em.getDiffEsqSolver());
 		difSolver.addAll(em.getDiffDirSolver());
 		List<BTNode> difUser= new ArrayList<BTNode>(em.getDiffEsqUser());
@@ -1851,7 +1851,7 @@ public class MiscFunctions {
 	}
 	
 	public static List<BTNode> ehMiscProcedenciaOP(EquacaoMisc em){
-		System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+em.getUser().getCleanExpression()+"Solver: "+em.getSolver().getCleanExpression());
 		//obter as diferencas
 		List<BTNode> difEsqSolver=em.getDiffEsqSolver();
 		List<BTNode> difDirSolver=em.getDiffDirSolver();
@@ -1922,7 +1922,7 @@ public class MiscFunctions {
 	public static List<BTNode> ehMiscBhaskaraTermos(EquacaoMisc em){
 		Expression user=em.getUser();
 		Expression solver=em.getSolver();
-		System.out.println("->Testando as Equacoes: User: "+user.getCleanExpression()+"Solver: "+solver.getCleanExpression());
+	//	System.out.println("->Testando as Equacoes: User: "+user.getCleanExpression()+"Solver: "+solver.getCleanExpression());
 		List<BTNode> nodos=new ArrayList<BTNode>();
 		if (Expression.findX(user.getRoot(), "d")==null)return nodos;
 		String sA,sB,sC;

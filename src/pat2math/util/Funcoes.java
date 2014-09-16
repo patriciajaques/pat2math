@@ -16,6 +16,7 @@ import pat2math.expressao.arvore.ArvoreExp;
 import pat2math.expressao.arvore.BTNode;
 import pat2math.expressao.arvore.BTNodeComparator;
 import pat2math.expressao.arvore.InvalidValueException;
+import pat2math.regras.MiscFunctions;
 
 /**
  * Classe que agrega todas as funções comuns ao conjuto de regras
@@ -2396,6 +2397,40 @@ public static String getTermoComum(BTNode root){
 		return e.getRoot();
 	}
 	
+	
+	/**
+	 * Ajusta o sinal de - em casos como x=-(12)/(19), o que faz com que internamente a equação seja
+	 * x=-1*(12/19). O ajuste torna a equação x=(-12)/(19). Este método somente irá funcionar em equações
+	 * cujo um dos lados seja "x=", onde x é uma incógnita válida
+	 * @param e a {@link Expression} a ser ajustada
+	 * @return a {@link Expression} ajustada
+	 */
+	public static Expression removeAbstractTermInFractionResult(Expression e){
+		BTNode root= e.getRoot();
+		BTNode esq = root.getEsq(), dir=root.getDir();
+		BTNode abs=e.getAbstract();
+		if ((Funcoes.isInc(esq.getValue()) || Funcoes.isInc(dir.getValue())) && abs!=null){
+			BTNode pai,notABS,result;
+			pai=abs.getPai();//pega o *, da expressão -1*a, sendo "a" uma expressão
+			esq=pai.getEsq();
+			dir=pai.getDir();
+			if (esq==abs)notABS=dir;
+			else notABS=esq;
+			//processar para a fração
+			if (notABS.getValue().equals("/")){
+			BTNode numerador=notABS.getEsq();
+			result=MiscFunctions.getResult(new BTNode ("*",(BTNode)abs.clone(),(BTNode)numerador.clone()));
+				numerador.setEsq(null);
+				numerador.setDir(null);
+				numerador.setValue(result.getValue());
+				numerador.setEsq(result.getEsq());
+				numerador.setDir(result.getDir());
+				Expression.removeDaArvore(abs);
+				e.setmod();
+			}
+		}
+		return e;
+	}
 	
 	/**
 	 * Método utilizado apenas para debug da funções do Drools pois estas não se pode por 

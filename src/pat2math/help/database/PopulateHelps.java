@@ -31,7 +31,7 @@ public class PopulateHelps {
 		ajudas=new ArrayList<Tip>();
 	}
 
-	public void createList(EntityManager em) throws Exception{
+	public void createList(/*EntityManager em*/) throws Exception{
 		File f= new File(filename);
 		InputStreamReader is= new InputStreamReader(new FileInputStream(f),"UTF-8");
 		Scanner scan=new Scanner(is);
@@ -113,13 +113,13 @@ public class PopulateHelps {
 							
 								Animation anime = new Animation();
 								anime.setCode(animation);
-								em.persist(anime);
+						//		em.persist(anime);
 						
 								h.setAnimation(anime);
 							}else {desc=line.substring(line.indexOf(" ")+1);
 								Animation anime = new Animation();
 							//	anime.setCode("NO");
-								em.persist(anime);
+					//			em.persist(anime);
 								h.setAnimation(anime);
 							}
 							h.setDescription(desc);
@@ -145,8 +145,8 @@ public class PopulateHelps {
 			}
 		}
 		
-		em.getTransaction().commit();
-		em.getTransaction().begin();
+	//	em.getTransaction().commit();
+	//	em.getTransaction().begin();
 		
 		scan.close();
 	}
