@@ -443,7 +443,7 @@ public class Funcoes {
 		if (user.getTipo().equals(Expression.COEFICIENTES_BK))can=true;
 		else if (usrRoot.getEsq().getValue().equals("d") ||usrRoot.getDir().getValue().equals("d")) can=true;
 		else if (user.getnewexpression().contains("±"))can=true;
-		//sem .getLast pq tem que ser apenas a incaognita em dum dos lados do resultado ao aluno
+		//sem .getLast pq tem que ser apenas a incógnita em um dos lados do resultado ao aluno
 		// para representar que ele esta apontado o resultado final da bhasakara
 		else if (Funcoes.isInc(usrRoot.getEsq().getValue()) || Funcoes.isInc(usrRoot.getDir().getValue())) can=true;
 		
