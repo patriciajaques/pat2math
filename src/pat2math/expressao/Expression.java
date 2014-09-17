@@ -1360,6 +1360,18 @@ public class Expression implements Cloneable{
 		return expressao.getAbstract();
 	}
 	
+	public static boolean hasIncognita( BTNode root){
+		boolean has= false;
+		if (root!=null){
+			has=hasIncognita(root.getEsq());
+			if (!has){
+				if (Funcoes.isInc(root.getLast())) has=true;
+				else has=hasIncognita(root.getDir());
+			}
+		}
+		return has;
+	}
+	
 	/*private int setIDNodes(BTNode bt, int id){
 		if (bt!=null){
 			id = setIDNodes(bt.getEsq(), id);

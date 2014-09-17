@@ -31,7 +31,6 @@ import pat2math.util.Conjuntos;
 import pat2math.util.Funcoes;
 import pat2math.util.Teclado;
 import baseDominio.POJO.MaterialInstrucionalPOJO;
-import br.com.pat2math.studentModel.Animation;
 import br.com.pat2math.studentModel.Knowledge;
 import br.com.pat2math.studentModel.Tip;
 

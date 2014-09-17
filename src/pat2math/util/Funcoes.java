@@ -453,8 +453,8 @@ public class Funcoes {
 			(root.getEsq().eFolha() && root.getEsq().getValue().equals("0"))){
 				return 0;
 		}
-		if ((root.getDir().eFolha() && Funcoes.isInc(root.getDir().getLast())) ||
-				(root.getEsq().eFolha() && Funcoes.isInc(root.getEsq().getLast()))){
+		if ((root.getDir().eFolha() && Funcoes.isInc(root.getDir().getLast()) && !Expression.hasIncognita(root.getEsq())) ||
+				(root.getEsq().eFolha() && Funcoes.isInc(root.getEsq().getLast())&& !Expression.hasIncognita(root.getDir()))){
 					return 0;
 		}
 		Funcoes f=new Funcoes();
