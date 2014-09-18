@@ -79,15 +79,18 @@ public class hintFunctions {
 							if (canOp){
 								boolean esq,dir;
 								if (x.equals("*") || x.equals("+")){
-									esq=Funcoes.caminho(n1,pai,x);
-									dir=Funcoes.caminho(n2,pai,x);
+									esq=Funcoes.verificaCaminho(n1,pai,x);
+									dir=Funcoes.verificaCaminho(n2,pai,x);
 									canOp=esq&&dir;
 								}else if (x.equals("-")){
-									esq=Funcoes.caminho(n1,pai,x);
-									dir=Funcoes.caminho(n2,pai,x);
+									esq=Funcoes.verificaCaminho(n1,pai,x);
+									dir=Funcoes.verificaCaminho(n2,pai,x);
+									//se  n2 é filhos direto de pai vai ser validado pela função ser exclusivo-exclusivo
+									if (n2.ehFilho(pai) && pai.getValue().equals("+"))dir=false;
 									canOp=esq&&dir;
 									//ou seja a+(-b) => a-b
-									if (!canOp && esq && n2.getValue().startsWith("-"))dir=Funcoes.caminho(n2,pai,"+");
+									if (!canOp && esq && n2.getValue().startsWith("-"))dir=Funcoes.verificaCaminho(n2,pai,"+");
+									canOp=esq&&dir;
 								}
 							}
 							if (canOp){

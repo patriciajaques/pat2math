@@ -1200,7 +1200,7 @@ public class Funcoes {
 			if (!caminho.equals(destino)){
 				if (caminho.getValue().equals(operador))return caminho(caminho.getPai(),destino,operador);
 				else return false;
-			}return true;
+			}else return true;
 		}
 		return false;
 	}
