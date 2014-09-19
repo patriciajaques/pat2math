@@ -44,7 +44,12 @@
 				    	<c:forEach items="${enabledContents}" var="content">
 						    <tr>
 						    	<td>
-						    		<p><a href="${content.id}">${content.name}</a></p>
+						    		<c:if test="${content.type eq 'video'}">
+						    			<p><a href="${content.id}">${content.name}</a></p>
+						    		</c:if>
+						    		<c:if test="${content.type eq 'equation'}">
+						    			<p><a href="${content.id}">${content.equation}</a></p>
+						    		</c:if>
 						    	</td>
 						    	<td>
 						    		<p>${content.type}</p>
@@ -79,7 +84,12 @@
 				    	<c:forEach items="${disabledContents}" var="content">
 						    <tr>
 						    	<td>
-						    		<p><a href="disabled/${content.id}">${content.name}</a></p>
+						    		<c:if test="${content.type eq 'video'}">
+						    			<p><a href="disabled/${content.id}">${content.name}</a></p>
+						    		</c:if>
+						    		<c:if test="${content.type eq 'equation'}">
+						    			<p><a href="disabled/${content.id}">${content.equation}</a></p>
+						    		</c:if>
 						    	</td>
 						    	<td>
 						    		<p>${content.type}</p>

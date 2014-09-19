@@ -1,5 +1,6 @@
 package br.com.pat2math.domainBase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,10 @@ import br.com.pat2math.studentModel.Teacher;
 
 @Entity
 @Table(name="plan")
-public class Plan {
+public class Plan implements Serializable {
+	
+	private static final long serialVersionUID = -1724612152677458577L;
+
 	@Id @GeneratedValue
 	private Long id;
 	

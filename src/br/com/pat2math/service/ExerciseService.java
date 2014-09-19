@@ -15,10 +15,6 @@ public class ExerciseService {
 	@Autowired private ContentRepository contents;
 	
 	public Exercise createExercise(Exercise exercise, Errors errors) {
-		if(contents.getByName(exercise.getName()) != null) {
-			errors.rejectValue("name", "error.duplicate",
-					new String[] { exercise.getName() }, null);
-		}
 		return errors.hasErrors() ? null : (Exercise) contents.add(exercise);
 	}
 	

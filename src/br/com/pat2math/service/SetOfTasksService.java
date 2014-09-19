@@ -56,6 +56,7 @@ public class SetOfTasksService {
 		SetOfTasks set = sets.getWithTasks(idSet);
 		List<Task> tasks = set.getTasks();
 		List<Exercise> exercises = new ArrayList<Exercise>();
+		
 		for(Task task : tasks) {
 			if(task.getContent() instanceof Exercise) {
 				Exercise e = (Exercise) task.getContent();
@@ -76,6 +77,7 @@ public class SetOfTasksService {
 				exercises.add(exercise);
 			}
 		}
+		
 		return exercises;
 	}
 	

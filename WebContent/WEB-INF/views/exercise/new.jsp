@@ -2,32 +2,12 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>	
 
-<form:form action="." modelAttribute="exercise" accept-charset="utf-8" class="box block left">
+<form:form action="." modelAttribute="exercise" accept-charset="utf-8" class="block left">
 	<form:errors path="*">
 		<div class="error-global">
 			<spring:message code="error.global" />
 		</div>
 	</form:errors>
-		
-	<label>Nome</label>
-	<p>
-		<form:input path="name" />
-	</p>
-	<p>
-		<form:errors path="name">
-			<form:errors path="name" htmlEscape="false" class="error" />
-		</form:errors>
-	</p>
-	
-	<label>Descrição</label>
-	<p>
-		<form:textarea path="description" rows="8" cols="25" />
-	</p>
-	<p>
-		<form:errors path="description">
-			<form:errors path="description" htmlEscape="false" class="error" />
-		</form:errors>
-	</p>
 	
 	<label>Equação</label>
 	<p>
@@ -39,6 +19,8 @@
 		</form:errors>
 	</p>
 	
+	<form:hidden path="description" />
+	<form:hidden path="name" />
 	<br>
 	<input type="submit" class="btn btn-large" value="Criar Exercício" />
 </form:form>

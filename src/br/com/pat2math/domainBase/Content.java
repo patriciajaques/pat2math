@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import br.com.pat2math.studentModel.Student;
@@ -35,12 +35,8 @@ public class Content {
 	@Id @GeneratedValue
 	protected Long id;
 	
-	@NotNull
-	@Size(min=3, max=30)
 	protected String name;
 	
-	@NotNull
-	@Size(min=5, max=300)
 	private String description;
 	
 	@Column(length=40, nullable=false, insertable=false, updatable=false)

@@ -16,8 +16,14 @@
 		<div>
 			<c:forEach items="${contents}" var="content">
 				<p>
-					<form:radiobutton path="content.id" value="${content.id}" />
-					<a href="/pat2math/content/${content.id}">${content.name}</a>
+					<c:if test="${content.type eq 'video'}">
+						<form:radiobutton path="content.id" value="${content.id}" />
+						<a href="/pat2math/content/${content.id}">${content.name}</a>	
+					</c:if>
+					<c:if test="${content.type eq 'equation'}">
+						<form:radiobutton path="content.id" value="${content.id}" />
+						<a href="/pat2math/content/${content.id}">${content.equation}</a>	
+					</c:if>
 				</p>
 			</c:forEach>
 		</div>

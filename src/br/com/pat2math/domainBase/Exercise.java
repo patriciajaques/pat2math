@@ -22,8 +22,8 @@ public class Exercise extends Content {
 		this.equation = equation;
 	}
 	
-	@NotNull(message="{equation.empty}")
-	@Size(min=3, max=100, message="{equation.size}")
+	@NotNull
+	@Size(min=3, max=100)
 	private String equation;
 	
 	@Transient

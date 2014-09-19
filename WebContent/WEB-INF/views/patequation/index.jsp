@@ -27,7 +27,7 @@
 		
 		<br><br><br>
 		<div class="left">
-			<p><a href="account" class="white-link">Perfil</a></p>
+			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
 			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p><br><br><br>
 			<p><a href="#" id="hide-menu" class="white-link">Esconder o menu</a></p>
 		</div>

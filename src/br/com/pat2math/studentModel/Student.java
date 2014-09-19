@@ -23,6 +23,9 @@ public class Student extends User implements Serializable {
 	@OneToMany(mappedBy="student", targetEntity=Knowledge.class)
 	private List<Knowledge> knowledges;
 	
+	@OneToMany
+	private List<TaskPerformed> tasksPerformed;
+	
 	@Transient
 	private List<Tip> helpsRequested = new ArrayList<Tip>();
 	
@@ -80,6 +83,14 @@ public class Student extends User implements Serializable {
 
 	public void setFeedbacks(List<Tip> feedbacks) {
 		this.feedbacks = feedbacks;
+	}
+
+	public List<TaskPerformed> getTasksPerformed() {
+		return tasksPerformed;
+	}
+
+	public void setTasksPerformed(List<TaskPerformed> tasksPerformed) {
+		this.tasksPerformed = tasksPerformed;
 	}
 	
 }

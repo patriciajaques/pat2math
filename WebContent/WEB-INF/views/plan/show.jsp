@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -45,7 +46,9 @@
 	    		<a href="/pat2math/sets/${topic.set.id}">
 	    			${topic.set.name}
 	    		</a>
+	    		<a style="float: right" href="../topic/delete?id=${topic.id}"><i class="icon-remove"></i></a>
 	    	</li>
+	    	
 	    </c:forEach>
 	</ul>
 	<c:if test="${empty plan.topics}"><br><p>Este plano ainda não possui nenhum tópico</p><br></c:if>

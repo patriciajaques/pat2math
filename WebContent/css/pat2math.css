@@ -8,6 +8,10 @@ body {
 	background: #fff;
 }
 
+.table td {
+	padding: 1px 5px;
+}
+
 p {
 	font-size: 16px;
 	line-height: 1.5;
