@@ -721,7 +721,7 @@ function BTNode fracionar (BTNode r){
 }
 
 function boolean validaXResult(BTNode r){
-	Funcoes.t();
+	Funcoes.j();
 	BTNode x=Expression.findX(r,"x");
 	BTNode pot= Expression.findX(r,"^");
 	boolean b=false;
@@ -3379,6 +3379,7 @@ rule "Multiplicacao fracoes"
 		System.out.println("# Multiplicar fracoes");
 		listresult.add(new Equacoes("# Multiplicar fracoes"));
 		BTNode r=findMultFrac(e.getRoot());
+		r.setAbstractTerm(false);
 		BTNode esq=r.getEsq();
 		BTNode dir=r.getDir();
 		BTNode temp;
@@ -3394,12 +3395,14 @@ rule "Multiplicacao fracoes"
 		}
 		// se for 2*(1/2) transforma em (2/1)*(1/2)
 		if (esq.eFolha() || Funcoes.isSquaredLeaf(esq)){
+			esq.setAbstractTerm(false);
 			temp= (BTNode)esq.clone();
 			esq.setEsq(temp);
 			esq.setDir(new BTNode("1"));
 			esq.setValue("/");
 		}
 		if (dir.eFolha() || Funcoes.isSquaredLeaf(dir)){
+			dir.setAbstractTerm(false);
 			temp= (BTNode)dir.clone();
 			dir.setEsq(temp);
 			dir.setDir(new BTNode("1"));

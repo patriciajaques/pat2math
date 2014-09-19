@@ -30,9 +30,10 @@ public class teste /*extends ModeloAluno*/{
 		s=s.replace("1x", "x");
 		System.out.println(s);*/
 		
-		Expression exp=new Expression ("x=-(12)/(19)");
-		Funcoes f =new Funcoes();
-		f.modificaSinal(exp.getRoot());
+		Expression exp=new Expression ("x=-(19)/(12R2)");
+		exp.removeSimpleAbstractTerm();
+		//Funcoes f =new Funcoes();
+		//f.modificaSinal(exp.getRoot());
 		exp.setmod();
 		System.out.println(exp.getnewexpression());
 		

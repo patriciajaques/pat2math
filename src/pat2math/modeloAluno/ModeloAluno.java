@@ -458,150 +458,157 @@ public class ModeloAluno extends Resolvedor{
 	 */
 	public Mensagem iniciaResolucao(String usrExpression, List<Tip> helps, List<Knowledge> knowledges){
 		try{
-		segGrau=false;
-		validaEquacao val =new validaEquacao(usrExpression);
-		if (hint!=null)hint.getHintInfo().madeAction();
-		Expression usr=new Expression(val.getEquacao(),Expression.USER);
-		usr=Funcoes.removeAbstractTermInFractionResult(usr);
-		usrExpression=usr.getnewexpression();
-		System.out.println(usrExpression);
-		Expression usrClone=(Expression)usr.clone();
-		Expression atual=new Expression(original);
-		Funcoes f=new Funcoes();
-		f.modificaSinal(atual.getRoot());
-		f.modificaSinal(usrClone.getRoot());
-		atual.setmod();
-		Date d= new Date();
-		System.out.println("Resolucao iniciada: "+d.toString());
-		//evita que uma resolução chege novamente na equação inicial
-		resp.add(new Equacoes("# Equacao Inicial"));
-		resp.add(new Equacoes(atual.getnewexpression(),
-				atual.getCleanExpression(),
-				atual.getTeXExpression()));
-		boolean igual=Expression.igual(usrClone.getRoot(), atual.getRoot());
-		usrClone=(Expression)usr.clone();
-		boolean certa=false;
-		if (!igual)certa=resolucao(usr, usrClone, atual,null);
-		boolean passoCerto=false;
-		checarSegundoGrau();
-		if (certa && operacao.equals(Operacao.OPERACAO_GENERICA))passoCerto=true;
-		boolean ig=false;
-		// se a solução do aluno está certa verifica se ele utilizou a operação certa
-		if (certa && !igual){
-			while (certa && !passoCerto && !ig){
-				passoCerto=checarOperacao();
-				if (!passoCerto){
-					/*
-					 * se é maior que um significa que ja foi adicionado anteriormente um valor nesta lista
-					 * e portanto ja n é a primera vez que uma resposta certa com operação errada é verificada
-					 */
-					ig=false;
-					if (possResp.size()>1){
-						Stack <String> pass=possResp.get(possResp.size()-1);
-						if(pass.size()== passos.size()){	
-							String passAntes="", passDepois="";
-							if (passos.isEmpty()){
-								ig=true;
-								igual=true;
-							}
-							while(!passAntes.startsWith("#") && !passos.isEmpty()){
-								passAntes=pass.get(pass.size()-1);
-								passDepois=passos.get(passos.size()-1);
-								if (passAntes.startsWith("#")){
-									if (passAntes.equals(passDepois))ig=true;
-									else ig=false;
+			segGrau=false;
+			String userAnswer=  usrExpression;
+			validaEquacao val =new validaEquacao(usrExpression);
+			if (hint!=null)hint.getHintInfo().madeAction();
+			Expression usr=new Expression(val.getEquacao(),Expression.USER);
+			//usr=Funcoes.removeAbstractTermInFractionResult(usr);
+			
+			usr.removeSimpleAbstractTerm();
+			
+			usrExpression=usr.getnewexpression();
+			System.out.println(usrExpression);
+			Expression usrClone=(Expression)usr.clone();
+			Expression atual=new Expression(original);
+			
+			atual.removeSimpleAbstractTerm();
+			
+			Funcoes f=new Funcoes();
+			f.modificaSinal(atual.getRoot());
+			f.modificaSinal(usrClone.getRoot());
+			atual.setmod();
+			Date d= new Date();
+			System.out.println("\nResolucao iniciada: "+d.toString()+"\nEquacao: "+original+" => "+atual.getnewexpression()+ "\nAluno: "+userAnswer +" => "+usr.getnewexpression() +"\n");
+			//evita que uma resolução chege novamente na equação inicial
+			resp.add(new Equacoes("# Equacao Inicial"));
+			resp.add(new Equacoes(atual.getnewexpression(),
+					atual.getCleanExpression(),
+					atual.getTeXExpression()));
+			boolean igual=Expression.igual(usrClone.getRoot(), atual.getRoot());
+			usrClone=(Expression)usr.clone();
+			boolean certa=false;
+			if (!igual)certa=resolucao(usr, usrClone, atual,null);
+			boolean passoCerto=false;
+			checarSegundoGrau();
+			if (certa && operacao.equals(Operacao.OPERACAO_GENERICA))passoCerto=true;
+			boolean ig=false;
+			// se a solução do aluno está certa verifica se ele utilizou a operação certa
+			if (certa && !igual){
+				while (certa && !passoCerto && !ig){
+					passoCerto=checarOperacao();
+					if (!passoCerto){
+						/*
+						 * se é maior que um significa que ja foi adicionado anteriormente um valor nesta lista
+						 * e portanto ja n é a primera vez que uma resposta certa com operação errada é verificada
+						 */
+						ig=false;
+						if (possResp.size()>1){
+							Stack <String> pass=possResp.get(possResp.size()-1);
+							if(pass.size()== passos.size()){	
+								String passAntes="", passDepois="";
+								if (passos.isEmpty()){
+									ig=true;
+									igual=true;
 								}
-								else if (passAntes.equals(passDepois))ig=true;
+								while(!passAntes.startsWith("#") && !passos.isEmpty()){
+									passAntes=pass.get(pass.size()-1);
+									passDepois=passos.get(passos.size()-1);
+									if (passAntes.startsWith("#")){
+										if (passAntes.equals(passDepois))ig=true;
+										else ig=false;
+									}
+									else if (passAntes.equals(passDepois))ig=true;
+								}
 							}
 						}
-					}
-					if (!ig){
-						String s="";
-						//remove a resposta final  de resp para que ela possa ser encontrada
-						// novamente por outro caminho
-						do{
-							if (!resp.isEmpty())s=resp.remove(resp.size()-1).getNotEquation();
-						}while(!s.startsWith("#") && !resp.isEmpty());
-						if (certa)possResp.add(passos);
-						passos=new Stack<String>();
-						certa=resolucao(usr, (Expression)usr.clone(), atual,null);
-					}
-				}/*else{
+						if (!ig){
+							String s="";
+							//remove a resposta final  de resp para que ela possa ser encontrada
+							// novamente por outro caminho
+							do{
+								if (!resp.isEmpty())s=resp.remove(resp.size()-1).getNotEquation();
+							}while(!s.startsWith("#") && !resp.isEmpty());
+							if (certa)possResp.add(passos);
+							passos=new Stack<String>();
+							certa=resolucao(usr, (Expression)usr.clone(), atual,null);
+						}
+					}/*else{
 					if (!possResp.isEmpty())passos=possResp.get(possResp.size()-1);
 				}*/
+				}
 			}
-		}
-		//a ultima busca deu errada mas há uma resposta certa (com operação errada), na lista obtem essta resposta
-		if (!certa && !possResp.isEmpty()){
-			certa=true;
-			passos=possResp.get(possResp.size()-1);
-		}
-		if (!certa || !passoCerto) pontos-=5;
-		boolean requestHint=this.requestHint;
-		this.requestHint=false;
-		if (igual && !operacao.equals(Operacao.REESCREVER_EQUACAO)) {
-			// 2/08/2014: Estou considerando resposta igual como resposta errada
-			// só troquei o primeiro boolean da mensagem de true para false
-			Mensagem m=new Mensagem("0",false,false,false,requestHint,"O passo informado é igual a equação.");
-			
-			//monitor.logEquacao(original, usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
-					// m.isOperacaoCerta(), m.isUltimoPasso());
-			//Tip h2 = m.getFeedbackOBJ();
-			//h2.setDescription("O passo informado é igual a equação.");
-			//h2.setId(-1L);
-			
-			m.setOperacao(operacao.getOperacao());
-			m.setRespostaAluno(usrExpression);
-			m.setSegGrau(segGrau);
-			return m;
-		}
-		else if (igual && operacao.equals(Operacao.REESCREVER_EQUACAO))passoCerto=true;
-		if (certa && passoCerto){
-			//checar se é o ultimo passo da resolução
-			boolean ultimoPasso=false;
-			if (isEndOfResolution(usrExpression))ultimoPasso=true;
-			Mensagem m=new Mensagem("0",true,true,ultimoPasso,false,requestHint,"Parabéns! Sua resposta está correta.");
-			//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
-					//m.isOperacaoCerta(), m.isUltimoPasso());
-			m.setOperacao(operacao.getOperacao());
-			m.setRespostaAluno(usrExpression);
-			m.setSegGrau(segGrau);
-			return m;
-		}else if (certa && !passoCerto){
-			Mensagem m=new Mensagem("0",true,false,false,requestHint,"Sua resposta está incorreta." +
-				" Você deve ter se enganado na operação escolhida.");
-			//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
-					//m.isOperacaoCerta(), m.isUltimoPasso());
-			m.setOperacao(operacao.getOperacao());
-			m.setRespostaAluno(usrExpression);
-			m.setSegGrau(segGrau);
-			return m;
-			
-		}	
-		else if (useMisconseptions){
-			List<Misconseption>misc=checkForMisconseptions(usrExpression);
-			Tip feedback=hint.parecerErro(original, usrExpression, Misconseption.toListOfString(misc), helps, knowledges);
-			Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua resposta está incorreta. Tente novamente!",feedback);
-			//monitor.logCorrecao(original,usrExpression, operacao.getOperacao(), 
-					//m.getFeedback(), m.isRespostaCerta(), m.isOperacaoCerta(), m.isUltimoPasso());
-			m.setOperacao(operacao.getOperacao());
-			m.setRespostaAluno(usrExpression);
-			m.setSegGrau(segGrau);
-			return m;
-		}else{
-			Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua resposta está incorreta. Tente novamente!");
-			//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
-					//m.isOperacaoCerta(), m.isUltimoPasso());
-			m.setOperacao(operacao.getOperacao());
-			m.setRespostaAluno(usrExpression);
-			return m;
-		}
-		
+			//a ultima busca deu errada mas há uma resposta certa (com operação errada), na lista obtem essta resposta
+			if (!certa && !possResp.isEmpty()){
+				certa=true;
+				passos=possResp.get(possResp.size()-1);
+			}
+			if (!certa || !passoCerto) pontos-=5;
+			boolean requestHint=this.requestHint;
+			this.requestHint=false;
+			if (igual && !operacao.equals(Operacao.REESCREVER_EQUACAO)) {
+				// 2/08/2014: Estou considerando resposta igual como resposta errada
+				// só troquei o primeiro boolean da mensagem de true para false
+				Mensagem m=new Mensagem("0",false,false,false,requestHint,"O passo informado é igual a equação.");
+
+				//monitor.logEquacao(original, usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
+				// m.isOperacaoCerta(), m.isUltimoPasso());
+				//Tip h2 = m.getFeedbackOBJ();
+				//h2.setDescription("O passo informado é igual a equação.");
+				//h2.setId(-1L);
+
+				m.setOperacao(operacao.getOperacao());
+				m.setRespostaAluno(userAnswer);
+				m.setSegGrau(segGrau);
+				return m;
+			}
+			else if (igual && operacao.equals(Operacao.REESCREVER_EQUACAO))passoCerto=true;
+			if (certa && passoCerto){
+				//checar se é o ultimo passo da resolução
+				boolean ultimoPasso=false;
+				if (isEndOfResolution(usrExpression))ultimoPasso=true;
+				Mensagem m=new Mensagem("0",true,true,ultimoPasso,false,requestHint,"Parabéns! Sua resposta está correta.");
+				//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
+				//m.isOperacaoCerta(), m.isUltimoPasso());
+				m.setOperacao(operacao.getOperacao());
+				m.setRespostaAluno(userAnswer);
+				m.setSegGrau(segGrau);
+				return m;
+			}else if (certa && !passoCerto){
+				Mensagem m=new Mensagem("0",true,false,false,requestHint,"Sua resposta está incorreta." +
+						" Você deve ter se enganado na operação escolhida.");
+				//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
+				//m.isOperacaoCerta(), m.isUltimoPasso());
+				m.setOperacao(operacao.getOperacao());
+				m.setRespostaAluno(userAnswer);
+				m.setSegGrau(segGrau);
+				return m;
+
+			}	
+			else if (useMisconseptions){
+				List<Misconseption>misc=checkForMisconseptions(usrExpression);
+				Tip feedback=hint.parecerErro(original, usrExpression, Misconseption.toListOfString(misc), helps, knowledges);
+				Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua resposta está incorreta. Tente novamente!",feedback);
+				//monitor.logCorrecao(original,usrExpression, operacao.getOperacao(), 
+				//m.getFeedback(), m.isRespostaCerta(), m.isOperacaoCerta(), m.isUltimoPasso());
+				m.setOperacao(operacao.getOperacao());
+				m.setRespostaAluno(userAnswer);
+				m.setSegGrau(segGrau);
+				return m;
+			}else{
+				Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua resposta está incorreta. Tente novamente!");
+				//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
+				//m.isOperacaoCerta(), m.isUltimoPasso());
+				m.setOperacao(operacao.getOperacao());
+				m.setRespostaAluno(userAnswer);
+				return m;
+			}
+
 
 		}catch(InvalidValueException ive){
 			Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua equação possui o seguinte erro: "+ive.message());
 			//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
-					//m.isOperacaoCerta(), m.isUltimoPasso());
+			//m.isOperacaoCerta(), m.isUltimoPasso());
 			m.setOperacao(operacao.getOperacao());
 			m.setRespostaAluno(usrExpression);
 			m.getFeedbackOBJ().setDescription(m.getMSG());
