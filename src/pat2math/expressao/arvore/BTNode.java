@@ -145,7 +145,7 @@ public class BTNode implements Cloneable{
 	 * @return se for um nodo válido <code>true</code> senão
 	 * <code>false</code> mesmo que aT seja <code>true</code>.
 	 */
-	private void setAbstractTerm(boolean aT){
+	public void setAbstractTerm(boolean aT){
 		if (aT){
 			if (val.equals("-1")&& this.ehFilhoEsq())abstractTerm= true;
 			else if (val.equals("*") && this.getEsq().isAbstract())abstractTerm= true;

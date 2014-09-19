@@ -26,16 +26,18 @@ public class HelpTest {
 		//	}else c.add(new Conhecimento(0.5f, s));
 		}
 		ArrayList<Tip> t =new ArrayList<Tip>();
-		//Tip tip=new Tip();
-		//tip.setOperation("EqPrim_Ad_Inc");
-		//tip.setContent("AD");
-		//tip.setLevel(2);
-	//	t.add(tip);
-		Tip hint=ma.hints("x=(-12/19)",t,c);
-	//	ma.setExpressao("x=7x+x");
-	//	ma.setOperacao("AD");
-	//	Mensagem hint = ma.iniciaResolucao("x=4x", t, c);
-		System.out.println(hint.getDescription());
+		Tip tip=new Tip();
+		tip.setOperation("EqPrim_Ad_Num");
+		//tip.setOperation("AD");
+		tip.setContent("AD");
+		tip.setLevel(2);
+		t.add(tip);
+	//	Tip hint=ma.hints("2-4=x",t,c);
+		ma.setExpressao("2+4=x");
+		ma.setOperacao("AD");
+		Mensagem hint = ma.iniciaResolucao("7=x", t, c);
+	//	System.out.println(hint.getDescription());
+		System.out.println(hint.getFeedback());
 	}
 	
 	/*
