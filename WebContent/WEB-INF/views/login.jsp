@@ -15,7 +15,7 @@
 
 <form class="box" action="/pat2math/j_spring_security_check" method="post" accept-charset="utf-8">
 	<p>
-		<img src="/pat2math/images/logo-large2.png" />
+		<img src="/pat2math/images/Pat2Math.png" />
 	</p>
 	<br><br>
 	

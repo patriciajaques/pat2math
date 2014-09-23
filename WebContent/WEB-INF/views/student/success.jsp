@@ -9,7 +9,7 @@
 </style>
 
 <div class="box">
-	<p><img src="/pat2math/images/logo-large2.png" /></p>
+	<p><img src="/pat2math/images/Pat2Math.png" /></p>
 	<br><br>
 	<h2 class="left">Obrigado!</h2>
 	<p class="left">
