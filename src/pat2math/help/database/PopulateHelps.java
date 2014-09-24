@@ -113,13 +113,13 @@ public class PopulateHelps {
 							
 								Animation anime = new Animation();
 								anime.setCode(animation);
-						//		em.persist(anime);
+					//			em.persist(anime);
 						
 								h.setAnimation(anime);
 							}else {desc=line.substring(line.indexOf(" ")+1);
 								Animation anime = new Animation();
 							//	anime.setCode("NO");
-					//			em.persist(anime);
+				//				em.persist(anime);
 								h.setAnimation(anime);
 							}
 							h.setDescription(desc);
@@ -171,7 +171,7 @@ public class PopulateHelps {
 		return ajudas;
 	}
 
-/*	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		PopulateHelps ph= new PopulateHelps("Dicas.txt");
 		try {
 			

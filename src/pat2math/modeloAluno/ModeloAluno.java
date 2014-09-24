@@ -426,11 +426,13 @@ public class ModeloAluno extends Resolvedor{
 		pontos-=2;
 		
 		if (hint!=null){
+			System.out.println("\nDica requisitada para a equacao:"+ eq);
 			dica= hint.dica(eq, helps, knowledges);
 			PedidoAjuda pa=hint.getHintInfo();
 			pa.requestHint();
 			//dica+=";"+pa.getPedidosConsecutivos();
 			requestHint=true;
+			System.out.println("Dica retornada:"+dica.getLevel()+": "+dica.getDescription());
 		}else{
 			//dica= dica(eq);
 		}
