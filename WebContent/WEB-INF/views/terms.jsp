@@ -13,7 +13,7 @@
 	<body>
 		<section>
 			<div id="container">
-				<p><img src="/pat2math/images/logo-large2.png" /></p>
+				<p><img src="/pat2math/images/Pat2MathBETA.png" /></p>
 				<br><br>
 				<h2>Por favor, leia com atenção os termos de uso:</h2>
 			</div>
