@@ -432,7 +432,7 @@ public class ModeloAluno extends Resolvedor{
 			pa.requestHint();
 			//dica+=";"+pa.getPedidosConsecutivos();
 			requestHint=true;
-			System.out.println("Dica retornada:"+dica.getLevel()+": "+dica.getDescription());
+			System.out.println("Dica retornada: "+dica.getLevel()+": "+dica.getDescription());
 		}else{
 			//dica= dica(eq);
 		}
@@ -909,7 +909,7 @@ public class ModeloAluno extends Resolvedor{
 									Activation act=getNextActivation(actList,newActList);
 									if (act!=null){
 										//descomentar somete em debug
-									//	System.out.println("*******************Regra: " +act.getRule().getName());
+										System.out.println("\n*Equação atual: " +atual.getCleanExpression()+" Regra: " +act.getRule().getName());
 										((DefaultAgenda)expressoes.getAgenda()).fireActivation(act);
 										forBhaskara=remakeBK(forBhaskara); 
 										actList.remove(0); //remove a regra utilizada

@@ -626,8 +626,11 @@ function boolean canMMC(Expression e){
 			if (Funcoes.arvINT(root)) return false;
 		}
 	}
+	// negar a execução se haver uma multiplicação a ser realizada
+	Vector<BTNode> mults=e.buscaChaveX(e.getRoot(),"*");
+	if (!mults.isEmpty()) return false;
 	Vector<BTNode> noList=e.buscaChaveX(e.getRoot(),"/");
-	Vector<BTNode> mults;
+	
 	BTNode no=null;
 	boolean result=false;
 	boolean denDifUm=false; // utilizada para impedir o MMC caso haver somente denominador 1
