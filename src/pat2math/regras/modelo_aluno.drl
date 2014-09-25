@@ -119,9 +119,18 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 					btD.getPai().getPai().getValue().equals("="))) || pVal.equals("+") ||
 					pVal.equals ("-"))){
 	
-				selected= new BTNode [2];
-				selected[0]=(BTNode)btE.clone();
-				selected[1]=new BTNode(pVal);
+					//TODO-sexta: verfica se o oposto deste valor existe ne equação do resolvedor
+					//String nVal=btE.getValue();
+					//String oposto;
+					//if (pVal.equals("+")){
+				//		if (nVal.startsWith("-"))oposto="+"
+			//			else oposto="-";
+		//			}else if (pVal.equals("*"))oposto="/";
+		//			else if (pVal.equals"/")) oposto="*";
+					
+					selected= new BTNode [2];
+					selected[0]=(BTNode)btE.clone();
+					selected[1]=new BTNode(pVal);
 				break;
 				}
 			}
