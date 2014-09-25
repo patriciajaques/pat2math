@@ -13,7 +13,7 @@
 	<body>
 		<section>
 			<div id="container">
-				<p><img src="/pat2math/images/Pat2Math.png" /></p>
+				<p><img src="/pat2math/images/Pat2MathBETA.png" /></p>
 				<br><br>
 				<h2>Aceso Negado.</h2>
 			</div>

@@ -1,6 +1,6 @@
 <div style="background: #fff; box-shadow: 2px 2px 6px #ccc; border: 2px solid #aaa; padding: 25px; border-radius: 8px">
 
-	<p style='text-align: center'><img src='http://200.188.161.124/pat2math/images/Pat2Math.png' /></p>
+	<p style='text-align: center'><img src='http://200.188.161.124/pat2math/images/Pat2MathBETA.png' /></p>
 
 	<h2 style='text-align: center; color: #48b; font-size: 35px'>Bem-vindo ${user.firstName} ${user.lastName}</h2>
 	<p style='text-align: center; font-size: 16px'>
