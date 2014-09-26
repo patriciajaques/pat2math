@@ -724,7 +724,7 @@ function BTNode fracionar (BTNode r){
 }
 
 function boolean validaXResult(BTNode r){
-	Funcoes.j();
+//	Funcoes.j();
 	BTNode x=Expression.findX(r,"x");
 	BTNode pot= Expression.findX(r,"^");
 	boolean b=false;
