@@ -106,7 +106,6 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 			for (BTNode btD: folhasDifDir){
 				String pVal=btE.getPai().getValue();
 				String p2Val=btD.getPai().getValue();
-				f.j();
 				/**
 				 *  - btE DEven ser iguais e associativos, significa que o nodo pode operar com qualquer um
 				 *  - os nodos se forem filho de * ou / deve ser filho direto de = um de cada lado
@@ -741,7 +740,7 @@ function List[] getNodosSimplificaveisDivSin (Expression usr, Expression solver)
 
 function List[] getNodosSimplificaveisNaoFolha (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
+	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -1886,6 +1885,50 @@ function List getFracaoSimpNaoFolha (List l, Expression e){
 	return fracao;
 }
 
+function List getFracSimpNumDen (Expression user, Expression solver){
+	BTNode clone = (BTNode)solver.getRoot().clone();
+	List<BTNode> esqSolver = solver.buscaChaveX(clone.getEsq(),"/");
+	List<BTNode> dirSolver = solver.buscaChaveX(clone.getDir(),"/");
+	List<BTNode> esqUser = user.getFolhasFracoes((BTNode)user.getRoot().getEsq().clone(), new Vector<BTNode>());
+	List<BTNode> dirUser = user.getFolhasFracoes((BTNode)user.getRoot().getDir().clone(), new Vector<BTNode>());
+	esqSolver= Conjuntos.getFracao(Conjuntos.diferenca(esqSolver,esqUser));
+	dirSolver = Conjuntos.getFracao(Conjuntos.diferenca(dirSolver,dirUser));
+	List<BTNode> opsNum=new ArrayList<BTNode>();
+	List<BTNode> opsDen= new ArrayList<BTNode>();
+	List<BTNode> valids = new ArrayList<BTNode>();
+	
+	
+	for (BTNode e: esqSolver){
+		opsNum= Funcoes.listOperators(e.getEsq(),opsNum);
+		opsDen= Funcoes.listOperators(e.getDir(),opsDen);
+		if (chkListForValidOperators(opsNum) && chkListForValidOperators(opsDen)){
+			valids.add(e);
+		}
+	}
+	if (valids.isEmpty()){
+		for (BTNode e: dirSolver){
+			opsNum= Funcoes.listOperators(e.getEsq(),opsNum);
+			opsDen= Funcoes.listOperators(e.getDir(),opsDen);
+			if (chkListForValidOperators(opsNum) && chkListForValidOperators(opsDen)){
+				valids.add(e);
+			}
+		}
+	
+	}
+	return valids;
+	
+}
+
+//uso exclusivo da função getFracSimpIntInc, verifica de list so possui operadores de *, ^ ou R
+function boolean chkListForValidOperators(List list){
+	List<BTNode> btList= new ArrayList(list);
+	boolean valid=true;
+	for(BTNode bt: btList){
+		if (!bt.getValue().equals("*") && !bt.getValue().equals("^") && !bt.getValue().equals("R")) valid=false;
+	}
+	return valid;
+}
+
 function List getRaizFact(List l){
 	List<BTNode> k=(List<BTNode>)l;
 	ArrayList<BTNode> raiz=new ArrayList<BTNode>();
@@ -2963,6 +3006,63 @@ rule "Simplificacao de nodos nao folha"
 		update(solver);
 end
 
+
+rule "Simplificacao Numerador por Denominador"
+	salience 9
+	dialect "java"
+	when
+		solver: Expression (tipo==Expression.SOLVER);
+		user: Expression (tipo==Expression.USER);
+		eval (solver.getnewexpression().contains("="));
+		eval (solver.getRoot().getValue().equals("="));
+		eval (!getFracSimpNumDen(user,solver).isEmpty());
+	then
+		String msg= "# Simplificar";
+		List<BTNode> fracs = getFracSimpNumDen(user,solver);
+		BTNode frac = fracs.get(0);
+		BTNode numNode= Funcoes.splitMMC(frac.getEsq(),solver);
+		BTNode denNode= Funcoes.splitMMC(frac.getDir(),solver);
+		List<BTNode> num= Expression.getFolhas(numNode);
+		List<BTNode> den= Expression.getFolhas(denNode);
+		for (int i=0;i<num.size();i++){
+			BTNode n= num.get(i);
+			for (int j=0;j<den.size();j++){
+				BTNode d=den.get(j);
+				if (n.eFolha() && d.eFolha() && n.igual(d)){
+					num.remove(n);
+					den.remove(d);
+					i--;// rever posicao pois o remover puxou todos os nodo uma posicao a frente
+					j=den.size(); //sai da interacao de j;
+				}
+			}
+		}
+		num.set(0,(BTNode)num.get(0).clone());
+		BTNode node;
+		while (num.size()>1){
+			node=num.remove(0);
+			if (num.size()>0){
+				node=new BTNode("*",(BTNode)num.remove(0).clone(),node);
+			}
+			num.add(0,node);
+		}
+		while (den.size()>1){
+			node=den.remove(0);
+			if (den.size()>0){
+				node=new BTNode("*",(BTNode)den.remove(0).clone(),node);
+			}
+			den.add(0,node);
+		}
+		frac.setEsq(null);
+		frac.setDir(null);
+		frac.setEsq(num.remove(0));
+		frac.setDir(den.remove(0));
+		solver.setNewRoot(solver.getRoot());
+		listresult.add(new Equacoes(msg));
+		listresult.add(new Equacoes(solver.getnewexpression(),
+							solver.getCleanExpression(),solver.getTeXExpression()));
+		update(solver);
+end
+
 rule "Fatorar Raizes"
 	salience 5
 	dialect "java"
@@ -3115,7 +3215,6 @@ rule "Operacao Inversa Divisao"
 		
 		if (l.isEmpty())l=v[1];
 		if (l.isEmpty())l=getOIDiv(user,solver);
-		Funcoes.j();
 		BTNode div=l.get(0);
 		BTNode mult; // o lado oposto da equação
 		if (div.ehFilhoEsq(root)){
@@ -3325,7 +3424,6 @@ rule "Principio Aditivo - Multiplicativo"
 		eval (getPrincAdMult(user, solver)!=null);
 	then
 		String msg = "# Operacao Inversa - ";
-		Funcoes.j();
 		BTNode []selected= getPrincAdMult(user, solver);
 		BTNode root=solver.getRoot();
 		BTNode tempE= root.getEsq();
