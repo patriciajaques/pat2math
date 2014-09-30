@@ -114,5 +114,10 @@
 	<div id="video-box"></div>
 	<div class="modal" id="msg-box"></div>
 	
+	<p id="points">
+		<span>0 de 0 pontos</span>
+        <a id="hint" class="btn btn-large">Dica</a>
+    </p>
+    	
 </body>
 </html>
