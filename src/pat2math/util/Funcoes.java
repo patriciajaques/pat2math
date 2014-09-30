@@ -1309,8 +1309,12 @@ public class Funcoes {
 				mmc.setValue("*");
 			}
 		}else if (!mmc.eFolha()){
-			splitMMC(mmc.getEsq(),e);
-			splitMMC(mmc.getDir(),e);
+			BTNode esq=splitMMC(mmc.getEsq(),e);
+			BTNode dir=splitMMC(mmc.getDir(),e);
+			mmc.setEsq(null);
+			mmc.setDir(null);
+			mmc.setEsq(esq);
+			mmc.setDir(dir);
 		}
 		return mmc;
 	}
@@ -1353,6 +1357,12 @@ public class Funcoes {
 			String vEsq=mmc.getEsq().getValue();
 			if (Funcoes.isInteger(vEsq)){
 				String vDir=mmc.getDir().getValue();
+				if (vDir.equals("*")){
+					BTNode dir=mergeMMC(mmc.getDir());
+					mmc.setDir(null);
+					mmc.setDir(dir);
+					vDir=mmc.getDir().getValue();
+				}
 				if (vDir.equals("^") && Funcoes.isInc(mmc.getDir().getEsq().getValue())){
 					vDir=mmc.getDir().getEsq().getValue();
 					if (vEsq.equals("1"))vEsq="";
@@ -1368,6 +1378,11 @@ public class Funcoes {
 					mmc.setValue(vEsq+vDir);
 					mmc.setEsq(null);
 					mmc.setDir(null);
+				}else if (Funcoes.isInteger(vDir)){
+					int val= mergeInteger(mmc);
+					mmc.setValue(val);
+					mmc.setEsq(null);
+					mmc.setDir(null);
 				}
 			}else if (!mmc.eFolha()){
 				//caso do inteiro estar divididos em fatores primos, ou seja, a*b, sendo a e b inteiros
@@ -1377,13 +1392,21 @@ public class Funcoes {
 					mmc.setEsq(null);
 					mmc.setDir(null);
 				}else{
-					mergeMMC(mmc.getEsq());
-					mergeMMC(mmc.getDir());
+					BTNode esq=mergeMMC(mmc.getEsq());
+					BTNode dir=mergeMMC(mmc.getDir());
+					mmc.setEsq(null);
+					mmc.setDir(null);
+					mmc.setEsq(esq);
+					mmc.setDir(dir);
 				}
 			}
 		}else if(!mmc.eFolha()){
-			mergeMMC(mmc.getEsq());
-			mergeMMC(mmc.getDir());
+			BTNode esq=mergeMMC(mmc.getEsq());
+			BTNode dir=mergeMMC(mmc.getDir());
+			mmc.setEsq(null);
+			mmc.setDir(null);
+			mmc.setEsq(esq);
+			mmc.setDir(dir);
 		}
 		return mmc;
 	}
@@ -1395,8 +1418,9 @@ public class Funcoes {
 	 */
 	public static int mergeInteger(BTNode root){
 		Expression e= new Expression(new BTNode ("=",(BTNode)root.clone(),new BTNode ("0")));
-		e.avaliarArvore();
-		return e.getRoot().getEsq().getIntValue();
+		String valor = e.avaliarArvore();
+		int v = (int)Double.parseDouble(valor.substring(0,valor.indexOf("=")));
+		return v;
 	}
 	
 	

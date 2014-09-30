@@ -740,7 +740,7 @@ function List[] getNodosSimplificaveisDivSin (Expression usr, Expression solver)
 
 function List[] getNodosSimplificaveisNaoFolha (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.j();
+	//f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -1886,11 +1886,12 @@ function List getFracaoSimpNaoFolha (List l, Expression e){
 }
 
 function List getFracSimpNumDen (Expression user, Expression solver){
-	BTNode clone = (BTNode)solver.getRoot().clone();
-	List<BTNode> esqSolver = solver.buscaChaveX(clone.getEsq(),"/");
-	List<BTNode> dirSolver = solver.buscaChaveX(clone.getDir(),"/");
-	List<BTNode> esqUser = user.getFolhasFracoes((BTNode)user.getRoot().getEsq().clone(), new Vector<BTNode>());
-	List<BTNode> dirUser = user.getFolhasFracoes((BTNode)user.getRoot().getDir().clone(), new Vector<BTNode>());
+	BTNode root = solver.getRoot();
+	List<BTNode> esqSolver = solver.buscaChaveX(root.getEsq(),"/");
+	List<BTNode> dirSolver = solver.buscaChaveX(root.getDir(),"/");
+	List<BTNode> esqUser = user.getFolhasFracoes(user.getRoot().getEsq(), new Vector<BTNode>());
+	List<BTNode> dirUser = user.getFolhasFracoes(user.getRoot().getDir(), new Vector<BTNode>());
+	Funcoes.j();
 	esqSolver= Conjuntos.getFracao(Conjuntos.diferenca(esqSolver,esqUser));
 	dirSolver = Conjuntos.getFracao(Conjuntos.diferenca(dirSolver,dirUser));
 	List<BTNode> opsNum=new ArrayList<BTNode>();
@@ -1898,10 +1899,16 @@ function List getFracSimpNumDen (Expression user, Expression solver){
 	List<BTNode> valids = new ArrayList<BTNode>();
 	
 	
+	
 	for (BTNode e: esqSolver){
 		opsNum= Funcoes.listOperators(e.getEsq(),opsNum);
 		opsDen= Funcoes.listOperators(e.getDir(),opsDen);
-		if (chkListForValidOperators(opsNum) && chkListForValidOperators(opsDen)){
+		//barra denomnador 1 pois na pratica a fração nao muda apos a execução da regra
+		if (!e.getDir().getValue().equals("1") && 
+				chkListForValidOperators(opsNum) && chkListForValidOperators(opsDen) &&
+					chkEqualPrimeNumDen( e, solver)){
+				
+			
 			valids.add(e);
 		}
 	}
@@ -1909,7 +1916,9 @@ function List getFracSimpNumDen (Expression user, Expression solver){
 		for (BTNode e: dirSolver){
 			opsNum= Funcoes.listOperators(e.getEsq(),opsNum);
 			opsDen= Funcoes.listOperators(e.getDir(),opsDen);
-			if (chkListForValidOperators(opsNum) && chkListForValidOperators(opsDen)){
+			if (!e.getDir().getValue().equals("1") &&
+					chkListForValidOperators(opsNum) && chkListForValidOperators(opsDen) &&
+					chkEqualPrimeNumDen( e, solver)){
 				valids.add(e);
 			}
 		}
@@ -1927,6 +1936,40 @@ function boolean chkListForValidOperators(List list){
 		if (!bt.getValue().equals("*") && !bt.getValue().equals("^") && !bt.getValue().equals("R")) valid=false;
 	}
 	return valid;
+}
+
+//verifica se eh realmete possivel simplificar, ou seja se um valor do numerador pode
+// dividir pelo numerador: quebrar em fatores primos e verificar se ha um valor igual
+// tanto no numerador como no denominador
+function boolean chkEqualPrimeNumDen(BTNode e, Expression exp){
+	boolean valid=false;
+	if (e.getValue().equals("/")){
+	Funcoes.j();
+		BTNode clone = (BTNode) e.clone();
+		BTNode num = clone.getEsq();
+		BTNode den = clone.getDir();
+		
+		
+		num = Funcoes.splitMMC(num,exp);
+		den = Funcoes.splitMMC(den,exp);
+		
+		List<BTNode> folhaN = Expression.getFolhas(num);
+		List<BTNode> folhaD = Expression.getFolhas(den);
+		
+		for (int i=0;i<folhaN.size();i++){
+			BTNode n= folhaN.get(i);
+			for (int j=0;j<folhaD.size();j++){
+				BTNode d= folhaD.get(j);
+				if (n.getValue().equals(d.getValue())){
+					valid=true;
+					j=folhaD.size();
+					i=folhaN.size();
+				}
+			}
+		}
+	}
+	return valid;
+	
 }
 
 function List getRaizFact(List l){
@@ -3020,6 +3063,7 @@ rule "Simplificacao Numerador por Denominador"
 		String msg= "# Simplificar";
 		List<BTNode> fracs = getFracSimpNumDen(user,solver);
 		BTNode frac = fracs.get(0);
+		Funcoes.j();
 		BTNode numNode= Funcoes.splitMMC(frac.getEsq(),solver);
 		BTNode denNode= Funcoes.splitMMC(frac.getDir(),solver);
 		List<BTNode> num= Expression.getFolhas(numNode);
@@ -3054,6 +3098,8 @@ rule "Simplificacao Numerador por Denominador"
 		}
 		frac.setEsq(null);
 		frac.setDir(null);
+		if (num.isEmpty())num.add(new BTNode("1"));
+		if (den.isEmpty())den.add(new BTNode("1"));
 		frac.setEsq(num.remove(0));
 		frac.setDir(den.remove(0));
 		solver.setNewRoot(solver.getRoot());
