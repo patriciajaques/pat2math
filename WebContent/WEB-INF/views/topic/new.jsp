@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<form:form action="../" modelAttribute="topic" accept-charset="utf-8">
+<form:form action="/pat2math/topic/" modelAttribute="topic" accept-charset="utf-8">
 	
 	<div class="left">
 		<form:errors path="*">

@@ -5,11 +5,15 @@ body {
 	padding: 0 30px;
 	font-family: Helvetica, Verdana, LucidaGrande, sans-serif;
 	text-align: center;
+	background: #eee;
+}
+
+.table {
 	background: #fff;
 }
 
 .table td {
-	padding: 1px 5px;
+	padding: 8px;
 }
 
 p {
@@ -361,7 +365,20 @@ textarea:focus {
 	display: none;
 	background: #fff;
 	box-shadow: 0 0 5px #bbb;
-	z-index: 99999;
+	z-index: 9999999;
+}
+
+#sets {
+	width: 626px;
+	height: 360px;
+	padding: 40px 50px;
+	text-align: center;
+	margin-left: -363px;
+	margin-top: -220px;
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
 }
 
 #video-box {

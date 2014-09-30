@@ -68,7 +68,7 @@
     </definition>
 
     <!--  Topic templates -->
-    <definition name="topic.new" extends="admin.page">
+    <definition name="topic.new" extends="blank">
         <put-attribute name="body" value="/WEB-INF/views/topic/new.jsp"/>
     </definition>
 
