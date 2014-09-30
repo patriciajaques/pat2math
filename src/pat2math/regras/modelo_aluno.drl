@@ -98,29 +98,90 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 	List<BTNode> folhasDifEsq=Conjuntos.diferenca(folhasUEsq,folhasSEsq);
 	List<BTNode> folhasDifDir=Conjuntos.diferenca(folhasUDir,folhasSDir);
 	BTNode[] selected=null;
+	String squareSymbol="";
 	//validar apenas se a unica diferenca for a soma/subtracao/multiplicação/divisao nos 2 lados
-	if (folhasDifEsq.size()==1 && folhasDifDir.size()==1 &&
-	 folhasDifEsq.get(0).getValue().equals(folhasDifDir.get(0).getValue())){
+	if (folhasDifEsq.size()==1 && folhasDifDir.size()==1 && isValidForPricAdMult(folhasDifEsq.get(0), folhasDifDir.get(0))){
 	
 		for (BTNode btE:folhasDifEsq){
 			for (BTNode btD: folhasDifDir){
 				String pVal=btE.getPai().getValue();
 				String p2Val=btD.getPai().getValue();
+				f.j();
 				/**
 				 *  - btE DEven ser iguais e associativos, significa que o nodo pode operar com qualquer um
 				 *  - os nodos se forem filho de * ou / deve ser filho direto de = um de cada lado
 				 *  - Caso contrario devem ser filhos de + ou -.
 				 */
-				if (btE.igual(btD) && Conjuntos.ehAssociativa(btE.getPai()) &&
+				 // o objetivo da função comentada ja esta sendo realizada na função
+				 //isValidForPrincAdMult
+				if (/*btE.igual(btD) &&*/ Conjuntos.ehAssociativa(btE.getPai()) &&
 					((((pVal.equals("*") || pVal.equals("/")) && 
-					(btE.getPai().getValue().equals(btD.getPai().getValue())) && // evita nullpointe se btD for filho direto de = o que deve ser ivalidado
+					(
+					
+					btE.getPai().getValue().equals(btD.getPai().getValue()) ||
+					isValidMultForPrincAdMult(btE, btD)
+					) && // evita nullpointe se btD for filho direto de = o que deve ser ivalidado
 					btE.getPai().getPai().getValue().equals("=") &&
 					btD.getPai().getPai().getValue().equals("="))) || pVal.equals("+") ||
 					pVal.equals ("-"))){
 	
-				selected= new BTNode [2];
-				selected[0]=(BTNode)btE.clone();
-				selected[1]=new BTNode(pVal);
+					//TODO-segunda: colocar o suporte para 2x=4 => 2x/2=4/2, mas não eh urgente pois tem outra regra q tbm faz isso
+					String nVal=btE.getValue();
+					if (Funcoes.isSquaredLeaf(btE)){
+						squareSymbol=nVal;
+						nVal=btE.getEsq().getValue();
+						
+					}
+					String oposto="";
+					if (pVal.equals("/") && isValidMultForPrincAdMult(btE, btD))pVal="*";
+					if (pVal.equals("+")){
+						if (nVal.startsWith("-")){
+							oposto="+";
+							nVal=Funcoes.trocaSinal(nVal);
+						}else{
+							oposto="-";
+							nVal="-"+nVal;
+						}
+					}else if (pVal.equals("*"))oposto="/";
+					else if (pVal.equals("/")) oposto="*";
+					
+					List <BTNode> nSolver=solver.buscaChaveX(solver.getRoot(), nVal);
+					if (nSolver.isEmpty() && pVal.equals("*")){
+						nVal=Funcoes.getINT(nVal)+"";
+						nSolver=solver.buscaChaveX(solver.getRoot(), nVal);
+					}
+					// o oposto deve existir também na equação do aluno
+					// afinal é este o termo que deve ser "movido"
+					// ex: 2x+3=0 => 2x+3-3=0-3
+					List <BTNode> nUser=usr.buscaChaveX(usr.getRoot(),nVal);
+					BTNode btn;
+					boolean existUSR=false;
+					if (!oposto.isEmpty() && !nUser.isEmpty() && !nSolver.isEmpty()){
+					
+						for (int i=0;i<nUser.size();i++){
+							btn=nUser.get(i);
+							if (btn.getPai().getValue().equals(oposto) &&
+								Conjuntos.ehAssociativa(btn)){
+								existUSR=true;
+								i=nSolver.size();
+							}
+						} 
+						for (int i=0;i<nSolver.size();i++){
+							btn=nSolver.get(i);
+							if (btn.getPai().getValue().equals(oposto) &&
+								Conjuntos.ehAssociativa(btn) && existUSR){
+								selected= new BTNode [2];
+								BTNode sel;
+								if (!squareSymbol.isEmpty()) sel=new BTNode(squareSymbol, new BTNode(nVal), new BTNode ("2"));
+								else sel=new BTNode(nVal);
+								selected[0]=sel;//(BTNode)btE.clone();
+								selected[1]=new BTNode(pVal);
+								i=nSolver.size();
+							}
+						} 
+					}
+					
+					
 				break;
 				}
 			}
@@ -128,6 +189,49 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 		}
 	}
 	return selected;
+}
+
+function boolean isValidForPricAdMult(BTNode n1, BTNode n2){
+	if (n1.getPai()==null || n2.getPai()==null) return false;
+	String inc1,inc2;
+	int v1,v2,pot1,pot2;
+	//desmembrar os valores
+	if (Funcoes.isSquaredLeaf(n1)){
+		pot1=2;
+		n1=n1.getEsq();
+	}else pot1=1;
+	if (Funcoes.isSquaredLeaf(n2)){
+		pot2=2;
+		n2=n2.getDir();
+	}else pot2=1;
+	v1=Funcoes.getINT(n1.getValue());
+	inc1=Funcoes.getInc(n1.getValue());
+	v2=Funcoes.getINT(n2.getValue());
+	inc2=Funcoes.getInc(n2.getValue());
+	
+	
+	if (v1==v2 && pot1==pot2){
+		//caso geral - tudo igual
+		if (inc1.equals(inc2)) return true;
+		//caso multiplicação - 2x e 4*2
+		else{
+			if (inc1.isEmpty() && n1.getPai().getValue().equals("*") && !inc2.isEmpty()) return true;
+			else if (!inc1.isEmpty() && inc2.isEmpty() && n2.getPai().getValue().equals("*"))return true;
+		}
+	}
+	return false;
+}
+
+function boolean isValidMultForPrincAdMult(BTNode n1, BTNode n2){
+	String v1=n1.getValue();
+	String v2=n2.getValue();
+	boolean valid1=false;
+	boolean valid2=false;
+	if (Funcoes.getInc(v1).isEmpty() && n1.getPai().getValue().equals("*"))valid1=true;
+	else if (!Funcoes.getInc(v1).isEmpty()&& n1.getPai().getValue().equals("/"))valid1=true;
+	if (Funcoes.getInc(v2).isEmpty() && n2.getPai().getValue().equals("*"))valid2=true;
+	else if (!Funcoes.getInc(v2).isEmpty()&& n2.getPai().getValue().equals("/"))valid1=true;
+	return valid1&&valid2;
 }
 
 
@@ -2017,7 +2121,7 @@ function boolean validarDestruirZeros(Expression user, Expression solver){
 
 function boolean validarReverteEquacao(Expression user,Expression solver){
 	Funcoes f=new Funcoes();
-	f.j();
+	//f.j();
 	f.modificaSinal(user.getRoot());
 	f.modificaSinal(solver.getRoot());
 	boolean revert=false;
@@ -3221,6 +3325,7 @@ rule "Principio Aditivo - Multiplicativo"
 		eval (getPrincAdMult(user, solver)!=null);
 	then
 		String msg = "# Operacao Inversa - ";
+		Funcoes.j();
 		BTNode []selected= getPrincAdMult(user, solver);
 		BTNode root=solver.getRoot();
 		BTNode tempE= root.getEsq();

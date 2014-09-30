@@ -477,4 +477,22 @@ public class ArvoreExp {
 		}
 		return abst;
 	}
+	
+	/**
+	 * Obtem todas as subarvoere abstract da equação
+	 * @return uma {@link List} contendo a raiz destas subarvores.
+	 */
+	public List<BTNode> getAllAbstract(){
+		return getAllAbstract(root, new ArrayList<BTNode>());
+	}
+	
+	private List<BTNode> getAllAbstract(BTNode bt, List<BTNode> list){
+		if (bt!=null){
+			list=getAllAbstract(bt.getEsq(),list);
+			if (bt.isAbstract() && !bt.eFolha())list.add(bt);
+			list=getAllAbstract(bt.getDir(),list);
+		}
+		return list;
+	}
+	
 }

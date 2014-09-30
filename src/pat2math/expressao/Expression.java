@@ -2,11 +2,13 @@ package pat2math.expressao;
 
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import pat2math.expressao.arvore.ArvoreExp;
 import pat2math.expressao.arvore.BTNode;
 import pat2math.expressao.arvore.InvalidValueException;
+import pat2math.regras.MiscFunctions;
 import pat2math.resolvedor.Equacoes;
 import pat2math.util.Funcoes;
 
@@ -1356,6 +1358,10 @@ public class Expression implements Cloneable{
 		return id;
 	}
 	
+	/**
+	 * Varre a arvore e retorna o primeiro nodo abstract
+	 * @return o primeiro nodo abstract
+	 */
 	public BTNode getAbstract(){
 		return expressao.getAbstract();
 	}
@@ -1371,6 +1377,53 @@ public class Expression implements Cloneable{
 		}
 		return has;
 	}
+	
+	/**
+	 * Varre a arvore de expressões e remove termos abstratos simples como:
+	 *  x=-(9) => x=-9 ou x=-(12)/(19) => x=(-12)/(19), x é uma expressao qualquer.
+	 *  Termos abstratos mais complexos como x=-(x-1) são mantidos.
+	 */
+	public void removeSimpleAbstractTerm(){
+		List<BTNode> abs = expressao.getAllAbstract();
+		BTNode notABS,result,den=null;
+		boolean fraction=false;
+		for (BTNode a: abs){
+			//o abstract node SEMPRE é o nodo da esquerda da multiplicação abstract
+			notABS= a.getDir();
+			if (notABS.eFolha() || 
+					(Funcoes.isSquaredLeaf(notABS) && !notABS.getValue().equals("R"))||
+					(Funcoes.isSingleFraction(notABS) && !notABS.getEsq().getValue().equals("R"))){
+				
+				if (Funcoes.isSingleFraction(notABS)){
+					den= notABS.getDir(); //pega o denominador
+					notABS=notABS.getEsq(); //pega o numerador
+					
+					fraction=true;
+				}
+				a.setAbstractTerm(false);
+				//não necessita de tratamento para "squaredleaf" pois getResult já trata isto
+				
+				result=MiscFunctions.getResult(new BTNode ("*",(BTNode)a.getEsq().clone(),(BTNode)notABS.clone()));
+				a.setEsq(null);
+				a.setDir(null);
+				if (fraction){
+					a.setValue("/");
+					a.setEsq(result);
+					a.setDir(den);
+				}else{
+					BTNode esq= result.getEsq();
+					BTNode dir= result.getDir();
+					result.setEsq(null);
+					result.setDir(null);
+					a.setValue(result.getValue());
+					a.setEsq(esq);
+					a.setDir(dir);
+				}
+			}
+		}
+		setmod();
+	}
+	
 	
 	/*private int setIDNodes(BTNode bt, int id){
 		if (bt!=null){
