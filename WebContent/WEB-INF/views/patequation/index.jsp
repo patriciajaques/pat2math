@@ -29,23 +29,21 @@
 		<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
 			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p><br><br><br>
-			<p><a href="#" id="hide-menu" class="white-link">Esconder o menu</a></p>
 		</div>
 		<br>
 	</div>
+	<p><span class="show-menu">></span></p>
 	
-	<p id="show-menu">
+	<!-- <p id="show-menu">
 		<a id="show-menu-link" href="#">Mostrar o menu</a>
 	</p>
-	
+ -->	
 	<!-- <img id="loadingImage" src="img/loading.gif"/> -->
 	
 	<div id="hintBox">
         	<div id="hintText"></div>
     </div>
    <div id="papers" style="text-align: center;">
-   		
-   		
    		<div id="paper-1"  style="display: inline-block;">
              		<p id="points">
              			<span>0 de 0 pontos</span>
