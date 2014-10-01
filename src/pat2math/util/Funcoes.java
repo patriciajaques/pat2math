@@ -791,7 +791,7 @@ public class Funcoes {
 	}
 	
 	/**
-	 * Reduz <code>i</code> a faotres primos
+	 * Reduz <code>i</code> a fatores primos
 	 * @param i o numero a ser fatorado
 	 * @return um {@link ArrayList} contendo os fatores primos
 	 */
@@ -1269,6 +1269,8 @@ public class Funcoes {
 	 * @param mmc o MMC a ser dividido
 	 * @return um BTNode com o MMC dividido
 	 */
+	//arrumar para x=(-4*5)/2
+	//			   x=-2*5
 	public static BTNode splitMMC(BTNode mmc, Expression e){
 		if (mmc.eFolha() || mmc.getValue().equals("^") && mmc.getEsq().eFolha()){
 			String val=e.setmod(mmc);
@@ -1325,7 +1327,13 @@ public class Funcoes {
 	 * @return uma arvore de multiplicações com o inteiro decomposto
 	 */
 	public static BTNode splitInteger(int v){
+		boolean neg=false;
+		if (v<0 && v!=-1){
+			v=v*-1;
+			neg=true;
+		}
 		List<Integer> fatores = fatorarInt(v);
+		if (neg)fatores.add(-1);
 		BTNode root=null;
 		for (int f: fatores){
 			root=addSubArvore(root, new BTNode(f), "*");
