@@ -1,10 +1,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<head>
+<script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
+<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
+</head>
 <style>
 	section {
 		margin-top: 30px;
 	} 
 </style>
+
+<script>
+checkBrowser();
+
+function checkBrowser ( ) {
+	var browser = navigator.userAgent.toLowerCase();
+	
+	if (browser.indexOf("mozilla") !== -1)
+		if (browser.indexOf("firefox") !== -1)
+			return;
+	
+	$.guider({
+        description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/modal_01.png border=0> <div style='position:absolute; top:350px; left:270px;'> <a href='https://www.mozilla.org/pt-BR/'><img src=/pat2math/images/modal_button_download.png></img></a> <div style='position:absolute; top:-360px; left:475px;'> <a href=# onclick=closeWindow()><img src=/pat2math/images/modal_exit_button.png></img></a>",
+        closable: true,
+        overlay: "dark",
+        alignButtons: "right",
+        width: 817
+    }).show();  
+}
+
+function closeWindow ( ) {
+    $.guider({
+        
+    }).hideAll();
+}
+  </script>
 
 <c:if test="${confirmed == true}">
 	<p class="msg">Conta confirmada com sucesso</p>

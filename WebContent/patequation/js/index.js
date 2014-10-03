@@ -157,11 +157,14 @@ $(document).ready(function() {
     centralizeCanCopy();
     buttonClick();
     focus();
+    
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
 });
+
+
 
 function reloadPaper(selected) {
 	selectedSheet = "#paper-" + selected;

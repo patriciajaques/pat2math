@@ -4,6 +4,13 @@
 
 <html lang="en">    
     <head>
+        <link href='http://fonts.googleapis.com/css?family=Petit+Formal+Script' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css'> 
+        <link href='http://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
+        <script type="text/javascript" src="/pat2math/patequation/lib/divalite/divakit/divajquery/jquery-1.5.2.js"></script>
+        <script type="text/javascript" src="/pat2math/patequation/lib/divalite/divakit/divajquery/jquery-ui.min.js"></script>
+        <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
     	<style>
     		input[type="text"] {
 				text-align: center;
