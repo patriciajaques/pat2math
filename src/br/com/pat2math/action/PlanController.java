@@ -49,10 +49,8 @@ public class PlanController {
 	public String list(Model model, Integer page, HttpSession session) {
 		Teacher teacher = new CurrentUser(session).teacher();
 		PlanPaginated pagination;
-		pagination = new PlanPaginated(allPlans.thatOwnerIs(teacher), 8);
+		pagination = new PlanPaginated(allPlans.thatOwnerIs(teacher), 5);
 		pagination.changePage(page);
-		
-		
 		
 		model.addAttribute("plans", pagination.getPageSelected());
 		model.addAttribute("pages", pagination.getPages());

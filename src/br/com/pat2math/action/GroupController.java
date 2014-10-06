@@ -1,8 +1,10 @@
 package br.com.pat2math.action;
 
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,9 +23,9 @@ import br.com.pat2math.service.PlanService;
 import br.com.pat2math.studentModel.Group;
 import br.com.pat2math.studentModel.Teacher;
 
-@Controller
-@Transactional
+@Controller @Transactional
 @RequestMapping("/group")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_TEACHER')")
 public class GroupController {
 	
 	@Autowired private GroupService groupService;
@@ -36,6 +38,12 @@ public class GroupController {
 		return "group.new";
 	}
 	
+	@RequestMapping(value="edit/{id}", method = RequestMethod.GET)
+	public String _new(@PathVariable Long id, Model model) {
+		model.addAttribute("group", groups.get(id));
+		return "group.edit";
+	}
+	
 	@RequestMapping(value="", method = RequestMethod.POST)
 	public String save(@ModelAttribute("group") @Valid Group group, 
 						BindingResult result, HttpSession session) {
@@ -46,6 +54,19 @@ public class GroupController {
 		return "redirect:" + newGroup.getId();
 	}
 	
+	@RequestMapping(value="update", method = RequestMethod.POST)
+	public String update(@ModelAttribute("group") @Valid Group group, 
+						BindingResult result, HttpSession session) {
+		Teacher teacher = new CurrentUser(session).teacher();
+		group.setTeacher(teacher);
+		if(result.hasErrors())
+			return "group.edit";
+		else {
+			groups.alter(group);
+			return "redirect:list";
+		}
+	}
+	
 	@RequestMapping(value="{id}", method = RequestMethod.GET)
 	public String show(@PathVariable Long id, Model model) {
 		model.addAttribute("group", groups.getWithStudents(id));
@@ -54,7 +75,7 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAnyRole('ROLE_TEACHER, ROLE_ADMIN')")
 	public String list(Model model, HttpSession session) {
 		Teacher teacher = (Teacher) session.getAttribute("user");
 		List<Group> groups = groupService.getGroups(teacher);
@@ -68,5 +89,4 @@ public class GroupController {
 		group.setPlan(planService.getPlan(idPlan));
 		return idPlan;
 	}
-	
 }
