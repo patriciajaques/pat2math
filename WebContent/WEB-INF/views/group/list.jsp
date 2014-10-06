@@ -21,7 +21,9 @@
 		    	</td>
 		    	<td>
 					<a title="editar" href="edit/${group.id}"><i class="icon-edit"></i></a>
+		    		<a title="editar" href="delete/${group.id}"><i class="icon-remove"></i></a>
 		    	</td>
+		    	
 		    </tr>
 		</c:forEach>	
     </tbody>

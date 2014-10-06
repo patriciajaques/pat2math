@@ -21,6 +21,15 @@ function loadTasks(id) {
 				function(data) {
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);
+					
+					$(".task").each(
+						function() {
+							var text = $(this).html();
+							if(text.length > 30) {
+								$(this).html($(this).html().substring(0, 23) + "...");
+							}
+						}
+					);
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {

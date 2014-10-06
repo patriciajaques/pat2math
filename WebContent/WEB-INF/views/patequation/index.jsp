@@ -3,14 +3,13 @@
 <!DOCTYPE html>
 
 <html lang="en">    
-    <head>
+   <head>
         <link href='http://fonts.googleapis.com/css?family=Petit+Formal+Script' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css'> 
         <link href='http://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
-        <script type="text/javascript" src="/pat2math/patequation/lib/divalite/divakit/divajquery/jquery-1.5.2.js"></script>
-        <script type="text/javascript" src="/pat2math/patequation/lib/divalite/divakit/divajquery/jquery-ui.min.js"></script>
         <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
+    	
     	<style>
     		input[type="text"] {
 				text-align: center;
@@ -23,6 +22,7 @@
     </head>
     <body>
     
+    <!-- <img id="loadingImage" src="img/loading.gif"/> -->
     <div id="topics">
 		<br>
 		<c:forEach items="${topics}" var="topic">
@@ -39,24 +39,30 @@
 		</div>
 		<br>
 	</div>
+	
 	<p><span class="show-menu">></span></p>
 	
-	<!-- <p id="show-menu">
-		<a id="show-menu-link" href="#">Mostrar o menu</a>
-	</p>
- -->	
-	<!-- <img id="loadingImage" src="img/loading.gif"/> -->
-	
-	<div id="hintBox">
-        	<div id="hintText"></div>
+	<div id="note">
+        <span id="amountPoins">0 de 0 pontos</span>
+        <br><br>
+        <span>Barra de progresso:</span>
+
+        <div id="progressBar" class="progress progress-striped">
+            <div class="bar" role="progressbar" style="width: 100%;">
+                <span class="label"></span>
+            </div>
+        </div>
+
+        <button id="hint" class="btn">D i c a</button>
     </div>
-   <div id="papers" style="text-align: center;">
+    
+    <div id="hintBox">
+        <div id="hintText"></div>
+    </div>
+    
+     <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;">
-             		<p id="points">
-             			<span>0 de 0 pontos</span>
-    	         		<a id="hint" class="btn btn-large">Dica</a>
-             		</p>                  
-                    <div id="logo" title="PAT2Math =D"></div>
+   			<div id="logo" title="PAT2Math =D"></div>
 
 					<div style="display: none;" id="date">
 				         <div id="dateDay" class="dates"></div>
@@ -115,14 +121,10 @@
     </div> -->
 	
 	<div id="newPoints">+10</div>
+	
     <div id="mask" onclick="test56()"></div>
 	<div id="video-box"></div>
-	<div class="modal" id="msg-box"></div>
 	
-	<p id="points">
-		<span>0 de 0 pontos</span>
-        <a id="hint" class="btn btn-large">Dica</a>
-    </p>
-    	
+	<div class="modal" id="msg-box"></div>
 </body>
 </html>

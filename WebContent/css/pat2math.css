@@ -29,7 +29,7 @@ body {
 }
 
 .hide-menu {
-	left: 277px;
+	left: 285px;
 }
 
 .show-menu {
@@ -303,7 +303,7 @@ textarea:focus {
 
 #topics {
 	z-index: 9999999999;
-	padding: 0 0 0 30px;
+	padding: 0 20px 0 20px;
 	text-align: center;
 	position: fixed;
 	top: 0;
@@ -317,24 +317,28 @@ textarea:focus {
 
 .topic {
 	margin: 0;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 	padding: 10px 0;
 	display: block;
-	font-size: 16px;
-	color: #fff;
+	font-size: 18px;
+	color: #aaa;
 	font-weight: bold;
-	text-align: left;
-	width: 170px;
+	text-align: center;
+	width: 100%;
+	background: #fff;
+	border-radius: 5px;
 }
 
 .topic:hover {
-	text-decoration: underline;
+	text-decoration: none;
 	cursor: pointer;
 }
 
 .tasks {
-	margin: 2px 0 30px 0;
+	margin: 0 0 0 0;
+	background: #48b;
 	display: none;
+	border-radius: 5px;
 }
 
 .task-conteiner {
@@ -344,8 +348,8 @@ textarea:focus {
 .task {
 	margin: 0;
 	display: inline-block;
-	padding: 6px 10px;
-	font-size: 14px;
+	padding: 10px 10px;
+	font-size: 16px;
 	color: #fff;
 	font-weight: normal;
 	width: 150px;

@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
-<script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
-<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
+	<script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
+	<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
 </head>
+
 <style>
 	section {
 		margin-top: 30px;
@@ -34,8 +35,9 @@ function closeWindow ( ) {
         
     }).hideAll();
 }
-  </script>
 
+</script>
+ 
 <c:if test="${confirmed == true}">
 	<p class="msg">Conta confirmada com sucesso</p>
 </c:if>

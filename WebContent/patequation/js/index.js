@@ -363,7 +363,7 @@ function loadEquation(index) {
 }
 
 function calculatePoints(equation) {
-    $("#points span").text(equation.userPoints + " de " + equation.points + " pontos");
+    $("#amountPoins").text(equation.userPoints + " de " + equation.points + " pontos");
 }
 
 function reloadProgressBar() {
@@ -957,8 +957,8 @@ function nextEquationClick() {
 }
 
 function callbackAddPoints(value) {
-    var x = $("#points span").offset().left - 20;
-    var y = $("#points span").offset().top - 40;
+    var x = $("#amountPoins").offset().left - 20;
+    var y = $("#amountPoins").offset().top - 40;
     var scrollTop = $(document).scrollTop();
 
     setTimeout(function() {

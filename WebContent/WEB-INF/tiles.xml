@@ -201,6 +201,10 @@
 	<definition name="group.new" extends="admin.page">
 		<put-attribute name="body" value="/WEB-INF/views/group/new.jsp"/>
 	</definition>
+
+	<definition name="group.edit" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/group/edit.jsp"/>
+	</definition>
 	
 	<definition name="group.show" extends="admin.page">
 		<put-attribute name="body" value="/WEB-INF/views/group/show.jsp"/>

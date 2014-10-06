@@ -166,8 +166,18 @@
 }
 
 #note {
-    font-size: 18px;
-    padding: 5px 0;
+    background: #eee;
+    box-shadow: -3px -3px 6px #888;
+    color: #888;
+    margin-left: 100px;
+    margin-top: -15px;
+    overflow: hidden;
+    padding: 1em 1.5em;
+    position: fixed;
+    transform: rotate(-10deg);
+    width: 160px;
+    cursor: default;
+    font-size: 16px;
 }
 
 .verticalTape{
@@ -621,7 +631,7 @@ math {
 }
 
 .hLine li { 
-    margin: 0 3px;
+    margin: 3px 3px 0 3px;
     /*padding: 5px;*/ 
     font-family: 'Petit Formal Script', cursive;
     font-style: normal;
