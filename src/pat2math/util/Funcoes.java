@@ -799,7 +799,7 @@ public class Funcoes {
 		int cont=0;
 		int[] p=Funcoes.PRIMOS;
 		ArrayList<Integer> f=new ArrayList<Integer>();
-		while((i!=1 && i!=-1) && cont<Funcoes.PRIMOS.length){
+		while((i!=1 && i!=-1 && i!=0) && cont<Funcoes.PRIMOS.length){
 			if(i%p[cont]==0){
 				f.add(p[cont]);
 				i=i/p[cont];
@@ -807,7 +807,7 @@ public class Funcoes {
 				cont++;
 			}
 		}
-		if((i==1 || i==-1) && f.isEmpty())f.add(i);
+		if((i==1 || i==-1 || i==0) && f.isEmpty())f.add(i);
 		return f;
 	}
 			
@@ -1269,8 +1269,6 @@ public class Funcoes {
 	 * @param mmc o MMC a ser dividido
 	 * @return um BTNode com o MMC dividido
 	 */
-	//arrumar para x=(-4*5)/2
-	//			   x=-2*5
 	public static BTNode splitMMC(BTNode mmc, Expression e){
 		if (mmc.eFolha() || mmc.getValue().equals("^") && mmc.getEsq().eFolha()){
 			String val=e.setmod(mmc);
