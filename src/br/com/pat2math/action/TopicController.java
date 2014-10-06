@@ -31,7 +31,7 @@ import br.com.pat2math.service.SetOfTasksService;
 @Transactional
 @RequestMapping("/topic")
 public class TopicController {
-
+	
 	@PersistenceContext private EntityManager em;
 	@Autowired private SetOfTasksService setsService;
 	@Autowired private Topics allTopics;
