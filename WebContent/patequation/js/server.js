@@ -184,7 +184,8 @@ function requestServer(type, last, next, typeOperation, element) {
 //                        } else {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
-                        nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
+                       // nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
+                        nextLine.html("<div class='final'></div>");
 
                         selectedEquation.isComplete = true;
                     } else {
