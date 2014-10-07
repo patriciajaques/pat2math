@@ -312,7 +312,7 @@ textarea:focus {
 	background: #76bdda;
 	height: 100%;
 	overflow: scroll;
-	display: none;
+	display: block;
 }
 
 .topic {

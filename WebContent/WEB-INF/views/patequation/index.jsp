@@ -40,7 +40,7 @@
 		<br>
 	</div>
 	
-	<p><span class="show-menu">></span></p>
+	<p><span class="hide-menu"><</span></p>
 	
 	<div id="note">
         <span id="amountPoins">0 de 0 pontos</span>
