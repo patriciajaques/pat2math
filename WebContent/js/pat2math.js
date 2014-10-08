@@ -60,6 +60,7 @@ function loadExercise(id) {
 				newEquations[0] = equation;
 			}
 			reloadPaper(1);
+			idEquation=id;
 		}
 	});
 }
@@ -105,6 +106,7 @@ function watchVideo(id) {
 			$("#video-box").fadeIn(700);
 		}
 	);
+	idTaskVideo=id;
 }
 
 function msgBox(id, msg, action) {

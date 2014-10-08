@@ -46,3 +46,8 @@ function Step(step, type) {
     this.step = step; //string that contains the step of resolution
     this.type = type; //type of the step (NORMAL_STEP, NORMAL_SOLUTION, DELTA_SOLUTION, x1_SOLUTION e x2_SOLUTION)
 }
+
+function TaskItem (taskSetID, taskID){
+	this.taskSetID=taskSetID; //The id of the set of tasks
+	this.taskID = taskID; // the id of the task
+}

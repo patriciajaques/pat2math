@@ -26,6 +26,8 @@
 					
 				}
 			);
+			$("#marktask"+idTaskVideo).removeAttr("style"); 
+            $("#marktask"+idTaskVideo).addClass("icon-white");
 		}
 	}
 

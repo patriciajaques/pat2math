@@ -1,5 +1,7 @@
 var selectedSheet = "#paper-1";
 var selectedEquation;
+var idEquation; // the id of the equation in database
+var idTaskVideo;
 
 // variables for the Step object
 var NORMAL_STEP = 0;

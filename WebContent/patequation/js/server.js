@@ -186,6 +186,11 @@ function requestServer(type, last, next, typeOperation, element) {
 //                        }
                        // nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
                         nextLine.html("<div class='final'></div>");
+                        
+                        
+                        $("#marktask"+idEquation).removeAttr("style"); 
+                        $("#marktask"+idEquation).addClass("icon-white");
+                        
 
                         selectedEquation.isComplete = true;
                     } else {
