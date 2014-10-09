@@ -22,12 +22,12 @@ function checkBrowser ( ) {
 			return;
 	
 	$.guider({
-        description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/modal_01.png border=0> <div style='position:absolute; top:350px; left:270px;'> <a href='https://www.mozilla.org/pt-BR/'><img src=/pat2math/images/modal_button_download.png></img></a> <div style='position:absolute; top:-360px; left:475px;'> <a href=# onclick=closeWindow()><img src=/pat2math/images/modal_exit_button.png></img></a>",
-        closable: true,
-        overlay: "dark",
-        alignButtons: "right",
-        width: 817
-    }).show();  
+	    description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/modal_firefox.png border=0> <div style='position:absolute; top:250px; left:225px;'> <a href='https://www.mozilla.org/pt-BR/'><img src=/pat2math/images/firefox_download.png></img></a> <div style='position:absolute; top:-270px; left:360px;'> <a href=# onclick=closeWindow()><img src=/pat2math/images/modal_exit.png></img></a>",
+	    closable: true,
+	    overlay: "dark",
+	    width: 624,
+	    alignButtons: "right",
+	    }).show();  
 }
 
 function closeWindow ( ) {
