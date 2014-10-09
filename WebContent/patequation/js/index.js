@@ -19,14 +19,12 @@ $(document).ready(function() {
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide();
-		$(this).html(">");
 		$(this).removeClass("hide-menu");
 		$(this).addClass("show-menu");
 	});
 	
 	$("body").on("click", ".show-menu", function() {
 		$("#topics").show();
-		$(this).html("<");
 		$(this).removeClass("show-menu");
 		$(this).addClass("hide-menu");
 	});

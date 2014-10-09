@@ -23,7 +23,16 @@
     <body>
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
-    <div id="topics">
+    <div id="topics" style="overflow: auto">
+    	<div id="bar-header" >
+    		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%;">
+    	</div>
+    	
+    	<div class="left">
+			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
+			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p>
+		</div>
+    	
 		<br>
 		<c:forEach items="${topics}" var="topic">
 			<span class="topic" onclick="loadTasks(${topic.set.id})">
@@ -33,21 +42,20 @@
 		</c:forEach>
 		
 		<br><br><br>
-		<div class="left">
-			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p><br><br><br>
-		</div>
+		
 		<br>
 	</div>
 	
-	<p><span class="hide-menu"><</span></p>
+	<p><span class="hide-menu">
+	 
+	</span></p>
 	
 	<div id="note">
         <span id="amountPoins">0 de 0 pontos</span>
         <br><br>
         <span>Barra de progresso:</span>
 
-        <div id="progressBar" class="progress progress-striped">
+        <div id="progressBar" class="progress">
             <div class="bar" role="progressbar" style="width: 100%;">
                 <span class="label"></span>
             </div>
