@@ -53,6 +53,15 @@
     text-align: center;
 }*/
 
+#help{
+    background: url("/pat2math/patequation/img/help.png") no-repeat scroll center center transparent;
+    width: 100px;
+    height: 100px;
+    margin-left: 955px;
+    margin-top: 1px;
+    cursor: pointer;
+}
+
 #calculatorAccess{
     background: url("../img/calculatorIcon.png") no-repeat scroll center center transparent;
     width: 40px;
