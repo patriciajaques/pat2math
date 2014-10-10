@@ -33,7 +33,7 @@
     
     function playAudio ( ) {
         $.guider({
-    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio1.mp3' type='audio/mpeg'> </audio>",
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio1.ogg' type='audio/mpeg'> </audio>",
                     closable: true,
                     overlay: "dark",
                     alignButtons: "right",
@@ -54,7 +54,7 @@
 
     function playAudio2 ( ) {
         $.guider({
-    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio2.mp3' type='audio/mpeg'> </audio>",
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio2.ogg' type='audio/mpeg'> </audio>",
                     closable: true,
                     overlay: "dark",
                     alignButtons: "right",
