@@ -1891,7 +1891,7 @@ function List getFracSimpNumDen (Expression user, Expression solver){
 	List<BTNode> dirSolver = solver.buscaChaveX(root.getDir(),"/");
 	List<BTNode> esqUser = user.getFolhasFracoes(user.getRoot().getEsq(), new Vector<BTNode>());
 	List<BTNode> dirUser = user.getFolhasFracoes(user.getRoot().getDir(), new Vector<BTNode>());
-	Funcoes.j();
+	//Funcoes.j();
 	esqSolver= Conjuntos.getFracao(Conjuntos.diferenca(esqSolver,esqUser));
 	dirSolver = Conjuntos.getFracao(Conjuntos.diferenca(dirSolver,dirUser));
 	List<BTNode> opsNum=new ArrayList<BTNode>();
@@ -1944,7 +1944,7 @@ function boolean chkListForValidOperators(List list){
 function boolean chkEqualPrimeNumDen(BTNode e, Expression exp){
 	boolean valid=false;
 	if (e.getValue().equals("/")){
-	Funcoes.j();
+//	Funcoes.j();
 		BTNode clone = (BTNode) e.clone();
 		BTNode num = clone.getEsq();
 		BTNode den = clone.getDir();
