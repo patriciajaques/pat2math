@@ -3080,7 +3080,7 @@ rule "Simplificacao Numerador por Denominador"
 				}
 			}
 		}
-		num.set(0,(BTNode)num.get(0).clone());
+		if (!num.isEmpty())num.set(0,(BTNode)num.get(0).clone());
 		BTNode node;
 		while (num.size()>1){
 			node=num.remove(0);
