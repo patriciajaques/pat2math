@@ -24,6 +24,7 @@
     
     <script>
     
+    audio();
     function closeWindow ( ) {
         $.guider({
             
@@ -183,7 +184,6 @@
 	
     <div id="mask" onclick="test56()"></div>
 	<div id="video-box"></div>
-	<div id="help"></div>
 	
 	<div class="modal" id="msg-box"></div>
 </body>
