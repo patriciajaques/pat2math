@@ -22,6 +22,58 @@
     </head>
     <body>
     
+    <script>
+    audio();
+    
+    function closeWindow ( ) {
+        $.guider({
+            
+        }).hideAll();
+    }
+    
+    function playAudio ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio1.mp3' type='audio/mpeg'> </audio>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+
+        setTimeout('closeWindow()',154000); 
+    }
+    function audio ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:330px; left:245px;'> <a href=# onclick=playAudio()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+    }
+
+    function playAudio2 ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio2.mp3' type='audio/mpeg'> </audio>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+
+        setTimeout('closeWindow()',185000); 
+    }
+    function audio2 ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:335px; left:250px;'> <a href=# onclick=playAudio2()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+    }
+    </script>
+    
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
     <div id="topics" style="overflow: auto">
     	<div id="bar-header" >
