@@ -28,6 +28,7 @@ body {
 	background: #fff;
 }
 
+
 .hide-menu {
 	left: 285px;
 }
@@ -235,15 +236,18 @@ ul {
 	width: 100px;
 	display: inline-block;
 	padding: 10px 10px 10px 10px;
-	color: #fff;
+	color: #269;
 	font-size: 17px;
 	border-top: 0 solid #98dffc;
-	background: #ccc;
+	background: #fff;
+	font-weight: bold;
 }
 
 .menu:hover {
+	background: #8ce;
 	color: #fff;
 	cursor: pointer;
+	text-decoration: none;
 }
 
 .input {

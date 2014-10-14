@@ -2,12 +2,10 @@ package br.com.pat2math.action;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import br.com.pat2math.dao.Topics;
 import br.com.pat2math.domainBase.Plan;
 import br.com.pat2math.domainBase.SetOfTasks;
@@ -27,11 +24,12 @@ import br.com.pat2math.domainBase.Topic;
 import br.com.pat2math.repository.PlanRepository;
 import br.com.pat2math.service.SetOfTasksService;
 
-@Controller
-@Transactional
+@Controller @Transactional
 @RequestMapping("/topic")
-public class TopicController {
+@PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_TEACHER')")
 
+public class TopicController {
+	
 	@PersistenceContext private EntityManager em;
 	@Autowired private SetOfTasksService setsService;
 	@Autowired private Topics allTopics;
@@ -42,21 +40,30 @@ public class TopicController {
 		List<SetOfTasks> sets = setsService.getSetOfTasks();
 		model.addAttribute("sets", sets);
 		model.addAttribute("topic", new Topic());
-		model.addAttribute("idPlan", idPlan);
 		return "topic.new";
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String save(@ModelAttribute("topic") @Valid Topic topic, 
-			BindingResult result, HttpSession session) {
-		if(result.hasErrors())
-			return "new/" + topic.getSet().getId();
-		Plan plan = em.find(Plan.class, topic.getPlan().getId());
-		topic.setPlan(plan);
+	public String save(String ids, HttpSession session) {
+		Plan plan = em.find(Plan.class, 1);
+		
+		String[] idsList = ids.split(", ");
+		
+	//	topic.setPlan(plan);
+		
 		long sequence = plan.getTopics().size();
-		topic.setSequence(sequence);
-		em.persist(topic);
-		return "redirect:/plan/" + topic.getPlan().getId();
+	//	topic.setSequence(sequence);
+	//	em.persist(topic);
+	//	return "redirect:/plan/" + topic.getPlan().getId();
+		return "";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping("/delete")
+	public String delete(Long id) {
+		Topic topic = allTopics.get(id); 
+		allTopics.delete(id);
+		return "/plan/" + topic.getPlan().getId();
 	}
 	
 	@RequestMapping("/change") @ResponseBody
@@ -67,14 +74,6 @@ public class TopicController {
 		topic.setSequence(topic2.getSequence());
 		topic2.setSequence(aux);
 		return "";
-	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping("/delete")
-	public String delete(Long id) {
-		Topic topic = allTopics.get(id); 
-		allTopics.delete(id);
-		return "/plan/" + topic.getPlan().getId();
 	}
 	
 }

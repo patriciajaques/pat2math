@@ -41,8 +41,7 @@ import br.com.pat2math.studentModel.SignUpConfirmation;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.TaskPerformed;
 
-@Controller
-@Transactional
+@Controller @Transactional
 public class StudentController {
 	
 	@Autowired private AllStudents allStudents;
@@ -114,7 +113,7 @@ public class StudentController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/student/home")
 	public String home(Model model, HttpSession session) {
-		session.setAttribute("tutor", new Tutor("", "", allHelps.getAll()));		
+		session.setAttribute("tutor", new Tutor("", "", allHelps.getAll()));
 		Student student = new CurrentUser(session).student();
 		Group studentGroup = student.getGroup();
 		Plan plan;

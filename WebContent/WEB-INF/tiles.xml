@@ -71,6 +71,10 @@
     <definition name="topic.new" extends="blank">
         <put-attribute name="body" value="/WEB-INF/views/topic/new.jsp"/>
     </definition>
+	
+	<definition name="topic.list" extends="blank">
+        <put-attribute name="body" value="/WEB-INF/views/topic/list.jsp"/>
+    </definition>
 
 	<!-- Student templates -->
 	<definition name="student.show" extends="student.page">
@@ -213,8 +217,10 @@
 	<definition name="group.list" extends="admin.page">
 		<put-attribute name="body" value="/WEB-INF/views/group/list.jsp"/>
 	</definition>
-
-
+		
+	<definition name="group.newStudent" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/group/newStudent.jsp"/>
+	</definition>
 
 
 

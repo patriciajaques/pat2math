@@ -10,5 +10,3 @@ Você vai precisar:
 - Mysql(crie o database 'pat2math')
 - Copiar o divalite dentro da pasta WebContent/patequation
 - Copiar as dependências(pasta lib) dentro do diretório WebContent/WEB-INF
-
-- BLA BLA BLA BLA

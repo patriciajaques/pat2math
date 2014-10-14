@@ -60,7 +60,7 @@ function closeWindow ( ) {
 	</p>
 	
 	<br>
-	<!-- <input type="checkbox" name="_spring_security_remember_me" /> Lembrar-me -->
+	<input type="checkbox" name="_spring_security_remember_me" /> Lembrar-me
 	
 	<c:if test="${param.failed == true}">
 		<p class="error" style="font-size: 16px;">Usuário ou senha inválidos</p>

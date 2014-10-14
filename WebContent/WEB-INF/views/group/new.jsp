@@ -2,7 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>	
 
-<form:form action="." modelAttribute="group" accept-charset="utf-8" class="block left">
+<form:form action="." modelAttribute="group" accept-charset="utf-8" class="box block left">
 	<form:errors path="*">
 		<div class="error-global">
 			<spring:message code="error.global" />
@@ -27,7 +27,7 @@
 		</form:errors>
 	</p>
 	
-	<p>
+	<%-- <p>
 		<form:password path="password" placeholder="senha" />
 	</p>
 	<p>
@@ -43,7 +43,7 @@
 		<form:errors path="maxOfStudents">
 			<form:errors path="maxOfStudents" htmlEscape="false" class="error" />
 		</form:errors>
-	</p>
+	</p> --%>
 	
 	<br>
 	<input type="submit" class="btn btn-large" value="Criar Turma" />

@@ -9,7 +9,7 @@
 <table class="table table-bordered">
     <thead>
 	    <tr>
-	    	<th><p>Meus planos de aula</p></th>
+	    	<th><p>Meus grupos</p></th>
 	    	<th><p>Opções</p></th>
     	</tr>
     </thead>
@@ -17,11 +17,11 @@
 		<c:forEach items="${groups}" var="group">
     		<tr>
 		    	<td>
-					${group.name}
+					<a href="${group.id}">${group.name}</a>
 		    	</td>
 		    	<td>
 					<a title="editar" href="edit/${group.id}"><i class="icon-edit"></i></a>
-		    		<a title="editar" href="delete/${group.id}"><i class="icon-remove"></i></a>
+					<%-- <a title="editar" href="delete/${group.id}"><i class="icon-remove"></i></a> --%>
 		    	</td>
 		    	
 		    </tr>

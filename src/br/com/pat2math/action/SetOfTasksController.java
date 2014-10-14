@@ -1,7 +1,7 @@
 package br.com.pat2math.action;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import br.com.pat2math.domainBase.SetOfTasks;
 import br.com.pat2math.domainBase.Topic;
 import br.com.pat2math.repository.SetOfTasksRepository;
 import br.com.pat2math.repository.TaskRepository;
 import br.com.pat2math.service.SetOfTasksService;
 
-@Controller
-@Transactional
+@Controller @Transactional
 @RequestMapping("/sets")
 public class SetOfTasksController {
 	
@@ -61,6 +61,12 @@ public class SetOfTasksController {
 	public String list(Model model) {
 		model.addAttribute("sets", service.getSetOfTasks());
 		return "set.list";
+	}
+	
+	@RequestMapping(value="search", method = RequestMethod.GET)
+	public String search(String name, Model model) {
+		model.addAttribute("sets", allSets.searchByName(name));
+		return "topic.list";
 	}
 	
 }

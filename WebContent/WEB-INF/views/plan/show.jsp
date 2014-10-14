@@ -27,7 +27,6 @@
 	
 	$(document).ready(function name() {
 		$(".newTopic").on("click", function() {
-			
 			$.ajax({
 				url: "/pat2math/topic/new/${plan.id}",
 				method: "get",
