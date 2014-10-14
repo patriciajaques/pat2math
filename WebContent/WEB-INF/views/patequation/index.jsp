@@ -23,7 +23,61 @@
     <body>
     
     <script>
-    audio();
+    //audio();
+    
+    function helpPage6 ( ) {
+        $.guider({
+		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+
+                closable: true,
+                overlay: "dark",
+                alignButtons: "right"
+		}).show();   
+    }
+    
+    function helpPage5 ( ) {
+        $.guider({
+		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_05.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage4()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage6()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+                closable: true,
+                overlay: "dark",
+                alignButtons: "right"
+		}).show();   
+    }
+    
+    function helpPage4 ( ) {
+        $.guider({
+		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_04.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage3()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+                closable: true,
+                overlay: "dark",
+                alignButtons: "right"
+		}).show();   
+    }
+    
+    function helpPage3 ( ) {
+        $.guider({
+		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_03.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage4()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+                closable: true,
+                overlay: "dark",
+                alignButtons: "right"
+		}).show();   
+    }
+    function helpPage2 ( ) {
+        $.guider({
+		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_02.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage3()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+                closable: true,
+                overlay: "dark",
+                alignButtons: "right"
+		}).show();   
+    }
+    function helpPage ( ) {
+        $.guider({
+		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:220px; left:452px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+                closable: true,
+                overlay: "dark",
+                alignButtons: "right"
+		}).show();   
+    }
+    
     function closeWindow ( ) {
         $.guider({
             
@@ -204,6 +258,7 @@
 	
 	<div id="newPoints">+10</div>
 	
+	<div id="help" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 	<div id="video-box"></div>
 	
