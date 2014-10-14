@@ -23,7 +23,7 @@
     <body>
     
     <script>
-    //audio();
+    audio();
     
     function helpPage6 ( ) {
         $.guider({
