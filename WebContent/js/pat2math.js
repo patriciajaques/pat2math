@@ -38,7 +38,7 @@ function loadTasks(id) {
 					var taskSolved=$(".icon-ok.icon-white").length;
 					/*alert("fim: "+taskSolved);*/
 					tasksRemaining=tasksRemaining-taskSolved;
-					alert("fim: "+tasksRemaining);
+					/*alert("fim: "+tasksRemaining);*/
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {

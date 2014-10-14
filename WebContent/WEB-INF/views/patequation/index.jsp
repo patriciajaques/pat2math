@@ -39,7 +39,7 @@
                     width: 620
     		}).show();  
 
-        setTimeout('closeWindow()',154000); 
+        setTimeout(function(){closeWindow();showSideBar();},154000); 
     }
     function audio ( ) {
         $.guider({
@@ -48,7 +48,8 @@
                     overlay: "dark",
                     alignButtons: "right",
                     width: 620
-    		}).show(); 
+    		}).show();
+        
     }
 
     function playAudio2 ( ) {
@@ -60,7 +61,7 @@
                     width: 620
     		}).show();  
 
-        setTimeout('closeWindow()',185000); 
+        setTimeout(function(){closeWindow();showSideBar();},185000); 
     }
     function audio2 ( ) {
         $.guider({
@@ -86,6 +87,7 @@
     		    }); 
 	}
     
+    
     </script>
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
@@ -97,7 +99,7 @@
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
 			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p>
-			<p><span class="white-link" onclick="rel()">Reload</span></p>
+<!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
 		</div>
     	
 		<br>

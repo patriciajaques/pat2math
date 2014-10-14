@@ -18,6 +18,7 @@ var concluded = 0;
 
 $(document).ready(function() {	
 	
+	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide();
 		$(this).removeClass("hide-menu");
@@ -29,6 +30,8 @@ $(document).ready(function() {
 		$(this).removeClass("show-menu");
 		$(this).addClass("hide-menu");
 	});
+	
+	hideSideBar();
 	
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
@@ -166,6 +169,15 @@ $(document).ready(function() {
 });
 
 
+function showSideBar(){
+	$("#topics").show();
+	$(".hide-menu").show();
+}
+
+function hideSideBar(){
+	$("#topics").hide();
+	$(".hide-menu").hide();
+}
 
 function reloadPaper(selected) {
 	selectedSheet = "#paper-" + selected;
