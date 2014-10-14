@@ -184,7 +184,17 @@ function requestServer(type, last, next, typeOperation, element) {
 //                        } else {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
-                        nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
+                       // nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
+                        nextLine.html("<div class='final'></div>");
+                        
+                        
+                        $("#marktask"+idEquation).removeAttr("style"); 
+                        $("#marktask"+idEquation).addClass("icon-white");
+                        
+                        tasksRemaining--;
+                        if (tasksRemaining===0){
+                        	rel();
+                        }
 
                         selectedEquation.isComplete = true;
                     } else {

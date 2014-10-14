@@ -22,32 +22,114 @@
     </head>
     <body>
     
+    <script>
+    audio();
+    function closeWindow ( ) {
+        $.guider({
+            
+        }).hideAll();
+    }
+    
+    function playAudio ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio1.ogg' type='audio/mpeg'> </audio>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+
+        setTimeout('closeWindow()',154000); 
+    }
+    function audio ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:330px; left:245px;'> <a href=# onclick=playAudio()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show(); 
+    }
+
+    function playAudio2 ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio2.ogg' type='audio/mpeg'> </audio>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+
+        setTimeout('closeWindow()',185000); 
+    }
+    function audio2 ( ) {
+        $.guider({
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:335px; left:250px;'> <a href=# onclick=playAudio2()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
+                    closable: true,
+                    overlay: "dark",
+                    alignButtons: "right",
+                    width: 620
+    		}).show();  
+    }
+    
+    function rel() {
+    	   $.ajax({  
+    		     type : "Get",   
+    		     url : "/pat2math/student/reload_task",     
+    		     success : function(response) { 
+    		    	/* $('#the_list').html('Teste'); */
+     		      	$('#the_list').html(response);   
+    		     },  
+    		     error : function(e) {  
+    		      alert('Error: ' + e);   
+    		     }  
+    		    }); 
+	}
+    
+    </script>
+    
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
-    <div id="topics">
+    <div id="topics" style="overflow: auto">
+    	<div id="bar-header" >
+    		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%;">
+    	</div>
+    	
+    	<div class="left">
+			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
+			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p>
+			<p><span class="white-link" onclick="rel()">Reload</span></p>
+		</div>
+    	
 		<br>
-		<c:forEach items="${topics}" var="topic">
+		<%-- <c:forEach items="${topics}" var="topic">
 			<span class="topic" onclick="loadTasks(${topic.set.id})">
 				${topic.set.name}
 			</span>
 			<div id="tasks${topic.set.id}" class="tasks"></div>
-		</c:forEach>
+		</c:forEach> 
+		<%@ include file="./topicList.jsp"%>
+		--%>
+		
+		
+		<div id="the_list">
+		<%@ include file="./topicList.jsp"%>
+		</div>
 		
 		<br><br><br>
-		<div class="left">
-			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p><br><br><br>
-		</div>
+		
 		<br>
 	</div>
 	
-	<p><span class="show-menu">></span></p>
+	<p><span class="hide-menu">
+	 
+	</span></p>
 	
 	<div id="note">
         <span id="amountPoins">0 de 0 pontos</span>
         <br><br>
         <span>Barra de progresso:</span>
 
-        <div id="progressBar" class="progress progress-striped">
+        <div id="progressBar" class="progress">
             <div class="bar" role="progressbar" style="width: 100%;">
                 <span class="label"></span>
             </div>

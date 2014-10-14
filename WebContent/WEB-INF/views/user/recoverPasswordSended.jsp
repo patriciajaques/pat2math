@@ -3,8 +3,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<h2>Email enviado</h2>
+<!-- <h2>Email enviado</h2>
 
 <p>Enviamos um email com as instruções para recuperar sua senha.</p>
 
-<p>Você possui 2 horas para realizar o procedimento.</p>
+<p>Você possui 2 horas para realizar o procedimento.</p> -->
+
+<div class="box">
+<img  src="/pat2math/images/reset_password.png" width="70%" height="70%" >
+</div>

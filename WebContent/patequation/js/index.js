@@ -1,5 +1,8 @@
 var selectedSheet = "#paper-1";
 var selectedEquation;
+var idEquation; // the id of the equation in database
+var idTaskVideo;// the id of the video in database
+var tasksRemaining; //the number of equations unsolved per topic
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -17,14 +20,12 @@ $(document).ready(function() {
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide();
-		$(this).html(">");
 		$(this).removeClass("hide-menu");
 		$(this).addClass("show-menu");
 	});
 	
 	$("body").on("click", ".show-menu", function() {
 		$("#topics").show();
-		$(this).html("<");
 		$(this).removeClass("show-menu");
 		$(this).addClass("hide-menu");
 	});

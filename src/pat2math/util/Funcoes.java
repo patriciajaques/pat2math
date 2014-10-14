@@ -29,7 +29,7 @@ import pat2math.regras.MiscFunctions;
  */
 public class Funcoes {
 	
-	public static final int[] PRIMOS={2,3,5,7,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
+	public static final int[] PRIMOS={2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
 	
 	/**
 	 * Verifica se op é um operador aritmetico ou não

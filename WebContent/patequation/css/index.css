@@ -53,6 +53,15 @@
     text-align: center;
 }*/
 
+#help{
+    background: url("/pat2math/patequation/img/help.png") no-repeat scroll center center transparent;
+    width: 100px;
+    height: 100px;
+    margin-left: 955px;
+    margin-top: 1px;
+    cursor: pointer;
+}
+
 #calculatorAccess{
     background: url("../img/calculatorIcon.png") no-repeat scroll center center transparent;
     width: 40px;
@@ -116,6 +125,10 @@
     display: none;
 }
 
+#amountPoins{
+	font-weight: bold;
+	font-size: 25px;
+}
 
 .toolsFont {
     font-family: 'Iceland', cursive;
@@ -166,7 +179,8 @@
 }
 
 #note {
-    background: #eee;
+    /* background: #eee; */
+    background: #FFDD17;
     box-shadow: -3px -3px 6px #888;
     color: #888;
     margin-left: 100px;
@@ -201,11 +215,13 @@
 }
 
 #hintText {
-    background: none repeat scroll 0 0 #00FF7F;
+    /* background: none repeat scroll 0 0 #00FF7F; */
+    background: none repeat scroll 0 0 #82C785;
     box-shadow: 3px 3px 6px #222222;
     color: #000;
-    top: 25px;
-    left: 85%;
+    top: 50px;
+   /*  left: 70%; */
+    right:160px;
     height: auto;
     max-height: 50%;
     padding: 1em 1.5em;
@@ -701,7 +717,7 @@ math {
 .final {
     /*width: 100%;*/
     height: 60px;
-    background: url('../img/final 2.png') no-repeat center;
+    background: url('../img/approve.png') no-repeat center;
     position: relative;
 }
 
@@ -798,6 +814,7 @@ msqrt mfrac{
 #hint{
     text-align: center;
     font-size: 15px;
+    background: #FFE087;
 }
 
 .text{
