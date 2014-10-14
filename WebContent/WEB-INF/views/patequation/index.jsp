@@ -23,7 +23,6 @@
     <body>
     
     <script>
-    
     audio();
     function closeWindow ( ) {
         $.guider({
@@ -49,7 +48,7 @@
                     overlay: "dark",
                     alignButtons: "right",
                     width: 620
-    		}).show();  
+    		}).show(); 
     }
 
     function playAudio2 ( ) {
@@ -72,6 +71,21 @@
                     width: 620
     		}).show();  
     }
+    
+    function rel() {
+    	   $.ajax({  
+    		     type : "Get",   
+    		     url : "/pat2math/student/reload_task",     
+    		     success : function(response) { 
+    		    	/* $('#the_list').html('Teste'); */
+     		      	$('#the_list').html(response);   
+    		     },  
+    		     error : function(e) {  
+    		      alert('Error: ' + e);   
+    		     }  
+    		    }); 
+	}
+    
     </script>
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
@@ -83,15 +97,23 @@
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
 			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p>
+			<p><span class="white-link" onclick="rel()">Reload</span></p>
 		</div>
     	
 		<br>
-		<c:forEach items="${topics}" var="topic">
+		<%-- <c:forEach items="${topics}" var="topic">
 			<span class="topic" onclick="loadTasks(${topic.set.id})">
 				${topic.set.name}
 			</span>
 			<div id="tasks${topic.set.id}" class="tasks"></div>
-		</c:forEach>
+		</c:forEach> 
+		<%@ include file="./topicList.jsp"%>
+		--%>
+		
+		
+		<div id="the_list">
+		<%@ include file="./topicList.jsp"%>
+		</div>
 		
 		<br><br><br>
 		

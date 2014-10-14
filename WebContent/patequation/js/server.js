@@ -191,6 +191,10 @@ function requestServer(type, last, next, typeOperation, element) {
                         $("#marktask"+idEquation).removeAttr("style"); 
                         $("#marktask"+idEquation).addClass("icon-white");
                         
+                        tasksRemaining--;
+                        if (tasksRemaining===0){
+                        	rel();
+                        }
 
                         selectedEquation.isComplete = true;
                     } else {

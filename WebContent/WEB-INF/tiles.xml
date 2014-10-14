@@ -56,6 +56,10 @@
         <put-attribute name="body" value="/WEB-INF/views/setOfTasks/tasks.jsp"/>
     </definition>
 
+	<definition name="set.reload" extends="blank">
+        <put-attribute name="body" value="/WEB-INF/views/patequation/topicList.jsp"/>
+    </definition>
+
 
 	<!--  Mail send templates -->
     
@@ -123,7 +127,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/exercise/listByTopic.jsp"/>
 	</definition>
 
-	
 
 
 

@@ -12,6 +12,7 @@ function enableContent(id) {
 
 function loadTasks(id) {
 	var open = $("#tasks"+id).css("display");
+	tasksRemaining=0;
 	if(open == 'none') {
 		$.ajax({
 			type: "post",
@@ -22,14 +23,22 @@ function loadTasks(id) {
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);
 					
+					tasksRemaining=$(".task").length;
+					
 					$(".task").each(
 						function() {
 							var text = $(this).html();
+							
 							if(text.length > 30) {
 								$(this).html($(this).html().substring(0, 23) + "...");
 							}
 						}
 					);
+					/*alert("inicio: "+tasksRemaining);*/
+					var taskSolved=$(".icon-ok.icon-white").length;
+					/*alert("fim: "+taskSolved);*/
+					tasksRemaining=tasksRemaining-taskSolved;
+					alert("fim: "+tasksRemaining);
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {

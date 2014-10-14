@@ -28,6 +28,10 @@
 			);
 			$("#marktask"+idTaskVideo).removeAttr("style"); 
             $("#marktask"+idTaskVideo).addClass("icon-white");
+            tasksRemaining--;
+            if (tasksRemaining===0){
+            	rel();
+            }
 		}
 	}
 

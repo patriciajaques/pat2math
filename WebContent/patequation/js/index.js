@@ -1,7 +1,8 @@
 var selectedSheet = "#paper-1";
 var selectedEquation;
 var idEquation; // the id of the equation in database
-var idTaskVideo;
+var idTaskVideo;// the id of the video in database
+var tasksRemaining; //the number of equations unsolved per topic
 
 // variables for the Step object
 var NORMAL_STEP = 0;
