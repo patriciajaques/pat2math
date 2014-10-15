@@ -578,6 +578,46 @@ public class MiscFunctions {
 			}
 			n1=null;
 		}
+		//inserir os nodos irmão do nodos "diferentes" pois a resposta do aluno 
+		//pode ser igual a um dos nos removidor da lista
+		List<BTNode> nList=new ArrayList<BTNode>();
+		BTNode brother;
+		for (BTNode temp:difU){
+			nList.add(temp);
+			if (ehPotRaizINT(temp))temp=temp.getPai();
+			if (temp.getPai().getPai()!=null){
+				if (temp.ehFilhoDir())brother=temp.getPai().getEsq();
+				else brother=temp.getPai().getDir();
+			}else brother=null;
+			//temp não é filho da raiz
+			if (brother!=null && !difU.contains(brother) && (brother.eFolha() || brother.getValue().equals("^"))){
+				nList.add(brother);
+				//buscar o correspondente na arvore da resposta do aluno  e colocar em difsolver
+				//retricao: deve ser filho do mesmo sinal da operacao entre temp e brother
+				/*BTNode pSolver=brother.getNodeX("=");
+				if (brother.ehFilhoDir(pSolver))pSolver=pSolver.getDir();
+				else pSolver=pSolver.getEsq();
+				List<BTNode> pFolhas= Expression.getFolhas(pSolver);
+				for (BTNode aux:pFolhas){
+					BTNode a1,a2;
+					a1=aux;
+					a2=brother;
+					if (ehPotRaizINT(aux) && ehPotRaizINT(brother)){
+						a1=aux.getEsq();
+						a2=brother.getEsq();
+					}
+					if (a1.getValue().equals(a2.getValue())){
+						//aux é o resultado então é filho direto 
+						// brother é filho do operador que é filho deste operador em comum
+						if (aux.getPai().getValue().equals(brother.getPai().getPai().getValue())){
+							difSolver.add(aux);
+						}
+					}
+				}*/
+			}
+		}
+		difU=nList;
+		
 		//if (difU.size()<=1&& !potRaizINT)return nodos;
 		for (Iterator<BTNode> it=difU.iterator();it.hasNext();){
 			potRaizINT=false;

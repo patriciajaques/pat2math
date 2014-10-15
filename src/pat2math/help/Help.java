@@ -863,7 +863,8 @@ public class Help {
 		String nextStp="";
 		String desc="";
 		boolean done=false;
-		if (Arrays.binarySearch(op_basicos, operation)>=0){
+		boolean isBasic=Arrays.binarySearch(op_basicos, operation)>=0;
+		if (isBasic){
 			eq.useForHints();
 			hints.clearWorkingMemory();
 			hints.inserir(eq);
@@ -875,33 +876,35 @@ public class Help {
 				if(ohint.getOperacao().equals(operation))oh=ohint;
 			}
 			//obter os nodos originais
-			if (oh==null)return nextStp;
-			List<BTNode> originais= oh.getExpOriginal();
-			BTNode resultado;
-			BTNode orig;
-			// pq ^ e R usam aprans um nodo ao inves de 2
-			if (oh.getOperacao().equals(Operacao.RAIZ) || oh.getOperacao().equals(Operacao.POTENCIACAO)){
-				resultado= MiscFunctions.getResult(oh.getExpDica().get(0));
-				orig=originais.get(0);
+			if (oh!=null){
+				List<BTNode> originais= oh.getExpOriginal();
+				BTNode resultado;
+				BTNode orig;
+				// pq ^ e R usam aprans um nodo ao inves de 2
+				if (oh.getOperacao().equals(Operacao.RAIZ) || oh.getOperacao().equals(Operacao.POTENCIACAO)){
+					resultado= MiscFunctions.getResult(oh.getExpDica().get(0));
+					orig=originais.get(0);
+					orig.setEsq(null);
+					orig.setDir(null);
+					orig.setValue(resultado.getValue());
+					orig.setEsq(orig.getEsq());
+					orig.setDir(resultado.getDir());
+				}else{
+					resultado= MiscFunctions.getResult(oh.getExpDica().get(0));
+					orig=originais.get(0);
+					Expression.removeNoArvore(orig);
+					orig=originais.get(1);
+				}
 				orig.setEsq(null);
 				orig.setDir(null);
 				orig.setValue(resultado.getValue());
 				orig.setEsq(orig.getEsq());
 				orig.setDir(resultado.getDir());
-			}else{
-				resultado= MiscFunctions.getResult(oh.getExpDica().get(0));
-				orig=originais.get(0);
-				Expression.removeNoArvore(orig);
-				orig=originais.get(1);
+				eq.setmod();
+				nextStp=eq.getCleanExpression();
 			}
-			orig.setEsq(null);
-			orig.setDir(null);
-			orig.setValue(resultado.getValue());
-			orig.setEsq(orig.getEsq());
-			orig.setDir(resultado.getDir());
-			eq.setmod();
-			nextStp=eq.getCleanExpression();
-		}else{
+		}
+		if (!isBasic || nextStp.isEmpty()){
 			while (!actList.isEmpty() && !done){
 				((DefaultAgenda)rules.getAgenda()).fireActivation(solver.getNextActivation(
 						actList,newActList));
@@ -912,13 +915,13 @@ public class Help {
 				if (!resp.isEmpty()){
 					//é a descrição
 					if (resp.get(resp.size()-1).getCleanEquation().startsWith("#")){
-						desc=(resp.remove(resp.size()-1).getCleanEquation())+"\n";
+						desc=(resp.remove(resp.size()-1).getCleanEquation());
 					}else nextStp+=" e "+ resp.remove(resp.size()-1).getCleanEquation();
 				}
 				//geralmente o segundo add deve pegar a descrição mas se for bhaskara ou fatoração
 				//são duas equações então deve apagar mais um valor de resp
 				if (!resp.isEmpty() && resp.get(resp.size()-1).getCleanEquation().startsWith("#")){
-					desc=(resp.remove(resp.size()-1).getCleanEquation())+"\n";
+					desc=(resp.remove(resp.size()-1).getCleanEquation());
 				}
 				if (Operacao.getCodigo(desc).equals(operation)) done=true;
 				else{

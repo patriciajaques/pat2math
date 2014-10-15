@@ -1895,7 +1895,7 @@ function List getFracSimpNumDen (Expression user, Expression solver){
 	List<BTNode> dirUserFrac= Conjuntos.getFracao(dirUser);
 	List<BTNode> esq;
 	List<BTNode> dir;
-	Funcoes.j();
+	//Funcoes.j();
 	esq= Conjuntos.getFracao(Conjuntos.diferenca(esqSolver,esqUser));
 	dir = Conjuntos.getFracao(Conjuntos.diferenca(dirSolver,dirUser));
 	if (esq.isEmpty())esq=Conjuntos.diferencaFracao(esqSolver,esqUserFrac);
