@@ -93,7 +93,7 @@
                     width: 620
     		}).show();  
 
-        setTimeout(function(){closeWindow();showSideBar();},154000); 
+        setTimeout(function(){closeWindow();showSideBar();},345000); 
     }
     function audio ( ) {
         $.guider({
