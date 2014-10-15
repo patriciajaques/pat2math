@@ -29,13 +29,13 @@ public class HelpTest {
 		}
 		ArrayList<Tip> t =new ArrayList<Tip>();
 		Tip tip=new Tip();
-		tip.setOperation("EqPrim_Mt_Num");
+		tip.setOperation("EqPrim_Ad_Num");
 		//tip.setOperation("AD");
-		tip.setContent("MT");
+		tip.setContent("AD");
 		tip.setLevel(2);
 		t.add(tip);
 	//	Tip hint=ma.hints("2-4=x",t,c);
-		ma.setExpressao("x=12*2");
+		ma.setExpressao("x=-2+12");
 		ma.setOperacao("OG");
 		Mensagem hint = ma.iniciaResolucao("x=2", t, c);
 	//	System.out.println(hint.getDescription());

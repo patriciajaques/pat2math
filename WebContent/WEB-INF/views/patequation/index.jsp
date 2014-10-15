@@ -86,7 +86,7 @@
     
     function playAudio ( ) {
         $.guider({
-    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio1.ogg' type='audio/mpeg'> </audio>",
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/mpeg'> </audio>",
                     closable: true,
                     overlay: "dark",
                     alignButtons: "right",
@@ -108,7 +108,7 @@
 
     function playAudio2 ( ) {
         $.guider({
-    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/audio2.ogg' type='audio/mpeg'> </audio>",
+    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/mpeg'> </audio>",
                     closable: true,
                     overlay: "dark",
                     alignButtons: "right",
@@ -152,7 +152,7 @@
     	
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout" class="white-link">Logout</a></p>
+			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 10%; width: 10%;" /></a></p>
 <!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
 		</div>
     	
