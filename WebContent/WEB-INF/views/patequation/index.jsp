@@ -87,14 +87,14 @@
 	    
 	    function playAudio() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg'> </audio>",
+	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
 	                    width: 620
 	    		}).show();  
 	
-	        setTimeout(function(){closeWindow();showSideBar();},346000); 
+	        setTimeout(function(){closeWindow();showSideBar();},347000); 
 	    }
 	    function audio() {
 	        $.guider({
@@ -108,14 +108,14 @@
 	    
 	    function playAudio2() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/ogg'> </audio>",
+	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/ogg' preload='auto'> </audio>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
 	                    width: 620
 	    		}).show();  
 	
-	        setTimeout(function(){closeWindow();showSideBar();},185000); 
+	        setTimeout(function(){closeWindow();showSideBar();},347000); 
 	    }
 	    function audio2() {
 	        $.guider({

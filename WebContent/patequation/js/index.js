@@ -3,7 +3,7 @@ var selectedEquation;
 var idEquation; // the id of the equation in database
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
-var useAudio=false;
+var useAudio=true;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
