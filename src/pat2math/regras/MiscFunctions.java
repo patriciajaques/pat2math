@@ -540,8 +540,8 @@ public class MiscFunctions {
 		List<BTNode> difs=Conjuntos.diferenca(difUser, difSolver);
 		if (difSolver.size()==difUser.size() &&
 				difs.isEmpty()) return new ArrayList<BTNode>();
-		List<BTNode> nodos=checkForMiscMatBasica(difDirUser, difDirSolver);
-		if (nodos!=null && nodos.isEmpty()) nodos=checkForMiscMatBasica(difEsqUser, difEsqSolver);
+		List<BTNode> nodos=checkForMiscMatBasica(difDirUser, difDirSolver, em.getUser().getRoot());
+		if (nodos!=null && nodos.isEmpty()) nodos=checkForMiscMatBasica(difEsqUser, difEsqSolver,em.getUser().getRoot());
 		return nodos;
 	}
 
@@ -559,7 +559,7 @@ public class MiscFunctions {
 	}
 	
 	//TODO: Como fazer para checar caso a resposta do aluno for igual a a um dos termos da operação!!!
-	private static List<BTNode> checkForMiscMatBasica(List<BTNode> difUser, List<BTNode> difSolver){
+	private static List<BTNode> checkForMiscMatBasica(List<BTNode> difUser, List<BTNode> difSolver, BTNode rootUser){
 		BTNode n1=null,n2=null,resultado=null;
 		List<BTNode> nodos=new ArrayList<BTNode>();
 		List<BTNode> difU=new ArrayList<BTNode>(difUser);
@@ -578,6 +578,47 @@ public class MiscFunctions {
 			}
 			n1=null;
 		}
+		//inserir os nodos irmão do nodos "diferentes" pois a resposta do aluno 
+		//pode ser igual a um dos nos removidor da lista
+		List<BTNode> nList=new ArrayList<BTNode>();
+		BTNode brother;
+		for (BTNode temp:difU){
+			nList.add(temp);
+			if (ehPotRaizINT(temp))temp=temp.getPai();
+			if (temp.getPai().getPai()!=null){
+				if (temp.ehFilhoDir())brother=temp.getPai().getEsq();
+				else brother=temp.getPai().getDir();
+			}else brother=null;
+			//temp não é filho da raiz
+			if (brother!=null && !difU.contains(brother) && (brother.eFolha() || brother.getValue().equals("^"))){
+				nList.add(brother);
+				//buscar o correspondente na arvore da resposta do aluno  e colocar em difsolver
+				//retricao: deve ser filho do mesmo sinal da operacao entre temp e brother
+				BTNode pSolver=brother.getNodeX("=");
+				BTNode pUser= rootUser;
+				if (brother.ehFilhoDir(pSolver))pUser=pUser.getDir();
+				else pUser=pUser.getEsq();
+				List<BTNode> pFolhas= Expression.getFolhas(pUser);
+				for (BTNode aux:pFolhas){
+					BTNode a1,a2;
+					a1=aux;
+					a2=brother;
+					if (ehPotRaizINT(aux) && ehPotRaizINT(brother)){
+						a1=aux.getEsq();
+						a2=brother.getEsq();
+					}
+					if (a1.getValue().equals(a2.getValue())){
+						//aux é o resultado então é filho direto 
+						// brother é filho do operador que é filho deste operador em comum
+						if (aux.getPai().getValue().equals(brother.getPai().getPai().getValue())){
+							difSolver.add(aux);
+						}
+					}
+				}
+			}
+		}
+		difU=nList;
+		
 		//if (difU.size()<=1&& !potRaizINT)return nodos;
 		for (Iterator<BTNode> it=difU.iterator();it.hasNext();){
 			potRaizINT=false;

@@ -1891,12 +1891,21 @@ function List getFracSimpNumDen (Expression user, Expression solver){
 	List<BTNode> dirSolver = solver.buscaChaveX(root.getDir(),"/");
 	List<BTNode> esqUser = user.getFolhasFracoes(user.getRoot().getEsq(), new Vector<BTNode>());
 	List<BTNode> dirUser = user.getFolhasFracoes(user.getRoot().getDir(), new Vector<BTNode>());
+	List<BTNode> esqUserFrac= Conjuntos.getFracao(esqUser);
+	List<BTNode> dirUserFrac= Conjuntos.getFracao(dirUser);
+	List<BTNode> esq;
+	List<BTNode> dir;
 	//Funcoes.j();
-	esqSolver= Conjuntos.getFracao(Conjuntos.diferenca(esqSolver,esqUser));
-	dirSolver = Conjuntos.getFracao(Conjuntos.diferenca(dirSolver,dirUser));
+	esq= Conjuntos.getFracao(Conjuntos.diferenca(esqSolver,esqUser));
+	dir = Conjuntos.getFracao(Conjuntos.diferenca(dirSolver,dirUser));
+	if (esq.isEmpty())esq=Conjuntos.diferencaFracao(esqSolver,esqUserFrac);
+	if (dir.isEmpty())dir=Conjuntos.diferencaFracao(dirSolver,dirUserFrac);
 	List<BTNode> opsNum=new ArrayList<BTNode>();
 	List<BTNode> opsDen= new ArrayList<BTNode>();
 	List<BTNode> valids = new ArrayList<BTNode>();
+	
+	esqSolver=esq;
+	dirSolver=dir;
 	
 	
 	

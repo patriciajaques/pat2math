@@ -18,17 +18,20 @@ var concluded = 0;
 
 $(document).ready(function() {	
 	
+	
 	$("body").on("click", ".hide-menu", function() {
-		$("#topics").hide();
+		$("#topics").hide("slide", { direction: "left" }, 1000);
 		$(this).removeClass("hide-menu");
 		$(this).addClass("show-menu");
 	});
 	
 	$("body").on("click", ".show-menu", function() {
-		$("#topics").show();
+		$("#topics").show("slide", { direction: "left" }, 1000);
 		$(this).removeClass("show-menu");
 		$(this).addClass("hide-menu");
 	});
+	
+	hideSideBar();
 	
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
@@ -166,6 +169,15 @@ $(document).ready(function() {
 });
 
 
+function showSideBar(){
+	$("#topics").show();
+	$(".hide-menu").show();
+}
+
+function hideSideBar(){
+	$("#topics").hide();
+	$(".hide-menu").hide();
+}
 
 function reloadPaper(selected) {
 	selectedSheet = "#paper-" + selected;

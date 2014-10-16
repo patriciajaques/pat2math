@@ -7,15 +7,17 @@ import java.util.List;
 import pat2math.help.database.PopulateHelps;
 import pat2math.modeloAluno.Mensagem;
 import pat2math.modeloAluno.ModeloAluno;
+import pat2math.regras.Progress;
 import br.com.pat2math.studentModel.Knowledge;
 import br.com.pat2math.studentModel.Tip;
 
 public class HelpTest {
 	
-	/*public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		PopulateHelps ph = new PopulateHelps("Dicas.txt");
 		ph.createList();
-		ModeloAluno ma = new ModeloAluno();
+		Progress p=null;
+		ModeloAluno ma = new ModeloAluno(p,true);
 		ma.setNome("teste", ph.getHelp());
 		//Help h = new Help(,ph.getHelp());
 		List<Knowledge> c=new ArrayList<Knowledge>();
@@ -33,12 +35,12 @@ public class HelpTest {
 		tip.setLevel(2);
 		t.add(tip);
 	//	Tip hint=ma.hints("2-4=x",t,c);
-		ma.setExpressao("2+4=x");
-		ma.setOperacao("AD");
-		Mensagem hint = ma.iniciaResolucao("7=x", t, c);
+		ma.setExpressao("x=-2+12");
+		ma.setOperacao("OG");
+		Mensagem hint = ma.iniciaResolucao("x=2", t, c);
 	//	System.out.println(hint.getDescription());
 		System.out.println(hint.getFeedback());
-	}*/
+	}
 	
 	/*
 	public static void main(String[] args) throws Exception {

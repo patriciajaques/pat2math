@@ -62,6 +62,6 @@
 		</p>
 		
 		<br>
-		<input type="submit" class="btn btn-large" value="cadastrar" />
+		<input type="submit" class="btn btn-large" value="cadastrar" /><a href="../login" class="btn btn-large" style="margin-left: 15px">voltar</a>
 	</form:form>
 </div>

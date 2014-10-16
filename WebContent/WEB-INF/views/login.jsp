@@ -60,12 +60,14 @@ function closeWindow ( ) {
 	</p>
 	
 	<br>
-<!-- 	<input type="checkbox" name="_spring_security_remember_me" /> Lembrar-me -->
+
+	<!-- 	<input type="checkbox" name="_spring_security_remember_me" /> Lembrar-me -->
+	<input class="btn btn-large" value="login" type="submit">
 	
 	<c:if test="${param.failed == true}">
-		<p class="error" style="font-size: 16px;">Usuário ou senha inválidos</p>
+		<p class="error" style="font-size: 16px;margin-top: 15px"">Usuário ou senha inválidos</p>
 	</c:if>
-	<input class="btn btn-large" value="login" type="submit"><br>
+	
 	<p class="left"><a href="/pat2math/student/new">cadastrar</a></p> 
  	<p class="left"><a href="user/forgotPassword">esqueci minha senha</a></p>
 </form>
