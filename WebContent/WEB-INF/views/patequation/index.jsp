@@ -181,7 +181,7 @@
     	
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 20%; width: 20%; border-radius: 5px;" /></a></p>
+			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /></a></p>
 <!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
 		</div>
     	
@@ -227,7 +227,7 @@
         <div id="hintText"></div>
     </div>
     
-     <div id="papers" style="text-align: center;">
+     <div id="papers" style="text-align: center; margin-top: -119px">
    		<div id="paper-1"  style="display: inline-block;">
    			<div id="logo" title="PAT2Math =D"></div>
 

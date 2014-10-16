@@ -58,7 +58,7 @@
     width: 70px;
     height: 70px;
     margin-left: 933px;
-    margin-top: -129px;
+    margin-top: -452px;
     cursor: pointer;
 }
 
@@ -181,14 +181,14 @@
 #note {
     /* background: #eee; */
     background: #FFDD17;
-    box-shadow: -3px -3px 6px #888;
+    box-shadow: 3px 3px 6px #888;
     color: #888;
-    margin-left: 100px;
-    margin-top: -15px;
+    margin-left: 785px;
+    /*margin-top: -15px; */
     overflow: hidden;
     padding: 1em 1.5em;
-    position: fixed;
-    transform: rotate(-10deg);
+    /*position: fixed;*/
+    transform: rotate(10deg);
     width: 160px;
     cursor: default;
     font-size: 16px;
@@ -234,9 +234,9 @@
     background: none repeat scroll 0 0 #82C785;
     box-shadow: 3px 3px 6px #222222;
     color: #000;
-    top: 50px;
+    top: 75px;
    /*  left: 70%; */
-    right:160px;
+    right:68px;
     height: auto;
     max-height: 50%;
     padding: 1em 1.5em;
@@ -502,7 +502,7 @@ span.kbd {
 
 
 .ui-tabs-vertical .ui-tabs-panel { 
-    padding: 1em; 
+    padding: 1em;  
     float: left; 
     width: 40em;
 }
