@@ -21,6 +21,7 @@
 	padding: 20px 20px;
 	background: #fff;
 	background-clip: padding-box;
+	border-radius: 15px;
 }
 
 .jGuider .jgClose {

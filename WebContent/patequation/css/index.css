@@ -54,9 +54,9 @@
 }*/
 
 #help {
-    background: url("../img/help.png") no-repeat scroll center center transparent;
-    width: 100px;
-    height: 100px;
+    background: url("/pat2math/patequation/img/help.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
     margin-left: 933px;
     margin-top: -129px;
     cursor: pointer;
@@ -192,6 +192,21 @@
     width: 160px;
     cursor: default;
     font-size: 16px;
+    
+    /*
+    background: #FFDD17;
+    box-shadow: 3px 3px 6px #888;
+    color: #888;
+    margin-left: 800px;
+    margin-top: -15px;
+    overflow: hidden;
+    padding: 1em 1.5em;
+    position: fixed;
+    transform: rotate(10deg);
+    width: 160px;
+    cursor: default;
+    font-size: 16px;
+    */
 }
 
 .verticalTape{

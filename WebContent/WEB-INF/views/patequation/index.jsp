@@ -29,8 +29,7 @@
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	                closable: true,
-	                overlay: "dark",
-	                alignButtons: "right"
+	                overlay: "dark"
 			}).show();   
 	    }
 	    
@@ -38,8 +37,7 @@
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_05.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage4()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage6()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	                closable: true,
-	                overlay: "dark",
-	                alignButtons: "right"
+	                overlay: "dark"
 			}).show();   
 	    }
 	    
@@ -47,8 +45,7 @@
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_04.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage3()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	                closable: true,
-	                overlay: "dark",
-	                alignButtons: "right"
+	                overlay: "dark"
 			}).show();   
 	    }
 	    
@@ -56,26 +53,33 @@
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_03.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage4()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	                closable: true,
-	                overlay: "dark",
-	                alignButtons: "right"
+	                overlay: "dark"
 			}).show();   
 	    }
 	    function helpPage2 ( ) {
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_02.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <a href=# onclick=helpPage3()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	                closable: true,
-	                overlay: "dark",
-	                alignButtons: "right"
-			}).show();   
+	                overlay: "dark"
+			}).show();
 	    }
 	    function helpPage ( ) {
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:220px; left:452px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	                closable: true,
-	                overlay: "dark",
-	                alignButtons: "right"
-			}).show();   
+	                overlay: "dark"
+			}).show();
+	        helpPage2();
+	        openPage1();
 	    }
+	    
+	    function openPage1 ( ) {
+	    	$.guider({
+				description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:220px; left:452px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
+		                closable: true,
+		                overlay: "dark"
+				}).show();
+	    } 
 	    
 	    function closeWindow() {
 	        $.guider({
@@ -84,18 +88,18 @@
 	    
 	    function playAudio() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/mpeg'> </audio>",
+	    		        description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio preload='metadata' autoplay> <source src=https://soundcloud.com/pat2math-project/audio-mindfulness-02?in=pat2math-project/sets/pat2math_mindfulness type='audio/mpeg'> </audio>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
 	                    width: 620
 	    		}).show();  
 	
-	        setTimeout(function(){closeWindow();showSideBar();},345000); 
+	        setTimeout(function(){closeWindow();showSideBar();},346000); 
 	    }
 	    function audio() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:330px; left:245px;'> <a href=# onclick=playAudio()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
+	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:320px; left:245px;'> <a href=# onclick=playAudio()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
