@@ -2,7 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>	
 
-<form:form action="." modelAttribute="video" accept-charset="utf-8" class="block left">
+<form:form action="." modelAttribute="video" accept-charset="utf-8" class="box block left">
 	<form:errors path="*">
 		<div class="error-global">
 			<spring:message code="error.global" />

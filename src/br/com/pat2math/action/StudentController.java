@@ -146,6 +146,7 @@ public class StudentController {
 			}
 		}
 		model.addAttribute("topics", activeTopics);
+		model.addAttribute("student", student);
 		return "student.home";
 	}
 	

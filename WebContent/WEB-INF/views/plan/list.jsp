@@ -3,11 +3,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-<div class="left">
+<p class="left">
 	<a href="listAll?page=0" class="btn btn-large">listar todos planos</a>
 	<a href="new" class="btn btn-large">novo plano</a>
-</div>
-<br>
+</p>
+
 <table class="table table-bordered">
     <thead>
 	    <tr>
@@ -25,7 +25,6 @@
     </tbody>
 </table>
 
-  	
 <c:if test="${empty plans}"><p>Não foi encontrado nenhum plano de ensino para ser exibido.</p><br><br><br><br><br></c:if>
 
 <c:forEach items="${pages}" var="page" varStatus="i">

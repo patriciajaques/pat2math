@@ -1,7 +1,6 @@
 package br.com.pat2math.action;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import br.com.pat2math.domainBase.SetOfTasks;
-import br.com.pat2math.domainBase.Topic;
 import br.com.pat2math.repository.SetOfTasksRepository;
 import br.com.pat2math.repository.TaskRepository;
 import br.com.pat2math.service.SetOfTasksService;

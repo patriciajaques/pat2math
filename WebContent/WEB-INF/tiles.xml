@@ -19,6 +19,10 @@
         <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
+	<definition name="routines.list" extends="admin.page">
+		<put-attribute name="body" value="/WEB-INF/views/adminRoutines/list.jsp"/>
+	</definition>	
+
 	<definition name="terms" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/terms.jsp"/>
 	</definition>

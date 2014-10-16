@@ -3,61 +3,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<form:form class="left" action="update" modelAttribute="set" accept-charset="utf-8">
-    
-	<form:errors path="*">
-		<div class="error-global">
-			<spring:message code="error.global" />
-		</div>
-	</form:errors>
-		
-	<label>Nome</label>
-	<p>
-		<form:input path="name" />
-	</p>
-	<p>
-		<form:errors path="name">
-			<form:errors path="name" htmlEscape="false" class="error" />
-		</form:errors>
-	</p>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+ 
+<div class="box block">
+	<h2 class="left">${set.name}</h2>
+	<p class="left">${set.description}</p>
+</div>	
 
-	<label>Descrição</label>
-	<p>
-		<form:textarea path="description" />
-	</p>
-	
-	<p>
-		<form:errors path="description">
-			<form:errors path="description" htmlEscape="false" class="error" />
-		</form:errors>				
-	</p>
-	
-	<form:hidden path="id" />
-	<input type="submit" class="btn btn-large" value="Salvar" />
-</form:form>
-
-<h3>Tarefas</h3>	
-
-<%-- <div class="right">
+<p class="left">
 	<a href="/pat2math/task/new/${set.id}" class="btn btn-large">adicionar tarefa</a>
-</div>
- --%>
-	
-<table class="table table-striped table-bordered">
-    <thead>
-	    <tr>
+</p>
 
-    	</tr>
-    	
-    </thead>
-
-    <tbody>
-    	 <c:forEach items="${set.tasks}" var="task">
-		    <tr>
-		    	<td>
-		    		<a href="/pat2math/video/${task.content.id}">${task.content.name}</a>
-		    	</td>
-		    </tr> 
-		  </c:forEach>
-    </tbody>
-</table>
+<ul id="sortable" class="list">
+	<c:forEach items="${set.tasks}" var="task">
+		<li class="item">
+    		<a href="/pat2math/content/${task.content.id}">
+    			${task.content.name}
+    		</a>
+			<a style="float: right" href="#"><i class="icon-remove"></i></a>
+    	</li>
+    </c:forEach>
+</ul>

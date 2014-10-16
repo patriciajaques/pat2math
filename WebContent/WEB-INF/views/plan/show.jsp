@@ -53,6 +53,10 @@
 		<a href="#" class="btn btn-large newTopic">
 			adicionar tópico
 		</a>
+		
+		<a href="/pat2math/sets/new" class="btn btn-large">
+			criar novo tópico
+		</a>
 	</div>
 </security:authorize>
 

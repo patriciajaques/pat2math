@@ -257,6 +257,7 @@ ul {
 	border-top: 0 solid #98dffc;
 	background: #fff;
 	font-weight: bold;
+	border-radius: 8px;
 }
 
 .menu:hover {
