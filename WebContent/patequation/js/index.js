@@ -3,6 +3,7 @@ var selectedEquation;
 var idEquation; // the id of the equation in database
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
+var useAudio=false;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -31,7 +32,7 @@ $(document).ready(function() {
 		$(this).addClass("hide-menu");
 	});
 	
-	hideSideBar();
+	if(!useAudio)showSideBar();
 	
     $("#loadingImage").hide();
     $("#book").show("clip", 500);

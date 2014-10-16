@@ -24,7 +24,6 @@
     
 
     <script type="text/javascript">
-    
     	function helpPage6() {
 	        $.guider({
 			description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:220px; left:-15px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:467px;'> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
@@ -84,7 +83,7 @@
 	    
 	    function playAudio() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/mpeg'> </audio>",
+	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg'> </audio>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
@@ -95,7 +94,7 @@
 	    }
 	    function audio() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:330px; left:245px;'> <a href=# onclick=playAudio()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
+	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0><div style='position:absolute; top:330px; left:266px;'> <a href=# onclick=playAudio()><img src=/pat2math/patequation/img/botao_play.png></img></a>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
@@ -105,7 +104,7 @@
 	    
 	    function playAudio2() {
 	        $.guider({
-	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/mpeg'> </audio>",
+	    		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/modal_audio.png border=0> <audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/ogg'> </audio>",
 	                    closable: true,
 	                    overlay: "dark",
 	                    alignButtons: "right",
@@ -143,27 +142,32 @@
 
     <c:if test="${student.group.id == 2}">
     	 <script type="text/javascript">
+    	 	useAudio=true;
     	 	audio();
     	</script>
    	</c:if>
     
     <c:if test="${student.group.id == 4}">
     	<script type="text/javascript">
+    		useAudio=true;
     		audio();
     	</script>
     </c:if>
     
     <c:if test="${student.group.id == 3}">
     	<script type="text/javascript">
+    		useAudio=true;
     		audio2();
     	</script>
     </c:if>
     
     <c:if test="${student.group.id == 5}">
     	<script type="text/javascript">
+    		useAudio=true;
     		audio2();
     	</script>
     </c:if>
+    
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
     <div id="topics" style="overflow: auto">
@@ -173,7 +177,7 @@
     	
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 10%; width: 10%;" /></a></p>
+			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 20%; width: 20%; border-radius: 5px;" /></a></p>
 <!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
 		</div>
     	
