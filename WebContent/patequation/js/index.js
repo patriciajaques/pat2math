@@ -159,7 +159,7 @@ function rel ( ) {
 }
 
 $(document).ready(function() {	
-	audio();
+	//audio();
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
