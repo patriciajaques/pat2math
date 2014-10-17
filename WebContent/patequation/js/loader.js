@@ -51,6 +51,8 @@ loadScript("/pat2math/js/pat2math.js");
 
 loadScript("/pat2math/patequation/css/index.css");
 loadScript("/pat2math/patequation/css/paper.css");
+loadScript ("/pat2math/patequation/js/guider-2.1.0.min.js");
+loadScript ("/pat2math/patequation/js/guider-2.1.0.min.css");
 
 function loadScript(url, callback) {
     // Adding the script tag to the head as suggested before
