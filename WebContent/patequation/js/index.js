@@ -95,7 +95,7 @@ function playAudio ( ) {
                 width: 620
 		}).show();  
 
-    setTimeout(function(){closeWindow();showSideBar();},3000); 
+    setTimeout(function(){closeWindow();showSideBar();},347000); 
     //347000
 	} catch (e) {
 		window.location.reload();
