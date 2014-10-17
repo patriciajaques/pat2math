@@ -173,6 +173,10 @@
     </c:if>
     
     
+    <div id="loading">
+  		<img id="loading-image" src="/pat2math/images/Pat2Math_Load.gif" alt="Loading..." />
+	</div>
+    
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
     <div id="topics" style="overflow: auto">
     	<div id="bar-header" >
@@ -215,7 +219,7 @@
         <span>Barra de progresso:</span>
 
         <div id="progressBar" class="progress">
-            <div class="bar" role="progressbar" style="width: 100%;">
+            <div class="bar" role="progressbar" style="width: 0%;">
                 <span class="label"></span>
             </div>
         </div>

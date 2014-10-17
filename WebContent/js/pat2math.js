@@ -34,11 +34,17 @@ function loadTasks(id) {
 							}
 						}
 					);
+					resetProgressBar();
+					//here tasksremaining contains the number of equations
+					progressvalue=100/tasksRemaining;
+					progressvalue=Math.trunc(progressvalue);
 					/*alert("inicio: "+tasksRemaining);*/
 					var taskSolved=$(".icon-ok.icon-white").length;
 					/*alert("fim: "+taskSolved);*/
 					tasksRemaining=tasksRemaining-taskSolved;
 					/*alert("fim: "+tasksRemaining);*/
+					if (tasksRemaining===0)addProgressValue(100);
+					else addProgressValue(progressvalue*taskSolved);
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
@@ -51,6 +57,7 @@ function loadTasks(id) {
 }
 
 function loadExercise(id) {
+	$('#loading').show();
 	$.ajax({
 		type: 'POST',
 		url: appContext + "student/loadExercise",
@@ -70,6 +77,7 @@ function loadExercise(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
+			$('#loading').hide();
 		}
 	});
 }

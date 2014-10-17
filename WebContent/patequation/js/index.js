@@ -3,7 +3,8 @@ var selectedEquation;
 var idEquation; // the id of the equation in database
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
-var useAudio=true;
+var useAudio=false;
+var progressvalue=0;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -389,6 +390,12 @@ function reloadProgressBar() {
     }
     addProgressValue(aux);
 }
+
+function resetProgressBar(){
+	concluded=0;
+	addProgressValue(0);
+}
+
 
 function addProgressValue(value) {
     concluded += value;

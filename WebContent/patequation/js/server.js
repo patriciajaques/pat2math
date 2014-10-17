@@ -195,7 +195,8 @@ function requestServer(type, last, next, typeOperation, element) {
                         if (tasksRemaining===0){
                         	rel();
                         }
-
+                        if (tasksRemaining===0)addProgressValue(100);
+                        else addProgressValue(progressvalue);
                         selectedEquation.isComplete = true;
                     } else {
                         isDelta = true;
@@ -261,7 +262,7 @@ function requestServer(type, last, next, typeOperation, element) {
                         }
                         //$(".labelDefault").focus();
                     } else {
-                        addProgressValue(10);
+                        /*addProgressValue(10);*/
                         selectedEquation.lastStep = null;
 
                         var x = $(".cool:last").offset().left;
