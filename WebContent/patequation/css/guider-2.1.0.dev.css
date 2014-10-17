@@ -17,7 +17,7 @@
 .jGuider .jgContent {
 	-webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
 	outline: 0; -webkit-outline: 0;
-	border: 1px solid #acacac; border: 1px solid rgba(0, 0, 0, .333);
+	border: 1px solid #acacac; /*border: 1px solid rgba(0, 0, 0, .333);*/
 	padding: 20px 20px;
 	background: #fff;
 	background-clip: padding-box;

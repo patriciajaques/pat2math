@@ -63,7 +63,7 @@ function helpPage ( ) {
             closable: true,
             overlay: "dark"
 	}).show();
-    setTimeout (function() {closeWindow(); setTimeout ('p1()', 10);}, 10);
+    //setTimeout (function() {closeWindow(); setTimeout ('p1()', 10);}, 10);
     
 	} catch (e) {
 		window.location.reload();
@@ -75,11 +75,11 @@ function p1 ( ) {
 	$.guider({
 		description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:220px; left:452px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
 	            closable: true,
-	            overlay: "dark"
+	            overlay: "dark"            
 		}).show();
 }
 
-//audio();
+
 function closeWindow ( ) {
     $.guider({
     }).hideAll();
@@ -95,7 +95,7 @@ function playAudio ( ) {
                 width: 620
 		}).show();  
 
-    setTimeout(function(){closeWindow();showSideBar();},347000); 
+    setTimeout(function(){closeWindow();showSideBar();},3000); 
     //347000
 	} catch (e) {
 		window.location.reload();
@@ -159,7 +159,7 @@ function rel ( ) {
 }
 
 $(document).ready(function() {	
-	
+	audio();
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
