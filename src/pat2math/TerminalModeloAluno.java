@@ -29,7 +29,7 @@ public class TerminalModeloAluno {
 		String pedido ="Nova expressao: ";
 		boolean nova=true;
 		Progress prog=null;
-		ModeloAluno model=new ModeloAluno(prog,true);
+		ModeloAluno model=new ModeloAluno(prog,false);
 		//System.out.print("Nome: ");
 		model.setNome("Teste");
 		String expressao="";

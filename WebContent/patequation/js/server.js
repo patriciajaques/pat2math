@@ -377,7 +377,7 @@ function requestServer(type, last, next, typeOperation, element) {
                     }, 1000));
 
                     var hint;
-                    if (split[5] !== "" && split[5] !== null) {
+                    if (split[5] !== "" && split[5] !== null && split[5]!== "null") {
                         hint = split[5];
                     } else {
                         hint = split[4];
@@ -423,6 +423,8 @@ function requestServer(type, last, next, typeOperation, element) {
                 }
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada
+                }else if (split[0]=== "você não está logado!"){
+                	showHint(split[0]);
                 }
             }
         }});

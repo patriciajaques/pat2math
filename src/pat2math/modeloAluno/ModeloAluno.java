@@ -470,7 +470,7 @@ public class ModeloAluno extends Resolvedor{
 			usr.removeSimpleAbstractTerm();
 			
 			usrExpression=usr.getnewexpression();
-			System.out.println(usrExpression);
+			//System.out.println(usrExpression);
 			Expression usrClone=(Expression)usr.clone();
 			Expression atual=new Expression(original);
 			
@@ -555,11 +555,11 @@ public class ModeloAluno extends Resolvedor{
 
 				//monitor.logEquacao(original, usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
 				// m.isOperacaoCerta(), m.isUltimoPasso());
-				Tip h2 = m.getFeedbackOBJ();
-				h2.setDescription("O passo informado é igual a equação.");
-				h2.setId(-1L);
+				//Tip h2 = m.getFeedbackOBJ();
+				//h2.setDescription("O passo informado é igual a equação.");
+				//h2.setId(-1L);
 
-				m.setFeedback(h2);
+				//m.setFeedback(h2);
 				m.setOperacao(operacao.getOperacao());
 				m.setRespostaAluno(userAnswer);
 				m.setSegGrau(segGrau);

@@ -54,6 +54,7 @@ public class ResolverController {
 		if(student == null) {
 			echo = "você não está logado!";
 		} else if(type.equals("e")) {
+			System.out.println("\nClient Request ->"+echo);
 			helps = student.getFeedbacks();
 			message = tutor.validaEquacao(equation, helps, student.getKnowledges());
 			
@@ -78,7 +79,7 @@ public class ResolverController {
 			}
 			
 			echo = message.getMensagem();
-		
+			System.out.println("\nServer Response ->"+echo);
 		} else if (type.equals ("d")) {
 			if(student.getKnowledges().size() == 0) {
 				List<Knowledge> knowledges = student.applyKnowledges(

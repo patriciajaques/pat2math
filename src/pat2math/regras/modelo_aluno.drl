@@ -91,6 +91,7 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
+	f.j();
 	List<BTNode> folhasUEsq=Expression.getFolhas(us.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getFolhas(us.getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getFolhas(sv.getEsq(),new Vector<BTNode>());
@@ -126,25 +127,30 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 	
 					//TODO-segunda: colocar o suporte para 2x=4 => 2x/2=4/2, mas não eh urgente pois tem outra regra q tbm faz isso
 					String nVal=btE.getValue();
+					
 					if (Funcoes.isSquaredLeaf(btE)){
 						squareSymbol=nVal;
 						nVal=btE.getEsq().getValue();
 						
 					}
+					String searchVal=nVal;
+					//oposto é o valor do sinal que existe em ambas as equações 
+					// se na equação esta dividindo em ambos os lados oposto sera "*"
 					String oposto="";
 					if (pVal.equals("/") && isValidMultForPrincAdMult(btE, btD))pVal="*";
 					if (pVal.equals("+")){
 						if (nVal.startsWith("-")){
 							oposto="+";
-							nVal=Funcoes.trocaSinal(nVal);
+							searchVal=Funcoes.trocaSinal(nVal);
 						}else{
-							oposto="-";
-							nVal="-"+nVal;
+							oposto="+";
+							searchVal="-"+nVal;
 						}
 					}else if (pVal.equals("*"))oposto="/";
 					else if (pVal.equals("/")) oposto="*";
 					
-					List <BTNode> nSolver=solver.buscaChaveX(solver.getRoot(), nVal);
+					List <BTNode> nSolver=solver.buscaChaveX(solver.getRoot(), searchVal);
+					
 					if (nSolver.isEmpty() && pVal.equals("*")){
 						nVal=Funcoes.getINT(nVal)+"";
 						nSolver=solver.buscaChaveX(solver.getRoot(), nVal);
@@ -192,6 +198,7 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 
 function boolean isValidForPricAdMult(BTNode n1, BTNode n2){
 	if (n1.getPai()==null || n2.getPai()==null) return false;
+	Funcoes.j();
 	String inc1,inc2;
 	int v1,v2,pot1,pot2;
 	//desmembrar os valores
@@ -236,7 +243,7 @@ function boolean isValidMultForPrincAdMult(BTNode n1, BTNode n2){
 
 function List[] getIsolaX (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
+	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();

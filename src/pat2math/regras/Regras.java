@@ -104,7 +104,7 @@ public class Regras {
 	}
 	
 	public Regras (Package p) throws Exception{
-		System.out.println("Carregando Pacote de Regras...");
+		System.out.println("Carregando Pacote "+p.getName()+"...");
 		final RuleBase rulebase =RuleBaseFactory.newRuleBase();
 		rulebase.addPackage(p);
 		session = rulebase.newStatefulSession();
