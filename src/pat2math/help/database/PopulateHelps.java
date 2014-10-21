@@ -97,6 +97,7 @@ public class PopulateHelps {
 						nivel=Integer.parseInt(line.substring(0,spaceIndex-1));
 
 					}
+					String desc;
 					if (tipoHelp==' '){	
 						int contentIndex=0;
 						for (String t:tipo){
@@ -106,7 +107,6 @@ public class PopulateHelps {
 							
 							
 							int animePosition= line.lastIndexOf("#");
-							String desc;
 							if (animePosition>0){
 								desc = line.substring(line.indexOf(" ")+1,animePosition);
 								String animation = line.substring(animePosition+1);
@@ -135,6 +135,24 @@ public class PopulateHelps {
 							Tip h=new Tip();
 							h.setContent(conteudo.get(typeIndex));
 							h.setLevel(nivel);
+							int animePosition= line.lastIndexOf("#");
+							
+							if (animePosition>0){
+								desc = line.substring(line.indexOf(" ")+1,animePosition);
+								String animation = line.substring(animePosition+1);
+							
+								Animation anime = new Animation();
+								anime.setCode(animation);
+					//			em.persist(anime);
+						
+								h.setAnimation(anime);
+							}else {desc=line.substring(line.indexOf(" ")+1);
+								Animation anime = new Animation();
+							//	anime.setCode("NO");
+				//				em.persist(anime);
+								h.setAnimation(anime);
+							}
+							
 							h.setDescription(line.substring(line.indexOf(" ")+1));
 							h.setOperation(tipo.get(typeIndex));
 							ajudas.add(h);
@@ -160,6 +178,7 @@ public class PopulateHelps {
 				for (Tip h: ajudas){
 					bf.write(h.getOperation()+"\t"+h.getLevel()+"\t"+h.getContent()+"\t"+ h.getDescription()+"\t"+h.getAnimation().getCode()+"\n");
 				}
+				bf.flush();
 				bf.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -171,6 +190,12 @@ public class PopulateHelps {
 		return ajudas;
 	}
 
+	public static void main(String[] args) throws Exception {
+		PopulateHelps ph= new PopulateHelps("novas_dicas.txt");
+		ph.createList();
+		ph.printListFile();
+	}
+	
 	/*public static void main(String[] args) throws Exception {
 		PopulateHelps ph= new PopulateHelps("Dicas.txt");
 		try {

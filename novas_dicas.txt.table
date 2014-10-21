@@ -1,0 +1,182 @@
+Operação	Nível	Conteúdo	Descrição	Animation
+AD	1	AD	Há dois termos nesta equação que você pode somar. Tente descobrir quais são eles.	EI
+AD	2	AD	Qual operação você deve fazer entre os termos <eq t+> e <eq +t>?	TE
+AD	3	AD	Os termos <eq t+>  e <eq +t> devem ser somados.	EQ
+AD	4	AD	Qual o resultado de: <eq +>?	EO
+AD	5	AD	Se você fizer <eq +>, o próximo passo (a linha inteira) da equação fica <PP>.	ER
+SB	1	SB	Há dois termos nesta equação que você pode subtrair. Tente descobrir quais são eles.	EI
+SB	2	SB	Qual operação você deve fazer entre os termos <eq t-> e <eq -t>?	TE
+SB	3	SB	Os termos <eq t-> e <eq -t> devem ser subtraídos.	EQ
+SB	4	SB	Qual o resultado de: <eq ->?	EO
+SB	5	SB	Se você fizer <eq ->, o próximo passo (a linha inteira) da equação fica <PP>.	ER
+MT	1	MT	Há dois termos nesta equação que você pode multiplicar. Tente descobrir quais são eles.	EI
+MT	2	MT	Qual operação você deve fazer entre os termos <eq t*> e <eq *t>?	TE
+MT	3	MT	Os termos <eq t*>  e <eq *t>  devem ser multiplicados.	EQ
+MT	4	MT	Qual o resultado de: <eq *>?	EO
+MT	5	MT	Se você fizer <eq *>, o próximo passo (a linha inteira) da equação fica <PP>.	ER
+DV	1	DV	Há dois termos nesta equação que você pode dividir. Tente descobrir quais são eles.	EI
+DV	2	DV	Qual operação você deve fazer entre os termos <eq t/> e <eq /t>?	TE
+DV	3	DV	Os termos <eq t/>  e <eq /t>  devem ser divididos.	EQ
+DV	4	DV	Qual o resultado de: <eq t/> / <eq /t>?	EO
+DV	5	DV	Se você fizer  <eq />, o próximo passo (a linha inteira) da equação fica <PP>.	ER
+DM	1	DM	Como você deve fazer para multiplicar <eq t*> por (x+8)??	TE
+DM	2	DM	Para resolver <eq *>, primeiramente multiplique <eq t*> pelo primeiro termo da e depois pelo segundo termo da expressão <eq *t>.?	TE
+DM	3	DM	Você sabia que a multiplicação 2*(x+8) é igual a 2x+16??	TE
+DM	4	DM	Se você fizer <eq *>, o próximo passo (a linha inteira) da equação fica <PP>.?	ER
+MM	1	MM	Você viu que tem frações nesta equação? Como você deve fazer a equivalência delas?	TF
+MM	2	MM	Observe que as frações a serem operadas possuem denominadores diferentes. Para realizar as operações nos  numeradores, (parte de cima da fração), você precisa transformar as frações de forma que todas tenham o mesmo denominador. Como você pode fazer isso?	TF
+MM	3	MM	Para realizar as operações sobre os numeradores das frações, você tem que calcular o Mínimo Múltiplo Comum dos termos <eq /t1> <eq /t2> <eq /t3>. Esse será o denominador das novas frações.	TF 
+MM	4	MM	Calculado o Mínimo Múltiplo Comum dos termos <eq /t1> <eq /t2> <eq /t3>. Coloque-o como denominador da fração e tente descobrir como fica o numerador das frações. 	TF
+MM	5	MM	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+OI	1	OI	Essa equação possui dois termos que podem ser operados (somados, subtraídos, etc). Mas, eles estão em lados opostos da equação (separados pelo sinal de igualdade). O que você pode fazer para deixar esses termos no mesmo lado?	LE
+OI	2	OI	Os termos <eq tOI> e <eq OIt> podem ser operados (somados, subtraídos, etc). Mas, eles estão em lados opostos da equação (separados pelo sinal de igualdade). O que você pode fazer para deixar esses termos no mesmo lado?	TE
+OI	3	OI	Lembre que para passar <eq tOI> para o outro lado da equação, você precisa aplicar a operação inversa de <eq tOI> em ambos os lados da equação. Lembre-se: a operação inversa da soma é a subtraçao e da multiplicação é a divisão.	TE
+OI	4	OI	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+SP	1	SP	Qual operação você pode aplicar para reduzir o valor da fração <eq t/t>?	TE
+SP	2	SP	Os termos <eq t/ > e <eq /t> da fração possuem um número múltiplo em comum. Você pode dividir  o numerador e denominador da fração por este número para reduzir o valor da fração. 	TE 
+SP	3	SP	O resultado da simplificação de <eq t/> e <eq /t> é <PP>.	ER
+EqPrim_Ad_Num	1	AD	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Sb_Num	1	SB	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Mt_Num	1	MT	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Dv_Num	1	DV	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Ad_Inc	1	AD	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Sb_Inc	1	SB	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Mt_Inc	1	MT	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Dv_Inc	1	DV	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Dv_Simp	1	DV	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
+EqPrim_Ad_Num	2	AD	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Sb_Num	2	SB	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Mt_Num	2	MT	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Dv_Num	2	DV	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Ad_Inc	2	AD	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Sb_Inc	2	SB	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Mt_Inc	2	MT	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Dv_Inc	2	DV	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Dv_Simp	2	DV	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Ad_Num	3	AD	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Sb_Num	3	SB	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Mt_Num	3	MT	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Dv_Num	3	DV	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Ad_Inc	3	AD	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Sb_Inc	3	SB	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Mt_Inc	3	MT	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Dv_Inc	3	DV	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Dv_Simp	3	DV	O próximo passo (a linha inteira) da equação fica <PP>.	ER
+EqPrim_Mt_Sin	1	MT	Você acabou de multiplicar <eq t*> por <eq *t>. Você acha que o sinal está correto?	AO
+EqPrim_Mt_Sin	2	MT	Lembre-se que ao multiplicar dois termos, você precisa também operar os sinais.	EQ
+EqPrim_Mt_Sin	3	MT	O resultado correto da multiplicação de <eq t*> e <eq *t> é <PP>.	ER
+EqPrim_Dv_Sin	1	DV	Você acabou de dividir <eq t/> por <eq /t>. Você acha que o sinal está correto?	AO
+EqPrim_Dv_Sin	2	DV	Lembre-se que ao dividir dois termos, você precisa também operar os sinais.	EQ
+EqPrim_Dv_Sin	3	DV	O resultado correto da divisão de <eq t/> e <eq /t> é <PP>.	ER
+EqPrim_OpPrim_Ad_Num/Inc	1	AD	Tem certeza que é possível somar<eq t+> com <eq +t>?#TE	TE
+EqPrim_OpPrim_Sb_Num/Inc	1	SB	Tem certeza que é possível subtrair <eq t-> com <eq -t>?#TE	TE
+EqPrim_OpPrim_Ad_Num/Inc	2	AD	Quais os requisitos necessários pra se realizar uma operação de soma sobre um número e uma incógnita?#DC	DC
+EqPrim_OpPrim_Sb_Num/Inc	2	SB	Quais os requisitos necessários pra se realizar uma operação de subtração sobre um número e uma incógnita?#DC	DC
+EqPrim_OpPrim_Ad_Num/Inc	3	AD	Você não pode realizar esta operção uma vez que você está somando uma incógnita com um número natural. Você só pode somar dois numeros naturais ou duas incógnitas.#DC	DC
+EqPrim_OpPrim_Sb_Num/Inc	3	SB	Você não pode realizar esta operção uma vez que você está subtraindo uma incógnita com um número natural. Você só pode subtrair dois numeros naturais ou duas incógnitas.#DC	DC
+EqSec_OpFrac_MMC_Ad-Lin	1	MM	A operação realizada foi <eq t/1> + <eq t/2> e <eq /t2> + <eq /t2>. Você acha que isto é certo?#EQ	EQ
+EqSec_OpFrac_MMC_Sub-Lin	1	MM  	A operação realizada foi <eq t/1> - <eq t/2> e <eq /t2> - <eq /t2>. Você acha que isto é certo?#EQ	EQ
+EqSec_OpFrac_MMC_Ad-Lin	2	MM	Como é realizada a soma/subtração de frações? O que deve ser calculado primeiro?	DC
+EqSec_OpFrac_MMC_Sub-Lin	2	MM  	Como é realizada a soma/subtração de frações? O que deve ser calculado primeiro?	DC
+EqSec_OpFrac_MMC_Ad-Lin	3	MM	Observe que estas frações possuem denominadores diferentes. Para realizar somas ou subtrações entre estas frações, elas devem ter o mesmo denominador, desse modo você deve calcular o Mínimo Múltiplo Comum e este deve ser o denominador de todas as frações.	FR
+EqSec_OpFrac_MMC_Sub-Lin	3	MM  	Observe que estas frações possuem denominadores diferentes. Para realizar somas ou subtrações entre estas frações, elas devem ter o mesmo denominador, desse modo você deve calcular o Mínimo Múltiplo Comum e este deve ser o denominador de todas as frações.	FR
+EqSec_OpFrac_MMC_Den_Num/Inc	1	MM	Eu observei que você não calculou o Mínimo Múltiplo Comum corretamente. Por favor, dê uma revisada.	DC
+EqSec_OpFrac_MMC_Den_Num/Inc	2	MM	Lembre-se das regras de cálculo do MMC, se há números e incógnitas nos denominadores, eles são unidos ou mantidos separados?	DC
+EqSec_OpFrac_MMC_Den_Num/Inc	3	MM	No cálculo do MMC o valor obtido deve ser divisível por todos os denominadores da fração.	FR
+EqSec_OpFrac_MMC_MtNumerador	1	MM	Após a aplicação do MMC, qual o próximo passo?	DC
+EqSec_OpFrac_MMC_MtNumerador	2	MM	Utilize o MMC obtido em conjunto com os numeradores e denominadores, de cada fração, para calcular os novos valores das frações.	FR
+EqSec_OpFrac_MMC_MtNumerador	3	MM	Lembre-se: o MMC deverá ser dividido pelo denominador e o resultado desta divisão deverá multiplicar o numerador.	DC
+EqSec_OpFrac_Dv_Lin	1	DV	Está certo de que a divisão de frações é resolvida desta forma?	FR
+EqSec_OpFrac_Dv_Lin	2	DV	Você dividiu <eq t/1> com <eq t/2> e este processo é utilizado em outra operação. Como é o processo da divisão de frações?	TE
+EqSec_OpFrac_Dv_Lin	3	DV	Divida <eq t/1> por <eq /t2> e <eq /t1> por <eq t/2>.	TE
+EqSec_OpFrac_Mt_Inv	1	MT	Está certo de que a multiplicação de frações é resolvida dessa forma?	FR
+EqSec_OpFrac_Mt_Inv	2	MT	Você multiplicou <eq t/1> com <eq /t2> e este processo é utilizado em outra operação. Como é o processo da multiplicação de frações?	TE
+EqSec_OpFrac_Mt_Inv	3	MT	Multiplique <eq t/1> por <eq t/2> e <eq /t1> por <eq /t2>.	TE
+EqSec_Distrib_MtTerm	1	DM	Observe se não faltam termos a serem multiplicados?	EQ
+EqSec_Distrib_MtTerm	2	DM	Para resolver <eq *>, você deve multiplicar <eq t*> por cada um dos termos dentro dos parênteses.	EQ 
+EqSec_Distrib_MtTerm	3	DM	O resultado de <eq *> é <PP>.	ER
+EqSec_Distrib_SinTerm	1	DM	Você tem certeza que multiplicou corretamente todos os termos? Os sinais estão corretos?	RA
+EqSec_Distrib_SinTerm	2	DM	Como proceder com os sinais dos termos em uma multiplicação?	EQ
+EqSec_Distrib_SinTerm	3	DM	Lembre-se: na multiplicação de dois termos, quando os sinais forem iguais, o resultado será positivo; quando forem diferentes, o resultado será negativo. Por exemplo: \n 2*x=2x \n-2*x=2x	EQ
+EqSec_Distrib_SinTerm	4	DM	O próximo passo da equação é <PP>.	ER
+EqSec_Par_~SinPref	1	MT	Você aplicou uma operação que não poderia ser aplicada. Não há outra operação que deva ser realizada primeiramente?	DC
+EqSec_Par_~SinPref	2	MT	Lembre-se da precedência de operadores. Os níveis de precedência são: \n1- () \n2- [] \n 3- {} \n 4- Multiplicação e Divisão \n 5- Soma e Subtração	DC
+EqSec_Par_~SinPref	3	MT	O próximo passo da equação é <PP>.	ER
+OI_Ad_Ad	1	OI	Verifique se você realizou corretamente a última operação.	DC
+OI_Sb_Sb	1	OI	Verifique se você realizou corretamente a última operação.	DC
+OI_Ad_Ad	2	OI	Mantenha o equilíbrio da equação: ao remover uma quantia de um lado você deve remover do outro lado também. Por exemplo, para remover 5 do lado esquerdo da equação abaixo, você deve subtrair 5 dos 2 lados: \n x+5=10 \n x+5-5=10-5 \n x=10-5 #LE	LE
+OI_Sb_Sb	2	OI	Mantenha o equilíbrio da equação: ao remover uma quantia de um lado você deve remover do outro lado também. Por exemplo, para remover -3 do lado esquerdo da equação abaixo, você deve somar 3 dos dois lados: \n x-3=5 \n x-3+3=5+3 \n x=10-5#LE	LE
+OI_Ad_Ad	3	OI	O próximo passo da equação é <PP>.	DC
+OI_Sb_Sb	3	OI	O próximo passo da equação é <PP>.	DC
+OI_Dv(+)_Dv(-)	1	OI	Na regra de operação inversa a operação do termo é alterada, não o sinal.	RA
+OI_Dv(+)_Dv(+)	1	OI	Na regra de operação inversa a operação do termo é alterada, não o sinal.	RA
+OI_Dv(-)_Dv(-)	1	OI	Na regra de operação inversa a operação do termo é alterada, não o sinal.	RA
+OI_Dv(-)_Dv(+)	1	OI	Na regra de operação inversa a operação do termo é alterada, não o sinal.	RA
+OI_Dv(+)_Dv(-)	2	OI	Qual é a operação?	DC
+OI_Dv(+)_Dv(+)	2	OI	Qual é a operação?	DC
+OI_Dv(-)_Dv(-)	2	OI	Qual é a operação?	DC
+OI_Dv(-)_Dv(+)	2	OI	Qual é a operação?	DC
+OI_Dv(+)_Dv(-)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade,  que tal multiplicarmos ambos os lados pelo termo que você escolheu?	RA
+OI_Dv(+)_Dv(+)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade,  que tal multiplicarmos ambos os lados pelo termo que você escolheu?	RA
+OI_Dv(-)_Dv(-)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade,  que tal multiplicarmos ambos os lados pelo termo que você escolheu?	RA
+OI_Dv(-)_Dv(+)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade,  que tal multiplicarmos ambos os lados pelo termo que você escolheu?	RA
+OI_Dv(+)_Mt(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Dv(-)_Mt(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Dv(+)_Mt(-)	2	OI	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
+OI_Dv(-)_Mt(+)	2	OI	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
+OI_Dv(+)_Mt(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Dv(-)_Mt(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Dv(-)_Ad	1	OI	A operação inversa que você realizou não é possível de ser realizada. Pois as operações são incompatíveis.	RA
+OI_Dv(-)_Sb	1	OI	A operação inversa que você realizou não é possível de ser realizada. Pois as operações são incompatíveis.	RA
+OI_Dv(+)_Ad	1	OI	A operação inversa que você realizou não é possível de ser realizada. Pois as operações são incompatíveis.	RA
+OI_Dv(+)_Sb	1	OI	A operação inversa que você realizou não é possível de ser realizada. Pois as operações são incompatíveis.	RA
+OI_Dv(-)_Ad	2	OI	Qual a operação inversa da divisão?	DC
+OI_Dv(-)_Sb	2	OI	Qual a operação inversa da divisão?	DC
+OI_Dv(+)_Ad	2	OI	Qual a operação inversa da divisão?	DC
+OI_Dv(+)_Sb	2	OI	Qual a operação inversa da divisão?	DC
+OI_Dv(-)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Dv(-)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Dv(+)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Dv(+)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(+)_Mt(+)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+OI_Mt(+)_Mt(-)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+OI_Mt(-)_Mt(+)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+OI_Mt(-)_Mt(-)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+OI_Mt(+)_Mt(+)	2	OI	Qual é a operação?	RA
+OI_Mt(+)_Mt(-)	2	OI	Qual é a operação?	RA
+OI_Mt(-)_Mt(+)	2	OI	Qual é a operação?	RA
+OI_Mt(-)_Mt(-)	2	OI	Qual é a operação?	RA
+OI_Mt(+)_Mt(+)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+OI_Mt(+)_Mt(-)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+OI_Mt(-)_Mt(+)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+OI_Mt(-)_Mt(-)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+OI_Mt(+)_Ad	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+OI_Mt(+)_Sb	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+OI_Mt(-)_Ad	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+OI_Mt(-)_Sb	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+OI_Mt(+)_Ad	2	OI	Qual a operação inversa da multiplicação?	RA
+OI_Mt(+)_Sb	2	OI	Qual a operação inversa da multiplicação?	RA
+OI_Mt(-)_Ad	2	OI	Qual a operação inversa da multiplicação?	RA
+OI_Mt(-)_Sb	2	OI	Qual a operação inversa da multiplicação?	RA
+OI_Mt(+)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(+)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(-)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(-)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(+)_Dv(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Mt(-)_Dv(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Mt(+)_Dv(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Mt(-)_Dv(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Mt(+)_Dv(-)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+OI_Mt(-)_Dv(+)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+OI_Mt(+)_Dv(-)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+OI_Mt(-)_Dv(+)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+OI_Mt(+)_Dv(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(-)_Dv(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(+)_Dv(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(-)_Dv(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(+)_Dv(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Mt(-)_Dv(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+OI_Mt(+)_Dv(-)	2	OI	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
+OI_Mt(-)_Dv(+)	2	OI	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
+OI_Mt(+)_Dv(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+OI_Mt(-)_Dv(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
