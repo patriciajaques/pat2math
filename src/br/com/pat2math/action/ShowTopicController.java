@@ -19,7 +19,7 @@ public class ShowTopicController {
 	
 	@Autowired private SetOfTasksService setService;
 	
-	@RequestMapping(value="showTopic", method = RequestMethod.POST)
+	@RequestMapping(value="showTopic", method = RequestMethod.GET)
 	public String loadTasks(Long idSet, Model model, HttpSession session) {
 		Student student = new CurrentUser(session).student();
 		if(student == null) return "login";

@@ -15,7 +15,7 @@ function loadTasks(id) {
 	tasksRemaining=0;
 	if(open == 'none') {
 		$.ajax({
-			type: "post",
+			type: "GET",
 			url: appContext + "student/showTopic",
 			data: {"idSet" : id}, 
 			success:
@@ -59,7 +59,7 @@ function loadTasks(id) {
 function loadExercise(id) {
 	$('#loading').show();
 	$.ajax({
-		type: 'POST',
+		type: 'GET',
 		url: appContext + "student/loadExercise",
 		data: {"exerciseId" : id},
 		success: function(data) {
