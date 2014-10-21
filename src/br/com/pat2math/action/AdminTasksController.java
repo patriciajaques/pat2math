@@ -9,10 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.pat2math.dao.Topics;
 import br.com.pat2math.domainBase.Exercise;
+import br.com.pat2math.domainBase.Plan;
+import br.com.pat2math.domainBase.Topic;
 import br.com.pat2math.repository.AllStudents;
 import br.com.pat2math.repository.ExerciseRepository;
 import br.com.pat2math.repository.KnowledgeRepository;
+import br.com.pat2math.repository.PlanRepository;
 import br.com.pat2math.studentModel.Knowledge;
 import br.com.pat2math.studentModel.Student;
 
@@ -24,6 +28,8 @@ public class AdminTasksController {
 	@Autowired private ExerciseRepository allExercises;
 	@Autowired private AllStudents allStudents;
 	@Autowired private KnowledgeRepository allKnowledges;
+	@Autowired private Topics allTopics;
+	@Autowired private PlanRepository allPlans;
 	
 	@RequestMapping("sanitizeExercises")
 	public String sanitizeExercises() {
@@ -31,6 +37,23 @@ public class AdminTasksController {
 		for(Exercise exercise : exercises) {
 			exercise.setName(exercise.getEquation());
 			allExercises.alter(exercise);
+		}
+		return "redirect:/routines/list";
+	}
+	
+	@RequestMapping("sanitizeTopicSequences")
+	public String sanitizeTopicSequences() {
+		List<Plan> plans = allPlans.getAll();
+		Topic topic;
+		List<Topic> topics;
+		
+		for(Plan plan : plans) {
+			topics = plan.getTopics();
+			for(int i = 0; i < topics.size(); i++) {
+				topic = topics.get(i);
+				topic.setSequence(i+0L);
+				allTopics.alter(topic);
+			}
 		}
 		return "redirect:/routines/list";
 	}
