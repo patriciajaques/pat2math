@@ -161,6 +161,7 @@ function rel ( ) {
 
 $(document).ready(function() {	
 	//audio();
+	//openTour();
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
