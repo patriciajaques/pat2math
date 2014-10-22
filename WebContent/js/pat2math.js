@@ -57,7 +57,7 @@ function loadTasks(id) {
 }
 
 function loadExercise(id) {
-	$('#loading').show();
+	loadingShow();
 	$.ajax({
 		type: 'GET',
 		url: appContext + "student/loadExercise",
@@ -77,9 +77,23 @@ function loadExercise(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			$('#loading').hide();
+			loadingHide();
 		}
 	});
+}
+
+function loadingShow(){
+	$('#loading').fadeIn();
+	$("#topics").hide("slide", { direction: "left" }, 1000);
+	$('.hide-menu').fadeOut();
+	
+}
+
+function loadingHide(){
+	$('#loading').fadeOut();
+	$("#topics").show("slide", { direction: "left" }, 1000);
+	$('.hide-menu').fadeIn();
+	
 }
 
 function changePlan(idGroup, idPlan) {

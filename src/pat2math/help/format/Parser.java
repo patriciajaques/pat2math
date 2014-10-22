@@ -6,7 +6,6 @@ import java.util.List;
 
 import pat2math.expressao.Expression;
 import pat2math.expressao.arvore.BTNode;
-import pat2math.expressao.arvore.BTNodeComparator;
 import pat2math.regras.Operacao;
 import pat2math.util.Conjuntos;
 import pat2math.util.Funcoes;
@@ -115,6 +114,7 @@ public class Parser {
 		inicioFrase=inicioFrase.replace("&", "<");
 		inicioFrase=inicioFrase.replace("$", ">");
 		if (!inicioFrase.isEmpty())texto=inicioFrase;
+		parseNewLine();
 	}
 	
 	/**
@@ -385,24 +385,28 @@ public class Parser {
 		return bt;
 	}
 	
-//	public static void main(String[] args) throws InvalidValueException {
-//		String texto="Aplique a <eq1 +1> <eq1 a1> com <eq1 a2>, <eq1 b1> com <eq1 b2> e <eq2 c1> com <eq2 c2>!!!";
-//		String texto2= "A equação <eq> possui a esquerda os termos <eq1 t*1> e a direita os termos <eq1 *t>, " +
-//				"resultando na expressão <eq1 t*t>!!! Há também o <eq =t> que é o resultado da equação.";
-//		String texto3= "A equacao <eq> possui uma potencia (<eq t^t>) e uma raiz (<eq tRt>) seus termos são: <eq t^> na esquerda " +
-//				"e <eq ^t> na direita, na potencia, e na raiz os termos são <eq tR> e <eq Rt>!!!.";
-//		String texto21= "A equacao <eq1> possui os seguintes termos: \n <eq1 t*> \n <eq1 *t>" +
-//				"\n<eq1 t+1> \n<eq1 +t1> \n<eq1 t+2> \n<eq1 +t2>.\n" +
-//				"Ja a <eq2> poissui os seguintes termos: \n<eq2 t/1>\n<eq2 /t1>\n<eq2 t*1>\n<eq2 *t1>" +
-//				"\n<eq2 tR1>\n<eq2 t^1>.>";
-//		Parser p= new Parser(texto, new Expression ("2x^2+4x^2+3x+4x+3+2=0"), new Expression ("1+1=x"));
-//		Parser p2= new Parser (texto21, new Expression ("(x+1)*(2x+2)=2"), new Expression ("x=(-4+(12^2-4*1*3)R2)/(2*1)"));
-//		Parser p3= new Parser (texto3, new Expression ("x+2=x^2+4R2"));
-//		//p.parse();
-//		p2.parse();
-//		//p3.parse();
-//		//System.out.println(p.getTexto());
-//		System.out.println(p2.getTexto());
-//		//System.out.println(p3.getTexto());
-//	}
+	public void parseNewLine(){
+		texto=texto.replace("\n", "<br>");
+	}
+	
+/*	public static void main(String[] args) {
+		String texto="Aplique a <eq1 +1> <eq1 a1> com <eq1 a2>, <eq1 b1> com <eq1 b2> e <eq2 c1> com <eq2 c2>!!!";
+		String texto2= "A equação <eq> possui a esquerda os termos <eq1 t*1> e a direita os termos <eq1 *t>, " +
+				"resultando na expressão <eq1 t*t>!!! Há também o <eq =t> que é o resultado da equação.";
+		String texto3= "A equacao <eq> possui uma potencia (<eq t^t>) e uma raiz (<eq tRt>) seus termos são: <eq t^> na esquerda " +
+				"e <eq ^t> na direita, na potencia, e na raiz os termos são <eq tR> e <eq Rt>!!!.";
+		String texto21= "A equacao <eq1> possui os seguintes termos: \n <eq1 t*> \n <eq1 *t>" +
+				"\n<eq1 t+1> \n<eq1 +t1> \n<eq1 t+2> \n<eq1 +t2>.\n" +
+				"Ja a <eq2> poissui os seguintes termos: \n<eq2 t/1>\n<eq2 /t1>\n<eq2 t*1>\n<eq2 *t1>" +
+				"\n<eq2 tR1>\n<eq2 t^1>.";
+		Parser p= new Parser(texto);//, new Expression ("2x^2+4x^2+3x+4x+3+2=0"), new Expression ("1+1=x"));
+		Parser p2= new Parser (texto21);//, new Expression ("(x+1)*(2x+2)=2"), new Expression ("x=(-4+(12^2-4*1*3)R2)/(2*1)"));
+		Parser p3= new Parser (texto3);//, new Expression ("x+2=x^2+4R2"));
+		//p.parse();
+		p2.parse();
+		//p3.parse();
+		System.out.println(p.getTexto());
+		System.out.println(p2.getTexto());
+		System.out.println(p3.getTexto());
+	}*/
 }
