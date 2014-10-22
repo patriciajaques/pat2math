@@ -41,6 +41,8 @@ public class Tip {
 	@ManyToOne
 	@JoinColumn(name="id_animation", referencedColumnName="id", nullable=false)
 	private Animation animation;
+	
+	private boolean deprecated;
 
 	public int getPedidosConsecutivos() {
 		return pedidosConsecutivos;
@@ -104,5 +106,13 @@ public class Tip {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isDeprecated() {
+		return deprecated;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		this.deprecated = deprecated;
 	}
 }

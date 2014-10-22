@@ -115,7 +115,7 @@ public class StudentController {
 	public String home(Model model, HttpSession session) {
 		Tutor tutor = (Tutor)session.getAttribute("tutor");
 		if (tutor==null){
-			session.setAttribute("tutor", new Tutor("", "", allHelps.getAll()));
+			session.setAttribute("tutor", new Tutor("", "", allHelps.getActives()));
 		}
 		Student student = new CurrentUser(session).student();
 		Group studentGroup = student.getGroup();
