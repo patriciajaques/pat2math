@@ -962,7 +962,7 @@ function exitTour ( ) {
 }
 
 function checkEquationTour ( ) {
-	var id = 3;
+	var id = 201;
 	
 	$.ajax({
 		type: 'POST',
