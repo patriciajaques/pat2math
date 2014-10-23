@@ -99,7 +99,7 @@ function openTour ( ) {
 		}
 	});
 	
-	$("#equationTour").guider({
+	$(".hide-menu").guider({
 		name: "third",
 		next: "fourth",
 		title: "Este é o menu principal",
@@ -1328,11 +1328,10 @@ function clickPlan ( ) {
 		}
 	});
 	
-	$("#equationTour").guider({
+	$().guider({
 		name: "fourth",
-		title: "Clique nesta equação",
+		title: "Clique na equação",
 		description: "Vamos resolver juntos passo-a-passo para você entender as principais funcionalidades do Pat2Math.",
-		position: "right",
 		alignButtons: "right",
 		closable: true, 
 		buttons: {
