@@ -23,7 +23,7 @@
     <body>
 
 
-    <c:if test="${student.group.id == 2}">
+<%--     <c:if test="${student.group.id == 2}"> 
     	 <script type="text/javascript">
     	 	useAudio=true;
     	 	audio();
@@ -49,7 +49,7 @@
     		useAudio=true;
     		audio2();
     	</script>
-    </c:if>
+    </c:if> --%>
     
     
     <div id="loading">
@@ -125,7 +125,7 @@
                     <div id="lines">
                         <div class="hLineAux">.</div>
                         <div class="hLine"></div>
-                        <div class="hLine"></div>
+                        <div class="hLine" id="linha3"></div>
                         <div class="hLine"></div>
                         <div class="hLine"></div>
                         <div class="hLine"></div>
@@ -174,6 +174,8 @@
 	
 	<div id="help" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
+    <div id="equationTour"></div>
+    <div id="tour" onclick="openTour()"></div>
 	<div id="video-box"></div>
 	
 	<div class="modal" id="msg-box"></div>

@@ -17,6 +17,10 @@ var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
+var isTourInterativo = true;
+var cont = 0;
+var topicIsOpen = false;
+var equationTourIsResolved = false;
 
 function helpPage6 ( ) {
     $.guider({
@@ -160,8 +164,13 @@ function rel ( ) {
 }
 
 $(document).ready(function() {	
-	//audio();
-	//openTour();
+	showSideBar();
+	
+	try {
+	openTour();
+	} catch (e) {
+		window.location.reload();
+	}
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
@@ -192,6 +201,57 @@ $(document).ready(function() {
         // key 13 = enter
         var key = event.which;
         //alert(key);
+        
+        if (isTourInterativo && key === 27) {
+            $.guider({
+		title: "Você pressionou esc e saiu do tour.",
+                next: "secondExit",
+		description: 'Confira a seguir as nossas considerações finais.',
+                closable: true,
+                alignButtons: "right",
+		buttons: {
+                     Próximo: {
+                         click: true,
+                         className: "primary"
+                     }
+		}
+		}).show();
+                
+            $("#help").guider({
+                name: "secondExit",
+                next: "thirdExit",
+		title: 'Teclas utilizadas',
+                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+                closable: true,
+                position: "left",
+                alignButtons: "right",
+		buttons: {
+                     Próximo: {
+                         click: true,
+                         className: "primary"
+                     }
+		}
+		}); 
+                
+
+        $("#tour").guider({
+                name: "thirdExit",             
+		title: 'Se você mudar de ideia',
+                description: 'Clique neste botão para acessar a este tour novamente.',
+                closable: true,
+                position: "left",
+                alignButtons: "right",
+		buttons: {
+                     Entendi: {
+                         click: true,
+                         className: "primary"
+                     }
+		}
+		}); 
+                
+            isTourInterativo = false; 
+        }
+
 
         if (key === 13) { //enter key
 
@@ -1054,45 +1114,61 @@ function newEquation() {
 }
 
 function checkEquation() { 
-    $(selectedSheet + " .canMove li input").blur();
-//    var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
-//    passoAnterior = getEquation(passoAnterior);
-    var passoAnterior = selectedEquation.lastStep;
-    if (passoAnterior !== null) {
-        passoAnterior = passoAnterior.step;
-    } else {
-        passoAnterior = selectedEquation.initialEquation;
-    }
+	$(selectedSheet + " .canMove li input").blur();
+//  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
+//  passoAnterior = getEquation(passoAnterior);
+  var equation = naturalToText(selectedEquation.currentStep);
+   
+  if (isTourInterativo) {
+      if (cont === 0) {
+      	resolutionPart1(equation);
+      } else if (cont === 1) {
+      	resolutionPart2(equation);
+      } else if (cont === 2) {
+      	resolutionPart3(equation);
+      } else if (cont === 3) {
+      	resolutionPart4(equation);
+      } else if (cont === 4) {
+      	resolutionPart5(equation);  
+      } cont++;
+  }
+  
+  var passoAnterior = selectedEquation.lastStep;
+  
+  if (passoAnterior !== null) {
+      passoAnterior = passoAnterior.step;
+  } else {
+      passoAnterior = selectedEquation.initialEquation;
+  }
 
-    //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
+  //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
 
-//    if (selectedEquation.initialEquation === "") {
-//        selectedEquation.initialEquation = passoAnterior;
-//    }
+//  if (selectedEquation.initialEquation === "") {
+//      selectedEquation.initialEquation = passoAnterior;
+//  }
 
-    var equation = naturalToText(selectedEquation.currentStep);
-    var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
-    if (mathml.indexOf('a') !== -1 || mathml.indexOf('b') !== -1 || mathml.indexOf('c') !== -1) {
-        equation = mathml;
-    }
-    //alert(equation + "/n" + selectedEquation.currentStep);
-    //selectedEquation.currentStep = equation;
+  var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
+  if (mathml.indexOf('a') !== -1 || mathml.indexOf('b') !== -1 || mathml.indexOf('c') !== -1) {
+      equation = mathml;
+  }
+  //alert(equation + "/n" + selectedEquation.currentStep);
+  //selectedEquation.currentStep = equation;
 
-    if (equation.indexOf('a') !== -1 || equation.indexOf('b') !== -1 || equation.indexOf('c') !== -1) {
-        //check if the a, b and c are corrects!!!
-        //selectedEquation.currentStep = equation;
-        equation = replaceAll(equation, ';', '&'); //split the equation to get the a, b and c value
-        passoAnterior = selectedEquation.initialEquation;
-    }
+  if (equation.indexOf('a') !== -1 || equation.indexOf('b') !== -1 || equation.indexOf('c') !== -1) {
+      //check if the a, b and c are corrects!!!
+      //selectedEquation.currentStep = equation;
+      equation = replaceAll(equation, ';', '&'); //split the equation to get the a, b and c value
+      passoAnterior = selectedEquation.initialEquation;
+  }
 
 
-    if (equation.indexOf("d") !== -1 && passoAnterior.indexOf("d") === -1 || passoAnterior === "" || passoAnterior === null) {
-        passoAnterior = selectedEquation.initialEquation;
-    } else if (passoAnterior.indexOf("±") !== -1 && equation.indexOf("±") === -1) {
-        selectedEquation.initialEquation = passoAnterior;
-        selectedEquation.twoAnswers = true;
-    }
-    requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
+  if (equation.indexOf("d") !== -1 && passoAnterior.indexOf("d") === -1 || passoAnterior === "" || passoAnterior === null) {
+      passoAnterior = selectedEquation.initialEquation;
+  } else if (passoAnterior.indexOf("±") !== -1 && equation.indexOf("±") === -1) {
+      selectedEquation.initialEquation = passoAnterior;
+      selectedEquation.twoAnswers = true;
+  }
+  requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
 }
 
 function identifyABC(step) {

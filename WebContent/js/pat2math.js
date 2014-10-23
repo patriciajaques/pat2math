@@ -10,10 +10,13 @@ function enableContent(id) {
 	);
 }
 
-function loadTasks(id) {
+
+function loadTasks(id) {	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {
+		topicIsOpen = true;
+		
 		$.ajax({
 			type: "GET",
 			url: appContext + "student/showTopic",
@@ -51,12 +54,21 @@ function loadTasks(id) {
 			     	alert("Perdão, obtivemos um erro ao processar esta ação.");
 			 }
 		});
+		
+		checkEquationTour();
+		
+		if (isTourInterativo && id === 9) //1
+			clickPlan();
 	} else {
+		topicIsOpen = false;
 		$("#tasks"+id).slideUp(700);
 	}
 }
 
 function loadExercise(id) {
+	if (isTourInterativo && id === 201) //3
+		clickEquation();
+	
 	loadingShow();
 	$.ajax({
 		type: 'GET',
@@ -84,6 +96,9 @@ function loadExercise(id) {
 }
 
 function loadExerciseTest(id) {
+	if (isTourInterativo && id === 3) 
+		clickEquation();
+	
 	loadingShow();
 	$.ajax({
 		type: 'GET',
