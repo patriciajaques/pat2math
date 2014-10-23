@@ -22,21 +22,47 @@
 	</c:if>
 	
 	<c:if test="${task.content.type eq 'equation'}">
-		<c:if test="${task.performed}">
-			<span class="task" onclick="loadExercise(${task.content.id})" >
-				${task.content.equation}
-			</span>
-			<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
-			<i id="marktask${task.content.id }" class="icon-ok  icon-white"></i>
-			<br>
+		
+		<!-- even id -->
+		<c:if test="${(task.id % 2) eq 0}">
+			<c:if test="${task.performed}">
+				<span class="task" onclick="loadExercise(${task.content.id})" >
+					${task.content.equation}
+				</span>
+				<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
+				<i id="marktask${task.content.id }" class="icon-ok  icon-white"></i>
+				<br>
+			</c:if>
+			
+			<c:if test="${!task.performed}">
+				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
+					${task.content.equation}
+				</span>
+				<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
+				<i id="marktask${task.content.id }" class="icon-ok" style="visibility: hidden;"></i>
+				<br>
+			</c:if>	
 		</c:if>
-		<c:if test="${!task.performed}">
-			<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
-				${task.content.equation}
-			</span>
-			<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
-			<i id="marktask${task.content.id }" class="icon-ok" style="visibility: hidden;"></i>
-			<br>
+		
+		<!-- even id -->
+		<c:if test="${(task.id % 2) eq 1}">
+			<c:if test="${task.performed}">
+				<span class="task" onclick="loadExerciseTest(${task.content.id})" >
+					${task.content.equation}
+				</span>
+				<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
+				<i id="marktask${task.content.id }" class="icon-ok  icon-white"></i>
+				<br>
+			</c:if>
+			<c:if test="${!task.performed}">
+				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
+					${task.content.equation}
+				</span>
+				<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
+				<i id="marktask${task.content.id }" class="icon-ok" style="visibility: hidden;"></i>
+				<br>
+			</c:if>
 		</c:if>
+		
 	</c:if>
 </c:forEach>

@@ -62,6 +62,7 @@ function loadExercise(id) {
 		type: 'GET',
 		url: appContext + "student/loadExercise",
 		data: {"exerciseId" : id},
+		dataType: 'json',
 		success: function(data) {
 			if(data != null) {
 				equation = new Equation(data.equation, 100);
@@ -71,6 +72,34 @@ function loadExercise(id) {
 				}
 					
 				if(data.performed) {
+					equation.isComplete = true;
+				}
+				newEquations[0] = equation;
+			}
+			reloadPaper(1);
+			idEquation=id;
+			loadingHide();
+		}
+	});
+}
+
+function loadExerciseTest(id) {
+	loadingShow();
+	$.ajax({
+		type: 'GET',
+		url: appContext + "student/loadExerciseTest",
+		data: {"exerciseId" : id},
+		dataType: 'text',
+		success: function(data) {
+			if(data != null) {
+				data = data.split(";");
+				equation = new Equation(data[1], 100);
+				equation.id = data[0];
+				for(var j = 3; j < data.length; j++) {
+					equation.steps[j-3] = new Step(data[j], 0);
+				}
+				
+				if(data[2] == "1") {
 					equation.isComplete = true;
 				}
 				newEquations[0] = equation;

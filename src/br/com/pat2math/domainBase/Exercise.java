@@ -1,5 +1,6 @@
 package br.com.pat2math.domainBase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
@@ -10,8 +11,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @DiscriminatorValue("equation")
-public class Exercise extends Content {
+public class Exercise extends Content implements Serializable {
 	
+	private static final long serialVersionUID = -7055969336661087202L;
+
 	public Exercise() {
 		
 	}
