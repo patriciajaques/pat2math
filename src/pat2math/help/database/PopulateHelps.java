@@ -113,13 +113,13 @@ public class PopulateHelps {
 							
 								Animation anime = new Animation();
 								anime.setCode(animation);
-					//			em.persist(anime);
+							//	em.persist(anime);
 						
 								h.setAnimation(anime);
 							}else {desc=line.substring(line.indexOf(" ")+1);
 								Animation anime = new Animation();
-							//	anime.setCode("NO");
-				//				em.persist(anime);
+								anime.setCode("NO");
+						//		em.persist(anime);
 								h.setAnimation(anime);
 							}
 							h.setDescription(desc);
@@ -148,8 +148,8 @@ public class PopulateHelps {
 								h.setAnimation(anime);
 							}else {desc=line.substring(line.indexOf(" ")+1);
 								Animation anime = new Animation();
-							//	anime.setCode("NO");
-				//				em.persist(anime);
+								anime.setCode("NO");
+					//			em.persist(anime);
 								h.setAnimation(anime);
 							}
 							
@@ -163,7 +163,7 @@ public class PopulateHelps {
 			}
 		}
 		
-	//	em.getTransaction().commit();
+		//em.getTransaction().commit();
 	//	em.getTransaction().begin();
 		
 		scan.close();
@@ -197,16 +197,30 @@ public class PopulateHelps {
 	}
 	
 	/*public static void main(String[] args) throws Exception {
-		PopulateHelps ph= new PopulateHelps("Dicas.txt");
+		PopulateHelps ph= new PopulateHelps("novas_dicas.txt");
 		try {
 			
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("pat2math");
 			EntityManager em = emf.createEntityManager();
+			
 			em.getTransaction().begin();
+			
+			String query = "select obj from br.com.pat2math.studentModel.Tip obj";
+			 
+			
+			List<Tip> t= (List<Tip>)em.createQuery(query).getResultList();
+			
+			for(Tip p : t) {
+				//if (p.getId()<=641){
+					p.setDeprecated(true);
+				//}
+			}
 			
 			ph.createList(em);
 			//ph.printListFile();
 
+			
+			
 			List<Tip> a = ph.getHelp();
 			
 			for(Tip p : a) {
@@ -220,8 +234,8 @@ public class PopulateHelps {
 				em.persist(p);
 			}
 			
-			AgentSpeeches m=new AgentSpeeches("Infelizmente não há dicas relacionadas a esta operação");
-			em.persist(m);
+			//AgentSpeeches m=new AgentSpeeches("Infelizmente não há dicas relacionadas a esta operação");
+			//em.persist(m);
 			
 			em.getTransaction().commit();
 			em.close();

@@ -113,14 +113,14 @@ function loadExerciseTest(id) {
 
 function loadingShow(){
 	$('#loading').fadeIn();
-	$("#topics").hide("slide", { direction: "left" }, 1000);
+	$("#topics").hide("slide", { direction: "left" }, 500);
 	$('.hide-menu').fadeOut();
 	
 }
 
 function loadingHide(){
 	$('#loading').fadeOut();
-	$("#topics").show("slide", { direction: "left" }, 1000);
+	$("#topics").show("slide", { direction: "left" }, 500);
 	$('.hide-menu').fadeIn();
 	
 }
