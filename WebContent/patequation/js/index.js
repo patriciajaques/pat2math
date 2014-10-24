@@ -17,10 +17,10 @@ var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
-var isTourInterativo = true;
-var cont = 0;
-var topicIsOpen = false;
-var equationTourIsResolved = false;
+//var isTourInterativo = false;
+//var cont = 0;
+//var topicIsOpen = false;
+//var equationTourIsResolved = false;
 
 function helpPage6 ( ) {
     $.guider({
@@ -166,11 +166,11 @@ function rel ( ) {
 $(document).ready(function() {	
 	showSideBar();
 	
-	try {
-	openTour();
-	} catch (e) {
-		window.location.reload();
-	}
+//	try {
+//	openTour();
+//	} catch (e) {
+//		window.location.reload();
+//	}
 	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
@@ -1119,19 +1119,19 @@ function checkEquation() {
 //  passoAnterior = getEquation(passoAnterior);
   var equation = naturalToText(selectedEquation.currentStep);
    
-  if (isTourInterativo) {
-      if (cont === 0) {
-      	resolutionPart1(equation);
-      } else if (cont === 1) {
-      	resolutionPart2(equation);
-      } else if (cont === 2) {
-      	resolutionPart3(equation);
-      } else if (cont === 3) {
-      	resolutionPart4(equation);
-      } else if (cont === 4) {
-      	resolutionPart5(equation);  
-      } cont++;
-  }
+//  if (isTourInterativo) {
+//      if (cont === 0) {
+//      	resolutionPart1(equation);
+//      } else if (cont === 1) {
+//      	resolutionPart2(equation);
+//      } else if (cont === 2) {
+//      	resolutionPart3(equation);
+//      } else if (cont === 3) {
+//      	resolutionPart4(equation);
+//      } else if (cont === 4) {
+//      	resolutionPart5(equation);  
+//      } cont++;
+//  }
   
   var passoAnterior = selectedEquation.lastStep;
   

@@ -174,8 +174,8 @@
 	
 	<div id="help" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
-    <div id="equationTour"></div>
-    <div id="tour" onclick="openTour()"></div>
+<!--     <div id="equationTour"></div> -->
+<!--     <div id="tour" onclick="openTour()"></div> -->
 	<div id="video-box"></div>
 	
 	<div class="modal" id="msg-box"></div>

@@ -15,7 +15,7 @@ function loadTasks(id) {
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {
-		topicIsOpen = true;
+//		topicIsOpen = true;
 		
 		$.ajax({
 			type: "GET",
@@ -55,10 +55,10 @@ function loadTasks(id) {
 			 }
 		});
 		
-		checkEquationTour();
+//		checkEquationTour();
 		
-		if (isTourInterativo && id === 9) //1
-			clickPlan();
+//		if (isTourInterativo && id === 9) //1
+//			clickPlan();
 	} else {
 		topicIsOpen = false;
 		$("#tasks"+id).slideUp(700);
@@ -66,8 +66,8 @@ function loadTasks(id) {
 }
 
 function loadExercise(id) {
-	if (isTourInterativo && id === 201) //3
-		clickEquation();
+//	if (isTourInterativo && id === 201) //3
+//		clickEquation();
 	
 	loadingShow();
 	$.ajax({
@@ -96,8 +96,8 @@ function loadExercise(id) {
 }
 
 function loadExerciseTest(id) {
-	if (isTourInterativo && id === 3) 
-		clickEquation();
+//	if (isTourInterativo && id === 3) 
+//		clickEquation();
 	
 	loadingShow();
 	$.ajax({
