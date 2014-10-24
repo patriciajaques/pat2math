@@ -202,55 +202,55 @@ $(document).ready(function() {
         var key = event.which;
         //alert(key);
         
-        if (isTourInterativo && key === 27) {
-            $.guider({
-		title: "Você pressionou esc e saiu do tour.",
-                next: "secondExit",
-		description: 'Confira a seguir as nossas considerações finais.',
-                closable: true,
-                alignButtons: "right",
-		buttons: {
-                     Próximo: {
-                         click: true,
-                         className: "primary"
-                     }
-		}
-		}).show();
-                
-            $("#help").guider({
-                name: "secondExit",
-                next: "thirdExit",
-		title: 'Teclas utilizadas',
-                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
-                closable: true,
-                position: "left",
-                alignButtons: "right",
-		buttons: {
-                     Próximo: {
-                         click: true,
-                         className: "primary"
-                     }
-		}
-		}); 
-                
-
-        $("#tour").guider({
-                name: "thirdExit",             
-		title: 'Se você mudar de ideia',
-                description: 'Clique neste botão para acessar a este tour novamente.',
-                closable: true,
-                position: "left",
-                alignButtons: "right",
-		buttons: {
-                     Entendi: {
-                         click: true,
-                         className: "primary"
-                     }
-		}
-		}); 
-                
-            isTourInterativo = false; 
-        }
+//        if (isTourInterativo && key === 27) {
+//            $.guider({
+//		title: "Você pressionou esc e saiu do tour.",
+//                next: "secondExit",
+//		description: 'Confira a seguir as nossas considerações finais.',
+//                closable: true,
+//                alignButtons: "right",
+//		buttons: {
+//                     Próximo: {
+//                         click: true,
+//                         className: "primary"
+//                     }
+//		}
+//		}).show();
+//                
+//            $("#help").guider({
+//                name: "secondExit",
+//                next: "thirdExit",
+//		title: 'Teclas utilizadas',
+//                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+//                closable: true,
+//                position: "left",
+//                alignButtons: "right",
+//		buttons: {
+//                     Próximo: {
+//                         click: true,
+//                         className: "primary"
+//                     }
+//		}
+//		}); 
+//                
+//
+//        $("#tour").guider({
+//                name: "thirdExit",             
+//		title: 'Se você mudar de ideia',
+//                description: 'Clique neste botão para acessar a este tour novamente.',
+//                closable: true,
+//                position: "left",
+//                alignButtons: "right",
+//		buttons: {
+//                     Entendi: {
+//                         click: true,
+//                         className: "primary"
+//                     }
+//		}
+//		}); 
+//                
+//            isTourInterativo = false; 
+//        }
 
 
         if (key === 13) { //enter key
