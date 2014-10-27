@@ -166,12 +166,6 @@ function rel ( ) {
 $(document).ready(function() {	
 	showSideBar();
 	
-//	try {
-//	openTour();
-//	} catch (e) {
-//		window.location.reload();
-//	}
-	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
 		$(this).removeClass("hide-menu");
