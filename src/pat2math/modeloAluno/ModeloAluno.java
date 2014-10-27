@@ -369,12 +369,19 @@ public class ModeloAluno extends Resolvedor{
 	 * e <code>false</code> caso contrário.
 	 */
 	public boolean isEndOfResolution(String eq)throws InvalidValueException{
-		if (Expression.isCoeficientExp(eq))return false;
-		if (Expression.isFinalAnswerSecondDegree(eq))return true;
+		if (Expression.isCoeficientExp(eq)){
+			System.out.println(eq+" End: false - is coeficient.");
+			return false;
+		}
+		if (Expression.isFinalAnswerSecondDegree(eq)){
+			System.out.println(eq+" End: true - is second degree.");
+			return true;
+		}
 		Expression exp= new Expression(eq);
 		expressoes.clearWorkingMemory();
 		expressoes.inserir(exp);
 		boolean isEnd=expressoes.getAgenda().getActivations().length==0;
+		if (isEnd)System.out.println(eq+" End: true - zero rules.");
 		expressoes.clearWorkingMemory();
 		return isEnd;
 	}

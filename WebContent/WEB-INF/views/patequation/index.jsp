@@ -21,6 +21,16 @@
     	</style>
     </head>
     <body>
+    <script>
+//     $(document).ready(function() {
+//    	try {
+//    	openTour();
+//    	} catch (e) {
+//    		window.location.reload();
+//    	}
+//     });
+
+    </script>
 
 
 <%--     <c:if test="${student.group.id == 2}"> 
