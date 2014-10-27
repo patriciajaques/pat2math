@@ -79,7 +79,7 @@ public class ResolverController {
 			}
 			
 			echo = message.getMensagem();
-			System.out.println("\nServer Response ->"+echo);
+			System.out.println("\nServer Response "+student.getEmail()+"->"+echo);
 		} else if (type.equals ("d")) {
 			if(student.getKnowledges().size() == 0) {
 				List<Knowledge> knowledges = student.applyKnowledges(
