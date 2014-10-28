@@ -2,11 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-</head>
-<body>
-     <style>
-            #audio {
+<style>
+     #audio {
                 background: url("/pat2math/patequation/img/modal_audio.png") no-repeat scroll center center transparent;
                 width: 755px;
                 height: 509px;
@@ -30,7 +27,12 @@
                 left: 0;
                 cursor: pointer;
             }
-        </style>
+     </style>
+</head>
+<body>
+     
+            
+       
         <div id="audio"></div>
         <div id="play" onclick="alert ('Olá')"></div>
 
