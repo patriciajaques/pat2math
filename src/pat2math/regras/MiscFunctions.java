@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import java.util.Vector;
 
 import pat2math.expressao.Expression;
+import pat2math.expressao.arvore.ArvoreExp;
 import pat2math.expressao.arvore.BTNode;
 import pat2math.expressao.arvore.BTNodeComparator;
 import pat2math.expressao.arvore.InvalidValueException;
@@ -2150,4 +2151,83 @@ public class MiscFunctions {
 		return nodeMisc;
 	}
 	
+	/**
+	 * Valida misconception de siplificação ou divisão:
+	 * x=4/6 => x=b, onde b!= de 2/3 e x=4/2 => x=c, onde c!=2
+	 * @param em
+	 * @return
+	 */
+	public static List<BTNode> checkMiscSimpResultado(EquacaoMisc em){
+		List<BTNode> nodeMisc=new ArrayList<BTNode>();
+		BTNode user = em.getUser().getRoot();
+		BTNode solver = em.getSolver().getRoot();
+		int num,den, result, sNum, sDen;
+		num=den=result=sNum=sDen=0;
+		BTNode frac=null;
+		boolean n,d,r, resultFrac;
+		n=d=r=resultFrac=false;
+		//solver e user devem ter uma incognita em um dos lados da equação
+		if (chkForResult(user) && chkForResult(solver)){
+			List<BTNode> userL= Expression.getFolhasFracoes(user, new Vector<BTNode>());
+			List<BTNode> solverL=Expression.getFolhasFracoes(solver, new Vector<BTNode>());
+			for (BTNode u:userL){
+				if (Funcoes.isInteger(u.getValue())){
+					result=u.getIntValue();
+					r=true;
+				}if (u.getValue().equals("/") && Funcoes.isInteger(u.getEsq().getValue()) && Funcoes.isInteger(u.getDir().getValue())){
+					num=u.getEsq().getIntValue();
+					den=u.getDir().getIntValue();
+					resultFrac=true;
+				}
+			}
+			for (BTNode s:solverL){
+				if( s.getValue().equals("/") && Funcoes.isInteger(s.getEsq().getValue()) && Funcoes.isInteger(s.getDir().getValue())){
+					sNum=s.getEsq().getIntValue();
+					sDen=s.getDir().getIntValue();
+					n=d=true;
+					frac=s;
+				}
+			}
+			if (n && (r||resultFrac) && d){
+				int multComum=1;
+				if (resultFrac){
+					List<Integer> comum= Funcoes.isS(frac);
+					while (!comum.isEmpty()){
+						int c= comum.remove(0);
+						sNum=sNum/c;
+						sDen=sDen/c;
+						multComum*=c;
+					}
+					if (multComum>1){
+						nodeMisc.add(new BTNode(multComum));
+						nodeMisc.add(frac);
+					}
+				}else if (r){
+					double res = (double)num/(double)den;
+					if (res!=(double)result){
+						nodeMisc.add(new BTNode(den));
+						nodeMisc.add(frac);
+					}
+				}
+			}
+		}
+		return nodeMisc;
+	}
+	
+	private static boolean chkForResult(BTNode bt){
+		boolean valid=false;
+		if (!bt.eFolha()){
+			//se esq x entao dir uma fracao simples ou um valor inteiro
+			if (bt.getEsq().eFolha() && Funcoes.isInc(bt.getEsq().getValue())){
+				if (Funcoes.isSingleFraction(bt.getDir())|| bt.getDir().eFolha()){
+					valid=true;
+				}
+			}else if (bt.getDir().eFolha() && Funcoes.isInc(bt.getDir().getValue())){
+				if (Funcoes.isSingleFraction(bt.getEsq())|| bt.getEsq().eFolha()){
+					valid=true;
+				}
+			}
+		}
+		return valid;
+	}
 }

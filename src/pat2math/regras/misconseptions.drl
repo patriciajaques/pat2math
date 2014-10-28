@@ -259,6 +259,24 @@ rule "Misconception Operacao Inversa - Simplificacao"
 		insert(new Misconseption(Misconseption.Equacao+Misconseption.Primaria,misc));
 end
 
+rule "Misconception Simplificacao - Numeros Inteiros e fracoes"
+	//valida erros de simplificação e divisão
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc(  );
+		eval(!MiscFunctions.checkMiscSimpResultado(em).isEmpty())
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.checkMiscSimpResultado(em);
+		String misc[] = new String[2];
+		misc[0]=Misconseption.Divisao;
+		if (nodos.get(0).getValue().equals(nodos.get(1).getDir().getValue()))misc[1]=Misconseption.Numero;
+		else misc[1]=Misconseption.Simplificacao;
+		insert(new Misconseption(Misconseption.OperacaoInversa,misc));
+end
+
 rule "Misconception Operacao Inversa - Inverter Numerador Denominador"
 	//valida Misconception onde o valor da incognita é passado para o numerador e o valor inteiro é mandado para o denominador:
 	// 2x=6 => x=2/6

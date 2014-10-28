@@ -35,9 +35,9 @@ public class HelpTest {
 		tip.setLevel(2);
 		t.add(tip);
 	//	Tip hint=ma.hints("2-4=x",t,c);
-		ma.setExpressao("1x=6");
+		ma.setExpressao("x=6/3");
 		ma.setOperacao("OG");
-		Mensagem hint = ma.iniciaResolucao("x=1/6", t, c);
+		Mensagem hint = ma.iniciaResolucao("x=4/5", t, c);
 	//	System.out.println(hint.getDescription());
 		System.out.println(hint.getFeedback());
 		System.out.println(hint.getFeedbackOBJ().getOperation());
