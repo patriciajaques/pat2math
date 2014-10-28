@@ -13,7 +13,7 @@ import br.com.pat2math.studentModel.Tip;
 
 public class HelpTest {
 	
-	/*public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		PopulateHelps ph = new PopulateHelps("Dicas.txt");
 		ph.createList();
 		Progress p=null;
@@ -35,12 +35,13 @@ public class HelpTest {
 		tip.setLevel(2);
 		t.add(tip);
 	//	Tip hint=ma.hints("2-4=x",t,c);
-		ma.setExpressao("x=10-4");
+		ma.setExpressao("1x=6");
 		ma.setOperacao("OG");
-		Mensagem hint = ma.iniciaResolucao("x=4", t, c);
+		Mensagem hint = ma.iniciaResolucao("x=1/6", t, c);
 	//	System.out.println(hint.getDescription());
 		System.out.println(hint.getFeedback());
-	}*/
+		System.out.println(hint.getFeedbackOBJ().getOperation());
+	}
 	
 	/*
 	public static void main(String[] args) throws Exception {
