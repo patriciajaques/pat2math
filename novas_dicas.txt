@@ -58,7 +58,7 @@ EqPrim_Ad_Inc AD
 EqPrim_Sb_Inc SB
 EqPrim_Mt_Inc MT
 EqPrim_Dv_Inc DV
-EqPrim_Dv_Simp DV
+EqPrim_Dv_Simp SP
 1 Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.#AO
 2 Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.#RA
 3 O próximo passo (a linha inteira) da equação fica <PP>.#ER

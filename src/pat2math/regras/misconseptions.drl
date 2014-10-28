@@ -240,6 +240,44 @@ rule "Misconseption Simplificacao"
 		insert(new Misconseption(Misconseption.Equacao+Misconseption.Primaria,misc));
 end
 
+rule "Misconception Operacao Inversa - Simplificacao"
+	//valida misconception enveolvendo a operacao inversa e a simplificacao
+	//x=6 => x=a onde a!=3, neste exemplo.
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc(  );
+		eval(!MiscFunctions.checkMiscOISimp(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.checkMiscOISimp(em);
+		String misc[]=new String[2];
+		misc[0]=Misconseption.Divisao;
+		misc[1]=Misconseption.Simplificacao;
+	//	retract(em);
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Primaria,misc));
+end
+
+rule "Misconception Operacao Inversa - Inverter Numerador Denominador"
+	//valida Misconception onde o valor da incognita é passado para o numerador e o valor inteiro é mandado para o denominador:
+	// 2x=6 => x=2/6
+	dialect "java"
+	agenda-group "misconseptions"
+	no-loop true
+	when
+		em: EquacaoMisc(  );
+		eval(!MiscFunctions.checkMiscOIInvertNumDen(em).isEmpty());
+	then
+		System.out.println("# Equacao Escolhida: "+ em.getEquacao());
+		List<BTNode> nodos=MiscFunctions.checkMiscOIInvertNumDen(em);
+		String misc[] = new String[2];
+		//TODO: tipo temporario apenas por questoes de teste, não reflete o significado real
+		misc[0]=Misconseption.Multiplicacao+Misconseption.Positivo;;
+		misc[1]=Misconseption.Divisao+Misconseption.Negativo;
+		insert(new Misconseption(Misconseption.OperacaoInversa,misc));
+end
+
 rule "Misconseption MMC - Denominador Comum"
 	//valida misconseptions de denominador comum errado
 	dialect "java"

@@ -26,7 +26,11 @@
 	<definition name="terms" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/terms.jsp"/>
 	</definition>
-
+	
+     <definition name="audio" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/audio.jsp"/>
+	</definition>
+	
 	<definition name="home" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
 	</definition>

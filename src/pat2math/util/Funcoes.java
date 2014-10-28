@@ -2270,6 +2270,30 @@ public static String getTermoComum(BTNode root){
 	}
 	
 	/**
+	 * Considera como folhas termos elevados a potencia de 2
+	 * @param bt o nodo a ser avaliado
+	 * @return <code>true</code> se bt for considarado folha e <code>false</code> caso contrario.
+	 */
+	public static boolean isLeafSquared(BTNode bt){
+		if (bt.getValue().equals("^"))return isSquaredLeaf(bt);
+		return false;
+	}
+	
+	/**
+	 * Verifica se bt possui dois filhos que são folhas ou folhas do tipo x^2
+	 * @param bt o nodo a ser avaliado
+	 * @return <code>true</code> se possuir nodos folhas e <code>false</code> caso contrário
+	 */
+	public static boolean hasLeafChildren(BTNode bt){
+		if (bt.eFolha()) return false;
+		if ((bt.getEsq().eFolha() || isLeafSquared(bt.getEsq())) &&
+				(bt.getDir().eFolha() || isLeafSquared(bt.getDir()))){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Verifica se é uma fração simples com apenas um termo no numerador e
 	 * um termo no denominador
 	 * @param bt o nodo contendo o "/" da fração
