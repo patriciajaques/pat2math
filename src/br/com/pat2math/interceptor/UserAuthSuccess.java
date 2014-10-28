@@ -22,7 +22,7 @@ public class UserAuthSuccess implements AuthenticationSuccessHandler {
 				|| roles.contains("ROLE_ADMIN"))
 			response.sendRedirect("/pat2math/plan/list?page=0");
 		else
-			response.sendRedirect("audio");
+			response.sendRedirect("/pat2math/student/home");
 	}
 	
 }
