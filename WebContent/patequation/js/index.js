@@ -354,8 +354,9 @@ $(document).ready(function() {
     centralizeCanMoveAndButton();
     sortable();
     draggable();
-    trashHide();
-    trashDroppable();
+    //trashHide();
+    trashClick();
+    //trashDroppable();
     centralizeCanCopy();
     buttonClick();
     focus();
@@ -385,8 +386,9 @@ function reloadPaper(selected) {
     centralizeCanMoveAndButton();
     sortable();
     draggable();
-    trashHide();
-    trashDroppable();
+   trashHide();
+    trashClick();
+  //  trashDroppable();
     centralizeCanCopy();
     buttonClick();
     focus();
@@ -606,6 +608,7 @@ function addLabelDefault() {
     centralizeCanMoveAndButton();
     sortable();
     trashHide();
+    trashClick();
     trashDroppable();
     focus();
 
@@ -634,8 +637,9 @@ function clearLine(option) {
     centralizeCanMoveAndButton();
     sortable();
     draggable();
-    trashHide();
-    trashDroppable();
+   // trashHide();
+    trashClick();
+   // trashDroppable();
     buttonClick();
     focus();
 
@@ -682,6 +686,7 @@ function referenceToDelta() {
     sortable();
     draggable();
     trashHide();
+    trashClick();
     trashDroppable();
     buttonClick();
     focus();
@@ -721,6 +726,7 @@ function referenceToABC(a, b, c, focused) {
     sortable();
     draggable();
     trashHide();
+    trashClick();
     trashDroppable();
     buttonClick();
     focus();
@@ -759,6 +765,7 @@ function referenceToBhaskara() { //± = &PlusMinus;
     sortable();
     draggable();
     trashHide();
+    trashClick();
     trashDroppable();
     buttonClick();
     focus();
@@ -793,8 +800,20 @@ function getEquation(list) {
     return equation;
 }
 
+
+function trashClick(){
+	//$("body").on("click", ".hide-menu", function() {
+	$(".trash").on("click",function(){
+		clearLine();
+	});
+}
+
 function trashHide() {
     $(selectedSheet + " .trash").hide();
+}
+
+function trashHide() {
+    $(selectedSheet + " .trash").show();
 }
 
 function trashDroppable() {
