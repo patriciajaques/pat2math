@@ -31,6 +31,9 @@
      </style>
 </head>
 <body>
+<script>
+
+</script>
        <c:if test="${student.group.id == 2}"> 
     	 <script type="text/javascript">
     	 	tipoAudio = 1;
