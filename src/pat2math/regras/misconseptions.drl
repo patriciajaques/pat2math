@@ -61,7 +61,7 @@ rule "Misconseption Operacao Inversa - Multiplicacao e Divisao (Inversao de Sina
 		em: EquacaoMisc(  );
 		eval (!MiscFunctions.ehMiscOIMultDivInvSinal(em).isEmpty());
 	then
-		System.out.println("# Equacao escolhida: "+ em.getEquacao());
+		System.out.println("# Equacao escolhjida: "+ em.getEquacao());
 		List<BTNode> nodos=MiscFunctions.ehMiscOIMultDivInvSinal(em);
 		String misc[]= new String[2];
 		if (nodos.get(0).getPai().getValue().equals("*") ||
@@ -274,7 +274,7 @@ rule "Misconception Simplificacao - Numeros Inteiros e fracoes"
 		misc[0]=Misconseption.Divisao;
 		if (nodos.get(0).getValue().equals(nodos.get(1).getDir().getValue()))misc[1]=Misconseption.Numero;
 		else misc[1]=Misconseption.Simplificacao;
-		insert(new Misconseption(Misconseption.OperacaoInversa,misc));
+		insert(new Misconseption(Misconseption.Equacao+Misconseption.Primaria,misc));
 end
 
 rule "Misconception Operacao Inversa - Inverter Numerador Denominador"

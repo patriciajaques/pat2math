@@ -238,15 +238,19 @@ public class MiscFunctions {
 					if (termo!=null){
 						t1=dir.getValue();
 						t2=termo.getValue();
-						//caso for 3x*x^2=4 => 3x=4/-x^2
-						if (t1.equals("^") && t2.equals("^")){
-							t1=dir.getEsq().getValue();
-							t2=termo.getEsq().getValue();
-						}
-						if (!t1.equals(t2)){
-							nodos.add(dir);
-							nodos.add(termo);
-							return nodos; 
+						//em uma divisão o valor da incognita deve ser o denominador da
+						// fração
+						if (op[0].equals("/") && dir.ehFilhoDir(termo.getNodeX("/"))){
+							//caso for 3x*x^2=4 => 3x=4/-x^2
+							if (t1.equals("^") && t2.equals("^")){
+								t1=dir.getEsq().getValue();
+								t2=termo.getEsq().getValue();
+							}
+							if (!t1.equals(t2)){
+								nodos.add(dir);
+								nodos.add(termo);
+								return nodos; 
+							}
 						}
 					}
 				}
@@ -276,10 +280,12 @@ public class MiscFunctions {
 					if (termo!=null){
 						t1=dir.getValue();
 						t2=termo.getValue();
-						if (!t1.equals(t2)){
-							nodos.add(dir);
-							nodos.add(termo);
-							return nodos;
+						if (op[0].equals("/") && dir.ehFilhoDir(termo.getNodeX("/"))){
+							if (!t1.equals(t2)){
+								nodos.add(dir);
+								nodos.add(termo);
+								return nodos;
+							}
 						}
 					}
 				}
