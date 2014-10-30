@@ -575,12 +575,12 @@ math {
 
 .trash{
     background-image: url('../img/trash.png');
-    width: 12px;  
-    height: 16px;
+    width: 19px;  
+    height: 25px;
     float: left;
     padding: 2px;
     margin-left: 20px;
-    margin-top: 3px;
+    margin-top: 1px;
     background-position: center center; 
     background-repeat: no-repeat;
     border: solid 1px transparent; 

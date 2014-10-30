@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import java.util.Vector;
 
 import pat2math.expressao.Expression;
+import pat2math.expressao.arvore.ArvoreExp;
 import pat2math.expressao.arvore.BTNode;
 import pat2math.expressao.arvore.BTNodeComparator;
 import pat2math.expressao.arvore.InvalidValueException;
@@ -237,15 +238,19 @@ public class MiscFunctions {
 					if (termo!=null){
 						t1=dir.getValue();
 						t2=termo.getValue();
-						//caso for 3x*x^2=4 => 3x=4/-x^2
-						if (t1.equals("^") && t2.equals("^")){
-							t1=dir.getEsq().getValue();
-							t2=termo.getEsq().getValue();
-						}
-						if (!t1.equals(t2)){
-							nodos.add(dir);
-							nodos.add(termo);
-							return nodos; 
+						//em uma divisão o valor da incognita deve ser o denominador da
+						// fração
+						if (op[0].equals("/") && dir.ehFilhoDir(termo.getNodeX("/"))){
+							//caso for 3x*x^2=4 => 3x=4/-x^2
+							if (t1.equals("^") && t2.equals("^")){
+								t1=dir.getEsq().getValue();
+								t2=termo.getEsq().getValue();
+							}
+							if (!t1.equals(t2)){
+								nodos.add(dir);
+								nodos.add(termo);
+								return nodos; 
+							}
 						}
 					}
 				}
@@ -275,10 +280,12 @@ public class MiscFunctions {
 					if (termo!=null){
 						t1=dir.getValue();
 						t2=termo.getValue();
-						if (!t1.equals(t2)){
-							nodos.add(dir);
-							nodos.add(termo);
-							return nodos;
+						if (op[0].equals("/") && dir.ehFilhoDir(termo.getNodeX("/"))){
+							if (!t1.equals(t2)){
+								nodos.add(dir);
+								nodos.add(termo);
+								return nodos;
+							}
 						}
 					}
 				}
@@ -2020,5 +2027,213 @@ public class MiscFunctions {
 		}
 		//if (nodos.size()>3)return new ArrayList<BTNode>();
 		return nodos;		
+	}
+	
+	/**
+	 * Valida uma misconception de simplificação que envolve a operação inversa
+	 * ex: 2x=6 => x=a onde a!=3, neste exemplo.
+	 * @param eq Um objeto do tipo {@link EquacaoMisc}
+	 * @return uma {@link List} com os nodos envolvidos
+	 */
+	public static List<BTNode> checkMiscOISimp(EquacaoMisc eq){
+		List<BTNode> nodeMisc=new ArrayList<BTNode>();
+		BTNode user = eq.getUser().getRoot();
+		BTNode solver = eq.getSolver().getRoot();
+		if ( Funcoes.hasLeafChildren(user) && Funcoes.hasLeafChildren(solver)){
+			List<BTNode> userL= Expression.getFolhas(user);
+			List<BTNode> solverL=Expression.getFolhas(solver);
+			String incWithInt, incNoInt;
+			incNoInt=incWithInt="";
+			int incWithIntValue=0;
+			int integ1,integ2;
+			boolean hasInt1,hasInt2;
+			hasInt1=hasInt2=false;
+			integ1=integ2=0;
+			//deve conter um inteiro e uma incognita sem o valor intero
+			for (BTNode u: userL){
+				if (u.getValue().equals("^"))u=u.getEsq();
+				if (Funcoes.isInteger(u.getValue())){
+					hasInt2=true;
+					integ2=u.getIntValue();
+				}
+				else if (Funcoes.isInc(u.getLast())) {
+					int v= Funcoes.getINT(u.getValue());
+					//ou seja incógnita sozinha
+					if(v==1 || v==-1)incNoInt=u.getValue();
+				}
+			}
+			for (BTNode s: solverL){
+				if (s.getValue().equals("^"))s=s.getEsq();
+				if (Funcoes.isInteger(s.getValue())){
+					hasInt1=true;
+					integ1=s.getIntValue();
+				}
+				else if (Funcoes.isInc(s.getLast())) {
+					int v= Funcoes.getINT(s.getValue());
+					incWithIntValue=v;
+					//ou seja acompanhada de um inteiro
+					if(v>1 || v<-1)incWithInt=s.getValue();
+				}
+			}
+			
+			if (!incWithInt.isEmpty() && !incNoInt.isEmpty() && hasInt1 && hasInt2){
+				//integ1/incWithIntValue deve ser diferente de integ2 para dar misconception
+				double result=((double)integ1)/((double)incWithIntValue);
+				if (result!=(double)integ2){
+					nodeMisc.addAll(solverL);
+					nodeMisc.addAll(userL);
+				}
+			}
+		}
+		return nodeMisc;
+	}
+	
+	/**
+	 * Valida uma misconception de operacao inversa onde:
+	 * 2x=6 => x=2/6
+	 * @param em
+	 * @return
+	 */
+	public static List<BTNode> checkMiscOIInvertNumDen(EquacaoMisc em){
+		List<BTNode> nodeMisc=new ArrayList<BTNode>();
+		BTNode user = em.getUser().getRoot();
+		BTNode solver = em.getSolver().getRoot();
+		//solver deve ter folhas
+		//user uma folha e uma / com folhas
+		if (Funcoes.hasLeafChildren(solver)){
+			List<BTNode> userL= Expression.getFolhasFracoes(user, new Vector<BTNode>());
+			List<BTNode> solverL=Expression.getFolhas(solver);
+			int intInc=0, integ=0;
+			BTNode frac=null;
+			String incWithInt="";
+			boolean singleInc=false;
+			boolean hasInt=false;
+			if (userL.size()==2){
+				for (BTNode u:userL){
+					if (u.getValue().equals("/") && Funcoes.isSingleFraction(u))frac=u;
+					else{
+						if (u.getValue().equals("^"))u=u.getEsq();
+						if (Funcoes.isInc(u.getLast())){
+							int v=Funcoes.getINT(u.getValue());
+							if (v==1 || v==-1)singleInc=true;
+						}
+					}
+				}
+				for (BTNode s:solverL){
+					if (s.getValue().equals("^"))s=s.getEsq();
+					if (Funcoes.isInteger(s.getValue())){
+						hasInt=true;
+						integ=s.getIntValue();
+					}
+					else if (Funcoes.isInc(s.getLast())) {
+						int v= Funcoes.getINT(s.getValue());
+						intInc=v;
+						//ou seja acompanhada de um inteiro
+						if(v>1 || v<-1)incWithInt=s.getValue();
+						//no caso de 1x=6 => x=1/6
+						else if ((v==1 || v==-1) && s.getValue().contains("1") )incWithInt=s.getValue();
+					}
+				}
+			}
+			if (!incWithInt.isEmpty() && frac!=null && singleInc && hasInt){
+				// montar a fracao intInc/integ se for igual a frac, misconception
+				// sinais serão ignorados
+				String esq, dir, num,den;
+				esq=String.valueOf(intInc);
+				dir=String.valueOf(integ);
+				num=frac.getEsq().getValue();
+				den=frac.getDir().getValue();
+				if (esq.startsWith("-"))esq=esq.substring(1);
+				if (dir.startsWith("-"))dir=dir.substring(1);
+				if (num.startsWith("-"))num=num.substring(1);
+				if (den.startsWith("-"))den=den.substring(1);
+				
+				if (esq.equals(num) && dir.equals(den)){
+					nodeMisc.addAll(solverL);
+					nodeMisc.addAll(userL);
+				}
+			}
+		}
+		return nodeMisc;
+	}
+	
+	/**
+	 * Valida misconception de siplificação ou divisão:
+	 * x=4/6 => x=b, onde b!= de 2/3 e x=4/2 => x=c, onde c!=2
+	 * @param em
+	 * @return
+	 */
+	public static List<BTNode> checkMiscSimpResultado(EquacaoMisc em){
+		List<BTNode> nodeMisc=new ArrayList<BTNode>();
+		BTNode user = em.getUser().getRoot();
+		BTNode solver = em.getSolver().getRoot();
+		int num,den, result, sNum, sDen;
+		num=den=result=sNum=sDen=0;
+		BTNode frac=null;
+		boolean n,d,r, resultFrac;
+		n=d=r=resultFrac=false;
+		//solver e user devem ter uma incognita em um dos lados da equação
+		if (chkForResult(user) && chkForResult(solver)){
+			List<BTNode> userL= Expression.getFolhasFracoes(user, new Vector<BTNode>());
+			List<BTNode> solverL=Expression.getFolhasFracoes(solver, new Vector<BTNode>());
+			for (BTNode u:userL){
+				if (Funcoes.isInteger(u.getValue())){
+					result=u.getIntValue();
+					r=true;
+				}if (u.getValue().equals("/") && Funcoes.isInteger(u.getEsq().getValue()) && Funcoes.isInteger(u.getDir().getValue())){
+					num=u.getEsq().getIntValue();
+					den=u.getDir().getIntValue();
+					resultFrac=true;
+				}
+			}
+			for (BTNode s:solverL){
+				if( s.getValue().equals("/") && Funcoes.isInteger(s.getEsq().getValue()) && Funcoes.isInteger(s.getDir().getValue())){
+					sNum=s.getEsq().getIntValue();
+					sDen=s.getDir().getIntValue();
+					n=d=true;
+					frac=s;
+				}
+			}
+			if (n && (r||resultFrac) && d){
+				int multComum=1;
+				if (resultFrac){
+					List<Integer> comum= Funcoes.isS(frac);
+					while (!comum.isEmpty()){
+						int c= comum.remove(0);
+						sNum=sNum/c;
+						sDen=sDen/c;
+						multComum*=c;
+					}
+					if (multComum>1){
+						nodeMisc.add(new BTNode(multComum));
+						nodeMisc.add(frac);
+					}
+				}else if (r){
+					double res = (double)num/(double)den;
+					if (res!=(double)result){
+						nodeMisc.add(new BTNode(den));
+						nodeMisc.add(frac);
+					}
+				}
+			}
+		}
+		return nodeMisc;
+	}
+	
+	private static boolean chkForResult(BTNode bt){
+		boolean valid=false;
+		if (!bt.eFolha()){
+			//se esq x entao dir uma fracao simples ou um valor inteiro
+			if (bt.getEsq().eFolha() && Funcoes.isInc(bt.getEsq().getValue())){
+				if (Funcoes.isSingleFraction(bt.getDir())|| bt.getDir().eFolha()){
+					valid=true;
+				}
+			}else if (bt.getDir().eFolha() && Funcoes.isInc(bt.getDir().getValue())){
+				if (Funcoes.isSingleFraction(bt.getEsq())|| bt.getEsq().eFolha()){
+					valid=true;
+				}
+			}
+		}
+		return valid;
 	}
 }

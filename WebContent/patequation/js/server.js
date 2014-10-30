@@ -150,8 +150,10 @@ function requestServer(type, last, next, typeOperation, element) {
                 coolAlign();
                 sortable();
                 draggable();
-                trashHide();
-                trashDroppable();
+               // trashHide();
+                trashClick();
+                trashShow();
+             //   trashDroppable();
                 buttonClick();
                 focus();
 
@@ -347,8 +349,9 @@ function requestServer(type, last, next, typeOperation, element) {
                     coolAlign();
                     sortable();
                     draggable();
-                    trashHide();
-                    trashDroppable();
+                 //   trashHide();
+                //    trashDroppable();
+                    trashClick();
                     buttonClick();
 //                    selectedEquation.lastStep = null;
                     focus();
