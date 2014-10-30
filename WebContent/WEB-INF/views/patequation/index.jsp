@@ -33,33 +33,6 @@
     </script>
 
 
-<%--     <c:if test="${student.group.id == 2}"> 
-    	 <script type="text/javascript">
-    	 	useAudio=true;
-    	 	audio();
-    	</script>
-   	</c:if>
-    
-    <c:if test="${student.group.id == 4}">
-    	<script type="text/javascript">
-    		useAudio=true;
-    		audio();
-    	</script>
-    </c:if>
-    
-    <c:if test="${student.group.id == 3}">
-    	<script type="text/javascript">
-    		useAudio=true;
-    		audio2();
-    	</script>
-    </c:if>
-    
-    <c:if test="${student.group.id == 5}">
-    	<script type="text/javascript">
-    		useAudio=true;
-    		audio2();
-    	</script>
-    </c:if> --%>
     
     
     <div id="loading">
