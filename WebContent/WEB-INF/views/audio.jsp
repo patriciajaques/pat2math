@@ -80,25 +80,28 @@ function playAudio ( ) {
        <c:if test="${student.group.id == 2}"> 
     	 <script type="text/javascript">
     	 	tipoAudio = 1;
+    	 	
     	</script>
    	</c:if>
     
     <c:if test="${student.group.id == 4}">
     	<script type="text/javascript">
     	   tipoAudio = 1;
+    	   
     	</script>
     </c:if>
     
     <c:if test="${student.group.id == 3}">
     	<script type="text/javascript">
     	    tipoAudio = 2;
+    	   
     	</script>
     </c:if>
     
     <c:if test="${student.group.id == 5}">
     	<script type="text/javascript">
     	    tipoAudio = 2;
-    	    alert(tipoAudio);
+    	    
     	</script>
     </c:if>
 

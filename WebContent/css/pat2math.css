@@ -486,6 +486,40 @@ textarea:focus {
 	z-index: 99999;
 }
 
+#help-box {
+	width: 548px;
+	height: 558px;
+	text-align: center;
+	display: none;
+	position: relative; 
+    margin: auto; 
+    top: -515px; 
+    right: 0; 
+    bottom: 0; 
+    left: 0;
+	background: #fff;
+	box-shadow: 0 0 5px #bbb;
+	border-radius: 15px;
+	z-index: 99999;
+}
+
+#firefox-box {
+	width: 602px;
+	height: 412px;
+	text-align: center;
+	display: none;
+	position: relative; 
+    margin: auto; 
+    top: -615px; 
+    right: 0; 
+    bottom: 0; 
+    left: 0;
+	background: #fff;
+	box-shadow: 0 0 5px #bbb;
+	border-radius: 15px;
+	z-index: 99999;
+}
+
 #msg-box {
 	width: 350px;
 	height: 150px;

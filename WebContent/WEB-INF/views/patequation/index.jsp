@@ -160,6 +160,8 @@
 <!--     <div id="equationTour"></div> -->
 <!--     <div id="tour" onclick="openTour()"></div> -->
 	<div id="video-box"></div>
+	<div id="help-box"></div>
+	
 	
 	<div class="modal" id="msg-box"></div>
 </body>

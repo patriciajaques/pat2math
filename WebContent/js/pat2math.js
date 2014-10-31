@@ -68,7 +68,7 @@ function loadTasks(id) {
 function loadExercise(id) {
 //	if (isTourInterativo && id === 201) //3
 //		clickEquation();
-	
+//	setCurrentEquation (id);
 	loadingShow();
 	$.ajax({
 		type: 'GET',
@@ -99,6 +99,7 @@ function loadExerciseTest(id) {
 //	if (isTourInterativo && id === 3) 
 //		clickEquation();
 	
+//	setCurrentEquation (id);
 	loadingShow();
 	$.ajax({
 		type: 'GET',

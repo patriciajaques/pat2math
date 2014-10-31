@@ -1,9 +1,11 @@
+var currentEquation = 0;
 
-function requestServer(type, last, next, typeOperation, element) {
+function requestServer (type, last, next, typeOperation, element) {
     //type = 'd' -> hint
     //type = 'n' -> new equation
     //type = 'e' -> check the equation
 
+	next = replaceAllMultiplications(next);
     var msg = "";
     if (type === 'd') { //for hint        
         msg = "cassio5;" + type + ";" + last;
@@ -186,7 +188,7 @@ function requestServer(type, last, next, typeOperation, element) {
 //                        } else {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
-                       // nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
+//                       nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
                         nextLine.html("<div class='final'></div>");
                         
                         
@@ -431,5 +433,14 @@ function requestServer(type, last, next, typeOperation, element) {
                 }
             }
         }});
+    
 
+}
+
+function setCurrentEquation (id) {
+	currentEquation = id;
+}
+
+function nextEquationClick ( ) {
+	loadExerciseTest (currentEquation + 1);
 }

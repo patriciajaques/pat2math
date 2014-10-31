@@ -9,6 +9,7 @@
  * */
 function Equation(equation, points) {
     this.equation = equation;  //the equation string in pat2math text notation 
+    this.equationToString = replaceAll (equation, "*(", "(");
     this.points = points; //maximum points of this equation (come from the system)
     this.userPoints = 0; //points that the user get
     this.userPassNumber = 0; //number of pass concluded in this equation
