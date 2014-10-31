@@ -3,7 +3,6 @@ var selectedEquation;
 var idEquation; // the id of the equation in database
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
-var tipoAudio = 0;
 var progressvalue = 0;
 
 // variables for the Step object
@@ -111,49 +110,7 @@ function closeWindow ( ) {
 	
 }
 
-function playAudio ( ) {
-	if (tipoAudio === 1) {
-		var display = document.getElementById('play').style.display;
-	    document.getElementById('play').style.display = 'none';
-		document.getElementById('audio').innerHTML= "<audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>";
-		setTimeout('location.href="/pat2math/student/home"',347000); 
-//	try {
-//    $.guider({
-//		description: "<div style='position:relative; top:0px; left:0px;'> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>",
-//                closable: false,
-//                overlay: "dark",
-//                alignButtons: "right",
-//                width: 620
-//		}).show();  
 
-    
-    //347000
-//	} catch (e) {
-//		window.location.reload();	
-//	}
-	} else if (tipoAudio === 2) {
-		var display = document.getElementById('play').style.display;
-	    document.getElementById('play').style.display = 'none';
-		document.getElementById('audio').innerHTML= "<audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/ogg' preload='auto'> </audio>";
-		setTimeout('location.href="/pat2math/student/home"',345000); 
-//		try {
-//	    $.guider({
-//			description: "<div style='position:relative; top:0px; left:0px;'> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>",
-//	                closable: false,
-//	                overlay: "dark",
-//	                alignButtons: "right",
-//	                width: 620
-//			}).show();  
-//
-//	    
-//	    //345000
-//		} catch (e) {
-//			window.location.reload();	
-//		}
-	} else { 
-		location.href = "/pat2math/student/home";
-	}
-}
 //function audio ( ) {
 //	try {
 //    $.guider({
@@ -210,6 +167,7 @@ function rel ( ) {
 		     }  
 		    }); 
 }
+
 
 $(document).ready(function() {	
 	showSideBar();

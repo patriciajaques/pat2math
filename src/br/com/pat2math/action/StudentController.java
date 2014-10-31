@@ -149,9 +149,12 @@ public class StudentController {
 			}
 		}
 		model.addAttribute("topics", activeTopics);
-		model.addAttribute("student", student);
+	//	model.addAttribute("student", student);
 		return "student.home";
 	}
+	
+	
+	
 	
 	@RequestMapping(method= RequestMethod.GET, value = "student/reload_task")
 	public String reloadTasks(Model model, HttpSession session){
@@ -191,7 +194,13 @@ public class StudentController {
 		
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.GET, value= "/audio")
+	public String audio(Model model, HttpSession session) {
+		Student student = new CurrentUser(session).student();
+		Group studentGroup = student.getGroup();
+		model.addAttribute("student", student);
+		return "audio";
+	}
 	
 	
 	private Student formToStudent(StudentForm formStudent) {

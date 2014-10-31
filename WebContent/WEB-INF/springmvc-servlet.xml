@@ -70,7 +70,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
     	<property name="url" value="jdbc:mysql://localhost/pat2math" />
     	<property name="username" value="root" />
-    	<property name="password" value="" />
+    	<property name="password" value="r#5vj@t6%" />
     </bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -88,7 +88,7 @@
 	<mvc:interceptors>
 
 		<mvc:interceptor>
-			<mvc:mapping path="/student/home" />
+			<mvc:mapping path="/audio" />
 			<bean class="br.com.pat2math.interceptor.StoreStudentOnSession" />
 		</mvc:interceptor>
 
