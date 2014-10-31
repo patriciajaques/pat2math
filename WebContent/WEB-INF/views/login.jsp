@@ -3,6 +3,7 @@
 <head>
 	<script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
 	<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
+<!-- 	<link rel="stylesheet" href="/pat2math/css/pat2math.css" type="text/css" /> -->
 </head>
 
 <style>
@@ -12,7 +13,9 @@
 </style>
 
 <script>
+$(document).ready(function() {	
 checkBrowser();
+});
 
 function checkBrowser ( ) {
 	var browser = navigator.userAgent.toLowerCase();
@@ -21,19 +24,22 @@ function checkBrowser ( ) {
 		if (browser.indexOf("firefox") !== -1)
 			return;
 	
-	$.guider({
-	    description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/modal_firefox.png border=0> <div style='position:absolute; top:250px; left:225px;'> <a href='https://www.mozilla.org/pt-BR/'><img src=/pat2math/images/firefox_download.png></img></a> <div style='position:absolute; top:-270px; left:360px;'> <a href=# onclick=closeWindow()><img src=/pat2math/images/modal_exit.png></img></a>",
-	    closable: true,
-	    overlay: "dark",
-	    width: 624,
-	    alignButtons: "right",
-	    }).show();  
+	$("#firefox-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/modal_firefox.png border=0> <div style='position:absolute; top:250px; left:225px;'> <a href='https://www.mozilla.org/pt-BR/'><img src=/pat2math/images/firefox_download.png></img></a> <div style='position:absolute; top:-246px; left:360px;'> <a href=# onclick=closeWindow()><img src=/pat2math/images/modal_exit.png></img></a>");
+	$("#mask").fadeIn(700);
+	$("#firefox-box").fadeIn(700);
+	
+// 	$.guider({
+// 	    description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/modal_firefox.png border=0> <div style='position:absolute; top:250px; left:225px;'> <a href='https://www.mozilla.org/pt-BR/'><img src=/pat2math/images/firefox_download.png></img></a> <div style='position:absolute; top:-270px; left:360px;'> <a href=# onclick=closeWindow()><img src=/pat2math/images/modal_exit.png></img></a>",
+// 	    closable: true,
+// 	    overlay: "dark",
+// 	    width: 624,
+// 	    alignButtons: "right",
+// 	    }).show();  
 }
 
 function closeWindow ( ) {
-    $.guider({
-        
-    }).hideAll();
+	$("#mask").fadeOut(700);
+	$("#firefox-box").fadeOut(700);	
 }
 
 </script>
@@ -71,3 +77,6 @@ function closeWindow ( ) {
 	<p class="left"><a href="/pat2math/student/new">cadastrar</a></p> 
  	<p class="left"><a href="user/forgotPassword">esqueci minha senha</a></p>
 </form>
+
+<div id="mask" onclick="test56()"></div>
+<div id="firefox-box"></div>

@@ -13,7 +13,7 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
     natural = replaceAll(natural, "+-", "±");
     natural = replaceAll(natural, "÷", "/");
     natural = replaceAll(natural, ":", "/"); //Já que tem o símbolo complexo acima (÷), é interessante ter também esse mais fácil de escrever xD
-    natural = replaceAllMultiplications(natural);
+    //natural = replaceAllMultiplications(natural);
     natural = natural.toLowerCase();
 
     var aux = "";
