@@ -491,9 +491,9 @@ textarea:focus {
 	height: 558px;
 	text-align: center;
 	display: none;
-	position: relative; 
+	position: fixed; 
     margin: auto; 
-    top: -515px; 
+    top: 0; 
     right: 0; 
     bottom: 0; 
     left: 0;
@@ -508,9 +508,9 @@ textarea:focus {
 	height: 412px;
 	text-align: center;
 	display: none;
-	position: relative; 
+	position: fixed; 
     margin: auto; 
-    top: -615px; 
+    top: 0; 
     right: 0; 
     bottom: 0; 
     left: 0;
