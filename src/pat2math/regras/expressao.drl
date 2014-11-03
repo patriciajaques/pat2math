@@ -3273,8 +3273,8 @@ rule "Soma e Subtracao de fracoes"
 		eval (e.getRoot().getValue().equals("="));
 		eval (getSomaSubFrac(e)!=null);
 	then
-		System.out.println("# Soma");
-		listresult.add(new Equacoes("# Soma"));
+		System.out.println("# Soma de Fracoes");
+		listresult.add(new Equacoes("# Soma de Fracoes"));
 	//	Funcoes.j();
 		BTNode operacao=getSomaSubFrac(e);
 		

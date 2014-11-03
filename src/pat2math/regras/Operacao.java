@@ -30,13 +30,21 @@ public class Operacao {
 	public static final String RAIZ="RZ";
 	public static final String POTENCIACAO="PT";
 	public static final String REESCREVER_EQUACAO="RE";
-	public static final String DIVISAO_FRACAO="DF";
+	
 	
 	/*
 	 * Operações experimentais que visam substituir OI
 	 */
 	public static final String PRINCIPIO_ADITIVO="PA";
 	public static final String PRINCIPIO_MULTIPLICATIVO="PM";	
+	
+	/*
+	 * Operações com frações 
+	 */
+	
+	public static final String SOMA_SUBTRACAO_FRACAO = "AF";
+	public static final String MULTIPLICACAO_FRACAO = "MF";
+	public static final String DIVISAO_FRACAO="DF";
 	
 	/*
 	 *  os codigos abaixo não são operações, apenas identificadores para as funções de proximoPass e mostrarPasso
@@ -133,7 +141,9 @@ public class Operacao {
 				if (desc.endsWith("Principio Multiplicativo")) return PRINCIPIO_MULTIPLICATIVO;
 				else if (desc.endsWith("Principio Aditivo")) return PRINCIPIO_ADITIVO;
 				else return desc;
-			}else return getCodigo(desc);
+			}else if (desc.equals("# Multiplicar fracoes")) return MULTIPLICACAO_FRACAO;
+			else if (desc.equals("# Soma de Fracoes")) return SOMA_SUBTRACAO_FRACAO;
+			else return getCodigo(desc);
 		}else return desc;
 	}
 		
