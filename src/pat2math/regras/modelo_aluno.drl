@@ -1254,6 +1254,7 @@ function List getNodosMover(List solver, List user){
 	List<BTNode> slvr= new Vector<BTNode>(solver);
 	List<BTNode> usr= new Vector<BTNode>(user);
 	String vS,vU;
+	Funcoes.j();
 	Vector<BTNode> nodos=new Vector<BTNode>();
 	BTNode btS,btU;
 	for (int i=slvr.size()-1;i>=0;i--){
@@ -1271,7 +1272,7 @@ function List getNodosMover(List solver, List user){
 			//se no solver estiver negativo no user DEVE ser positivo pois estao de lados opostos
 			//da equacao	
 			if (vS.startsWith("-") && !vU.startsWith("-")){
-				if (vS.substring(1).equals(vU)){
+				if (vS.substring(1).equals(vU) && !vU.equals("0")){
 					if (podeMover(btS)){
 						nodos.add(btS);
 						slvr.remove(btS);
@@ -1279,7 +1280,7 @@ function List getNodosMover(List solver, List user){
 					}
 				}
 			}else if (!vS.startsWith("-") && vU.startsWith("-")){
-				if (vU.substring(1).equals(vS)){
+				if (vU.substring(1).equals(vS) && !vS.equals("0")){
 					if (podeMover(btS)){
 						nodos.add(btS);
 						slvr.remove(btS);

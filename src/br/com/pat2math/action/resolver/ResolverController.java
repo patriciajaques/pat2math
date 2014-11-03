@@ -54,7 +54,7 @@ public class ResolverController {
 		if(student == null) {
 			echo = "você não está logado!";
 		} else if(type.equals("e")) {
-			System.out.println("\nClient Request ->"+echo);
+			System.out.println("\nClient Request "+student.getEmail()+"->"+echo);
 			helps = student.getFeedbacks();
 			message = tutor.validaEquacao(equation, helps, student.getKnowledges());
 			
