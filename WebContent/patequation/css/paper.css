@@ -29,6 +29,18 @@
     background-image: url('../img/logo.png');
 }
 
+#refresh_page {
+	background-image: url('/pat2math/images/reload_pat2math.png');
+	background-repeat: no-repeat;
+	height: 20px;
+	width:  20px;
+	background-size: 20px 20px;
+	float: left;
+	margin-left: 40px;
+	margin-top: 5%;
+	cursor: pointer;
+}
+
 #lines, .lines{
     border-left: 1px solid #FA8072;
     height: 90%;
