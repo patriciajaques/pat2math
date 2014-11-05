@@ -32,9 +32,12 @@
 </head>
 <body>
 <script>
-var tipoAudio=0;
+var tipoAudio = 0;
+var play = true; //Se play estiver como false, é porque o botão já foi pressionado e não deve acontecer nada se pressionar novamente.
 function playAudio ( ) {
+	if (play) {
 	if (tipoAudio === 1) {
+		play = false;
 		var display = document.getElementById('play').style.display;
 	    document.getElementById('play').style.display = 'none';
 		document.getElementById('audio').innerHTML= "<audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>";
@@ -54,6 +57,7 @@ function playAudio ( ) {
 //		window.location.reload();	
 //	}
 	} else if (tipoAudio === 2) {
+		play = false;
 		var display = document.getElementById('play').style.display;
 	    document.getElementById('play').style.display = 'none';
 		document.getElementById('audio').innerHTML= "<audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/ogg' preload='auto'> </audio>";
@@ -74,6 +78,7 @@ function playAudio ( ) {
 //		}
 	} else { 
 		location.href = "/pat2math/student/home";
+	}
 	}
 }
 </script>
