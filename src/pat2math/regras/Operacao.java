@@ -143,6 +143,7 @@ public class Operacao {
 				else return desc;
 			}else if (desc.equals("# Multiplicar fracoes")) return MULTIPLICACAO_FRACAO;
 			else if (desc.equals("# Soma de Fracoes")) return SOMA_SUBTRACAO_FRACAO;
+			else if (desc.equals("# Reescrever Equacao")) return REESCREVER_EQUACAO;
 			else return getCodigo(desc);
 		}else return desc;
 	}
