@@ -1499,6 +1499,27 @@ function boolean validarMoverTermo(Expression e){
 	else return false;
 }
 
+function boolean validarMoverTermoSimples(Expression e){
+	Funcoes.t();
+	BTNode root=e.getRoot();
+	BTNode possivel=null;
+	BTNode esq=root.getEsq();
+	BTNode dir=root.getDir();
+	if (esq.getValue().equals("/") && dir.getValue().equals("/"))return false;
+	if(esq.getValue().equals("/")){
+		//bloqueia denominador 1 e 0
+		if (esq.getDir().getValue().equals ("1") || esq.getDir().getValue().equals ("0")) return false;
+		Vector v= Funcoes.getIncognitas(esq.getEsq(),new Vector());
+		if (v!= null && v.size()>0)possivel=esq;
+	}else if (dir.getValue().equals("/")){
+		if (dir.getDir().getValue().equals ("1") || dir.getDir().getValue().equals ("0")) return false;
+		Vector v=Funcoes.getIncognitas(dir.getEsq(),new Vector());
+		if (v!= null && v.size()>0)possivel=dir;
+	}
+	if (possivel!=null /*&& !isSimp(e,possivel)*/)return true;
+	else return false;
+}
+
 function boolean validarSomaSub(Expression e){
 	BTNode[] esq = findEquals(e.getRoot().getEsq());
 	Funcoes f=new Funcoes();
@@ -2187,6 +2208,62 @@ rule "Calculo"
 		}
 end
 
+rule "Mover termo simples"
+// 3x/4=9 => 3x=9*4
+	salience 5
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		u: Expression (tipo==Expression.USER);
+		not Expression (tipo==Expression.COEFICIENTES_BK);
+		eval(e.getnewexpression().contains("="));
+		eval (e.getRoot().getValue().equals("="));
+		eval(e.getnewexpression().contains("/"));
+		eval(validarMoverTermoSimples(e));
+		eval(!op(e.getRoot()));
+		eval(canDivideBy1(e.getRoot(),e)==null);
+	then
+		System.out.println("# Operacao Inversa - Principio Multiplicativo");
+		listresult.add(new Equacoes("# Operacao Inversa - Principio Multiplicativo"));
+		BTNode r=e.getRoot();
+		BTNode div= r.getEsq();
+		BTNode otherSide=r.getDir();
+		boolean isDivEsq=true; // se a divisao a ser desmembrada esta na esquerda
+		Vector v;
+		if (div.getValue().equals("/")){
+			isDivEsq=true;
+			v=Funcoes.getIncognitas(div,new Vector());
+			 //se entrou na regra e não é o equerdo logo é o direito
+			if (v==null || v.size()<=0){
+				div=r.getDir();
+				otherSide=r.getEsq();
+				isDivEsq=false;
+			}
+		}else{ 
+			isDivEsq=false;
+			div=r.getDir();
+			otherSide=r.getEsq();
+		}
+		BTNode divdir=div.getDir(); //número ou expressao que sera passada para o outro lado
+		BTNode divEsq= div.getEsq(); //Valor que pemanece
+		BTNode n;
+		n=(BTNode)divdir.clone();
+		r.setEsq(null);
+		r.setDir(null);
+		BTNode mult = new BTNode ("*",otherSide, n);
+		if (isDivEsq){
+			r.setEsq(divEsq);
+			r.setDir(mult);
+		}else{
+			r.setEsq(mult);
+			r.setDir(divEsq);
+			
+		}
+		e.setNewRoot(r);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update(e);
+end
 
 //Atualizar para o novo modelo de demonstracao  ---  OK
 rule "Mover termo"

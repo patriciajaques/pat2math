@@ -9,7 +9,6 @@ import java.util.ListIterator;
 import java.util.Vector;
 
 import pat2math.expressao.Expression;
-import pat2math.expressao.arvore.ArvoreExp;
 import pat2math.expressao.arvore.BTNode;
 import pat2math.expressao.arvore.BTNodeComparator;
 import pat2math.expressao.arvore.InvalidValueException;
@@ -73,7 +72,39 @@ public class MiscFunctions {
 				}
 			}
 		}
+		//TODO: Terminar isso aqui
+		//outro caso fez a OI e ja somou/subtraiu:
+		// soma/subtrai os nodos das listas esq e dir (sem alterar o sinal) de difUser
+		// e busca o resultado nas listas de difSolver
+		/*List<BTNode> difSolver= new ArrayList<BTNode>(difEsqSolver);
+		difSolver.addAll(difDirSolver);
+		List<BTNode> difUser = new ArrayList<BTNode>(difEsqSolver);
+		difUser.addAll(difDirSolver);
+		List<BTNode> tempS = Conjuntos.getIncognitas(difSolver, false);
+		List<BTNode> tempU = Conjuntos.getIncognitas(difUser, false);*/
+		
 		return nodos;
+	}
+	
+	/**
+	 * Soma/ Subtrai os nodos presentes difUser, e busca o resultado em difSolver
+	 * @param difSolver os nodos que não estão em solver
+	 * @param difUser os nodos que não estão em user
+	 * @return true haver correspondencia e false caso contrario
+	 */
+	private boolean sumSUBNodes (List<BTNode> difSolver, List<BTNode> difUser){
+		BTNode root=null;
+		boolean equal=false;
+		for (BTNode dU: difUser){
+			if (root==null) root=(BTNode)dU.clone();
+			else{
+				root=getResult(new BTNode ("+",root,(BTNode)dU.clone()));
+			}
+		}
+		for (BTNode dS: difSolver){
+			if (root!=null && !equal && Expression.igual(dS, root))equal=true;
+		}
+		return equal;
 	}
 
 	/**
