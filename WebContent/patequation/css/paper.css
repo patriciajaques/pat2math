@@ -32,12 +32,12 @@
 #refresh_page {
 	background-image: url('/pat2math/images/reload_pat2math.png');
 	background-repeat: no-repeat;
-	height: 20px;
-	width:  20px;
-	background-size: 20px 20px;
+	height: 35px;
+	width:  32px;
+	background-size: 32px 35px;
 	float: left;
-	margin-left: 40px;
-	margin-top: 5%;
+	margin-left: 26px;
+	margin-top: 3%;
 	cursor: pointer;
 }
 
