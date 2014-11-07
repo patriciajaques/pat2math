@@ -76,33 +76,62 @@ public class MiscFunctions {
 		//outro caso fez a OI e ja somou/subtraiu:
 		// soma/subtrai os nodos das listas esq e dir (sem alterar o sinal) de difUser
 		// e busca o resultado nas listas de difSolver
-		/*List<BTNode> difSolver= new ArrayList<BTNode>(difEsqSolver);
+		List<BTNode> difSolver= new ArrayList<BTNode>(difEsqSolver);
 		difSolver.addAll(difDirSolver);
-		List<BTNode> difUser = new ArrayList<BTNode>(difEsqSolver);
-		difUser.addAll(difDirSolver);
-		List<BTNode> tempS = Conjuntos.getIncognitas(difSolver, false);
-		List<BTNode> tempU = Conjuntos.getIncognitas(difUser, false);*/
-		
+		List<BTNode> difUser = new ArrayList<BTNode>(difEsqUser);
+		difUser.addAll(difDirUser);
+		List<BTNode> tempSInc = Conjuntos.getIncognitas(difSolver, false);
+		List<BTNode> tempSInt = Conjuntos.getIntegers(difSolver, false);
+		List<BTNode> tempUIncEsq = Conjuntos.getIncognitas(difEsqUser, false);
+		List<BTNode> tempUIncDir = Conjuntos.getIncognitas(difDirUser, false);
+		List<BTNode> tempUIntEsq = Conjuntos.getIntegers(difEsqUser, false);
+		List<BTNode> tempUIntDir = Conjuntos.getIntegers(difDirUser, false);
+		BTNode[] inc=sumSUBNodes(tempSInc, tempUIncEsq,tempUIncDir);
+		BTNode[] integ= sumSUBNodes(tempSInt, tempUIntEsq, tempUIntDir);
+		if (inc[0]!=null){
+			nodos.add(inc[0]);
+			nodos.add(inc[1]);
+		}else if (integ[0]!=null){
+			nodos.add(integ[0]);
+			nodos.add(integ[1]);
+		}
 		return nodos;
 	}
 	
 	/**
-	 * Soma/ Subtrai os nodos presentes difUser, e busca o resultado em difSolver
+	 * Soma/ Subtrai os nodos presentes difUserEsq e difUserDir, e busca o resultado em difSolver. Para
+	 * haver a misconception deve haver pelomenos um nodo em esq e um em dir
 	 * @param difSolver os nodos que não estão em solver
 	 * @param difUser os nodos que não estão em user
 	 * @return true haver correspondencia e false caso contrario
 	 */
-	private boolean sumSUBNodes (List<BTNode> difSolver, List<BTNode> difUser){
+	private static BTNode[] sumSUBNodes (List<BTNode> difSolver, List<BTNode> difUserEsq, List<BTNode> difUserDir){
 		BTNode root=null;
-		boolean equal=false;
-		for (BTNode dU: difUser){
-			if (root==null) root=(BTNode)dU.clone();
-			else{
-				root=getResult(new BTNode ("+",root,(BTNode)dU.clone()));
+		BTNode equal[]=new BTNode [2];
+		String []opValidos={"+","-","="};
+		List<String> whiteList=Arrays.asList(opValidos);
+		if (difUserEsq.isEmpty() || difUserDir.isEmpty()) return equal;
+		for (BTNode dU: difUserEsq){
+			if (Funcoes.checkFathers(dU, dU.getNodeX("="),whiteList)){
+				if (root==null) root=(BTNode)dU.clone();
+				else{
+					root=getResult(new BTNode ("+",root,(BTNode)dU.clone()));
+				}
+			}
+		}
+		for (BTNode dU: difUserDir){
+			if (Funcoes.checkFathers(dU, dU.getNodeX("="),whiteList)){
+				if (root==null) root=(BTNode)dU.clone();
+				else{
+					root=getResult(new BTNode ("+",root,(BTNode)dU.clone()));
+				}
 			}
 		}
 		for (BTNode dS: difSolver){
-			if (root!=null && !equal && Expression.igual(dS, root))equal=true;
+			if (Funcoes.checkFathers(dS, dS.getNodeX("="), whiteList) && root!=null && equal[0]==null && Expression.igual(dS, root)){
+				equal[0]=dS;
+				equal[1]=root;
+			}
 		}
 		return equal;
 	}

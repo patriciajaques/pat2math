@@ -917,7 +917,7 @@ public class ModeloAluno extends Resolvedor{
 									Activation act=getNextActivation(actList,newActList);
 									if (act!=null){
 										//descomentar somete em debug
-										System.out.println("\n*Equação atual: " +atual.getCleanExpression()+" Regra: " +act.getRule().getName());
+										System.out.println("\n*Equação inicial: "+original+" Resposta aluno: "+usr.getCleanExpression()+" Equação atual: " +atual.getCleanExpression()+" Regra: " +act.getRule().getName());
 										((DefaultAgenda)expressoes.getAgenda()).fireActivation(act);
 										forBhaskara=remakeBK(forBhaskara); 
 										actList.remove(0); //remove a regra utilizada

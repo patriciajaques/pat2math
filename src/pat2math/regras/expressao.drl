@@ -2208,6 +2208,7 @@ rule "Calculo"
 		}
 end
 
+
 rule "Mover termo simples"
 // 3x/4=9 => 3x=9*4
 	salience 5
