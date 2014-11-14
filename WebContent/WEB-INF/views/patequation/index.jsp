@@ -96,6 +96,7 @@
     
      <div id="papers" style="text-align: center; margin-top: -119px">
    		<div id="paper-1"  style="display: inline-block;">
+   			<div id="refresh_page" title="Recarregar página"></div>
    			<div id="logo" title="PAT2Math =D"></div>
 
 					<div style="display: none;" id="date">

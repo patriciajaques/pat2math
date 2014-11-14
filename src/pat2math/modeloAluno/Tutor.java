@@ -156,7 +156,7 @@ public class Tutor {
 		for(Equacoes e : fullResult) {
 			if(e.getFullEquation().startsWith("#")) {
 				Operation operation = new Operation();
-				String code =Operacao.getCodigo(e.getFullEquation());
+				String code =Operacao.getWithNewCodes(e.getFullEquation());
 				if (!code.startsWith("#")){
 					operation.setCode(code);
 					operations.add(operation);

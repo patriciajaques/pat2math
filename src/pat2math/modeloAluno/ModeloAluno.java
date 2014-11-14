@@ -144,7 +144,7 @@ public class ModeloAluno extends Resolvedor{
 	}*/
 
     public ModeloAluno(Progress p, boolean misconseption) throws Exception {
-    	super(getFileS(new String[]{"/pat2math/regras/modelo_aluno.drl", "/pat2math/regras/misconseptions.drl"}, misconseption), misconseption, p);
+    	super(getFileS(new String[]{"/pat2math/regras/modelo_aluno.drl", "/pat2math/regras/misconseptions.drl"}, misconseption), true, p);
         possResp = new ArrayList<Stack<String>>();
         passos = new Stack<String>();
         useMisconseptions = misconseption;
@@ -917,7 +917,7 @@ public class ModeloAluno extends Resolvedor{
 									Activation act=getNextActivation(actList,newActList);
 									if (act!=null){
 										//descomentar somete em debug
-										System.out.println("\n*Equação atual: " +atual.getCleanExpression()+" Regra: " +act.getRule().getName());
+										System.out.println("\n*Equação inicial: "+original+" Resposta aluno: "+usr.getCleanExpression()+" Equação atual: " +atual.getCleanExpression()+" Regra: " +act.getRule().getName());
 										((DefaultAgenda)expressoes.getAgenda()).fireActivation(act);
 										forBhaskara=remakeBK(forBhaskara); 
 										actList.remove(0); //remove a regra utilizada
@@ -1047,7 +1047,8 @@ public class ModeloAluno extends Resolvedor{
 		BTNode arvSolver=solverExp.getRoot();
 		f.modificaSinal(userExp.getRoot());
 		f.modificaSinal(solverExp.getRoot());
-		if (verificaFolhas(arvUsr, arvSolver)){
+		if (verificaFolhas(arvUsr.getEsq(), arvSolver.getEsq()) &&
+				verificaFolhas(arvUsr.getDir(), arvSolver.getDir())){
 			solverExp.substituiInc("2");
 			userExp.substituiInc("2");
 			String user,solver;

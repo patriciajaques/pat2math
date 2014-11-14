@@ -457,6 +457,12 @@ public class Funcoes {
 				(root.getEsq().eFolha() && Funcoes.isInc(root.getEsq().getLast())&& !Expression.hasIncognita(root.getDir()))){
 					return 0;
 		}
+		//bloquear se tiver multiplicação por 0
+		List<BTNode> mult = Expression.buscaXall("*", solver.getRoot());
+		for (BTNode mt: mult){
+			if (mt.getEsq().getValue().equals("0") || mt.getDir().getValue().equals("0")) return 0;
+		}
+		//fim do bloco
 		Funcoes f=new Funcoes();
 		f.modificaSinal(root);
 		Vector<BTNode> folhasEsq=Expression.getFolhas(root.getEsq(),new Vector<BTNode>());
@@ -2377,7 +2383,7 @@ public static String getTermoComum(BTNode root){
 	}
 	
 	/**
-	 * VErifica se no caminho de frac até destino ha somete os valores presentes na whiteList,
+	 * VErifica se no caminho de origem até destino ha somete os valores presentes na whiteList,
 	 * a busca é exclusiva-inclusiva
 	 * @param frac o inicio da busca
 	 * @param destino o ultimo nodo da busca

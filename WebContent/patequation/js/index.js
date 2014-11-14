@@ -208,6 +208,11 @@ $(document).ready(function() {
 		$(this).addClass("hide-menu");
 	});
 	
+	$("#papers").on("click", "#refresh_page", function() {
+		location.reload(true);
+	});
+	
+	$("#refresh_page").tooltip();
 	//if(!useAudio)showSideBar();
 	
     $("#loadingImage").hide();

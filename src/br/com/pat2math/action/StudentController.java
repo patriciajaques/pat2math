@@ -118,6 +118,7 @@ public class StudentController {
 			session.setAttribute("tutor", new Tutor("", "", allHelps.getActives()));
 		}
 		Student student = new CurrentUser(session).student();
+		if (student==null) return "user.login";
 		Group studentGroup = student.getGroup();
 		Plan plan;
 		if(studentGroup != null)
