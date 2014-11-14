@@ -209,7 +209,7 @@ $(document).ready(function() {
 	});
 	
 	$("#papers").on("click", "#refresh_page", function() {
-		location.reload(true);
+		window.location.reload();
 	});
 	
 	$("#refresh_page").tooltip();
