@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 #declare any global variables here
 global Vector listresult;
 
@@ -490,7 +491,7 @@ function List [] nodosCalculo(List folhasDifEsq,List folhasDifDir, Expression so
 
 function List[] getNodosMult (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.j();
+//	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -2471,14 +2472,30 @@ rule "Calculo Soma e Subtracao"
 		eval (validarRealizaCalculo(user,solver));	
 	then
 		List[] v=getNodosCalculo(user,solver);
+		Funcoes.j();
 		BTNode v1,v2,root=solver.getRoot(),posicao; 
 		List<BTNode>l=v[0];						  
 		String s1,s2,inc="",msg,local;//local= o lado onde vai ser inserido o novo nodo com o 
-		int val1,val2,resultado; // resultado da operacao
+		int val1,val2,resultado; // resulta)do da operacao
 		if (l.isEmpty())l=v[1];
 		v1=l.remove(0);
 		String sinalOp=v1.getPai().getValue();
-		v2=removeNoArvore(l.remove(0),solver);// remove apenas um da arvore pois o outro vai armazenar o resultado
+		v2=l.remove(0);
+		Funcoes f=new Funcoes();
+		BTNode paiComum = f.verificaPai(solver,v1,v2);
+		List<String> caminhoV1 = Funcoes.getNodeValues(v1,paiComum);//funcao é inclusiva para paiComum
+		List<String> caminhoV2 = Funcoes.getNodeValues(v2,paiComum);
+		caminhoV1.remove(caminhoV1.size()-1);
+		caminhoV2.remove(caminhoV2.size()-1);//remove o ultimo que é o pai em comum
+		int fV1= Collections.frequency(caminhoV1,"-");
+		int fV2= Collections.frequency(caminhoV2, "-");
+		int somaFreq=fV1+fV2;
+		//se numero par quem decide é o comum
+		// se numero impar é o oposto do comum
+		if (somaFreq%2==0)sinalOp=paiComum.getValue();
+		else sinalOp=Funcoes.trocaSinal(paiComum.getValue());
+		
+		v2=removeNoArvore(v2,solver);// remove apenas um da arvore pois o outro vai armazenar o resultado
 		s1=v1.getValue();
 		s2=v2.getValue();
 		if (s1.equals("^"))s1=v1.getEsq().getValue();
@@ -2499,10 +2516,17 @@ rule "Calculo Soma e Subtracao"
 		}
 		val1=Integer.parseInt(s1);
 		val2=Integer.parseInt(s2);
-		if (sinalOp.equals("+") && sinalV2.equals("+"))msg="# Soma";
-		else if (sinalOp.equals("+") && sinalV2.equals("-"))msg="# Subtracao";
-		else msg="# Subtracao";
-		resultado=val1+val2;
+		if (sinalOp.equals("+")&& sinalV2.equals("+")){
+			msg="# Soma";//&& sinalV2.equals("+"))msg="# Soma";
+			resultado=val1+val2;
+		}else if (sinalOp.equals("+")&& sinalV2.equals("-")){
+			msg="# Subtracao";//&& sinalV2.equals("-"))msg="# Subtracao";
+			resultado=val1+val2;// pois o segundo é negativo
+		}else{
+			msg="# Subtracao";
+			resultado=val1-val2;
+		}
+		
 	//	if (resultado==0 && (v1.getPai().getValue().equals("+")))removeNoArvore(v1,solver);
 	//	else {
 			//para não aparecer 0x;
@@ -3080,7 +3104,7 @@ rule "Simplificacao Numerador por Denominador"
 		String msg= "# Simplificar";
 		List<BTNode> fracs = getFracSimpNumDen(user,solver);
 		BTNode frac = fracs.get(0);
-		Funcoes.j();
+	//	Funcoes.j();
 		BTNode numNode= Funcoes.splitMMC(frac.getEsq(),solver);
 		BTNode denNode= Funcoes.splitMMC(frac.getDir(),solver);
 		List<BTNode> num= Expression.getFolhas(numNode);
