@@ -227,7 +227,13 @@ public class Funcoes {
 					root.getEsq().eFolha()){
 					dir=root.getEsq();
 					root=root.getPai();
-				}else dir= root.getDir();
+					//Caso específico da multiplicaçao no qual o sinal negativo pode pular para o filho direito se este for folha
+					// o caso acima trata do sinal pular para o filho esquerdo que pode ser tanto fração como multiplicação
+				}else if (root.getPai()!=null && root.getValue().equals("*") && root.ehFilhoDir() && root.getDir().eFolha()){
+					dir=root.getDir();
+					root=root.getPai();
+				}
+				else dir= root.getDir();
 				if(dir.eFolha() && root.getValue().equals("-") && !dir.getValue().equals("0")){
 					dir.setValue(trocaSinal(dir.getValue()));
 					root.setValue("+");
@@ -1410,6 +1416,7 @@ public class Funcoes {
 					mmc.setDir(null);
 					mmc.setEsq(esq);
 					mmc.setDir(dir);
+					mmc=mergeMMC(mmc);
 				}
 			}
 		}else if(!mmc.eFolha()){
@@ -1419,6 +1426,7 @@ public class Funcoes {
 			mmc.setDir(null);
 			mmc.setEsq(esq);
 			mmc.setDir(dir);
+			mmc=mergeMMC(mmc);
 		}
 		return mmc;
 	}
@@ -1515,7 +1523,7 @@ public class Funcoes {
 				Expression.removeNoArvore(temp.getDir());
 			}else{
 				temp.setDir(null);
-				temp.setDir(resultado.get(0));
+				temp.setDir(mergeMMC(resultado.get(0)));
 				temp.setValue("*");
 			}
 		}

@@ -91,7 +91,6 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
-	f.j();
 	List<BTNode> folhasUEsq=Expression.getFolhas(us.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getFolhas(us.getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getFolhas(sv.getEsq(),new Vector<BTNode>());
@@ -198,7 +197,6 @@ function BTNode[] getPrincAdMult(Expression usr, Expression solver){
 
 function boolean isValidForPricAdMult(BTNode n1, BTNode n2){
 	if (n1.getPai()==null || n2.getPai()==null) return false;
-	Funcoes.j();
 	String inc1,inc2;
 	int v1,v2,pot1,pot2;
 	//desmembrar os valores
@@ -243,7 +241,6 @@ function boolean isValidMultForPrincAdMult(BTNode n1, BTNode n2){
 
 function List[] getIsolaX (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -493,7 +490,7 @@ function List [] nodosCalculo(List folhasDifEsq,List folhasDifDir, Expression so
 
 function List[] getNodosMult (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
+	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -1254,7 +1251,6 @@ function List getNodosMover(List solver, List user){
 	List<BTNode> slvr= new Vector<BTNode>(solver);
 	List<BTNode> usr= new Vector<BTNode>(user);
 	String vS,vU;
-	Funcoes.j();
 	Vector<BTNode> nodos=new Vector<BTNode>();
 	BTNode btS,btU;
 	for (int i=slvr.size()-1;i>=0;i--){
@@ -1679,8 +1675,11 @@ function List getMultiplicavel(List l){
 										f=pai1;
 									}
 									if (p!=null &&f!=null && p.getPai()!=null&&Funcoes.caminho(f,p.getPai(),"*")){
-										mult.add(bt1);
-										mult.add(bt2);
+									//são 2 multiplicações de 2 subarvores diferentes, logo entre bt1 e bt2 não pode haver outro operador
+										if (Funcoes.caminho(bt1,pai1,"*") && Funcoes.caminho(bt2,pai2,"*")){
+											mult.add(bt1);
+											mult.add(bt2);
+										}
 									}
 								}
 							}else if (pai2.getNodeX("*")!=null){
@@ -2335,6 +2334,7 @@ function BTNode moverNodos(Expression solver,List[] v){
 	BTNode novoLado;
 	BTNode root=solver.getRoot();
 	List<BTNode> l=v[0];
+	Funcoes.j();
 	if (!l.isEmpty()){
 		//mover da direita para a esquerda
 		novoLado=root.getEsq();	

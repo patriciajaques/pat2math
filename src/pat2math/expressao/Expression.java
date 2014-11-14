@@ -264,7 +264,7 @@ public class Expression implements Cloneable{
 			 */
 			
 			if ((exp.charAt(i)=='-' || exp.charAt(i)=='_') &&
-					exp.charAt(i+1)=='(' && 
+					exp.charAt(i+1)=='('  &&
 					(i==0 /*pro caso de -(-2)=x*/||exp.charAt(i-1)=='='|| exp.charAt(i-1)=='(') ){
 				StringBuffer sb=new StringBuffer(exp);
 				sb.replace(i, ++i, "?*");
@@ -359,16 +359,26 @@ public class Expression implements Cloneable{
 	public static BTNode removeNoArvore(BTNode r){
 		BTNode pai=r.getPai();
 		BTNode dir= pai.getDir();
+		boolean useAbstract=false;
 		if (pai.getEsq()!=null && pai.getEsq().equals(r)){
 			if (pai.getValue().equals("-")){
 				if (dir.getValue().equals("^")||dir.getValue().equals("R")){
 					dir.getEsq().setValue(Funcoes.trocaSinal(dir.getEsq().getValue()));
-				}else dir.setValue(Funcoes.trocaSinal(dir.getValue()));
+				}else if (!dir.eFolha()){
+					useAbstract=true;
+				}
+				else dir.setValue(Funcoes.trocaSinal(dir.getValue()));
 				pai.setValue("+");
 			}
 			pai.setDir(null);
 			pai.setEsq(null);
-			if (pai.getPai().getEsq()!=null && 
+			if (useAbstract){
+				pai.setEsq(new BTNode(-1));
+				pai.setDir(dir);
+				pai.setValue("*");
+				pai.getEsq().setAbstractTerm(true);
+				pai.setAbstractTerm(true);
+			}else if (pai.getPai().getEsq()!=null && 
 					pai.getPai().getEsq().equals(pai)){
 				pai=pai.getPai();
 				pai.setEsq(dir);
