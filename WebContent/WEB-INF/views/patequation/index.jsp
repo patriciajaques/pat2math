@@ -22,6 +22,7 @@
     </head>
     <body>
     <script>
+
 //     $(document).ready(function() {
 //    	try {
 //    	openTour();
