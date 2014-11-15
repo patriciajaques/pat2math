@@ -1,5 +1,3 @@
-var currentEquation = 0;
-
 function requestServer (type, last, next, typeOperation, element) {
     //type = 'd' -> hint
     //type = 'n' -> new equation
@@ -188,10 +186,16 @@ function requestServer (type, last, next, typeOperation, element) {
 //                        } else {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
-//                       nextLine.html("<div class='final'></div><div class='btn btn-info nextEquation' onclick='nextEquationClick();'>Próxima Equação</div>");
-                        nextLine.html("<div class='final'></div>");
+                    
+                    	var finalIds = [26, 49, 63, 120, 143, 162, 178];
+                    	
+                    	if (binarySearch (finalIds, idEquation) === -1)                  		
+                            nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>");
+                    	
+                    	else
+                    		nextLine.html("<div class='final'></div>");
                         
-                        
+                      $("#next_equation").tooltip();
                         $("#marktask"+idEquation).removeAttr("style"); 
                         $("#marktask"+idEquation).addClass("icon-white");
                         
@@ -435,12 +439,4 @@ function requestServer (type, last, next, typeOperation, element) {
         }});
     
 
-}
-
-function setCurrentEquation (id) {
-	currentEquation = id;
-}
-
-function nextEquationClick ( ) {
-	loadExerciseTest (currentEquation + 1);
 }

@@ -21,6 +21,28 @@ var concluded = 0;
 //var topicIsOpen = false;
 //var equationTourIsResolved = false;
 
+
+function getEquations ( ) {
+	loadExercise (168);
+	loadEquation(0);
+	
+	setTimeout ("var a = 2;", 3000)
+	var string = '\\"' + selectedEquation.equation + '\\"';
+	
+	for (var i = 169; i < 179; i++) {
+		if (i !== 175) {
+		loadExercise (i);
+		loadEquation(0);
+		string += ' \\"' + selectedEquation.equation + '\\"';
+		}
+		
+		
+	}
+	
+	alert (string);
+}
+
+
 function helpPage6 ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:246px; left:1px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:494px;'> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
@@ -172,12 +194,13 @@ function rel ( ) {
 $(document).ready(function() {	
 	showSideBar();
 	
-	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
 		$(this).removeClass("hide-menu");
 		$(this).addClass("show-menu");
 	});
+	
+	
 	
 	$("body").on("click", ".show-menu", function() {
 		$("#topics").show("slide", { direction: "left" }, 1000);
@@ -186,7 +209,7 @@ $(document).ready(function() {
 	});
 	
 	$("#papers").on("click", "#refresh_page", function() {
-		location.reload(true);
+		window.location.reload();
 	});
 	
 	$("#refresh_page").tooltip();
@@ -438,7 +461,7 @@ function loadEquation(index) {
         // get the firs valid line to put content
         var line = $(selectedSheet + " .hLineAux").next();
 
-        var stack = textToMathml(selectedEquation.equation);
+        var stack = textToMathml(selectedEquation.equationToString);
 
         var elements = "<ul>";
         for (var i = 0; i < stack.length; i++) {
@@ -585,6 +608,8 @@ function loadEquation(index) {
     $("#hintText").hide('blind', 500);
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
+    
+    return selectedEquation.equation;
 }
 
 function calculatePoints(equation) {
@@ -1139,6 +1164,18 @@ function newEquation() {
 }
 
 function checkEquation() { 
+	var display = document.getElementById('button').style.display;
+    document.getElementById('button').style.display = 'none';
+    
+    $(document).keyup(function(event) {
+        // key 13 = enter
+        var key = event.which;
+
+        if (key === 13) { //enter key
+
+        }
+    });
+    
 	$(selectedSheet + " .canMove li input").blur();
 //  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
 //  passoAnterior = getEquation(passoAnterior);
@@ -1194,6 +1231,7 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
+  //document.getElementById('button').style.display = 'inline';
 }
 
 function identifyABC(step) {
@@ -1246,4 +1284,12 @@ function showHint(hint) {
     $("#hintText").hide('blind', 200);
     $("#hintText").html("*Dica: " + hint + lastHint);
     $("#hintText").show('blind', 500);
+}
+
+function searchArray (elemento, array) {
+	for (var i = 0; i < array.length; i++)
+		if (array[i] === elemento)
+			return i;
+	
+	return -1;	
 }
