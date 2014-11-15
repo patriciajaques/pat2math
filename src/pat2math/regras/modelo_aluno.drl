@@ -63,7 +63,6 @@ function List[] getOIMultDiv (Expression usr, Expression solver, String signal){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
-	//f.j();
 	List<BTNode> folhasUEsq=Expression.getFolhas(us.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getFolhas(us.getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getFolhas(sv.getEsq(),new Vector<BTNode>());
@@ -285,7 +284,6 @@ function List[] getIsolaX (Expression usr, Expression solver){
 		else sv=solver.getRoot();
 		f.modificaSinal(us);
 		f.modificaSinal(sv);
-		//f.j();
 		BTNode rootS=solver.getRoot();
 		BTNode rootU=usr.getRoot();
 		BTNode esq, dir;
@@ -390,7 +388,6 @@ function List[] getNodosCalculo (Expression usr, Expression solver){
 
 function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 	Funcoes f=new Funcoes();
-	//f.j();
 	BTNode us,sv;
 	if (user.isRootMMC())us=user.getRoot().getEsq();
 	else us=user.getRoot();
@@ -446,7 +443,6 @@ function List nodosSomaFrac(List folhasDif, Expression e){
 	BTNode n1,n2,father;
 	List<String> whiteList=  Arrays.asList("+","-");
 	List<BTNode> result = new ArrayList<BTNode>();
-	//f.j();
 	for (int i=0; i<folhasDif.size();i++){
 		n1= (BTNode)folhasDif.get(i);
 		for (int j=0; j<folhasDif.size();j++){
@@ -491,7 +487,6 @@ function List [] nodosCalculo(List folhasDifEsq,List folhasDifDir, Expression so
 
 function List[] getNodosMult (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-//	f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -555,7 +550,6 @@ function List[] nodosPotRaizINT(List folhasDifEsq,List folhasDifDir, String op){
 
 function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	//f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -608,7 +602,6 @@ function List [] getNodosSimplificaveisINT(Expression usr, Expression solver){
 }
 
 function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List folhasDifEsq, List folhasDifDir, List folhasDifEsqINT, List folhasDifDirINT ){	
-	//Funcoes.j();
 	//isso ja tinha
 	folhasDifEsq=Conjuntos.getFracao(folhasDifEsq);
 	folhasDifDir=Conjuntos.getFracao(folhasDifDir);
@@ -627,7 +620,6 @@ function List[] simplificaveisINT(List folhasUDifEsq,List folhasUDifDir,List fol
 
 function List getFracaoToINT(List folhasDifS, List folhasDifUINT){
 	List<BTNode> fracao = new ArrayList<BTNode>();
-//	Funcoes.j();
 	BTNode aux,usr;
 	for (int i=0;i<folhasDifS.size();i++){
 		aux=(BTNode)folhasDifS.get(i);
@@ -745,7 +737,6 @@ function List[] getNodosSimplificaveisDivSin (Expression usr, Expression solver)
 
 function List[] getNodosSimplificaveisNaoFolha (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	//f.j();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -1111,7 +1102,7 @@ function List[] getNodosQuadSomDif(Expression usr,Expression solver){
 
 function BTNode getNodosFatorarQuadProdSomDif(Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
+	//f.j();
 	BTNode sv;
 	if (solver.isRootMMC())sv=solver.getRoot().getEsq();
 	else sv=solver.getRoot();
@@ -1121,8 +1112,8 @@ function BTNode getNodosFatorarQuadProdSomDif(Expression solver){
 	//um dos lados DEVE ser zero
 	if (root.getEsq().getValue().equals("0"))selected=root.getDir();
 	if (root.getDir().getValue().equals("0"))selected=root.getEsq();
-	if (selected!=null && !selected.eFolha()){
-		//verificar se o secionadoe é do tipo (a+b)*(c+d) onde a,b,c,d são folhas
+	if (selected!=null && !selected.eFolha() && selected.getValue().equals("*")){
+		//verificar se o selecionado é do tipo (a+b)*(c+d) onde a,b,c,d são folhas
 		// e ad,ac,b,ou bd são incognitas
 		BTNode esq=selected.getEsq(), dir=selected.getDir();
 		if ((esq.getValue().equals("+") || esq.getValue().equals("-")) &&
@@ -2335,7 +2326,6 @@ function BTNode moverNodos(Expression solver,List[] v){
 	BTNode novoLado;
 	BTNode root=solver.getRoot();
 	List<BTNode> l=v[0];
-	Funcoes.j();
 	if (!l.isEmpty()){
 		//mover da direita para a esquerda
 		novoLado=root.getEsq();	
@@ -2348,8 +2338,10 @@ function BTNode moverNodos(Expression solver,List[] v){
 			root.setDir(
 			new BTNode ("0"));
 		}else Expression.removeNoArvore(nodo);
-		if (novoLado.getValue().equals("0"))root.setEsq(nodo);
-		else root.setEsq(new BTNode("+",nodo,novoLado));
+		//descomentar linha abaixo para reativar a supressão do 0 ao realizar a
+		// operação inversa da soma/subtração
+		//if (novoLado.getValue().equals("0"))root.setEsq(nodo);
+		root.setEsq(new BTNode("+",nodo,novoLado));
 	}else{
 		//mover da esquerda para a direita
 		l=v[1];
@@ -2362,8 +2354,10 @@ function BTNode moverNodos(Expression solver,List[] v){
 			root.setEsq(null);
 			root.setEsq(new BTNode ("0"));
 		}else Expression.removeNoArvore(nodo);
-		if (novoLado.getValue().equals("0")) root.setDir(nodo);
-		else root.setDir(new BTNode("+",nodo,novoLado));
+		//descomentar linha abaixo para reativar a supressão do 0 ao realizar a
+		// operação inversa da soma/subtração
+		//if (novoLado.getValue().equals("0")) root.setDir(nodo);
+		root.setDir(new BTNode("+",nodo,novoLado));
 	}
 	return root;
 }
@@ -2426,7 +2420,6 @@ rule "Mover Termo Soma Subtracao"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (!validarMoverTermoSomaSub(user,solver));
 	then
-	//Funcoes.j();
 		String msg="# Operacao Inversa - Principio Aditivo";
 		List<BTNode> somaSub= getNodosMoverTermoSomaSub(user,solver);
 		BTNode n1,n2, op;
@@ -2472,7 +2465,6 @@ rule "Calculo Soma e Subtracao"
 		eval (validarRealizaCalculo(user,solver));	
 	then
 		List[] v=getNodosCalculo(user,solver);
-		Funcoes.j();
 		BTNode v1,v2,root=solver.getRoot(),posicao; 
 		List<BTNode>l=v[0];						  
 		String s1,s2,inc="",msg,local;//local= o lado onde vai ser inserido o novo nodo com o 
@@ -2565,7 +2557,6 @@ rule "Calculo Soma Subtracao de Fracoes"
 			sideLeft=false;
 		}
 		String msg="# Soma";
-		//Funcoes.j();
 		BTNode temp1=null,temp2=null;
 		//agrupar as frações
 		while (chosen.size()>1){
@@ -2812,7 +2803,6 @@ rule "Simplificacao de Inteiros"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarSimplificacaoINT(user,solver));
 	then
-		//Funcoes.j();
 		String msg="# Simplificar";
 		List<BTNode>[] simplificaveis=getNodosSimplificaveisINT(user,solver);
 		List<BTNode> simplifica= simplificaveis[0];
@@ -2920,7 +2910,6 @@ rule "Simplificacao de Incognitas e Potencias"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarSimplificacaoINC(user,solver));
 	then
-		//Funcoes.j();
 		String msg="# Simplificar";
 		List<BTNode>[] simplificaveis=getNodosSimplificaveisINC(user,solver);
 		List<BTNode> simplifica= simplificaveis[0];
@@ -3104,7 +3093,6 @@ rule "Simplificacao Numerador por Denominador"
 		String msg= "# Simplificar";
 		List<BTNode> fracs = getFracSimpNumDen(user,solver);
 		BTNode frac = fracs.get(0);
-	//	Funcoes.j();
 		BTNode numNode= Funcoes.splitMMC(frac.getEsq(),solver);
 		BTNode denNode= Funcoes.splitMMC(frac.getDir(),solver);
 		List<BTNode> num= Expression.getFolhas(numNode);
@@ -3463,6 +3451,8 @@ rule "Fatorar Quadrado-Produto - Soma-Diferenca"
 							e1.getCleanExpression(),e1.getTeXExpression()));
 		listresult.add(new Equacoes(e2.getnewexpression(),
 							e2.getCleanExpression(),e2.getTeXExpression()));
+		System.out.println(e1.getnewexpression());
+		System.out.println(e2.getnewexpression());
 		insert(e1);
 		insert(e2);
 		
@@ -3759,7 +3749,6 @@ rule "Gera Resultado"
 		eval (e.getRoot().getValue().equals("="));
 		eval(Funcoes.canGenerateResult(e.getRoot())!=0);
 	then
-	//Funcoes.j();
 		//1= mover para a direita, 2= mover para a esquerda, 0= false.
 		int moveTo=	Funcoes.canGenerateResult (e.getRoot());
 		Vector<BTNode> folhas;

@@ -454,31 +454,41 @@ public class Funcoes {
 		else if (Funcoes.isInc(usrRoot.getEsq().getValue()) || Funcoes.isInc(usrRoot.getDir().getValue())) can=true;
 		
 		if (can){
-		BTNode root = solver.getRoot();
-		if ((root.getDir().eFolha() && root.getDir().getValue().equals("0")) ||
-			(root.getEsq().eFolha() && root.getEsq().getValue().equals("0"))){
-				return 0;
-		}
-		if ((root.getDir().eFolha() && Funcoes.isInc(root.getDir().getLast()) && !Expression.hasIncognita(root.getEsq())) ||
-				(root.getEsq().eFolha() && Funcoes.isInc(root.getEsq().getLast())&& !Expression.hasIncognita(root.getDir()))){
+			BTNode root = solver.getRoot();
+			if ((root.getDir().eFolha() && root.getDir().getValue().equals("0")) ||
+					(root.getEsq().eFolha() && root.getEsq().getValue().equals("0"))){
 					return 0;
-		}
-		//bloquear se tiver multiplicação por 0
-		List<BTNode> mult = Expression.buscaXall("*", solver.getRoot());
-		for (BTNode mt: mult){
-			if (mt.getEsq().getValue().equals("0") || mt.getDir().getValue().equals("0")) return 0;
-		}
-		//fim do bloco
-		Funcoes f=new Funcoes();
-		f.modificaSinal(root);
-		Vector<BTNode> folhasEsq=Expression.getFolhas(root.getEsq(),new Vector<BTNode>());
-		Vector<BTNode> folhasDir=Expression.getFolhas(root.getDir(),new Vector<BTNode>());
-		if ((folhasEsq.size()+folhasDir.size())<2 )return 0; // com menos de 2 termos a regra resultado é disparada
-		boolean moveDir=checkLeafs(folhasDir, root);
-		boolean moveEsq=checkLeafs(folhasEsq, root);
-		if (!moveEsq && !moveDir) return 0;
-		if (moveEsq) return 1;
-		else return 2;
+			}
+			if ((root.getDir().eFolha() && Funcoes.isInc(root.getDir().getLast()) && !Expression.hasIncognita(root.getEsq())) ||
+					(root.getEsq().eFolha() && Funcoes.isInc(root.getEsq().getLast())&& !Expression.hasIncognita(root.getDir()))){
+				return 0;
+			}
+		
+			//bloquear caso haja um 0 somando/subtraindo em um lado da equação
+			List<BTNode> somaSub = Expression.buscaXall("+", solver.getRoot());
+			somaSub.addAll(Expression.buscaXall("-", solver.getRoot()));
+			
+			for(BTNode aS: somaSub){
+				if (aS.eFolha() && aS.getValue().equals("-0")) return 0;
+				else if (!aS.eFolha() && (aS.getEsq().getValue().equals("0") || aS.getDir().getValue().equals("0"))) return 0;
+			}
+			
+			//bloquear se tiver multiplicação por 0
+			List<BTNode> mult = Expression.buscaXall("*", solver.getRoot());
+			for (BTNode mt: mult){
+				if (mt.getEsq().getValue().equals("0") || mt.getDir().getValue().equals("0")) return 0;
+			}
+			//fim do bloco
+			Funcoes f=new Funcoes();
+			f.modificaSinal(root);
+			Vector<BTNode> folhasEsq=Expression.getFolhas(root.getEsq(),new Vector<BTNode>());
+			Vector<BTNode> folhasDir=Expression.getFolhas(root.getDir(),new Vector<BTNode>());
+			if ((folhasEsq.size()+folhasDir.size())<2 )return 0; // com menos de 2 termos a regra resultado é disparada
+			boolean moveDir=checkLeafs(folhasDir, root);
+			boolean moveEsq=checkLeafs(folhasEsq, root);
+			if (!moveEsq && !moveDir) return 0;
+			if (moveEsq) return 1;
+			else return 2;
 		}
 		return 0;
 	}
