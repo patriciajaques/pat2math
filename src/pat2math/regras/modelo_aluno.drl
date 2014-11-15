@@ -3778,3 +3778,34 @@ rule "Gera Resultado"
 								e.getTeXExpression()));
 		update(e);
 end
+
+//Utilizada para validar respostas do tipo 5*x ou x*5 ao invés de 5x
+//Somente é ativasa se a unica diferenca entre a resposta do aluno
+//e a equação do resolvedo for esta multiplicação e o seu correspondente 
+//sem o sinal de multiplicação, se x, divide em 1*x
+rule "Separa incognita e inteiro"
+dialect "java"
+	when
+		e: Expression (tipo==Expression.SOLVER);
+		user: Expression (tipo==Expression.USER);
+		not Expression (tipo==Expression.COEFICIENTES_BK);
+		eval(e.getnewexpression().contains("="));
+		eval(e.getRoot().getValue().equals("="));
+		eval(Funcoes.getSplitMult(user,e)!=null);
+	then
+		BTNode split= Funcoes.getSplitMult(user,e);
+		String value=split.getValue();
+		String inc= Funcoes.getInc(value);
+		int integer= Funcoes.getINT(value);
+		split.setEsq(new BTNode(integer));
+		split.setDir(new BTNode(inc));
+		split.setValue("*");
+		String msg="# Reescrever Equacao";
+		 System.out.println(msg);
+		e.setNewRoot(e.getRoot());
+		listresult.add(new Equacoes (msg));
+		listresult.add(new Equacoes(e.getnewexpression(),
+								e.getCleanExpression(),
+								e.getTeXExpression()));
+		update(e);
+end

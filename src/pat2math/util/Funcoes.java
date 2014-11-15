@@ -2512,6 +2512,61 @@ public static String getTermoComum(BTNode root){
 		return e;
 	}
 	
+	public static BTNode getSplitMult(Expression user, Expression solver){
+		Funcoes f=new Funcoes();
+		BTNode rootU = user.getRoot();
+		BTNode rootS = solver.getRoot();
+		f.modificaSinal(rootU);
+		f.modificaSinal(rootS);
+		List<BTNode> folhasUEsq=Expression.getFolhas(rootU.getEsq(),new Vector<BTNode>());
+		List<BTNode> folhasUDir=Expression.getFolhas(rootU.getDir(),new Vector<BTNode>());
+		List<BTNode> folhasSEsq=Expression.getFolhas(rootS.getEsq(),new Vector<BTNode>());
+		List<BTNode> folhasSDir=Expression.getFolhas(rootS.getDir(),new Vector<BTNode>());
+		//Obtem os nos de solver que nao estao presentes em usr 
+		List<BTNode> folhasDifEsqS=Conjuntos.diferenca(folhasSEsq,folhasUEsq);
+		List<BTNode> folhasDifDirS=Conjuntos.diferenca(folhasSDir,folhasUDir);
+		//Obtem os nos de user que nao estao presenter em solver
+		List<BTNode> folhasDifEsqU=Conjuntos.diferenca(folhasUEsq,folhasSEsq);
+		List<BTNode> folhasDifDirU=Conjuntos.diferenca(folhasUDir,folhasSDir);
+		
+		//dif de solver deve ser apenas 1  um termo no estilo ax, sendo a um inteiro e x uma incognita
+		BTNode termoSolver=null;
+		List<BTNode> listUserToCheck=null;
+		if (folhasDifEsqS.size()==1 && folhasDifDirS.size()==0){
+			termoSolver=folhasDifEsqS.get(0);
+			if (folhasDifEsqU.size()==2 && folhasDifDirU.size()==0)listUserToCheck=folhasDifEsqU;
+		}else if (folhasDifDirS.size()==1 && folhasDifEsqS.size()==0 ){
+			termoSolver=folhasDifDirS.get(0);
+			if (folhasDifDirU.size()==2 && folhasDifEsqU.size()==0)listUserToCheck=folhasDifDirU;
+		}
+		BTNode chosenONE=null;
+		//listUserToCheck tem tamanho 2 pois é a incoógnita e o inteiro
+		if (termoSolver!=null && listUserToCheck!=null && listUserToCheck.size()==2){
+			String inc=getInc(termoSolver.getValue());
+			int integer=getINT(termoSolver.getValue());
+			BTNode incUser, intUser;
+			incUser=intUser=null;
+			for (BTNode bt: listUserToCheck){
+				String val= bt.getValue();
+				if (Funcoes.isInc(bt.getValue())|| (val.length()==2 && Funcoes.isInc(Funcoes.getLast(val)) && Funcoes.getFirst(val)=='-' )){
+					incUser=bt;
+				}else if (Funcoes.isInteger(val)){
+					intUser=bt;
+				}
+			}
+			if (incUser!=null && intUser!=null){
+				if (incUser.getPai().equals(intUser.getPai())){
+					if (incUser.getPai().getValue().equals("*")){
+						if(inc.equals(incUser.getValue())&& integer==intUser.getIntValue()){
+							chosenONE=termoSolver;
+						}
+					}
+				}
+			}
+		}
+		return chosenONE;
+	}
+	
 	/**
 	 * Método utilizado apenas para debug da funções do Drools pois estas não se pode por 
 	 * um breakpoint.
