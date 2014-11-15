@@ -225,94 +225,97 @@ function msgBox(id, msg, action) {
 }
 
 function nextEquationClick ( ) {
+	//Os ids das equações estão na posição correspondente no array ordenado.
+    //Por exemplo, o id 42 está na posição 42, o 100 na posição 100, e assim por diante.
 	
+	//Posição da próxima equação. Ela é obtida da seguinte forma:
+	//Seleciona a equação atual no array ordenado, e verifica a sua posição no array original. 
+	//Esta variável recebe a posição seguinte da equação no array original.	
+	var newPos = sortedIds[idEquation].pos + 1;
+	loadExercise (ids[newPos]);
+	loadEquation (0);
+	//pos++; //Avança uma posição do array ordenado
+	
+	
+//	stop = false; //Como o usuário clicou no botão da próxima equação, ele está resolvendo-as sequencialmente.
 	/* Verifica se:
 	 * É a primeira vez que o usuário clica no botão ou
 	 * O usuário está resolvendo as equações de forma sequencial utilizando o botão (caso ele pulou para outra equação no mesmo plano, a variável pos deverá ser atualizada);
 	 * O usuário está no mesmo plano de aula da equação anterior.
 	 */
-	if (stop || binarySearch (currentIds2, idEquation) === -1) {
-		//Verifica se a equação está no Plano de Aula 1 (ids0)
-		pos = binarySearch (ids0, idEquation);
-		
-		//Caso a pesquisa retorne -1, é que não encontrou a equação atual. Assim, continua verificando todos os planos até encontrar o da equação atual.
-		if (pos === -1) {
-			pos = binarySearch (ids1, idEquation);
-			
-			if (pos === -1) {
-				pos = binarySearch (ids2, idEquation);
-				
-				if (pos === -1) {
-					pos = binarySearch (ids3, idEquation);
-					
-					if (pos === -1) {
-						pos = binarySearch (ids4, idEquation);
-						
-						if (pos === -1) {
-							pos = binarySearch (ids5, idEquation);
-							
-							if (pos === -1) {
-								pos = binarySearch (ids6, idEquation);
-								
-								if (pos === -1) {
-									pos = binarySearch (ids7, idEquation);
-									
-									if (pos === -1) {
-										pos = binarySearch (ids8, idEquation);
-
-										currentIds = ids08;
-										currentIds2 = ids8;
-									}
-									else {
-									    currentIds = ids07;
-									    currentIds2 = ids7;
-									}
-								}
-								else {
-								    currentIds = ids06;
-								    currentIds2 = ids6;
-								}
-							}
-							else {
-							    currentIds = ids05;
-							    currentIds2 = ids5;
-							}						    
-						}
-						else {
-						    currentIds = ids04;
-						    currentIds2 = ids4;
-						}
-					}
-					else {
-					    currentIds = ids03;
-					    currentIds2 = ids3;
-					}
-				}
-				else {
-				    currentIds = ids02;
-				    currentIds2 = ids2;
-				}
-			}
-			else {
-			    currentIds = ids01;
-			    currentIds2 = ids1;
-			}
-		}
-		
-		else {
-		    currentIds = ids00;	
-		    currentIds2 = ids0;
-		}
-	}
-	
-	//Posição da próxima equação. Ela é obtida da seguinte forma:
-	//Seleciona a equação atual no array ordenado, e verifica a sua posição no array original. 
-	//Esta variável recebe a posição seguinte da equação no array original.
-	var newPos = currentIds2[pos].pos + 1;
-	pos++; //Avança uma posição do array ordenado
-	loadExercise (currentIds[newPos]);
-	loadEquation (0);
-	stop = false; //Como o usuário clicou no botão da próxima equação, ele está resolvendo-as sequencialmente.
+//	if (stop || binarySearch (currentIds2, idEquation) === -1) {
+//		//Verifica se a equação está no Plano de Aula 1 (ids0)
+//		pos = binarySearch (ids0, idEquation);
+//		
+//		//Caso a pesquisa retorne -1, é que não encontrou a equação atual. Assim, continua verificando todos os planos até encontrar o da equação atual.
+//		if (pos === -1) {
+//			pos = binarySearch (ids1, idEquation);
+//			
+//			if (pos === -1) {
+//				pos = binarySearch (ids2, idEquation);
+//				
+//				if (pos === -1) {
+//					pos = binarySearch (ids3, idEquation);
+//					
+//					if (pos === -1) {
+//						pos = binarySearch (ids4, idEquation);
+//						
+//						if (pos === -1) {
+//							pos = binarySearch (ids5, idEquation);
+//							
+//							if (pos === -1) {
+//								pos = binarySearch (ids6, idEquation);
+//								
+//								if (pos === -1) {
+//									pos = binarySearch (ids7, idEquation);
+//									
+//									if (pos === -1) {
+//										pos = binarySearch (ids8, idEquation);
+//
+//										currentIds = ids08;
+//										currentIds2 = ids8;
+//									}
+//									else {
+//									    currentIds = ids07;
+//									    currentIds2 = ids7;
+//									}
+//								}
+//								else {
+//								    currentIds = ids06;
+//								    currentIds2 = ids6;
+//								}
+//							}
+//							else {
+//							    currentIds = ids05;
+//							    currentIds2 = ids5;
+//							}						    
+//						}
+//						else {
+//						    currentIds = ids04;
+//						    currentIds2 = ids4;
+//						}
+//					}
+//					else {
+//					    currentIds = ids03;
+//					    currentIds2 = ids3;
+//					}
+//				}
+//				else {
+//				    currentIds = ids02;
+//				    currentIds2 = ids2;
+//				}
+//			}
+//			else {
+//			    currentIds = ids01;
+//			    currentIds2 = ids1;
+//			}
+//		}
+//		
+//		else {
+//		    currentIds = ids00;	
+//		    currentIds2 = ids0;
+//		}
+//	}
 	
 //	var pos = binarySearch (sortedIds0, idEquation);
 //	
@@ -440,156 +443,303 @@ function EquationId (id, pos) {
 	this.pos = pos; //Posição em que ela está no array original (não ordenado)
 }
 
-var ids0 = [new EquationId (13, 0), 
-            new EquationId (14, 1), 
-            new EquationId (15, 2), 
-            new EquationId (16, 3), 
-            new EquationId (21, 8), 
-            new EquationId (22, 9), 
-            new EquationId (23, 10), 
-            new EquationId (24, 11), 
-            new EquationId (25, 12), 
-            new EquationId (26, 13), 
-            new EquationId (107, 4), 
-            new EquationId (108, 5), 
-            new EquationId (109, 6), 
-            new EquationId (110, 7)];
+//Array original das equações
+var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
+           29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+           58, 59, 60, 61, 62, 55, 56, 57, 63,
+           64, 65, 111, 67, 68, 112, 70, 71, 72, 113, 114, 115, 116, 117, 80, 81, 118, 119, 83, 84, 120,
+           121, 122, 123, 125, 126, 127, 128, 129, 130, 131, 132, 124, 125, 126, 135, 101, 136, 137, 138, 105, 139, 140, 141, 142, 143,
+           144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 180, 162,
+           168, 169, 170, 171, 172, 173, 174, 176, 177, 178,
+           187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
 
-var ids1 = [new EquationId (29, 0), 
-            new EquationId (30, 1), 
-            new EquationId (31, 2), 
-            new EquationId (32, 3), 
-            new EquationId (33, 4), 
-            new EquationId (34, 5), 
-            new EquationId (35, 6), 
-            new EquationId (36, 7), 
-            new EquationId (37, 8), 
-            new EquationId (38, 9), 
-            new EquationId (39, 10), 
-            new EquationId (40, 11), 
-            new EquationId (41, 12), 
-            new EquationId (42, 13), 
-            new EquationId (43, 14), 
-            new EquationId (44, 15), 
-            new EquationId (45, 16), 
-            new EquationId (46, 17), 
-            new EquationId (47, 18), 
-            new EquationId (48, 19), 
-            new EquationId (49, 20)];
+var sortedIds = new Array ( );
+sortedIds[13] = new EquationId (13, 0);
+sortedIds[14] = new EquationId (14, 1);
+sortedIds[15] = new EquationId (15, 2);
+sortedIds[16] = new EquationId (16, 3);
+sortedIds[21] = new EquationId (21, 8);
+sortedIds[22] = new EquationId (22, 9);
+sortedIds[23] = new EquationId (23, 10);
+sortedIds[24] = new EquationId (24, 11);
+sortedIds[25] = new EquationId (25, 12);
+sortedIds[26] = new EquationId (26, 13);
+sortedIds[29] = new EquationId (29, 14);
+sortedIds[30] = new EquationId (30, 15);
+sortedIds[31] = new EquationId (31, 16);
+sortedIds[32] = new EquationId (32, 17);
+sortedIds[33] = new EquationId (33, 18);
+sortedIds[34] = new EquationId (34, 19);
+sortedIds[35] = new EquationId (35, 20);
+sortedIds[36] = new EquationId (36, 21);
+sortedIds[37] = new EquationId (37, 22);
+sortedIds[38] = new EquationId (38, 23);
+sortedIds[39] = new EquationId (39, 24);
+sortedIds[40] = new EquationId (40, 25);
+sortedIds[41] = new EquationId (41, 26);
+sortedIds[42] = new EquationId (42, 27);
+sortedIds[43] = new EquationId (43, 28);
+sortedIds[44] = new EquationId (44, 29);
+sortedIds[45] = new EquationId (45, 30);
+sortedIds[46] = new EquationId (46, 31);
+sortedIds[47] = new EquationId (47, 32);
+sortedIds[48] = new EquationId (48, 33);
+sortedIds[49] = new EquationId (49, 34);
+sortedIds[55] = new EquationId (55, 40);
+sortedIds[56] = new EquationId (56, 41);
+sortedIds[57] = new EquationId (57, 42);
+sortedIds[58] = new EquationId (58, 35);
+sortedIds[59] = new EquationId (59, 36);
+sortedIds[60] = new EquationId (60, 37);
+sortedIds[61] = new EquationId (61, 38);
+sortedIds[62] = new EquationId (62, 39);
+sortedIds[63] = new EquationId (63, 43);
+sortedIds[64] = new EquationId (64, 44);
+sortedIds[65] = new EquationId (65, 45);
+sortedIds[67] = new EquationId (67, 47);
+sortedIds[68] = new EquationId (68, 48);
+sortedIds[70] = new EquationId (70, 50);
+sortedIds[71] = new EquationId (71, 51);
+sortedIds[72] = new EquationId (72, 52);
+sortedIds[80] = new EquationId (80, 58);
+sortedIds[81] = new EquationId (81, 59);
+sortedIds[83] = new EquationId (83, 62);
+sortedIds[84] = new EquationId (84, 63);
+sortedIds[101] = new EquationId (101, 80);
+sortedIds[105] = new EquationId (105, 84);
+sortedIds[107] = new EquationId (107, 4);
+sortedIds[108] = new EquationId (108, 5);
+sortedIds[109] = new EquationId (109, 6);
+sortedIds[110] = new EquationId (110, 7);
+sortedIds[111] = new EquationId (111, 46);
+sortedIds[112] = new EquationId (112, 49);
+sortedIds[113] = new EquationId (113, 53);
+sortedIds[114] = new EquationId (114, 54);
+sortedIds[115] = new EquationId (115, 55);
+sortedIds[116] = new EquationId (116, 56);
+sortedIds[117] = new EquationId (117, 57);
+sortedIds[118] = new EquationId (118, 60);
+sortedIds[119] = new EquationId (119, 61);
+sortedIds[120] = new EquationId (120, 64);
+sortedIds[121] = new EquationId (121, 65);
+sortedIds[122] = new EquationId (122, 66);
+sortedIds[123] = new EquationId (123, 67);
+sortedIds[124] = new EquationId (124, 76);
+sortedIds[125] = new EquationId (125, 68);
+sortedIds[125] = new EquationId (125, 77);
+sortedIds[126] = new EquationId (126, 69);
+sortedIds[126] = new EquationId (126, 78);
+sortedIds[127] = new EquationId (127, 70);
+sortedIds[128] = new EquationId (128, 71);
+sortedIds[129] = new EquationId (129, 72);
+sortedIds[130] = new EquationId (130, 73);
+sortedIds[131] = new EquationId (131, 74);
+sortedIds[132] = new EquationId (132, 75);
+sortedIds[135] = new EquationId (135, 79);
+sortedIds[136] = new EquationId (136, 81);
+sortedIds[137] = new EquationId (137, 82);
+sortedIds[138] = new EquationId (138, 83);
+sortedIds[139] = new EquationId (139, 85);
+sortedIds[140] = new EquationId (140, 86);
+sortedIds[141] = new EquationId (141, 87);
+sortedIds[142] = new EquationId (142, 88);
+sortedIds[143] = new EquationId (143, 89);
+sortedIds[144] = new EquationId (144, 90);
+sortedIds[145] = new EquationId (145, 91);
+sortedIds[146] = new EquationId (146, 92);
+sortedIds[147] = new EquationId (147, 93);
+sortedIds[148] = new EquationId (148, 94);
+sortedIds[149] = new EquationId (149, 95);
+sortedIds[150] = new EquationId (150, 96);
+sortedIds[151] = new EquationId (151, 97);
+sortedIds[152] = new EquationId (152, 98);
+sortedIds[153] = new EquationId (153, 99);
+sortedIds[154] = new EquationId (154, 100);
+sortedIds[155] = new EquationId (155, 101);
+sortedIds[156] = new EquationId (156, 102);
+sortedIds[157] = new EquationId (157, 103);
+sortedIds[158] = new EquationId (158, 104);
+sortedIds[159] = new EquationId (159, 105);
+sortedIds[160] = new EquationId (160, 106);
+sortedIds[162] = new EquationId (162, 108);
+sortedIds[168] = new EquationId (168, 109);
+sortedIds[169] = new EquationId (169, 110);
+sortedIds[170] = new EquationId (170, 111);
+sortedIds[171] = new EquationId (171, 112);
+sortedIds[172] = new EquationId (172, 113);
+sortedIds[173] = new EquationId (173, 114);
+sortedIds[174] = new EquationId (174, 115);
+sortedIds[176] = new EquationId (176, 116);
+sortedIds[177] = new EquationId (177, 117);
+sortedIds[178] = new EquationId (178, 118);
+sortedIds[180] = new EquationId (180, 107);
+sortedIds[187] = new EquationId (187, 119);
+sortedIds[188] = new EquationId (188, 120);
+sortedIds[189] = new EquationId (189, 121);
+sortedIds[190] = new EquationId (190, 122);
+sortedIds[191] = new EquationId (191, 123);
+sortedIds[192] = new EquationId (192, 124);
+sortedIds[193] = new EquationId (193, 125);
+sortedIds[194] = new EquationId (194, 126);
+sortedIds[195] = new EquationId (195, 127);
+sortedIds[196] = new EquationId (196, 128);
+sortedIds[197] = new EquationId (197, 129);
+sortedIds[198] = new EquationId (198, 130);
+sortedIds[199] = new EquationId (199, 131);
+sortedIds[200] = new EquationId (200, 132);
 
-var ids2 = [new EquationId (55, 5), 
-            new EquationId (56, 6), 
-            new EquationId (57, 7), 
-            new EquationId (58, 0), 
-            new EquationId (59, 1), 
-            new EquationId (60, 2), 
-            new EquationId (61, 3), 
-            new EquationId (62, 4), 
-            new EquationId (63, 8)];
-
-var ids3 = [new EquationId (64, 0), 
-            new EquationId (65, 1), 
-            new EquationId (67, 3), 
-            new EquationId (68, 4), 
-            new EquationId (70, 6), 
-            new EquationId (71, 7), 
-            new EquationId (72, 8), 
-            new EquationId (80, 14), 
-            new EquationId (81, 15), 
-            new EquationId (83, 18), 
-            new EquationId (84, 19), 
-            new EquationId (111, 2), 
-            new EquationId (112, 5), 
-            new EquationId (113, 9), 
-            new EquationId (114, 10), 
-            new EquationId (115, 11), 
-            new EquationId (116, 12), 
-            new EquationId (117, 13), 
-            new EquationId (118, 16), 
-            new EquationId (119, 17), 
-            new EquationId (120, 20)];
-
-var ids4 = [new EquationId (101, 15), 
-            new EquationId (105, 19), 
-            new EquationId (121, 0), 
-            new EquationId (122, 1), 
-            new EquationId (123, 2), 
-            new EquationId (124, 11), 
-            new EquationId (125, 3), 
-            new EquationId (125, 3), 
-            new EquationId (126, 4), 
-            new EquationId (126, 4), 
-            new EquationId (127, 5), 
-            new EquationId (128, 6), 
-            new EquationId (129, 7), 
-            new EquationId (130, 8), 
-            new EquationId (131, 9), 
-            new EquationId (132, 10), 
-            new EquationId (135, 14), 
-            new EquationId (136, 16), 
-            new EquationId (137, 17), 
-            new EquationId (138, 18), 
-            new EquationId (139, 20), 
-            new EquationId (140, 21), 
-            new EquationId (141, 22), 
-            new EquationId (142, 23), 
-            new EquationId (143, 24)];
-
-var ids5 = [new EquationId (144, 0), 
-            new EquationId (145, 1), 
-            new EquationId (146, 2), 
-            new EquationId (147, 3), 
-            new EquationId (148, 4), 
-            new EquationId (149, 5), 
-            new EquationId (150, 6), 
-            new EquationId (151, 7), 
-            new EquationId (152, 8), 
-            new EquationId (153, 9), 
-            new EquationId (154, 10), 
-            new EquationId (155, 11), 
-            new EquationId (156, 12), 
-            new EquationId (157, 13), 
-            new EquationId (158, 14), 
-            new EquationId (159, 15), 
-            new EquationId (160, 16), 
-            new EquationId (162, 18), 
-            new EquationId (180, 17)];
-
-var ids6 = [new EquationId (168, 0), 
-            new EquationId (169, 1), 
-            new EquationId (170, 2), 
-            new EquationId (171, 3), 
-            new EquationId (172, 4), 
-            new EquationId (173, 5), 
-            new EquationId (174, 6), 
-            new EquationId (176, 7), 
-            new EquationId (177, 8), 
-            new EquationId (178, 9)];
-
-var ids7 = [new EquationId (187, 0), 
-            new EquationId (188, 1), 
-            new EquationId (189, 2), 
-            new EquationId (190, 3), 
-            new EquationId (191, 4), 
-            new EquationId (192, 5), 
-            new EquationId (193, 6), 
-            new EquationId (194, 7), 
-            new EquationId (195, 8), 
-            new EquationId (196, 9), 
-            new EquationId (197, 10), 
-            new EquationId (198, 11), 
-            new EquationId (199, 12), 
-            new EquationId (200, 13)];
+//var ids0 = [new EquationId (13, 0), 
+//            new EquationId (14, 1), 
+//            new EquationId (15, 2), 
+//            new EquationId (16, 3), 
+//            new EquationId (21, 8), 
+//            new EquationId (22, 9), 
+//            new EquationId (23, 10), 
+//            new EquationId (24, 11), 
+//            new EquationId (25, 12), 
+//            new EquationId (26, 13), 
+//            new EquationId (107, 4), 
+//            new EquationId (108, 5), 
+//            new EquationId (109, 6), 
+//            new EquationId (110, 7)];
+//
+//var ids1 = [new EquationId (29, 0), 
+//            new EquationId (30, 1), 
+//            new EquationId (31, 2), 
+//            new EquationId (32, 3), 
+//            new EquationId (33, 4), 
+//            new EquationId (34, 5), 
+//            new EquationId (35, 6), 
+//            new EquationId (36, 7), 
+//            new EquationId (37, 8), 
+//            new EquationId (38, 9), 
+//            new EquationId (39, 10), 
+//            new EquationId (40, 11), 
+//            new EquationId (41, 12), 
+//            new EquationId (42, 13), 
+//            new EquationId (43, 14), 
+//            new EquationId (44, 15), 
+//            new EquationId (45, 16), 
+//            new EquationId (46, 17), 
+//            new EquationId (47, 18), 
+//            new EquationId (48, 19), 
+//            new EquationId (49, 20)];
+//
+//var ids2 = [new EquationId (55, 5), 
+//            new EquationId (56, 6), 
+//            new EquationId (57, 7), 
+//            new EquationId (58, 0), 
+//            new EquationId (59, 1), 
+//            new EquationId (60, 2), 
+//            new EquationId (61, 3), 
+//            new EquationId (62, 4), 
+//            new EquationId (63, 8)];
+//
+//var ids3 = [new EquationId (64, 0), 
+//            new EquationId (65, 1), 
+//            new EquationId (67, 3), 
+//            new EquationId (68, 4), 
+//            new EquationId (70, 6), 
+//            new EquationId (71, 7), 
+//            new EquationId (72, 8), 
+//            new EquationId (80, 14), 
+//            new EquationId (81, 15), 
+//            new EquationId (83, 18), 
+//            new EquationId (84, 19), 
+//            new EquationId (111, 2), 
+//            new EquationId (112, 5), 
+//            new EquationId (113, 9), 
+//            new EquationId (114, 10), 
+//            new EquationId (115, 11), 
+//            new EquationId (116, 12), 
+//            new EquationId (117, 13), 
+//            new EquationId (118, 16), 
+//            new EquationId (119, 17), 
+//            new EquationId (120, 20)];
+//
+//var ids4 = [new EquationId (101, 15), 
+//            new EquationId (105, 19), 
+//            new EquationId (121, 0), 
+//            new EquationId (122, 1), 
+//            new EquationId (123, 2), 
+//            new EquationId (124, 11), 
+//            new EquationId (125, 3), 
+//            new EquationId (125, 3), 
+//            new EquationId (126, 4), 
+//            new EquationId (126, 4), 
+//            new EquationId (127, 5), 
+//            new EquationId (128, 6), 
+//            new EquationId (129, 7), 
+//            new EquationId (130, 8), 
+//            new EquationId (131, 9), 
+//            new EquationId (132, 10), 
+//            new EquationId (135, 14), 
+//            new EquationId (136, 16), 
+//            new EquationId (137, 17), 
+//            new EquationId (138, 18), 
+//            new EquationId (139, 20), 
+//            new EquationId (140, 21), 
+//            new EquationId (141, 22), 
+//            new EquationId (142, 23), 
+//            new EquationId (143, 24)];
+//
+//var ids5 = [new EquationId (144, 0), 
+//            new EquationId (145, 1), 
+//            new EquationId (146, 2), 
+//            new EquationId (147, 3), 
+//            new EquationId (148, 4), 
+//            new EquationId (149, 5), 
+//            new EquationId (150, 6), 
+//            new EquationId (151, 7), 
+//            new EquationId (152, 8), 
+//            new EquationId (153, 9), 
+//            new EquationId (154, 10), 
+//            new EquationId (155, 11), 
+//            new EquationId (156, 12), 
+//            new EquationId (157, 13), 
+//            new EquationId (158, 14), 
+//            new EquationId (159, 15), 
+//            new EquationId (160, 16), 
+//            new EquationId (162, 18), 
+//            new EquationId (180, 17)];
+//
+//var ids6 = [new EquationId (168, 0), 
+//            new EquationId (169, 1), 
+//            new EquationId (170, 2), 
+//            new EquationId (171, 3), 
+//            new EquationId (172, 4), 
+//            new EquationId (173, 5), 
+//            new EquationId (174, 6), 
+//            new EquationId (176, 7), 
+//            new EquationId (177, 8), 
+//            new EquationId (178, 9)];
+//
+//var ids7 = [new EquationId (187, 0), 
+//            new EquationId (188, 1), 
+//            new EquationId (189, 2), 
+//            new EquationId (190, 3), 
+//            new EquationId (191, 4), 
+//            new EquationId (192, 5), 
+//            new EquationId (193, 6), 
+//            new EquationId (194, 7), 
+//            new EquationId (195, 8), 
+//            new EquationId (196, 9), 
+//            new EquationId (197, 10), 
+//            new EquationId (198, 11), 
+//            new EquationId (199, 12), 
+//            new EquationId (200, 13)];
 
 //Arrays originais das equações
-ids00 = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26];
-ids01 = [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
-ids02 = [58, 59, 60, 61, 62, 55, 56, 57, 63];
-ids03 = [64, 65, 111, 67, 68, 112, 70, 71, 72, 113, 114, 115, 116, 117, 80, 81, 118, 119, 83, 84, 120];
-ids04 = [121, 122, 123, 125, 126, 127, 128, 129, 130, 131, 132, 124, 125, 126, 135, 101, 136, 137, 138, 105, 139, 140, 141, 142, 143];
-ids05 = [144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 180, 162];
-ids06 = [168, 169, 170, 171, 172, 173, 174, 176, 177, 178];
-ids07 = [187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
+//ids00 = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26];
+//ids01 = [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
+//ids02 = [58, 59, 60, 61, 62, 55, 56, 57, 63];
+//ids03 = [64, 65, 111, 67, 68, 112, 70, 71, 72, 113, 114, 115, 116, 117, 80, 81, 118, 119, 83, 84, 120];
+//ids04 = [121, 122, 123, 125, 126, 127, 128, 129, 130, 131, 132, 124, 125, 126, 135, 101, 136, 137, 138, 105, 139, 140, 141, 142, 143];
+//ids05 = [144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 180, 162];
+//ids06 = [168, 169, 170, 171, 172, 173, 174, 176, 177, 178];
+//ids07 = [187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
+
+
 //
 //
 //sortedIds0 = [13, 14, 15, 16, 21, 22, 23, 24, 25, 26, 107, 108, 109, 110];
