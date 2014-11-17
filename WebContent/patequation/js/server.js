@@ -187,7 +187,7 @@ function requestServer (type, last, next, typeOperation, element) {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
                     
-                    	var finalIds = [26, 49, 63, 120, 143, 162, 178];
+                    	var finalIds = [26, 49, 63, 120, 143, 162, 178, 200, 201, 219];
                     	
                     	if (binarySearch (finalIds, idEquation) === -1)                  		
                             nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>");
@@ -437,6 +437,24 @@ function requestServer (type, last, next, typeOperation, element) {
                 }
             }
         }});
-    
+}
 
+function binarySearch (ids, id) {
+	var inf = 0;
+	var sup = ids.length - 1;
+	
+	while (sup >= inf) {
+		var med = Math.floor((inf + sup) / 2);
+		
+		if (id === ids[med])
+			return med;
+		
+		else if (id < ids[med])
+			sup = med - 1;
+		
+		else
+			inf = med + 1;
+	}
+	
+	return -1;
 }

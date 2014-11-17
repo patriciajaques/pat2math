@@ -418,26 +418,6 @@ function nextEquationClick ( ) {
 	
 }
 
-function binarySearch (ids, id) {
-	var inf = 0;
-	var sup = ids.length - 1;
-	
-	while (sup >= inf) {
-		var med = Math.floor((inf + sup) / 2);
-		
-		if (id === ids[med].id)
-			return med;
-		
-		else if (id < ids[med].id)
-			sup = med - 1;
-		
-		else
-			inf = med + 1;
-	}
-	
-	return -1;
-}
-
 function EquationId (id, pos) {
 	this.id = id; //ID da equação
 	this.pos = pos; //Posição em que ela está no array original (não ordenado)
@@ -451,7 +431,8 @@ var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
            121, 122, 123, 125, 126, 127, 128, 129, 130, 131, 132, 124, 125, 126, 135, 101, 136, 137, 138, 105, 139, 140, 141, 142, 143,
            144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 180, 162,
            168, 169, 170, 171, 172, 173, 174, 176, 177, 178,
-           187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
+           187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
+           212, 213, 214, 215, 216, 217, 218, 219];
 
 var sortedIds = new Array ( );
 sortedIds[13] = new EquationId (13, 0);
@@ -587,6 +568,14 @@ sortedIds[197] = new EquationId (197, 129);
 sortedIds[198] = new EquationId (198, 130);
 sortedIds[199] = new EquationId (199, 131);
 sortedIds[200] = new EquationId (200, 132);
+sortedIds[212] = new EquationId (212, 133);
+sortedIds[213] = new EquationId (213, 134);
+sortedIds[214] = new EquationId (214, 135);
+sortedIds[215] = new EquationId (215, 136);
+sortedIds[216] = new EquationId (216, 137);
+sortedIds[217] = new EquationId (217, 138);
+sortedIds[218] = new EquationId (218, 139);
+sortedIds[219] = new EquationId (219, 140); 
 
 //var ids0 = [new EquationId (13, 0), 
 //            new EquationId (14, 1), 
