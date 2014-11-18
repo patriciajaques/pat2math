@@ -83,8 +83,10 @@ function mostraProgressoAudio2 ( ) {
 var tipoAudio = 0;
 
 $(document).ready(function() {	
+	var temp = 42;
+	
 	if (tipoAudio === 0)
-	location.href = "/pat2math/student/home";
+	    location.href = "/pat2math/student/home";
 	
 });
 

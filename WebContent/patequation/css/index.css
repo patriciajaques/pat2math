@@ -826,16 +826,6 @@ msqrt mfrac{
     background: url('../img/lupa cinza.png') no-repeat center;
 }
 
-#button_load{    
-    position: relative;
-    float: right;
-    border: none;
-    width: 40px;
-    height: 28px;
-    margin-top: 2px;
-    background: url('../images/solve_loading.gif') no-repeat center;
-}
-
 #button:hover {
     background: url('../img/lupa.png') no-repeat center;
     /*    border:1px solid #EEE8AA;
