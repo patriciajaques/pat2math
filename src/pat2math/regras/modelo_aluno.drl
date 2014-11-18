@@ -2214,8 +2214,7 @@ function boolean validarDestruirZeros(Expression user, Expression solver){
 }
 
 function boolean validarReverteEquacao(Expression user,Expression solver){
-	Funcoes f=new Funcoes();
-	//f.j();
+	Funcoes f=new Funcoes();	
 	f.modificaSinal(user.getRoot());
 	f.modificaSinal(solver.getRoot());
 	boolean revert=false;
@@ -2230,8 +2229,12 @@ function boolean validarReverteEquacao(Expression user,Expression solver){
 	if (!revert){
 		//caso especial, quando há um termo (ou 2 em caso de fração) em cada lado da equação, reverte de modo a manter a incognita e o 
 		// numero inteiro em lados iguais ao do aluno
-		revert= ((checkForINC(folhasUEsq,folhasSDir)&&checkForINT(folhasUDir,folhasSEsq)) ||
-			(checkForINT(folhasUEsq,folhasSDir)&&checkForINC(folhasUDir,folhasSEsq)));
+		//config 1 e 2 não podem se true ao mesmo tempo, pois significa que há constante e incogita em ambos os lado.
+		f.j();
+		boolean config1=(checkForINC(folhasUEsq,folhasSDir)&&checkForINT(folhasUDir,folhasSEsq));
+		boolean config2=(checkForINT(folhasUEsq,folhasSDir)&&checkForINC(folhasUDir,folhasSEsq));
+		revert=  (config1 && !config2)||(!config1 && config2);
+			
 	}
 	return revert;
 }
@@ -2609,7 +2612,7 @@ rule "Calculo Multiplicacao"
 		BTNode mult=null;
 		BTNode m1=l.remove(0);
 		BTNode m2=l.remove(0);
-		Funcoes.j();
+		//Funcoes.j();
 		if (m1.isAbstract()){
 			m1.setAbstractTerm(false);
 			m1.getPai().setAbstractTerm(false);

@@ -389,11 +389,25 @@ public class Expression implements Cloneable{
 		}else{
 			BTNode esq=pai.getEsq();
 			if (pai.getValue().equals("-")){
-				dir.setValue(Funcoes.trocaSinal(dir.getValue()));
+				if (dir.eFolha())dir.setValue(Funcoes.trocaSinal(dir.getValue()));
+				else useAbstract=true;
 				pai.setValue("+");
 			}
 			pai.setEsq(null);
 			pai.setDir(null);
+			if (useAbstract){
+				if (dir.getValue().equals("/")){
+					BTNode aux= dir.getEsq();//numerador
+					dir.setEsq(null);
+					dir.setEsq(new BTNode("*",new BTNode("-1"),aux));
+					dir.getEsq().getEsq().setAbstractTerm(true);
+					dir.getEsq().setAbstractTerm(true);
+				}else{
+					r=new BTNode ("*",new BTNode ("-1"),dir);
+					r.getEsq().setAbstractTerm(true);
+					r.setAbstractTerm(true);
+				}
+			}
 			if (pai.getPai().getEsq()!=null &&
 					pai.getPai().getEsq().equals(pai)){
 				pai=pai.getPai();
