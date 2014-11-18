@@ -4,6 +4,7 @@ var idEquation; // the id of the equation in database
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
+var isClicked = false;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -817,11 +818,12 @@ function centralizeCanCopy() {
 }
 
 function buttonClick() {
-
-    $(selectedSheet + " #button").button().unbind('click');
-    $(selectedSheet + " #button").button().click(function() {
-        checkEquation();
-    });
+	if (isClicked === false) {
+        $(selectedSheet + " #button").button().unbind('click');
+        $(selectedSheet + " #button").button().click(function() {
+            checkEquation();
+        });
+	}
 }
 
 function getEquation(list) {
@@ -1164,8 +1166,13 @@ function newEquation() {
 }
 
 function checkEquation() { 
-	var display = document.getElementById('button').style.display;
-    document.getElementById('button').style.display = 'none';
+	//var display = document.getElementById('button').style.display;
+	isClicked = true;
+	document.getElementById('button').style.width = '16px';
+	document.getElementById('button').style.height = '16px';
+	document.getElementById('button').style.top = '4px';
+	document.getElementById('button').style.right = '7px';
+	document.getElementById('button').style.background = 'url("/pat2math/images/solve_loading.gif")';
     
     $(document).keyup(function(event) {
         // key 13 = enter
@@ -1231,6 +1238,7 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
+  isClicked = false;
   //document.getElementById('button').style.display = 'inline';
 }
 
