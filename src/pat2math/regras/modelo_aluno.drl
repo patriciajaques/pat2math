@@ -410,10 +410,10 @@ function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 	folhasSEsqInt.addAll(Conjuntos.getIncognitas(folhasSEsq,true));
 	folhasSDirInt.addAll(Conjuntos.getIncognitas(folhasSDir,true));
 	
-	folhasUEsq = filterSimpleFractions(folhasUEsq);
-	folhasUDir = filterSimpleFractions(folhasUDir);
-	folhasSEsq = filterSimpleFractions(folhasSEsq);
-	folhasSDir = filterSimpleFractions(folhasSDir);
+	folhasUEsq = Conjuntos.getFracao(folhasUEsq);//filterSimpleFractions(folhasUEsq);
+	folhasUDir = Conjuntos.getFracao(folhasUDir);//filterSimpleFractions(folhasUDir);
+	folhasSEsq = Conjuntos.getFracao(folhasSEsq);//filterSimpleFractions(folhasSEsq);
+	folhasSDir = Conjuntos.getFracao(folhasSDir);//filterSimpleFractions(folhasSDir);
 	
 	List calculos[]= new List[2];
 	if (folhasUEsq.isEmpty() && folhasUDir.isEmpty() && folhasSEsq.isEmpty() &&folhasSDir.isEmpty()){
@@ -424,8 +424,8 @@ function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 	
 	 
 	//Obtem os nos de solver que nao estao presentes em usr 
-	List<BTNode> folhasDifEsq=Conjuntos.diferencaFracao(folhasSEsq,folhasUEsq);
-	List<BTNode> folhasDifDir=Conjuntos.diferencaFracao(folhasSDir,folhasUDir);
+	List<BTNode> folhasDifEsq=Conjuntos.diferencaFracaoComplexa(folhasSEsq,folhasUEsq);
+	List<BTNode> folhasDifDir=Conjuntos.diferencaFracaoComplexa(folhasSDir,folhasUDir);
 	
 	List<BTNode> folhasDifEsqInt=Conjuntos.diferenca(folhasSEsqInt,folhasUEsqInt);
 	List<BTNode> folhasDifDirInt=Conjuntos.diferenca(folhasSDirInt,folhasUDirInt);
@@ -2468,7 +2468,7 @@ rule "Calculo Soma e Subtracao"
 		BTNode v1,v2,root=solver.getRoot(),posicao; 
 		List<BTNode>l=v[0];						  
 		String s1,s2,inc="",msg,local;//local= o lado onde vai ser inserido o novo nodo com o 
-		int val1,val2,resultado; // resulta)do da operacao
+		int val1,val2,resultado; // resultado da operacao
 		if (l.isEmpty())l=v[1];
 		v1=l.remove(0);
 		String sinalOp=v1.getPai().getValue();
@@ -2609,6 +2609,7 @@ rule "Calculo Multiplicacao"
 		BTNode mult=null;
 		BTNode m1=l.remove(0);
 		BTNode m2=l.remove(0);
+		Funcoes.j();
 		if (m1.isAbstract()){
 			m1.setAbstractTerm(false);
 			m1.getPai().setAbstractTerm(false);
@@ -2617,7 +2618,6 @@ rule "Calculo Multiplicacao"
 			m2.setAbstractTerm(false);
 			m2.getPai().setAbstractTerm(false);
 		}
-		Funcoes.j();
 		String potRaiz=""; //para o uso de multiplicação de raizes ou potencias!!!
 		while (!m1.getPai().getValue().equals("*"))m1=m1.getPai();
 		while (!m2.getPai().getValue().equals("*"))m2=m2.getPai();

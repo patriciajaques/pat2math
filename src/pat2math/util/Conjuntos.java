@@ -274,6 +274,43 @@ public class Conjuntos {
 		return numeradoresDif;
 	}
 	
+	public static List<BTNode> diferencaFracaoComplexa(List<BTNode> l1,List<BTNode> l2){
+		// numeradores e denominadores serão processados separadamente pelo método <code>diferenca</code>
+		List<BTNode> numeradoresDif,denominadoresDif;
+		ArrayList<BTNode> numeradores1=new ArrayList<BTNode>(),
+						  numeradores2=new ArrayList<BTNode>(),
+						  denominadores1=new ArrayList<BTNode>(),
+						  denominadores2=new ArrayList<BTNode>();
+		for (int i=l1.size()-1;i>=0;i--){
+			BTNode frac1=l1.get(i);
+			numeradores1.addAll(Expression.getFolhas(frac1.getEsq()));
+			denominadores1.addAll(Expression.getFolhas(frac1.getDir()));
+			for (int j=l2.size()-1;j>=0;j--){
+				BTNode frac2=l2.get(j);
+				numeradores2.addAll(Expression.getFolhas(frac2.getEsq()));
+				denominadores2.addAll(Expression.getFolhas(frac2.getDir()));
+				if (numeradores1.size()==numeradores2.size() && denominadores1.size()==denominadores2.size()){
+					numeradoresDif=diferenca(numeradores1, numeradores2);
+					denominadoresDif=diferenca(denominadores1,denominadores2);
+					//nenhum nodo de diferente de l1 em l2
+					if (numeradoresDif.isEmpty() && denominadoresDif.isEmpty()){
+						numeradoresDif=diferenca(numeradores2, numeradores1);
+						denominadoresDif=diferenca(denominadores2,denominadores1);
+						//nenhum nodo de diferente de l2 em l1
+						if (numeradoresDif.isEmpty() && denominadoresDif.isEmpty()){
+							l1.remove(frac1);
+							l2.remove(frac2);
+							break;
+						}
+					}
+				}
+			}
+		}	
+				
+		return l1;
+	}
+	
+	
 	/**
 	 * Verifica se os BTNodes de l1 estao em l2
 	 * @param l1 o conjunto de BTNodes a ser verificado

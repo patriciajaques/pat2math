@@ -2211,7 +2211,7 @@ end
 
 rule "Mover termo simples"
 // 3x/4=9 => 3x=9*4
-	salience 5
+	salience 2
 	dialect "java"
 	when
 		e: Expression(tipo==Expression.SOLVER);
