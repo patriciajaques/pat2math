@@ -499,6 +499,7 @@ function List[] getNodosMult (Expression usr, Expression solver){
 	List<BTNode> folhasSEsq=Expression.getFolhasPotRaiz(sv.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasSDir=Expression.getFolhasPotRaiz(sv.getDir(),new Vector<BTNode>());
 	//Obtem os nos de solver que nao estao presentes em usr 
+	Funcoes.j();
 	List<BTNode> folhasDifEsq=Conjuntos.diferenca(folhasSEsq,folhasUEsq);
 	List<BTNode> folhasDifDir=Conjuntos.diferenca(folhasSDir,folhasUDir);
 	List mult[]=new List[2];
@@ -1258,21 +1259,23 @@ function List getNodosMover(List solver, List user){
 			if ((btS.eFolha() && btU.eFolha()) ||
 				btS.getValue().equals("^") && btU.getValue().equals("^") && btS.getDir().getValue().equals(btU.getDir().getValue())){
 			//se no solver estiver negativo no user DEVE ser positivo pois estao de lados opostos
-			//da equacao	
-			if (vS.startsWith("-") && !vU.startsWith("-")){
-				if (vS.substring(1).equals(vU) && !vU.equals("0")){
-					if (podeMover(btS)){
-						nodos.add(btS);
-						slvr.remove(btS);
-						usr.remove(btU);
+			//da equacao
+			if (Conjuntos.checkNodesForEquality(btS,btU)){
+				if (vS.startsWith("-") && !vU.startsWith("-")){
+					if (vS.substring(1).equals(vU) && !vU.equals("0")){
+						if (podeMover(btS)){
+							nodos.add(btS);
+							slvr.remove(btS);
+							usr.remove(btU);
+						}
 					}
-				}
-			}else if (!vS.startsWith("-") && vU.startsWith("-")){
-				if (vU.substring(1).equals(vS) && !vS.equals("0")){
-					if (podeMover(btS)){
-						nodos.add(btS);
-						slvr.remove(btS);
-						usr.remove(btU);
+				}else if (!vS.startsWith("-") && vU.startsWith("-")){
+					if (vU.substring(1).equals(vS) && !vS.equals("0")){
+						if (podeMover(btS)){
+							nodos.add(btS);
+							slvr.remove(btS);
+							usr.remove(btU);
+						}
 					}
 				}
 			}
@@ -2230,7 +2233,6 @@ function boolean validarReverteEquacao(Expression user,Expression solver){
 		//caso especial, quando há um termo (ou 2 em caso de fração) em cada lado da equação, reverte de modo a manter a incognita e o 
 		// numero inteiro em lados iguais ao do aluno
 		//config 1 e 2 não podem se true ao mesmo tempo, pois significa que há constante e incogita em ambos os lado.
-		f.j();
 		boolean config1=(checkForINC(folhasUEsq,folhasSDir)&&checkForINT(folhasUDir,folhasSEsq));
 		boolean config2=(checkForINT(folhasUEsq,folhasSDir)&&checkForINC(folhasUDir,folhasSEsq));
 		revert=  (config1 && !config2)||(!config1 && config2);

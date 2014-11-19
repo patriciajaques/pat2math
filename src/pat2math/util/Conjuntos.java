@@ -74,7 +74,7 @@ public class Conjuntos {
 	 * @param node2 un {@link BTNode}
 	 * @return <code>true</code> se os nodos forem iguais e <code>false</code> caso contrario.
 	 */
-	private static boolean checkNodesForEquality (BTNode node,BTNode node2){
+	public static boolean checkNodesForEquality (BTNode node,BTNode node2){
 		if (node.igual(node2)){
 			ArrayList<String> nodeOp=Funcoes.getNodeValues(node);
 			ArrayList<String> node2Op=Funcoes.getNodeValues(node2);
