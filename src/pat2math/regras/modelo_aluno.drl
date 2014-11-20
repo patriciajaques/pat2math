@@ -327,7 +327,6 @@ function List[] getIsolaX (Expression usr, Expression solver){
 
 function List getNodosMoverTermoSomaSub (Expression usr, Expression solver){
 	Funcoes f=new Funcoes();
-	f.t();
 	BTNode us,sv;
 	if (usr.isRootMMC())us=usr.getRoot().getEsq();
 	else us=usr.getRoot();
@@ -395,6 +394,7 @@ function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
+	//Funcoes.j();
 	List<BTNode> folhasUEsq=Expression.getFolhasFracoes(us.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getFolhasFracoes(us.getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getFolhasFracoes(sv.getEsq(),new Vector<BTNode>());
@@ -2560,6 +2560,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 		String msg="# Soma de Fracoes";
 		BTNode temp1=null,temp2=null;
 		//agrupar as frações
+		Funcoes.j();
 		while (chosen.size()>1){
 			if (temp1==null ||temp1.getPai()!=null){
 				temp1=chosen.remove(0);

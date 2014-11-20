@@ -80,7 +80,7 @@ public class Conjuntos {
 			ArrayList<String> node2Op=Funcoes.getNodeValues(node2);
 			boolean done=false;
 			boolean igual=false;
-			boolean pertFrac;// se true ou sos 2 nodos são numeradores ou denominadores 
+			boolean pertFrac=false;// se true ou sos 2 nodos são numeradores ou denominadores 
 			BTNode rootFrac1,rootFrac2;
 			rootFrac1=node.getNodeX("/");
 			rootFrac2=node2.getNodeX("/");
@@ -104,7 +104,7 @@ public class Conjuntos {
 						(node.ehFilhoDir(rootFrac1) && node2.ehFilhoDir(rootFrac2))){
 					pertFrac=true; // significa que ambos são frações e são numeradores ou denominadores
 				}else return false; // são frações e não são os 2 numeradores ou os 2 denominadores então não são iguais
-			}else return false; //se um pertence a uma fração e o outro não então são diferentes
+			}else if ((rootFrac1!=null && rootFrac2==null) || (rootFrac1==null && rootFrac2!=null))return false; //se um pertence a uma fração e o outro não então são diferentes
 			//para o cas de alguma equação onde opde haver algo do tipo
 			// a+b=c onde c pode ser considerado igual caso
 			//apareça um +,-,* ou se o numerador da fração

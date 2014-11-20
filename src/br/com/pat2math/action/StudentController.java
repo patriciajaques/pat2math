@@ -113,12 +113,12 @@ public class StudentController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/student/home")
 	public String home(Model model, HttpSession session) {
+		Student student = new CurrentUser(session).student();
+		if (student==null) return "user.login";
 		Tutor tutor = (Tutor)session.getAttribute("tutor");
 		if (tutor==null){
 			session.setAttribute("tutor", new Tutor("", "", allHelps.getActives()));
 		}
-		Student student = new CurrentUser(session).student();
-		if (student==null) return "user.login";
 		Group studentGroup = student.getGroup();
 		Plan plan;
 		if(studentGroup != null)
