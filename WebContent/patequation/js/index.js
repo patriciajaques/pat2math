@@ -824,10 +824,6 @@ function buttonClick() {
 		checkEquation();
     });
 	}
-	
-	else {
-		alert ("Erro");
-	}
 }
 
 function getEquation(list) {
@@ -1246,10 +1242,6 @@ function checkEquation() {
   isClicked = false;
   //document.getElementById('button').style.display = 'inline';
 }
-
-	else {
-		alert ("Erro");
-	}
 }
 
 function identifyABC(step) {
