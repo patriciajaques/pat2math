@@ -819,10 +819,14 @@ function centralizeCanCopy() {
 
 function buttonClick() {
 	if (isClicked === false) {
-        $(selectedSheet + " #button").button().unbind('click');
-        $(selectedSheet + " #button").button().click(function() {
-            checkEquation();
-        });
+	$(selectedSheet + " #button").button().unbind('click');   
+	$(selectedSheet + " #button").button().click(function() {    
+		checkEquation();
+    });
+	}
+	
+	else {
+		alert ("Erro");
 	}
 }
 
@@ -1166,6 +1170,7 @@ function newEquation() {
 }
 
 function checkEquation() { 
+	if (isClicked === false) {
 	//var display = document.getElementById('button').style.display;
 	isClicked = true;
 	document.getElementById('button').style.width = '16px';
@@ -1240,6 +1245,11 @@ function checkEquation() {
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
   isClicked = false;
   //document.getElementById('button').style.display = 'inline';
+}
+
+	else {
+		alert ("Erro");
+	}
 }
 
 function identifyABC(step) {
