@@ -321,29 +321,56 @@ public class Expression implements Cloneable{
 	public static BTNode removeDaArvore(BTNode r){
 		BTNode pai=r.getPai();
 		BTNode dir= pai.getDir();
+		boolean useAbstract=false;
 		if (pai.getEsq().equals(r)){
 			if (pai.getValue().equals("-")){
 				if (dir.getValue().equals("^")||dir.getValue().equals("R")){
 					dir.getEsq().setValue(Funcoes.trocaSinal(dir.getEsq().getValue()));
-				}else dir.setValue(Funcoes.trocaSinal(dir.getValue()));
+				}else if (!dir.eFolha()){
+					useAbstract=true;
+				}
+				else dir.setValue(Funcoes.trocaSinal(dir.getValue()));
 				pai.setValue("+");
 			}
 			pai.setDir(null);
 			pai.setEsq(null);
-			pai.setValue(dir.getValue());
-			pai.setEsq(dir.getEsq());
-			pai.setDir(dir.getDir());
+			if (useAbstract){
+				pai.setEsq(new BTNode(-1));
+				pai.setDir(dir);
+				pai.setValue("*");
+				pai.getEsq().setAbstractTerm(true);
+				pai.setAbstractTerm(true);
+			}else {
+				pai.setValue(dir.getValue());
+				pai.setEsq(dir.getEsq());
+				pai.setDir(dir.getDir());
+			}
 		}else{
 			BTNode esq=pai.getEsq();
 			if (pai.getValue().equals("-")){
-				dir.setValue(Funcoes.trocaSinal(dir.getValue()));
+				if (dir.eFolha())dir.setValue(Funcoes.trocaSinal(dir.getValue()));
+				else useAbstract=true;
 				pai.setValue("+");
 			}
 			pai.setEsq(null);
 			pai.setDir(null);
-			pai.setValue(esq.getValue());
-			pai.setEsq(esq.getEsq());
-			pai.setDir(esq.getDir());
+			if (useAbstract){
+				if (dir.getValue().equals("/")){
+					BTNode aux= dir.getEsq();//numerador
+					dir.setEsq(null);
+					dir.setEsq(new BTNode("*",new BTNode("-1"),aux));
+					dir.getEsq().getEsq().setAbstractTerm(true);
+					dir.getEsq().setAbstractTerm(true);
+				}else{
+					r=new BTNode ("*",new BTNode ("-1"),dir);
+					r.getEsq().setAbstractTerm(true);
+					r.setAbstractTerm(true);
+				}
+			}else{
+				pai.setValue(esq.getValue());
+				pai.setEsq(esq.getEsq());
+				pai.setDir(esq.getDir());
+			}
 		}
 		return r;
 	}

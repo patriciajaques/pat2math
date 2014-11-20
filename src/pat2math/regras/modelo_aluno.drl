@@ -422,7 +422,6 @@ function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 		return calculos;
 	}
 	
-	 
 	//Obtem os nos de solver que nao estao presentes em usr 
 	List<BTNode> folhasDifEsq=Conjuntos.diferencaFracaoComplexa(folhasSEsq,folhasUEsq);
 	List<BTNode> folhasDifDir=Conjuntos.diferencaFracaoComplexa(folhasSDir,folhasUDir);
@@ -499,7 +498,6 @@ function List[] getNodosMult (Expression usr, Expression solver){
 	List<BTNode> folhasSEsq=Expression.getFolhasPotRaiz(sv.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasSDir=Expression.getFolhasPotRaiz(sv.getDir(),new Vector<BTNode>());
 	//Obtem os nos de solver que nao estao presentes em usr 
-	Funcoes.j();
 	List<BTNode> folhasDifEsq=Conjuntos.diferenca(folhasSEsq,folhasUEsq);
 	List<BTNode> folhasDifDir=Conjuntos.diferenca(folhasSDir,folhasUDir);
 	List mult[]=new List[2];
@@ -926,8 +924,8 @@ function BTNode getOIFrac(Expression solver,Expression user){
 	folhasSEsq=filterSimpleFractions(folhasSEsq);
 	folhasSDir=filterSimpleFractions(folhasSDir);
 	//Obtem os nos de solver que nao estao presentes em usr 
-	List<BTNode> folhasDifEsq=Conjuntos.diferencaFracao(folhasSEsq,folhasUEsq);
-	List<BTNode> folhasDifDir=Conjuntos.diferencaFracao(folhasSDir,folhasUDir);
+	List<BTNode> folhasDifEsq=Conjuntos.diferencaFracaoComplexa(folhasSEsq,folhasUEsq);
+	List<BTNode> folhasDifDir=Conjuntos.diferencaFracaoComplexa(folhasSDir,folhasUDir);
 	BTNode chosenOne= getNodoOIFrac( folhasDifEsq,folhasUDir);
 	if (chosenOne==null) chosenOne = getNodoOIFrac( folhasDifDir,folhasUEsq);
 	return chosenOne;
@@ -1260,25 +1258,23 @@ function List getNodosMover(List solver, List user){
 				btS.getValue().equals("^") && btU.getValue().equals("^") && btS.getDir().getValue().equals(btU.getDir().getValue())){
 			//se no solver estiver negativo no user DEVE ser positivo pois estao de lados opostos
 			//da equacao
-			if (Conjuntos.checkNodesForEquality(btS,btU)){
 				if (vS.startsWith("-") && !vU.startsWith("-")){
 					if (vS.substring(1).equals(vU) && !vU.equals("0")){
-						if (podeMover(btS)){
-							nodos.add(btS);
-							slvr.remove(btS);
+						if (podeMover(btS) && podeMover(btU)){ //apesar de BTU nao ser movido pela regra ele deve 
+							nodos.add(btS);						// ser movível, afinal ele representa
+							slvr.remove(btS);					//	bts quando movido
 							usr.remove(btU);
 						}
 					}
 				}else if (!vS.startsWith("-") && vU.startsWith("-")){
 					if (vU.substring(1).equals(vS) && !vS.equals("0")){
-						if (podeMover(btS)){
+						if (podeMover(btS) && podeMover(btU)){
 							nodos.add(btS);
 							slvr.remove(btS);
 							usr.remove(btU);
 						}
 					}
 				}
-			}
 			}
 		}
 	}
@@ -2561,7 +2557,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 			chosen=v[1];
 			sideLeft=false;
 		}
-		String msg="# Soma";
+		String msg="# Soma de Fracoes";
 		BTNode temp1=null,temp2=null;
 		//agrupar as frações
 		while (chosen.size()>1){
@@ -3664,6 +3660,7 @@ end
 
 rule "Operacao Inversa com fracao"
 	//permite realizar operacao inversa com fracoes, tratando-as como valores inteiros
+	salience 7
 	dialect "java"
 	when
 		solver: Expression (tipo==Expression.SOLVER);

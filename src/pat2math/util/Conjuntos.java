@@ -74,12 +74,16 @@ public class Conjuntos {
 	 * @param node2 un {@link BTNode}
 	 * @return <code>true</code> se os nodos forem iguais e <code>false</code> caso contrario.
 	 */
-	public static boolean checkNodesForEquality (BTNode node,BTNode node2){
+	private static boolean checkNodesForEquality (BTNode node,BTNode node2){
 		if (node.igual(node2)){
 			ArrayList<String> nodeOp=Funcoes.getNodeValues(node);
 			ArrayList<String> node2Op=Funcoes.getNodeValues(node2);
 			boolean done=false;
 			boolean igual=false;
+			boolean pertFrac;// se true ou sos 2 nodos são numeradores ou denominadores 
+			BTNode rootFrac1,rootFrac2;
+			rootFrac1=node.getNodeX("/");
+			rootFrac2=node2.getNodeX("/");
 			int i=0;
 			int i2=0;
 			//descarta de cara se os nos forem filhos de "/" mas um é numerador e o outro é denominador
@@ -95,6 +99,12 @@ public class Conjuntos {
 			if (node2.getPai().getValue().equals("/") && node2.ehFilhoDir() && !node.getPai().getValue().equals("/")){
 				return false;
 			}
+			if (rootFrac1!=null && rootFrac2!=null){
+				if ((node.ehFilhoEsq(rootFrac1) && node2.ehFilhoEsq(rootFrac2)) ||
+						(node.ehFilhoDir(rootFrac1) && node2.ehFilhoDir(rootFrac2))){
+					pertFrac=true; // significa que ambos são frações e são numeradores ou denominadores
+				}else return false; // são frações e não são os 2 numeradores ou os 2 denominadores então não são iguais
+			}else return false; //se um pertence a uma fração e o outro não então são diferentes
 			//para o cas de alguma equação onde opde haver algo do tipo
 			// a+b=c onde c pode ser considerado igual caso
 			//apareça um +,-,* ou se o numerador da fração
@@ -141,6 +151,10 @@ public class Conjuntos {
 					}else if (nodeOp.get(i).equals("=")&& (node2Op.get(i2).equals("+") || node2Op.get(i2).equals("*"))){
 							i2++;
 					}else if (node2Op.get(i2).equals("=")&& (nodeOp.get(i).equals("+") || nodeOp.get(i).equals("*"))){
+							i++;
+					}else if (pertFrac && nodeOp.get(i).equals("/") && (node2Op.get(i2).equals("+") || node2Op.get(i2).equals("*"))){
+							i2++;
+					}else if (pertFrac && node2Op.get(i2).equals("/") && (nodeOp.get(i).equals("+") || nodeOp.get(i).equals("*"))){
 							i++;
 							//TODO: Fim Teste
 					}else if(!nodeOp.get(i).equals(node2Op.get(i2))){
@@ -283,10 +297,14 @@ public class Conjuntos {
 						  denominadores2=new ArrayList<BTNode>();
 		for (int i=l1.size()-1;i>=0;i--){
 			BTNode frac1=l1.get(i);
+			numeradores1.clear();
+			denominadores1.clear();
 			numeradores1.addAll(Expression.getFolhas(frac1.getEsq()));
 			denominadores1.addAll(Expression.getFolhas(frac1.getDir()));
 			for (int j=l2.size()-1;j>=0;j--){
 				BTNode frac2=l2.get(j);
+				numeradores2.clear();
+				denominadores2.clear();
 				numeradores2.addAll(Expression.getFolhas(frac2.getEsq()));
 				denominadores2.addAll(Expression.getFolhas(frac2.getDir()));
 				if (numeradores1.size()==numeradores2.size() && denominadores1.size()==denominadores2.size()){
