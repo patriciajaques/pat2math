@@ -87,7 +87,6 @@ $(document).ready(function() {
 	
 	if (tipoAudio === 0)
 	    location.href = "/pat2math/student/home";
-	
 });
 
 function playAudio ( ) {

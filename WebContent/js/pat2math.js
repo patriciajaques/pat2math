@@ -231,10 +231,19 @@ function nextEquationClick ( ) {
 	//Posição da próxima equação. Ela é obtida da seguinte forma:
 	//Seleciona a equação atual no array ordenado, e verifica a sua posição no array original. 
 	//Esta variável recebe a posição seguinte da equação no array original.	
-	var newPos = sortedIds[idEquation].pos + 1;
-	loadExercise (ids[newPos]);
-	loadEquation (0);
-	//pos++; //Avança uma posição do array ordenado
+	
+	if (idEquation < 144 || idEquation === 160 || idEquation === 180) {
+		var newPos = sortedIds[idEquation].pos + 1;
+		loadExercise (ids[newPos]);
+		loadEquation (0);
+		//pos++; //Avança uma posição do array ordenado
+	}
+	
+	else {
+		loadExercise (idEquation + 1);
+		loadEquation (0);
+	}
+	
 	
 	
 //	stop = false; //Como o usuário clicou no botão da próxima equação, ele está resolvendo-as sequencialmente.
@@ -432,7 +441,7 @@ var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
            144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 180, 162,
            168, 169, 170, 171, 172, 173, 174, 176, 177, 178,
            187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
-           212, 213, 214, 215, 216, 217, 218, 219];
+           202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219];
 
 var sortedIds = new Array ( );
 sortedIds[13] = new EquationId (13, 0);
@@ -525,57 +534,57 @@ sortedIds[140] = new EquationId (140, 86);
 sortedIds[141] = new EquationId (141, 87);
 sortedIds[142] = new EquationId (142, 88);
 sortedIds[143] = new EquationId (143, 89);
-sortedIds[144] = new EquationId (144, 90);
-sortedIds[145] = new EquationId (145, 91);
-sortedIds[146] = new EquationId (146, 92);
-sortedIds[147] = new EquationId (147, 93);
-sortedIds[148] = new EquationId (148, 94);
-sortedIds[149] = new EquationId (149, 95);
-sortedIds[150] = new EquationId (150, 96);
-sortedIds[151] = new EquationId (151, 97);
-sortedIds[152] = new EquationId (152, 98);
-sortedIds[153] = new EquationId (153, 99);
-sortedIds[154] = new EquationId (154, 100);
-sortedIds[155] = new EquationId (155, 101);
-sortedIds[156] = new EquationId (156, 102);
-sortedIds[157] = new EquationId (157, 103);
-sortedIds[158] = new EquationId (158, 104);
-sortedIds[159] = new EquationId (159, 105);
-sortedIds[160] = new EquationId (160, 106);
-sortedIds[162] = new EquationId (162, 108);
-sortedIds[168] = new EquationId (168, 109);
-sortedIds[169] = new EquationId (169, 110);
-sortedIds[170] = new EquationId (170, 111);
-sortedIds[171] = new EquationId (171, 112);
-sortedIds[172] = new EquationId (172, 113);
-sortedIds[173] = new EquationId (173, 114);
-sortedIds[174] = new EquationId (174, 115);
-sortedIds[176] = new EquationId (176, 116);
-sortedIds[177] = new EquationId (177, 117);
-sortedIds[178] = new EquationId (178, 118);
+//sortedIds[144] = new EquationId (144, 90);
+//sortedIds[145] = new EquationId (145, 91);
+//sortedIds[146] = new EquationId (146, 92);
+//sortedIds[147] = new EquationId (147, 93);
+//sortedIds[148] = new EquationId (148, 94);
+//sortedIds[149] = new EquationId (149, 95);
+//sortedIds[150] = new EquationId (150, 96);
+//sortedIds[151] = new EquationId (151, 97);
+//sortedIds[152] = new EquationId (152, 98);
+//sortedIds[153] = new EquationId (153, 99);
+//sortedIds[154] = new EquationId (154, 100);
+//sortedIds[155] = new EquationId (155, 101);
+//sortedIds[156] = new EquationId (156, 102);
+//sortedIds[157] = new EquationId (157, 103);
+//sortedIds[158] = new EquationId (158, 104);
+//sortedIds[159] = new EquationId (159, 105);
+//sortedIds[160] = new EquationId (160, 106);
+//sortedIds[162] = new EquationId (162, 108);
+//sortedIds[168] = new EquationId (168, 109);
+//sortedIds[169] = new EquationId (169, 110);
+//sortedIds[170] = new EquationId (170, 111);
+//sortedIds[171] = new EquationId (171, 112);
+//sortedIds[172] = new EquationId (172, 113);
+//sortedIds[173] = new EquationId (173, 114);
+//sortedIds[174] = new EquationId (174, 115);
+//sortedIds[176] = new EquationId (176, 116);
+//sortedIds[177] = new EquationId (177, 117);
+//sortedIds[178] = new EquationId (178, 118);
 sortedIds[180] = new EquationId (180, 107);
-sortedIds[187] = new EquationId (187, 119);
-sortedIds[188] = new EquationId (188, 120);
-sortedIds[189] = new EquationId (189, 121);
-sortedIds[190] = new EquationId (190, 122);
-sortedIds[191] = new EquationId (191, 123);
-sortedIds[192] = new EquationId (192, 124);
-sortedIds[193] = new EquationId (193, 125);
-sortedIds[194] = new EquationId (194, 126);
-sortedIds[195] = new EquationId (195, 127);
-sortedIds[196] = new EquationId (196, 128);
-sortedIds[197] = new EquationId (197, 129);
-sortedIds[198] = new EquationId (198, 130);
-sortedIds[199] = new EquationId (199, 131);
-sortedIds[200] = new EquationId (200, 132);
-sortedIds[212] = new EquationId (212, 133);
-sortedIds[213] = new EquationId (213, 134);
-sortedIds[214] = new EquationId (214, 135);
-sortedIds[215] = new EquationId (215, 136);
-sortedIds[216] = new EquationId (216, 137);
-sortedIds[217] = new EquationId (217, 138);
-sortedIds[218] = new EquationId (218, 139);
-sortedIds[219] = new EquationId (219, 140); 
+//sortedIds[187] = new EquationId (187, 119);
+//sortedIds[188] = new EquationId (188, 120);
+//sortedIds[189] = new EquationId (189, 121);
+//sortedIds[190] = new EquationId (190, 122);
+//sortedIds[191] = new EquationId (191, 123);
+//sortedIds[192] = new EquationId (192, 124);
+//sortedIds[193] = new EquationId (193, 125);
+//sortedIds[194] = new EquationId (194, 126);
+//sortedIds[195] = new EquationId (195, 127);
+//sortedIds[196] = new EquationId (196, 128);
+//sortedIds[197] = new EquationId (197, 129);
+//sortedIds[198] = new EquationId (198, 130);
+//sortedIds[199] = new EquationId (199, 131);
+//sortedIds[200] = new EquationId (200, 132);
+//sortedIds[212] = new EquationId (212, 133);
+//sortedIds[213] = new EquationId (213, 134);
+//sortedIds[214] = new EquationId (214, 135);
+//sortedIds[215] = new EquationId (215, 136);
+//sortedIds[216] = new EquationId (216, 137);
+//sortedIds[217] = new EquationId (217, 138);
+//sortedIds[218] = new EquationId (218, 139);
+//sortedIds[219] = new EquationId (219, 140); 
 
 //var ids0 = [new EquationId (13, 0), 
 //            new EquationId (14, 1), 
