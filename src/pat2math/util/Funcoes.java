@@ -2410,11 +2410,10 @@ public static String getTermoComum(BTNode root){
 	 * caso contrario.
 	 */
 	public static boolean checkFathers(BTNode origem,BTNode destino, List<String> whiteList){
-		boolean result=false;
+		boolean result=true;
 		do{
 			origem = origem.getPai();
-			if (find(whiteList,origem.getValue())!=null)result=true;
-			else result=false;
+			if (find(whiteList,origem.getValue())==null)result=false;
 			
 		}while (origem!=null && origem!=destino);
 		return result;
@@ -2422,7 +2421,8 @@ public static String getTermoComum(BTNode root){
 	
 	public static BTNode makeAddSubFactions(BTNode operacao, Expression e){
 		BTNode bt=null, fact=null;
-		List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
+		//List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
+		List <BTNode> fracs=e.buscaChaveX(operacao, "/");
 		//primeria etapa - calcular o mmc
 		for (int i=0;i<fracs.size();i++){
 			bt=fracs.get(i);
@@ -2583,6 +2583,10 @@ public static String getTermoComum(BTNode root){
 		return false;
 	}
 
+	public static boolean m(){
+		if (true) return true;
+		return false;
+	}
 //	public static void main(String[] args) throws InvalidValueException {
 //		String i1="(x+1)^2-x*x=0";
 //		String i2="x^2+-(32)R2=0";

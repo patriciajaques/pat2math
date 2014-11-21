@@ -138,6 +138,12 @@ public class Conjuntos {
 						while (node2Op.get(i2).equals("+")){
 							i2++;
 						}
+						while(nodeOp.get(i).equals("*")){
+							i++;
+						}
+						while (node2Op.get(i2).equals("*")){
+							i2++;
+						}
 						if(nodeOp.get(i).equals(node2Op.get(i2))){
 							igual=true;
 							i++;

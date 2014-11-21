@@ -394,7 +394,6 @@ function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 	else sv=solver.getRoot();
 	f.modificaSinal(us);
 	f.modificaSinal(sv);
-	//Funcoes.j();
 	List<BTNode> folhasUEsq=Expression.getFolhasFracoes(us.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasUDir=Expression.getFolhasFracoes(us.getDir(),new Vector<BTNode>());
 	List<BTNode> folhasSEsq=Expression.getFolhasFracoes(sv.getEsq(),new Vector<BTNode>());
@@ -440,7 +439,7 @@ function List[] getNodosCalculoSomaFrac(Expression user, Expression solver){
 function List nodosSomaFrac(List folhasDif, Expression e){
 	Funcoes f=new Funcoes();
 	BTNode n1,n2,father;
-	List<String> whiteList=  Arrays.asList("+","-");
+	List<String> whiteList=  Arrays.asList("+","-","*");
 	List<BTNode> result = new ArrayList<BTNode>();
 	for (int i=0; i<folhasDif.size();i++){
 		n1= (BTNode)folhasDif.get(i);
@@ -451,14 +450,19 @@ function List nodosSomaFrac(List folhasDif, Expression e){
 							 n2.getValue().equals("/") && !n2.getDir().equals("1")
 							 						&&	!n2.getDir().equals("0")	)){
 				father = f.verificaPai(e,n1, n2);
-				if (Funcoes.checkFathers(n1, father, whiteList) && 
+				if ((father.getValue().equals("+") ||father.getValue().equals("-")) && Funcoes.checkFathers(n1, father, whiteList) && 
 					Funcoes.checkFathers(n2, father, whiteList)){
-					result.add(n1);
-					result.add(n2);
-					i=j=folhasDif.size();
+					BTNode no1=n1;
+					BTNode no2=n2;
+					if (Funcoes.getNodeValues(no1,father).contains("*"))no1=no1.getNodeX("*");
+					if (Funcoes.getNodeValues(no2,father).contains("*"))no2=no2.getNodeX("*");
+					if (!result.contains(no1))result.add(no1);
+					if (!result.contains(no2))result.add(no2);
+					//j=folhasDif.size();
 				}
 			}
 		}
+		if (!result.isEmpty())i=folhasDif.size();
 	}
 	return result;
 }
@@ -498,9 +502,11 @@ function List[] getNodosMult (Expression usr, Expression solver){
 	List<BTNode> folhasSEsq=Expression.getFolhasPotRaiz(sv.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasSDir=Expression.getFolhasPotRaiz(sv.getDir(),new Vector<BTNode>());
 	//Obtem os nos de solver que nao estao presentes em usr 
+	Funcoes.m();
 	List<BTNode> folhasDifEsq=Conjuntos.diferenca(folhasSEsq,folhasUEsq);
 	List<BTNode> folhasDifDir=Conjuntos.diferenca(folhasSDir,folhasUDir);
 	List mult[]=new List[2];
+	
 	mult[0]=getMultiplicavel(folhasDifEsq);
 	mult[1]=getMultiplicavel(folhasDifDir);
 	if (mult[0].isEmpty() && mult[1].isEmpty()){
@@ -1634,7 +1640,14 @@ function List getMultiplicavel(List l){
 				if ((!bt1.getValue().equals("R") && !bt2.getValue().equals("R")) ||
 					(bt1.getValue().equals("R") && bt2.getValue().equals("R") && bt1.getDir().igual(bt2.getDir())&& 
 							bt1.getEsq().eFolha() && bt2.getEsq().eFolha()) ){
-					if (!pai1.getValue().equals("*"))pai1=pai1.getNodeX("*"); 
+					if (!pai1.getValue().equals("*"))pai1=pai1.getNodeX("*");
+					//Funcoes f=new Funcoes();
+					//BTNode father = f.verificaPai(e,pai1,pai2);
+					///ArrayList<String> whiteList=new ArrayList<String> ()
+				//	whitelist.add("*");
+				//	boolean can=false;
+			//		if (Funcoes.checkFathers(pai1,father,whitelist) && Funcoes.checkFathers(pai2,father,whitelist)){
+			//		can=true;
 					if ((pai1!=null) &&
 					((bt1.ehFilhoEsq(pai1) && bt2.ehFilhoDir(pai1))||
 					(bt1.ehFilhoDir(pai1) && bt2.ehFilhoEsq(pai1)))){
@@ -2560,19 +2573,26 @@ rule "Calculo Soma Subtracao de Fracoes"
 		String msg="# Soma de Fracoes";
 		BTNode temp1=null,temp2=null;
 		//agrupar as frações
-		Funcoes.j();
+		
 		while (chosen.size()>1){
 			if (temp1==null ||temp1.getPai()!=null){
 				temp1=chosen.remove(0);
-				removeNoArvore(temp1,solver);
+				
+				if (temp1.getPai()!=null)removeNoArvore(temp1,solver);
+				if (temp1.eFolha() || temp1.getValue().equals("*"))temp1=new BTNode("/",temp1,new BTNode("1"));
 			}
 			if (temp2==null || temp2.getPai()!=null){
 				temp2=chosen.remove(0);
-				removeNoArvore(temp2,solver);
+				
+				if (temp2.getPai()!=null)removeNoArvore(temp2,solver);
+				if (temp2.eFolha() || temp2.getValue().equals("*"))temp2=new BTNode("/",temp2,new BTNode ("1"));
 			}
 			chosen.add(0,new BTNode("+",temp1,temp2));
+			temp1=null;
+			temp2=null;
 		} 
 		BTNode aux;
+		
 		if (sideLeft){
 			aux=root.getEsq();
 			root.setEsq(null);
@@ -2584,6 +2604,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 			if (aux.getValue().equals("0")) root.setDir(chosen.get(0));
 			else root.setDir(new BTNode("+",chosen.get(0),aux));
 		}
+		Funcoes.j();
 		root= Funcoes.makeAddSubFactions(chosen.get(0),solver);
 		System.out.println(msg);
 		solver.setNewRoot(root);
