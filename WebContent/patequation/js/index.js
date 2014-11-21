@@ -1163,7 +1163,13 @@ function newEquation() {
 
 function checkEquation() { 
 	//var display = document.getElementById('button').style.display;
+	if (document.getElementById ('button') === null && idEquation >= 0) {
+		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
+    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
+		    nextEquationClick();
+	}
 	
+	else {
 	if (document.getElementById('button').style.width !== '16px') {
 	document.getElementById('button').style.width = '16px';
 	document.getElementById('button').style.height = '16px';
@@ -1228,6 +1234,7 @@ function checkEquation() {
   }
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
   //document.getElementById('button').style.display = 'inline';
+}
 }
 }
 
