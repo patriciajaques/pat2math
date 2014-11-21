@@ -3353,10 +3353,18 @@ rule "Soma e Subtracao de fracoes"
 	then
 		System.out.println("# Soma de Fracoes");
 		listresult.add(new Equacoes("# Soma de Fracoes"));
-	//	Funcoes.j();
+		Funcoes.j();
 		BTNode operacao=getSomaSubFrac(e);
+		BTNode esq= operacao.getEsq();
+		BTNode dir= operacao.getDir();
+		operacao.setEsq(null);
+		operacao.setDir(null);
+		if (esq.eFolha() || esq.getValue().equals("^")) esq=new BTNode ("/",esq,new BTNode("1"));
+		if (dir.eFolha() || dir.getValue().equals("^")) dir=new BTNode ("/",dir,new BTNode("1"));
+		operacao.setEsq(esq);
+		operacao.setDir(dir);
 		
-		BTNode somaFrac= Funcoes. makeAddSubFactions(operacao, e);
+		BTNode somaFrac= Funcoes.makeAddSubFactions(operacao, e);
 		//List <BTNode> fracs= Arrays.asList(new BTNode[]{operacao.getEsq(),operacao.getDir()});
 		//primeria etapa - calcular o mmc
 	//	for (int i=0;i<fracs.size();i++){

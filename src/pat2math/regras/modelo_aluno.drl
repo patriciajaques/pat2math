@@ -502,18 +502,16 @@ function List[] getNodosMult (Expression usr, Expression solver){
 	List<BTNode> folhasSEsq=Expression.getFolhasPotRaiz(sv.getEsq(),new Vector<BTNode>());
 	List<BTNode> folhasSDir=Expression.getFolhasPotRaiz(sv.getDir(),new Vector<BTNode>());
 	//Obtem os nos de solver que nao estao presentes em usr 
-	Funcoes.m();
 	List<BTNode> folhasDifEsq=Conjuntos.diferenca(folhasSEsq,folhasUEsq);
 	List<BTNode> folhasDifDir=Conjuntos.diferenca(folhasSDir,folhasUDir);
 	List mult[]=new List[2];
-	
-	mult[0]=getMultiplicavel(folhasDifEsq);
-	mult[1]=getMultiplicavel(folhasDifDir);
+	mult[0]=getMultiplicavel(folhasDifEsq, solver);
+	mult[1]=getMultiplicavel(folhasDifDir, solver);
 	if (mult[0].isEmpty() && mult[1].isEmpty()){
 		folhasDifEsq=Conjuntos.diferenca(folhasSEsq,folhasUDir);
 		folhasDifDir=Conjuntos.diferenca(folhasSDir,folhasUEsq);
-		mult[0]=getMultiplicavel(folhasDifEsq);
-		mult[1]=getMultiplicavel(folhasDifDir);
+		mult[0]=getMultiplicavel(folhasDifEsq, solver);
+		mult[1]=getMultiplicavel(folhasDifDir, solver);
 	}
 	return mult;
 }
@@ -1616,7 +1614,7 @@ function List getCalculavel(Expression solver, List l){
 	return calculo;
 }
  
-function List getMultiplicavel(List l){
+function List getMultiplicavel(List l, Expression e){
 	ArrayList<BTNode> mult= new ArrayList<BTNode>();
 	if (l.size()>1){
 		BTNode bt1=null,bt2=null,pai1,pai2, aux=null;
@@ -1628,6 +1626,7 @@ function List getMultiplicavel(List l){
 				mult.add(pai1.getDir());
 			}
 		}
+		bt1=null;
 		if (mult.size()>=2)return mult;
 		for (Iterator<BTNode> i=l.iterator();i.hasNext();){
 			
@@ -1641,16 +1640,20 @@ function List getMultiplicavel(List l){
 					(bt1.getValue().equals("R") && bt2.getValue().equals("R") && bt1.getDir().igual(bt2.getDir())&& 
 							bt1.getEsq().eFolha() && bt2.getEsq().eFolha()) ){
 					if (!pai1.getValue().equals("*"))pai1=pai1.getNodeX("*");
-					//Funcoes f=new Funcoes();
-					//BTNode father = f.verificaPai(e,pai1,pai2);
-					///ArrayList<String> whiteList=new ArrayList<String> ()
-				//	whitelist.add("*");
-				//	boolean can=false;
-			//		if (Funcoes.checkFathers(pai1,father,whitelist) && Funcoes.checkFathers(pai2,father,whitelist)){
-			//		can=true;
-					if ((pai1!=null) &&
-					((bt1.ehFilhoEsq(pai1) && bt2.ehFilhoDir(pai1))||
-					(bt1.ehFilhoDir(pai1) && bt2.ehFilhoEsq(pai1)))){
+					Funcoes fun=new Funcoes();
+					BTNode father = fun.verificaPai(e,bt1,bt2);
+					ArrayList<String> whiteList=new ArrayList<String> ();
+					whiteList.add("*");
+					whiteList.add("+");
+					whiteList.add("-");
+					boolean can=false;
+					if ((pai1!=null)&&father.getValue().equals("*") && (pai1.equals(father) ||Funcoes.checkFathers(pai1,father,whiteList))
+					 && (pai2.equals(father) || Funcoes.checkFathers(pai2,father,whiteList))){
+						can=true;
+					}
+					if (can && (pai1!=null) &&
+					((bt1.ehFilhoEsq(father) && bt2.ehFilhoDir(father))||
+					(bt1.ehFilhoDir(father) && bt2.ehFilhoEsq(father)))){
 						/*
 						* Bloquear apenas neste ponto pois a multiplicação somente vais ser aceita se 
 						* pai2 for igual a pai1
@@ -1670,21 +1673,21 @@ function List getMultiplicavel(List l){
 										mult.add(bt2);	
 									}
 								}else {
-									BTNode p=null,f=null;
-									if (pai2.filhoDe(pai1)){
-										p=pai1;
-										f=pai2;
-									}else if (pai1.filhoDe(pai2)){
-									p=pai2;
-										f=pai1;
-									}
-									if (p!=null &&f!=null && p.getPai()!=null&&Funcoes.caminho(f,p.getPai(),"*")){
+								//	BTNode p=null,f=null;
+								//	if (pai2.filhoDe(pai1)){
+								//		p=pai1;
+								//		f=pai2;					o booleano "can" ja valida isto
+								//	}else if (pai1.filhoDe(pai2)){
+								//	p=pai2;
+								//		f=pai1;
+								//	}
+								//	if (p!=null &&f!=null && p.getPai()!=null&&Funcoes.caminho(f,p.getPai(),"*")){
 									//são 2 multiplicações de 2 subarvores diferentes, logo entre bt1 e bt2 não pode haver outro operador
-										if (Funcoes.caminho(bt1,pai1,"*") && Funcoes.caminho(bt2,pai2,"*")){
+										if (Funcoes.verificaCaminho(bt1,father,"*") && Funcoes.verificaCaminho(bt2,father,"*")){
 											mult.add(bt1);
 											mult.add(bt2);
 										}
-									}
+									//}
 								}
 							}else if (pai2.getNodeX("*")!=null){
 							//multiplicacao de subarvore (distributiva) com folha
@@ -2573,18 +2576,27 @@ rule "Calculo Soma Subtracao de Fracoes"
 		String msg="# Soma de Fracoes";
 		BTNode temp1=null,temp2=null;
 		//agrupar as frações
-		
+		Funcoes.j();
+		boolean pertMult=false; // se a soma está dentro de uma multiplicação
 		while (chosen.size()>1){
 			if (temp1==null ||temp1.getPai()!=null){
 				temp1=chosen.remove(0);
 				
-				if (temp1.getPai()!=null)removeNoArvore(temp1,solver);
+				if (temp1.getPai()!=null){
+					if (temp1.getPai().getValue().equals("*"))pertMult=true;// apos remover a maioria dos nodos irá sobrar apenas um como filho 
+					//de * e que será removeido é neste momento que a variaval é atualizada pois este filho será removido
+					// e o irmao passara um nivel acima eliminando o sinal
+					removeNoArvore(temp1,solver);
+				}
 				if (temp1.eFolha() || temp1.getValue().equals("*"))temp1=new BTNode("/",temp1,new BTNode("1"));
 			}
 			if (temp2==null || temp2.getPai()!=null){
 				temp2=chosen.remove(0);
 				
-				if (temp2.getPai()!=null)removeNoArvore(temp2,solver);
+				if (temp2.getPai()!=null){
+					if (temp2.getPai().getValue().equals("*"))pertMult=true;// idem ao comentario acima
+					removeNoArvore(temp2,solver);
+				}
 				if (temp2.eFolha() || temp2.getValue().equals("*"))temp2=new BTNode("/",temp2,new BTNode ("1"));
 			}
 			chosen.add(0,new BTNode("+",temp1,temp2));
@@ -2597,11 +2609,13 @@ rule "Calculo Soma Subtracao de Fracoes"
 			aux=root.getEsq();
 			root.setEsq(null);
 			if (aux.getValue().equals("0")) root.setEsq(chosen.get(0));
+			else if (pertMult) root.setEsq(new BTNode("*",chosen.get(0),aux));
 			else root.setEsq(new BTNode("+",chosen.get(0),aux));
 		}else{
 			aux=root.getDir();
 			root.setDir(null);
 			if (aux.getValue().equals("0")) root.setDir(chosen.get(0));
+			else if (pertMult) root.setEsq(new BTNode("*",chosen.get(0),aux));
 			else root.setDir(new BTNode("+",chosen.get(0),aux));
 		}
 		Funcoes.j();

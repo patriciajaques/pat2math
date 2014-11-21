@@ -2413,7 +2413,7 @@ public static String getTermoComum(BTNode root){
 		boolean result=true;
 		do{
 			origem = origem.getPai();
-			if (find(whiteList,origem.getValue())==null)result=false;
+			if (origem!= null && find(whiteList,origem.getValue())==null)result=false;
 			
 		}while (origem!=null && origem!=destino);
 		return result;
@@ -2583,10 +2583,6 @@ public static String getTermoComum(BTNode root){
 		return false;
 	}
 
-	public static boolean m(){
-		if (true) return true;
-		return false;
-	}
 //	public static void main(String[] args) throws InvalidValueException {
 //		String i1="(x+1)^2-x*x=0";
 //		String i2="x^2+-(32)R2=0";
