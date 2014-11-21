@@ -3101,11 +3101,89 @@ rule "Soma Subtracao subarvores diferentes"
 		update(e);
 end
 
+
+//extamente a mesma da regra MMC, aprenas com a diferenca que esta 
+// é ativada apenas quando a resposta do aluno não contem frações
+// indicando que ele ainda não as eliminou
+// principal objetivo desta regra, a regra MMC agora serve
+// apenas para demonstração ou dicas
+rule "MMC Sobre Equacao"
+	no-loop true
+	dialect "java"
+	when
+		e: Expression(tipo==Expression.SOLVER);
+		user: Expression( tipo==Expression.USER );
+		not Expression (tipo==Expression.COEFICIENTES_BK);
+		eval (e.getRoot().getValue().equals("="));
+		eval(e.getnewexpression().contains("="));
+		eval(e.getnewexpression().contains("/"));
+		eval(canMMC(e));
+		eval(Funcoes.isNeededApplyMMCUnderEquation(user,e));
+	then
+		System.out.println("# Calcular MMC");
+		listresult.add(new Equacoes("# Calcular MMC"));
+		BTNode bt=fracionar(e.getRoot());
+		System.out.println(e.setmod(bt));
+		Vector <BTNode> oldV= e.buscaChaveX(bt,"/");
+		Vector <BTNode> newV=new Vector<BTNode> ();
+		boolean inteiro=true; //indica se o mmc será ou não de inteiros
+		boolean igual=false;
+		int i;
+		int v1,v2;
+		String exp="";
+		String aux="";
+		BTNode fact;
+		//coleta os denominadores das frações que sejam diferentes 
+		//entre si e diferente de 1		
+		for (i=0;i<oldV.size();i++){
+			bt=oldV.get(i); //como bt é referencia não há necessidade de readicionar em oldV
+			bt=bt.getDir();
+			if (!Funcoes.isInteger(bt.getValue())) inteiro=false;
+			if (Funcoes.canFatorComum(bt,e.setmod(bt))){
+				//função de fatoração exige raiz "="
+				fact=new BTNode("=",(BTNode)bt.clone(),new BTNode("0"));
+				fact=new Expression(Funcoes.fatorar(fact)).getRoot();
+				//dir pois é o denominador
+				oldV.set(i,fact);
+				e.setmod();
+				bt=fact;		
+			}else{
+				oldV.set(i,bt);
+				e.setmod();
+			}
+		}
+		//monta o mmc sob toda a equação
+		if (!inteiro){
+			bt=Funcoes.mmcPolinomios(oldV,e);//mmc_Maiores(oldV,e);
+			exp=e.setmod(bt); //contem somente o mmc
+		}else{
+			int[]v=new int[oldV.size()];
+			for(int index=0;index<oldV.size();index++){
+				v[index]=Integer.parseInt(oldV.get(index).getValue());
+			}
+			exp=String.valueOf(Funcoes.mmc(v)); //contem somete o mmc
+		}
+		if (!inteiro){
+			bt=new BTNode("/",e.getRoot(),bt);
+		}else bt=new BTNode("/",e.getRoot(),new BTNode(exp));
+		BTNode n;
+		oldV.addElement(bt);
+		boolean change=false;
+		e.setNewRoot(bt);
+		listresult.add(new Equacoes(e.getnewexpression(),
+							e.getCleanExpression(),e.getTeXExpression()));
+		update (e);
+end
+
+
+
+
 rule "MMC"
 	no-loop true
 	dialect "java"
 	when
 		e: Expression(tipo==Expression.SOLVER);
+		not Expression (tipo==Expression.USER);
 		eval (e.getRoot().getValue().equals("="));
 		eval(e.getnewexpression().contains("="));
 		eval(e.getnewexpression().contains("/"));

@@ -2568,6 +2568,24 @@ public static String getTermoComum(BTNode root){
 	}
 	
 	/**
+	 * Valida se o MMC pode ser aplicado sobre toda a fração, ou seja, quando a resposta do aluno não contiver frações 
+	 * ou quando a resposta do aluno contiver uma fração na raiza da árvore
+	 * @param user a equação do aluno.
+	 * @param solver a equação do resolverdor
+	 * @return <code>true</code> se é possivel aplicar e false caso contrario.
+	 */
+	public static boolean isNeededApplyMMCUnderEquation(Expression user, Expression solver){
+		Vector<BTNode> solverList=solver.buscaChaveX(solver.getRoot(),"/");
+		Vector<BTNode> userList= user.buscaChaveX(user.getRoot(), "/");
+		boolean needed=false;
+		if (!solverList.isEmpty()){
+			if (user.getRoot().getValue().equals("/"))needed=true;
+			else if (userList.isEmpty())needed=true;
+		}
+		return needed;
+	}
+	
+	/**
 	 * Método utilizado apenas para debug da funções do Drools pois estas não se pode por 
 	 * um breakpoint.
 	 * @return <code>true</code>
