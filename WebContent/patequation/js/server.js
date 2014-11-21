@@ -21,6 +21,7 @@ function requestServer (type, last, next, typeOperation, element) {
             //alert(data[0]);
             console.log("Server answer ->  " + data[0]);
             var split = (data[0] + "").split(";");
+          
  
             //split[0] = int - id do aluno (não está sendo utilizado)
             //split[1] = boolean - resposta certa

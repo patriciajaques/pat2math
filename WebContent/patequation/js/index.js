@@ -4,7 +4,6 @@ var idEquation; // the id of the equation in database
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
-var isClicked = false;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -194,7 +193,6 @@ function rel ( ) {
 
 $(document).ready(function() {	
 	showSideBar();
-	
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
 		$(this).removeClass("hide-menu");
@@ -818,12 +816,10 @@ function centralizeCanCopy() {
 }
 
 function buttonClick() {
-	if (isClicked === false) {
 	$(selectedSheet + " #button").button().unbind('click');   
 	$(selectedSheet + " #button").button().click(function() {    
 		checkEquation();
     });
-	}
 }
 
 function getEquation(list) {
@@ -1166,23 +1162,15 @@ function newEquation() {
 }
 
 function checkEquation() { 
-	if (isClicked === false) {
 	//var display = document.getElementById('button').style.display;
-	isClicked = true;
+	
+	if (document.getElementById('button').style.width !== '16px') {
 	document.getElementById('button').style.width = '16px';
 	document.getElementById('button').style.height = '16px';
 	document.getElementById('button').style.top = '4px';
 	document.getElementById('button').style.right = '7px';
 	document.getElementById('button').style.background = 'url("/pat2math/images/solve_loading.gif")';
-    
-    $(document).keyup(function(event) {
-        // key 13 = enter
-        var key = event.which;
 
-        if (key === 13) { //enter key
-
-        }
-    });
     
 	$(selectedSheet + " .canMove li input").blur();
 //  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
@@ -1239,7 +1227,6 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
-  isClicked = false;
   //document.getElementById('button').style.display = 'inline';
 }
 }
