@@ -2565,6 +2565,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 		eval (solver.getRoot().getValue().equals("="));
 		eval (validarRealizaCalculoSomaFrac(user,solver));	
 	then
+		//arrumar para 8+5x=((x)/(3)+(-1))*10 24+15=10x-30
 		List[] v=getNodosCalculoSomaFrac(user,solver);
 		List<BTNode> chosen= v[0];
 		BTNode root=solver.getRoot();
