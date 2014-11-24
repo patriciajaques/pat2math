@@ -1,9 +1,9 @@
 var appContext = "/pat2math/";
-var currentIds = null; //Array original atual das equações
-var currentIds2 = null; //Array ordenado atual das equações
-var stop = true; //Variável que controla se o aluno está resolvendo as equações em sequência. Se não estiver, a variável pos deverá ser atualizada 
-                      //quando clicar no botão da próxima equação.
-var pos = -1; //Posição da equação atual no array ordenado (currentIds2)
+//var currentIds = null; //Array original atual das equações
+//var currentIds2 = null; //Array ordenado atual das equações
+//var stop = true; //Variável que controla se o aluno está resolvendo as equações em sequência. Se não estiver, a variável pos deverá ser atualizada 
+//                      //quando clicar no botão da próxima equação.
+//var pos = -1; //Posição da equação atual no array ordenado (currentIds2)
 
 
 function enableContent(id) {
@@ -96,7 +96,8 @@ function loadExercise(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
+			setCookie ("currentEquation", idEquation, 1);
+//			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação		
 			loadingHide();
 			
 //			var eq = loadEquation(0);
@@ -142,7 +143,8 @@ function loadExerciseTest(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
+			setCookie ("currentEquation", idEquation, 1);
+//			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
 			loadingHide();
 			
 //            var eq = loadEquation(0);
@@ -740,14 +742,7 @@ sortedIds[180] = new EquationId (180, 107);
 
 //
 //
-//sortedIds0 = [13, 14, 15, 16, 21, 22, 23, 24, 25, 26, 107, 108, 109, 110];
-//sortedIds1 = [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
-//sortedIds2 = [55, 56, 57, 58, 59, 60, 61, 62, 63];
-//sortedIds3 = [64, 65, 67, 68, 70, 71, 72, 80, 81, 83, 84, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120];
-//sortedIds4 = [101, 105, 121, 122, 123, 124, 125, 125, 126, 126, 127, 128, 129, 130, 131, 132, 135, 136, 137, 138, 139, 140, 141, 142, 143];
-//sortedIds5 = [144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 162, 180];
-//sortedIds6 = [168, 169, 170, 171, 172, 173, 174, 176, 177, 178];
-//sortedIds7 = [187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
+
 
 
 //var plano1 = 

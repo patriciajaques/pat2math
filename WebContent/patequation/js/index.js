@@ -228,7 +228,7 @@ $(document).ready(function() {
     $(document).keyup(function(event) {
         // key 13 = enter
         var key = event.which;
-        //alert(key);
+//        alert(key);
         
 //        if (isTourInterativo && key === 27) {
 //            $.guider({
@@ -383,6 +383,7 @@ $(document).ready(function() {
         hint();
     });
 
+    loadExercise(30);
     loadEquation(0);
 
     centralizeCanMoveAndButton();
