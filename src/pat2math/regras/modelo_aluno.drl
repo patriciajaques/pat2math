@@ -2570,6 +2570,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 		List<BTNode> chosen= v[0];
 		BTNode root=solver.getRoot();
 		boolean sideLeft=true;
+		Funcoes.j();
 		if (chosen.isEmpty()) {
 			chosen=v[1];
 			sideLeft=false;
@@ -2616,7 +2617,7 @@ rule "Calculo Soma Subtracao de Fracoes"
 			aux=root.getDir();
 			root.setDir(null);
 			if (aux.getValue().equals("0")) root.setDir(chosen.get(0));
-			else if (pertMult) root.setEsq(new BTNode("*",chosen.get(0),aux));
+			else if (pertMult) root.setDir(new BTNode("*",chosen.get(0),aux));
 			else root.setDir(new BTNode("+",chosen.get(0),aux));
 		}
 		Funcoes.j();

@@ -1055,6 +1055,56 @@ public class MiscFunctions {
 	}
 
 	/**
+	 * Resolver multiplicação e divisão de frações simples
+	 * @return
+	 */
+	public static BTNode getResultFrac(BTNode operacao){
+		BTNode num,den;
+		num=den=null;
+		BTNode esq,dir;
+		esq=operacao.getEsq();
+		dir=operacao.getDir();
+		if (!Funcoes.isSingleFraction(esq) && !Funcoes.isSingleFraction(dir))return null;
+		if (operacao.getValue().equals("*")){
+			if (esq.eFolha() || (Funcoes.isSquaredLeaf(esq) && esq.getValue().equals("^")) ||(Funcoes.isSingleFraction(esq))){
+				if (esq.eFolha() || Funcoes.isSquaredLeaf(esq))num=(BTNode)esq.clone();
+				else{
+					num = (BTNode)esq.getEsq().clone();
+					den = (BTNode)esq.getDir().clone();
+				}
+				
+			}
+			if (dir.eFolha() || (Funcoes.isSquaredLeaf(dir) && dir.getValue().equals("^")) ||(Funcoes.isSingleFraction(dir))){
+				if (dir.eFolha() || Funcoes.isSquaredLeaf(dir))num=new BTNode ("*",num,(BTNode)dir.clone());
+				else num=new BTNode("*",num,(BTNode)dir.getEsq().clone());
+				if (den==null){
+					if (!dir.eFolha()){
+						den=(BTNode)dir.getDir().clone();
+					}
+				}else{
+					if (!dir.eFolha()){
+						den=new BTNode ("*", den, (BTNode)dir.getDir().clone());
+					}
+				}
+			}
+			num=getResult(num);
+			den=getResult(den);
+			operacao= new BTNode ("/",num,den);
+			if (num==null || den ==null)operacao=null;
+			return operacao;
+		}else if (operacao.getValue().equals("/")){
+			// num e den aqui são os 1º e 2º membro da multiplicação
+			if (esq.eFolha() || (Funcoes.isSquaredLeaf(esq) && esq.getValue().equals("^")))num=(BTNode)esq.clone();
+			else if (Funcoes.isSingleFraction(esq))num=(BTNode)esq.clone();
+			if (dir.eFolha() || (Funcoes.isSquaredLeaf(dir) && dir.getValue().equals("^")))den=new BTNode("/",new BTNode("1"), (BTNode)dir.clone());
+			else if (Funcoes.isSingleFraction(dir))den=new BTNode ("/",(BTNode)dir.getDir().clone(), (BTNode)dir.getEsq().clone());
+			operacao=new BTNode("*",num,den);
+			operacao=getResultFrac(operacao);
+			return operacao;
+		}else return null;
+	}
+	
+	/**
 	 * Responsável pela validação de uma misconseption de simplificação de frações.
 	 * @param em oobjeto da memoria de trabalho do SE, contendo as diferencas entre
 	 * as equações
@@ -1699,6 +1749,8 @@ public class MiscFunctions {
 		return nodos;
 	}
 
+	//24/11/2014 - arrumar para misc distrib com fracao: x+3=2*(x+((-1)/(2)))
+	//														2x+6=4*(2x-1)
 	private static List<List<BTNode>> checkForMiscDistrib(List<BTNode> difUser,List <BTNode>difSolver,Expression e){
 		List<List<BTNode>> nodos=new ArrayList<List<BTNode>>();
 		//buscar uma distributiva que não está na resposta do aluno (difUser)
