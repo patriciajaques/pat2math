@@ -14,7 +14,7 @@ import br.com.pat2math.studentModel.Tip;
 public class HelpTest {
 	
 	public static void main(String[] args) throws Exception {
-		PopulateHelps ph = new PopulateHelps("Dicas.txt");
+		PopulateHelps ph = new PopulateHelps("novas_dicas.txt");
 		ph.createList();
 		Progress p=null;
 		ModeloAluno ma = new ModeloAluno(p,true);
@@ -35,9 +35,9 @@ public class HelpTest {
 		tip.setLevel(2);
 		t.add(tip);
 	//	Tip hint=ma.hints("2-4=x",t,c);
-		ma.setExpressao("x+3=2*(x+((-1)/(2)))");
+		ma.setExpressao("(3x+(-2x))=(-7+2)+(-15)+(-6)");
 		ma.setOperacao("OG");
-		Mensagem hint = ma.iniciaResolucao("2x+6=4*(2x-1)", t, c);
+		Mensagem hint = ma.iniciaResolucao("2*(2x+(-4))=(x+5*2+((-4)*2))/(2)", t, c);
 	//	System.out.println(hint.getDescription());
 		System.out.println(hint.getFeedback());
 		System.out.println(hint.getFeedbackOBJ().getOperation());

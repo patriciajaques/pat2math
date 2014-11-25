@@ -984,6 +984,11 @@ public class MiscFunctions {
 			n2=dir.getEsq().getValue();
 			pot2=Integer.parseInt(dir.getDir().getValue());
 		}else n2=dir.getValue();
+		//TODO: Teste com frações simples
+		if ((Funcoes.isSingleFraction(esq) ||Funcoes.isSingleFraction(dir)) && op=='*')return getResultFrac(operacao);
+		//neste eslse não sao frações simples
+		else if (esq.getValue().equals("/") || dir.getValue().equals("/")) return null;
+		//fim do teste
 		//separar inteiros das incognitas
 		v1=Funcoes.getINT(n1);
 		n1=Funcoes.getInc(n1);
@@ -1087,8 +1092,8 @@ public class MiscFunctions {
 					}
 				}
 			}
-			num=getResult(num);
-			den=getResult(den);
+			if (!num.eFolha())num=getResult(num);
+			if (!den.eFolha())den=getResult(den);
 			operacao= new BTNode ("/",num,den);
 			if (num==null || den ==null)operacao=null;
 			return operacao;
@@ -1791,6 +1796,10 @@ public class MiscFunctions {
 								if (tempS.getValue().equals("^") && !Expression.igual(tempS,tempU)){
 									break;
 								}else if (tempS.getValue().equals("R"))break;
+								else if (tempS.getValue().equals("/")){
+									if(!Funcoes.isSingleFraction(tempU) || !Expression.igual(tempS, tempU))break;
+								}
+								
 								/*
 								 * tempU e tempS são iguais, ou seja, tem os mesmo valores e os mesmo pais.
 								 * Neste caso pais iguais são nodos diferentes com o mesmo valor.
@@ -1799,13 +1808,29 @@ public class MiscFunctions {
 								if (tempS.getPai().getValue().equals("*")){
 									pai=tempS.getPai();
 									BTNode paiU=tempU.getPai();
-									fS.remove(pai.getEsq());
-									fS.remove(pai.getDir());
-									fU.remove(paiU.getEsq());
-									fU.remove(paiU.getDir());
+									if (pai.getEsq().getValue().equals("/")){
+										fS.removeAll(Expression.getFolhas(pai.getEsq()));
+									}else fS.remove(pai.getEsq());
+									
+									if (pai.getDir().getValue().equals("/")){
+										fS.removeAll(Expression.getFolhas(pai.getDir()));
+									}else fS.remove(pai.getDir());
+									
+									if (paiU.getEsq().getValue().equals("/")){
+										fU.removeAll(Expression.getFolhas(paiU.getEsq()));
+									}else fU.remove(paiU.getEsq());
+									
+									if (paiU.getDir().getValue().equals("/")){
+										fU.removeAll(Expression.getFolhas(paiU.getDir()));
+									}else fU.remove(paiU.getDir());
 								}else{
-									fS.remove(tempS);
-									fU.remove(tempU);
+									if (tempS.getValue().equals("/")){
+										fS.removeAll(Expression.getFolhas(tempS));
+									}else fS.remove(tempS);
+									
+									if (tempU.getValue().equals("/")){
+										fU.removeAll(Expression.getFolhas(tempU));
+									}else fU.remove(tempU);
 								}
 								j=fU.size();
 								i--;
@@ -1818,15 +1843,27 @@ public class MiscFunctions {
 							if (tempS.getPai().getValue().equals("*")){
 								//realiza a operação e diminui o indice a fim de ser rechecado com a resposta do aluno
 								pai=tempS.getPai();
-								fS.remove(pai.getEsq());
-								fS.remove(pai.getDir());
-								BTNode re= getResult(pai);
+								if (pai.getEsq().getValue().equals("/")){
+									fS.removeAll(Expression.getFolhas(pai.getEsq()));
+								}else fS.remove(pai.getEsq());
+								
+								if (pai.getDir().getValue().equals("/")){
+									fS.removeAll(Expression.getFolhas(pai.getDir()));
+								}else fS.remove(pai.getDir());
+								BTNode re;
+								
+								if (pai.getEsq().getValue().equals("/") ||pai.getDir().getValue().equals("/")){
+									re=getResultFrac(pai);
+								}else re= getResult(pai);
+								
 								pai.setEsq(null);
 								pai.setDir(null);
 								pai.setEsq(re.getEsq());
 								pai.setDir(re.getDir());
 								pai.setValue(re.getValue());
-								fS.add(i,pai);
+								if (pai.getValue().equals("/")){
+									fS.addAll(i,Expression.getFolhas(pai));
+								}else fS.add(i,pai);
 								i--;
 								if (fU.isEmpty())i=fS.size();
 							}
