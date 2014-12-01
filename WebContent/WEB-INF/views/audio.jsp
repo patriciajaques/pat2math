@@ -45,6 +45,7 @@
 </head>
 <body>
 <script>
+var i;
 
 function mostraProgressoAudio1 ( ) {
 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
@@ -83,59 +84,134 @@ function mostraProgressoAudio2 ( ) {
 var tipoAudio = 0;
 
 $(document).ready(function() {	
-	var temp = 42;
+	var currentID = "" + ${student.id};
+	var isLastUser = false;
+	//Os cookies do tipo lastUsersN salvam os ids dos usuários que acessaram o Pat2Math no dia
+	var cookieName = "lastUsers0";	
+	i = 0;
 	
-	if (tipoAudio === 0)
-	    location.href = "/pat2math/student/home";
-});
-
-function playAudio ( ) {
-	if (tipoAudio === 1) {
-		var display = document.getElementById('play').style.display;
-	    document.getElementById('play').style.display = 'none';
-// 		document.getElementById('audio').innerHTML= "<audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>";	
-		document.getElementById('player').innerHTML= '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';	
+	//Verifica se o ID atual já está salvo em algum cookie, senão descobre a posição livre para salvar este ID.
+	while (getCookie (cookieName) !== "" && isLastUser === false) {
+		if (currentID === getCookie ("lastUsers" + i))
+			isLastUser = true;
 		
-		mostraProgressoAudio1();
-		setTimeout('location.href="/pat2math/student/home"',352000); 
-//	try {
-//    $.guider({
-//		description: "<div style='position:relative; top:0px; left:0px;'> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>",
-//                closable: false,
-//                overlay: "dark",
-//                alignButtons: "right",
-//                width: 620
-//		}).show();  
-
-    
-    //347000
-//	} catch (e) {
-//		window.location.reload();	
-//	}
-	} else if (tipoAudio === 2) {
-		var display = document.getElementById('play').style.display;
-	    document.getElementById('play').style.display = 'none';
-// 		document.getElementById('audio').innerHTML= "<audio autoplay> <source src='/pat2math/patequation/audio/historia.ogg' type='audio/ogg' preload='auto'> </audio>";
-        document.getElementById('player').innerHTML= '<iframe width="560" height="315" src="//www.youtube.com/embed/-sa-Gq3OM5A?autoplay=1" frameborder="0" allowfullscreen></iframe>';	
-		mostraProgressoAudio2();
-		setTimeout('location.href="/pat2math/student/home"',350000); 
-//		try {
-//	    $.guider({
-//			description: "<div style='position:relative; top:0px; left:0px;'> <audio autoplay> <source src='/pat2math/patequation/audio/mindfulness.ogg' type='audio/ogg' preload='auto'> </audio>",
-//	                closable: false,
-//	                overlay: "dark",
-//	                alignButtons: "right",
-//	                width: 620
-//			}).show();  
-//
-//	    
-//	    //345000
-//		} catch (e) {
-//			window.location.reload();	
-//		}
-	} else { 
+		else {
+		    i++;
+		    cookieName = "lastUsers" + i;
+		}
+	}
+	
+	//Posição que o ID atual está
+	setCookieDays ("pos", i, 1);
+	
+	//Caso o ID atual não for encontrado nos cookies, ele deverá ser salvo
+	if (isLastUser === false)
+		setCookieDays (cookieName, currentID, 1);
+	
+	//Verifica se o usuário deve ouvir o rádio
+	var playAudio = getCookie ("playAudio" + i);
+	
+	if (tipoAudio === 0 || playAudio === "false") {
+		var cookieName = "playAudio" + i;
+		setCookieDays (cookieName, "false", 1);
 		location.href = "/pat2math/student/home";
 	}
+	
+// 	var lastUser = getCookie ("lastUser");
+// 	var isSameUser; //Variável que verifica se o usuário atual é o mesmo do login anterior
+	
+// 	if (lastUser !== "") {
+// 		lastUser = parseInt (lastUser);
+		
+// 		if (lastUser === currentID)
+// 			isSameUser = "true";
+		
+// 		else
+// 			isSameUser = "false";
+// 	} else {
+// 		isSameUser = "false";
+// 	}
+	
+// 	setCookieDays ("isSameUser", isSameUser, 10);
+// 	setCookieDays ("lastUser", currentID, 10);
+	
+// 	var playAudio;
+// 	if (isSameUser === "false") {
+// 		setCookieMinutes ("playAudio", "", 0);
+// 		setCookieMinutes ("currentEquation", "", 0);
+// 		playAudio = true;
+// 	} else {
+// 		playAudio = getCookie ("playAudio");
+		
+// 		if (playAudio === "false")
+// 			playAudio = "false";
+		
+// 		else
+// 			playAudio = "true";
+// 	}
+	
+// 	if (tipoAudio === 0 || playAudio === "false") {
+// 		location.href = "/pat2math/student/home";
+// 	}
+	    
+});
+
+function endAudio ( ) {
+	var cookieName = "playAudio" + i;
+	setCookieDays (cookieName, "false", 1);
+	location.href="/pat2math/student/home";	
+}
+
+function playAudio ( ) {
+	var cookieName = "playAudio" + i;
+	
+	if (getCookie (cookieName) === "false")
+		location.href = "/pat2math/student/home";
+	
+	else {
+	    if (tipoAudio === 1) {
+		    var display = document.getElementById('play').style.display;
+	        document.getElementById('play').style.display = 'none';
+		    document.getElementById('player').innerHTML= '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';	
+		    mostraProgressoAudio1();
+		    setTimeout('endAudio()',352000); 
+	    } else if (tipoAudio === 2) {
+		    var display = document.getElementById('play').style.display;
+	        document.getElementById('play').style.display = 'none';
+            document.getElementById('player').innerHTML= '<iframe width="560" height="315" src="//www.youtube.com/embed/-sa-Gq3OM5A?autoplay=1" frameborder="0" allowfullscreen></iframe>';	
+		    mostraProgressoAudio2();
+		    setTimeout('endAudio()',350000); 
+	    } else { 
+		    location.href = "/pat2math/student/home";
+	    }
+	}
+}
+
+function setCookieDays(cname,cvalue,exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
+
+function setCookieMinutes(cname,cvalue,exminutes) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exminutes*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 </script>
        <c:if test="${student.group.id == 2}"> 

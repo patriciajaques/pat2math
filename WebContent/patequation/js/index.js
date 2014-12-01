@@ -1,6 +1,7 @@
 var selectedSheet = "#paper-1";
 var selectedEquation;
 var idEquation; // the id of the equation in database
+var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
@@ -20,7 +21,6 @@ var concluded = 0;
 //var cont = 0;
 //var topicIsOpen = false;
 //var equationTourIsResolved = false;
-
 
 function getEquations ( ) {
 	loadExercise (168);
@@ -228,7 +228,7 @@ $(document).ready(function() {
     $(document).keyup(function(event) {
         // key 13 = enter
         var key = event.which;
-//        alert(key);
+        //alert(key);
         
 //        if (isTourInterativo && key === 27) {
 //            $.guider({
@@ -383,7 +383,6 @@ $(document).ready(function() {
         hint();
     });
 
-    loadExercise(30);
     loadEquation(0);
 
     centralizeCanMoveAndButton();

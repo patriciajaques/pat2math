@@ -22,14 +22,35 @@
     </head>
     <body>
     <script>
-
-//     $(document).ready(function() {
+     $(document).ready(function() {
+    	 var pos = getCookie ("pos");
+    	 var cookieName = "playAudio" + pos;
+    	 var playAudio = getCookie (cookieName);
+    	 
+    	 if (playAudio !== "false") {
+    		 alert ("Ops! Vocë deve ouvir o áudio antes de começar a utilizar o Pat2Math");
+    		 location.href = "/pat2math/audio";
+    	 }
+    		 
 //    	try {
 //    	openTour();
 //    	} catch (e) {
 //    		window.location.reload();
 //    	}
-//     });
+    });
+     
+     function getCookie(cname) {
+    	    var name = cname + "=";
+    	    var ca = document.cookie.split(';');
+    	    for(var i=0; i<ca.length; i++) {
+    	        var c = ca[i];
+    	        while (c.charAt(0)==' ') c = c.substring(1);
+    	        if (c.indexOf(name) != -1) {
+    	            return c.substring(name.length, c.length);
+    	        }
+    	    }
+    	    return "";
+    	}
 
     </script>
 

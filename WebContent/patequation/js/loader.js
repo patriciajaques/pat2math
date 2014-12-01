@@ -30,7 +30,9 @@ loadScript("/pat2math/patequation/lib/jquery-ui/jquery-1.10.2.js", function() {
                 loadScript("/pat2math/patequation/js/conversion.js", function() {
                     loadScript("/pat2math/patequation/js/server.js", function() {
                     	loadScript("/pat2math/patequation/js/tour.js", function() {
-                            loadScript("/pat2math/patequation/js/index.js");
+                            loadScript("/pat2math/patequation/js/index.js", function() {
+                            	loadScript("/pat2math/js/cookies.js");
+                            });
                         });
                     });
                 });
