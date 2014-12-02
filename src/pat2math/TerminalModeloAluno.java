@@ -73,6 +73,11 @@ public class TerminalModeloAluno {
 			r=new Regras(new String[]{"/pat2math/regras/expressao.drl","/pat2math/regras/modelo_aluno.drl", "/pat2math/regras/misconseptions.drl"}, true, null);
 			Regras.saveRecources("pat2math.regras", r.getSession().getRuleBase().getPackage("pat2math.regras"));
 			System.out.println("Processo concluído!");
+		}else if (args.length>0 && args[0].equals("-v")){
+			System.out.println("Processando regras da mente do estudante virtual");
+			Regras r=new Regras(new String[]{"/pat2math/regras/expressao.drl"},true,null);
+			Regras.saveRecources("VirtualStudent.Mind", r.getSession().getRuleBase().getPackage("pat2math.regras"));
+			System.out.println("Processo concluído!");
 		}else{
 			TerminalModeloAluno t=new TerminalModeloAluno();
 			t.start();

@@ -500,7 +500,6 @@ public class Help {
 			h2.setContent(mh.getContent());
 			h2.setLevel(mh.getNivel());
 			h2.setOperation(mh.getOperacao());
-			h2.setContent(content);
 			h2.setId(mh.getIdHelp());
 			
 			Animation animation = new Animation();
