@@ -8,13 +8,19 @@ var plan7 = [168, 169, 170, 171, 172, 173, 174, 176, 177, 178];
 var plan8 = [187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
 var plan9 = [202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219];
 
-function setCookie(cname,cvalue,exdays) {
+function setCookieDays(cname,cvalue,exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires=" + d.toGMTString();
     document.cookie = cname+"="+cvalue+"; "+expires;
 }
 
+function setCookieMinutes(cname,cvalue,exminutes) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exminutes*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -49,37 +55,40 @@ function binarySearch (array, value) {
 }
 
 $(document).ready(function() {
-	var currentEquation = getCookie ("currentEquation");
+	var pos = getCookie  ("pos");
+	var cookieName = "currentEquation" + pos;
+	var currentEquationString = getCookie (cookieName);
 	
-	if (currentEquation != "") {
+	if (currentEquationString !== "") {
+		var currentEquation = parseInt (currentEquationString);
+		
 		if (binarySearch (plan1, currentEquation) !== -1) 
-			loadTasks (2);
-		
-		else if (binarySearch (plan2, currentEquation) !== -1) 
-			loadTasks (3);
-		
-		else if (binarySearch (plan3, currentEquation) !== -1) 
-			loadTasks (4);
-		
-		else if (binarySearch (plan4, currentEquation) !== -1) 
-			loadTasks (5);
-		
-		else if (binarySearch (plan5, currentEquation) !== -1) 
-			loadTasks (6);
-		
-		else if (binarySearch (plan6, currentEquation) !== -1) 
-			loadTasks (7);
-		
-		else if (binarySearch (plan7, currentEquation) !== -1) 
-			loadTasks (8);
-		
-		else if (binarySearch (plan8, currentEquation) !== -1) 
-			loadTasks (10);
-		
-		else
-			loadTasks (11);
-		
-		loadExercise (currentEquation);
-		
+		    loadTasks (2);
+	
+	    else if (binarySearch (plan2, currentEquation) !== -1) 
+		    loadTasks (3);
+	
+	    else if (binarySearch (plan3, currentEquation) !== -1) 
+		    loadTasks (4);
+	
+	    else if (binarySearch (plan4, currentEquation) !== -1) 
+		    loadTasks (5);
+	
+	    else if (binarySearch (plan5, currentEquation) !== -1) 
+		    loadTasks (6);
+	
+	    else if (binarySearch (plan6, currentEquation) !== -1) 
+		    loadTasks (7);
+	
+	    else if (binarySearch (plan7, currentEquation) !== -1) 
+		    loadTasks (8);
+	
+	    else if (binarySearch (plan8, currentEquation) !== -1) 
+		    loadTasks (10);
+	
+	    else
+		    loadTasks (11);
+	
+	    loadExercise (currentEquation);
 	}
 });

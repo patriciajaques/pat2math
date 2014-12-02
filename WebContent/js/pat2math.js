@@ -5,7 +5,6 @@ var appContext = "/pat2math/";
 //                      //quando clicar no botão da próxima equação.
 //var pos = -1; //Posição da equação atual no array ordenado (currentIds2)
 
-
 function enableContent(id) {
 	$.post(
 		appContext + "content/enable",
@@ -96,7 +95,9 @@ function loadExercise(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			setCookie ("currentEquation", idEquation, 1);
+			var pos = getCookie ("pos");
+			var cookieName = "currentEquation" + pos;
+			setCookieDays (cookieName, idEquation, 1);
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação		
 			loadingHide();
 			
@@ -143,7 +144,9 @@ function loadExerciseTest(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			setCookie ("currentEquation", idEquation, 1);
+			var pos = getCookie ("pos");
+			var cookieName = "currentEquation" + pos;
+			setCookieDays (cookieName, idEquation, 1);
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
 			loadingHide();
 			
