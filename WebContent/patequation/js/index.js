@@ -5,6 +5,7 @@ var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
+var numClicks;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -22,25 +23,25 @@ var concluded = 0;
 //var topicIsOpen = false;
 //var equationTourIsResolved = false;
 
-function getEquations ( ) {
-	loadExercise (168);
-	loadEquation(0);
-	
-	setTimeout ("var a = 2;", 3000)
-	var string = '\\"' + selectedEquation.equation + '\\"';
-	
-	for (var i = 169; i < 179; i++) {
-		if (i !== 175) {
-		loadExercise (i);
-		loadEquation(0);
-		string += ' \\"' + selectedEquation.equation + '\\"';
-		}
-		
-		
-	}
-	
-	alert (string);
-}
+//function getEquations ( ) {
+//	loadExercise (168);
+//	loadEquation(0);
+//	
+//	setTimeout ("var a = 2;", 3000)
+//	var string = '\\"' + selectedEquation.equation + '\\"';
+//	
+//	for (var i = 169; i < 179; i++) {
+//		if (i !== 175) {
+//		loadExercise (i);
+//		loadEquation(0);
+//		string += ' \\"' + selectedEquation.equation + '\\"';
+//		}
+//		
+//		
+//	}
+//	
+//	alert (string);
+//}
 
 
 function helpPage6 ( ) {
@@ -191,8 +192,7 @@ function rel ( ) {
 }
 
 
-$(document).ready(function() {	
-	showSideBar();
+$(document).ready(function() {	    
 	$("body").on("click", ".hide-menu", function() {
 		$("#topics").hide("slide", { direction: "left" }, 1000);
 		$(this).removeClass("hide-menu");
@@ -395,6 +395,18 @@ $(document).ready(function() {
     buttonClick();
     focus();
     
+    showSideBar();
+	
+    var pos = getCookie  ("pos");
+	var cookieName = "currentEquation" + pos;
+	var currentEquationString = getCookie (cookieName);
+	
+	if (currentEquationString !== "") {	
+		var currentEquation = parseInt (currentEquationString);
+		var plan = sortedIds[currentEquation].plan;
+		loadTasks (plan);
+	    loadExercise (currentEquation);
+	} 
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
@@ -1161,7 +1173,37 @@ function newEquation() {
     requestServer('n', "", "", "", null);
 }
 
+function resetNumClicks ( ) {
+	numClicks = 0;
+}
+
+function fiveClicksOnTheLoupe ( ) {
+	numClicks = 0;
+	
+	$("#easter-egg-loupe-box").html('<audio autoplay> <source src="horse.ogg" type="audio/ogg"> <source src="/pat2math/patequation/audio/quebra-da-lupa.mp3" type="audio/mpeg"> </audio><img src=/pat2math/patequation/img/lupa-quebrada.png border=0>');
+	$("#mask").fadeIn(700);
+	$("#easter-egg-loupe-box").fadeIn(700);
+	
+	setTimeout ('closeEasterEgg()', 10000);
+}
+
+function closeEasterEgg ( ) {
+	$("#mask").fadeOut(700);
+	$("#easter-egg-loupe-box").fadeOut(700);
+	
+}
 function checkEquation() { 
+	setTimeout ('resetNumClicks()', 3000);
+	
+	if (numClicks === undefined)
+		numClicks = 1;
+	
+	else
+		numClicks++;
+	
+	if (numClicks === 5)
+		fiveClicksOnTheLoupe();
+	
 	//var display = document.getElementById('button').style.display;
 	if (document.getElementById ('button') === null && idEquation >= 0) {
 		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
@@ -1288,6 +1330,32 @@ function showHint(hint) {
     $("#hintText").hide('blind', 200);
     $("#hintText").html("*Dica: " + hint + lastHint);
     $("#hintText").show('blind', 500);
+}
+
+function setCookieDays(cname,cvalue,exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
+
+function setCookieMinutes(cname,cvalue,exminutes) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exminutes*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname+"="+cvalue+"; "+expires;
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 function searchArray (elemento, array) {

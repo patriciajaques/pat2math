@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/pat2math/patequation/js/index.js"></script>
+
 <style>
      #audio {
                 background: url("/pat2math/patequation/img/modal_audio.png") no-repeat scroll center center transparent;
@@ -187,32 +189,6 @@ function playAudio ( ) {
 	}
 }
 
-function setCookieDays(cname,cvalue,exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = cname+"="+cvalue+"; "+expires;
-}
-
-function setCookieMinutes(cname,cvalue,exminutes) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exminutes*60*1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = cname+"="+cvalue+"; "+expires;
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) != -1) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
 </script>
        <c:if test="${student.group.id == 2}"> 
     	 <script type="text/javascript">
