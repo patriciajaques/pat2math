@@ -5,7 +5,7 @@ var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
-var numClicks;
+//var numClicks;
 
 // variables for the Step object
 var NORMAL_STEP = 0;
@@ -1173,36 +1173,36 @@ function newEquation() {
     requestServer('n', "", "", "", null);
 }
 
-function resetNumClicks ( ) {
-	numClicks = 0;
-}
+//function resetNumClicks ( ) {
+//	numClicks = 0;
+//}
+//
+//function fiveClicksOnTheLoupe ( ) {
+//	numClicks = 0;
+//	
+//	$("#easter-egg-loupe-box").html('<audio autoplay> <source src="horse.ogg" type="audio/ogg"> <source src="/pat2math/patequation/audio/quebra-da-lupa.mp3" type="audio/mpeg"> </audio><img src=/pat2math/patequation/img/lupa-quebrada.png border=0>');
+//	$("#mask").fadeIn(700);
+//	$("#easter-egg-loupe-box").fadeIn(700);
+//	
+//	setTimeout ('closeEasterEgg()', 10000);
+//}
 
-function fiveClicksOnTheLoupe ( ) {
-	numClicks = 0;
-	
-	$("#easter-egg-loupe-box").html('<audio autoplay> <source src="horse.ogg" type="audio/ogg"> <source src="/pat2math/patequation/audio/quebra-da-lupa.mp3" type="audio/mpeg"> </audio><img src=/pat2math/patequation/img/lupa-quebrada.png border=0>');
-	$("#mask").fadeIn(700);
-	$("#easter-egg-loupe-box").fadeIn(700);
-	
-	setTimeout ('closeEasterEgg()', 10000);
-}
-
-function closeEasterEgg ( ) {
-	$("#mask").fadeOut(700);
-	$("#easter-egg-loupe-box").fadeOut(700);
-	
-}
+//function closeEasterEgg ( ) {
+//	$("#mask").fadeOut(700);
+//	$("#easter-egg-loupe-box").fadeOut(700);
+//	
+//}
 function checkEquation() { 
-	setTimeout ('resetNumClicks()', 3000);
-	
-	if (numClicks === undefined)
-		numClicks = 1;
-	
-	else
-		numClicks++;
-	
-	if (numClicks === 5)
-		fiveClicksOnTheLoupe();
+//	setTimeout ('resetNumClicks()', 3000);
+//	
+//	if (numClicks === undefined)
+//		numClicks = 1;
+//	
+//	else
+//		numClicks++;
+//	
+//	if (numClicks === 5)
+//		fiveClicksOnTheLoupe();
 	
 	//var display = document.getElementById('button').style.display;
 	if (document.getElementById ('button') === null && idEquation >= 0) {

@@ -539,10 +539,6 @@ span.kbd {
     position: fixed;
 }*/
 
-body {
-    background: url('../img/wood texture 2.jpg') repeat left top;
-}
-
 input[type="text"] {
     background-color: transparent !important;
     margin-top: 1px;
