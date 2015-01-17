@@ -16,36 +16,36 @@ body {
 	padding: 8px;
 }
 
-.hide-menu, .show-menu {
-	position: fixed; 
-	/* top: 47%;
-	z-index: 99999999999999;
-	padding: 0px 13px 5px 13px;
-	border-radius: 50px;
-	border: 3px solid #269;
-	font-weight:bold;
-	font-size: 30px;
-	background: #fff; */
-	top: 47%;
-	z-index: 99999999999999;
-    background-image: url("/pat2math/images/seta_left.png");
-    background-repeat: no-repeat;
-    height: 50px;
-    width: 50px; 
-    background-size: 50px 50px;
-}
+/* .hide-menu, .show-menu { */
+/* 	position: fixed;  */
+/* 	/* top: 47%; */
+/* 	z-index: 99999999999999; */
+/* 	padding: 0px 13px 5px 13px; */
+/* 	border-radius: 50px; */
+/* 	border: 3px solid #269; */
+/* 	font-weight:bold; */
+/* 	font-size: 30px; */
+/* 	background: #fff; */ */
+/* 	top: 47%; */
+/* 	z-index: 99999999999999; */
+/*     background-image: url("/pat2math/images/seta_left.png"); */
+/*     background-repeat: no-repeat; */
+/*     height: 50px; */
+/*     width: 50px;  */
+/*     background-size: 50px 50px; */
+/* } */
 
 
-.hide-menu {
-	display:none;
-	left: 295px;
-	background-image: url("/pat2math/images/seta_left.png");
-}
+/* .hide-menu { */
+/* 	display:none; */
+/* 	left: 295px; */
+/* 	background-image: url("/pat2math/images/seta_left.png"); */
+/* } */
 
-.show-menu {
-	left: -3px;
-	background-image: url("/pat2math/images/seta_right.png");
-}
+/* .show-menu { */
+/* 	left: -3px; */
+/* 	background-image: url("/pat2math/images/seta_right.png"); */
+/* } */
 
 .show-menu:hover {
 	cursor: pointer;
@@ -366,6 +366,15 @@ textarea:focus {
 	background: #76bdda;
 	height: 100%;
 	overflow: scroll;
+	display: none;
+}
+
+#topicsAux {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 280px;
+	height: 100%;
 	display: none;
 }
 

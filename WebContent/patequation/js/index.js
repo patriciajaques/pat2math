@@ -193,19 +193,19 @@ function rel ( ) {
 
 
 $(document).ready(function() {	    
-	$("body").on("click", ".hide-menu", function() {
-		$("#topics").hide("slide", { direction: "left" }, 1000);
-		$(this).removeClass("hide-menu");
-		$(this).addClass("show-menu");
-	});
-	
-	
-	
-	$("body").on("click", ".show-menu", function() {
-		$("#topics").show("slide", { direction: "left" }, 1000);
-		$(this).removeClass("show-menu");
-		$(this).addClass("hide-menu");
-	});
+//	$("body").on("click", ".hide-menu", function() {
+//		$("#topics").hide("slide", { direction: "left" }, 1000);
+//		$(this).removeClass("hide-menu");
+//		$(this).addClass("show-menu");
+//	});
+//	
+//	
+//	
+//	$("body").on("click", ".show-menu", function() {
+//		$("#topics").show("slide", { direction: "left" }, 1000);
+//		$(this).removeClass("show-menu");
+//		$(this).addClass("hide-menu");
+//	});
 	
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
@@ -216,7 +216,7 @@ $(document).ready(function() {
 	
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
-    loadScript("/pat2math/patequation/js/paper.js");
+    
 
     $("#mask").click(
             function() {
@@ -224,6 +224,7 @@ $(document).ready(function() {
                 $("#mask").hide();
             }
     );
+    
 
     $(document).keyup(function(event) {
         // key 13 = enter
@@ -395,7 +396,18 @@ $(document).ready(function() {
     buttonClick();
     focus();
     
-    showSideBar();
+    $("#topics").mouseleave (function() {
+    	if (selectedEquation !== null) {
+    	    $("#topics").fadeOut();
+    	    $("#topicsAux").show();
+    	}
+    });
+    
+    $("#topicsAux").mouseover (function() {
+    	$("#topics").fadeIn();
+    	$("#topicsAux").hide();
+    });
+    
 	
     var pos = getCookie  ("pos");
 	var cookieName = "currentEquation" + pos;
@@ -406,7 +418,15 @@ $(document).ready(function() {
 		var plan = sortedIds[currentEquation].plan;
 		loadTasks (plan);
 	    loadExercise (currentEquation);
+	    $("#topics").fadeOut();
+    	$("#topicsAux").show();
 	} 
+	
+	else {
+		selectedEquation = null;
+		$("#topics").fadeIn();
+    	$("#topicsAux").hide();
+	}
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();

@@ -184,6 +184,7 @@
 <!--     <div id="tour" onclick="openTour()"></div> -->
 	<div id="video-box"></div>
 	<div id="help-box"></div>
+	<div id="topicsAux"></div>
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	
 	

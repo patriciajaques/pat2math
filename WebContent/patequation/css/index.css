@@ -548,12 +548,12 @@ input[type="text"] {
     max-width: 300px;
 }
 
-#show-menu {
-	position: absolute;
-	top: 10px;
-	left: 80%;
-	display: none;
-}
+/* #show-menu { */
+/* 	position: absolute; */
+/* 	top: 10px; */
+/* 	left: 80%; */
+/* 	display: none; */
+/* } */
 
 .labelDefault {
     min-width: 30px;
