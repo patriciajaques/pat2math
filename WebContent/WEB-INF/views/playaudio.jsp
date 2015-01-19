@@ -1,5 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,12 +8,6 @@
                 background: url("/pat2math/patequation/img/modal_audio.png") no-repeat scroll center center transparent;
                 width: 633px;
                 height: 446px;
-/*                 margin: auto;  */
-/*                 position: absolute;  */
-/*                 top: 0;  */
-/*                 right: 0;  */
-/*                 bottom: 0;  */
-/*                 left: 0; */
             }
             
             #play {

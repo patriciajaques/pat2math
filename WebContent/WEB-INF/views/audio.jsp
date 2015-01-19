@@ -51,7 +51,7 @@ function verificaAudio ( ) {
 	}
 	
 	else {
-		window.open (' /pat2math/play_audio ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
+		window.open (' /pat2math/playaudio ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
 	}
 }
 
