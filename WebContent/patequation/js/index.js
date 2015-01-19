@@ -5,6 +5,7 @@ var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
+var tipoAudio = 0;
 //var numClicks;
 
 // variables for the Step object
@@ -44,6 +45,13 @@ var concluded = 0;
 //}
 
 
+function isPopup() {         
+    if (window.opener && !(window.location.href == window.opener.location.href))
+        return true;
+    
+    else
+        return false;
+}       
 function helpPage6 ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:246px; left:1px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:494px;'> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
@@ -408,7 +416,9 @@ $(document).ready(function() {
     	$("#topicsAux").hide();
     });
     
-	
+    if (!isPopup ( ))
+	    location.href = "/pat2math/audio";
+    
     var pos = getCookie  ("pos");
 	var cookieName = "currentEquation" + pos;
 	var currentEquationString = getCookie (cookieName);

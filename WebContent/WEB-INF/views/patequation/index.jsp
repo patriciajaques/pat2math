@@ -35,22 +35,24 @@
     </head>
     <body>
     <script>
-     $(document).ready(function() {
-    	 var pos = getCookie ("pos");
-    	 var cookieName = "playAudio" + pos;
-    	 var playAudio = getCookie (cookieName);
+//      $(document).ready(function() {
     	 
-    	 if (playAudio !== "false") {
-    		 alert ("Ops! Vocë deve ouvir o áudio antes de começar a utilizar o Pat2Math");
-    		 location.href = "/pat2math/audio";
-    	 }
+    	 
+//     	 var pos = getCookie ("pos");
+//     	 var cookieName = "playAudio" + pos;
+//     	 var playAudio = getCookie (cookieName);
+    	 
+//     	 if (playAudio !== "false") {
+//     		 alert ("Ops! Vocë deve ouvir o áudio antes de começar a utilizar o Pat2Math");
+//     		 location.href = "/pat2math/audio";
+//     	 }
     		 
 //    	try {
 //    	openTour();
 //    	} catch (e) {
 //    		window.location.reload();
 //    	}
-    });
+//     });
 
     </script>
 
