@@ -31,6 +31,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/audio.jsp"/>
 	</definition>
 	
+	<definition name="playaudio" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/playaudio.jsp"/>
+	</definition>
+	
 	<definition name="home" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
 	</definition>
