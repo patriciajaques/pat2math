@@ -5,7 +5,7 @@ var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
-var tipoAudio = 0;
+var tipoAudio;
 //var numClicks;
 
 // variables for the Step object

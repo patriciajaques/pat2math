@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,10 +43,10 @@
 <script>
 var i;
 
-$(document).ready(function() {	
-	if (!isPopup ( ))
-	    location.href = "/pat2math/audio";
-});
+// $(document).ready(function() {	
+// 	if (!isPopup ( ))
+// 	    location.href = "/pat2math/audio";
+// });
 
 function mostraProgressoAudio1 ( ) {
 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
@@ -82,7 +84,8 @@ function mostraProgressoAudio2 ( ) {
 }
 
 function endAudio ( ) {
-	var cookieName = "playAudio" + i;
+	var pos = getCookie  ("pos");
+	var cookieName = "playAudio" + pos;
 	setCookieDays (cookieName, "false", 1);
 	location.href="/pat2math/student/home";	
 }

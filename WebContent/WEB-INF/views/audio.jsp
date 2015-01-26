@@ -7,17 +7,12 @@
 </head>
 <body>
 <script>
-var i;
-var playAudio;
-
-
-$(document).ready(function() {	
-	
+$(document).ready(function() {		
 	var currentID = "" + ${student.id};
 	var isLastUser = false;
 	//Os cookies do tipo lastUsersN salvam os ids dos usuários que acessaram o Pat2Math no dia
 	var cookieName = "lastUsers0";	
-	i = 0;
+	var i = 0;
 	
 	//Verifica se o ID atual já está salvo em algum cookie, senão descobre a posição livre para salvar este ID.
 	while (getCookie (cookieName) !== "" && isLastUser === false) {
@@ -36,23 +31,19 @@ $(document).ready(function() {
 	//Caso o ID atual não for encontrado nos cookies, ele deverá ser salvo
 	if (isLastUser === false)
 		setCookieDays (cookieName, currentID, 1);
-	
-	//Verifica se o usuário deve ouvir o rádio
-	playAudio = getCookie ("playAudio" + i);   
-	
+		
 	verificaAudio ( );
 });
 
 function verificaAudio ( ) {
-	if (tipoAudio === 0 || playAudio === "false") {
-		var cookieName = "playAudio" + i;
-		setCookieDays (cookieName, "false", 1);
-		window.open (' /pat2math/student/home ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
-	}
+	var pos = getCookie  ("pos");
+	var playAudio = getCookie ("playAudio" + pos);   
 	
-	else {
+	if ((tipoAudio != 1 && tipoAudio != 2) || playAudio === "false") 
+		window.open (' /pat2math/student/home ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
+		
+	else 
 		window.open (' /pat2math/playaudio ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
-	}
 }
 
 
