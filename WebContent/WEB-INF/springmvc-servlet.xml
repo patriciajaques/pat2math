@@ -70,7 +70,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
     	<property name="url" value="jdbc:mysql://localhost/pat2math" />
     	<property name="username" value="root" />
-    	<property name="password" value="SpFc7557?" />
+    	<property name="password" value="" />
     </bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -104,8 +104,8 @@
 
 	<!-- Mail service -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	    <property name="username" value="pat2math@gmail.com"/>
-	    <property name="password" value="pat2mathadmingmail"/>
+	    <property name="username" value="pat2math.do.not.reply@gmail.com"/>
+	    <property name="password" value="antPAT04"/>
 	    <property name="javaMailProperties">
 	        <props>
 	            <prop key="mail.smtp.host">smtp.gmail.com</prop>
