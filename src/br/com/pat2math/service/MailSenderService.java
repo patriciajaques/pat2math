@@ -31,11 +31,11 @@ public class MailSenderService {
 	 @Async
 	 public void sendConfirmationAccount(User to, SignUpConfirmation confirmation, String subject) throws MessagingException {
 		 MimeMessage mm = mailSender.createMimeMessage();
-		 MimeMessageHelper mh = new MimeMessageHelper(mm);
+		 MimeMessageHelper mh = new MimeMessageHelper(mm,"UTF-8");
 		 Map<String, Object> model = new HashMap<String, Object>();
 		 model.put("user", to);
 		 model.put("hash", confirmation.getHash());
-		 String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, CONF_SIGN_UP, model);
+		 String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, CONF_SIGN_UP,"UTF-8", model);
 		 text = text.replaceAll("\n", "<br>");
 		 mh.setFrom("[no-reply] pat2math@gmail.com");
 		 mh.setTo(to.getEmail());
@@ -48,11 +48,11 @@ public class MailSenderService {
 	 @Async
 	 public void recoverPassword(User to, PasswordRecovery passwordRecovery) throws MessagingException {
 		 MimeMessage mm = mailSender.createMimeMessage();
-		 MimeMessageHelper mh = new MimeMessageHelper(mm);
+		 MimeMessageHelper mh = new MimeMessageHelper(mm,"UTF-8");
 		 Map<String, Object> model = new HashMap<String, Object>();
 		 model.put("user", to);
 		 model.put("hash", passwordRecovery.getHash());
-		 String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, CHANGE_PASSWORD, model);
+		 String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, CHANGE_PASSWORD, "UTF-8",model);
 		 text = text.replaceAll("\n", "<br>");
 		 mh.setFrom("pat2math@gmail.com");
 		 mh.setTo(to.getEmail());
