@@ -208,11 +208,229 @@ function clickEquation ( ) {
 }
 
 function clickEquationSlim ( ) {
+	$.guider({
+		next: "smain2",
+		title: "Verificamos que a equação já foi resolvida",
+		description: "Vamos avançar um pouco no nosso tour para verificar outros detalhes importantes. ",
+	    alignButtons: "right", 
+	    buttons: {
+	    	Próximo: {
+                click: true,
+                className: "primary"
+            }
+	    }
+		}).show();
 	
+    $("#note").guider({
+		name: "smain2",
+		next: "smain3",
+		title: "Observe este painel",
+		description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
+		position: "left",
+		alignButtons: "right",
+		closable: true, 
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+    
+    $("#note").guider({
+		name: "smain3",
+		next: "smain4",
+		title: "Pontuação",
+		description: "Ao acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+		position: "left",
+		alignButtons: "right",
+		closable: true, 
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+    
+    $("#hint").guider({
+		name: "smain4",
+		next: "smain5",
+		title: "Pedindo dicas",
+		description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
+		position: "bottom",
+		alignButtons: "right",
+		closable: true, 
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+    
+    $("#help").guider({
+		name: "smain5",
+		next: "smain6",
+		title: "Teclas utilizadas",
+		description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
+		position: "left",
+		alignButtons: "right",
+		closable: true, 
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+    
+    $("#tour").guider({
+		name: "smain6",
+		title: "Você está liberado!",
+		description: "Se desejar, você pode acessar a este tour novamente clicando neste botão.",
+		position: "left",
+		alignButtons: "center",
+		closable: true, 
+		buttons: {
+			Finalizar: {
+                click: true,
+                className: "primary"
+            }
+		}
+	});
+    
+    isTourInterativo = false;
 }
 
 function clickEquationPartiallyResolved ( ) {
+	$.guider({
+		next: "pmain2",
+		title: "Esta é a sua interface principal",
+		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br><br>Continue com o tour para descobrir!",
+	    alignButtons: "right", 
+	    buttons: {
+	    	Próximo: {
+                click: true,
+                className: "primary"
+            }
+	    }
+		}).show();
 	
+	$("#topicsAux").guider({
+		name: "pmain2",
+		next: "pmain3",
+		title: "O menu principal sumiu!",
+		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "pmain3",
+		next: "pmain4",
+		title: "As equações iniciais sempre estarão na primeira linha",
+		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
+		position: "bottom",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#note").guider({
+    	name: "pmain4",
+    	next: "pmain5",
+    	title: "Observe este painel",
+    	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
+    	position: "left",
+    	alignButtons: "right",
+    	buttons: {
+    		Voltar: true,
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	});
+    	    
+    	    $("#note").guider({
+    			name: "pmain5",
+    			next: "pmain6",
+    			title: "Pontuação",
+    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+    			position: "left",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#hint").guider({
+    			name: "pmain6",
+    			next: "pmain7",
+    			title: "Pedindo dicas",
+    			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
+    			position: "bottom",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#help").guider({
+    	    	name: "pmain7",
+    			next: "pmain8",
+    	    	title: "Teclas utilizadas",
+    	    	description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
+    	    	position: "left",
+    	    	alignButtons: "right",
+    	    	closable: true, 
+    	    	buttons: {
+    	    		Voltar: true,
+    	    		Próximo: {
+    	    			click: true,
+    	    			className: "primary"
+    	    		}
+    	    	}
+    	    	});
+    	    
+    	    $.guider({
+    			name: "pmain8",
+    			title: "Agora é com você",
+    			description: "Continue resolvendo a equação da forma que preferir. Quando terminar, nós lhe passaremos mais algumas orientações.",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				OK: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
 }
 function clickPlan ( ) {
 	$.guider({
@@ -291,7 +509,7 @@ function firstStepTour ( ) {
     	            
     	}).show();            
     	    
-    	    $("#note").guider({
+    $("#note").guider({
     	name: "fstep2",
     	next: "fstep3",
     	title: "Observe este painel",
@@ -372,11 +590,11 @@ function firstStepTour ( ) {
     	    	    
 }
 
-function finalStepWithTour ( ) {
+function finalStepTour ( ) {
 	$.guider({
     	next: "fstep2",
-    	title: "Parabéns, você resolveu a equação!",
-    	description: "Você já está quase pronto para utilizar o Pat2Math. Confira a seguir as nossas considerações finais. ",
+    	title: "Parabéns!",
+    	description: "O plano de aula 1 foi desbloqueado e você já está pronto para utilizar o Pat2Math.",
     	            alignButtons: "right",
     	buttons: {
     		Próximo: {
@@ -385,7 +603,24 @@ function finalStepWithTour ( ) {
     		}
     	}
     	            
-    	}).show();       
+    	}).show();
+	
+	$("#tour").guider({
+    	name: "fstep2",
+    	title: "Você está liberado!",
+		description: "Se desejar, você pode acessar a este tour novamente clicando neste botão.",
+		position: "left",
+		alignButtons: "center",
+		closable: true, 
+		buttons: {
+			Finalizar: {
+               click: true,
+               className: "primary"
+            }
+		}
+    	});
+	
+	isTourInterativo = false;
 }
 
 // function openTour ( ) {

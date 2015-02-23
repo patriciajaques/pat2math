@@ -189,6 +189,8 @@ function requestServer (type, last, next, typeOperation, element) {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
                     
+                    	finalStepTour();
+                    	
                     	//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
                     	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)                  		
                             nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>");
@@ -379,6 +381,9 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         $("#newPoints").show("puff", 500, callbackAddPoints(10));
                         
+                        var pos = getCookie  ("pos");
+                    	var cookieName = "isPartiallyResolved" + pos;
+                    	setCookieDays (cookieName, "true", 1);
                         firstStepTour();
                     }
                     

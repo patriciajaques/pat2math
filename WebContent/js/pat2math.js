@@ -92,15 +92,21 @@ function loadExercise(id) {
 				
 				if (isTourInterativo && id === 201) {
 					blockMenu = false;
-					
+						
 					if (equation.isComplete === true)
 						clickEquationSlim();
 					
-					else if (equation.lastStep === null)
-						clickEquation();
+					else {
+						var pos = getCookie  ("pos");
+	                	var cookieName = "isPartiallyResolved" + pos;
+	                	var temp = getCookie (cookieName);
+	                	
+					    if (temp === "")
+						    clickEquation();
 					
-					else
-						clickEquationPartiallyResolved();
+					    else
+						    clickEquationPartiallyResolved();
+					}
 				}
 				
 				newEquations[0] = equation;

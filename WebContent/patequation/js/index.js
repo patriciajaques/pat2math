@@ -438,9 +438,9 @@ $(document).ready(function() {
     	$("#topicsAux").hide();
 	}
 	
-	cookieName = "tour" + pos;
-	var startTour = getCookie (cookieName);
-	setTimeout ('openTour()', 1000);
+//	cookieName = "tour" + pos;
+//	var startTour = getCookie (cookieName);
+//	setTimeout ('openTour()', 1000);
 //	if (startTour === "")
 //	    openTour();
 
