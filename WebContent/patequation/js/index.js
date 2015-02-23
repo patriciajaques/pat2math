@@ -423,7 +423,7 @@ $(document).ready(function() {
 	var cookieName = "currentEquation" + pos;
 	var currentEquationString = getCookie (cookieName);
 	
-	if (currentEquationString !== "") {	
+	if (currentEquationString !== "" && currentEquationString !== "201") {	
 		var currentEquation = parseInt (currentEquationString);
 		var plan = sortedIds[currentEquation].plan;
 		loadTasks (plan);
