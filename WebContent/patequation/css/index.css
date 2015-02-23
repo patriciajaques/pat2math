@@ -70,14 +70,14 @@
 /*     position: fixed; */
 /* } */
 
-/* #tour{ */
-/*     background: url("/pat2math/patequation/img/tour.png") no-repeat scroll center center transparent; */
-/*     width: 70px; */
-/*     height: 70px; */
-/*     margin-left: 933px; */
-/*     margin-top: 3px; */
-/*     cursor: pointer; */
-/* } */
+#tour{
+    background: url("/pat2math/patequation/img/tour.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    margin-top: 3px;
+    cursor: pointer;
+}
 
 
 #calculatorAccess{

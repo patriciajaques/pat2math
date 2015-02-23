@@ -4,6 +4,16 @@
 <html lang="en">
 <head>
 <script src="/pat2math/patequation/js/index.js"></script>
+
+<style>
+/* Redimensionar a imagem para ficar com a altura mais baixo para ser visualizada em resoluções menores */
+#aviso {
+    background: url("/pat2math/patequation/img/aviso_controle.png") no-repeat scroll center center transparent;
+    width: 656px;
+    height: 490px;
+    cursor: pointer;
+}
+</style>
 </head>
 <body>
 <script>
@@ -49,7 +59,7 @@ function verificaAudio ( ) {
 
 </script>
 
-<div onclick="verificaAudio()">Para o Pat2Math funcionar corretamente, você deve permitir cookies em seu navegador e desbloquear popups para o nosso site. Uma nova janela deverá ser aberta automaticamente, se isso não acontecer clique aqui.</div>
+<div id="aviso" class="box" onclick="verificaAudio()"></div>
 
        <c:if test="${student.group.id == 2}"> 
     	 <script type="text/javascript">

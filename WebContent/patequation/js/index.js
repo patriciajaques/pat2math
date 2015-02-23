@@ -19,10 +19,10 @@ var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
-//var isTourInterativo = false;
+var isTourInterativo = false;
+var blockMenu = false;
 //var cont = 0;
-//var topicIsOpen = false;
-//var equationTourIsResolved = false;
+var isFirstStepWithTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
 //function getEquations ( ) {
 //	loadExercise (168);
@@ -405,7 +405,7 @@ $(document).ready(function() {
     focus();
     
     $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null) {
+    	if (selectedEquation !== null && blockMenu === false) {
     	    $("#topics").fadeOut();
     	    $("#topicsAux").show();
     	}
@@ -437,6 +437,12 @@ $(document).ready(function() {
 		$("#topics").fadeIn();
     	$("#topicsAux").hide();
 	}
+	
+	cookieName = "tour" + pos;
+	var startTour = getCookie (cookieName);
+	setTimeout ('openTour()', 1000);
+//	if (startTour === "")
+//	    openTour();
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
@@ -1272,10 +1278,12 @@ function checkEquation() {
   var passoAnterior = selectedEquation.lastStep;
   
   if (passoAnterior !== null) {
-      passoAnterior = passoAnterior.step;
+      passoAnterior = passoAnterior.step;         
   } else {
-      passoAnterior = selectedEquation.initialEquation;
+      passoAnterior = selectedEquation.initialEquation;       	  
   }
+  
+  
 
   //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
 
@@ -1304,6 +1312,16 @@ function checkEquation() {
       selectedEquation.initialEquation = passoAnterior;
       selectedEquation.twoAnswers = true;
   }
+  
+  if (isTourInterativo && selectedEquation.equation === "x+15=45-2x") {
+	  if (equation === "x=10") {
+		  finalStepTour();   	  
+	  } else if (isFirstStepWithTour) {
+		  isFirstStepWithTour = false;
+		  firstStepTour();
+	  }
+  }
+  
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
   //document.getElementById('button').style.display = 'inline';
 }

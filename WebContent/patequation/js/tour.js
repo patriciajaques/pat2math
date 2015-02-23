@@ -1,137 +1,408 @@
-//function openTour ( ) {
-//    isTourInterativo = true;
+function openTour ( ) {
+	isTourInterativo = true;
+	blockMenu = true;	
+	$("#topics").fadeIn();
+	$("#topicsAux").hide();
+
+	$.guider({
+		next : "start2",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
+		description : "<center>Você deseja passar pelo nosso Tour interativo antes de começar?</center>",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "center",
+		buttons : {
+			"Não, obrigado." : {
+			click : function() {noThanks();}
+			},
+			"Só se for agora!" : {
+				click : true,
+				className : "primary",
+				focus : true
+			}
+		}
+	}).show();
+	
+	$().guider({
+		name: "start2",
+		next: "start3",
+		title: "Ótimo! Você verá que é muito fácil e divertido utilizar esse programa",
+		description: 'A qualquer momento você pode sair deste tour pressionando <font color="red">ESC</font>',                             
+        hashable: true,
+		position: "right",
+		alignButtons: "center",
+        overlay: "dark",                 
+		buttons: {
+			"Vamos começar!": {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#topics").guider({
+		name: "start3",
+		next: "start4",
+		title: "Este é o menu principal",
+		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$(".topic").guider({
+		name: "start4",
+		title: "Acesso às Equações",
+		description: "Clique neste botão para conferir as equações do plano de aula especial do tour.",     
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}); 
+}
+
+function noThanks ( ) {
+	 $.guider({
+		title : "Tudo bem!",
+		next : "exit2",
+		description : 'Confira a seguir as nossas considerações finais.',
+		alignButtons : "right",
+		buttons : {
+			Próximo : {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+
+	$("#help").guider({
+		name : "exit2",
+	    next : "exit3",
+		title : 'Teclas utilizadas',
+		description : 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+		position : "left",
+		alignButtons : "right",
+		width : 600,
+		buttons : {
+			Próximo : {
+			click : true,
+		    className : "primary"
+			}
+		}
+	});
+
+	$("#tour").guider({
+		name : "exit3",
+		title : 'Se você mudar de ideia',
+		description : 'Clique neste botão para acessar a este tour novamente.',
+		position : "left",
+		alignButtons : "right",
+		width : 600,
+		buttons : {
+			Entendi : {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+
+	isTourInterativo = false; 
+	blockMenu = false;
+	
+	$("#topics").fadeOut();
+    $("#topicsAux").show();
+    
+	var pos = getCookie ("pos");
+	var cookieName = "tour" + pos;
+	setCookieDays (cookieName, "false", 7);
+}
+
+function clickEquation ( ) {
+	$.guider({
+		next: "main2",
+		title: "Esta é a sua interface principal",
+		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br><br>Continue com o tour para descobrir!",
+	    alignButtons: "right", 
+	    buttons: {
+	    	Próximo: {
+                click: true,
+                className: "primary"
+            }
+	    }
+		}).show();
+	
+	$("#topicsAux").guider({
+		name: "main2",
+		next: "main3",
+		title: "O menu principal sumiu!",
+		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#linha3").guider({
+		name: "main3",
+		next: "main4",
+		title: "As equações iniciais sempre estarão na primeira linha",
+		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
+		position: "bottom",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#linha3").guider({
+		name: "main4",
+        next: "main5",
+		title: "Agora, nós vamos resolver esta equação passo-a-passo",
+		description: 'Você pode começar a resolução da forma que preferir, mas sugerimos que adicione "+2x" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada.',  
+		width: 600,
+		position: "bottom",
+		alignButtons: "right",
+		buttons: {
+            Voltar: true,
+			Próximo: {
+               click: true,
+               className: "primary"
+            }
+		}
+	});
+            
+    $("#linha3").guider({
+		name: "main5",
+		title: "Veja como é fácil",
+		description: 'Digite x+2x+15=45-2x+2x e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img> localizado ao final da linha.',    
+		width: 620,
+		position: "bottom",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+}
+
+function clickEquationSlim ( ) {
+	
+}
+
+function clickEquationPartiallyResolved ( ) {
+	
+}
+function clickPlan ( ) {
+	$.guider({
+		next: "plan2",
+		title: "Planos de Aula",
+		description: "Os planos de aula são como as fases de um jogo.<br><br>Cada fase é composta por uma série de equações. ",
+	    alignButtons: "right", 
+	    buttons: {
+	    	Próximo: {
+                click: true,
+                className: "primary"
+            }
+	    }
+		}).show();
+	
+	$().guider({
+		name: "plan2",
+		next: "plan3",
+		title: "Passando de Fase",
+		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br><br>Essas equações podem ser resolvidas na ordem que você quiser.",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$().guider({
+		name: "plan3",
+		next: "plan4",
+		title: "Níveis de Dificuldade",
+		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br><br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
+		alignButtons: "right",
+		width: 610,
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$().guider({
+		name: "plan4",
+		title: "Clique na equação",
+		description: "Vamos resolvê-la passo-a-passo para entender as principais funcionalidades do Pat2Math.",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+}
+
+
+
+function firstStepTour ( ) {
+    $.guider({
+    	next: "fstep2",
+    	title: "Muito bem!",
+    	description: "Por acertar este passo da equação, você ganhou 10 pontos.",
+    	            alignButtons: "right",
+    	buttons: {
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	}).show();            
+    	    
+    	    $("#note").guider({
+    	name: "fstep2",
+    	next: "fstep3",
+    	title: "Observe este painel",
+    	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
+    	position: "left",
+    	alignButtons: "right",
+    	buttons: {
+    		Voltar: true,
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	});
+    	    
+    	    $("#note").guider({
+    			name: "fstep3",
+    			next: "fstep4",
+    			title: "Pontuação",
+    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+    			position: "left",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#hint").guider({
+    			name: "fstep4",
+    			next: "fstep5",
+    			title: "Pedindo dicas",
+    			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
+    			position: "bottom",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#help").guider({
+    	    	name: "fstep5",
+    	    	next: "fstep6",
+    	    	title: "Teclas utilizadas",
+    	    	description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
+    	    	position: "left",
+    	    	alignButtons: "right",
+    	    	closable: true, 
+    	    	buttons: {
+    	    		Voltar: true,
+    	    		Próximo: {
+    	    			click: true,
+    	    			className: "primary"
+    	    		}
+    	    	}
+    	    	});
+    	    
+    	    $.guider({
+    			name: "fstep6",
+    			title: "Agora é com você",
+    			description: "Continue resolvendo a equação da forma que preferir. Quando terminar, nós lhe passaremos mais algumas orientações.",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				OK: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    	    
+}
+
+function finalStepWithTour ( ) {
+	$.guider({
+    	next: "fstep2",
+    	title: "Parabéns, você resolveu a equação!",
+    	description: "Você já está quase pronto para utilizar o Pat2Math. Confira a seguir as nossas considerações finais. ",
+    	            alignButtons: "right",
+    	buttons: {
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	}).show();       
+}
+
+// function openTour ( ) {
+// isTourInterativo = true;
 //    
-//    if (topicIsOpen) {
-//    	if (equationTourIsResolved)
-//    		openTourSlimWithTopicOpen();
+// if (topicIsOpen) {
+// if (equationTourIsResolved)
+// openTourSlimWithTopicOpen();
 //    	
-//    	else
-//    		openTourWithTopicOpen();
-//    }
+// else
+// openTourWithTopicOpen();
+// }
 //    
-//    else {
-//	$.guider({
-//		next: "second",
-//		title: "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo!  </center>",
-//		description: "<center>Você deseja passar pelo nosso Tour interativo antes de começar?</center>",
-//                    closable: true,
-//		overlay: "dark",
-//		width: 600,
-//                    alignButtons: "center",
-//		buttons: {
-//                            "Não, obrigado.": {
-//                                click: function () {
-//                                    $.guider({
-//	title: "Tudo bem!",
-//            next: "secondExit",
-//	description: 'Confira a seguir as nossas considerações finais.',
-//            closable: true,
-//            alignButtons: "right",
-//	buttons: {
-//                 Próximo: {
-//                     click: true,
-//                     className: "primary"
-//                 }
-//	}
-//	}).show();
+// else {
+
 //            
-//        $("#help").guider({
-//            name: "secondExit",
-//            next: "thirdExit",
-//	title: 'Teclas utilizadas',
-//            description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
-//            closable: true,
-//            position: "left",
-//            alignButtons: "right",
-//            width: 600,
-//	buttons: {
-//                 Próximo: {
-//                     click: true,
-//                     className: "primary"
-//                 }
-//	}
-//	}); 
-//            
-//
-//    $("#tour").guider({
-//            name: "thirdExit",             
-//	title: 'Se você mudar de ideia',
-//            description: 'Clique neste botão para acessar a este tour novamente.',
-//            closable: true,
-//            position: "left",
-//            alignButtons: "right",
-//            width: 600,
-//	buttons: {
-//                 Entendi: {
-//                     click: true,
-//                     className: "primary"
-//                 }
-//	}
-//	}); 
-//            
-//        isTourInterativo = false; 
-//                                }
-//                            },
-//			"Só se for agora!": {
-//				click: true,
-//				className: "primary",
-//				focus: true                                       
-//			}
-//		}
-//	}).show();
-//            
-//	$().guider({
-//		name: "second",
-//		next: "third",
-//		title: "Ótimo! Você verá que é muito fácil e divertido utilizar esse programa",
-//		description: 'A qualquer momento você pode sair deste tour pressionando <font color="red">ESC</font>',
-//                                  
-//                    hashable: true,
-//		position: "right",
-//		alignButtons: "center",
-//                    overlay: "dark",
-//                    
-//		buttons: {
-//			"Vamos começar!": {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//	
-//	$(".hide-menu").guider({
-//		name: "third",
-//		next: "fourth",
-//		title: "Este é o menu principal",
-//		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
-//		position: "right",
-//		alignButtons: "right",
-//		closable: true, 
-//		buttons: {
-//			Próximo: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//	
-//	$(".topic").guider({
-//		name: "fourth",
-//		title: "Acesso às Equações",
-//		description: "Clique neste botão para conferir as equações do plano de aula especial do tour.",     
-//		position: "right",
-//		alignButtons: "center",
-//		closable: true,
-//		buttons: {
-//			OK: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	}); 
-//    }
-//		
-//}
+
 //
 //function openTourSlim ( ) {
 //	isTourInterativo = true;
@@ -991,71 +1262,7 @@
 //    
 //    if (formaCompleta || formaDireta) {
 //        
-//    $.guider({
-//next: "second",
-//title: "Muito bem!",
-//description: "Por acertar este passo da equação, você ganhou 10 pontos.",
-//            closable: true,
-//            alignButtons: "right",
-//buttons: {
-//	Próximo: {
-//		click: true,
-//		className: "primary"
-//	}
-//}
-//            
-//}).show();            
-//    
-//    $("#note").guider({
-//name: "second",
-//next: "third",
-//title: "Observe este painel",
-//description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
-//position: "left",
-//alignButtons: "right",
-//closable: true, 
-//buttons: {
-//	Voltar: true,
-//	Próximo: {
-//		click: true,
-//		className: "primary"
-//	}
-//}
-//});
-//    
-//    $("#note").guider({
-//		name: "third",
-//		next: "fourth",
-//		title: "Pontuação",
-//		description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
-//		position: "left",
-//		alignButtons: "right",
-//		closable: true, 
-//		buttons: {
-//			Voltar: true,
-//			Próximo: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//    
-//    $("#hint").guider({
-//		name: "fourth",
-//		next: "fiveth",
-//		title: "Pedindo dicas",
-//		description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
-//		position: "bottom",
-//		alignButtons: "right",
-//		closable: true, 
-//		buttons: {
-//			Voltar: true,
-//			Próximo: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
+
 //    
 //    var descricao = 'Subtraia o "15" nos dois lados da equação e simplifique a expressão "-2x+2x" do lado direito.';
 //    
@@ -1226,23 +1433,7 @@
 //            
 //}).show();
 //
-//    $("#help").guider({
-//name: "second",
-//next: "third",
-//title: "Teclas utilizadas",
-//description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
-//
-//position: "left",
-//alignButtons: "right",
-//closable: true, 
-//buttons: {
-//	Voltar: true,
-//	Próximo: {
-//		click: true,
-//		className: "primary"
-//	}
-//}
-//});
+
 //    
 //    $("#tour").guider({
 //		name: "third",
@@ -1277,141 +1468,12 @@
 //    }   
 //}
 //
-//function clickPlan ( ) {
-//	if (equationTourIsResolved) 
-//		openTourSlimAlternative();
-//	
-//	else {
-//	$.guider({
-//		next: "second",
-//		title: "Planos de Aula",
-//		description: "Os planos de aula são como as fases de um jogo.<br><br>Cada fase é composta por uma série de equações. ",
-//	    alignButtons: "right", 
-//	    buttons: {
-//	    	Próximo: {
-//                click: true,
-//                className: "primary"
-//            }
-//	    }
-//		}).show();
-//	
-//	$().guider({
-//		name: "second",
-//		next: "third",
-//		title: "Passando de Fase",
-//		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br><br>Essas equações podem ser resolvidas na ordem que você quiser.",
-//		alignButtons: "right",
-//		closable: true, 
-//		buttons: {
-//			Voltar: true,
-//			Próximo: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//	
-//	$().guider({
-//		name: "third",
-//		next: "fourth",
-//		title: "Níveis de Dificuldade",
-//		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br><br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
-//		alignButtons: "right",
-//		closable: true, 
-//		width: 610,
-//		buttons: {
-//			Voltar: true,
-//			Próximo: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//	
-//	$().guider({
-//		name: "fourth",
-//		title: "Clique na equação",
-//		description: "Vamos resolver juntos passo-a-passo para você entender as principais funcionalidades do Pat2Math.",
-//		alignButtons: "right",
-//		closable: true, 
-//		buttons: {
-//			Voltar: true,
-//			OK: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//	}
-//}
+
 //
 //function clickEquation ( ) {	
 //	if (equationTourIsResolved)
 //		openTourSlim();
 //	
 //	else {
-//	$.guider({
-//		next: "second",
-//		title: "Esta é a sua interface principal",
-//		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br><br>Continue com o tour para descobrir!",
-//	    alignButtons: "right", 
-//	    buttons: {
-//	    	Próximo: {
-//                click: true,
-//                className: "primary"
-//            }
-//	    }
-//		}).show();
-//	
-//	$("#linha3").guider({
-//		name: "second",
-//		next: "third",
-//		title: "As equações iniciais sempre estarão na primeira linha",
-//		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
-//		position: "bottom",
-//		alignButtons: "right",
-//		buttons: {
-//			Voltar: true,
-//			Próximo: {
-//				click: true,
-//				className: "primary"
-//			}
-//		}
-//	});
-//	
-//	$("#linha3").guider({
-//		name: "third",
-//        next: "fourth",
-//		title: "Agora, nós vamos resolver esta equação passo-a-passo",
-//		description: 'Para começar, adicione "+2x" nos dois lados da equação, para simplificar o segundo lado e manter a equação balanceada.',
-//    
-//		width: 600,
-//		position: "bottom",
-//		alignButtons: "right",
-//		closable: true, 
-//		buttons: {
-//                            Voltar: true,
-//			Próximo: {
-//                                click: true,
-//                                className: "primary"
-//                            }
-//		}
-//	});
-//            
-//        $("#linha3").guider({
-//		name: "fourth",
-//		title: "Veja como é fácil",
-//		description: 'Digite x+2x+15=45-2x+2x e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img> localizado ao final da linha.',    
-//		width: 620,
-//		position: "bottom",
-//		alignButtons: "center",
-//		closable: true, 
-//		buttons: {
-//			OK: {
-//                                click: true,
-//                                className: "primary"
-//                            }
-//		}
-//	});
-//	}
+	
 //}

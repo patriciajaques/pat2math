@@ -19,9 +19,7 @@ function enableContent(id) {
 function loadTasks(id) {	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
-	if(open == 'none') {
-//		topicIsOpen = true;
-		
+	if(open == 'none') {	
 		$.ajax({
 			type: "GET",
 			url: appContext + "student/showTopic",
@@ -62,17 +60,18 @@ function loadTasks(id) {
 		
 //		checkEquationTour();
 		
-//		if (isTourInterativo && id === 9) //1
-//			clickPlan();
+		if (isTourInterativo && id === 9) 
+			clickPlan();
 	} else {
-		topicIsOpen = false;
-		$("#tasks"+id).slideUp(700);
+		if (isTourInterativo && id === 9) 		
+			clickPlan();
+		
+		else
+		    $("#tasks"+id).slideUp(700);
 	}
 }
 
-function loadExercise(id) {
-//	if (isTourInterativo && id === 201) //3
-//		clickEquation();
+function loadExercise(id) {	
 //	setCurrentEquation (id);
 	loadingShow();
 	$.ajax({
@@ -88,9 +87,22 @@ function loadExercise(id) {
 					equation.steps[j] = new Step(data.steps[j], 0);
 				}
 					
-				if(data.performed) {
+				if(data.performed) 
 					equation.isComplete = true;
+				
+				if (isTourInterativo && id === 201) {
+					blockMenu = false;
+					
+					if (equation.isComplete === true)
+						clickEquationSlim();
+					
+					else if (equation.lastStep === null)
+						clickEquation();
+					
+					else
+						clickEquationPartiallyResolved();
 				}
+				
 				newEquations[0] = equation;
 			}
 			reloadPaper(1);
@@ -116,7 +128,7 @@ function loadExercise(id) {
 			
 		}
 	});
-	loadingHide();
+	loadingHide();	
 }
 
 function loadExerciseTest(id) {
@@ -229,6 +241,7 @@ function msgBox(id, msg, action) {
 		//nothing
 	}
 }
+
 
 function nextEquationClick ( ) {
 	//Os ids das equações estão na posição correspondente no array ordenado.

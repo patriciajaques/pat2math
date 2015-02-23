@@ -378,7 +378,11 @@ function requestServer (type, last, next, typeOperation, element) {
                         $("#newPoints").css("color", "green");
 
                         $("#newPoints").show("puff", 500, callbackAddPoints(10));
+                        
+                        firstStepTour();
                     }
+                    
+                    
                 }
                 else if (split[1] === "false") {
                     $(element).css("background", "url('img/bad.png') no-repeat center");
