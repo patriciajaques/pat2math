@@ -22,7 +22,7 @@ var concluded = 0;
 var isTourInterativo = false;
 var blockMenu = false;
 //var cont = 0;
-var isFirstStepWithTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
+var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
 //function getEquations ( ) {
 //	loadExercise (168);
@@ -237,58 +237,9 @@ $(document).ready(function() {
     $(document).keyup(function(event) {
         // key 13 = enter
         var key = event.which;
-        //alert(key);
         
-//        if (isTourInterativo && key === 27) {
-//            $.guider({
-//		title: "Você pressionou esc e saiu do tour.",
-//                next: "secondExit",
-//		description: 'Confira a seguir as nossas considerações finais.',
-//                closable: true,
-//                alignButtons: "right",
-//		buttons: {
-//                     Próximo: {
-//                         click: true,
-//                         className: "primary"
-//                     }
-//		}
-//		}).show();
-//                
-//            $("#help").guider({
-//                name: "secondExit",
-//                next: "thirdExit",
-//		title: 'Teclas utilizadas',
-//                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
-//                closable: true,
-//                position: "left",
-//                alignButtons: "right",
-//		buttons: {
-//                     Próximo: {
-//                         click: true,
-//                         className: "primary"
-//                     }
-//		}
-//		}); 
-//                
-//
-//        $("#tour").guider({
-//                name: "thirdExit",             
-//		title: 'Se você mudar de ideia',
-//                description: 'Clique neste botão para acessar a este tour novamente.',
-//                closable: true,
-//                position: "left",
-//                alignButtons: "right",
-//		buttons: {
-//                     Entendi: {
-//                         click: true,
-//                         className: "primary"
-//                     }
-//		}
-//		}); 
-//                
-//            isTourInterativo = false; 
-//        }
-
+        if (isTourInterativo && key === 27) //esc
+        	exitEsc();
 
         if (key === 13) { //enter key
 
@@ -423,7 +374,7 @@ $(document).ready(function() {
 	var cookieName = "currentEquation" + pos;
 	var currentEquationString = getCookie (cookieName);
 	
-	if (currentEquationString !== "" && currentEquationString !== "201") {	
+	if (currentEquationString !== "" && currentEquationString !== "201") {//201 é o id da equação especial do tour
 		var currentEquation = parseInt (currentEquationString);
 		var plan = sortedIds[currentEquation].plan;
 		loadTasks (plan);
@@ -438,11 +389,11 @@ $(document).ready(function() {
     	$("#topicsAux").hide();
 	}
 	
-//	cookieName = "tour" + pos;
-//	var startTour = getCookie (cookieName);
-//	setTimeout ('openTour()', 1000);
-//	if (startTour === "")
-//	    openTour();
+	cookieName = "tour" + pos;
+	var startTour = getCookie (cookieName);
+	
+	if (startTour === "")
+		setTimeout ('openTour()', 1000);
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();

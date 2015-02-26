@@ -163,7 +163,6 @@ function requestServer (type, last, next, typeOperation, element) {
                 var isDelta = false;
 
                 if (split[3] === "true") {
-
                     var step = new Step(next, NORMAL_SOLUTION);
                     selectedEquation.currentStep = "";
 
@@ -189,8 +188,17 @@ function requestServer (type, last, next, typeOperation, element) {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
                     
-                    	if (isTourInterativo)
-                    	    finalStepTour();
+                    	if (isTourInterativo && idEquation === 201) {
+                    		var pos = getCookie  ("pos");
+    	                	var cookieName = "isPartiallyResolved" + pos;
+    	                	var isPartiallyResolved = getCookie (cookieName);
+    	                	
+    	                	if (isPartiallyResolved !== "")
+    	                		finalStepTour();
+    	                	
+    	                	else
+    	                		alternativeFinalStepTour(); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                    	}               	    
                     	
                     	//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
                     	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)                  		
@@ -382,15 +390,22 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         $("#newPoints").show("puff", 500, callbackAddPoints(10));
                         
-                        if (isTourInterativo) {
-                            var pos = getCookie  ("pos");
-                    	    var cookieName = "isPartiallyResolved" + pos;
-                    	    setCookieDays (cookieName, "true", 1);
-                            firstStepTour();
+                        if (idEquation === 201) {
+                        	if (isFirstStepTour) {
+                        		isFirstStepTour = false;
+                                var pos = getCookie  ("pos");
+                    	        var cookieName = "isPartiallyResolved" + pos;
+                    	        var isPartiallyResolved = getCookie (cookieName);
+                    	        
+                    	        if (isPartiallyResolved === "") {
+                    	            setCookieDays (cookieName, "true", 1);  
+                    	           
+                    	            if (isTourInterativo)
+                                        firstStepTour();                       	        
+                    	        }	        
+                        	}	
                         }
-                    }
-                    
-                    
+                    }        
                 }
                 else if (split[1] === "false") {
                     $(element).css("background", "url('img/bad.png') no-repeat center");

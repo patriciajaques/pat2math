@@ -119,14 +119,73 @@ function noThanks ( ) {
 	isTourInterativo = false; 
 	blockMenu = false;
 	
-	$("#topics").fadeOut();
-    $("#topicsAux").show();
+	if (selectedEquation !== null) {
+	    $("#topics").fadeOut();
+        $("#topicsAux").show();
+	}
     
 	var pos = getCookie ("pos");
 	var cookieName = "tour" + pos;
 	setCookieDays (cookieName, "false", 7);
 }
 
+function exitEsc ( ) {
+	$.guider({
+		title: "Você pressionou esc e saiu do tour.",
+                next: "exit2",
+		description: 'Confira a seguir as nossas considerações finais.',
+                closable: true,
+                alignButtons: "right",
+		buttons: {
+                     Próximo: {
+                         click: true,
+                         className: "primary"
+                     }
+		}
+		}).show();
+                
+            $("#help").guider({
+                name: "exit2",
+                next: "exit3",
+		title: 'Teclas utilizadas',
+                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+                closable: true,
+                position: "left",
+                alignButtons: "right",
+		buttons: {
+                     Próximo: {
+                         click: true,
+                         className: "primary"
+                     }
+		}
+		});
+                
+
+        $("#tour").guider({
+                name: "exit3",             
+		title: 'Se você mudar de ideia',
+                description: 'Clique neste botão para acessar a este tour novamente.',
+                closable: true,
+                position: "left",
+                alignButtons: "right",
+		buttons: {
+                     Entendi: {
+                         click: true,
+                         className: "primary"
+                     }
+		}
+		});    
+        
+        isTourInterativo = false; 
+    	blockMenu = false;
+    	
+    	$("#topics").fadeOut();
+        $("#topicsAux").show();
+        
+        var pos = getCookie ("pos");
+    	var cookieName = "tour" + pos;
+    	setCookieDays (cookieName, "false", 7);
+}
 function clickEquation ( ) {
 	$.guider({
 		next: "main2",
@@ -221,9 +280,25 @@ function clickEquationSlim ( ) {
 	    }
 		}).show();
 	
-    $("#note").guider({
+	$("#topicsAux").guider({
 		name: "smain2",
 		next: "smain3",
+		title: "O menu principal sumiu!",
+		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+    $("#note").guider({
+		name: "smain3",
+		next: "smain4",
 		title: "Observe este painel",
 		description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
 		position: "left",
@@ -239,8 +314,8 @@ function clickEquationSlim ( ) {
 	});
     
     $("#note").guider({
-		name: "smain3",
-		next: "smain4",
+		name: "smain4",
+		next: "smain5",
 		title: "Pontuação",
 		description: "Ao acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
 		position: "left",
@@ -256,8 +331,8 @@ function clickEquationSlim ( ) {
 	});
     
     $("#hint").guider({
-		name: "smain4",
-		next: "smain5",
+		name: "smain5",
+		next: "smain6",
 		title: "Pedindo dicas",
 		description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
 		position: "bottom",
@@ -273,8 +348,8 @@ function clickEquationSlim ( ) {
 	});
     
     $("#help").guider({
-		name: "smain5",
-		next: "smain6",
+		name: "smain6",
+		next: "smain7",
 		title: "Teclas utilizadas",
 		description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
 		position: "left",
@@ -290,13 +365,14 @@ function clickEquationSlim ( ) {
 	});
     
     $("#tour").guider({
-		name: "smain6",
+		name: "smain7",
 		title: "Você está liberado!",
 		description: "Se desejar, você pode acessar a este tour novamente clicando neste botão.",
 		position: "left",
-		alignButtons: "center",
+		alignButtons: "right",
 		closable: true, 
 		buttons: {
+			Voltar: true,
 			Finalizar: {
                 click: true,
                 className: "primary"
@@ -304,7 +380,15 @@ function clickEquationSlim ( ) {
 		}
 	});
     
-    isTourInterativo = false;
+    isTourInterativo = false; 
+	blockMenu = false;
+	
+	$("#topics").fadeOut();
+    $("#topicsAux").show();
+    
+    var pos = getCookie ("pos");
+	var cookieName = "tour" + pos;
+	setCookieDays (cookieName, "false", 7);
 }
 
 function clickEquationPartiallyResolved ( ) {
@@ -479,7 +563,7 @@ function clickPlan ( ) {
 	
 	$().guider({
 		name: "plan4",
-		title: "Clique na equação",
+		title: "Clique na equação x+15=45-2x",
 		description: "Vamos resolvê-la passo-a-passo para entender as principais funcionalidades do Pat2Math.",
 		alignButtons: "right",
 		buttons: {
@@ -577,7 +661,7 @@ function firstStepTour ( ) {
     	    $.guider({
     			name: "fstep6",
     			title: "Agora é com você",
-    			description: "Continue resolvendo a equação da forma que preferir. Quando terminar, nós lhe passaremos mais algumas orientações.",
+    			description: "Continue resolvendo a equação da forma que preferir.",
     			alignButtons: "right",
     			buttons: {
     				Voltar: true,
@@ -595,7 +679,7 @@ function finalStepTour ( ) {
     	next: "fstep2",
     	title: "Parabéns!",
     	description: "O plano de aula 1 foi desbloqueado e você já está pronto para utilizar o Pat2Math.",
-    	            alignButtons: "right",
+        alignButtons: "right",
     	buttons: {
     		Próximo: {
     			click: true,
@@ -610,7 +694,7 @@ function finalStepTour ( ) {
     	title: "Você está liberado!",
 		description: "Se desejar, você pode acessar a este tour novamente clicando neste botão.",
 		position: "left",
-		alignButtons: "center",
+		alignButtons: "right",
 		closable: true, 
 		buttons: {
 			Finalizar: {
@@ -620,7 +704,122 @@ function finalStepTour ( ) {
 		}
     	});
 	
-	isTourInterativo = false;
+	isTourInterativo = false; 
+	blockMenu = false;
+	
+	$("#topics").fadeOut();
+    $("#topicsAux").show();
+    
+    var pos = getCookie ("pos");
+	var cookieName = "tour" + pos;
+	setCookieDays (cookieName, "false", 7);
+}
+
+function alternativeFinalStepTour ( ) {
+	$.guider({
+    	next: "fstep2",
+    	title: "Parabéns! O plano de aula 1 foi desbloqueado",
+    	description: "Confira a seguir as nossas considerações finais.",
+    	            alignButtons: "right",
+    	buttons: {
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	}).show();            
+    	    
+    $("#note").guider({
+    	name: "fstep2",
+    	next: "fstep3",
+    	title: "Observe este painel",
+    	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
+    	position: "left",
+    	alignButtons: "right",
+    	buttons: {
+    		Voltar: true,
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	});
+    	    
+    	    $("#note").guider({
+    			name: "fstep3",
+    			next: "fstep4",
+    			title: "Pontuação",
+    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+    			position: "left",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#hint").guider({
+    			name: "fstep4",
+    			next: "fstep5",
+    			title: "Pedindo dicas",
+    			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
+    			position: "bottom",
+    			alignButtons: "right",
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#help").guider({
+    	    	name: "fstep5",
+    	    	next: "fstep6",
+    	    	title: "Teclas utilizadas",
+    	    	description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
+    	    	position: "left",
+    	    	alignButtons: "right",
+    	    	closable: true, 
+    	    	buttons: {
+    	    		Voltar: true,
+    	    		Próximo: {
+    	    			click: true,
+    	    			className: "primary"
+    	    		}
+    	    	}
+    	    	});
+    	    
+    	    $("#tour").guider({
+    			name: "fstep6",
+    			title: "Você está liberado!",
+    			description: "Se desejar, você pode acessar a este tour novamente clicando neste botão.",
+    			position: "left",
+    			alignButtons: "right",
+    			closable: true, 
+    			buttons: {
+    				Voltar: true,
+    				Finalizar: {
+    	                click: true,
+    	                className: "primary"
+    	            }
+    			}
+    		});
+    	    
+    	    isTourInterativo = false; 
+        	blockMenu = false;
+        	
+        	$("#topics").fadeOut();
+            $("#topicsAux").show();
+            
+            var pos = getCookie ("pos");
+        	var cookieName = "tour" + pos;
+        	setCookieDays (cookieName, "false", 7);
 }
 
 // function openTour ( ) {
