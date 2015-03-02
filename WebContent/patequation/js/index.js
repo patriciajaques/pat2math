@@ -22,7 +22,7 @@ var concluded = 0;
 var isTourInterativo = false;
 var blockMenu = false;
 //var cont = 0;
-var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
+//var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
 //function getEquations ( ) {
 //	loadExercise (168);

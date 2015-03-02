@@ -58,7 +58,7 @@ function openTour ( ) {
 	$(".topic").guider({
 		name: "start4",
 		title: "Acesso às Equações",
-		description: "Clique neste botão para conferir as equações do plano de aula especial do tour.",     
+		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
 		position: "right",
 		alignButtons: "right",
 		buttons: {
@@ -116,19 +116,19 @@ function noThanks ( ) {
 		}
 	});
 
+	exit();
+}
+function exit ( ) {
 	isTourInterativo = false; 
 	blockMenu = false;
 	
-	if (selectedEquation !== null) {
-	    $("#topics").fadeOut();
-        $("#topicsAux").show();
-	}
+	$("#topics").fadeOut();
+    $("#topicsAux").show();
     
-	var pos = getCookie ("pos");
+    var pos = getCookie ("pos");
 	var cookieName = "tour" + pos;
 	setCookieDays (cookieName, "false", 7);
 }
-
 function exitEsc ( ) {
 	$.guider({
 		title: "Você pressionou esc e saiu do tour.",
@@ -176,21 +176,13 @@ function exitEsc ( ) {
 		}
 		});    
         
-        isTourInterativo = false; 
-    	blockMenu = false;
-    	
-    	$("#topics").fadeOut();
-        $("#topicsAux").show();
-        
-        var pos = getCookie ("pos");
-    	var cookieName = "tour" + pos;
-    	setCookieDays (cookieName, "false", 7);
+        exit();
 }
 function clickEquation ( ) {
 	$.guider({
 		next: "main2",
 		title: "Esta é a sua interface principal",
-		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br><br>Continue com o tour para descobrir!",
+		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br>Continue com o tour para descobrir!",
 	    alignButtons: "right", 
 	    buttons: {
 	    	Próximo: {
@@ -317,7 +309,7 @@ function clickEquationSlim ( ) {
 		name: "smain4",
 		next: "smain5",
 		title: "Pontuação",
-		description: "Ao acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+		description: "Ao acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
@@ -371,6 +363,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
+		onHide: function() {exit();},
 		buttons: {
 			Voltar: true,
 			Finalizar: {
@@ -379,23 +372,13 @@ function clickEquationSlim ( ) {
             }
 		}
 	});
-    
-    isTourInterativo = false; 
-	blockMenu = false;
-	
-	$("#topics").fadeOut();
-    $("#topicsAux").show();
-    
-    var pos = getCookie ("pos");
-	var cookieName = "tour" + pos;
-	setCookieDays (cookieName, "false", 7);
 }
 
 function clickEquationPartiallyResolved ( ) {
 	$.guider({
 		next: "pmain2",
 		title: "Esta é a sua interface principal",
-		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br><br>Continue com o tour para descobrir!",
+		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br>Continue com o tour para descobrir!",
 	    alignButtons: "right", 
 	    buttons: {
 	    	Próximo: {
@@ -457,7 +440,7 @@ function clickEquationPartiallyResolved ( ) {
     			name: "pmain5",
     			next: "pmain6",
     			title: "Pontuação",
-    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
     			buttons: {
@@ -520,7 +503,7 @@ function clickPlan ( ) {
 	$.guider({
 		next: "plan2",
 		title: "Planos de Aula",
-		description: "Os planos de aula são como as fases de um jogo.<br><br>Cada fase é composta por uma série de equações. ",
+		description: "Os planos de aula são como as fases de um jogo.<br>Cada fase é composta por uma série de equações. ",
 	    alignButtons: "right", 
 	    buttons: {
 	    	Próximo: {
@@ -534,7 +517,7 @@ function clickPlan ( ) {
 		name: "plan2",
 		next: "plan3",
 		title: "Passando de Fase",
-		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br><br>Essas equações podem ser resolvidas na ordem que você quiser.",
+		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br>Essas equações podem ser resolvidas na ordem que você quiser.",
 		alignButtons: "right",
 		buttons: {
 			Voltar: true,
@@ -549,7 +532,7 @@ function clickPlan ( ) {
 		name: "plan3",
 		next: "plan4",
 		title: "Níveis de Dificuldade",
-		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br><br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
+		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
 		alignButtons: "right",
 		width: 610,
 		buttons: {
@@ -613,7 +596,7 @@ function firstStepTour ( ) {
     			name: "fstep3",
     			next: "fstep4",
     			title: "Pontuação",
-    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
     			buttons: {
@@ -704,15 +687,7 @@ function finalStepTour ( ) {
 		}
     	});
 	
-	isTourInterativo = false; 
-	blockMenu = false;
-	
-	$("#topics").fadeOut();
-    $("#topicsAux").show();
-    
-    var pos = getCookie ("pos");
-	var cookieName = "tour" + pos;
-	setCookieDays (cookieName, "false", 7);
+	exit();
 }
 
 function alternativeFinalStepTour ( ) {
@@ -750,7 +725,7 @@ function alternativeFinalStepTour ( ) {
     			name: "fstep3",
     			next: "fstep4",
     			title: "Pontuação",
-    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br><br>E se errar, você perde 5 pontos e recebe uma dica.",
+    			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
     			buttons: {
@@ -811,15 +786,7 @@ function alternativeFinalStepTour ( ) {
     			}
     		});
     	    
-    	    isTourInterativo = false; 
-        	blockMenu = false;
-        	
-        	$("#topics").fadeOut();
-            $("#topicsAux").show();
-            
-            var pos = getCookie ("pos");
-        	var cookieName = "tour" + pos;
-        	setCookieDays (cookieName, "false", 7);
+    	    exit();
 }
 
 // function openTour ( ) {

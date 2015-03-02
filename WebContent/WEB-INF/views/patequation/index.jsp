@@ -93,7 +93,7 @@
     	
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /></a></p>
+			<p><a href="javascript:window.close()"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /></a></p>
 <!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
 		</div>
     	

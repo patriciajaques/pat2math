@@ -45,15 +45,24 @@ $(document).ready(function() {
 	verificaAudio ( );
 });
 
+function openPopup (url) {
+	var popup = window.open (url , ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
+	
+	popup.onbeforeunload = function() {
+		location.href="/pat2math/login";	
+	}
+}
+
+
 function verificaAudio ( ) {
 	var pos = getCookie  ("pos");
 	var playAudio = getCookie ("playAudio" + pos);   
 	
 	if ((tipoAudio != 1 && tipoAudio != 2) || playAudio === "false") 
-		window.open (' /pat2math/student/home ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
+		openPopup (' /pat2math/student/home ');
 		
 	else 
-		window.open (' /pat2math/playaudio ', ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
+		openPopup (' /pat2math/audio ');
 }
 
 

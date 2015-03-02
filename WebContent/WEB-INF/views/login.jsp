@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
-	<script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
-	<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css" />
 <!-- 	<link rel="stylesheet" href="/pat2math/css/pat2math.css" type="text/css" /> -->
 </head>
 

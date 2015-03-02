@@ -96,17 +96,23 @@ function loadExercise(id) {
 					if (equation.isComplete === true)
 						clickEquationSlim();
 					
-					else {
-						var pos = getCookie  ("pos");
-	                	var cookieName = "isPartiallyResolved" + pos;
-	                	var temp = getCookie (cookieName);
-	                	
-					    if (temp === "")
-						    clickEquation();
+					else if (equation.steps.length !== 0)
+						clickEquationPartiallyResolved();
 					
-					    else
-						    clickEquationPartiallyResolved();
-					}
+					else
+						clickEquation();
+					
+//					else {
+//						var pos = getCookie  ("pos");
+//	                	var cookieName = "isPartiallyResolved" + pos;
+//	                	var temp = getCookie (cookieName);
+//	                	
+//					    if (temp === "")
+//						    clickEquation();
+//					
+//					    else
+//						    clickEquationPartiallyResolved();
+//					}
 				}
 				
 				newEquations[0] = equation;
