@@ -5,7 +5,8 @@ $(document).ready(function() {
 function loadPaper(selectedSheet){
 
     $(selectedSheet + " #logo").tooltip();
-    $(selectedSheet + " #next_equation").tooltip();
+    $("#help").tooltip();
+    $("#tour").tooltip();
 
     var date = new Date();
     $(selectedSheet + " #dateDay").html(date.getDate());

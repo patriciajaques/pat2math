@@ -202,10 +202,10 @@
 	
 	<div id="newPoints">+10</div>
 	
-	<div id="help" onclick="helpPage()"></div>
+	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
-    <div id="tour" onclick="openTour()"></div>
+    <div id="tour" title="Tour Interativo" onclick="openTour()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>
 	<div id="topicsAux"></div>

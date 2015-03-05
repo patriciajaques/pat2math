@@ -392,8 +392,16 @@ $(document).ready(function() {
 	cookieName = "tour" + pos;
 	var startTour = getCookie (cookieName);
 	
-	if (startTour === "")
-		setTimeout ('openTour()', 1000);
+	if (startTour === "") {
+		var cookieName = "tourIsInProgress" + pos;
+		var continueTour = getCookie (cookieName);
+		
+		if (continueTour !== "true")
+		    setTimeout ('openTour()', 1000);
+		
+		else
+			setTimeout ('continueTour()', 1000);
+	}
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();

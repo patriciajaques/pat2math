@@ -1,13 +1,20 @@
 function openTour ( ) {
 	isTourInterativo = true;
 	blockMenu = true;	
+	
+	var pos = getCookie ("pos");
+	var cookieName = "tour" + pos;
+	setCookieDays (cookieName, "", 0);
+	cookieName = "tourIsInProgress" + pos;
+	setCookieMinutes (cookieName, "true", 5);
+	
 	$("#topics").fadeIn();
 	$("#topicsAux").hide();
 
 	$.guider({
 		next : "start2",
 		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
-		description : "<center>Você deseja passar pelo nosso Tour interativo antes de começar?</center>",
+		description : "<center>Você deseja passar pelo nosso tour interativo antes de começar?</center>",
 		overlay : "dark",
 		width : 600,
 		alignButtons : "center",
@@ -71,6 +78,89 @@ function openTour ( ) {
 	}); 
 }
 
+function continueTour ( ) {
+	isTourInterativo = true;
+	blockMenu = true;	
+	
+	var pos = getCookie ("pos");
+	var cookieName = "tour" + pos;
+	setCookieDays (cookieName, "", 0);
+	cookieName = "tourIsInProgress" + pos;
+	setCookieMinutes (cookieName, "true", 5);
+	
+	$("#topics").fadeIn();
+	$("#topicsAux").hide();
+
+	$.guider({
+		next : "start2",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+		description : "Vamos passar pelo tour novamente?",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "center",
+		buttons : {
+			"Não, obrigado." : {
+			click : function() {noThanks();}
+			},
+			"Sim, por favor." : {
+				click : true,
+				className : "primary",
+				focus : true
+			}
+		}
+	}).show();
+	
+	$().guider({
+		name: "start2",
+		next: "start3",
+		title: "É isso aí!",
+		description: 'Lembre-se que você pode sair deste tour pressionando <font color="red">ESC</font> a qualquer momento.',                             
+        hashable: true,
+		position: "right",
+		alignButtons: "center",
+        overlay: "dark",                 
+		buttons: {
+			"Vamos começar!": {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#topics").guider({
+		name: "start3",
+		next: "start4",
+		title: "Este é o menu principal",
+		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$(".topic").guider({
+		name: "start4",
+		title: "Acesso às Equações",
+		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}); 
+}
+
+function clickTour ( ) {
+	
+}
 function noThanks ( ) {
 	 $.guider({
 		title : "Tudo bem!",
@@ -122,12 +212,16 @@ function exit ( ) {
 	isTourInterativo = false; 
 	blockMenu = false;
 	
-	$("#topics").fadeOut();
-    $("#topicsAux").show();
+	if (selectedEquation !== null) {
+	    $("#topics").fadeOut();
+        $("#topicsAux").show();
+	}
     
     var pos = getCookie ("pos");
 	var cookieName = "tour" + pos;
 	setCookieDays (cookieName, "false", 7);
+	cookieName = "tourIsInProgress" + pos;
+	setCookieMinutes (cookieName, "false", 5);
 }
 function exitEsc ( ) {
 	$.guider({
