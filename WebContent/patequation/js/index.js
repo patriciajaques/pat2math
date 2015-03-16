@@ -185,6 +185,7 @@ function closeWindow ( ) {
 //	}
 //}
 
+
 function rel ( ) {
 	   $.ajax({  
 		     type : "Get",   
@@ -1219,7 +1220,10 @@ function checkEquation() {
 //  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
 //  passoAnterior = getEquation(passoAnterior);
   var equation = naturalToText(selectedEquation.currentStep);
-   
+  
+  if (equation === "")
+	  equation = " ";
+  
 //  if (isTourInterativo) {
 //      if (cont === 0) {
 //      	resolutionPart1(equation);

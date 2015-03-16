@@ -203,13 +203,7 @@ function requestServer (type, last, next, typeOperation, element) {
     	                		alternativeFinalStepTour(); //se o usuário informou a resposta diretamente no primeiro passo da equação
                     	}               	    
                     	
-                    	//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula                                        162
-                    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)                  		
-                            nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>");
-                    	
-                    	else
-                    		nextLine.html("<div class='final'></div>");
-                        
+                   
                       $("#next_equation").tooltip();
                         $("#marktask"+idEquation).removeAttr("style"); 
                         $("#marktask"+idEquation).addClass("icon-white");
@@ -221,6 +215,13 @@ function requestServer (type, last, next, typeOperation, element) {
                         if (tasksRemaining===0)addProgressValue(100);
                         else addProgressValue(progressvalue);
                         selectedEquation.isComplete = true;
+                        
+                      //Verifica se o ID da equação atual não é o da última equação de um dos planos de aula                                        162
+                    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)                  		
+                            showNextButton (nextLine);
+                    	
+                    	else
+                    		nextLine.html("<div class='final'></div>");
                     } else {
                         isDelta = true;
                         step.type = DELTA_SOLUTION;
@@ -470,4 +471,9 @@ function requestServer (type, last, next, typeOperation, element) {
                 }
             }
         }});
+}
+
+function showNextButton (nextLine) {
+	 setTimeout(function(){ nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
+	
 }

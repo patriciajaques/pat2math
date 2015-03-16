@@ -26,7 +26,13 @@
 		<!-- even id -->
 		<c:if test="${(task.id % 2) eq 0}">
 			<c:if test="${task.performed}">
-				<span class="task" onclick="loadExercise(${task.content.id})" >
+			    <script type="text/javascript">
+			    var id = ${task.content.id};
+                
+                
+      	            equationToMathml (id);     
+    	        </script>
+				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }" >
 					${task.content.equation}
 				</span>
 				<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
@@ -35,6 +41,12 @@
 			</c:if>
 			
 			<c:if test="${!task.performed}">
+			    <script type="text/javascript">
+			        var id = ${task.content.id};
+                
+                    
+          	            equationToMathml (id);        
+    	        </script>
 				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
 				</span>
@@ -47,7 +59,13 @@
 		<!-- even id -->
 		<c:if test="${(task.id % 2) eq 1}">
 			<c:if test="${task.performed}">
-				<span class="task" onclick="loadExerciseTest(${task.content.id})" >
+			    <script type="text/javascript">
+	                  var id = ${task.content.id};
+	                  
+	                  
+	                	  equationToMathml (id);           
+    	        </script>
+				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
 				</span>
 				<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
@@ -55,6 +73,12 @@
 				<br>
 			</c:if>
 			<c:if test="${!task.performed}">
+			    <script type="text/javascript">
+			        var id = ${task.content.id};
+                
+                    
+              	        equationToMathml (id);       
+    	        </script>
 				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
 				</span>

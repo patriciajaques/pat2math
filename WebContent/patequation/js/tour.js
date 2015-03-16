@@ -159,7 +159,83 @@ function continueTour ( ) {
 }
 
 function clickTour ( ) {
+	isTourInterativo = true;
+	blockMenu = true;	
 	
+	var pos = getCookie ("pos");
+	var cookieName = "tour" + pos;
+	setCookieDays (cookieName, "", 0);
+	cookieName = "tourIsInProgress" + pos;
+	setCookieMinutes (cookieName, "true", 5);
+	
+	$("#topics").fadeIn();
+	$("#topicsAux").hide();
+
+	$.guider({
+		next : "start2",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Olá! </center>",
+		description : "<center>Você deseja passar pelo nosso tour interativo para entender as principais funcionalidades do Pat2Math?</center>",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "center",
+		buttons : {
+			"Não, obrigado." : {
+			click : function() {noThanks();}
+			},
+			"Só se for agora!" : {
+				click : true,
+				className : "primary",
+				focus : true
+			}
+		}
+	}).show();
+	
+	$().guider({
+		name: "start2",
+		next: "start3",
+		title: "Ótimo! Você verá que é muito fácil e divertido utilizar esse programa",
+		description: 'A qualquer momento você pode sair deste tour pressionando <font color="red">ESC</font>',                             
+        hashable: true,
+		position: "right",
+		alignButtons: "center",
+        overlay: "dark",                 
+		buttons: {
+			"Vamos começar!": {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#topics").guider({
+		name: "start3",
+		next: "start4",
+		title: "Este é o menu principal",
+		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$(".topic").guider({
+		name: "start4",
+		title: "Acesso às Equações",
+		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}); 
 }
 function noThanks ( ) {
 	 $.guider({

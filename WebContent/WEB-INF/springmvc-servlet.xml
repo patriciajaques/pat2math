@@ -70,7 +70,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
     	<property name="url" value="jdbc:mysql://localhost/pat2math" />
     	<property name="username" value="root" />
-    	<property name="password" value="SpFc7557?" />
+    	<property name="password" value="r#5vj@t6%" />
     </bean>
 
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

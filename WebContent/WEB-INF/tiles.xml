@@ -14,10 +14,36 @@
     </definition>
 
 	<!-- Student template -->
-    <definition name="student.page" template="/public/app-student.jsp">
-        <put-attribute name="header" value="/public/header-home.jsp" />
-        <put-attribute name="footer" value="/public/footer.jsp"/>
-    </definition>
+    <definition name="student.page" template="/public/app-student.jsp"></definition>
+    
+    <!-- Student templates -->
+	<definition name="student.success" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/student/success.jsp"/>
+	</definition>
+
+	<definition name="student.new" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/student/new.jsp"/>
+	</definition>
+
+	<definition name="student.home" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/patequation/body.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/patequation/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/patequation/footer.jsp"/>
+	</definition>
+	
+	<definition name="audio" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/audio/body.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/audio/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/audio/footer.jsp"/>
+	</definition>
+	
+	<definition name="user.login" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/login/body.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/login/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/login/footer.jsp"/>
+	</definition>
 
 	<definition name="routines.list" extends="admin.page">
 		<put-attribute name="body" value="/WEB-INF/views/adminRoutines/list.jsp"/>
@@ -25,10 +51,6 @@
 
 	<definition name="terms" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/terms.jsp"/>
-	</definition>
-	
-     <definition name="audio" extends="student.page">
-		<put-attribute name="body" value="/WEB-INF/views/audio.jsp"/>
 	</definition>
 	
 	<definition name="playaudio" extends="student.page">
@@ -97,25 +119,6 @@
 		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/student/show.jsp"/>
 	</definition>
-
-
-	<!-- Student templates -->
-	<definition name="student.success" extends="student.page">
-		<put-attribute name="header" value="/public/header-home.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/student/success.jsp"/>
-	</definition>
-
-	<definition name="student.new" extends="student.page">
-		<put-attribute name="header" value="/public/header-home.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/student/new.jsp"/>
-	</definition>
-
-	<definition name="student.home" extends="student.page">
-		<put-attribute name="body" value="/WEB-INF/views/patequation/index.jsp"/>
-		<put-attribute name="header" value="/public/header-home.jsp"/>
-	</definition>
-
-
 
 	<!-- Videos templates -->
 	<definition name="video.new" extends="admin.page">
@@ -207,14 +210,6 @@
 	<definition name="teacher.accessdenied" extends="admin.page">
 		<put-attribute name="body" value="/WEB-INF/views/teacher/accessdenied.jsp"/>
 	</definition>
-
-
-	<definition name="user.login" extends="admin.page">
-		<put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
-		<put-attribute name="header" value=""/>
-		<put-attribute name="footer" value=""/>
-	</definition>
-
 
 	<!-- groups templates -->
 	<definition name="group.new" extends="admin.page">

@@ -1,23 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
 <script src="/pat2math/patequation/js/index.js"></script>
-
-<style>
-/* Redimensionar a imagem para ficar com a altura mais baixo para ser visualizada em resoluções menores */
-#aviso {
-    background: url("/pat2math/patequation/img/aviso_controle.png") no-repeat scroll center center transparent;
-    width: 656px;
-    height: 490px;
-    cursor: pointer;
-}
-</style>
-</head>
-<body>
 <script>
-$(document).ready(function() {		
+	
 	var currentID = "" + ${student.id};
 	var isLastUser = false;
 	//Os cookies do tipo lastUsersN salvam os ids dos usuários que acessaram o Pat2Math no dia
@@ -43,7 +27,7 @@ $(document).ready(function() {
 		setCookieDays (cookieName, currentID, 1);
 		
 	verificaAudio ( );
-});
+
 
 function openPopup (url) {
 	var popup = window.open (url , ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
@@ -68,9 +52,7 @@ function verificaAudio ( ) {
 
 </script>
 
-<div id="aviso" class="box" onclick="verificaAudio()"></div>
-
-       <c:if test="${student.group.id == 2}"> 
+ <c:if test="${student.group.id == 2}"> 
     	 <script type="text/javascript">
     	 	tipoAudio = 1;
     	 	
@@ -97,7 +79,3 @@ function verificaAudio ( ) {
     	    
     	</script>
     </c:if>
-
-
-</body>
-</html>

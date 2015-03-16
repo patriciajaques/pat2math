@@ -111,6 +111,7 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
     text = replaceAll(text, "²", "^2");
     return text;
 }
+5+8
 
 function textToMathml(text) { //<msup>base exponent</msup>
     var stack = new Array();
@@ -413,4 +414,21 @@ function mathmlToText(math) {
     var result = auxBefore + stack.pop();
     //alert("mathml to Text = " + result);
     return result;
+}
+
+function equationToMathml (id) {
+	var idTask = "#task" + id;
+	var eq = stringEquation[id];		
+	var temp = textToMathml (eq);
+	var equation = "<math>" + temp[0];
+	
+	for (var i = 1; i < temp.length; i++)
+		equation += temp[i];
+	
+	equation += "</math>";
+	
+	if (eq.indexOf ("..") !== -1)
+		equation += "..";
+	
+	$(idTask).html (equation);
 }
