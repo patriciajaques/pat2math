@@ -1,8 +1,6 @@
 package br.com.pat2math.action;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +28,7 @@ public class LoadEquationsController {
 	@Autowired private ContentRepository contents;
 	@Autowired private TaskPerformedRepository performedTasks;
 	
+		
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@RequestMapping(value="/student/loadExercise")
 	public @ResponseBody Exercise loadExercise(Long exerciseId, HttpSession session,

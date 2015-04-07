@@ -98,6 +98,11 @@ public class Operacao {
 	}
 	
 	public static String getCodigo(String desc){
+		return getWithNewCodes(desc);
+	}
+	
+	
+	public static String getCodes(String desc){
 		if (desc.startsWith("#")){
 			if (desc.equals("# Soma"))return SOMA;
 			else if (desc.equals("# Subtracao"))return SUBTRACAO;
@@ -144,7 +149,7 @@ public class Operacao {
 			}else if (desc.equals("# Multiplicar fracoes")) return MULTIPLICACAO_FRACAO;
 			else if (desc.equals("# Soma de Fracoes")) return SOMA_SUBTRACAO_FRACAO;
 			else if (desc.equals("# Reescrever Equacao")) return REESCREVER_EQUACAO;
-			else return getCodigo(desc);
+			else return getCodes(desc);
 		}else return desc;
 	}
 		

@@ -167,4 +167,26 @@ public class Tutor {
 		return operations;
 	}
 	
+	public List<String> getSteps(String equation){
+		List<String> solution = new ArrayList<String>();
+		try {
+			solution = resolvedor.mostrarPassos(equation);
+						
+		} catch (InvalidValueException e) {
+			System.out.println(e.getMessage());
+		}
+		return solution;
+		
+	}
+	
+	public String getOneStep(String equation){
+		String solution="";
+		try {
+			solution = resolvedor.proximoPasso(equation);
+		} catch (InvalidValueException e) {
+			System.out.println(e.getMessage());
+		}
+		return solution;
+	}
+	
 }

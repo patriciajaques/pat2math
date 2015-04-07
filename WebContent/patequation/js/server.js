@@ -477,3 +477,29 @@ function showNextButton (nextLine) {
 	 setTimeout(function(){ nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
 	
 }
+
+function testResolution (){
+	requestResolutionTest("x+2=2");
+}
+
+function testStep(){
+	requestStepTest("x+2=2");
+}
+
+function requestResolutionTest (equation){
+	 $.ajax({url: "/pat2math/getSteps",
+	        data: {"lastStep":equation},
+	        success: function(data) {
+	        	console.log(data);
+	        }
+	 });
+}
+
+function requestStepTest(equation){
+	$.ajax({url: "/pat2math/getOneStep",
+			data: {"lastStep": equation},
+			success: function(data){
+				console.log(data);
+			}
+	});
+}

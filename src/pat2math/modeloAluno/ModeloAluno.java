@@ -287,32 +287,36 @@ public class ModeloAluno extends Resolvedor{
 	 * @throws InvalidValueException se <code>eq</code> estiver inválida
 	 */
 	public String proximoPasso(String eq) throws InvalidValueException{
-		Expression exp=new Expression(eq);
+		validaEquacao vE= new validaEquacao(eq);
+		Expression exp=new Expression(vE.getEquacao());
 		requestHint=false;
 		hint.getHintInfo().requestHint();
 		expressoes.clearWorkingMemory();
 		int tam= resp.size();
+		System.out.println(">>>>>> Proximo passo:");
 		expressoes.inserir(exp);
 		expressoes.executar(1);
+		System.out.println(">>>>>> End - Proximo Passo");
 		tam=resp.size()-tam;
 		int i=0;
 		String p="";
 		String topo="";
+		
 		while(i<tam){
 			topo=resp.remove(resp.size()-1).getCleanEquation();
-			p=Operacao.getCodigo(topo);
+			p=Operacao.getWithNewCodes(topo);
 			i++;
 			if (p.equals(Operacao.ERRO)){
 				p=p+";"+topo;
 			}else{
-				p=Operacao.getCodigo(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
+				p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 				i++;
 				//geralmente o segundo add deve pegar a descrição mas se for bhaskara ou fatoração são duas equações então deve pergar mais um valor 
 				//de resp
 				if (!resp.isEmpty())topo=resp.get(resp.size()-1).getCleanEquation();
 				if (!resp.isEmpty() && topo.startsWith("#") && !Operacao.getCodigo(topo).equals(Operacao.ERRO)){
 					p=p.replace(";", "#");
-					p=Operacao.getCodigo(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
+					p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 					i++;
 				}
 			}
@@ -333,27 +337,30 @@ public class ModeloAluno extends Resolvedor{
 		int tam=resp.size();
 		if (hint!=null)hint.getHintInfo().requestHint();
 		requestHint=false;
+		System.out.println(">>>>>>>> Mostrar Resolucao");
 		resolve(eq);
+		System.out.println(">>>>>>>> End - Mostrar Resolucao");
 		List<String> pas=new ArrayList<String>();
 		tam=resp.size()-tam;
 		int i=0;
 		String p="";//guarda um passo de resolução
 		String topo=""; //topo da pilha (fim da fila)
+		
 		while(i<tam){
 			topo=resp.remove(resp.size()-1).getCleanEquation();
-			p=Operacao.getCodigo(topo);
+			p=Operacao.getWithNewCodes(topo);
 			i++;
 			if (p.equals(Operacao.ERRO)){
 				p=p+";"+topo;
 			}else{
-				p=Operacao.getCodigo(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
+				p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 				i++;
 				//geralmente o segundo add deve pegar a descrição mas se for bhaskara ou fatoração são duas equações então deve pergar mais um valor 
 				//de resp
 				if (!resp.isEmpty())topo=resp.get(resp.size()-1).getCleanEquation();
 				if (!resp.isEmpty() && topo.startsWith("#") && !Operacao.getCodigo(topo).equals(Operacao.ERRO)){
 					p=p.replace(";", "#");
-					p=Operacao.getCodigo(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
+					p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 					i++;
 				}
 			}

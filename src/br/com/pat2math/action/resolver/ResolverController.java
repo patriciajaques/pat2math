@@ -1,23 +1,32 @@
 package br.com.pat2math.action.resolver;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import pat2math.expressao.arvore.InvalidValueException;
 import pat2math.modeloAluno.Mensagem;
 import pat2math.modeloAluno.Tutor;
 import br.com.pat2math.action.CurrentUser;
+import br.com.pat2math.domainBase.Exercise;
 import br.com.pat2math.repository.AllStudents;
 import br.com.pat2math.repository.KnowledgeRepository;
 import br.com.pat2math.service.StudentService;
 import br.com.pat2math.studentModel.Knowledge;
+import br.com.pat2math.studentModel.Operation;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.Tip;
 import com.google.gson.Gson;
@@ -153,5 +162,34 @@ public class ResolverController {
     	echo = callback + "(" + jsonOutput + ");";
     	model.addAttribute("response", echo);
 		return "resolverResponse";
+	}
+	
+	
+	@RequestMapping(value="/getSteps")
+	public @ResponseBody Exercise getStep (String lastStep, HttpSession session,
+			HttpServletResponse response, HttpServletRequest request) throws IOException{
+		
+		Tutor tutor = (Tutor) session.getAttribute("tutor");
+		
+		List <String> op=tutor.getSteps(lastStep);
+		
+		Exercise exe= new Exercise(0l, lastStep, lastStep);
+		exe.setSteps(op);
+		
+		return exe;
+		
+	}
+	
+	@RequestMapping(value="/getOneStep")
+	public @ResponseBody String getOneStep (String lastStep, HttpSession session,
+			HttpServletResponse response, HttpServletRequest request) throws IOException{
+		
+		Tutor tutor = (Tutor) session.getAttribute("tutor");
+		
+		String op=tutor.getOneStep(lastStep);
+		
+		
+		return op;
+		
 	}
 }
