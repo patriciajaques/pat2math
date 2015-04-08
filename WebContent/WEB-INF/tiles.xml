@@ -20,11 +20,13 @@
 	<definition name="student.success" extends="student.page">
 		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/student/success.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="student.new" extends="student.page">
 		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/student/new.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="student.home" extends="student.page">
@@ -50,7 +52,9 @@
 	</definition>	
 
 	<definition name="terms" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/terms.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 	
 	<definition name="playaudio" extends="student.page">
@@ -62,88 +66,125 @@
 	</definition>
 
 	<definition name="user.forgotPassword" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/user/forgotPassword.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="user.recoverPasswordSended" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/user/recoverPasswordSended.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="user.editPassword" extends="student.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/user/editPassword.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 	
 	<!-- contents templates -->
 	<definition name="content.list" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/content/list.jsp" />
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 	
 	<definition name="content.show" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/content/show.jsp" />
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="content.added" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/content/addedWithSuccess.jsp" />
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="set.tasks" extends="blank">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
         <put-attribute name="body" value="/WEB-INF/views/setOfTasks/tasks.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
 	<definition name="set.reload" extends="blank">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
         <put-attribute name="body" value="/WEB-INF/views/patequation/topicList.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
 
 	<!--  Mail send templates -->
     
 	<definition name="invite.new" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
         <put-attribute name="body" value="/WEB-INF/views/invite/new.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
 	<definition name="invite.success" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
         <put-attribute name="body" value="/WEB-INF/views/invite/success.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
     <!--  Topic templates -->
     <definition name="topic.new" extends="blank">
+    	<put-attribute name="header" value="/public/header-home.jsp"/>
         <put-attribute name="body" value="/WEB-INF/views/topic/new.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 	
 	<definition name="topic.list" extends="blank">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
         <put-attribute name="body" value="/WEB-INF/views/topic/list.jsp"/>
+        <put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
 	<!-- Student templates -->
 	<definition name="student.show" extends="student.page">
 		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/student/show.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<!-- Videos templates -->
 	<definition name="video.new" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/video/new.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="video.show" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/video/show.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="video.watch" extends="blank">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/video/watch.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
     </definition>
 
 	<!-- Exercises templates -->
 	<definition name="exercise.new" extends="admin.page">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/exercise/new.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="exercise.show" extends="admin.page">
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/exercise/show.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 	<definition name="loadExercises" extends="blank">
+		<put-attribute name="header" value="/public/header-home.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/exercise/listByTopic.jsp"/>
+		<put-attribute name="footer" value="/public/footer.jsp"/>
 	</definition>
 
 
