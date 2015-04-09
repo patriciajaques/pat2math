@@ -1,11 +1,14 @@
+var cStepTour = "stepTour" + currentPos;
+var cFunctionTour = "functionTour" + currentPos;
+
 function openTour ( ) {
 	isTourInterativo = true;
 	blockMenu = true;	
 	
-	var pos = getCookie ("pos");
-	var cookieName = "tour" + pos;
+	
+	var cookieName = "tour" + currentPos;
 	setCookieDays (cookieName, "", 0);
-	cookieName = "tourIsInProgress" + pos;
+	cookieName = "tourIsInProgress" + currentPos;
 	setCookieMinutes (cookieName, "true", 5);
 	
 	$("#topics").fadeIn();
@@ -38,7 +41,8 @@ function openTour ( ) {
         hashable: true,
 		position: "right",
 		alignButtons: "center",
-        overlay: "dark",                 
+        overlay: "dark",
+        onShow: function() {setCookieMinutes (cStepTour, "start2", 5); setCookieMinutes (cFunctionTour, "openTour", 5);},
 		buttons: {
 			"Vamos começar!": {
 				click: true,
@@ -54,6 +58,7 @@ function openTour ( ) {
 		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "start3", 5); setCookieMinutes (cFunctionTour, "openTour", 5);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -68,6 +73,7 @@ function openTour ( ) {
 		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "start4", 5); setCookieMinutes (cFunctionTour, "openTour", 5);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -82,10 +88,10 @@ function continueTour ( ) {
 	isTourInterativo = true;
 	blockMenu = true;	
 	
-	var pos = getCookie ("pos");
-	var cookieName = "tour" + pos;
+	
+	var cookieName = "tour" + currentPos;
 	setCookieDays (cookieName, "", 0);
-	cookieName = "tourIsInProgress" + pos;
+	cookieName = "tourIsInProgress" + currentPos;
 	setCookieMinutes (cookieName, "true", 5);
 	
 	$("#topics").fadeIn();
@@ -162,10 +168,10 @@ function clickTour ( ) {
 	isTourInterativo = true;
 	blockMenu = true;	
 	
-	var pos = getCookie ("pos");
-	var cookieName = "tour" + pos;
+	
+	var cookieName = "tour" + currentPos;
 	setCookieDays (cookieName, "", 0);
-	cookieName = "tourIsInProgress" + pos;
+	cookieName = "tourIsInProgress" + currentPos;
 	setCookieMinutes (cookieName, "true", 5);
 	
 	$("#topics").fadeIn();
@@ -198,7 +204,8 @@ function clickTour ( ) {
         hashable: true,
 		position: "right",
 		alignButtons: "center",
-        overlay: "dark",                 
+        overlay: "dark",
+        onShow: function() {setCookieMinutes (cStepTour, "start2", 5); setCookieMinutes (cFunctionTour, "clickTour", 5);},
 		buttons: {
 			"Vamos começar!": {
 				click: true,
@@ -214,6 +221,7 @@ function clickTour ( ) {
 		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "start3", 5); setCookieMinutes (cFunctionTour, "clickTour", 5);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -228,6 +236,7 @@ function clickTour ( ) {
 		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "start4", 5); setCookieMinutes (cFunctionTour, "clickTour", 5);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -293,10 +302,10 @@ function exit ( ) {
         $("#topicsAux").show();
 	}
     
-    var pos = getCookie ("pos");
-	var cookieName = "tour" + pos;
+    
+	var cookieName = "tour" + currentPos;
 	setCookieDays (cookieName, "false", 7);
-	cookieName = "tourIsInProgress" + pos;
+	cookieName = "tourIsInProgress" + currentPos;
 	setCookieMinutes (cookieName, "false", 5);
 }
 function exitEsc ( ) {
@@ -330,7 +339,6 @@ function exitEsc ( ) {
 		}
 		});
                 
-
         $("#tour").guider({
                 name: "exit3",             
 		title: 'Se você mudar de ideia',
@@ -350,10 +358,12 @@ function exitEsc ( ) {
 }
 function clickEquation ( ) {
 	$.guider({
+		name: "main",
 		next: "main2",
 		title: "Esta é a sua interface principal",
 		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br>Continue com o tour para descobrir!",
 	    alignButtons: "right", 
+	    onShow: function() {setCookieMinutes (cStepTour, "main", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -369,6 +379,7 @@ function clickEquation ( ) {
 		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "main2", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -385,6 +396,7 @@ function clickEquation ( ) {
 		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		position: "bottom",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "main3", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -402,6 +414,7 @@ function clickEquation ( ) {
 		width: 600,
 		position: "bottom",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "main4", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
 		buttons: {
             Voltar: true,
 			Próximo: {
@@ -418,6 +431,7 @@ function clickEquation ( ) {
 		width: 620,
 		position: "bottom",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "main5", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -430,10 +444,12 @@ function clickEquation ( ) {
 
 function clickEquationSlim ( ) {
 	$.guider({
+		name: "smain",
 		next: "smain2",
 		title: "Verificamos que a equação já foi resolvida",
 		description: "Vamos avançar um pouco no nosso tour para verificar outros detalhes importantes. ",
 	    alignButtons: "right", 
+	    onShow: function() {setCookieMinutes (cStepTour, "smain", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -449,6 +465,7 @@ function clickEquationSlim ( ) {
 		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "smain2", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -466,6 +483,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
+		onShow: function() {setCookieMinutes (cStepTour, "smain3", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -483,6 +501,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
+		onShow: function() {setCookieMinutes (cStepTour, "smain4", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -499,7 +518,8 @@ function clickEquationSlim ( ) {
 		description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
 		position: "bottom",
 		alignButtons: "right",
-		closable: true, 
+		closable: true,
+		onShow: function() {setCookieMinutes (cStepTour, "smain5", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -517,6 +537,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
+		onShow: function() {setCookieMinutes (cStepTour, "smain6", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -534,6 +555,7 @@ function clickEquationSlim ( ) {
 		alignButtons: "right",
 		closable: true, 
 		onHide: function() {exit();},
+		onShow: function() {setCookieMinutes (cStepTour, "smain7", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
 		buttons: {
 			Voltar: true,
 			Finalizar: {
@@ -546,10 +568,12 @@ function clickEquationSlim ( ) {
 
 function clickEquationPartiallyResolved ( ) {
 	$.guider({
+		name: "pmain",
 		next: "pmain2",
 		title: "Esta é a sua interface principal",
 		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br>Continue com o tour para descobrir!",
 	    alignButtons: "right", 
+	    onShow: function() {setCookieMinutes (cStepTour, "pmain", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -565,6 +589,7 @@ function clickEquationPartiallyResolved ( ) {
 		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "pmain2", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -581,6 +606,7 @@ function clickEquationPartiallyResolved ( ) {
 		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		position: "bottom",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "pmain3", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -597,6 +623,7 @@ function clickEquationPartiallyResolved ( ) {
     	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
+    	onShow: function() {setCookieMinutes (cStepTour, "pmain4", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -613,6 +640,7 @@ function clickEquationPartiallyResolved ( ) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "pmain5", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -629,6 +657,7 @@ function clickEquationPartiallyResolved ( ) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
     			position: "bottom",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "pmain6", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -646,6 +675,7 @@ function clickEquationPartiallyResolved ( ) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
+    	    	onShow: function() {setCookieMinutes (cStepTour, "pmain7", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -660,6 +690,7 @@ function clickEquationPartiallyResolved ( ) {
     			title: "Agora é com você",
     			description: "Continue resolvendo a equação da forma que preferir. Quando terminar, nós lhe passaremos mais algumas orientações.",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "pmain8", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
     			buttons: {
     				Voltar: true,
     				OK: {
@@ -671,10 +702,12 @@ function clickEquationPartiallyResolved ( ) {
 }
 function clickPlan ( ) {
 	$.guider({
+		name: "plan",
 		next: "plan2",
 		title: "Planos de Aula",
 		description: "Os planos de aula são como as fases de um jogo.<br>Cada fase é composta por uma série de equações. ",
 	    alignButtons: "right", 
+	    onShow: function() {setCookieMinutes (cStepTour, "plan", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -689,6 +722,7 @@ function clickPlan ( ) {
 		title: "Passando de Fase",
 		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br>Essas equações podem ser resolvidas na ordem que você quiser.",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "plan2", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -705,6 +739,7 @@ function clickPlan ( ) {
 		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
 		alignButtons: "right",
 		width: 610,
+		onShow: function() {setCookieMinutes (cStepTour, "plan3", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -719,6 +754,7 @@ function clickPlan ( ) {
 		title: "Clique na equação x+15=45-2x",
 		description: "Vamos resolvê-la passo-a-passo para entender as principais funcionalidades do Pat2Math.",
 		alignButtons: "right",
+		onShow: function() {setCookieMinutes (cStepTour, "plan4", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -733,10 +769,12 @@ function clickPlan ( ) {
 
 function firstStepTour ( ) {
     $.guider({
+    	name: "fstep",
     	next: "fstep2",
     	title: "Muito bem!",
     	description: "Por acertar este passo da equação, você ganhou 10 pontos.",
-    	            alignButtons: "right",
+    	alignButtons: "right",
+    	onShow: function() {setCookieMinutes (cStepTour, "fstep", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -753,6 +791,7 @@ function firstStepTour ( ) {
     	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
+    	onShow: function() {setCookieMinutes (cStepTour, "fstep2", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -769,6 +808,7 @@ function firstStepTour ( ) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "fstep3", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -785,6 +825,7 @@ function firstStepTour ( ) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
     			position: "bottom",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "fstep4", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -802,6 +843,7 @@ function firstStepTour ( ) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
+    	    	onShow: function() {setCookieMinutes (cStepTour, "fstep5", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -816,6 +858,7 @@ function firstStepTour ( ) {
     			title: "Agora é com você",
     			description: "Continue resolvendo a equação da forma que preferir.",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "fstep6", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
     			buttons: {
     				Voltar: true,
     				OK: {
@@ -862,10 +905,12 @@ function finalStepTour ( ) {
 
 function alternativeFinalStepTour ( ) {
 	$.guider({
+		name: "fstep",
     	next: "fstep2",
     	title: "Parabéns! O plano de aula 1 foi desbloqueado",
     	description: "Confira a seguir as nossas considerações finais.",
-    	            alignButtons: "right",
+    	alignButtons: "right",
+    	onShow: function() {setCookieMinutes (cStepTour, "fstep", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -882,6 +927,7 @@ function alternativeFinalStepTour ( ) {
     	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
+    	onShow: function() {setCookieMinutes (cStepTour, "fstep2", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -898,6 +944,7 @@ function alternativeFinalStepTour ( ) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "fstep3", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -914,6 +961,7 @@ function alternativeFinalStepTour ( ) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
     			position: "bottom",
     			alignButtons: "right",
+    			onShow: function() {setCookieMinutes (cStepTour, "fstep4", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -931,6 +979,7 @@ function alternativeFinalStepTour ( ) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
+    	    	onShow: function() {setCookieMinutes (cStepTour, "fstep5", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {

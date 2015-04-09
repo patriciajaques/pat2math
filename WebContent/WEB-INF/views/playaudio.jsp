@@ -84,8 +84,7 @@ function mostraProgressoAudio2 ( ) {
 }
 
 function endAudio ( ) {
-	var pos = getCookie  ("pos");
-	var cookieName = "playAudio" + pos;
+	var cookieName = "playAudio" + currentPos;
 	setCookieDays (cookieName, "false", 1);
 	location.href="/pat2math/student/home";	
 }

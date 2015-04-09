@@ -156,8 +156,8 @@ function loadExercise(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			var pos = getCookie ("pos");
-			var cookieName = "currentEquation" + pos;
+			
+			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação		
 			
@@ -206,8 +206,8 @@ function loadExerciseTest(id) {
 			}
 			reloadPaper(1);
 			idEquation=id;
-			var pos = getCookie ("pos");
-			var cookieName = "currentEquation" + pos;
+			
+			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
 			

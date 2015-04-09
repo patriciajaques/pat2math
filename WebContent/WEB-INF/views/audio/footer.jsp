@@ -21,6 +21,7 @@
 	
 	//Posição que o ID atual está
 	setCookieDays ("pos", i, 1);
+	currentPos = i;
 	
 	//Caso o ID atual não for encontrado nos cookies, ele deverá ser salvo
 	if (isLastUser === false)
@@ -39,8 +40,7 @@ function openPopup (url) {
 
 
 function verificaAudio ( ) {
-	var pos = getCookie  ("pos");
-	var playAudio = getCookie ("playAudio" + pos);   
+	var playAudio = getCookie ("playAudio" + currentPos);   
 	
 	if ((tipoAudio != 1 && tipoAudio != 2) || playAudio === "false") 
 		openPopup (' /pat2math/student/home ');

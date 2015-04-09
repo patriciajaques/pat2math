@@ -21,6 +21,7 @@ var equations = [new Equation("x=1", 0)];
 var concluded = 0;
 var isTourInterativo = false;
 var blockMenu = false;
+var currentPos = getCookie ("pos");
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
@@ -371,8 +372,7 @@ $(document).ready(function() {
     if (!isPopup ( ))
 	    location.href = "/pat2math/audio";
     
-    var pos = getCookie  ("pos");
-	var cookieName = "currentEquation" + pos;
+	var cookieName = "currentEquation" + currentPos;
 	var currentEquationString = getCookie (cookieName);
 	
 	if (currentEquationString !== "" && currentEquationString !== "201") {//201 é o id da equação especial do tour
@@ -390,11 +390,11 @@ $(document).ready(function() {
     	$("#topicsAux").hide();
 	}
 	
-	cookieName = "tour" + pos;
+	cookieName = "tour" + currentPos;
 	var startTour = getCookie (cookieName);
 	
 	if (startTour === "") {
-		var cookieName = "tourIsInProgress" + pos;
+		var cookieName = "tourIsInProgress" + currentPos;
 		var continueTour = getCookie (cookieName);
 		
 		if (continueTour !== "true")
