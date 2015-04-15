@@ -1,19 +1,53 @@
-var cStepTour = "stepTour" + currentPos;
-var cFunctionTour = "functionTour" + currentPos;
+/* Quando o tour for retomado após atualizar a página, se for um dos passos iniciais antes da explicação do funcionamento do menu, manter
+ * o menu fixo, assim como é na primeira mensagem do tour.
+ * ATIVAR O COOKIE QUE LEMBRA DA EQUAÇÃO QUE ESTAVA ABERTA NA EQUAÇÃO ESPECIAL DO TOUR (a princípio já está ativo)
+ */
 
-function openTour ( ) {
-	isTourInterativo = true;
-	blockMenu = true;	
+function openTour (nextStep, exitEsc) {	
+//	var cookieName = "tour" + currentPos;
+//	setCookieDays (cookieName, "", 0);
+//	cookieName = "tourIsInProgress" + currentPos;
+//	setCookieDays (cookieName, "true", 1);
 	
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
 	
-	var cookieName = "tour" + currentPos;
-	setCookieDays (cookieName, "", 0);
-	cookieName = "tourIsInProgress" + currentPos;
-	setCookieMinutes (cookieName, "true", 5);
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
 	
-	$("#topics").fadeIn();
-	$("#topicsAux").hide();
-
+	else {
 	$.guider({
 		next : "start2",
 		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
@@ -23,7 +57,7 @@ function openTour ( ) {
 		alignButtons : "center",
 		buttons : {
 			"Não, obrigado." : {
-			click : function() {noThanks();}
+			click : function() {exit();}
 			},
 			"Só se for agora!" : {
 				click : true,
@@ -32,6 +66,7 @@ function openTour ( ) {
 			}
 		}
 	}).show();
+	}
 	
 	$().guider({
 		name: "start2",
@@ -42,7 +77,7 @@ function openTour ( ) {
 		position: "right",
 		alignButtons: "center",
         overlay: "dark",
-        onShow: function() {setCookieMinutes (cStepTour, "start2", 5); setCookieMinutes (cFunctionTour, "openTour", 5);},
+        onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "openTour", 1);},
 		buttons: {
 			"Vamos começar!": {
 				click: true,
@@ -58,7 +93,7 @@ function openTour ( ) {
 		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "start3", 5); setCookieMinutes (cFunctionTour, "openTour", 5);},
+		onShow: function() {setCookieDays (cStepTour, "start3", 1); setCookieDays (cFunctionTour, "openTour", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -73,7 +108,7 @@ function openTour ( ) {
 		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "start4", 5); setCookieMinutes (cFunctionTour, "openTour", 5);},
+		onShow: function() {setCookieDays (cStepTour, "start4", 1); setCookieDays (cFunctionTour, "openTour", 1);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -84,109 +119,146 @@ function openTour ( ) {
 	}); 
 }
 
-function continueTour ( ) {
+//function continueTour (nextStep, exitEsc) {
+//	isTourInterativo = true;
+//	blockMenu = true;	
+//	
+//	
+//	var cookieName = "tour" + currentPos;
+//	setCookieDays (cookieName, "", 0);
+//	cookieName = "tourIsInProgress" + currentPos;
+//	setCookieDays (cookieName, "true", 1);
+//	
+//	$("#topics").fadeIn();
+//	$("#topicsAux").hide();
+//
+//	$.guider({
+//		next : "start2",
+//		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+//		description : "Vamos passar pelo tour novamente?",
+//		overlay : "dark",
+//		width : 600,
+//		alignButtons : "center",
+//		buttons : {
+//			"Não, obrigado." : {
+//			click : function() {noThanks();}
+//			},
+//			"Sim, por favor." : {
+//				click : true,
+//				className : "primary",
+//				focus : true
+//			}
+//		}
+//	}).show();
+//	
+//	$().guider({
+//		name: "start2",
+//		next: "start3",
+//		title: "É isso aí!",
+//		description: 'Lembre-se que você pode sair deste tour pressionando <font color="red">ESC</font> a qualquer momento.',                             
+//        hashable: true,
+//		position: "right",
+//		alignButtons: "center",
+//        overlay: "dark",                 
+//		buttons: {
+//			"Vamos começar!": {
+//				click: true,
+//				className: "primary"
+//			}
+//		}
+//	});
+//	
+//	$("#topics").guider({
+//		name: "start3",
+//		next: "start4",
+//		title: "Este é o menu principal",
+//		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
+//		position: "right",
+//		alignButtons: "right",
+//		buttons: {
+//			Próximo: {
+//				click: true,
+//				className: "primary"
+//			}
+//		}
+//	});
+//	
+//	$(".topic").guider({
+//		name: "start4",
+//		title: "Acesso às Equações",
+//		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
+//		position: "right",
+//		alignButtons: "right",
+//		buttons: {
+//			Voltar: true,
+//			OK: {
+//				click: true,
+//				className: "primary"
+//			}
+//		}
+//	}); 
+//}
+
+function clickTour (nextStep, exitEsc) {	
 	isTourInterativo = true;
 	blockMenu = true;	
-	
-	
-	var cookieName = "tour" + currentPos;
-	setCookieDays (cookieName, "", 0);
-	cookieName = "tourIsInProgress" + currentPos;
-	setCookieMinutes (cookieName, "true", 5);
-	
 	$("#topics").fadeIn();
 	$("#topicsAux").hide();
+	
+//	var cookieName = "tour" + currentPos;
+//	setCookieDays (cookieName, "", 0);
+//	cookieName = "tourIsInProgress" + currentPos;
+//	setCookieDays (cookieName, "true", 1);
+	
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			closable: true,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
 
-	$.guider({
-		next : "start2",
-		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
-		description : "Vamos passar pelo tour novamente?",
-		overlay : "dark",
-		width : 600,
-		alignButtons : "center",
-		buttons : {
-			"Não, obrigado." : {
-			click : function() {noThanks();}
-			},
-			"Sim, por favor." : {
-				click : true,
-				className : "primary",
-				focus : true
-			}
-		}
-	}).show();
-	
-	$().guider({
-		name: "start2",
-		next: "start3",
-		title: "É isso aí!",
-		description: 'Lembre-se que você pode sair deste tour pressionando <font color="red">ESC</font> a qualquer momento.',                             
-        hashable: true,
-		position: "right",
-		alignButtons: "center",
-        overlay: "dark",                 
-		buttons: {
-			"Vamos começar!": {
-				click: true,
-				className: "primary"
-			}
-		}
-	});
-	
-	$("#topics").guider({
-		name: "start3",
-		next: "start4",
-		title: "Este é o menu principal",
-		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
-		position: "right",
-		alignButtons: "right",
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
-	});
-	
-	$(".topic").guider({
-		name: "start4",
-		title: "Acesso às Equações",
-		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
-		position: "right",
-		alignButtons: "right",
-		buttons: {
-			Voltar: true,
-			OK: {
-				click: true,
-				className: "primary"
-			}
-		}
-	}); 
-}
-
-function clickTour ( ) {
-	isTourInterativo = true;
-	blockMenu = true;	
-	
-	
-	var cookieName = "tour" + currentPos;
-	setCookieDays (cookieName, "", 0);
-	cookieName = "tourIsInProgress" + currentPos;
-	setCookieMinutes (cookieName, "true", 5);
-	
-	$("#topics").fadeIn();
-	$("#topicsAux").hide();
-
+	else {
 	$.guider({
 		next : "start2",
 		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Olá! </center>",
-		description : "<center>Você deseja passar pelo nosso tour interativo para entender as principais funcionalidades do Pat2Math?</center>",
+		description : "<center>Você deseja passar pelo nosso tour interativo para entender as principais funcionalidades do PAT2Math?</center>",
 		overlay : "dark",
 		width : 600,
 		alignButtons : "center",
 		buttons : {
 			"Não, obrigado." : {
-			click : function() {noThanks();}
+			click : function() {exit();}
 			},
 			"Só se for agora!" : {
 				click : true,
@@ -195,6 +267,7 @@ function clickTour ( ) {
 			}
 		}
 	}).show();
+	}
 	
 	$().guider({
 		name: "start2",
@@ -205,7 +278,7 @@ function clickTour ( ) {
 		position: "right",
 		alignButtons: "center",
         overlay: "dark",
-        onShow: function() {setCookieMinutes (cStepTour, "start2", 5); setCookieMinutes (cFunctionTour, "clickTour", 5);},
+        onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "clickTour", 1);},
 		buttons: {
 			"Vamos começar!": {
 				click: true,
@@ -221,7 +294,7 @@ function clickTour ( ) {
 		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "start3", 5); setCookieMinutes (cFunctionTour, "clickTour", 5);},
+		onShow: function() {setCookieDays (cStepTour, "start3", 1); setCookieDays (cFunctionTour, "clickTour", 1); var cookieName = "openTour" + currentPos; setCookieDays (cookieName, "", 0);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -236,7 +309,7 @@ function clickTour ( ) {
 		description: "Clique neste botão para conferir a equação do plano de aula especial do tour.",     
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "start4", 5); setCookieMinutes (cFunctionTour, "clickTour", 5);},
+		onShow: function() {setCookieDays (cStepTour, "start4", 1); setCookieDays (cFunctionTour, "clickTour", 1);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -246,54 +319,59 @@ function clickTour ( ) {
 		}
 	}); 
 }
-function noThanks ( ) {
-	 $.guider({
-		title : "Tudo bem!",
-		next : "exit2",
-		description : 'Confira a seguir as nossas considerações finais.',
-		alignButtons : "right",
-		buttons : {
-			Próximo : {
-				click : true,
-				className : "primary"
-			}
-		}
-	}).show();
 
-	$("#help").guider({
-		name : "exit2",
-	    next : "exit3",
-		title : 'Teclas utilizadas',
-		description : 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
-		position : "left",
-		alignButtons : "right",
-		width : 600,
-		buttons : {
-			Próximo : {
-			click : true,
-		    className : "primary"
-			}
-		}
-	});
+//function noThanks (nextStep, exitEsc) {
+//	 $.guider({
+//		title : "Tudo bem!",
+//		next : "exit2",
+//		description : 'Confira a seguir as nossas considerações finais.',
+//		alignButtons : "right",
+//		buttons : {
+//			Próximo : {
+//				click : true,
+//				className : "primary"
+//			}
+//		}
+//	}).show();
+//
+//	$("#help").guider({
+//		name : "exit2",
+//	    next : "exit3",
+//		title : 'Teclas utilizadas',
+//		description : 'Caso tenha dúvidas referentes às teclas utilizadas no PAT2Math, clique neste botão para conferir a lista completa.',
+//		position : "left",
+//		alignButtons : "right",
+//		width : 600,
+//		buttons : {
+//			Próximo : {
+//			click : true,
+//		    className : "primary"
+//			}
+//		}
+//	});
+//
+//	$("#tour").guider({
+//		name : "exit3",
+//		title : 'Se você mudar de ideia',
+//		description : 'Clique neste botão para acessar a este tour novamente.',
+//		position : "left",
+//		alignButtons : "right",
+//		width : 600,
+//		buttons : {
+//			Entendi : {
+//				click : true,
+//				className : "primary"
+//			}
+//		}
+//	});
+//
+//	exit();
+//}
 
-	$("#tour").guider({
-		name : "exit3",
-		title : 'Se você mudar de ideia',
-		description : 'Clique neste botão para acessar a este tour novamente.',
-		position : "left",
-		alignButtons : "right",
-		width : 600,
-		buttons : {
-			Entendi : {
-				click : true,
-				className : "primary"
-			}
-		}
-	});
-
-	exit();
-}
 function exit ( ) {
+	$.guider({	
+	}).hideAll();
+	
 	isTourInterativo = false; 
 	blockMenu = false;
 	
@@ -302,68 +380,124 @@ function exit ( ) {
         $("#topicsAux").show();
 	}
     
-    
-	var cookieName = "tour" + currentPos;
+    var pos = getCookie ("pos");
+	var cookieName = "stepTour" + pos;
+	setCookieDays (cookieName, "", 0);
+	cookieName = "functionTour" + pos;
+	setCookieDays (cookieName, "", 0);
+	cookieName = "openTour" + pos;
 	setCookieDays (cookieName, "false", 7);
-	cookieName = "tourIsInProgress" + currentPos;
-	setCookieMinutes (cookieName, "false", 5);
 }
+
+function checkTour (exitEsc) {
+	isTourInterativo = true;
+	var pos = getCookie ("pos");
+	var cookieName = "stepTour" + pos;
+	var nextStep = getCookie (cookieName);
+    cookieName = "functionTour" + pos;
+    var functionTour = getCookie (cookieName);
+    
+    if (functionTour === "" || functionTour === "openTour" || functionTour === "clickTour" || functionTour === "clickPlan") {
+    	blockMenu = true;	
+    	$("#topics").fadeIn();
+    	$("#topicsAux").hide();
+    	
+    	if (functionTour === "" || functionTour === "openTour")
+    	    openTour (nextStep, exitEsc);
+    	
+    	else if (functionTour === "clickTour") 
+    	    clickTour (nextStep, exitEsc);
+    	
+    	else
+        	clickPlan (nextStep, exitEsc);	    
+    }
+       
+    else if (functionTour === "clickEquation") 
+    	clickEquation (nextStep, exitEsc);
+    
+    else if (functionTour === "clickEquationSlim") 
+    	clickEquationSlim (nextStep, exitEsc);
+    
+    else if (functionTour === "clickEquationPartiallyResolved") 
+    	clickEquationPartiallyResolved (nextStep, exitEsc);
+     
+    else if (functionTour === "firstStepTour") 
+    	firstStepTour (nextStep, exitEsc);
+    
+    else if (functionTour === "alternativeFinalStepTour")
+    	alternativeFinalStepTour (nextStep, exitEsc);
+    
+    else {
+    	alert ("Os cookies em seu navegador não estão habilitados corretamente.");
+    	exit();
+    }
+}
+
 function exitEsc ( ) {
 	$.guider({
-		title: "Você pressionou esc e saiu do tour.",
-                next: "exit2",
-		description: 'Confira a seguir as nossas considerações finais.',
+		title: "A tecla esc foi pressionada",
+		description: "Você realmente deseja sair do tour?",
                 closable: true,
-                alignButtons: "right",
+                alignButtons: "center",
 		buttons: {
-                     Próximo: {
-                         click: true,
-                         className: "primary"
+			"Sim" : {
+			click : function() {exit();}
+			},
+			"Não, quero continuar" : {
+				click : function() {checkTour(true);},
+				className : "primary",
+				focus : true
+			}
                      }
-		}
-		}).show();
-                
-            $("#help").guider({
-                name: "exit2",
-                next: "exit3",
-		title: 'Teclas utilizadas',
-                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
-                closable: true,
-                position: "left",
-                alignButtons: "right",
-		buttons: {
-                     Próximo: {
-                         click: true,
-                         className: "primary"
-                     }
-		}
-		});
-                
-        $("#tour").guider({
-                name: "exit3",             
-		title: 'Se você mudar de ideia',
-                description: 'Clique neste botão para acessar a este tour novamente.',
-                closable: true,
-                position: "left",
-                alignButtons: "right",
-		buttons: {
-                     Entendi: {
-                         click: true,
-                         className: "primary"
-                     }
-		}
-		});    
-        
-        exit();
+		}).show();      
 }
-function clickEquation ( ) {
+function clickEquation (nextStep, exitEsc) {
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep === "" || nextStep === "main"){
 	$.guider({
 		name: "main",
 		next: "main2",
 		title: "Esta é a sua interface principal",
-		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br>Continue com o tour para descobrir!",
+		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do PAT2Math.<br>Continue com o tour para descobrir!",
 	    alignButtons: "right", 
-	    onShow: function() {setCookieMinutes (cStepTour, "main", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
+	    onShow: function() {setCookieDays (cStepTour, "main", 1); setCookieDays (cFunctionTour, "clickEquation", 1);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -371,6 +505,7 @@ function clickEquation ( ) {
             }
 	    }
 		}).show();
+	}
 	
 	$("#topicsAux").guider({
 		name: "main2",
@@ -379,7 +514,7 @@ function clickEquation ( ) {
 		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "main2", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
+		onShow: function() {setCookieDays (cStepTour, "main2", 1); setCookieDays (cFunctionTour, "clickEquation", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -396,7 +531,7 @@ function clickEquation ( ) {
 		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "main3", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
+		onShow: function() {setCookieDays (cStepTour, "main3", 1); setCookieDays (cFunctionTour, "clickEquation", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -414,7 +549,7 @@ function clickEquation ( ) {
 		width: 600,
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "main4", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
+		onShow: function() {setCookieDays (cStepTour, "main4", 1); setCookieDays (cFunctionTour, "clickEquation", 1);},
 		buttons: {
             Voltar: true,
 			Próximo: {
@@ -431,7 +566,7 @@ function clickEquation ( ) {
 		width: 620,
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "main5", 5); setCookieMinutes (cFunctionTour, "clickEquation", 5);},
+		onShow: function() {setCookieDays (cStepTour, "main5", 1); setCookieDays (cFunctionTour, "clickEquation", 1);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -442,14 +577,53 @@ function clickEquation ( ) {
 	});
 }
 
-function clickEquationSlim ( ) {
+function clickEquationSlim (nextStep, exitEsc) {
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep === "" || nextStep === "smain"){
 	$.guider({
 		name: "smain",
 		next: "smain2",
 		title: "Verificamos que a equação já foi resolvida",
 		description: "Vamos avançar um pouco no nosso tour para verificar outros detalhes importantes. ",
 	    alignButtons: "right", 
-	    onShow: function() {setCookieMinutes (cStepTour, "smain", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+	    onShow: function() {setCookieDays (cStepTour, "smain", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -457,6 +631,7 @@ function clickEquationSlim ( ) {
             }
 	    }
 		}).show();
+	}
 	
 	$("#topicsAux").guider({
 		name: "smain2",
@@ -465,7 +640,7 @@ function clickEquationSlim ( ) {
 		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "smain2", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+		onShow: function() {setCookieDays (cStepTour, "smain2", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -483,7 +658,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
-		onShow: function() {setCookieMinutes (cStepTour, "smain3", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+		onShow: function() {setCookieDays (cStepTour, "smain3", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -501,7 +676,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
-		onShow: function() {setCookieMinutes (cStepTour, "smain4", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+		onShow: function() {setCookieDays (cStepTour, "smain4", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -519,7 +694,7 @@ function clickEquationSlim ( ) {
 		position: "bottom",
 		alignButtons: "right",
 		closable: true,
-		onShow: function() {setCookieMinutes (cStepTour, "smain5", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+		onShow: function() {setCookieDays (cStepTour, "smain5", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -537,7 +712,7 @@ function clickEquationSlim ( ) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
-		onShow: function() {setCookieMinutes (cStepTour, "smain6", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+		onShow: function() {setCookieDays (cStepTour, "smain6", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -555,7 +730,7 @@ function clickEquationSlim ( ) {
 		alignButtons: "right",
 		closable: true, 
 		onHide: function() {exit();},
-		onShow: function() {setCookieMinutes (cStepTour, "smain7", 5); setCookieMinutes (cFunctionTour, "clickEquationSlim", 5);},
+		onShow: function() {setCookieDays (cStepTour, "smain7", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Finalizar: {
@@ -566,14 +741,53 @@ function clickEquationSlim ( ) {
 	});
 }
 
-function clickEquationPartiallyResolved ( ) {
+function clickEquationPartiallyResolved (nextStep, exitEsc) {
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep === "" || nextStep === "pmain"){
 	$.guider({
 		name: "pmain",
 		next: "pmain2",
 		title: "Esta é a sua interface principal",
-		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do Pat2Math.<br>Continue com o tour para descobrir!",
+		description: "Aqui estão as principais funcionalidades que você utilizará para resolver as equações do PAT2Math.<br>Continue com o tour para descobrir!",
 	    alignButtons: "right", 
-	    onShow: function() {setCookieMinutes (cStepTour, "pmain", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+	    onShow: function() {setCookieDays (cStepTour, "pmain", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -581,6 +795,7 @@ function clickEquationPartiallyResolved ( ) {
             }
 	    }
 		}).show();
+	}
 	
 	$("#topicsAux").guider({
 		name: "pmain2",
@@ -589,7 +804,7 @@ function clickEquationPartiallyResolved ( ) {
 		description: "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!",    
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "pmain2", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+		onShow: function() {setCookieDays (cStepTour, "pmain2", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -606,7 +821,7 @@ function clickEquationPartiallyResolved ( ) {
 		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "pmain3", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+		onShow: function() {setCookieDays (cStepTour, "pmain3", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -623,7 +838,7 @@ function clickEquationPartiallyResolved ( ) {
     	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
-    	onShow: function() {setCookieMinutes (cStepTour, "pmain4", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+    	onShow: function() {setCookieDays (cStepTour, "pmain4", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -640,7 +855,7 @@ function clickEquationPartiallyResolved ( ) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "pmain5", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "pmain5", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -657,7 +872,7 @@ function clickEquationPartiallyResolved ( ) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
     			position: "bottom",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "pmain6", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "pmain6", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -675,7 +890,7 @@ function clickEquationPartiallyResolved ( ) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
-    	    	onShow: function() {setCookieMinutes (cStepTour, "pmain7", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+    	    	onShow: function() {setCookieDays (cStepTour, "pmain7", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -690,7 +905,7 @@ function clickEquationPartiallyResolved ( ) {
     			title: "Agora é com você",
     			description: "Continue resolvendo a equação da forma que preferir. Quando terminar, nós lhe passaremos mais algumas orientações.",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "pmain8", 5); setCookieMinutes (cFunctionTour, "clickEquationPartiallyResolved", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "pmain8", 1); setCookieDays (cFunctionTour, "clickEquationPartiallyResolved", 1);},
     			buttons: {
     				Voltar: true,
     				OK: {
@@ -700,14 +915,53 @@ function clickEquationPartiallyResolved ( ) {
     			}
     		});
 }
-function clickPlan ( ) {
+function clickPlan (nextStep, exitEsc) {
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",			
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep === "" || nextStep === "plan"){
 	$.guider({
 		name: "plan",
 		next: "plan2",
 		title: "Planos de Aula",
 		description: "Os planos de aula são como as fases de um jogo.<br>Cada fase é composta por uma série de equações. ",
 	    alignButtons: "right", 
-	    onShow: function() {setCookieMinutes (cStepTour, "plan", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
+	    onShow: function() {setCookieDays (cStepTour, "plan", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
 	    buttons: {
 	    	Próximo: {
                 click: true,
@@ -715,6 +969,7 @@ function clickPlan ( ) {
             }
 	    }
 		}).show();
+	}
 	
 	$().guider({
 		name: "plan2",
@@ -722,7 +977,7 @@ function clickPlan ( ) {
 		title: "Passando de Fase",
 		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br>Essas equações podem ser resolvidas na ordem que você quiser.",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "plan2", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
+		onShow: function() {setCookieDays (cStepTour, "plan2", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -739,7 +994,7 @@ function clickPlan ( ) {
 		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
 		alignButtons: "right",
 		width: 610,
-		onShow: function() {setCookieMinutes (cStepTour, "plan3", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
+		onShow: function() {setCookieDays (cStepTour, "plan3", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
 		buttons: {
 			Voltar: true,
 			Próximo: {
@@ -749,12 +1004,13 @@ function clickPlan ( ) {
 		}
 	});
 	
-	$().guider({
+	$("#tasks9").guider({
 		name: "plan4",
-		title: "Clique na equação x+15=45-2x",
-		description: "Vamos resolvê-la passo-a-passo para entender as principais funcionalidades do Pat2Math.",
+		title: "Clique nesta equação",
+		description: "Vamos resolvê-la passo-a-passo para entender as principais funcionalidades do PAT2Math.",
 		alignButtons: "right",
-		onShow: function() {setCookieMinutes (cStepTour, "plan4", 5); setCookieMinutes (cFunctionTour, "clickPlan", 5);},
+		position: "right",
+		onShow: function() {setCookieDays (cStepTour, "plan4", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -767,14 +1023,53 @@ function clickPlan ( ) {
 
 
 
-function firstStepTour ( ) {
+function firstStepTour (nextStep, exitEsc) {
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep === "" || nextStep === "fstep"){
     $.guider({
     	name: "fstep",
     	next: "fstep2",
     	title: "Muito bem!",
     	description: "Por acertar este passo da equação, você ganhou 10 pontos.",
     	alignButtons: "right",
-    	onShow: function() {setCookieMinutes (cStepTour, "fstep", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
+    	onShow: function() {setCookieDays (cStepTour, "fstep", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -782,7 +1077,8 @@ function firstStepTour ( ) {
     		}
     	}
     	            
-    	}).show();            
+    	}).show();
+	}
     	    
     $("#note").guider({
     	name: "fstep2",
@@ -791,7 +1087,7 @@ function firstStepTour ( ) {
     	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
-    	onShow: function() {setCookieMinutes (cStepTour, "fstep2", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
+    	onShow: function() {setCookieDays (cStepTour, "fstep2", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -808,7 +1104,7 @@ function firstStepTour ( ) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "fstep3", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "fstep3", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -825,7 +1121,7 @@ function firstStepTour ( ) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
     			position: "bottom",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "fstep4", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "fstep4", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -843,7 +1139,7 @@ function firstStepTour ( ) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
-    	    	onShow: function() {setCookieMinutes (cStepTour, "fstep5", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
+    	    	onShow: function() {setCookieDays (cStepTour, "fstep5", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -858,7 +1154,7 @@ function firstStepTour ( ) {
     			title: "Agora é com você",
     			description: "Continue resolvendo a equação da forma que preferir.",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "fstep6", 5); setCookieMinutes (cFunctionTour, "firstStepTour", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "fstep6", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				OK: {
@@ -874,7 +1170,7 @@ function finalStepTour ( ) {
 	$.guider({
     	next: "fstep2",
     	title: "Parabéns!",
-    	description: "O plano de aula 1 foi desbloqueado e você já está pronto para utilizar o Pat2Math.",
+    	description: "O plano de aula 1 foi desbloqueado e você já está pronto para utilizar o PAT2Math.",
         alignButtons: "right",
     	buttons: {
     		Próximo: {
@@ -894,23 +1190,60 @@ function finalStepTour ( ) {
 		closable: true, 
 		buttons: {
 			Finalizar: {
-               click: true,
+               click: function() {exit();},
                className: "primary"
             }
 		}
     	});
-	
-	exit();
 }
 
-function alternativeFinalStepTour ( ) {
+function alternativeFinalStepTour (nextStep, exitEsc) {
+	if (nextStep !== "" && exitEsc === false) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos?",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "center",
+			buttons : {
+				"Não, obrigado." : {
+				click : function() {exit();}
+				},
+				"Sim, por favor." : {
+					click : true,
+					className : "primary",
+					focus : true
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep !== "" && exitEsc === true) {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> É isso aí!",
+			description : "Vamos continuar o tour a partir do ponto em que paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else if (nextStep === "" || nextStep === "fstep"){
 	$.guider({
 		name: "fstep",
     	next: "fstep2",
     	title: "Parabéns! O plano de aula 1 foi desbloqueado",
     	description: "Confira a seguir as nossas considerações finais.",
     	alignButtons: "right",
-    	onShow: function() {setCookieMinutes (cStepTour, "fstep", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
+    	onShow: function() {setCookieDays (cStepTour, "fstep", 1); setCookieDays (cFunctionTour, "alternativeFinalStepTour", 1);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -918,7 +1251,8 @@ function alternativeFinalStepTour ( ) {
     		}
     	}
     	            
-    	}).show();            
+    	}).show();  
+	}
     	    
     $("#note").guider({
     	name: "fstep2",
@@ -927,7 +1261,7 @@ function alternativeFinalStepTour ( ) {
     	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
-    	onShow: function() {setCookieMinutes (cStepTour, "fstep2", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
+    	onShow: function() {setCookieDays (cStepTour, "fstep2", 1); setCookieDays (cFunctionTour, "alternativeFinalStepTour", 1);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -944,7 +1278,7 @@ function alternativeFinalStepTour ( ) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "fstep3", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "fstep3", 1); setCookieDays (cFunctionTour, "alternativeFinalStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -961,7 +1295,7 @@ function alternativeFinalStepTour ( ) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão.",
     			position: "bottom",
     			alignButtons: "right",
-    			onShow: function() {setCookieMinutes (cStepTour, "fstep4", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
+    			onShow: function() {setCookieDays (cStepTour, "fstep4", 1); setCookieDays (cFunctionTour, "alternativeFinalStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -979,7 +1313,7 @@ function alternativeFinalStepTour ( ) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
-    	    	onShow: function() {setCookieMinutes (cStepTour, "fstep5", 5); setCookieMinutes (cFunctionTour, "alternativeFinalStepTour", 5);},
+    	    	onShow: function() {setCookieDays (cStepTour, "fstep5", 1); setCookieDays (cFunctionTour, "alternativeFinalStepTour", 1);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -999,16 +1333,14 @@ function alternativeFinalStepTour ( ) {
     			buttons: {
     				Voltar: true,
     				Finalizar: {
-    	                click: true,
+    					click: function() {exit();},
     	                className: "primary"
     	            }
     			}
     		});
-    	    
-    	    exit();
 }
 
-// function openTour ( ) {
+// function openTour (nextStep, exitEsc) {
 // isTourInterativo = true;
 //    
 // if (topicIsOpen) {
@@ -1024,7 +1356,7 @@ function alternativeFinalStepTour ( ) {
 //            
 
 //
-//function openTourSlim ( ) {
+//function openTourSlim (nextStep, exitEsc) {
 //	isTourInterativo = true;
 //	
 //	$.guider({
@@ -1126,7 +1458,7 @@ function alternativeFinalStepTour ( ) {
 //    isTourInterativo = false;
 //}
 //
-//function openTourWithTopicOpen ( ) {
+//function openTourWithTopicOpen (nextStep, exitEsc) {
 //	isTourInterativo = true;
 //	
 //	$.guider({
@@ -1158,7 +1490,7 @@ function alternativeFinalStepTour ( ) {
 //            name: "secondExit",
 //            next: "thirdExit",
 //	title: 'Teclas utilizadas',
-//            description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+//            description: 'Caso tenha dúvidas referentes às teclas utilizadas no PAT2Math, clique neste botão para conferir a lista completa.',
 //            closable: true,
 //            position: "left",
 //            alignButtons: "right",
@@ -1284,7 +1616,7 @@ function alternativeFinalStepTour ( ) {
 //	$("#equationTour").guider({
 //		name: "seventh",
 //		title: "Clique nesta equação",
-//		description: "Vamos resolver juntos passo-a-passo para você entender as principais funcionalidades do Pat2Math.",
+//		description: "Vamos resolver juntos passo-a-passo para você entender as principais funcionalidades do PAT2Math.",
 //		position: "right",
 //		alignButtons: "right",
 //		closable: true, 
@@ -1298,7 +1630,7 @@ function alternativeFinalStepTour ( ) {
 //	});
 //}
 //
-//function openTourSlim ( ) {
+//function openTourSlim (nextStep, exitEsc) {
 //	isTourInterativo = true;
 //	
 //	$.guider({
@@ -1400,7 +1732,7 @@ function alternativeFinalStepTour ( ) {
 //    isTourInterativo = false;
 //}
 //
-//function openTourSlimAlternative ( ) {
+//function openTourSlimAlternative (nextStep, exitEsc) {
 //	isTourInterativo = true;
 //	
 //	$.guider({
@@ -1548,7 +1880,7 @@ function alternativeFinalStepTour ( ) {
 //    
 //    isTourInterativo = false;
 //}
-//function openTourSlimWithTopicOpen ( ) {
+//function openTourSlimWithTopicOpen (nextStep, exitEsc) {
 //	isTourInterativo = true;
 //	
 //	$.guider({
@@ -1580,7 +1912,7 @@ function alternativeFinalStepTour ( ) {
 //            name: "secondExit",
 //            next: "thirdExit",
 //	title: 'Teclas utilizadas',
-//            description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+//            description: 'Caso tenha dúvidas referentes às teclas utilizadas no PAT2Math, clique neste botão para conferir a lista completa.',
 //            closable: true,
 //            position: "left",
 //            alignButtons: "right",
@@ -1802,7 +2134,7 @@ function alternativeFinalStepTour ( ) {
 //    
 //    isTourInterativo = false;
 //}
-//function exitTour ( ) {
+//function exitTour (nextStep, exitEsc) {
 //	$.guider({
 //		title: "Você pressionou esc e saiu do tour.",
 //                next: "secondExit",
@@ -1821,7 +2153,7 @@ function alternativeFinalStepTour ( ) {
 //                name: "secondExit",
 //                next: "thirdExit",
 //		title: 'Teclas utilizadas',
-//                description: 'Caso tenha dúvidas referentes às teclas utilizadas no Pat2Math, clique neste botão para conferir a lista completa.',
+//                description: 'Caso tenha dúvidas referentes às teclas utilizadas no PAT2Math, clique neste botão para conferir a lista completa.',
 //                closable: true,
 //                position: "left",
 //                alignButtons: "right",
@@ -1852,7 +2184,7 @@ function alternativeFinalStepTour ( ) {
 //            isTourInterativo = false; 
 //}
 //
-//function checkEquationTour ( ) {
+//function checkEquationTour (nextStep, exitEsc) {
 //	var id = 201;
 //	
 //	$.ajax({
@@ -2039,7 +2371,7 @@ function alternativeFinalStepTour ( ) {
 //	if (equation === "x=10") {
 //		equationTourIsResolved = true;
 //        $.guider({
-//title: "Parabéns! Você já está pronto para utilizar o Pat2Math!",
+//title: "Parabéns! Você já está pronto para utilizar o PAT2Math!",
 //            next: "second",
 //description: "Confira a seguir as nossas considerações finais:",
 //            closable: true,
@@ -2090,7 +2422,7 @@ function alternativeFinalStepTour ( ) {
 //
 
 //
-//function clickEquation ( ) {	
+//function clickEquation (nextStep, exitEsc) {	
 //	if (equationTourIsResolved)
 //		openTourSlim();
 //	

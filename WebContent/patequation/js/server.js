@@ -200,7 +200,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     			finalStepTour();
     	                	
     	                	else
-    	                		alternativeFinalStepTour(); //se o usuário informou a resposta diretamente no primeiro passo da equação
+    	                		alternativeFinalStepTour("", false); //se o usuário informou a resposta diretamente no primeiro passo da equação
                     	}               	    
                     	
                    
@@ -396,7 +396,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         
                         if (isTourInterativo && idEquation === 201) {
                         	if (selectedEquation.steps.length === 1)
-                        	    firstStepTour();
+                        	    firstStepTour("", false);
 //                        	if (isFirstStepTour) {
 //                        		isFirstStepTour = false;
 //                                var pos = getCookie  ("pos");

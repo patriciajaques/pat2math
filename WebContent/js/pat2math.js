@@ -98,13 +98,19 @@ function loadTasks(id) {
 //		checkEquationTour();
 		
 		if (isTourInterativo && id === 9) 
-			clickPlan();
+			clickPlan("", false);
+		
+		var cookieName = "currentPlan" + currentPos;
+		setCookieDays (cookieName, id, 1);
 	} else {
 		if (isTourInterativo && id === 9) 		
-			clickPlan();
+			clickPlan("", false);
 		
-		else
+		else {
 		    $("#tasks"+id).slideUp(700);
+		    var cookieName = "currentPlan" + currentPos;
+			setCookieDays (cookieName, "", 0);
+		}
 	}
 }
 
@@ -131,13 +137,13 @@ function loadExercise(id) {
 					blockMenu = false;
 						
 					if (equation.isComplete === true)
-						clickEquationSlim();
+						clickEquationSlim("", false);
 					
 					else if (equation.steps.length !== 0)
-						clickEquationPartiallyResolved();
+						clickEquationPartiallyResolved("", false);
 					
 					else
-						clickEquation();
+						clickEquation("", false);
 					
 //					else {
 //						var pos = getCookie  ("pos");
@@ -647,6 +653,7 @@ sortedIds[197] = new EquationId (197, 132, 10);
 sortedIds[198] = new EquationId (198, 133, 10);
 sortedIds[199] = new EquationId (199, 134, 10);
 sortedIds[200] = new EquationId (200, 135, 10);
+sortedIds[201] = new EquationId (201, 0, 9);
 sortedIds[202] = new EquationId (202, 136, 11);
 sortedIds[203] = new EquationId (203, 137, 11);
 sortedIds[204] = new EquationId (204, 138, 11);

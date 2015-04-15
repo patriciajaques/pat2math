@@ -22,6 +22,8 @@ var concluded = 0;
 var isTourInterativo = false;
 var blockMenu = false;
 var currentPos = getCookie ("pos");
+var cStepTour = "stepTour" + currentPos;
+var cFunctionTour = "functionTour" + currentPos;
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
@@ -372,17 +374,15 @@ $(document).ready(function() {
     if (!isPopup ( ))
 	    location.href = "/pat2math/audio";
     
-	var cookieName = "currentEquation" + currentPos;
+    var cookieName = "currentEquation" + currentPos;
 	var currentEquationString = getCookie (cookieName);
 	
-	if (currentEquationString !== "" && currentEquationString !== "201") {//201 é o id da equação especial do tour
-		var currentEquation = parseInt (currentEquationString);
-		var plan = sortedIds[currentEquation].plan;
-		loadTasks (plan);
-	    loadExercise (currentEquation);
-	    $("#topics").fadeOut();
-    	$("#topicsAux").show();
-	} 
+	if (currentEquationString !== "") {			
+    	var currentEquation = parseInt (currentEquationString);
+        loadExercise (currentEquation);
+        $("#topics").fadeOut();
+	    $("#topicsAux").show();
+	}
 	
 	else {
 		selectedEquation = null;
@@ -390,18 +390,19 @@ $(document).ready(function() {
     	$("#topicsAux").hide();
 	}
 	
-	cookieName = "tour" + currentPos;
+	cookieName = "currentPlan" + currentPos;
+	var currentPlanString = getCookie (cookieName);
+	
+	if (currentPlanString !== "") {
+		var currentPlan = parseInt (currentPlanString);
+		loadTasks (currentPlan);
+	} 
+	
+	cookieName = "openTour" + currentPos;
 	var startTour = getCookie (cookieName);
 	
 	if (startTour === "") {
-		var cookieName = "tourIsInProgress" + currentPos;
-		var continueTour = getCookie (cookieName);
-		
-		if (continueTour !== "true")
-		    setTimeout ('openTour()', 1000);
-		
-		else
-			setTimeout ('continueTour()', 1000);
+		setTimeout (function() {checkTour(false);}, 1000);
 	}
 
     // $("#hintText").hide();
@@ -1274,15 +1275,6 @@ function checkEquation() {
   } else if (passoAnterior.indexOf("±") !== -1 && equation.indexOf("±") === -1) {
       selectedEquation.initialEquation = passoAnterior;
       selectedEquation.twoAnswers = true;
-  }
-  
-  if (isTourInterativo && selectedEquation.equation === "x+15=45-2x") {
-	  if (equation === "x=10") {
-		  finalStepTour();   	  
-	  } else if (isFirstStepWithTour) {
-		  isFirstStepWithTour = false;
-		  firstStepTour();
-	  }
   }
   
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
