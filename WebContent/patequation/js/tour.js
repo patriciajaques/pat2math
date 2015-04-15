@@ -1,8 +1,3 @@
-/* Quando o tour for retomado após atualizar a página, se for um dos passos iniciais antes da explicação do funcionamento do menu, manter
- * o menu fixo, assim como é na primeira mensagem do tour.
- * ATIVAR O COOKIE QUE LEMBRA DA EQUAÇÃO QUE ESTAVA ABERTA NA EQUAÇÃO ESPECIAL DO TOUR (a princípio já está ativo)
- */
-
 function openTour (nextStep, exitEsc) {	
 //	var cookieName = "tour" + currentPos;
 //	setCookieDays (cookieName, "", 0);
