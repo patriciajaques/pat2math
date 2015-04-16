@@ -1,7 +1,5 @@
 <script>
-$(document).ready(function() {	
 checkBrowser();
-});
 
 function checkBrowser ( ) {
 	var browser = navigator.userAgent.toLowerCase();

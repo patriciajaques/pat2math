@@ -512,6 +512,23 @@ textarea:focus {
 	z-index: 99999;
 }
 
+#helpCookiesPopups-box {
+	width: 606px;
+	height: 440px;
+	text-align: center;
+	display: none;
+	position: fixed; 
+    margin: auto; 
+    top: 0; 
+    right: 0; 
+    bottom: 0; 
+    left: 0;
+	background: #fff;
+	box-shadow: 0 0 5px #bbb;
+	border-radius: 15px;
+	z-index: 99999;
+}
+
 /* #easter-egg-loupe-box { */
 /* 	width: 524px; */
 /* 	height: 502px; */
