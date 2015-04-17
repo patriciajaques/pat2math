@@ -70,7 +70,6 @@ function openTour (nextStep, exitEsc) {
 		position: "right",
 		alignButtons: "center",
         overlay: "dark",
-        onShow: function() {setCookieDays (cStepTour, "start3", 1); setCookieDays (cFunctionTour, "openTour", 1);},
 		buttons: {
 			"Vamos começar!": {
 				click: true,
@@ -86,6 +85,7 @@ function openTour (nextStep, exitEsc) {
 		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
 		position: "right",
 		alignButtons: "right",
+		onShow: function() {setCookieDays (cStepTour, "start3", 1); setCookieDays (cFunctionTour, "openTour", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
