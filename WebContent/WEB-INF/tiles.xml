@@ -47,12 +47,6 @@
 		<put-attribute name="footer" value="/WEB-INF/views/playaudio/footer.jsp"/>
 	</definition>
 	
-	<definition name="reportbug" extends="student.page">
-		<put-attribute name="body" value="/WEB-INF/views/reportbug/teste-email.jsp"/>
-		<put-attribute name="header" value="/WEB-INF/views/reportbug/header.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/reportbug/javamail-anexo.jsp"/>
-	</definition>
-	
 	<definition name="user.login" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/login/body.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/login/header.jsp"/>

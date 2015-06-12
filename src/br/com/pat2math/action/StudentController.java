@@ -27,7 +27,6 @@ import br.com.pat2math.domainBase.Plan;
 import br.com.pat2math.domainBase.SetOfTasks;
 import br.com.pat2math.domainBase.Task;
 import br.com.pat2math.domainBase.Topic;
-import br.com.pat2math.formBeans.ReportBugForm;
 import br.com.pat2math.formBeans.StudentForm;
 import br.com.pat2math.repository.AllStudents;
 import br.com.pat2math.repository.AllUsers;
@@ -88,18 +87,6 @@ public class StudentController {
 		emailService.sendConfirmationAccount(student, confirmation, "confirme sua conta");
 		
 		model.addAttribute("user", student);
-		return "redirect:signUpSuccess";
-	}
-	
-	@RequestMapping(value="report", method = RequestMethod.POST)
-	public String report(@ModelAttribute("reportBug")
-		ReportBugForm form, BindingResult result, Model model, HttpSession session) 
-				throws MessagingException {
-
-		Student student = new CurrentUser(session).student();
-		emailService.sendReportBug(student, form.getDescricaoBug());
-		
-	
 		return "redirect:signUpSuccess";
 	}
 	

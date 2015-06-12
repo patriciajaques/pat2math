@@ -44,19 +44,6 @@ public class MailSenderService {
 	     mailSender.send(mm);
 	 }
 	 
-	 public void sendReportBug (User to, String text) throws MessagingException {
-		 MimeMessage mm = mailSender.createMimeMessage();
-		 MimeMessageHelper mh = new MimeMessageHelper(mm,"UTF-8");
-		 Map<String, Object> model = new HashMap<String, Object>();
-		 model.put("user", to);
-		 text = text.replaceAll("\n", "<br>");
-		 mh.setFrom(to.getEmail());
-		 mh.setTo("otavioazevedo@live.com");
-		 mh.setSubject("Reporte de Bug - " + to.getFirstName() + " " + to.getLastName());
-	     mh.setText(text, true);
-	     mailSender.send(mm);
-	 }
-	 
 	 @SuppressWarnings("deprecation")
 	 @Async
 	 public void recoverPassword(User to, PasswordRecovery passwordRecovery) throws MessagingException {
