@@ -1,5 +1,7 @@
 var selectedSheet = "#paper-1";
 var selectedEquation;
+//var currentStepsFirstEquation;
+var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
 var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
@@ -19,11 +21,16 @@ var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
+var stepWE;
+var enableWorkedExample = false;
+var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
 var currentPos = getCookie ("pos");
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
+
+
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
@@ -47,6 +54,79 @@ var cFunctionTour = "functionTour" + currentPos;
 //	alert (string);
 //}
 
+
+
+//function workedExample ( ) {
+//	requestResolution ( );
+//	
+//	var passoAnterior = selectedEquation.lastStep;
+//	  
+//	if (passoAnterior !== null) {
+//	    passoAnterior = passoAnterior.step;         
+//	} else {
+//	    passoAnterior = selectedEquation.initialEquation;       	  
+//	}
+//	  
+//	var cookieName = "currentStepWE" + currentPos;   
+//    var numero = getCookie (cookieName);
+//    var n;
+//	
+//	if (numero === "") 
+//		n = 1;
+//	
+//	else
+//	    n = parseInt (numero);
+//	
+//	var passoRegra = currentStepsFirstEquation[currentStepsFirstEquation.length-n].split (";");
+//	var passo = passoRegra[1];
+//	
+//	if (n === currentStepsFirstEquation.length) {
+//		isWorkedExample = false;      
+//		setCookieDays (cookieName, "", 0);
+//    	cookieName = "isWorkedExample" + currentPos;
+//    	setCookieDays (cookieName, "", 0);
+//	}
+//	
+//	else {
+//	    numero = "" + (n+1);
+//	    setCookieDays (cookieName, numero, 1);
+//	}
+//	
+//	requestServer('e', passoAnterior, passo, "OG", $(selectedSheet + " #button"));
+//	
+//	window.location.reload();
+	
+//	for (var i = 0; i < currentStepsFirstEquation.length; i++) {
+//		var temp = currentStepsFirstEquation[i].split (";");
+//		passos[i] = temp[1];
+//	}
+//	
+//	
+//	var passo = passos[passos.length-n];
+	
+//	var equation = selectedEquation.lastStep;
+//	  
+//    if (equation !== null) 
+//	    equation = equation.step; 
+//	    
+//    else
+//    	equation = selectedEquation.initialEquation;   	
+//    
+//    var passo = getStep (equation);
+//    
+//    return passo;
+//}
+
+function insertLines ( ) {
+	var lines = document.getElementById('lines').innerHTML;
+	var newLines = lines + '<div class="hLine"></div> <div class="hLine"></div>';
+	document.getElementById('lines').innerHTML = newLines;
+	var heightString = $('#paper-1').css('height');
+	var height = heightString.split ("px");
+	height = parseInt (height[0]);
+	height += 124;
+	document.getElementById('paper-1').style.height = height + 'px';
+}
 
 function isPopup() {         
     if (window.opener && !(window.location.href == window.opener.location.href))
@@ -113,6 +193,7 @@ function helpPage ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:246px; left:1px;'> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
+	$("#topics").fadeOut();
 //	try {
 //    $.guider({
 //	description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:220px; left:452px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
@@ -123,9 +204,39 @@ function helpPage ( ) {
 //    
 //	} catch (e) {
 //		window.location.reload();
-//	}
-    
-    
+//	} 
+}
+
+function reportBug ( ) {
+	//Criar uma box específica para o upload de imagens, a qual é acessada se o usuário clicar no ícone ou botão "fazer upload de imagem", ver qual a melhor posição
+	//para colocar esse ícone/botão. 
+	
+	$("#reportBug-box").html ('<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="690" frameborder="0" marginheight="0" marginwidth="0" SCROLLING="NO">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>');
+	$("#mask").fadeIn(700);
+	$("#reportBug-box").fadeIn(700);
+	$("#topics").fadeOut();
+}
+
+function uploadImage ( ) {
+	$("#uploadImage-box").html ('<iframe src="http://uploaddeimagens.com.br/" width="1000" height="420" SCROLLING="NO"></iframe> <div style="position:absolute; top:380px; left:930px;"> <a href=# onclick=closeWindowUploadImage()><img src=/pat2math/patequation/img/exit_text.png></img></a> <div style="position:absolute; top:-373px; left:-208px;"> <img src=/pat2math/patequation/img/fundo_branco.png></img>');
+	$("#mask").fadeIn(700);
+	$("#uploadImage-box").fadeIn(700);
+	//http://www.brimg.com/
+}
+
+function closeWindowReportBug ( ) {
+	$("#mask").fadeOut(700);
+	$("#reportBug-box").fadeOut(700);
+	
+	if (selectedEquation !== null)
+		$("#topicsAux").show();
+	
+	else
+	    $("#topics").fadeIn();
+}
+
+function closeWindowUploadImage ( ) {
+	$("#uploadImage-box").fadeOut(700);
 }
 function p1 ( ) {
 	$.guider({
@@ -139,9 +250,12 @@ function p1 ( ) {
 function closeWindow ( ) {
 	$("#mask").fadeOut(700);
 	$("#help-box").fadeOut(700);
-//    $.guider({
-//    }).hideAll();
 	
+	if (selectedEquation !== null)
+		$("#topicsAux").show();
+	
+	else
+	    $("#topics").fadeIn();	
 }
 
 
@@ -219,6 +333,7 @@ $(document).ready(function() {
 //		$(this).addClass("hide-menu");
 //	});
 	
+	
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
 	});
@@ -237,7 +352,12 @@ $(document).ready(function() {
             }
     );
     
-
+    var cookieName = "isWorkedExample" + currentPos;
+	
+    if (enableWorkedExample && getCookie (cookieName) !== "") {
+		isWorkedExample = true;
+    }
+    
     $(document).keyup(function(event) {
         // key 13 = enter
         var key = event.which;
@@ -367,14 +487,16 @@ $(document).ready(function() {
     });
     
     $("#topicsAux").mouseover (function() {
-    	$("#topics").fadeIn();
-    	$("#topicsAux").hide();
+    	if (isWorkedExample === false || selectedEquation.isComplete === true) {
+    	    $("#topics").fadeIn();
+    	    $("#topicsAux").hide();
+    	}
     });
     
     if (!isPopup ( ))
 	    location.href = "/pat2math/audio";
     
-    var cookieName = "currentEquation" + currentPos;
+    cookieName = "currentEquation" + currentPos;
 	var currentEquationString = getCookie (cookieName);
 	
 	if (currentEquationString !== "") {			
@@ -404,6 +526,7 @@ $(document).ready(function() {
 	if (startTour === "") {
 		setTimeout (function() {checkTour(false);}, 1000);
 	}
+	
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
@@ -1189,7 +1312,7 @@ function newEquation() {
 //	$("#easter-egg-loupe-box").fadeOut(700);
 //	
 //}
-function checkEquation() { 
+function checkEquation() { 	
 //	setTimeout ('resetNumClicks()', 3000);
 //	
 //	if (numClicks === undefined)
@@ -1224,6 +1347,11 @@ function checkEquation() {
   
   if (equation === "")
 	  equation = " ";
+  
+//  if (isWorkedExample) 
+//	  equation = workedExample ( );
+  
+  
   
 //  if (isTourInterativo) {
 //      if (cont === 0) {
@@ -1278,10 +1406,12 @@ function checkEquation() {
   }
   
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
+
   //document.getElementById('button').style.display = 'inline';
 }
 }
 }
+
 
 function identifyABC(step) {
     var a, b, c;

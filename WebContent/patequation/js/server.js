@@ -222,6 +222,12 @@ function requestServer (type, last, next, typeOperation, element) {
                     	
                     	else
                     		nextLine.html("<div class='final'></div>");
+                    	
+//                    	var cookieName = "numLines" + currentPos + idEquation; 			           			
+//            			setCookieDays (cookieName, "", 0);
+                    	
+                    	setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
+                    	     	
                     } else {
                         isDelta = true;
                         step.type = DELTA_SOLUTION;
@@ -314,11 +320,30 @@ function requestServer (type, last, next, typeOperation, element) {
 //                alert("Resposta Correta! =D");
                 }
                 else if (split[1] === "true" && split[2] === "true") {
-
+//                	var cookieName = "numLines" + currentPos + idEquation; 			
+//        			var numLinesString = getCookie (cookieName);
+//        			var numLines = parseInt (numLinesString);
+//        			
+//        			if (next.indexOf ("/") !== -1)
+//        				numLines--;
+//        			
+//        			else
+//        				numLines -= 2;
+//        			
+//        			if (numLines <= 1) {
+//        				insertLines();
+//        				numLines += 4;
+//        			}
+//        			
+//        			setCookieDays (cookieName, numLines, 1);
+                	
                     var step = new Step(next, NORMAL_STEP);
                     selectedEquation.lastStep = step;
                     selectedEquation.steps.push(step);
                     selectedEquation.currentStep = "";
+                    
+                    if (selectedEquation.steps.length >= 10)
+                    	insertLines();
 
 //                    if (next.indexOf("^2") !== -1) {
 //                        selectedEquation.twoAnswers = true;
@@ -471,35 +496,39 @@ function requestServer (type, last, next, typeOperation, element) {
                 }
             }
         }});
+    
+    if (isWorkedExample)
+        window.location.reload();
 }
 
 function showNextButton (nextLine) {
-	 setTimeout(function(){ nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='nextEquationClick();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
+	 setTimeout(function(){ nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='loadingShow(); nextEquationClick(); loadingHide();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
 	
 }
 
-function testResolution (){
-	requestResolutionTest("x+2=2");
+function getResolution (equation){
+	requestResolution(equation);
 }
 
-function testStep(){
-	requestStepTest("x+2=2");
+function getStep(){
+	requestStep(equation);
 }
 
-function requestResolutionTest (equation){
+function requestResolution ( ){
 	 $.ajax({url: "/pat2math/getSteps",
-	        data: {"lastStep":equation},
+	        data: {"lastStep":selectedEquation.equation},
 	        success: function(data) {
-	        	console.log(data);
+	        	currentStepsFirstEquation = data.steps;
 	        }
 	 });
 }
 
-function requestStepTest(equation){
+function requestStep(equation){
 	$.ajax({url: "/pat2math/getOneStep",
 			data: {"lastStep": equation},
 			success: function(data){
-				console.log(data);
+				var temp = data.split (";");
+				stepWE = temp[1];
 			}
 	});
 }

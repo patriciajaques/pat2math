@@ -5,16 +5,89 @@ var appContext = "/pat2math/";
 //                      //quando clicar no botão da próxima equação.
 //var pos = -1; //Posição da equação atual no array ordenado (currentIds2)
 
+//OBS: o método funciona se não houverem frações dentro de frações, estudar uma forma de corrigir neste caso. 
+//(x+2*(2+x))/(2+5)=10
 function calculateLength (equation) {
 	var length = equation.length;
-	var s = equation.split ("/");
+	//Posição atual do símbolo de fração
+	var posFrac = equation.indexOf ("/");
+	//Array com todas as posições do símbolo de fração
+	var posFracArray = new Array ( );
 	
-	if (s.length > 1) {
-		var pos = equation.indexOf(")/")
+	//posFrac é diferente de -1 se houverem uma ou mais frações na equação
+	while (posFrac !== -1) {
+		posFracArray[posFracArray.length] = posFrac;
+		posFrac = equation.indexOf ("/", posFrac + 1);
 	}
 	
+	//Se o array de posições tiver pelo menos um registro, existe uma ou mais frações na equação
+	if (posFracArray.length > 0) {
+		//Converte a String em um array de caracteres
+		var equationArray = equation.split ("");
+		//Na primeira execução, first é o início da equação e last é a posição do primeiro símbolo de fração
+		var first = 0, last = posFracArray[0];
+		//posArray recebe 1 pois a posição 0 já foi utilizada acima
+		var posArray = 1;
+		//O próximo laço while deverá ser executado enquanto o último símbolo de fração da equação não foi verificado
+		var continua = last !== undefined;
+		
+		while (continua) {
+			//Controlam o balanceamento de parênteses abertos e fechados
+			var cont1 = 0, cont2 = 0;
+			//length1 é o tamanho do numerador e length2 do denominador da fração
+			var length1, length2;
+			//O primeiro for começará de trás para frente, a partir do primeiro caracter que não seja o símbolo de fração nem o parênteses que fecha o numerador
+			var i = last - 2;
+			//Para os parênteses estarem balanceados, cont2 deve ser o número sucessor a cont1
+			for (; cont1 !== cont2 + 1; i--) {
+				if (equationArray[i] === "(")
+					cont1++;
+				//Se este parêntese for encontrado, é que haviam parênteses internos no numerador da fração, como por exemplo 5*(x+2)
+				else if (equationArray[i] === ")")
+					cont2++;
+			}
+			
+			length1 = last - i + 1; //seria -1+2, onde 2 são os parênteses que abrem e fecham a fração, os quais não deverão ser contados no tamanho final
+			//O -1 é porque, antes de sair do laço for, ou seja, quando a condição for falsa, i é decrementado mais uma vez
+			
+			first = last + 1;
+			last = posFracArray[posArray];
+			
+			if (last !== undefined)
+				posArray++;
+			//Se last for undefined, é que chegou ao último símbolo de fração, que está na última posição do array de caracteres
+			else {
+				last = equation.length - 1;
+				continua = false;
+			}
+			//No segundo for ocorre o processo inverso em relação ao primeiro
+			cont1 = 0; cont2 = 0; i = first + 1;
+			
+			for (; cont1 !== cont2 + 1; i++) {
+				if (equationArray[i] === ")")
+					cont1++;
+				//Se este parêntese for encontrado, é que haviam parênteses internos no denominador da fração, como por exemplo 5*(x+2)
+				else if (equationArray[i] === "(")
+					cont2++;
+			}
+			
+			length2 = i - first + 2; //2 são os parênteses que abrem e fecham a fração
+			
+			//Compara qual dos tamanhos é o menor, que deverá ser subtraído do tamanho total da equação (o que conta é o termo com mais caracteres)
+			if (length2 < length1)
+				length -= length2;
+			
+			else
+				length -= length1;
+		}
+		
+	}
+	
+	length -= posFracArray.length; //Referentes aos símbolos de divisão "/"
+
 	return length;
 }
+
 function enableContent(id) {
 	$.post(
 		appContext + "content/enable",
@@ -37,9 +110,13 @@ function loadTasks(id) {
 			success:
 				function(data) {
 					$("#tasks" + id).html(data);
-					$("#tasks" + id).slideDown(700);
-					
+					$("#tasks" + id).slideDown(700);				
 					tasksRemaining=$(".task").length;
+					
+					if (id !== 9) {
+					    var firstEquation = firstEquations[id];
+					    getResolution (firstEquation);
+					}
 					
 					$(".task").each(
 						function() {
@@ -112,10 +189,12 @@ function loadTasks(id) {
 			setCookieDays (cookieName, "", 0);
 		}
 	}
+	
 }
 
 function loadExercise(id) {	
 //	setCurrentEquation (id);
+	blockMenu = false;
 	loadingShow();
 	$.ajax({
 		type: 'GET',
@@ -124,14 +203,22 @@ function loadExercise(id) {
 		dataType: 'json',
 		success: function(data) {
 			if(data != null) {
+				//Verificar neste momento se a primeira equação já está resolvida e atualizar no array de equações (atualizar nos cookies e localmente).
+				//Para avançar às próximas equações, a primeira deve estar resolvida obrigatoriamente. Se o usuário tentar acessar outra equação do mesmo plano,
+				//será redirecionado mesmo assim para a primeira equação.
 				equation = new Equation(data.equation, 100);
 				equation.id = data.id;
 				for(var j = 0; j < data.steps.length; j++) {
 					equation.steps[j] = new Step(data.steps[j], 0);
 				}
 					
-				if(data.performed) 
+				idEquation=id;
+				
+				if(data.performed) {
 					equation.isComplete = true;
+					isWorkedExample = false;
+					setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
+				}
 				
 				if (isTourInterativo && id === 201) {
 					blockMenu = false;
@@ -161,10 +248,36 @@ function loadExercise(id) {
 				newEquations[0] = equation;
 			}
 			reloadPaper(1);
-			idEquation=id;
+			
 			
 			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
+			cookieName = "isWorkedExample" + currentPos;
+			
+			if (enableWorkedExample) {
+			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
+        	        setCookieDays (cookieName, "true", 1);   
+        	        isWorkedExample = true;
+        	    
+        	        if (selectedEquation.lastStep !== null)
+        	    	    requestStep (selectedEquation.lastStep.step);
+        	    
+        	        else
+        	            requestStep (selectedEquation.equation);
+		    	}
+			
+			    else {
+				setCookieDays (cookieName, "", 0); 
+				isWorkedExample = false;
+			    }
+			}
+			
+//			cookieName = "numLines" + currentPos + idEquation;
+//			
+//			if (getCookie (cookieName) === "")
+//				setCookieDays (cookieName, "20", 1);
+
+			
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação		
 			
 			
@@ -186,10 +299,43 @@ function loadExercise(id) {
 	loadingHide();	
 }
 
+function loadNextExercise(id) {	
+	blockMenu = false;
+	$.ajax({
+		type: 'GET',
+		url: appContext + "student/loadExercise",
+		data: {"exerciseId" : id},
+		dataType: 'json',
+		success: function(data) {
+			if(data != null) {
+				equation = new Equation(data.equation, 100);
+				equation.id = data.id;
+				for(var j = 0; j < data.steps.length; j++) {
+					equation.steps[j] = new Step(data.steps[j], 0);
+				}
+					
+				idEquation=id;
+				
+				if(data.performed) {
+					nextEquationClick();
+					return;				
+				}				
+				
+				newEquations[0] = equation;
+			}
+			reloadPaper(1);
+					
+			var cookieName = "currentEquation" + currentPos;
+			setCookieDays (cookieName, idEquation, 1);
+			cookieName = "isWorkedExample" + currentPos;
+		}
+	});
+}
+
 function loadExerciseTest(id) {
 //	if (isTourInterativo && id === 3) 
 //		clickEquation();
-	
+	blockMenu = false;
 	loadingShow();
 	$.ajax({
 		type: 'GET',
@@ -207,6 +353,8 @@ function loadExerciseTest(id) {
 				
 				if(data[2] == "1") {
 					equation.isComplete = true;
+					isWorkedExample = false;
+					setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				newEquations[0] = equation;
 			}
@@ -215,6 +363,21 @@ function loadExerciseTest(id) {
 			
 			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
+            cookieName = "isWorkedExample" + currentPos;
+			
+            if (enableWorkedExample) {
+			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
+        	        setCookieDays (cookieName, "true", 1);   
+        	        isWorkedExample = true;
+        	        requestStep (selectedEquation.equation);
+			    }
+			
+			    else {
+				    setCookieDays (cookieName, "", 0); 
+				    isWorkedExample = false;
+			    }
+            }
+			
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
 			
 			
@@ -308,196 +471,15 @@ function nextEquationClick ( ) {
 	
 	if (idEquation < 29 || (idEquation > 49 && idEquation < 144) || idEquation === 160 || idEquation === 180) {
 		var newPos = sortedIds[idEquation].pos + 1;
-		loadExercise (ids[newPos]);
+		loadNextExercise (ids[newPos]);
 		loadEquation (0);
 		//pos++; //Avança uma posição do array ordenado
 	}
 	
 	else {
-		loadExercise (idEquation + 1);
+		loadNextExercise (idEquation + 1);
 		loadEquation (0);
 	}
-	
-	
-	
-//	stop = false; //Como o usuário clicou no botão da próxima equação, ele está resolvendo-as sequencialmente.
-	/* Verifica se:
-	 * É a primeira vez que o usuário clica no botão ou
-	 * O usuário está resolvendo as equações de forma sequencial utilizando o botão (caso ele pulou para outra equação no mesmo plano, a variável pos deverá ser atualizada);
-	 * O usuário está no mesmo plano de aula da equação anterior.
-	 */
-//	if (stop || binarySearch (currentIds2, idEquation) === -1) {
-//		//Verifica se a equação está no Plano de Aula 1 (ids0)
-//		pos = binarySearch (ids0, idEquation);
-//		
-//		//Caso a pesquisa retorne -1, é que não encontrou a equação atual. Assim, continua verificando todos os planos até encontrar o da equação atual.
-//		if (pos === -1) {
-//			pos = binarySearch (ids1, idEquation);
-//			
-//			if (pos === -1) {
-//				pos = binarySearch (ids2, idEquation);
-//				
-//				if (pos === -1) {
-//					pos = binarySearch (ids3, idEquation);
-//					
-//					if (pos === -1) {
-//						pos = binarySearch (ids4, idEquation);
-//						
-//						if (pos === -1) {
-//							pos = binarySearch (ids5, idEquation);
-//							
-//							if (pos === -1) {
-//								pos = binarySearch (ids6, idEquation);
-//								
-//								if (pos === -1) {
-//									pos = binarySearch (ids7, idEquation);
-//									
-//									if (pos === -1) {
-//										pos = binarySearch (ids8, idEquation);
-//
-//										currentIds = ids08;
-//										currentIds2 = ids8;
-//									}
-//									else {
-//									    currentIds = ids07;
-//									    currentIds2 = ids7;
-//									}
-//								}
-//								else {
-//								    currentIds = ids06;
-//								    currentIds2 = ids6;
-//								}
-//							}
-//							else {
-//							    currentIds = ids05;
-//							    currentIds2 = ids5;
-//							}						    
-//						}
-//						else {
-//						    currentIds = ids04;
-//						    currentIds2 = ids4;
-//						}
-//					}
-//					else {
-//					    currentIds = ids03;
-//					    currentIds2 = ids3;
-//					}
-//				}
-//				else {
-//				    currentIds = ids02;
-//				    currentIds2 = ids2;
-//				}
-//			}
-//			else {
-//			    currentIds = ids01;
-//			    currentIds2 = ids1;
-//			}
-//		}
-//		
-//		else {
-//		    currentIds = ids00;	
-//		    currentIds2 = ids0;
-//		}
-//	}
-	
-//	var pos = binarySearch (sortedIds0, idEquation);
-//	
-//	if (pos === -1) {
-//		pos = binarySearch (sortedIds1, idEquation);
-//		
-//		if (pos === -1) {
-//			pos = binarySearch (sortedIds2, idEquation);
-//			
-//			if (pos === -1) {
-//				pos = binarySearch (sortedIds3, idEquation);
-//				
-//				if (pos === -1) {
-//					pos = binarySearch (sortedIds4, idEquation);
-//					
-//					if (pos === -1) {
-//						pos = binarySearch (sortedIds5, idEquation);
-//						
-//						if (pos === -1) {
-//							pos = binarySearch (sortedIds6, idEquation);
-//							
-//							for (var i = 0; i < ids6.length; i++)
-//								if (idEquation === ids6[i]) {
-//									pos = i;
-//									break;
-//								}
-//							
-//							loadExercise (ids6[pos + 1]);
-//							loadEquation (0);
-//						}
-//						
-//						else {
-//							for (var i = 0; i < ids5.length; i++)
-//								if (idEquation === ids5[i]) {
-//									pos = i;
-//									break;
-//								}
-//							
-//							loadExercise (ids5[pos + 1]);
-//							loadEquation (0);
-//						}
-//					}
-//					
-//					else {
-//						for (var i = 0; i < ids4.length; i++)
-//							if (idEquation === ids4[i]) {
-//								pos = i;
-//								break;
-//							}
-//						
-//						loadExercise (ids4[pos + 1]);
-//						loadEquation (0);
-//					}
-//				}
-//				
-//				else {
-//					for (var i = 0; i < ids3.length; i++)
-//						if (idEquation === ids3[i]) {
-//							pos = i;
-//							break;
-//						}
-//					
-//					loadExercise (ids3[pos + 1]);
-//					loadEquation (0);
-//				}
-//			}
-//			
-//			else {
-//				for (var i = 0; i < ids2.length; i++)
-//					if (idEquation === ids2[i]) {
-//						pos = i;
-//						break;
-//					}
-//						
-//				loadExercise (ids2[pos + 1]);
-//				loadEquation (0);
-//			}
-//		}
-//		
-//		else {
-//			for (var i = 0; i < ids1.length; i++)
-//				if (idEquation === ids1[i]) {
-//					pos = i;
-//					break;
-//				}
-//			
-//			loadExercise (ids1[pos + 1]);
-//			loadEquation (0);
-//		}
-//	}
-//	
-//	else {
-//		for (var i = 0; i < ids0.length; i++)
-//			if (idEquation === ids0[i]) {
-//				pos = i;
-//				break;
-//			}
-//	}
-	
 	
 }
 
@@ -517,6 +499,7 @@ var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
            168, 169, 170, 171, 172, 173, 174, 176, 177, 178,
            187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
            202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219];
+
 
 var sortedIds = new Array ( );
 sortedIds[13] = new EquationId (13, 0, 2);
@@ -673,146 +656,7 @@ sortedIds[217] = new EquationId (217, 151, 11);
 sortedIds[218] = new EquationId (218, 152, 11);
 sortedIds[219] = new EquationId (219, 153, 11);
 
-//var ids0 = [new EquationId (13, 0), 
-//            new EquationId (14, 1), 
-//            new EquationId (15, 2), 
-//            new EquationId (16, 3), 
-//            new EquationId (21, 8), 
-//            new EquationId (22, 9), 
-//            new EquationId (23, 10), 
-//            new EquationId (24, 11), 
-//            new EquationId (25, 12), 
-//            new EquationId (26, 13), 
-//            new EquationId (107, 4), 
-//            new EquationId (108, 5), 
-//            new EquationId (109, 6), 
-//            new EquationId (110, 7)];
-//
-//var ids1 = [new EquationId (29, 0), 
-//            new EquationId (30, 1), 
-//            new EquationId (31, 2), 
-//            new EquationId (32, 3), 
-//            new EquationId (33, 4), 
-//            new EquationId (34, 5), 
-//            new EquationId (35, 6), 
-//            new EquationId (36, 7), 
-//            new EquationId (37, 8), 
-//            new EquationId (38, 9), 
-//            new EquationId (39, 10), 
-//            new EquationId (40, 11), 
-//            new EquationId (41, 12), 
-//            new EquationId (42, 13), 
-//            new EquationId (43, 14), 
-//            new EquationId (44, 15), 
-//            new EquationId (45, 16), 
-//            new EquationId (46, 17), 
-//            new EquationId (47, 18), 
-//            new EquationId (48, 19), 
-//            new EquationId (49, 20)];
-//
-//var ids2 = [new EquationId (55, 5), 
-//            new EquationId (56, 6), 
-//            new EquationId (57, 7), 
-//            new EquationId (58, 0), 
-//            new EquationId (59, 1), 
-//            new EquationId (60, 2), 
-//            new EquationId (61, 3), 
-//            new EquationId (62, 4), 
-//            new EquationId (63, 8)];
-//
-//var ids3 = [new EquationId (64, 0), 
-//            new EquationId (65, 1), 
-//            new EquationId (67, 3), 
-//            new EquationId (68, 4), 
-//            new EquationId (70, 6), 
-//            new EquationId (71, 7), 
-//            new EquationId (72, 8), 
-//            new EquationId (80, 14), 
-//            new EquationId (81, 15), 
-//            new EquationId (83, 18), 
-//            new EquationId (84, 19), 
-//            new EquationId (111, 2), 
-//            new EquationId (112, 5), 
-//            new EquationId (113, 9), 
-//            new EquationId (114, 10), 
-//            new EquationId (115, 11), 
-//            new EquationId (116, 12), 
-//            new EquationId (117, 13), 
-//            new EquationId (118, 16), 
-//            new EquationId (119, 17), 
-//            new EquationId (120, 20)];
-//
-//var ids4 = [new EquationId (101, 15), 
-//            new EquationId (105, 19), 
-//            new EquationId (121, 0), 
-//            new EquationId (122, 1), 
-//            new EquationId (123, 2), 
-//            new EquationId (124, 11), 
-//            new EquationId (125, 3), 
-//            new EquationId (125, 3), 
-//            new EquationId (126, 4), 
-//            new EquationId (126, 4), 
-//            new EquationId (127, 5), 
-//            new EquationId (128, 6), 
-//            new EquationId (129, 7), 
-//            new EquationId (130, 8), 
-//            new EquationId (131, 9), 
-//            new EquationId (132, 10), 
-//            new EquationId (135, 14), 
-//            new EquationId (136, 16), 
-//            new EquationId (137, 17), 
-//            new EquationId (138, 18), 
-//            new EquationId (139, 20), 
-//            new EquationId (140, 21), 
-//            new EquationId (141, 22), 
-//            new EquationId (142, 23), 
-//            new EquationId (143, 24)];
-//
-//var ids5 = [new EquationId (144, 0), 
-//            new EquationId (145, 1), 
-//            new EquationId (146, 2), 
-//            new EquationId (147, 3), 
-//            new EquationId (148, 4), 
-//            new EquationId (149, 5), 
-//            new EquationId (150, 6), 
-//            new EquationId (151, 7), 
-//            new EquationId (152, 8), 
-//            new EquationId (153, 9), 
-//            new EquationId (154, 10), 
-//            new EquationId (155, 11), 
-//            new EquationId (156, 12), 
-//            new EquationId (157, 13), 
-//            new EquationId (158, 14), 
-//            new EquationId (159, 15), 
-//            new EquationId (160, 16), 
-//            new EquationId (162, 18), 
-//            new EquationId (180, 17)];
-//
-//var ids6 = [new EquationId (168, 0), 
-//            new EquationId (169, 1), 
-//            new EquationId (170, 2), 
-//            new EquationId (171, 3), 
-//            new EquationId (172, 4), 
-//            new EquationId (173, 5), 
-//            new EquationId (174, 6), 
-//            new EquationId (176, 7), 
-//            new EquationId (177, 8), 
-//            new EquationId (178, 9)];
-//
-//var ids7 = [new EquationId (187, 0), 
-//            new EquationId (188, 1), 
-//            new EquationId (189, 2), 
-//            new EquationId (190, 3), 
-//            new EquationId (191, 4), 
-//            new EquationId (192, 5), 
-//            new EquationId (193, 6), 
-//            new EquationId (194, 7), 
-//            new EquationId (195, 8), 
-//            new EquationId (196, 9), 
-//            new EquationId (197, 10), 
-//            new EquationId (198, 11), 
-//            new EquationId (199, 12), 
-//            new EquationId (200, 13)];
+
 
 //Arrays originais das equações
 //ids00 = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26];
@@ -825,11 +669,18 @@ sortedIds[219] = new EquationId (219, 153, 11);
 //ids07 = [187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200];
 
 
-//
-//
+var firstEquations = new Array ( );
+firstEquations[2] = "x+4=10";
+firstEquations[3] = "4x=-28";
+firstEquations[4] = "(x)/(2)=12";
+firstEquations[5] = "3x+10=91";
+firstEquations[6] = "3*(2x-1)=2*(x+1)+3";
+firstEquations[7] = "4*(x+1)=12";
+firstEquations[8] = "x+(x)/(4)=20";
+firstEquations[10] = "3-2*(x+3)=x-18";
+firstEquations[11] = "(x-1)/(5)=x-(2x-1)/(3)";
 
 var stringEquation = new Array ( );
-
 stringEquation[201] = "x+15=45-2x";
 stringEquation[13] = "x+4=10";
 stringEquation[14] = "x+1=23";

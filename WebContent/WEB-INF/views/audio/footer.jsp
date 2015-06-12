@@ -34,19 +34,20 @@ function openPopup (url) {
 	var popup = window.open (url , ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
 	
 	popup.onbeforeunload = function() {
+		
 		location.href="/pat2math/login";	
 	}
 }
 
 
 function verificaAudio ( ) {
-	var playAudio = getCookie ("playAudio" + currentPos);   
+// 	var playAudio = getCookie ("playAudio" + currentPos);   
 	
-	if ((tipoAudio != 1 && tipoAudio != 2) || playAudio === "false") 
-		openPopup (' /pat2math/student/home ');
+// 	if ((tipoAudio != 1 && tipoAudio != 2) || playAudio === "false") 
+		openPopup (' /pat2math/student/home');
 		
-	else 
-		openPopup (' /pat2math/audio ');
+// 	else 
+// 		openPopup (' /pat2math/playaudio ');
 }
 
 function helpPageCookies ( ) {

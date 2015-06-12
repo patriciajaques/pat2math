@@ -14,8 +14,8 @@
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
 			<p><a href="javascript:window.close()"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /></a></p>
-			<p><button type="button" onclick="testResolution()">Teste Resolução</button></p>
-			<p><button type="button" onclick="testStep()">Teste Passo</button></p>
+<!-- 			<p><button type="button" onclick="getResolution()">Teste Resolução</button></p> -->
+<!-- 			<p><button type="button" onclick="getStep()">Teste Passo</button></p> -->
 			
 <!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
 		</div>
@@ -129,8 +129,11 @@
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
     <div id="tour" title="Tour Interativo" onclick="clickTour()"></div>
+    <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>
+	<div id="reportBug-box"></div>
+	<div id="uploadImage-box"></div>
 	<div id="topicsAux"></div>
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	

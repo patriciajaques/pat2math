@@ -79,6 +79,15 @@
     cursor: pointer;
 }
 
+#reportBug {
+    background: url("/pat2math/patequation/img/reportar_bug.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    margin-top: -216px;
+    cursor: pointer;
+}
+
 
 #calculatorAccess{
     background: url("../img/calculatorIcon.png") no-repeat scroll center center transparent;

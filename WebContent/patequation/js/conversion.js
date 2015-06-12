@@ -2,7 +2,13 @@
 "use strict";
 
 //translates natural language to format text PAT2Math
+//Colocar aqui a substituição do valor para a resposta do corretor do PAT2Math
 function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
+	if (isWorkedExample) {
+		return stepWE;
+	}
+	
+	else {
     natural = replaceAll(natural, " ", "");
     natural = replaceAll(natural, "^2", "²");
     natural = replaceAll(natural, "ˆ2", "²");
@@ -111,7 +117,7 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
     text = replaceAll(text, "²", "^2");
     return text;
 }
-5+8
+}
 
 function textToMathml(text) { //<msup>base exponent</msup>
     var stack = new Array();
@@ -431,4 +437,19 @@ function equationToMathml (id) {
 		equation += "..";
 	
 	$(idTask).html (equation);
+}
+
+function equationToMathml2 (equation) {		
+	var temp = textToMathml (equation);
+	var equationMathml = "<math>" + temp[0];
+	
+	for (var i = 1; i < temp.length; i++)
+		equationMathml += temp[i];
+	
+	equationMathml += "</math>";
+	
+	if (equation.indexOf ("..") !== -1)
+		equationMathml += "..";
+	
+	return equationMathml;
 }

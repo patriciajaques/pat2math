@@ -7,6 +7,7 @@ function loadPaper(selectedSheet){
     $(selectedSheet + " #logo").tooltip();
     $("#help").tooltip();
     $("#tour").tooltip();
+    $("#reportBug").tooltip();
 
     var date = new Date();
     $(selectedSheet + " #dateDay").html(date.getDate());
