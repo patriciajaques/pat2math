@@ -34,8 +34,8 @@
 function verificaAudio ( ) {
 	var idGroup = ${student.group.id};
 	
-	if (getCookie ("playAudio" + currentPos) !== "false" && (idGroup === 1 || idGroup === 2)) {
-        if (idGroup === 1)
+	if (getCookie ("playAudio" + currentPos) !== "false" && (idGroup === 2 || idGroup === 3)) {
+        if (idGroup === 2)
             setCookieDays ("tipoAudio", "1", 1);
             
         else

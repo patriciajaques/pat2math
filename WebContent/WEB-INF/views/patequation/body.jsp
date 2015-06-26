@@ -134,6 +134,7 @@
 	<div id="help-box"></div>
 	<div id="reportBug-box"></div>
 	<div id="uploadImage-box"></div>
+	<div id="quest-box"></div>
 	<div id="topicsAux"></div>
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	

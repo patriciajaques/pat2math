@@ -531,7 +531,7 @@ textarea:focus {
 
 #reportBug-box {
 	width: 720px;
-	height: 690px;
+	height: 675px;
 	text-align: center;
 	display: none;
 	position: fixed; 
@@ -547,6 +547,22 @@ textarea:focus {
 }
 
 #uploadImage-box {
+	width: 1002px;
+	height: 462px;
+	text-align: center;
+	display: none;
+	position: fixed; 
+    margin: auto; 
+    top: -184px; 
+    right: 0; 
+    bottom: 0; 
+    left: 0;
+	background: #fff;
+	box-shadow: 0 0 5px #bbb;
+	z-index: 99999;
+}
+
+#quest-box {
 	width: 1002px;
 	height: 462px;
 	text-align: center;

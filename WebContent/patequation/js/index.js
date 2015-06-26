@@ -23,7 +23,7 @@ var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
 var stepWE;
-var enableWorkedExample = true;
+var enableWorkedExample = false;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -212,7 +212,7 @@ function reportBug ( ) {
 	//Criar uma box específica para o upload de imagens, a qual é acessada se o usuário clicar no ícone ou botão "fazer upload de imagem", ver qual a melhor posição
 	//para colocar esse ícone/botão. 
 	
-	$("#reportBug-box").html ('<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="690" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>');
+	$("#reportBug-box").html ('<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>');
 	$("#mask").fadeIn(700);
 	$("#reportBug-box").fadeIn(700);
 	$("#topics").fadeOut();
