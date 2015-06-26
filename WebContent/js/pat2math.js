@@ -259,6 +259,11 @@ function loadExercise(id) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
         	    
+        	        var play = document.getElementById ('button');
+        	        play.style.width = '25px';
+        	    	play.style.height = '25px';
+        	        play.style.background = 'url("/pat2math/patequation/img/play_25x25.png")';
+        	        
         	        if (selectedEquation.lastStep !== null)
         	    	    requestStep (selectedEquation.lastStep.step);
         	    
@@ -330,6 +335,8 @@ function loadNextExercise(id) {
 			cookieName = "isWorkedExample" + currentPos;
 		}
 	});
+	
+	
 }
 
 function loadExerciseTest(id) {
@@ -368,8 +375,17 @@ function loadExerciseTest(id) {
             if (enableWorkedExample) {
 			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
-        	        isWorkedExample = true;
-        	        requestStep (selectedEquation.equation);
+        	        isWorkedExample = true;      	    
+        	        var play = document.getElementById ('button');
+        	        play.style.width = '25px';
+        	    	play.style.height = '25px';
+        	        play.style.background = 'url("/pat2math/patequation/img/play_25x25.png")';
+        	        
+        	        if (selectedEquation.lastStep !== null)
+        	    	    requestStep (selectedEquation.lastStep.step);
+        	    
+        	        else
+        	            requestStep (selectedEquation.equation);
 			    }
 			
 			    else {

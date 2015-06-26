@@ -8,6 +8,7 @@ var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
 var tipoAudio;
+var playAudio;
 //var numClicks;
 
 // variables for the Step object
@@ -22,7 +23,7 @@ var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
 var stepWE;
-var enableWorkedExample = false;
+var enableWorkedExample = true;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -211,14 +212,14 @@ function reportBug ( ) {
 	//Criar uma box específica para o upload de imagens, a qual é acessada se o usuário clicar no ícone ou botão "fazer upload de imagem", ver qual a melhor posição
 	//para colocar esse ícone/botão. 
 	
-	$("#reportBug-box").html ('<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="690" frameborder="0" marginheight="0" marginwidth="0" SCROLLING="NO">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>');
+	$("#reportBug-box").html ('<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="690" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>');
 	$("#mask").fadeIn(700);
 	$("#reportBug-box").fadeIn(700);
 	$("#topics").fadeOut();
 }
 
 function uploadImage ( ) {
-	$("#uploadImage-box").html ('<iframe src="http://uploaddeimagens.com.br/" width="1000" height="420" SCROLLING="NO"></iframe> <div style="position:absolute; top:380px; left:930px;"> <a href=# onclick=closeWindowUploadImage()><img src=/pat2math/patequation/img/exit_text.png></img></a> <div style="position:absolute; top:-373px; left:-208px;"> <img src=/pat2math/patequation/img/fundo_branco.png></img>');
+	$("#uploadImage-box").html ('<iframe src="http://uploaddeimagens.com.br/" width="1000" height="460" SCROLLING="NO"></iframe> <div style="position:absolute; top:380px; left:930px;"> <a href=# onclick=closeWindowUploadImage()><img src=/pat2math/patequation/img/exit_text.png></img></a> <div style="position:absolute; top:-373px; left:-208px;"> <img src=/pat2math/patequation/img/fundo_branco.png></img>');
 	$("#mask").fadeIn(700);
 	$("#uploadImage-box").fadeIn(700);
 	//http://www.brimg.com/
@@ -527,13 +528,21 @@ $(document).ready(function() {
 		setTimeout (function() {checkTour(false);}, 1000);
 	}
 	
+	if (getCookie ("playAudio" + currentPos) === "false") {
+		var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
+		setTimeout ('openQuestions()', time);
+		
+	}
+	
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
 });
 
-
+function openQuestions ( ) {
+	alert ("Questionário");
+}
 function showSideBar(){
 	$("#topics").show();
 	$(".hide-menu").show();
@@ -969,9 +978,17 @@ function getEquation(list) {
 
 
 function trashClick(){
+	
+	
+	
 	//$("body").on("click", ".hide-menu", function() {
+	
 	$(".trash").on("click",function(){
-		clearLine();
+		if (enableWorkedExample && isWorkedExample) 
+			checkEquation();
+		
+		else
+		    clearLine();
 	});
 }
 
@@ -1332,12 +1349,13 @@ function checkEquation() {
 	}
 	
 	else {
-	if (document.getElementById('button').style.width !== '16px') {
-	document.getElementById('button').style.width = '16px';
-	document.getElementById('button').style.height = '16px';
-	document.getElementById('button').style.top = '4px';
-	document.getElementById('button').style.right = '7px';
-	document.getElementById('button').style.background = 'url("/pat2math/images/solve_loading.gif")';
+	var button = document.getElementById('button');
+	if (button.style.width !== '16px') {
+	button.style.width = '16px';
+	button.style.height = '16px';
+	button.style.top = '4px';
+	button.style.right = '7px';
+	button.style.background = 'url("/pat2math/images/solve_loading.gif")';
 
     
 	$(selectedSheet + " .canMove li input").blur();

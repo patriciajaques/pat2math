@@ -3,6 +3,7 @@
 <script>
 	
 	var currentID = "" + ${student.id};
+
 	var isLastUser = false;
 	//Os cookies do tipo lastUsersN salvam os ids dos usuários que acessaram o Pat2Math no dia
 	var cookieName = "lastUsers0";	
@@ -26,9 +27,26 @@
 	//Caso o ID atual não for encontrado nos cookies, ele deverá ser salvo
 	if (isLastUser === false)
 		setCookieDays (cookieName, currentID, 1);
-		
-	verificaAudio ( );
+	
+	verificaAudio();
+	
 
+function verificaAudio ( ) {
+	var idGroup = ${student.group.id};
+	
+	if (getCookie ("playAudio" + currentPos) !== "false" && (idGroup === 2 || idGroup === 4 || idGroup === 5 || idGroup === 3)) {
+        if (idGroup === 2 || idGroup === 4)
+            setCookieDays ("tipoAudio", "1", 1);
+            
+        else
+        	setCookieDays ("tipoAudio", "2", 1);
+        
+        openPopup ('/pat2math/playaudio');
+    }
+    
+    else
+        openPopup ('/pat2math/student/home'); 
+}
 
 function openPopup (url) {
 	var popup = window.open (url , ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
@@ -40,15 +58,6 @@ function openPopup (url) {
 }
 
 
-function verificaAudio ( ) {
-// 	var playAudio = getCookie ("playAudio" + currentPos);   
-	
-// 	if ((tipoAudio != 1 && tipoAudio != 2) || playAudio === "false") 
-		openPopup (' /pat2math/student/home');
-		
-// 	else 
-// 		openPopup (' /pat2math/playaudio ');
-}
 
 function helpPageCookies ( ) {
 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/cookies_01.png border=0><div style='position:absolute; top:194px; left:5px;'><div style='position:absolute; top:0; left:542px;'> <a href=# onclick=helpPageCookies2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
@@ -99,30 +108,30 @@ function closeWindow ( ) {
 
 </script>
 
- <c:if test="${student.group.id == 2}"> 
-    	 <script type="text/javascript">
-    	 	tipoAudio = 1;
+<%--  <c:if test="${student.group.id == 2}">  --%>
+<!--     	 <script type="text/javascript"> -->
+<!-- //     	 	tipoAudio = 1; -->
     	 	
-    	</script>
-   	</c:if>
+<!--     	</script> -->
+<%--    	</c:if> --%>
     
-    <c:if test="${student.group.id == 4}">
-    	<script type="text/javascript">
-    	   tipoAudio = 1;
+<%--     <c:if test="${student.group.id == 4}"> --%>
+<!--     	<script type="text/javascript"> -->
+<!-- //     	   tipoAudio = 1; -->
     	   
-    	</script>
-    </c:if>
+<!--     	</script> -->
+<%--     </c:if> --%>
     
-    <c:if test="${student.group.id == 3}">
-    	<script type="text/javascript">
-    	    tipoAudio = 2;
+<%--     <c:if test="${student.group.id == 3}"> --%>
+<!--     	<script type="text/javascript"> -->
+<!-- //     	    tipoAudio = 2; -->
     	   
-    	</script>
-    </c:if>
+<!--     	</script> -->
+<%--     </c:if> --%>
     
-    <c:if test="${student.group.id == 5}">
-    	<script type="text/javascript">
-    	    tipoAudio = 2;
+<%--     <c:if test="${student.group.id == 5}"> --%>
+<!--     	<script type="text/javascript"> -->
+<!-- //     	    tipoAudio = 2; -->
     	    
-    	</script>
-    </c:if>
+<!--     	</script> -->
+<%--     </c:if> --%>
