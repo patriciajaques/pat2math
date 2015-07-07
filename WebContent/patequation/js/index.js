@@ -209,9 +209,6 @@ function helpPage ( ) {
 }
 
 function reportBug ( ) {
-	//Criar uma box específica para o upload de imagens, a qual é acessada se o usuário clicar no ícone ou botão "fazer upload de imagem", ver qual a melhor posição
-	//para colocar esse ícone/botão. 
-	
 	$("#reportBug-box").html ('<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>');
 	$("#mask").fadeIn(700);
 	$("#reportBug-box").fadeIn(700);
@@ -238,6 +235,166 @@ function closeWindowReportBug ( ) {
 
 function closeWindowUploadImage ( ) {
 	$("#uploadImage-box").fadeOut(700);
+}
+
+function openQuest ( ) {
+	var cookieName = "image1" + currentPos;
+	var image1 = getCookie (cookieName);
+	
+	if (image1 === "")
+		image1 = "<img src=/pat2math/patequation/img/bar_00.png border=0>";
+	
+	cookieName = "image2" + currentPos;	
+	var image2 = getCookie (cookieName);
+	
+	if (image2 === "")
+		image2 = "<img src=/pat2math/patequation/img/bar_00.png border=0>";
+	
+	cookieName = "image2" + currentPos;	
+	var image3 = getCookie (cookieName);
+	
+	if (image3 === "")
+		image3 = "<img src=/pat2math/patequation/img/bar_00.png border=0>";
+	
+	quest (image1, image2, image3);
+}
+
+function quest (image1, image2, image3) {
+	$("#quest-box").html("<div style='position:relative; top:0px; left:0px;'>" +
+			" <img src=/pat2math/patequation/img/question_logo.png border=0> " +
+			"<style>" +
+			".question {" +
+			"font: normal 20px 'Open Sans', sans-serif;" +
+			"}" +
+			".title {" +
+			"font: bold 40px 'Amatic SC', sans-serif;" +
+			"}" +
+			".answer {" +
+			"font: normal 16px 'Open Sans', sans-serif;" +
+			"}" +
+			"</style>" +
+			"<div style='position:absolute; top:135px; left:78px;'>" +
+			"<img src=/pat2math/patequation/img/pergunta.png></img>" +
+			"<div style='position:absolute; top:85px; left:-60px;'>" +
+			"<p class='question'>1. Me disperso com facilidade</p> " +
+			"<div style='position:absolute; top:32px; left:0px;'>" +
+			image1 +
+			"<div style='position:absolute; top:23px; left:-14px;'>" +
+			"<p class='answer'>Nada</p> " +
+			"<div style='position:absolute; top:0px; left:709px;'>" +
+			"<p class='answer'>Totalmente</p> " +
+			"</div></div>" +
+			"<div style='position:absolute; top:0px; left:0px;'>" +
+			"<a href=# onclick=answer1q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:75px;'>" +
+			"<a href=# onclick=answer2q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:150px;'>" +
+			"<a href=# onclick=answer3q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:225px;'>" +
+			"<a href=# onclick=answer4q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:300px;'>" +
+			"<a href=# onclick=answer5q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:375px;'>" +
+			"<a href=# onclick=answer6q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:450px;'>" +
+			"<a href=# onclick=answer7q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:525px;'>" +
+			"<a href=# onclick=answer8q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:600px;'>" +
+			"<a href=# onclick=answer9q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:675px;'>" +
+			"<a href=# onclick=answer10q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:85px; left:0px;'>" +
+			"<p class='question'>2. Entendo a matéria com facilidade</p> " +
+			"<div style='position:absolute; top:32px; left:0px;'>" +
+			image2 +
+			"<div style='position:absolute; top:23px; left:-14px;'>" +
+			"<p class='answer'>Nada</p> " +
+			"<div style='position:absolute; top:0px; left:709px;'>" +
+			"<p class='answer'>Totalmente</p> " +
+			"</div></div>" +
+			"<div style='position:absolute; top:0px; left:0px;'>" +
+			"<a href=# onclick=answer1q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:75px;'>" +
+			"<a href=# onclick=answer2q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:150px;'>" +
+			"<a href=# onclick=answer3q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:225px;'>" +
+			"<a href=# onclick=answer4q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:300px;'>" +
+			"<a href=# onclick=answer5q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:375px;'>" +
+			"<a href=# onclick=answer6q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:450px;'>" +
+			"<a href=# onclick=answer7q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:525px;'>" +
+			"<a href=# onclick=answer8q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:600px;'>" +
+			"<a href=# onclick=answer9q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:675px;'>" +
+			"<a href=# onclick=answer10q2()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:100px; left:0px;'>" +
+			"<p class='question'>3. Sou atento</p>" +
+			"<div style='position:absolute; top:32px; left:0px;'>" +
+			image3 +
+			"<div style='position:absolute; top:23px; left:-14px;'>" +
+			"<p class='answer'>Nada</p> " +
+			"<div style='position:absolute; top:0px; left:709px;'>" +
+			"<p class='answer'>Totalmente</p> " +
+			"</div></div>" +
+			"<div style='position:absolute; top:0px; left:0px;'>" +
+			"<a href=# onclick=answer1q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:75px;'>" +
+			"<a href=# onclick=answer2q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:150px;'>" +
+			"<a href=# onclick=answer3q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:225px;'>" +
+			"<a href=# onclick=answer4q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:300px;'>" +
+			"<a href=# onclick=answer5q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:375px;'>" +
+			"<a href=# onclick=answer6q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:450px;'>" +
+			"<a href=# onclick=answer7q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:525px;'>" +
+			"<a href=# onclick=answer8q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:600px;'>" +
+			"<a href=# onclick=answer9q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>" +
+			"<div style='position:absolute; top:0px; left:675px;'>" +
+			"<a href=# onclick=answer10q3()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"</div>");
+	$("#mask").fadeIn(700);
+	$("#quest-box").fadeIn(700);
+	$("#topics").fadeOut();
 }
 function p1 ( ) {
 	$.guider({
