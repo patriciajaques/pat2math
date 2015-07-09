@@ -8,7 +8,7 @@ function requestSaveAnswers(){
 	/* Ver porquê não está funcionando o request saveQuestion, dá o erro 404
 	 * O saveQuestion está dentro do ResolverController.java
 	 */
-	$.ajax("../../pat2math/saveQuestion?answer1=" + respostas[0] + "&answer2=" + respostas[1] + "&answer3=" + respostas[2], {
+	$.ajax({ url: "/pat2math/saveQuestion?answer1=" + respostas[0] + "&answer2=" + respostas[1] + "&answer3=" + respostas[2],
 		dataType: "text",
 		success: function(data){
 			alert(data);

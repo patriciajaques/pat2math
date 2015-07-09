@@ -523,6 +523,7 @@ function requestResolution ( ){
 	 });
 }
 
+//Passar os parâmetros pelo data na função de responder as questões
 function requestStep(equation){
 	$.ajax({url: "/pat2math/getOneStep",
 			data: {"lastStep": equation},

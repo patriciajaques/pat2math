@@ -1,4 +1,5 @@
 var selectedSheet = "#paper-1";
+requestSaveAnswers();
 var selectedEquation;
 //var currentStepsFirstEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
@@ -169,6 +170,7 @@ function helpPage4 ( ) {
 //            overlay: "dark"
 //	}).show();   
 }
+
 
 function helpPage3 ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_03.png border=0> <div style='position:absolute; top:246px; left:1px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage4()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");

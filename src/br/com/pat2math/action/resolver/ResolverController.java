@@ -136,7 +136,7 @@ public class ResolverController {
 		return "ok";
 	}
 	
-	@RequestMapping("/saveQuestion")
+	@RequestMapping(value="/saveQuestion")
 	public String get(Long answer1, Long answer2, Long answer3, HttpSession session, Model model, String echo, String callback) 
 			throws InvalidValueException, UnsupportedEncodingException {
 		return "ok";
