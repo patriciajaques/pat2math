@@ -1,3 +1,21 @@
+var respostas = new Array();
+
+function answer(question, answer){
+	respostas[question] = answer;
+}
+
+function requestSaveAnswers(){
+	/* Ver porquê não está funcionando o request saveQuestion, dá o erro 404
+	 * O saveQuestion está dentro do ResolverController.java
+	 */
+	$.ajax("../../pat2math/saveQuestion?answer1=" + respostas[0] + "&answer2=" + respostas[1] + "&answer3=" + respostas[2], {
+		dataType: "text",
+		success: function(data){
+			alert(data);
+		}
+	});
+}
+
 function answer1q1 ( ) {
 	var image1 = "<img src=/pat2math/patequation/img/bar_10.png border=0>";
 	

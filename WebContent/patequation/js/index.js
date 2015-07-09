@@ -31,6 +31,7 @@ var currentPos = getCookie ("pos");
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
 
+openQuest ( );
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -285,7 +286,7 @@ function quest (image1, image2, image3) {
 			"<p class='answer'>Totalmente</p> " +
 			"</div></div>" +
 			"<div style='position:absolute; top:0px; left:0px;'>" +
-			"<a href=# onclick=answer1q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +
+			"<a href=# onclick=answer(0,1)><img src=/pat2math/patequation/img/opcao.png></img></a>" +
 			"</div>" +
 			"<div style='position:absolute; top:0px; left:75px;'>" +
 			"<a href=# onclick=answer2q1()><img src=/pat2math/patequation/img/opcao.png></img></a>" +

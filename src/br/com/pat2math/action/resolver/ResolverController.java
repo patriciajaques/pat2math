@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import br.com.pat2math.studentModel.Knowledge;
 import br.com.pat2math.studentModel.Operation;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.Tip;
+
 import com.google.gson.Gson;
 
 @Controller
@@ -126,6 +128,18 @@ public class ResolverController {
     	echo = callback + "(" + jsonOutput + ");";
     	model.addAttribute("response", echo);
 		return "resolverResponse";
+	}
+	
+	@RequestMapping("/teste")
+	public String teste(HttpSession session, Model model, String echo, String callback) 
+			throws InvalidValueException, UnsupportedEncodingException {
+		return "ok";
+	}
+	
+	@RequestMapping("/saveQuestion")
+	public String get(Long answer1, Long answer2, Long answer3, HttpSession session, Model model, String echo, String callback) 
+			throws InvalidValueException, UnsupportedEncodingException {
+		return "ok";
 	}
 	
 	@RequestMapping("/resolverAPI")
