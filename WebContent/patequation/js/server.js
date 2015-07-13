@@ -528,7 +528,7 @@ function requestResolution ( ){
 //Passar os parâmetros pelo data na função de responder as questões
 function requestStep(equation){
 	$.ajax({url: "/pat2math/getOneStep",
-			data: {"lastStep": equation},
+			data: {"lastStep": selectedEquation.equation},
 			success: function(data){
 				var temp = data.split (";");
 				stepWE = temp[1];
