@@ -1,5 +1,4 @@
 var selectedSheet = "#paper-1";
-requestSaveAnswers();
 var selectedEquation;
 //var currentStepsFirstEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
@@ -24,7 +23,7 @@ var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
 var stepWE;
-var enableWorkedExample = false;
+var enableWorkedExample = true;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -539,7 +538,7 @@ $(document).ready(function() {
 	
 	else {
 //	    var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
-		var time = 5000;
+		var time = 50000;
 	    setTimeout ('openQuest()', time);
 	}
 	
@@ -1370,6 +1369,7 @@ function checkEquation() {
 	$(selectedSheet + " .canMove li input").blur();
 //  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
 //  passoAnterior = getEquation(passoAnterior);
+	
   var equation = naturalToText(selectedEquation.currentStep);
   
   if (equation === "")

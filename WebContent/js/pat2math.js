@@ -269,6 +269,16 @@ function loadExercise(id) {
         	    
         	        else
         	            requestStep (selectedEquation.equation);
+        	        
+        	        if (idEquation === 13) {
+        	        	var cookieName = "showTutorial" + currentPos;
+        	        	
+        	        	if (getCookie (cookieName) === "")
+        	        	    tutorialWorkedExamples();
+        	        	
+        	        	else if (getCookie (cookieName) === "1")
+        	        		finishTutorial();
+        	        }
 		    	}
 			
 			    else {
@@ -375,7 +385,8 @@ function loadExerciseTest(id) {
             if (enableWorkedExample) {
 			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
-        	        isWorkedExample = true;      	    
+        	        isWorkedExample = true;
+        	    
         	        var play = document.getElementById ('button');
         	        play.style.width = '25px';
         	    	play.style.height = '25px';
@@ -386,13 +397,23 @@ function loadExerciseTest(id) {
         	    
         	        else
         	            requestStep (selectedEquation.equation);
-			    }
+        	        
+        	        if (idEquation === 13) {
+        	        	var cookieName = "showTutorial" + currentPos;
+        	        	
+        	        	if (getCookie (cookieName) === "")
+        	        	    tutorialWorkedExamples();
+        	        	
+        	        	else if (getCookie (cookieName) === "1")
+        	        		finishTutorial();
+        	        }
+		    	}
 			
 			    else {
 				    setCookieDays (cookieName, "", 0); 
 				    isWorkedExample = false;
 			    }
-            }
+			}
 			
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
 			

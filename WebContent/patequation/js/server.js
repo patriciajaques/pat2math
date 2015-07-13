@@ -495,10 +495,12 @@ function requestServer (type, last, next, typeOperation, element) {
                 	showHint(split[0]);
                 }
             }
+            
+            if (isWorkedExample)
+                window.location.reload();
         }});
     
-    if (isWorkedExample)
-        window.location.reload();
+    
 }
 
 function showNextButton (nextLine) {
