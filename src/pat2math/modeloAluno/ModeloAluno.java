@@ -309,16 +309,14 @@ public class ModeloAluno extends Resolvedor{
 			if (p.equals(Operacao.ERRO)){
 				p=p+";"+topo;
 			}else{
-				//p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
-				p=resp.remove(resp.size()-1).getCleanEquation().replace("#", "")+";"+p;
+				p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 				i++;
 				//geralmente o segundo add deve pegar a descrição mas se for bhaskara ou fatoração são duas equações então deve pergar mais um valor 
 				//de resp
 				if (!resp.isEmpty())topo=resp.get(resp.size()-1).getCleanEquation();
 				if (!resp.isEmpty() && topo.startsWith("#") && !Operacao.getCodigo(topo).equals(Operacao.ERRO)){
 					p=p.replace(";", "#");
-//					p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
-					p=resp.remove(resp.size()-1).getCleanEquation().replace("#", "")+";"+p;
+					p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 					i++;
 				}
 			}
@@ -355,16 +353,14 @@ public class ModeloAluno extends Resolvedor{
 			if (p.equals(Operacao.ERRO)){
 				p=p+";"+topo;
 			}else{
-				//p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
-				p=resp.remove(resp.size()-1).getCleanEquation().replace("#", "")+";"+p;
+				p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 				i++;
 				//geralmente o segundo add deve pegar a descrição mas se for bhaskara ou fatoração são duas equações então deve pergar mais um valor 
 				//de resp
 				if (!resp.isEmpty())topo=resp.get(resp.size()-1).getCleanEquation();
 				if (!resp.isEmpty() && topo.startsWith("#") && !Operacao.getCodigo(topo).equals(Operacao.ERRO)){
 					p=p.replace(";", "#");
-					//p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
-					p=resp.remove(resp.size()-1).getCleanEquation().replace("#", "")+";"+p;
+					p=Operacao.getWithNewCodes(resp.remove(resp.size()-1).getCleanEquation())+";"+p;
 					i++;
 				}
 			}
