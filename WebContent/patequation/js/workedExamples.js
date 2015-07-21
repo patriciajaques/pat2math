@@ -103,3 +103,44 @@ function finishTutorial ( ) {
 		}
     	});
 }
+
+function showExplanation ( ) {
+	var regra = regras[regraWE];
+	
+	$.guider({
+		title: regra.nome,
+		description: regra.explicacao,
+	    alignButtons: "center", 
+	    buttons: {
+	    	OK: {
+				click: true,
+				className: "primary"
+			}
+	    }
+		}).show();
+}
+
+var regras = new Array ( );
+regras["AD"] = new Regra ("Soma", "explicação");
+regras["SB"] = new Regra ("Subtração", "explicação");
+regras["DV"] = new Regra ("Divisão", "explicação");
+regras["MT"] = new Regra ("Multiplicação", "explicação");
+regras["MM"] = new Regra ("Mínimo Múltiplo Comum (MMC)", "explicação");
+regras["DM"] = new Regra ("Distributiva", "explicação");
+regras["FC"] = new Regra ("Fator Comum", "explicação");
+regras["QS"] = new Regra ("Quadrado da Soma", "explicação");
+regras["QD"] = new Regra ("Quadrado da Diferença", "explicação");
+regras["PS"] = new Regra ("Produto da Soma pela Diferença", "explicação");
+regras["BK"] = new Regra ("Bháskara", "explicação");
+regras["OI"] = new Regra ("Operação Inversa", "explicação");
+regras["SP"] = new Regra ("Simplificação", "explicação");
+regras["RC"] = new Regra ("Racionalização", "explicação");
+regras["FT"] = new Regra ("Fatoração", "explicação");
+regras["RZ"] = new Regra ("Raiz", "explicação");
+regras["PT"] = new Regra ("Potenciação", "explicação");
+regras["RE"] = new Regra ("Reescrever Equação", "explicação");
+regras["PA"] = new Regra ("Princípio Aditivo", "explicação");
+regras["PM"] = new Regra ("Princípio Multiplicativo", "explicação");
+regras["AF"] = new Regra ("Soma ou Subtração de Frações", "explicação");
+regras["MF"] = new Regra ("Multiplicação de Frações", "explicação");
+regras["DF"] = new Regra ("Divisão de Frações", "explicação");

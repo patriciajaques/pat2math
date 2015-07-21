@@ -528,10 +528,11 @@ function requestResolution ( ){
 //Passar os parâmetros pelo data na função de responder as questões
 function requestStep(equation){
 	$.ajax({url: "/pat2math/getOneStep",
-			data: {"lastStep": selectedEquation.equation},
+			data: {"lastStep": equation},
 			success: function(data){
 				var temp = data.split (";");
 				stepWE = temp[1];
+				regraWE = temp[0];
 			}
 	});
 }

@@ -22,6 +22,7 @@ var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 
 var concluded = 0;
+var regraWE;
 var stepWE;
 var enableWorkedExample = true;
 var isWorkedExample = false;
