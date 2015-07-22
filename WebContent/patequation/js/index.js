@@ -20,8 +20,10 @@ var x2_SOLUTION = 4;
 
 var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
-
+var stringEquation;
+var firstEquations;
 var concluded = 0;
+var regras;
 var regraWE;
 var stepWE;
 var enableWorkedExample = true;
@@ -501,6 +503,9 @@ $(document).ready(function() {
     if (!isPopup ( ))
 	    location.href = "/pat2math/audio";
     
+    getStringEquations();
+    getFirstEquations();
+    getRegras();
     cookieName = "currentEquation" + currentPos;
 	var currentEquationString = getCookie (cookieName);
 	
@@ -538,8 +543,7 @@ $(document).ready(function() {
 		openQuest();
 	
 	else {
-//	    var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
-		var time = 50000;
+	    var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
 	    setTimeout ('openQuest()', time);
 	}
 	

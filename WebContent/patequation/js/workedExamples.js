@@ -79,7 +79,7 @@ function finishTutorial ( ) {
 		name: "finish",
 		next: "finish2",
 		title: "Primeiro passo da equação resolvido com sucesso!",
-		description: "Agora você deve analisar o que foi feito. Quando estiver pronto, clique novamente no botão play para resolver o próximo passo. ",
+		description: "A seguir você verá a explicação da regra que foi utilizada para resolver este passo.",
 	    alignButtons: "right", 
 	    buttons: {
 	    	Próximo: {
@@ -90,9 +90,24 @@ function finishTutorial ( ) {
 		}).show();
 	
 	$.guider({
-    	name: "finish2",
+		name: "finish2",
+		next: "finish3",
+		title: "Princípio Aditivo",
+		description: 'Também conhecida como "passar um termo para o outro lado invertendo o sinal", consiste em manipular a equação somando ou subtraindo por um termo nos dois lados para mantêla balanceada, possibilitando novos cálculos para chegar ao resultado final.',
+	    alignButtons: "right", 
+	    buttons: {
+	    	Voltar: true,
+	    	Próximo: {
+                click: true,
+                className: "primary"
+            }
+	    }
+		});
+	
+	$.guider({
+    	name: "finish3",
     	title: "Muito bem!",
-		description: "Você já está pronto para prosseguir sozinho. Clique no botão abaixo para concluir este tutorial.",
+		description: "Você já está pronto para prosseguir sozinho. Quando estiver pronto, clique novamente no botão play para resolver o próximo passo.",
 		alignButtons: "right",
 		closable: true, 
 		buttons: {
@@ -104,6 +119,7 @@ function finishTutorial ( ) {
     	});
 }
 
+
 function showExplanation ( ) {
 	var regra = regras[regraWE];
 	
@@ -111,6 +127,7 @@ function showExplanation ( ) {
 		title: regra.nome,
 		description: regra.explicacao,
 	    alignButtons: "center", 
+	    onHide: function() {window.location.reload();},
 	    buttons: {
 	    	OK: {
 				click: true,
@@ -120,27 +137,30 @@ function showExplanation ( ) {
 		}).show();
 }
 
-var regras = new Array ( );
-regras["AD"] = new Regra ("Soma", "explicação");
-regras["SB"] = new Regra ("Subtração", "explicação");
-regras["DV"] = new Regra ("Divisão", "explicação");
-regras["MT"] = new Regra ("Multiplicação", "explicação");
-regras["MM"] = new Regra ("Mínimo Múltiplo Comum (MMC)", "explicação");
-regras["DM"] = new Regra ("Distributiva", "explicação");
-regras["FC"] = new Regra ("Fator Comum", "explicação");
-regras["QS"] = new Regra ("Quadrado da Soma", "explicação");
-regras["QD"] = new Regra ("Quadrado da Diferença", "explicação");
-regras["PS"] = new Regra ("Produto da Soma pela Diferença", "explicação");
-regras["BK"] = new Regra ("Bháskara", "explicação");
-regras["OI"] = new Regra ("Operação Inversa", "explicação");
-regras["SP"] = new Regra ("Simplificação", "explicação");
-regras["RC"] = new Regra ("Racionalização", "explicação");
-regras["FT"] = new Regra ("Fatoração", "explicação");
-regras["RZ"] = new Regra ("Raiz", "explicação");
-regras["PT"] = new Regra ("Potenciação", "explicação");
-regras["RE"] = new Regra ("Reescrever Equação", "explicação");
-regras["PA"] = new Regra ("Princípio Aditivo", "explicação");
-regras["PM"] = new Regra ("Princípio Multiplicativo", "explicação");
-regras["AF"] = new Regra ("Soma ou Subtração de Frações", "explicação");
-regras["MF"] = new Regra ("Multiplicação de Frações", "explicação");
-regras["DF"] = new Regra ("Divisão de Frações", "explicação");
+function getRegras ( ) {
+	regras = new Array ( );
+	regras["AD"] = new Regra ("Soma", "Consiste em somar os termos semelhantes.");
+	regras["SB"] = new Regra ("Subtração", "Consiste em subtrair os termos semelhantes.");
+	regras["DV"] = new Regra ("Divisão", "Consiste em dividir os termos semelhantes.");
+	regras["UT"] = new Regra ("Unir Termos Semelhantes", "Consiste em aproximar os termos que são semelhantes, ou seja, os termos que podem ser calculados. Exemplos de termos semelhantes: 4+2 e 7x+3x.");
+	regras["MT"] = new Regra ("Multiplicação", "Consiste em multiplicar os termos semelhantes.");
+	regras["MM"] = new Regra ("Mínimo Múltiplo Comum (MMC)", "Consiste em determinar um denominador comum para as frações, tornando possível realizar os cálculos de soma e subtração entre elas.");
+	regras["DM"] = new Regra ("Propriedade Distributiva", 'Consiste em "abrir" uma multiplicação da forma a(b+c+...), efetuando os cálculos da seguinte maneira: a(b+c+...) = ab + ac + a...');
+	regras["FC"] = new Regra ("Fator Comum", "Consiste em fatorar uma expressão através de seu fator comum. Por exemplo: na expressão 2x+xy o fator comum é x, portanto temos 2x+xy=x(2+y)");
+	regras["QS"] = new Regra ("Quadrado da Soma", "É um produto notável. Sua resposta é definida por: (a+b)² = a² + 2ab + b²");
+	regras["QD"] = new Regra ("Quadrado da Diferença", "É um produto notável. Sua resposta é definida por: (a-b)² = a² - 2ab + b²");
+	regras["PS"] = new Regra ("Produto da Soma pela Diferença", "É um produto notável. Sua resposta é definida por: (a+b)(a-b) = a² - b²");
+	regras["BK"] = new Regra ("Bháskara", "explicação");
+	regras["OI"] = new Regra ("Operação Inversa", "explicação");
+	regras["SP"] = new Regra ("Simplificação", "Utilizada em frações, consiste em resolver os cálculos de uma fração para torná-la o mais simplificada possível. ");
+	regras["RC"] = new Regra ("Racionalização", "Consiste em racionalizar o denominador de uma fração, ou seja, tornar este número racional ao invés de irracional.");
+	regras["FT"] = new Regra ("Fatoração", "Consiste em manipular uma expressão de soma e subtração, transformando-a em uma multiplicação.");
+	regras["RZ"] = new Regra ("Raiz", "explicação");
+	regras["PT"] = new Regra ("Potenciação", "explicação");
+	regras["RE"] = new Regra ("Reescrever Equação", "explicação");
+	regras["PA"] = new Regra ("Princípio Aditivo", 'Também conhecida como "passar um termo para o outro lado invertendo o sinal", consiste em manipular a equação somando ou subtraindo por um termo nos dois lados para mantêla balanceada, possibilitando novos cálculos para chegar ao resultado final.');
+	regras["PM"] = new Regra ("Princípio Multiplicativo", 'Também conhecida como "passar um termo para o outro lado multiplicando ou dividindo", consiste em manipular a equação multiplicando ou dividindo por um termo nos dois lados para mantêla balanceada, possibilitando novos cálculos para chegar ao resultado final.');
+	regras["AF"] = new Regra ("Soma ou Subtração de Frações", "É a soma ou subtração de termos fracionários.");
+	regras["MF"] = new Regra ("Multiplicação de Frações", "É a multiplicação de termos fracionários.");
+	regras["DF"] = new Regra ("Divisão de Frações", "É a divisão de termos fracionários.");
+}

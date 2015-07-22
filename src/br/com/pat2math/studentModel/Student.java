@@ -32,6 +32,9 @@ public class Student extends User implements Serializable {
 	@Transient
 	private List<Tip> feedbacks = new ArrayList<Tip>();
 	
+	private String question1, question2, question3;
+	
+	
 	public static Student newStudent(Student student) {
 		student.defineRole();
 		student.desactivate();
@@ -92,5 +95,31 @@ public class Student extends User implements Serializable {
 	public void setTasksPerformed(List<TaskPerformed> tasksPerformed) {
 		this.tasksPerformed = tasksPerformed;
 	}
+
+	public String getQuestion1() {
+		return question1;
+	}
+
+	public void setQuestion1(String question1) {
+		this.question1 = question1;
+	}
+
+	public String getQuestion2() {
+		return question2;
+	}
+
+	public void setQuestion2(String question2) {
+		this.question2 = question2;
+	}
+
+	public String getQuestion3() {
+		return question3;
+	}
+
+	public void setQuestion3(String question3) {
+		this.question3 = question3;
+	}
+	
+	
 	
 }

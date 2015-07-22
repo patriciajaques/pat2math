@@ -41,7 +41,7 @@ public class User {
 	@Size(min=3, max=80)
 	private String lastName;
 	
-	@Email
+//	@Email
 	@Size(min=5, max=120)
 	@Column(unique=true)
 	private String email;

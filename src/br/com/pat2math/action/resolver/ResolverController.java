@@ -130,15 +130,15 @@ public class ResolverController {
 		return "resolverResponse";
 	}
 	
-	@RequestMapping("/teste")
-	public String teste(HttpSession session, Model model, String echo, String callback) 
-			throws InvalidValueException, UnsupportedEncodingException {
-		return "ok";
-	}
 	
 	@RequestMapping(value="/saveQuestion")
-	public String get(Long answer1, Long answer2, Long answer3, HttpSession session, Model model, String echo, String callback) 
+	public String get(String answer1, String answer2, String answer3, HttpSession session, Model model, String echo, String callback) 
 			throws InvalidValueException, UnsupportedEncodingException {
+		Student student = new CurrentUser(session).student();
+		student.setQuestion1 (answer1);
+		student.setQuestion2 (answer2);
+		student.setQuestion3 (answer3);
+		allStudents.alter (student);
 		return "ok";
 	}
 	

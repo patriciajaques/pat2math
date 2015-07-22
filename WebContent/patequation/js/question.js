@@ -32,7 +32,7 @@ function requestSaveAnswers(){
 	$.ajax({ url: "/pat2math/saveQuestion?answer1=" + respostas[0] + "&answer2=" + respostas[1] + "&answer3=" + respostas[2],
 		dataType: "text",
 		success: function(data){
-			alert(data);
+
 		}
 	});
 }
