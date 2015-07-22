@@ -2,10 +2,10 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-  
+
 	<persistence-unit name="pat2math" transaction-type="RESOURCE_LOCAL">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-    
+
 	    <class>br.com.pat2math.domainBase.Topic</class>
 	    <class>br.com.pat2math.domainBase.Plan</class>
 	    <class>br.com.pat2math.domainBase.Task</class>
@@ -13,7 +13,7 @@
 	    <class>br.com.pat2math.domainBase.Exercise</class>
 	    <class>br.com.pat2math.domainBase.Content</class>
 	    <class>br.com.pat2math.domainBase.Level</class>
-	    
+
 	    <class>br.com.pat2math.studentModel.School</class>
 	    <class>br.com.pat2math.studentModel.Teacher</class>
 	    <class>br.com.pat2math.studentModel.Group</class>
@@ -27,15 +27,14 @@
 	    <class>br.com.pat2math.studentModel.Operation</class>
 	    <class>br.com.pat2math.studentModel.SignUpConfirmation</class>
 	    <class>br.com.pat2math.studentModel.PasswordRecovery</class>
-	    
+
 	    <properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 	        <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/pat2math?autoReconnect=true" />
 	        <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 	        <property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.connection.password" value="r#5vj@t6%" />
 <!-- 			<property name="hibernate.connection.password" value="r#5vj@t6%" /> -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
 	    </properties>
 	</persistence-unit>
 </persistence>
