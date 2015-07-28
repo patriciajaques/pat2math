@@ -531,7 +531,7 @@ textarea:focus {
 
 #reportBug-box {
 	width: 720px;
-	height: 675px;
+	height: 600px;
 	text-align: center;
 	display: none;
 	position: fixed; 
