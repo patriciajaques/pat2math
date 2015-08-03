@@ -34,9 +34,9 @@ public class Student extends User implements Serializable {
 	
 	private String question1, question2, question3;
 	
-	
 	public static Student newStudent(Student student) {
 		student.defineRole();
+		student.defineQuestionsDefault();
 		student.desactivate();
 		return student;
 	}
@@ -54,6 +54,10 @@ public class Student extends User implements Serializable {
 	
 	public void defineRole() {
 		this.setRole("ROLE_STUDENT");
+	}
+	
+	public void defineQuestionsDefault ( ) {
+		question1 = question2 = question3 = "0";
 	}
 	
 	public Group getGroup() {

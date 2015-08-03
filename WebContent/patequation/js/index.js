@@ -214,7 +214,7 @@ function helpPage ( ) {
 }
 
 function reportBug ( ) {
-	var html = '<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>';
+	var html = '<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0" scrolling="no">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>';
 	
 	if (screen.height < 800)
 		html = '<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe><div style="position:absolute; top:18px; left:657px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a></div><div style="position:absolute; top:539px; left:555px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a></div> <div style="position:absolute; top:18px; left:48px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img></div>';
@@ -528,28 +528,30 @@ $(document).ready(function() {
 	}
 	
 	cookieName = "currentPlan" + currentPos;
-	var currentPlanString = getCookie (cookieName);
 	
-	if (currentPlanString !== "") {
+	if (getCookie (cookieName) !== "") {
 		var currentPlan = parseInt (currentPlanString);
 		loadTasks (currentPlan);
 	} 
 	
 	cookieName = "openTour" + currentPos;
-	var startTour = getCookie (cookieName);
 	
-	if (startTour === "") {
+	if (getCookie (cookieName) === "") {
 		setTimeout (function() {checkTour(false);}, 1000);
 	}
 	
-	cookieName = "isQuestOpen" + currentPos;
+	cookieName = "openQuest" + currentPos;
 	
-	if (getCookie (cookieName) === "true")
-		openQuest();
+	if (getCookie (cookieName) === "") {
+	    cookieName = "isQuestOpen" + currentPos;
 	
-	else {
-	    var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
-	    setTimeout ('openQuest()', time);
+	    if (getCookie (cookieName) === "true")
+		    openQuest();
+	
+	    else {
+	        var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
+	        setTimeout ('openQuest()', time);
+	    }
 	}
 	
 

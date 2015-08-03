@@ -32,9 +32,13 @@
 	
 
 function verificaAudio ( ) {
-	var idGroup = ${student.group.id};
 	
-	if (getCookie ("playAudio" + currentPos) !== "false" && (idGroup === 2 || idGroup === 3)) {
+	//Se q1 === 0 é que a questão ainda não foi respondida, caso contrário já foi respondida. 
+	//Fazer essa validação para definir se a janela de questões deverá ser exibida (primeiro ver a resposta do Michael ou do Bruno)
+	var idGroup = ${student.group.id};
+	var cookieName = "playAudio" + currentPos;
+	
+	if (getCookie (cookieName) !== "false" && (idGroup === 2 || idGroup === 3)) {
         if (idGroup === 2)
             setCookieDays ("tipoAudio", "1", 1);
             
@@ -44,8 +48,11 @@ function verificaAudio ( ) {
         openPopup ('/pat2math/playaudio');
     }
     
-    else
+    else {
+    	cookieName = "openQuest" + currentPos;
+    	setCookieDays (cookieName, "false", 30);
         openPopup ('/pat2math/student/home'); 
+    }
 }
 
 function openPopup (url) {

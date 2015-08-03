@@ -16,6 +16,8 @@ function openQuest ( ) {
 function requestSaveAnswers(){
 	var cookieName = "isQuestOpen" + currentPos;
 	setCookieDays (cookieName, "", 0);
+	cookieName = "openQuest" + currentPos;
+	setCookieDays (cookieName, "false", 5);
 	
 	$("#mask").fadeOut(700);
 	$("#quest-box").fadeOut(700);
@@ -26,9 +28,7 @@ function requestSaveAnswers(){
 	else
 	    $("#topics").fadeIn();	
 	
-	/* Ver porquê não está funcionando o request saveQuestion, dá o erro 404
-	 * O saveQuestion está dentro do ResolverController.java
-	 */
+
 	$.ajax({ url: "/pat2math/saveQuestion?answer1=" + respostas[0] + "&answer2=" + respostas[1] + "&answer3=" + respostas[2],
 		dataType: "text",
 		success: function(data){
