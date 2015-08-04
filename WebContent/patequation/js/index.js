@@ -554,6 +554,12 @@ $(document).ready(function() {
 	    }
 	}
 	
+//	cookieName = "regraWE" + currentPos;
+//	var regra = getCookie (cookieName);
+//	
+//	if (regra != "")
+//		showExplanation();
+	
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();

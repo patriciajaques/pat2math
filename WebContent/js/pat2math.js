@@ -435,7 +435,11 @@ function loadExerciseTest(id) {
 function loadingShow(){
 	$('#loading').fadeIn();
 	$("#topics").fadeOut();
-	
+}
+
+function loadingShowWE() {
+	$('#loadingWE').fadeIn();
+	$("#topics").fadeOut();
 }
 
 function loadingHide(){

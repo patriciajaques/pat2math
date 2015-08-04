@@ -123,6 +123,10 @@ function finishTutorial ( ) {
 function showExplanation ( ) {
 	var regra = regras[regraWE];
 	
+//	$("#hintText").html(regra.nome.toUpperCase() + "<br>" + regra.explicacao);
+//    $("#hintText").show('blind', 500);
+//    $(".verticalTape").show('fold', 500);
+    
 	$.guider({
 		title: regra.nome,
 		description: regra.explicacao,

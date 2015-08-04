@@ -4,6 +4,9 @@
     <div id="loading">
   		<img id="loading-image" src="/pat2math/images/Pat2Math_Load.gif" alt="Loading..." />
 	</div>
+	<div id="loadingWE">
+  		<img id="loading-image" src="/pat2math/images/Pat2Math_Load.gif" alt="Loading..." />
+	</div>
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
     <div id="topics" style="overflow: auto">
