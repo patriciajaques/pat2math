@@ -22,9 +22,9 @@ var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 var stringEquation;
 var firstEquations;
+var sortedIds;
 var concluded = 0;
 var regras;
-var regraWE;
 var stepWE;
 var enableWorkedExample = true;
 var isWorkedExample = false;
@@ -508,6 +508,7 @@ $(document).ready(function() {
     if (!isPopup ( ))
 	    location.href = "/pat2math/audio";
     
+    getSortedIds();
     getStringEquations();
     getFirstEquations();
     getRegras();
@@ -528,8 +529,8 @@ $(document).ready(function() {
 	}
 	
 	cookieName = "currentPlan" + currentPos;
-	
-	if (getCookie (cookieName) !== "") {
+	var currentPlanString = getCookie (cookieName);
+	if (currentPlanString !== "") {
 		var currentPlan = parseInt (currentPlanString);
 		loadTasks (currentPlan);
 	} 
@@ -554,11 +555,12 @@ $(document).ready(function() {
 	    }
 	}
 	
-//	cookieName = "regraWE" + currentPos;
-//	var regra = getCookie (cookieName);
-//	
-//	if (regra != "")
-//		showExplanation();
+	cookieName = "regraWE" + currentPos;
+	var regrasCookie = getCookie (cookieName);
+	
+	if (regra != "") {
+		setTimeout (function() {showExplanation(regrasCookie);}, 1000);
+	}
 	
 
     // $("#hintText").hide();

@@ -120,25 +120,35 @@ function finishTutorial ( ) {
 }
 
 
-function showExplanation ( ) {
-	var regra = regras[regraWE];
+function showExplanation (regrasCookie) {
+	var r = regrasCookie.split (";");
+	var regraPos = r[0];
+	var regra = regras[regraPos];
+	var texto = "<b>" + regra.nome.toUpperCase() + "<br>" + regra.explicacao + "</b>";
 	
-//	$("#hintText").html(regra.nome.toUpperCase() + "<br>" + regra.explicacao);
-//    $("#hintText").show('blind', 500);
-//    $(".verticalTape").show('fold', 500);
+	for (var i = 0; i < r.length; i++) {
+		regraPos = r[i];
+		regra = regras[regraPos];
+		var temp = regra.nome.toUpperCase() + "<br>" + regra.explicacao;
+		texto += "<br><br>" + temp;
+	}
+	
+	$("#hintText").html(texto);
+    $("#hintText").show('blind', 500);
+    $(".verticalTape").show('fold', 500);
     
-	$.guider({
-		title: regra.nome,
-		description: regra.explicacao,
-	    alignButtons: "center", 
-	    onHide: function() {window.location.reload();},
-	    buttons: {
-	    	OK: {
-				click: true,
-				className: "primary"
-			}
-	    }
-		}).show();
+//	$.guider({
+//		title: regra.nome,
+//		description: regra.explicacao,
+//	    alignButtons: "center", 
+//	    onHide: function() {window.location.reload();},
+//	    buttons: {
+//	    	OK: {
+//				click: true,
+//				className: "primary"
+//			}
+//	    }
+//		}).show();
 }
 
 function getRegras ( ) {
