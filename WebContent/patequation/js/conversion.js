@@ -7,10 +7,10 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
 	if (isWorkedExample) {
 		loadingShowWE();	
 		
-		var cookieName = "regraWE" + idEquation + currentPos;
+		var cookieName = "regraWE" + currentPos;
 		var regras = getCookie (cookieName);
 		
-		if (regras !== "")
+		if (regras !== "" && selectedEquation.steps.length > 0) 
 		    regras += " " + regraWE;
 		
 		else

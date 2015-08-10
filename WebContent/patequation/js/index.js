@@ -557,7 +557,7 @@ $(document).ready(function() {
 	    }
 	}
 	
-	cookieName = "regraWE" + idEquation + currentPos;
+	cookieName = "regraWE" + currentPos;
 	var regrasCookie = getCookie (cookieName);
 	
 	if (regrasCookie != "") {
