@@ -5,7 +5,19 @@
 //Colocar aqui a substituição do valor para a resposta do corretor do PAT2Math
 function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
 	if (isWorkedExample) {
-		loadingShowWE();		
+		loadingShowWE();	
+		
+		var cookieName = "regraWE" + idEquation + currentPos;
+		var regras = getCookie (cookieName);
+		
+		if (regras !== "")
+		    regras += " " + regraWE;
+		
+		else
+			regras = regraWE;
+		
+		setCookieDays (cookieName, regras, 1);	
+		
 		return stepWE;
 	}
 	

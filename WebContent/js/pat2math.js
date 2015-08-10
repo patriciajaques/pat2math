@@ -383,7 +383,7 @@ function loadExerciseTest(id) {
 			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
             cookieName = "isWorkedExample" + currentPos;
-			
+            
             if (enableWorkedExample) {
 			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
@@ -409,6 +409,13 @@ function loadExerciseTest(id) {
         	        	else if (getCookie (cookieName) === "1")
         	        		finishTutorial();
         	        }
+        	        
+        	        else if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
+                    	plan2();
+                        var cookieName = "splan2" + currentPos;
+                        setCookieDays (cookieName, "false", 7);
+                        
+                    }
 		    	}
 			
 			    else {
@@ -416,6 +423,8 @@ function loadExerciseTest(id) {
 				    isWorkedExample = false;
 			    }
 			}
+            
+            
 			
 //			stop = true; //Essa variável recebe false em seguida se o usuário clicou no botão de próxima equação
 			

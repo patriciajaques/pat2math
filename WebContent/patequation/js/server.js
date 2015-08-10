@@ -514,15 +514,14 @@ function requestServer (type, last, next, typeOperation, element) {
         		    	showExplanation();
         		    	
         		    }
-        		}  
-            	
-            	else {
-            		window.location.reload();
-            	}
-            	
+        		}             	
+            	window.location.reload();         	
             }
         }});
     
+    if (isWorkedExample)
+        setTimeout ('window.location.reload()', 2000);
+    	
     
 }
 
@@ -555,17 +554,7 @@ function requestStep(equation){
 			success: function(data){
 				var temp = data.split (";");
 				stepWE = temp[1];
-				
-				var cookieName = "regraWE" + currentPos;
-				var regras = getCookie (cookieName);
-				
-				if (regras !== "")
-				    regras += ";" + temp[0];
-				
-				else
-					regras = temp[0];
-				
-				setCookieDays (cookieName, regras, 1);	
+				regraWE = temp[0];
 			}
 	});
 }

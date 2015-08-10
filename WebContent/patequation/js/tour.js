@@ -886,7 +886,7 @@ function clickPlan (nextStep, exitEsc) {
 		name: "plan",
 		next: "plan2",
 		title: "Planos de Aula",
-		description: "Os planos de aula são como as fases de um jogo.<br>Cada fase é composta por uma série de equações. ",
+		description: "Os planos de aula são como as fases de um jogo. Cada plano possui várias equações, que podem ser resolvidas na ordem que você quiser. ",
 	    alignButtons: "right", 
 	    onShow: function() {setCookieDays (cStepTour, "plan", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
 	    buttons: {
@@ -898,46 +898,13 @@ function clickPlan (nextStep, exitEsc) {
 		}).show();
 	}
 	
-	$().guider({
-		name: "plan2",
-		next: "plan3",
-		title: "Passando de Fase",
-		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br>Essas equações podem ser resolvidas na ordem que você quiser.",
-		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "plan2", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
-		buttons: {
-			Voltar: true,
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
-	});
-	
-	$().guider({
-		name: "plan3",
-		next: "plan4",
-		title: "Níveis de Dificuldade",
-		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
-		alignButtons: "right",
-		width: 610,
-		onShow: function() {setCookieDays (cStepTour, "plan3", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
-		buttons: {
-			Voltar: true,
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
-	});
-	
 	$("#tasks9").guider({
-		name: "plan4",
+		name: "plan2",
 		title: "Clique nesta equação",
 		description: "Vamos resolvê-la passo-a-passo para entender as principais funcionalidades do PAT2Math.",
 		alignButtons: "right",
 		position: "right",
-		onShow: function() {setCookieDays (cStepTour, "plan4", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
+		onShow: function() {setCookieDays (cStepTour, "plan2", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -1271,4 +1238,36 @@ function alternativeFinalStepTour (nextStep, exitEsc) {
     	            }
     			}
     		});
+}
+
+function plan2 ( ) {
+	$().guider({
+		name: "plan2_1",
+		next: "plan2_2",
+		title: "Passando de Fase",
+		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.<br>Essas equações podem ser resolvidas na ordem que você quiser.",
+		alignButtons: "right",
+		onShow: function() {setCookieDays (cStepTour, "plan2", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$().guider({
+		name: "plan2_2",
+		title: "Níveis de Dificuldade",
+		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
+		alignButtons: "right",
+		width: 610,
+		onShow: function() {setCookieDays (cStepTour, "plan3", 1); setCookieDays (cFunctionTour, "clickPlan", 1);},
+		buttons: {
+			Entendi: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
 }

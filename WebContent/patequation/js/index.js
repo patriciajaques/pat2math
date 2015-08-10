@@ -25,12 +25,14 @@ var firstEquations;
 var sortedIds;
 var concluded = 0;
 var regras;
+var regraWE;
 var stepWE;
 var enableWorkedExample = true;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
 var currentPos = getCookie ("pos");
+var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
 
@@ -555,11 +557,16 @@ $(document).ready(function() {
 	    }
 	}
 	
-	cookieName = "regraWE" + currentPos;
+	cookieName = "regraWE" + idEquation + currentPos;
 	var regrasCookie = getCookie (cookieName);
 	
-	if (regra != "") {
+	if (regrasCookie != "") {
 		setTimeout (function() {showExplanation(regrasCookie);}, 1000);
+	}
+	
+	if (currentPlanString === "3") {
+	    cookieName = "splan2" + currentPos;
+	    showPlan2Explanation = getCookie (cookieName);
 	}
 	
 
