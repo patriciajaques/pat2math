@@ -52,11 +52,11 @@ function requestServer (type, last, next, typeOperation, element) {
 
                 element = $(selectedSheet + " .canCopy ul");
 
-                var nextLine;
+                nextLineServer;
                 if (element.parent().html().indexOf("<mfrac") !== -1) {
-                    nextLine = element.parent().next().next();
+                    nextLineServer = element.parent().next().next();
                 } else {
-                    nextLine = element.parent().next();
+                    nextLineServer = element.parent().next();
                 }
 
                 //é só comentar essa linha e descomentar a original, para voltar a versão anterior.
@@ -124,13 +124,12 @@ function requestServer (type, last, next, typeOperation, element) {
                 element = $(selectedSheet + " .canCopy ul");
 
 
-                var nextLine;
                 if (newHtml.indexOf("<mfrac") !== -1) {
-                    nextLine = element.parent().next().next();
+                    nextLineServer = element.parent().next().next();
                 } else {
-                    nextLine = element.parent().next();
+                    nextLineServer = element.parent().next();
                 }
-                nextLine.html(
+                nextLineServer.html(
                         "<ul>" +
                         "<li class='labelDefault'><input type='text'></li>" +
                         "</ul>" +
@@ -142,7 +141,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 $(selectedSheet + " .canMove ul").sortable("disable");
                 //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
                 $(selectedSheet + " .canMove li").css("opacity", "0.75");
-                nextLine.addClass("canMove");
+                nextLineServer.addClass("canMove");
                 element.parent().removeClass("canMove");
                 element.parent().addClass("canCopy");
 
@@ -171,11 +170,10 @@ function requestServer (type, last, next, typeOperation, element) {
                     $(".verticalTape").hide('blind', 200);
                     $("#hintText").html("");
 
-                    var nextLine;
                     if (element.parent().html().indexOf("<mfrac") !== -1) {
-                        nextLine = element.parent().next().next();
+                        nextLineServer = element.parent().next().next();
                     } else {
-                        nextLine = element.parent().next();
+                        nextLineServer = element.parent().next();
                     }
 
                     $(selectedSheet + " .trash").remove();
@@ -218,10 +216,10 @@ function requestServer (type, last, next, typeOperation, element) {
                         
                       //Verifica se o ID da equação atual não é o da última equação de um dos planos de aula                                        162
                     	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)                  		
-                            showNextButton (nextLine);
+                            showNextButton (nextLineServer);
                     	
-                    	else
-                    		nextLine.html("<div class='final'></div>");
+                    	else 
+                    		nextLineServer.html("<div class='final'></div>");               	
                     	
 //                    	var cookieName = "numLines" + currentPos + idEquation; 			           			
 //            			setCookieDays (cookieName, "", 0);
@@ -271,7 +269,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
                     $(selectedSheet + " .canMove").removeClass("canMove");
                     if (isDelta) {
-                        nextLine.addClass("canMove");
+                        nextLineServer.addClass("canMove");
                         clearLine();
 
                         if (!selectedEquation.isAnswer()) {
@@ -367,13 +365,12 @@ function requestServer (type, last, next, typeOperation, element) {
 //                    });
 
 
-                    var nextLine;
                     if (element.parent().html().indexOf("<mfrac") !== -1) {
-                        nextLine = element.parent().next().next();
+                        nextLineServer = element.parent().next().next();
                     } else {
-                        nextLine = element.parent().next();
+                        nextLineServer = element.parent().next();
                     }
-                    nextLine.html(
+                    nextLineServer.html(
                             "<ul>" +
                             "<li class='labelDefault'><input type='text'></li>" +
                             "</ul>" +
@@ -386,7 +383,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     $(selectedSheet + " .canMove ul").sortable("disable");
                     //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
                     $(selectedSheet + " .canMove li").css("opacity", "0.75");
-                    nextLine.addClass("canMove");
+                    nextLineServer.addClass("canMove");
                     element.parent().removeClass("canMove");
                     element.parent().addClass("canCopy");
 
@@ -525,8 +522,8 @@ function requestServer (type, last, next, typeOperation, element) {
     
 }
 
-function showNextButton (nextLine) {
-	 setTimeout(function(){ nextLine.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='loadingShow(); nextEquationClick(); loadingHide();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
+function showNextButton ( ) {
+	 setTimeout(function(){ nextLineServer.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='loadingShow(); nextEquationClick(); loadingHide();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
 	
 }
 

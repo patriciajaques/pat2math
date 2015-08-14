@@ -118,6 +118,8 @@ function loadTasks(id) {
 					    getResolution (firstEquation);
 					}
 					
+					planoAtual=id;
+					
 					$(".task").each(
 						function() {
 							var text = $(this).html();
@@ -216,7 +218,13 @@ function loadExercise(id) {
 				
 				if(data.performed) {
 					equation.isComplete = true;
-					isWorkedExample = false;
+					
+					if (isWorkedExample) {
+					    isWorkedExample = false;
+					    $("#workedExamplesBlock").hide();
+					    var cookieName = "regraWE" + currentPos;
+					    setCookieDays (cookieName, "", 0);	
+					}
 					setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				
@@ -258,6 +266,7 @@ function loadExercise(id) {
 			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
+        	        $("#workedExamplesBlock").show();
         	    
         	        var play = document.getElementById ('button');
         	        play.style.width = '25px';
@@ -279,11 +288,29 @@ function loadExercise(id) {
         	        	else if (getCookie (cookieName) === "1")
         	        		finishTutorial();
         	        }
+        	        
+        	        else if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
+                    	plan2();
+                        var cookieName = "splan2" + currentPos;
+                        setCookieDays (cookieName, "false", 7);                    
+                    }
 		    	}
 			
 			    else {
-				setCookieDays (cookieName, "", 0); 
-				isWorkedExample = false;
+			    	if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
+                    	plan2();
+                        var cookieName = "splan2" + currentPos;
+                        setCookieDays (cookieName, "false", 7);                
+                    }
+			    	
+			    	setCookieDays (cookieName, "", 0); 
+			    	
+			    	if (isWorkedExample) {
+					    isWorkedExample = false;
+					    $("#workedExamplesBlock").hide();
+					    cookieName = "regraWE" + currentPos;
+					    setCookieDays (cookieName, "", 0);	
+					}
 			    }
 			}
 			
@@ -372,7 +399,13 @@ function loadExerciseTest(id) {
 				
 				if(data[2] == "1") {
 					equation.isComplete = true;
-					isWorkedExample = false;
+					
+					if (isWorkedExample) {
+					    isWorkedExample = false;
+					    $("#workedExamplesBlock").hide();
+					    var cookieName = "regraWE" + currentPos;
+					    setCookieDays (cookieName, "", 0);	
+					}
 					setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				newEquations[0] = equation;
@@ -388,6 +421,7 @@ function loadExerciseTest(id) {
 			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
+        	        $("#workedExamplesBlock").show();
         	    
         	        var play = document.getElementById ('button');
         	        play.style.width = '25px';
@@ -413,14 +447,27 @@ function loadExerciseTest(id) {
         	        else if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
                     	plan2();
                         var cookieName = "splan2" + currentPos;
-                        setCookieDays (cookieName, "false", 7);
-                        
+                        setCookieDays (cookieName, "false", 7);                      
                     }
 		    	}
 			
 			    else {
+			    	if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
+                    	plan2();
+                        var cookieName = "splan2" + currentPos;
+                        setCookieDays (cookieName, "false", 7);                
+                    }
+			    	
 				    setCookieDays (cookieName, "", 0); 
-				    isWorkedExample = false;
+				    
+				    if (isWorkedExample) {
+					    isWorkedExample = false;
+					    $("#workedExamplesBlock").hide();
+					    cookieName = "regraWE" + currentPos;
+					    setCookieDays (cookieName, "", 0);	
+					}
+				    
+				    
 			    }
 			}
             
@@ -884,6 +931,21 @@ function getStringEquations ( ) {
 	stringEquation[217] = "2(x-2)+3(2x+2)..";
 	stringEquation[218] = "x-(x)/(3)=6+(x)/(2)";
 	stringEquation[219] = "10(x-6)=9(x+3)";
+}
+
+function getEquationsPlan ( ) {
+	equationPlan = new Array ( );	
+	equationPlan[9] = new EquationPlan (201, 2);
+	equationPlan[2] = new EquationPlan (13, 3);
+	equationPlan[3] = new EquationPlan (29, 4);
+	equationPlan[4] = new EquationPlan (58, 5);
+	equationPlan[5] = new EquationPlan (64, 6);
+	equationPlan[6] = new EquationPlan (121, 7);
+	equationPlan[7] = new EquationPlan (144, 8);
+	equationPlan[8] = new EquationPlan (168, 10);
+	equationPlan[10] = new EquationPlan (187, 11);
+	equationPlan[11] = new EquationPlan (202, null);
+	
 }
 
 //var plano1 = 

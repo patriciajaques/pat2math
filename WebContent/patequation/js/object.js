@@ -63,3 +63,8 @@ function Regra (nome, explicacao) {
 	this.nome = nome;
 	this.explicacao = explicacao;
 }
+
+function EquationPlan (idFirstEquation, idNextPlan) {
+	this.idFirstEquation = idFirstEquation;
+	this.idNextPlan = idNextPlan;
+}

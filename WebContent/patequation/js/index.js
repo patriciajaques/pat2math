@@ -3,6 +3,7 @@ var selectedEquation;
 //var currentStepsFirstEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
+var planoAtual; //id do plano que está selecionado
 var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
@@ -23,10 +24,12 @@ var equations = [new Equation("x=1", 0)];
 var stringEquation;
 var firstEquations;
 var sortedIds;
+var equationPlan;
 var concluded = 0;
 var regras;
 var regraWE;
 var stepWE;
+var nextLineServer;
 var enableWorkedExample = true;
 var isWorkedExample = false;
 var isTourInterativo = false;
@@ -317,6 +320,11 @@ function closeWindow ( ) {
 //}
 
 
+/*Criar um novo usuário no localhost para testar as novas funcionalidades:
+ * Se ao resolver todas as equações do plano de aula 1 aparece as mensagens de "plan2()";
+ * Se ao resolver todas as equações de qualquer plano de aula (inclusive o do tour) aparece o botão
+ * de próxima equação que redireciona para a primeira equação do próximo plano.
+ */
 function rel ( ) {
 	   $.ajax({  
 		     type : "Get",   
@@ -324,6 +332,12 @@ function rel ( ) {
 		     success : function(response) { 
 		    	/* $('#the_list').html('Teste'); */
  		      	$('#the_list').html(response);   
+ 		      	
+//Fazer mais testes nesta parte para ver o que não funcionou bem 		      	
+// 		      	if (response.indexOf ("tasks3") !== -1 && response.indexOf ("tasks4" === -1))
+// 		      		plan2();
+// 		      	
+// 		      	showNextPlanButton();	      	
 		     },  
 		     error : function(e) {  
 		      alert('Error: ' + e);   
@@ -331,6 +345,17 @@ function rel ( ) {
 		    }); 
 }
 
+function showNextPlanButton ( ) {
+	setTimeout(function(){ nextLineServer.html("<div class='final'></div><div id='next_equation' title='Próximo Plano' onclick='loadingShow(); nextEquationPlanClick(); loadingHide();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);	
+}
+
+function nextEquationPlanClick ( ) {
+	var proximoPlano = equationPlan[planoAtual].idNextPlan;
+   	var proximaEquacao = equationPlan[planoAtual].idFirstEquation;
+   	
+   	loadTasks (proximoPlano);
+   	loadExercise (proximaEquacao);
+}
 
 $(document).ready(function() {	    
 //	$("body").on("click", ".hide-menu", function() {
@@ -353,7 +378,9 @@ $(document).ready(function() {
 	});
 	
 	$("#refresh_page").tooltip();
+	$("#workedExamplesBlock").tooltip();
 	//if(!useAudio)showSideBar();
+	
 	
     $("#loadingImage").hide();
     $("#book").show("clip", 500);
@@ -370,7 +397,14 @@ $(document).ready(function() {
 	
     if (enableWorkedExample && getCookie (cookieName) !== "") {
 		isWorkedExample = true;
+		$("#workedExamplesBlock").show();
     }
+    
+    if (isWorkedExample)
+	    $("#workedExamplesBlock").show();
+	
+	else
+		$("#workedExamplesBlock").hide();
     
     $(document).keyup(function(event) {
         // key 13 = enter
@@ -513,6 +547,7 @@ $(document).ready(function() {
     getSortedIds();
     getStringEquations();
     getFirstEquations();
+    getEquationsPlan();
     getRegras();
     cookieName = "currentEquation" + currentPos;
 	var currentEquationString = getCookie (cookieName);

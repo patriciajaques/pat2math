@@ -9,6 +9,7 @@
 	</div>
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
+    
     <div id="topics" style="overflow: auto">
     	<div id="bar-header" >
     		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%;">
@@ -64,9 +65,8 @@
     <div id="hintBox">
         <div id="hintText"></div>
     </div>
-    
      <div id="papers" style="text-align: center; margin-top: -119px">
-   		<div id="paper-1"  style="display: inline-block;">
+   		<div id="paper-1"  style="display: inline-block;"> 		    
    			<div id="refresh_page" title="Recarregar página"></div>
    			<div id="logo" title="PAT2Math =D"></div>
 
@@ -138,6 +138,7 @@
 	<div id="reportBug-box"></div>
 	<div id="uploadImage-box"></div>
 	<div id="quest-box"></div>
+	<div id="workedExamplesBlock" title="Esta equação é um exemplo resolvido. Clique no botão play para continuar"></div>
 	<div id="topicsAux"></div>
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	
