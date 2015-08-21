@@ -118,7 +118,7 @@
 }
 
 #clearCanvas{
-    //float: right;
+    float: right;
     margin-left: 178px;
     cursor: pointer;
     position: absolute;
@@ -126,8 +126,20 @@
 
 #noteBox{
     float: right;
-    margin-top: -800px;
+    margin-top: -410px;
     margin-right: 20px;
+}
+
+#calculator{
+	margin-top: -29px;
+	margin-left: -277px;
+	display: none;
+}
+
+#calculatorIcon{
+	margin-top: -410px;
+	margin-left: -622px;
+	cursor: pointer;
 }
 
 #progressBar .label{

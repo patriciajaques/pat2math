@@ -288,12 +288,14 @@ function exit ( ) {
 	}).hideAll();
 	
 	isTourInterativo = false; 
-	blockMenu = false;
+	blockMenu = true;
 	
-	if (selectedEquation !== null) {
-	    $("#topics").fadeOut();
-        $("#topicsAux").show();
-	}
+	$("#topics").fadeIn();
+	$("#topicsAux").hide();
+//	if (selectedEquation !== null) {
+//	    $("#topics").fadeOut();
+//        $("#topicsAux").show();
+//	}
     
     var pos = getCookie ("pos");
 	var cookieName = "stepTour" + pos;
@@ -650,12 +652,11 @@ function clickEquationSlim (nextStep, exitEsc) {
 		position: "left",
 		alignButtons: "right",
 		closable: true, 
-		onHide: function() {exit();},
 		onShow: function() {setCookieDays (cStepTour, "smain7", 1); setCookieDays (cFunctionTour, "clickEquationSlim", 1);},
 		buttons: {
 			Voltar: true,
 			Finalizar: {
-                click: true,
+				click : function() {exit();},
                 className: "primary"
             }
 		}
@@ -1087,7 +1088,7 @@ function finalStepTour ( ) {
 		closable: true, 
 		buttons: {
 			Finalizar: {
-               click: function() {exit();},
+			   click : function() {exit();},
                className: "primary"
             }
 		}
@@ -1233,7 +1234,7 @@ function alternativeFinalStepTour (nextStep, exitEsc) {
     			buttons: {
     				Voltar: true,
     				Finalizar: {
-    					click: function() {exit();},
+    					click : function() {exit();},
     	                className: "primary"
     	            }
     			}

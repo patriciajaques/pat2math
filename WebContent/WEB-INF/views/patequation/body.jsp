@@ -126,8 +126,8 @@
         </div>
     </div> -->
 	
+
 	<div id="newPoints">+10</div>
-	
 	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
@@ -144,3 +144,10 @@
 	
 	
 	<div class="modal" id="msg-box"></div>
+		<div id="calculatorIcon" onclick="showCalculator()"><img src=/pat2math/patequation/img/calculadora.png border=0></div>
+		<div id="calculator" title='Digite a expressão desejada e clique em "Ver resultado"'>
+	<form name="calculator" > <input type="textfield" name="ans" value="">
+<input type="button" value="Ver resultado" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)">
+</form>
+	</div>
+	

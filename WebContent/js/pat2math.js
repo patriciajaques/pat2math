@@ -225,7 +225,9 @@ function loadExercise(id) {
 					    var cookieName = "regraWE" + currentPos;
 					    setCookieDays (cookieName, "", 0);	
 					}
-					setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
+					
+					if (isTourInterativo == false)
+					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				
 				if (isTourInterativo && id === 201) {
@@ -406,7 +408,9 @@ function loadExerciseTest(id) {
 					    var cookieName = "regraWE" + currentPos;
 					    setCookieDays (cookieName, "", 0);	
 					}
-					setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
+					
+					if (isTourInterativo == false)
+					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				newEquations[0] = equation;
 			}

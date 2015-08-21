@@ -30,7 +30,8 @@ var regras;
 var regraWE;
 var stepWE;
 var nextLineServer;
-var enableWorkedExample = true;
+var enableWorkedExample = false;
+//Ver se a condição acima também desativa as instruções dos Worked Examples
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -145,6 +146,10 @@ function isPopup() {
     else
         return false;
 }       
+
+function showCalculator ( ) {
+	$("#calculator").fadeIn();
+}
 function helpPage6 ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:246px; left:1px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:494px;'> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
@@ -218,6 +223,9 @@ function helpPage ( ) {
 //	} 
 }
 
+function calculator ( ) {
+
+}
 function reportBug ( ) {
 	var html = '<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0" scrolling="no">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>';
 	
@@ -357,6 +365,26 @@ function nextEquationPlanClick ( ) {
    	loadExercise (proximaEquacao);
 }
 
+//Calcula a diferença entre dois tempos, na forma: hour1:minutes1 - hour2:minutes2
+//Retorna o resultado em milisegundos
+function subtractTime (hour1, minutes1, hour2, minutes2) {
+	var time1MS = (hour1 * 3600000) + (minutes1 * 60000);
+	var time2MS = (hour2 * 3600000) + (minutes2 * 60000);
+	var result = time2MS - time1MS;
+	
+	return result;
+}
+
+//15:05 - 14:55 = 00:10 (600.000ms)
+//54.300.000 - 53.700.000 = 
+
+function getCurrentHour ( ) {
+	return new Date().getHours();
+}
+
+function getCurrentMinutes ( ) {
+	return new Date().getMinutes();
+}
 $(document).ready(function() {	    
 //	$("body").on("click", ".hide-menu", function() {
 //		$("#topics").hide("slide", { direction: "left" }, 1000);
@@ -377,7 +405,9 @@ $(document).ready(function() {
 		window.location.reload();
 	});
 	
+	
 	$("#refresh_page").tooltip();
+	$("#calculator").tooltip();
 	$("#workedExamplesBlock").tooltip();
 	//if(!useAudio)showSideBar();
 	
