@@ -223,9 +223,6 @@ function helpPage ( ) {
 //	} 
 }
 
-function calculator ( ) {
-
-}
 function reportBug ( ) {
 	var html = '<iframe src="https://docs.google.com/forms/d/1LX-zhGj-ogFZO-h7fABqSH26COqdT258Vs-Bws3hO2I/viewform?embedded=true" width="720" height="675" frameborder="0" marginheight="0" marginwidth="0" scrolling="no">Carregando...</iframe><div style="position:absolute; top:15px; left:677px;"> <a href=# onclick=closeWindowReportBug()><img src=/pat2math/patequation/img/exit.png></img></a><div style="position:absolute; top:570px; left:-460px;"> <a href=# onclick=uploadImage()><img src=/pat2math/patequation/img/upload_image.png></img></a> <div style="position:absolute; top:-571px; left:-168px;"> <img src=/pat2math/patequation/img/cabecalho_reportar_bug.png></img>';
 	
@@ -367,9 +364,9 @@ function nextEquationPlanClick ( ) {
 
 //Calcula a diferença entre dois tempos, na forma: hour1:minutes1 - hour2:minutes2
 //Retorna o resultado em milisegundos
-function subtractTime (hour1, minutes1, hour2, minutes2) {
-	var time1MS = (hour1 * 3600000) + (minutes1 * 60000);
-	var time2MS = (hour2 * 3600000) + (minutes2 * 60000);
+function subtractTime (hour1, minutes1, seconds1, hour2, minutes2, seconds2) {
+	var time1MS = (hour1 * 3600000) + (minutes1 * 60000) + (seconds1 * 1000);
+	var time2MS = (hour2 * 3600000) + (minutes2 * 60000) + (seconds2 * 1000);
 	var result = time2MS - time1MS;
 	
 	return result;
@@ -384,6 +381,10 @@ function getCurrentHour ( ) {
 
 function getCurrentMinutes ( ) {
 	return new Date().getMinutes();
+}
+
+function getCurrentSeconds ( ) {
+	return new Date().getSeconds();
 }
 $(document).ready(function() {	    
 //	$("body").on("click", ".hide-menu", function() {
@@ -408,6 +409,7 @@ $(document).ready(function() {
 	
 	$("#refresh_page").tooltip();
 	$("#calculator").tooltip();
+	$("#calculatorIcon").tooltip();
 	$("#workedExamplesBlock").tooltip();
 	//if(!useAudio)showSideBar();
 	
@@ -609,7 +611,7 @@ $(document).ready(function() {
 	}
 	
 	cookieName = "openQuest" + currentPos;
-	
+
 	if (getCookie (cookieName) === "") {
 	    cookieName = "isQuestOpen" + currentPos;
 	
@@ -617,7 +619,48 @@ $(document).ready(function() {
 		    openQuest();
 	
 	    else {
-	        var time = Math.floor((Math.random() * 1500) + 1) * 1000; 
+	    	cookieName = "timeQuest" + currentPos;
+	    	var time = getCookie (cookieName);
+	    	
+	    	if (time === "") {
+	            time = Math.floor((Math.random() * 1500) + 1) * 1000; 
+	        
+	            var hour = getCurrentHour();
+	            cookieName = "lastHour" + currentPos;
+	            setCookieDays (cookieName, hour, 1);
+	        
+	            var minutes = getCurrentMinutes();  
+	            cookieName = "lastMinutes" + currentPos;
+	            setCookieDays (cookieName, minutes, 1);
+	            
+	            var seconds = getCurrentSeconds();
+	            cookieName = "lastSeconds" + currentPos;
+	            setCookieDays (cookieName, seconds, 1);
+	    	}
+	    	
+	    	else {
+	    		var currentHour = getCurrentHour();
+	    		var currentMinutes = getCurrentMinutes();
+	    		var currentSeconds = getCurrentSeconds();
+	    		
+	    		cookieName = "lastHour" + currentPos;
+	    		var lastHour = parseInt (getCookie (cookieName));
+	    		
+	    		cookieName = "lastMinutes" + currentPos;
+	    		var lastMinutes = parseInt (getCookie (cookieName));
+	    		
+	    		cookieName = "lastSeconds" + currentPos;
+	    		var lastSeconds = parseInt (getCookie (cookieName));
+	    		
+	    		var difference = subtractTime(lastHour, lastMinutes, lastSeconds, currentHour, currentMinutes, currentSeconds);
+	    		
+	    		time = parseInt (time);
+	    		time = time - difference;
+	    	}
+	        
+	    	cookieName = "timeQuest" + currentPos;
+	    	setCookieDays (cookieName, time, 1);
+	    	
 	        setTimeout ('openQuest()', time);
 	    }
 	}
@@ -1442,13 +1485,13 @@ function checkEquation() {
 //		fiveClicksOnTheLoupe();
 	
 	//var display = document.getElementById('button').style.display;
-	if (document.getElementById ('button') === null && idEquation >= 0) {
-		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
-    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
-		    nextEquationClick();
-	}
+//	if (document.getElementById ('button') === null && idEquation >= 0) {
+//		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
+//    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
+//		    nextEquationClick();
+//	}
 	
-	else {
+//	else {
 	var button = document.getElementById('button');
 	if (button.style.width !== '16px') {
 	button.style.width = '16px';
@@ -1466,6 +1509,9 @@ function checkEquation() {
   
   if (equation === "")
 	  equation = " ";
+  
+  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
+	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
   
 //  if (isWorkedExample) 
 //	  equation = workedExample ( );
@@ -1527,7 +1573,7 @@ function checkEquation() {
   requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
 
   //document.getElementById('button').style.display = 'inline';
-}
+//}
 }
 }
 

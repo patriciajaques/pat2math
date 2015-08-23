@@ -36,24 +36,21 @@ function verificaAudio ( ) {
 	//Se q1 === 0 é que a questão ainda não foi respondida, caso contrário já foi respondida. 
 	//Fazer essa validação para definir se a janela de questões deverá ser exibida (primeiro ver a resposta do Michael ou do Bruno)
 // 	var idGroup = ${student.group.id};
-    var id = parseInt (currentID);
-	var cookieName = "playAudio" + currentPos;
+//     var id = parseInt (currentID);
+// 	var cookieName = "playAudio" + currentPos;
 	
-	if (getCookie (cookieName) !== "false" && ((id >= 207 && id <= 268) || (id >= 269 && id <= 278))) { //idGroup === 2 || idGroup === 3
-        if ((id < 239) || (id >= 269 && (id % 2) !== 0))
-            setCookieDays ("tipoAudio", "1", 1);
+// 	if (getCookie (cookieName) !== "false" && ((id >= 207 && id <= 268) || (id >= 269 && id <= 278))) { //idGroup === 2 || idGroup === 3
+//         if ((id < 239) || (id >= 269 && (id % 2) !== 0))
+//             setCookieDays ("tipoAudio", "1", 1);
             
-        else
-        	setCookieDays ("tipoAudio", "2", 1);
+//         else
+//         	setCookieDays ("tipoAudio", "2", 1);
         
-        openPopup ('/pat2math/playaudio');
-    }
+//         openPopup ('/pat2math/playaudio');
+//     }
     
-    else {
-    	cookieName = "openQuest" + currentPos;
-    	setCookieDays (cookieName, "false", 30);
+//     else 
         openPopup ('/pat2math/student/home'); 
-    }
 }
 
 function openPopup (url) {
