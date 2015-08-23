@@ -68,7 +68,7 @@
      <div id="papers" style="text-align: center; margin-top: -119px">
    		<div id="paper-1"  style="display: inline-block;"> 		    
 <!--    			<div id="refresh_page" title="Recarregar página"></div> -->
-   			<div id="logo" title="PAT2Math =D"></div>
+   			<div id="logo" title="Atualizar a página" onclick="window.location.reload()"></div>
 
 					<div style="display: none;" id="date">
 				         <div id="dateDay" class="dates"></div>
@@ -144,7 +144,7 @@
 	
 	
 	<div class="modal" id="msg-box"></div>
-		<div id="calculatorIcon" title='Clique aqui para abrir a calculadora' onclick="showCalculator()"><img src=/pat2math/patequation/img/calculadora.png border=0></div>
+		<div id="calculatorIcon" title='Calculadora' onclick="showCalculator()"><img src=/pat2math/patequation/img/calculadora.png border=0></div>
 		<div id="calculator" title='Digite a expressão desejada e clique em "="'>
 	<form name="calculator" > <input type="textfield" name="ans" value="">
 <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)">

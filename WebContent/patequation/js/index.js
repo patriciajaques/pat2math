@@ -148,7 +148,13 @@ function isPopup() {
 }       
 
 function showCalculator ( ) {
-	$("#calculator").fadeIn();
+    var calculatorDisplay = document.getElementById('calculator').style.display;
+    
+	if (calculatorDisplay === "" || calculatorDisplay === "none")
+	    $("#calculator").fadeIn();
+	
+	else
+		$("#calculator").fadeOut();
 }
 function helpPage6 ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_06.png border=0> <div style='position:absolute; top:246px; left:1px;'> <a href=# onclick=helpPage5()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0px; left:494px;'> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
