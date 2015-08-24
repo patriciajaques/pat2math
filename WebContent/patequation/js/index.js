@@ -662,6 +662,9 @@ $(document).ready(function() {
 	    		
 	    		time = parseInt (time);
 	    		time = time - difference;
+	    		
+	    		if (time < 0)
+	    			time = 2000;
 	    	}
 	        
 	    	cookieName = "timeQuest" + currentPos;
