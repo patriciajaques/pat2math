@@ -208,16 +208,19 @@ function requestServer (type, last, next, typeOperation, element) {
                         
                         tasksRemaining--;
                         if (tasksRemaining===0){
+                        	var divName = "#tasks" + numUnlockedPlans;
+                        	$(divName).slideUp(700);
+                        	
                         	if ((numUnlockedPlans > 0 && numUnlockedPlans < 8) || numUnlockedPlans >= 10)
                         		numUnlockedPlans++;
                         	
-                        	else if (numUnlockedPlans === 0)
+                        	else if (numUnlockedPlans === 9)
                         		numUnlockedPlans = 2;
                         	
                         	else
                         		numUnlockedPlans = 10;
                         	
-                        	var divName = "lplan" + numUnlockedPlans;
+                        	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
                         }
                         if (tasksRemaining===0)addProgressValue(100);

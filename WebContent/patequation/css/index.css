@@ -168,6 +168,7 @@
 	position: absolute;
 	margin-left: 223px;
 	margin-top: 5px;
+	cursor: pointer;
 }
 
 #amountPoins{
@@ -279,9 +280,9 @@
     background: none repeat scroll 0 0 #82C785;
     box-shadow: 3px 3px 6px #222222;
     color: #000;
-    top: 75px;
+    top: 253px;
    /*  left: 70%; */
-    right:68px;
+    right:823px;
     height: auto;
     max-height: 50%;
     padding: 1em 1.5em;

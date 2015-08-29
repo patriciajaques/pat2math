@@ -199,6 +199,15 @@ function loadTasks(id) {
 	}
 }
 
+function padlockClick ( ) {
+	if (selectedEquation !== null)
+		moveHint();
+
+	$("#hintText").html("Para desbloquear este plano de aula, você deve resolver todas as equações do plano anterior.");
+	$("#hintText").show('blind', 500);
+	$(".verticalTape").show('fold', 500);
+}
+
 function loadExercise(id) {	
 //	setCurrentEquation (id);
 	blockMenu = false;

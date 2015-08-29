@@ -1516,7 +1516,31 @@ function stringToUrl(string) {
     return string;
 }
 
+function moveHint() {
+	var steps = selectedEquation.steps;
+	var top = 253;
+	
+	if (selectedEquation.equation.indexOf ("/") !== -1) {
+		top += 32;
+	}
+	
+	for (var i = 0; i < steps.length; i++) {
+		if (steps[i].step.indexOf ("/") === -1) {
+			top += 32;
+		}
+		
+		else {
+			top += 64;
+		}
+	}
+	
+	top = top + "px";
+	
+	document.getElementById('hintText').style.top = top;
+}
 function hint() {
+	moveHint();
+
     if (!selectedEquation.isComplete) {
         var equation = $(selectedSheet + " .canCopy li").toArray();
         equation = getEquation(equation);
