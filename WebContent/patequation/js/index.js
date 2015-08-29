@@ -141,7 +141,13 @@ function showNotificationDoNotCloseLoginWindow() {
 			
 		else {		
 			if (getCurrentMinutes() === 8) {
-			    alert ("Por favor, deixe a janela de login do PAT2Math aberta para facilitar o acesso da próxima turma que utlizará o programa. ");
+				if (selectedEquation !== null)
+					moveHint();
+
+				$("#hintText").html("Por favor, deixe a janela de login do PAT2Math aberta para facilitar o acesso da próxima turma que utlizará o programa. Ao sair, somente feche a janela atual (clicando no ícone vermelho com uma porta no menu principal ou no X do canto superior direito).");
+				$("#hintText").show('blind', 500);
+				$(".verticalTape").show('fold', 500);
+
 			    setTimeout ('window.close()', 240000);
 			}
 			
