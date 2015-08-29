@@ -1535,7 +1535,6 @@ function moveHint() {
 	}
 	
 	top = top + "px";
-	
 	document.getElementById('hintText').style.top = top;
 }
 function hint() {
