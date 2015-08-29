@@ -41,7 +41,7 @@ var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
-var numUnlockedPlans = 0;
+var numUnlockedPlans = 9;
 
 
 
