@@ -100,6 +100,10 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
+	if (id === 9 || numUnlockedPlans >= id) {
+	var divName = "#lplan" + id;
+	$(divName).hide();
+	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -192,6 +196,7 @@ function loadTasks(id) {
 		}
 	}
 	
+	}
 }
 
 function loadExercise(id) {	
@@ -510,6 +515,8 @@ function loadingHide(){
 //	$('.hide-menu').fadeIn();
 	
 }
+
+
 
 function changePlan(idGroup, idPlan) {
 	$.post(

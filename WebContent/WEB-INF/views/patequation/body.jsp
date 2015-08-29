@@ -36,7 +36,36 @@
 		
 		
 		<div id="the_list">
-		<%@ include file="./topicList.jsp"%>
+		<span class="topic" onclick="loadTasks(9)">Tour</span>
+		<div id="tasks9" class="tasks"></div>
+		<div class="locked" id="lplan2"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(2)">Plano de Aula 1</span>
+		<div id="tasks2" class="tasks"></div>
+		<div class="locked" id="lplan3"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(3)">Plano de Aula 2</span>
+		<div id="tasks3" class="tasks"></div>
+		<div class="locked" id="lplan4"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(4)">Plano de Aula 3</span>
+		<div id="tasks4" class="tasks"></div>
+		<div class="locked" id="lplan5"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(5)">Plano de Aula 4</span>
+		<div id="tasks5" class="tasks"></div>
+		<div class="locked" id="lplan6"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(6)">Plano de Aula 5</span>
+		<div id="tasks6" class="tasks"></div>
+		<div class="locked" id="lplan7"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(7)">Plano de Aula 6</span>
+		<div id="tasks7" class="tasks"></div>
+		<div class="locked" id="lplan8"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(8)">Plano de Aula 7</span>
+		<div id="tasks8" class="tasks"></div>
+		<div class="locked" id="lplan10"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(10)">Plano de Aula 8</span>
+		<div id="tasks10" class="tasks"></div>
+		<div class="locked" id="lplan11"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
+		<span class="topic" onclick="loadTasks(11)">Plano de Aula 9</span>
+		<div id="tasks11" class="tasks"></div>
+<%-- 		<%@ include file="./topicList.jsp"%> --%>
 		</div>
 		
 		<br><br><br>
@@ -67,8 +96,8 @@
     </div>
      <div id="papers" style="text-align: center; margin-top: -119px">
    		<div id="paper-1"  style="display: inline-block;"> 		    
-<!--    			<div id="refresh_page" title="Recarregar página"></div> -->
-   			<div id="logo" title="Atualizar a página" onclick="window.location.reload()"></div>
+   			<div id="refresh_page" title="Atualizar a página"></div>
+   			<div id="logo" title="PAT2Math =D"></div>
 
 					<div style="display: none;" id="date">
 				         <div id="dateDay" class="dates"></div>
@@ -144,10 +173,10 @@
 	
 	
 	<div class="modal" id="msg-box"></div>
-		<div id="calculatorIcon" title='Calculadora' onclick="showCalculator()"><img src=/pat2math/patequation/img/calculadora.png border=0></div>
-		<div id="calculator" title='Digite a expressão desejada e clique em "="'>
-	<form name="calculator" > <input type="textfield" name="ans" value="">
-<input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)">
-</form>
-	</div>
+<!-- 		<div id="calculatorIcon" title='Calculadora' onclick="showCalculator()"><img src=/pat2math/patequation/img/calculadora.png border=0></div> -->
+<!-- 		<div id="calculator" title='Digite a expressão desejada e clique em "="'> -->
+<!-- 	<form name="calculator" > <input type="textfield" name="ans" value=""> -->
+<!-- <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)"> -->
+<!-- </form> -->
+<!-- 	</div> -->
 	

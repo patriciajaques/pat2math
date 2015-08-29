@@ -28,28 +28,35 @@
 	if (isLastUser === false)
 		setCookieDays (cookieName, currentID, 1);
 	
-	verificaAudio();
+	var id = parseInt (currentID);
+	
+	if ((id >= 207 && id <= 268) || (id === 290 || id === 291 || id === 298)) {
+		setCookieDays ("experimentoSaoLuis", "true", 1);
+	    verificaAudio();
+	}
+	
+	else {
+		setCookieDays ("experimentoSaoLuis", "", 0);
+		openPopup ('/pat2math/student/home'); 
+	}
 	
 
 function verificaAudio ( ) {
-	
-	//Se q1 === 0 é que a questão ainda não foi respondida, caso contrário já foi respondida. 
-	//Fazer essa validação para definir se a janela de questões deverá ser exibida (primeiro ver a resposta do Michael ou do Bruno)
+
 // 	var idGroup = ${student.group.id};
-//     var id = parseInt (currentID);
-// 	var cookieName = "playAudio" + currentPos;
+	var cookieName = "playAudio" + currentPos;
 	
-// 	if (getCookie (cookieName) !== "false" && ((id >= 207 && id <= 268) || (id >= 269 && id <= 278))) { //idGroup === 2 || idGroup === 3
-//         if ((id < 239) || (id >= 269 && (id % 2) !== 0))
-//             setCookieDays ("tipoAudio", "1", 1);
+	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3
+        if (id < 239 || id === 290 || id === 291)
+            setCookieDays ("tipoAudio", "1", 1);
             
-//         else
-//         	setCookieDays ("tipoAudio", "2", 1);
+        else
+        	setCookieDays ("tipoAudio", "2", 1);
         
-//         openPopup ('/pat2math/playaudio');
-//     }
+        openPopup ('/pat2math/playaudio');
+    }
     
-//     else 
+    else 
         openPopup ('/pat2math/student/home'); 
 }
 

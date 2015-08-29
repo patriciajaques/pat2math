@@ -10,6 +10,7 @@ var tasksRemaining; //the number of equations unsolved per topic
 var progressvalue = 0;
 var tipoAudio;
 var playAudio;
+var unlockedPlans;
 //var numClicks;
 
 // variables for the Step object
@@ -36,9 +37,11 @@ var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
 var currentPos = getCookie ("pos");
+var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
+var numUnlockedPlans = 0;
 
 
 
@@ -128,6 +131,25 @@ var cFunctionTour = "functionTour" + currentPos;
 //    return passo;
 //}
 
+
+function showNotificationDoNotCloseLoginWindow() {
+	var currentHour = getCurrentHour();
+	
+	if (isExperimentoSaoLuis !== "" && (currentHour === 8 || currentHour === 9)) {	
+		if (currentHour === 8) 
+			setTimeout ('showNotificationDoNotCloseLoginWindow()', 300000)
+			
+		else {		
+			if (getCurrentMinutes() === 8) {
+			    alert ("Por favor, deixe a janela de login do PAT2Math aberta para facilitar o acesso da próxima turma que utlizará o programa. ");
+			    setTimeout ('window.close()', 240000);
+			}
+			
+			else
+				setTimeout ('showNotificationDoNotCloseLoginWindow()', 60000);
+		}
+	}
+}
 function insertLines ( ) {
 	var lines = document.getElementById('lines').innerHTML;
 	var newLines = lines + '<div class="hLine"></div> <div class="hLine"></div>';
@@ -342,7 +364,59 @@ function rel ( ) {
 		     url : "/pat2math/student/reload_task",     
 		     success : function(response) { 
 		    	/* $('#the_list').html('Teste'); */
- 		      	$('#the_list').html(response);   
+// 		      	$('#the_list').html(response);   
+		    	 unlockedPlans = response;
+		    	 
+		    	 if (unlockedPlans.indexOf ("Plano de aula 1") !== -1) {
+		    			$("#lplan2").hide();
+		    			numUnlockedPlans = 2;
+		    	 }
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 2") !== -1) {
+		    			$("#lplan3").hide();
+		    			numUnlockedPlans = 3;
+		    		}
+		    		
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 3") !== -1) {
+		    			$("#lplan4").hide();
+		    			numUnlockedPlans = 4;
+		    		}
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 4") !== -1) {
+		    			$("#lplan5").hide();
+		    			numUnlockedPlans = 5;
+		    		}
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 5") !== -1) {
+		    			$("#lplan6").hide();
+		    			numUnlockedPlans = 6;
+		    		}
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 6") !== -1) {
+		    			$("#lplan7").hide();
+		    			numUnlockedPlans = 7;
+		    		}
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 7") !== -1) {
+		    			$("#lplan8").hide();
+		    			numUnlockedPlans = 8;
+		    		}
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 8") !== -1) {
+		    			$("#lplan10").hide();
+		    			numUnlockedPlans = 10;
+		    		}
+		    		
+		    		if (unlockedPlans.indexOf ("Plano de aula 9") !== -1) {
+		    			$("#lplan11").hide();
+		    			numUnlockedPlans = 11;
+		    		}
+		    		
+		    	
+
+		    		
+		    		
  		      	
 //Fazer mais testes nesta parte para ver o que não funcionou bem 		      	
 // 		      	if (response.indexOf ("tasks3") !== -1 && response.indexOf ("tasks4" === -1))
@@ -412,6 +486,7 @@ $(document).ready(function() {
 		window.location.reload();
 	});
 	
+	showNotificationDoNotCloseLoginWindow();
 	
 	$("#refresh_page").tooltip();
 	$("#calculator").tooltip();
@@ -599,7 +674,7 @@ $(document).ready(function() {
 	
 	else {
 		selectedEquation = null;
-		$("#topics").fadeIn();
+		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
     	$("#topicsAux").hide();
 	}
 	
@@ -685,11 +760,13 @@ $(document).ready(function() {
 	    cookieName = "splan2" + currentPos;
 	    showPlan2Explanation = getCookie (cookieName);
 	}
-	
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
+	
+	
+	rel();
 });
 
 function openQuestions ( ) {

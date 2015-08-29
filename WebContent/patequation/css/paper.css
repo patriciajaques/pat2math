@@ -27,7 +27,7 @@
 
 #paper-1 #logo {
     background-image: url('../img/logo.png');
-    cursor: pointer;
+/*     cursor: pointer; */
 }
 
 #refresh_page {

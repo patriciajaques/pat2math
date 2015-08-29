@@ -164,6 +164,12 @@
     display: none;
 }
 
+.locked {
+	position: absolute;
+	margin-left: 223px;
+	margin-top: 5px;
+}
+
 #amountPoins{
 	font-weight: bold;
 	font-size: 25px;
