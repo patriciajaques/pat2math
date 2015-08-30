@@ -222,6 +222,12 @@ function requestServer (type, last, next, typeOperation, element) {
                         	
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+       
+                        	if (numUnlockedPlans !== 2)
+                        	    setTimeout ("newPlan()", 2000);
+                        	
+                        	divName = "#lplan" + numUnlockedPlans;
+                        	setTimeout (function() {$(divName).hide();}, 20000);
                         }
                         if (tasksRemaining===0)addProgressValue(100);
                         else addProgressValue(progressvalue);

@@ -101,8 +101,6 @@ function enableContent(id) {
 
 function loadTasks(id) {	
 	if (id === 9 || numUnlockedPlans >= id) {
-	var divName = "#lplan" + id;
-	$(divName).hide();
 	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
@@ -600,6 +598,20 @@ function nextEquationClick ( ) {
 		loadEquation (0);
 	}
 	
+}
+
+function testandos ( ) {
+	$().guider({
+		title: "Parabéns! Você passou de fase!",
+		description: "O próximo plano de aula contém equações um pouco mais desafiadoras do que o anterior. Lembre-se que você pode pedir uma dica a qualquer momento na resolução de uma equação.",
+		alignButtons: "center",
+		buttons: {
+			Próximo: {
+				click: function() {$.guider({}).hideAll(); loadTasks(numUnlockedPlans);},
+				className: "primary"
+			}
+		}
+	}).show();
 }
 
 //Array original das equações
