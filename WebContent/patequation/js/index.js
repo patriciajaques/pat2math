@@ -654,7 +654,7 @@ $(document).ready(function() {
     });
     
     $("#topicsAux").mouseover (function() {
-    	if (isWorkedExample === false || selectedEquation.isComplete === true) {
+    	if (blockMenu === false && (isWorkedExample === false || selectedEquation.isComplete === true)) {
     	    $("#topics").fadeIn();
     	    $("#topicsAux").hide();
     	}
@@ -668,35 +668,38 @@ $(document).ready(function() {
     getFirstEquations();
     getEquationsPlan();
     getRegras();
-    cookieName = "currentEquation" + currentPos;
-	var currentEquationString = getCookie (cookieName);
+    
+    if (numUnlockedPlans === 9) {
+    	blockMenu = true;
+    	loadExercise(201);
+    	checkTour();
+    }
+    
+    else {
+    	cookieName = "currentEquation" + currentPos;
+    	var currentEquationString = getCookie (cookieName);
 	
-	if (currentEquationString !== "") {			
-    	var currentEquation = parseInt (currentEquationString);
-        loadExercise (currentEquation);
-        $("#topics").fadeOut();
-	    $("#topicsAux").show();
-	}
+    	if (currentEquationString !== "") {			
+    		var currentEquation = parseInt (currentEquationString);
+    		loadExercise (currentEquation);
+    		$("#topics").fadeOut();
+    		$("#topicsAux").show();
+    	}
 	
-	else {
-		selectedEquation = null;
-		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
-    	$("#topicsAux").hide();
-	}
+    	else {
+    		selectedEquation = null;
+    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
+    		$("#topicsAux").hide();
+    	}
 	
-	cookieName = "currentPlan" + currentPos;
-	var currentPlanString = getCookie (cookieName);
-	if (currentPlanString !== "") {
-		var currentPlan = parseInt (currentPlanString);
-		loadTasks (currentPlan);
-	} 
-	
-	cookieName = "openTour" + currentPos;
-	
-	if (getCookie (cookieName) === "") {
-		setTimeout (function() {checkTour(false);}, 1000);
-	}
-	
+    	cookieName = "currentPlan" + currentPos;
+    	var currentPlanString = getCookie (cookieName);
+    	if (currentPlanString !== "") {
+    		var currentPlan = parseInt (currentPlanString);
+    		loadTasks (currentPlan);
+    	} 
+    }
+    
 	cookieName = "openQuest" + currentPos;
 
 	if (getCookie (cookieName) === "") {

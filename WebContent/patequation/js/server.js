@@ -223,7 +223,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
        
-                        	if (numUnlockedPlans !== 2)
+                        	if (numUnlockedPlans !== 2 && numUnlockedPlans !== 3)
                         	    setTimeout ("newPlan()", 2000);
                         	
                         	divName = "#lplan" + numUnlockedPlans;
