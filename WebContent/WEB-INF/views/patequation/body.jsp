@@ -158,7 +158,7 @@
 	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
-    <div id="tour" title="Tour Interativo" onclick="clickTour()"></div>
+<!--     <div id="tour" title="Tour Interativo" onclick="clickTour()"></div> -->
     <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>
