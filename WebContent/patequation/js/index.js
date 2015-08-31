@@ -41,7 +41,7 @@ var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
-var numUnlockedPlans = 9;
+var numUnlockedPlans = 1;
 
 
 
@@ -373,10 +373,17 @@ function rel ( ) {
 // 		      	$('#the_list').html(response);   
 		    	 unlockedPlans = response;
 		    	 
-		    	 if (unlockedPlans.indexOf ("Plano de aula 1") !== -1) {
-		    			$("#lplan2").hide();
-		    			numUnlockedPlans = 2;
-		    	 }
+		    	 if (response.indexOf ("Plano de aula 1") === -1) {
+		    	    	blockMenu = true;
+		    	    	isTourInterativo = true;
+		    	    	loadExercise(201);
+		    	    	checkTour();
+		    	    }
+		    	 
+		    	 else {
+		    	      
+		    		 $("#lplan2").hide();
+		    		 numUnlockedPlans = 2;
 		    		
 		    		if (unlockedPlans.indexOf ("Plano de aula 2") !== -1) {
 		    			$("#lplan3").hide();
@@ -419,16 +426,31 @@ function rel ( ) {
 		    			numUnlockedPlans = 11;
 		    		}
 		    		
-		    	
+		        	if (numUnlockedPlans < 4)
+		        		checkTour();
+		        	
+		        	 var cookieName = "currentPlan" + currentPos;
+	    	         var currentPlanString = getCookie (cookieName);
+	    	         if (currentPlanString !== "") {
+	    	        		var currentPlan = parseInt (currentPlanString);
+	    	        		loadTasks (currentPlan);
+	    	        		 
+	    	        		cookieName = "currentEquation" + currentPos;
+	    		    	    var currentEquationString = getCookie (cookieName);
+	    		    		
+	    		    	    if (currentEquationString !== "") {		    	    	  
+	    		    	    		var currentEquation = parseInt (currentEquationString);
+	    		    	    		loadExercise (currentEquation);      		    	    		
+	    		    	    		$("#topics").fadeOut();
+	    		    	    		$("#topicsAux").show();    		
+	    		    	    	}
+	    	         } 
 
-		    		
-		    		
- 		      	
-//Fazer mais testes nesta parte para ver o que não funcionou bem 		      	
-// 		      	if (response.indexOf ("tasks3") !== -1 && response.indexOf ("tasks4" === -1))
-// 		      		plan2();
-// 		      	
-// 		      	showNextPlanButton();	      	
+		    	     if (isTourInterativo === false) {
+		    	    		selectedEquation = null;
+		    	    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
+		    	     }
+		    	 }
 		     },  
 		     error : function(e) {  
 		      alert('Error: ' + e);   
@@ -668,37 +690,7 @@ $(document).ready(function() {
     getFirstEquations();
     getEquationsPlan();
     getRegras();
-    
-    if (numUnlockedPlans === 9) {
-    	blockMenu = true;
-    	loadExercise(201);
-    	checkTour();
-    }
-    
-    else {
-    	cookieName = "currentEquation" + currentPos;
-    	var currentEquationString = getCookie (cookieName);
-	
-    	if (currentEquationString !== "") {			
-    		var currentEquation = parseInt (currentEquationString);
-    		loadExercise (currentEquation);
-    		$("#topics").fadeOut();
-    		$("#topicsAux").show();
-    	}
-	
-    	else {
-    		selectedEquation = null;
-    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
-    		$("#topicsAux").hide();
-    	}
-	
-    	cookieName = "currentPlan" + currentPos;
-    	var currentPlanString = getCookie (cookieName);
-    	if (currentPlanString !== "") {
-    		var currentPlan = parseInt (currentPlanString);
-    		loadTasks (currentPlan);
-    	} 
-    }
+    rel();
     
 	cookieName = "openQuest" + currentPos;
 
@@ -765,17 +757,19 @@ $(document).ready(function() {
 		setTimeout (function() {showExplanation(regrasCookie);}, 1000);
 	}
 	
-	if (currentPlanString === "3") {
-	    cookieName = "splan2" + currentPos;
-	    showPlan2Explanation = getCookie (cookieName);
+	var widthResolution = screen.width;
+	
+	if (widthResolution > 1440) {
+		if (widthResolution <= 1600)
+			document.getElementById('hintText').style.left = "38%";
+	
+		else
+			document.getElementById('hintText').style.left = "40%";
 	}
 
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
-	
-	
-	rel();
 });
 
 function openQuestions ( ) {

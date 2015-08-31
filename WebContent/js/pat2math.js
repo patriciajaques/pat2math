@@ -101,7 +101,6 @@ function enableContent(id) {
 
 function loadTasks(id) {	
 	if (id === 9 || numUnlockedPlans >= id) {
-	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -178,23 +177,20 @@ function loadTasks(id) {
 		
 //		checkEquationTour();
 		
-		if (isTourInterativo && id === 9) 
-			clickPlan("", false);
+		if (isTourInterativo && id === 2) 
+			classPlan("");
 		
-		var cookieName = "currentPlan" + currentPos;
-		setCookieDays (cookieName, id, 1);
+		
 	} else {
-		if (isTourInterativo && id === 9) 		
-			clickPlan("", false);
-		
-		else {
-		    $("#tasks"+id).slideUp(700);
-		    var cookieName = "currentPlan" + currentPos;
-			setCookieDays (cookieName, "", 0);
-		}
+		$("#tasks"+id).slideUp(700);
+	    var cookieName = "currentPlan" + currentPos;
+		setCookieDays (cookieName, "", 0);
+
 	}
 	
 	}
+	var cookieName = "currentPlan" + currentPos;
+	setCookieDays (cookieName, id, 1);
 }
 
 function padlockClick ( ) {
@@ -208,7 +204,7 @@ function padlockClick ( ) {
 
 function loadExercise(id) {	
 //	setCurrentEquation (id);
-	blockMenu = false;
+	
 	loadingShow();
 	$.ajax({
 		type: 'GET',
@@ -240,31 +236,6 @@ function loadExercise(id) {
 					
 					if (isTourInterativo == false)
 					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
-				}
-				
-				if (isTourInterativo && id === 201) {
-					blockMenu = false;
-						
-					if (equation.isComplete === true)
-						clickEquationSlim("", false);
-					
-					else if (equation.steps.length !== 0)
-						clickEquationPartiallyResolved("", false);
-					
-					else
-						clickEquation("", false);
-					
-//					else {
-//						var pos = getCookie  ("pos");
-//	                	var cookieName = "isPartiallyResolved" + pos;
-//	                	var temp = getCookie (cookieName);
-//	                	
-//					    if (temp === "")
-//						    clickEquation();
-//					
-//					    else
-//						    clickEquationPartiallyResolved();
-//					}
 				}
 				
 				newEquations[0] = equation;
@@ -352,13 +323,20 @@ function loadExercise(id) {
 			
 		}
 	});
+	
+	if (isTourInterativo && id !== 201)
+		clickEquation("");
+		
+	else
+		blockMenu = false;
 	loadingHide();	
 	
 	
 }
 
 function loadNextExercise(id) {	
-	blockMenu = false;
+	if (isTourInterativo)
+		blockMenu = false;
 	$.ajax({
 		type: 'GET',
 		url: appContext + "student/loadExercise",
@@ -395,7 +373,8 @@ function loadNextExercise(id) {
 function loadExerciseTest(id) {
 //	if (isTourInterativo && id === 3) 
 //		clickEquation();
-	blockMenu = false;
+	if (isTourInterativo === false)
+		blockMenu = false;
 	loadingShow();
 	$.ajax({
 		type: 'GET',
@@ -503,6 +482,10 @@ function loadExerciseTest(id) {
 //						}
 		}
 	});
+	
+	if (isTourInterativo && id !== 201)
+		clickEquation("");
+	
 	loadingHide();
 }
 

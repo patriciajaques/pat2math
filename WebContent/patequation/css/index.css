@@ -281,15 +281,22 @@
     box-shadow: 3px 3px 6px #222222;
     color: #000;
     top: 253px;
-   /*  left: 70%; */
-    right:823px;
+    left: 36%;
     height: auto;
     max-height: 50%;
     padding: 1em 1.5em;
     position: fixed;
-    width: 10%;
+    width: 355px; /*192px*/
     overflow: auto;
     display: none;
+}
+
+#tourAux {
+	width: 1px;
+	height: 1px;
+	margin-top: -63px;
+	margin-left: -40px;
+	position: fixed;
 }
 
 #next_equation {

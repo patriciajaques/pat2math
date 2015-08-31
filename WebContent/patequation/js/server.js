@@ -186,19 +186,8 @@ function requestServer (type, last, next, typeOperation, element) {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
                     
-                    	if (isTourInterativo && idEquation === 201) {
-//                    		var pos = getCookie  ("pos");
-//    	                	var cookieName = "isPartiallyResolved" + pos;
-//    	                	var isPartiallyResolved = getCookie (cookieName);
-//    	                	
-//    	                	if (isPartiallyResolved !== "")
-//    	                		finalStepTour();
-                    		
-                    		if (selectedEquation.steps.length !== 0)
-                    			finalStepTour();
-    	                	
-    	                	else
-    	                		alternativeFinalStepTour("", false); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                    	if (isTourInterativo && selectedEquation.steps.length === 0) {
+    	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
                     	}               	    
                     	
                    
@@ -207,6 +196,10 @@ function requestServer (type, last, next, typeOperation, element) {
                         $("#marktask"+idEquation).addClass("icon-white");
                         
                         tasksRemaining--;
+                        
+                        if (isTourInterativo)
+                        	tasksRemaining = 0;
+                        
                         if (tasksRemaining===0){
                         	var divName = "#tasks" + numUnlockedPlans;
                         	$(divName).slideUp(700);
@@ -214,16 +207,19 @@ function requestServer (type, last, next, typeOperation, element) {
                         	if ((numUnlockedPlans > 0 && numUnlockedPlans < 8) || numUnlockedPlans >= 10)
                         		numUnlockedPlans++;
                         	
-                        	else if (numUnlockedPlans === 9)
-                        		numUnlockedPlans = 2;
-                        	
                         	else
                         		numUnlockedPlans = 10;
                         	
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
        
-                        	if (numUnlockedPlans !== 2 && numUnlockedPlans !== 3)
+                        	if (numUnlockedPlans == 2)
+                        		mainMenu("");
+                        	
+                        	else if (numUnlockedPlans == 3)
+                        		plan2Explanation("");
+                        	
+                        	else
                         	    setTimeout ("newPlan()", 2000);
                         	
                         	divName = "#lplan" + numUnlockedPlans;
@@ -435,22 +431,9 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         $("#newPoints").show("puff", 500, callbackAddPoints(10));
                         
-                        if (isTourInterativo && idEquation === 201) {
+                        if (isTourInterativo) {
                         	if (selectedEquation.steps.length === 1)
-                        	    firstStepTour("", false);
-//                        	if (isFirstStepTour) {
-//                        		isFirstStepTour = false;
-//                                var pos = getCookie  ("pos");
-//                    	        var cookieName = "isPartiallyResolved" + pos;
-//                    	        var isPartiallyResolved = getCookie (cookieName);
-//                    	        
-//                    	        if (isPartiallyResolved === "") {
-//                    	            setCookieDays (cookieName, "true", 1);  
-//                    	           
-//                    	            if (isTourInterativo)
-//                                        firstStepTour();                       	        
-//                    	        }	        
-//                        	}	
+                        	    firstStepTour("", "Muito bem!", "Por acertar este passo da equação, você ganhou 10 pontos.");
                         }
                     }        
                 }
@@ -502,6 +485,11 @@ function requestServer (type, last, next, typeOperation, element) {
                         $(selectedSheet + " .labelDefault input").css("width", (selectedEquation.currentStep.length + 1) * 16 + "px");
                         centralizeCanMoveAndButton();
                         focus();
+                    }
+                    
+                    if (isTourInterativo) {
+                    	if (selectedEquation.steps.length === 1)
+                    	    firstStepTour("", "Oops!", "Por errar este passo da equação, você perdeu 5 pontos e recebeu uma dica.");
                     }
 
                 }

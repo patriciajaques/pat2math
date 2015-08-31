@@ -36,8 +36,6 @@
 		
 		
 		<div id="the_list">
-		<span class="topic" onclick="loadTasks(9)">Tour</span>
-		<div id="tasks9" class="tasks"></div>
 		<div class="locked" id="lplan2" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>
 		<span class="topic" onclick="loadTasks(2)">Plano de Aula 1</span>
 		<div id="tasks2" class="tasks"></div>
@@ -169,6 +167,7 @@
 	<div id="quest-box"></div>
 	<div id="workedExamplesBlock" title="Esta equação é um exemplo resolvido. Clique no botão play para continuar"></div>
 	<div id="topicsAux"></div>
+	<div id="tourAux"></div>
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	
 	
