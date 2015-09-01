@@ -167,14 +167,6 @@ function insertLines ( ) {
 	document.getElementById('paper-1').style.height = height + 'px';
 }
 
-function isPopup() {         
-    if (window.opener && !(window.location.href == window.opener.location.href))
-        return true;
-    
-    else
-        return false;
-}       
-
 function showCalculator ( ) {
     var calculatorDisplay = document.getElementById('calculator').style.display;
     
@@ -681,9 +673,6 @@ $(document).ready(function() {
     	    $("#topicsAux").hide();
     	}
     });
-    
-    if (!isPopup ( ))
-	    location.href = "/pat2math/audio";
     
     getSortedIds();
     getStringEquations();
