@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script src="/pat2math/patequation/js/index.js"></script>
 <script>
-	
 	var currentID = "" + ${student.id};
 
 	var isLastUser = false;
@@ -36,8 +35,10 @@
 	}
 	
 	else {
+		var cookieName = "playAudio" + currentPos;
+		setCookieDays (cookieName, "false", 1);
 		setCookieDays ("experimentoSaoLuis", "", 0);
-		openPopup ('/pat2math/student/home'); 
+		location.href= '/pat2math/student/home'; 
 	}
 	
 
@@ -53,21 +54,13 @@ function verificaAudio ( ) {
         else
         	setCookieDays ("tipoAudio", "2", 1);
         
-        openPopup ('/pat2math/playaudio');
+        location.href= '/pat2math/playaudio';
     }
     
     else 
-        openPopup ('/pat2math/student/home'); 
+    	location.href= '/pat2math/student/home'; 
 }
 
-function openPopup (url) {
-	var popup = window.open (url , ' null' , ' width = 1920, height = 1080, toolbar = no , scrollbars = yes , location = no, resizable = no ');
-	
-	popup.onbeforeunload = function() {
-		
-		location.href="/pat2math/login";	
-	}
-}
 
 
 

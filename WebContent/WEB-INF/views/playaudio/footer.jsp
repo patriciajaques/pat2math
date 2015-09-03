@@ -45,10 +45,8 @@ function endAudio ( ) {
 	location.href="/pat2math/student/home";	
 }
 
-function playAudio ( ) {
-	if (!isPopup ( )) {
-	    location.href = "/pat2math/audio";
-	} else if (getCookie ("tipoAudio") === "1") {
+function playAudio ( ) {	
+	if (getCookie ("tipoAudio") === "1") {
 		var display = document.getElementById('play').style.display;
 		document.getElementById('play').style.display = 'none';
 		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';

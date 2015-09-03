@@ -131,7 +131,6 @@ var numUnlockedPlans = 1;
 //    return passo;
 //}
 
-
 function showNotificationDoNotCloseLoginWindow() {
 	var currentHour = getCurrentHour();
 	
@@ -500,7 +499,10 @@ $(document).ready(function() {
 //		$(this).removeClass("show-menu");
 //		$(this).addClass("hide-menu");
 //	});
+	var cookieName = "playAudio" + currentPos;
 	
+	if (getCookie (cookieName) !== "false")
+		location.href="/pat2math/audio";	
 	
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
@@ -526,7 +528,7 @@ $(document).ready(function() {
             }
     );
     
-    var cookieName = "isWorkedExample" + currentPos;
+    cookieName = "isWorkedExample" + currentPos;
 	
     if (enableWorkedExample && getCookie (cookieName) !== "") {
 		isWorkedExample = true;
@@ -1573,6 +1575,7 @@ function newEquation() {
 //	$("#easter-egg-loupe-box").fadeOut(700);
 //	
 //}
+
 function checkEquation() { 	
 //	setTimeout ('resetNumClicks()', 3000);
 //	

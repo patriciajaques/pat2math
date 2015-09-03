@@ -55,8 +55,8 @@ function introduction (nextStep) {
 	$("#linha3").guider({
 		name: "start2",
 		next: "start3",
-		title: "As equações iniciais sempre estarão na primeira linha",
-		description: "Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
+		title: "Equações iniciais",
+		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		position: "bottom",
 		alignButtons: "right",
 		onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
@@ -71,37 +71,20 @@ function introduction (nextStep) {
 	$("#linha3").guider({
 		name: "start3",
         next: "start4",
-		title: "Agora, nós vamos resolver esta equação passo-a-passo",
-		description: 'Você pode começar a resolução da forma que preferir, mas sugerimos que adicione "+2x" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada.',  
+		title: "Resolvendo uma equação",
+		description: 'Nós vamos resolver esta equação passo-a-passo. Você pode começar a resolução da forma que preferir, mas sugerimos que adicione "+2x" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada. Digite x+2x+15=45-2x+2x e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img>',  
 		width: 600,
 		position: "bottom",
 		alignButtons: "right",
 		onShow: function() {setCookieDays (cStepTour, "start3", 1); setCookieDays (cFunctionTour, "introduction", 1);},
 		buttons: {
             Voltar: true,
-			Próximo: {
+			OK: {
                click: true,
                className: "primary"
             }
 		}
-	});
-            
-    $("#linha3").guider({
-		name: "start4",
-		title: "Veja como é fácil",
-		description: 'Digite x+2x+15=45-2x+2x e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img> localizado ao final da linha.',    
-		width: 620,
-		position: "bottom",
-		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start4", 1); setCookieDays (cFunctionTour, "introduction", 1);},
-		buttons: {
-			Voltar: true,
-			OK: {
-				click: true,
-				className: "primary"
-			}
-		}
-	});
+	});         
 }
 
 //O título e a descrição devem variar se o usuário acertou o errou o passo
@@ -164,8 +147,8 @@ function firstStepTour (nextStep, title, description) {
     $("#note").guider({
     	name: "fstep2",
     	next: "fstep3",
-    	title: "Observe este painel",
-    	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
+    	title: "Painel de progresso",
+    	description: "Observe este painel. Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
     	onShow: function() {setCookieDays (cStepTour, "fstep2", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
@@ -302,8 +285,8 @@ function alternativeFirstStepTour (nextStep) {
     $("#note").guider({
     	name: "fstep2",
     	next: "fstep3",
-    	title: "Observe este painel",
-    	description: "Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
+    	title: "Painel de Progresso",
+    	description: "Observe este painel. Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
     	onShow: function() {setCookieDays (cStepTour, "fstep2", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},

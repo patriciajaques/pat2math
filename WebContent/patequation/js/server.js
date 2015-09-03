@@ -185,10 +185,7 @@ function requestServer (type, last, next, typeOperation, element) {
 //                        } else {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
 //                        }
-                    
-                    	if (isTourInterativo && selectedEquation.steps.length === 0) {
-    	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
-                    	}               	    
+                             	    
                     	
                    
                       $("#next_equation").tooltip();
@@ -213,8 +210,13 @@ function requestServer (type, last, next, typeOperation, element) {
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
        
-                        	if (numUnlockedPlans == 2)
-                        		mainMenu("");
+                        	if (numUnlockedPlans == 2) {
+                        		if (selectedEquation.steps.length === 0)
+        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        	  
+                        		else
+                        		    mainMenu("");
+                        	}
                         	
                         	else if (numUnlockedPlans == 3)
                         		plan2Explanation("");
