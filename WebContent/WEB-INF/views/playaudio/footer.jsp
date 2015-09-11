@@ -2,6 +2,30 @@
 
 <script>
 var i;
+var tipoAudio = "2";
+
+setColor();
+// var tipoAudio = getCookie ("tipoAudio");
+
+function setColor ( ) {
+	var color = Math.floor((Math.random() * 2) + 1);
+	
+	if (tipoAudio === "1") {
+		if (color === 1)
+			document.body.style.background = "#FFD1EA";
+		
+		else
+			document.body.style.background = "#D1E8FF";
+	}
+	
+	else {
+		if (color === 1)
+			document.body.style.background = "#FFDEAE";
+		
+		else
+			document.body.style.background = "#DFFFCC";
+	}
+}
 
 function mostraProgressoAudio1 ( ) {
 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
@@ -46,7 +70,7 @@ function endAudio ( ) {
 }
 
 function playAudio ( ) {	
-	if (getCookie ("tipoAudio") === "1") {
+	if (tipoAudio === "1") {
 		var display = document.getElementById('play').style.display;
 		document.getElementById('play').style.display = 'none';
 		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';

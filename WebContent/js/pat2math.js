@@ -125,25 +125,25 @@ function loadTasks(id) {
 						function() {
 							var text = $(this).html();
 							
-							if (text.indexOf ("5*(2x") !== -1 || text.indexOf("2*(x") !== -1) {
-								var eq;
-								
-								if (text.indexOf ("5*(2x") !== -1) 
-									eq = "5(2x+7)-1=4..";
-		
-								else 
-									eq = "2(x-1)+3(x+1)..";
-								
-								var temp = textToMathml (eq);
-								var equation = "<math>" + temp[0];
-								
-								for (var i = 1; i < temp.length; i++)
-									equation += temp[i];
-								
-								equation += "</math>..";
-								
-								$(this).html (equation);
-							}
+//							if (text.indexOf ("5*(2x") !== -1 || text.indexOf("2*(x") !== -1) {
+//								var eq;
+//								
+//								if (text.indexOf ("5*(2x") !== -1) 
+//									eq = "5(2x+7)-1=4..";
+//		
+//								else 
+//									eq = "2(x-1)+3(x+1)..";
+//								
+//								var temp = textToMathml (eq);
+//								var equation = "<math>" + temp[0];
+//								
+//								for (var i = 1; i < temp.length; i++)
+//									equation += temp[i];
+//								
+//								equation += "</math>..";
+//								
+//								$(this).html (equation);
+//							}
 							
 						}
 					);

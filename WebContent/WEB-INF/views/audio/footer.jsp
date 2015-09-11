@@ -29,7 +29,7 @@
 	
 	var id = parseInt (currentID);
 	
-	if ((id >= 207 && id <= 268) || (id === 290 || id === 291 || id === 298)) {
+	if ((id >= 207 && id <= 268) || (id === 274 || id === 290 || id === 291 || id === 298)) {
 		setCookieDays ("experimentoSaoLuis", "true", 1);
 	    verificaAudio();
 	}
@@ -48,7 +48,7 @@ function verificaAudio ( ) {
 	var cookieName = "playAudio" + currentPos;
 	
 	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3
-        if (id < 239 || id === 290 || id === 291)
+        if (id < 239 || id === 274 || id === 290 || id === 291)
             setCookieDays ("tipoAudio", "1", 1);
             
         else

@@ -1,3 +1,7 @@
+//Colocar uma verificação se o passo digitado é do tipo x=[número]. Se for e estiver correto,
+//deve ser identificado como solução da equação, às vezes isso não acontece.
+
+
 function requestServer (type, last, next, typeOperation, element) {
     //type = 'd' -> hint
     //type = 'n' -> new equation
