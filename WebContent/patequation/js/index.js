@@ -1725,6 +1725,8 @@ function callbackAddPoints(value) {
 }
 
 function showHint(hint) {
+	moveHint();
+	
     var lastHint = $("#hintText").html();
     if (lastHint !== "") {
         lastHint = "<br><br>" + lastHint;

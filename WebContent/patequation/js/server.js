@@ -202,6 +202,8 @@ function requestServer (type, last, next, typeOperation, element) {
                         	tasksRemaining = 0;
                         
                         if (tasksRemaining===0){
+                        	addProgressValue(100);
+                        	
                         	var divName = "#tasks" + numUnlockedPlans;
                         	$(divName).slideUp(700);
                         	
@@ -231,7 +233,6 @@ function requestServer (type, last, next, typeOperation, element) {
                         	divName = "#lplan" + numUnlockedPlans;
                         	setTimeout (function() {$(divName).hide();}, 20000);
                         }
-                        if (tasksRemaining===0)addProgressValue(100);
                         else addProgressValue(progressvalue);
                         selectedEquation.isComplete = true;
                         
