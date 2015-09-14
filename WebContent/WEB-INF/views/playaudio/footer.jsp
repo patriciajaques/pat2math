@@ -2,10 +2,9 @@
 
 <script>
 var i;
-var tipoAudio = "2";
-
+var tipoAudio = getCookie ("tipoAudio");
 setColor();
-// var tipoAudio = getCookie ("tipoAudio");
+
 
 function setColor ( ) {
 	var color = Math.floor((Math.random() * 2) + 1);
