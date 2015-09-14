@@ -143,7 +143,7 @@ function showNotificationDoNotCloseLoginWindow() {
 				if (selectedEquation !== null)
 					moveHint();
 
-				$("#hintText").html("Por favor, deixe a janela de login do PAT2Math aberta para facilitar o acesso da próxima turma que utlizará o programa. Ao sair, somente feche a janela atual (clicando no ícone vermelho com uma porta no menu principal ou no X do canto superior direito).");
+				$("#hintText").html("Por favor, deixe a janela de login do PAT2Math aberta para facilitar o acesso da próxima turma que utlizará o programa. Ao sair, clique no ícone vermelho com uma porta desenhada no menu principal.");
 				$("#hintText").show('blind', 500);
 				$(".verticalTape").show('fold', 500);
 
