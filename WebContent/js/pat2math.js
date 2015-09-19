@@ -100,7 +100,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-	if (id === 9 || numUnlockedPlans >= id) {
+//	if (id === 9 || numUnlockedPlans >= id) {
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -188,7 +188,7 @@ function loadTasks(id) {
 
 	}
 	
-	}
+//	}
 	var cookieName = "currentPlan" + currentPos;
 	setCookieDays (cookieName, id, 1);
 }
@@ -203,9 +203,14 @@ function padlockClick ( ) {
 }
 
 function loadExercise(id) {	
-//	setCurrentEquation (id);
-	
+//	setCurrentEquation (id);	
 	loadingShow();
+	
+	var cookieName = "linesHeight" + currentPos + "" + id;
+	
+	if (getCookie (cookieName) !== "")
+		insertLines(true, id);
+	
 	$.ajax({
 		type: 'GET',
 		url: appContext + "student/loadExercise",
@@ -248,7 +253,7 @@ function loadExercise(id) {
 			cookieName = "isWorkedExample" + currentPos;
 			
 			if (enableWorkedExample) {
-			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
+			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
         	        $("#workedExamplesBlock").show();
@@ -264,7 +269,7 @@ function loadExercise(id) {
         	        else
         	            requestStep (selectedEquation.equation);
         	        
-        	        if (idEquation === 13) {
+        	        if (idEquation === 29 && selectedEquation.isComplete === false) { //Colocar o tutorial na primeira equação do plano 10, pois eles ainda não viram os Worked Examples
         	        	var cookieName = "showTutorial" + currentPos;
         	        	
         	        	if (getCookie (cookieName) === "")
@@ -371,11 +376,16 @@ function loadNextExercise(id) {
 }
 
 function loadExerciseTest(id) {
-//	if (isTourInterativo && id === 3) 
-//		clickEquation();
+	loadingShow();
+
+    var cookieName = "linesHeight" + currentPos + "" + id;
+    
+	if (getCookie (cookieName) !== "")
+		insertLines(true, id);
+	
 	if (isTourInterativo === false)
 		blockMenu = false;
-	loadingShow();
+	
 	$.ajax({
 		type: 'GET',
 		url: appContext + "student/loadExerciseTest",
@@ -413,7 +423,7 @@ function loadExerciseTest(id) {
             cookieName = "isWorkedExample" + currentPos;
             
             if (enableWorkedExample) {
-			    if (idEquation === 13 || idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
+			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
         	        $("#workedExamplesBlock").show();
@@ -429,7 +439,7 @@ function loadExerciseTest(id) {
         	        else
         	            requestStep (selectedEquation.equation);
         	        
-        	        if (idEquation === 13) {
+        	        if (idEquation === 29) {
         	        	var cookieName = "showTutorial" + currentPos;
         	        	
         	        	if (getCookie (cookieName) === "")
@@ -592,7 +602,17 @@ var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
            144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 180, 162, 163, 166, 167,
            168, 169, 170, 171, 172, 173, 174, 176, 177, 178,
            187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
-           202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219];
+           202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219,
+           220, 221, 222, 223, 224, 225, 226, 227, 228, 229,
+           230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240,
+           241, 242, 243, 244, 245, 246, 247, 248, 249, 250,
+           251, 252, 253, 254, 255, 256,
+           257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269,
+           270, 271, 272, 273, 274, 275, 276, 277, 278,
+           279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292,
+           293, 294, 295, 296, 297, 298, 299,
+           300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312,
+           313, 314, 315, 316, 317, 318, 319, 320];
  
 
 
@@ -762,6 +782,108 @@ function getSortedIds ( ) {
 	sortedIds[217] = new EquationId (217, 151, 11);
 	sortedIds[218] = new EquationId (218, 152, 11);
 	sortedIds[219] = new EquationId (219, 153, 11);
+	sortedIds[220] = new EquationId (220, 154, 12);
+	sortedIds[221] = new EquationId (221, 155, 12);
+	sortedIds[222] = new EquationId (222, 156, 12);
+	sortedIds[223] = new EquationId (223, 157, 12);
+	sortedIds[224] = new EquationId (224, 158, 12);
+	sortedIds[225] = new EquationId (225, 159, 12);
+	sortedIds[226] = new EquationId (226, 160, 12);
+	sortedIds[227] = new EquationId (227, 161, 12);
+	sortedIds[228] = new EquationId (228, 162, 12);
+	sortedIds[229] = new EquationId (229, 163, 12);
+	sortedIds[230] = new EquationId (230, 164, 13);
+	sortedIds[231] = new EquationId (231, 165, 13);
+	sortedIds[232] = new EquationId (232, 166, 13);
+	sortedIds[233] = new EquationId (233, 167, 13);
+	sortedIds[234] = new EquationId (234, 168, 13);
+	sortedIds[235] = new EquationId (235, 169, 13);
+	sortedIds[236] = new EquationId (236, 170, 13);
+	sortedIds[237] = new EquationId (237, 171, 13);
+	sortedIds[238] = new EquationId (238, 172, 13);
+	sortedIds[239] = new EquationId (239, 173, 13);
+	sortedIds[240] = new EquationId (240, 174, 13);
+	sortedIds[241] = new EquationId (241, 175, 14);
+	sortedIds[242] = new EquationId (242, 176, 14);
+	sortedIds[243] = new EquationId (243, 177, 14);
+	sortedIds[244] = new EquationId (244, 178, 14);
+	sortedIds[245] = new EquationId (245, 179, 14);
+	sortedIds[246] = new EquationId (246, 180, 14);
+	sortedIds[247] = new EquationId (247, 181, 14);
+	sortedIds[248] = new EquationId (248, 182, 14);
+	sortedIds[249] = new EquationId (249, 183, 14);
+	sortedIds[250] = new EquationId (250, 184, 14);
+	sortedIds[251] = new EquationId (251, 185, 15);
+	sortedIds[252] = new EquationId (252, 186, 15);
+	sortedIds[253] = new EquationId (253, 187, 15);
+	sortedIds[254] = new EquationId (254, 188, 15);
+	sortedIds[255] = new EquationId (255, 189, 15);
+	sortedIds[256] = new EquationId (256, 190, 15);
+	sortedIds[257] = new EquationId (257, 191, 16);
+	sortedIds[258] = new EquationId (258, 192, 16);
+	sortedIds[259] = new EquationId (259, 193, 16);
+	sortedIds[260] = new EquationId (260, 194, 16);
+	sortedIds[261] = new EquationId (261, 195, 16);
+	sortedIds[262] = new EquationId (262, 196, 16);
+	sortedIds[263] = new EquationId (263, 197, 16);
+	sortedIds[264] = new EquationId (264, 198, 16);
+	sortedIds[265] = new EquationId (265, 199, 16);
+	sortedIds[266] = new EquationId (266, 200, 16);
+	sortedIds[267] = new EquationId (267, 201, 16);
+	sortedIds[268] = new EquationId (268, 202, 16);
+	sortedIds[269] = new EquationId (269, 203, 16);
+	sortedIds[270] = new EquationId (270, 204, 17);
+	sortedIds[271] = new EquationId (271, 205, 17);
+	sortedIds[272] = new EquationId (272, 206, 17);
+	sortedIds[273] = new EquationId (273, 207, 17);
+	sortedIds[274] = new EquationId (274, 208, 17);
+	sortedIds[275] = new EquationId (275, 209, 17);
+	sortedIds[276] = new EquationId (276, 210, 17);
+	sortedIds[277] = new EquationId (277, 211, 17);
+	sortedIds[278] = new EquationId (278, 212, 17);
+	sortedIds[279] = new EquationId (279, 213, 18);
+	sortedIds[280] = new EquationId (280, 214, 18);
+	sortedIds[281] = new EquationId (281, 215, 18);
+	sortedIds[282] = new EquationId (282, 216, 18);
+	sortedIds[283] = new EquationId (283, 217, 18);
+	sortedIds[284] = new EquationId (284, 218, 18);
+	sortedIds[285] = new EquationId (285, 219, 18);
+	sortedIds[286] = new EquationId (286, 220, 18);
+	sortedIds[287] = new EquationId (287, 221, 18);
+	sortedIds[288] = new EquationId (288, 222, 18);
+	sortedIds[289] = new EquationId (289, 223, 18);
+	sortedIds[290] = new EquationId (290, 224, 18);
+	sortedIds[291] = new EquationId (291, 225, 18);
+	sortedIds[292] = new EquationId (292, 226, 18);
+	sortedIds[293] = new EquationId (293, 227, 19);
+	sortedIds[294] = new EquationId (294, 228, 19);
+	sortedIds[295] = new EquationId (295, 229, 19);
+	sortedIds[296] = new EquationId (296, 230, 19);
+	sortedIds[297] = new EquationId (297, 231, 19);
+	sortedIds[298] = new EquationId (298, 232, 19);
+	sortedIds[299] = new EquationId (299, 233, 19);
+	sortedIds[300] = new EquationId (300, 234, 20);
+	sortedIds[301] = new EquationId (301, 235, 20);
+	sortedIds[302] = new EquationId (302, 236, 20);
+	sortedIds[303] = new EquationId (303, 237, 20);
+	sortedIds[304] = new EquationId (304, 238, 20);
+	sortedIds[305] = new EquationId (305, 239, 20);
+	sortedIds[306] = new EquationId (306, 240, 20);
+	sortedIds[307] = new EquationId (307, 241, 20);
+	sortedIds[308] = new EquationId (308, 242, 20);
+	sortedIds[309] = new EquationId (309, 243, 20);
+	sortedIds[310] = new EquationId (310, 244, 20);
+	sortedIds[311] = new EquationId (311, 245, 20);
+	sortedIds[312] = new EquationId (312, 246, 20);
+	sortedIds[313] = new EquationId (313, 247, 21);
+	sortedIds[314] = new EquationId (314, 248, 21);
+	sortedIds[315] = new EquationId (315, 249, 21);
+	sortedIds[316] = new EquationId (316, 250, 21);
+	sortedIds[317] = new EquationId (317, 251, 21);
+	sortedIds[318] = new EquationId (318, 252, 21);
+	sortedIds[319] = new EquationId (319, 253, 21);
+	sortedIds[320] = new EquationId (320, 254, 21);
+
 }
 
 function getFirstEquations ( ) {
@@ -932,6 +1054,107 @@ function getStringEquations ( ) {
 	stringEquation[217] = "2(x-2)+3(2x+2)..";
 	stringEquation[218] = "x-(x)/(3)=6+(x)/(2)";
 	stringEquation[219] = "10(x-6)=9(x+3)";
+	stringEquation[220] = "9-2(x+3)=x-18";
+	stringEquation[221] = "4(x-4)=-1..";
+	stringEquation[222] = "40+(3x-4)=2..";
+	stringEquation[223] = "5(2x-5)=3..";
+	stringEquation[224] = "2(6x-8)+10=3..";
+	stringEquation[225] = "3x+2(1-x)=10";
+	stringEquation[226] = "x-(3-x)=1";
+	stringEquation[227] = "x+3(x-1)-(x..";
+	stringEquation[228] = "10=3(x-2)-(x..";
+	stringEquation[229] = "2(7x-1)-3(4..";
+	stringEquation[230] = "(x)/(4)-2=(x-3)/(2)";
+	stringEquation[231] = "(4)/(5)+(x)/(2)=(x)/(3)-2";
+	stringEquation[232] = "(4x+16)/(4)-(x)/(2)=6+x";
+	stringEquation[233] = "(2x+4)/(5)-(x-10)/(6)=2";
+	stringEquation[234] = "(2x+9)/(7)-(x+1)/(4)=x+2";
+	stringEquation[235] = "(4x+9)/(9)-(x)/(15)=2x..";
+	stringEquation[236] = "x-(x)/(2)=2x+1";
+	stringEquation[237] = "(x)/(2)+(x-1)/(3)=3";
+	stringEquation[238] = "(x-2)/(4)+2x=(5x)/(2)";
+	stringEquation[239] = "(x)/(3)+(2x+2)/(4)=3x+7";
+	stringEquation[240] = "(x-1)/(7)-(2x+6)/(8)=(4x-14)/(14)-1";
+	stringEquation[241] = "2(2x-4)=5-((x)/(2)+4)";
+	stringEquation[242] = "x+3=2(x-(1)/(2))";
+	stringEquation[243] = "(3(x-4))/(4)-1=x..";
+	stringEquation[244] = "4x-2(x-5)..";
+	stringEquation[245] = "(2x-1)/(4)-(x-1)/(3)..";
+	stringEquation[246] = "(x)/(2)-(x-1)/(3)+(17)/(12)..";
+	stringEquation[247] = "(2x-3)/(5)-(11-x)/(3)=(29)/(30)";
+	stringEquation[248] = "(x-1)/(2)+(x+1)/(3)=(2x+3)/(5)";
+	stringEquation[249] = "(3x+1)/(13)-(2-x)/(2)..";
+	stringEquation[250] = "(2x-1)/(3)-(5x-10)/(4)..";
+	stringEquation[251] = "x+8x-2x=81-2x";
+	stringEquation[252] = "7x+44-x=2x+20";
+	stringEquation[253] = "6x-2(x-3)-(12..";
+	stringEquation[254] = "10(x+1)-6=3..";
+	stringEquation[255] = "6(x-2)-2(x..";
+	stringEquation[256] = "6x-(x+1)-1..";
+	stringEquation[257] = "(x-1)/(2)=x-(2x-1)/(3)";
+	stringEquation[258] = "(x-2)/(3)-(x+1)/(4)=10";
+	stringEquation[259] = "(x-1)/(7)-(x+3)/(4)=1";
+	stringEquation[260] = "(x-3)/(5)=(x-1)/(4)";
+	stringEquation[261] = "(x+1)/(3)+(3x-1)/(2)..)";
+	stringEquation[262] = "(x)/(2)+4x=15-2..";
+	stringEquation[263] = "(1-x)/(2)=(x+1)/(2)+x";
+	stringEquation[264] = "(x)/(6)+(x)/(9)=(x-1)/(2)+2";
+	stringEquation[265] = "(x-3)/(3)-(3)/(2)=(4x)/(3)";
+	stringEquation[266] = "(x+3)/(2)+(x)/(3)=10";
+	stringEquation[267] = "(x+3)/(2)+(x+2)/(3)=12";
+	stringEquation[268] = "(x-1)/(2)=(x+1)/(3)";
+	stringEquation[269] = "(x-2)/(10)=(x-1)/(2)";
+	stringEquation[270] = "9-2(x+3)=x-18";
+	stringEquation[271] = "4(x-4)=-1..";
+	stringEquation[272] = "40+(3x-4)=2..";
+	stringEquation[273] = "5(2x-5)=3..";
+	stringEquation[274] = "2(6x-8)+10=3..";
+	stringEquation[275] = "3x+2(1-x)=10";
+	stringEquation[276] = "x-(3-x)=1";
+	stringEquation[277] = "x+3(x-1)-(x..";
+	stringEquation[278] = "10=3(x-2)-(x..";
+	stringEquation[279] = "(x)/(3)-(7)/(8)=(x)/(4)-1";
+	stringEquation[280] = "(3x-5)/(2)-(x-2)/(5)=7";
+	stringEquation[281] = "x-3=2(x-(1)/(2))";
+	stringEquation[282] = "(x+5)/(2)=(8+2x)/(5)";
+	stringEquation[283] = "(5x-10)/(2)=10-(5x-5)/(3)";
+	stringEquation[284] = "(x+3)/(8)=(5)/(4)";
+	stringEquation[285] = "(x)/(2)-5=x+(3)/(4)";
+	stringEquation[286] = "(5x-3)/(4)-(3x+8)/(2)..";
+	stringEquation[287] = "(x+4)/(5)-(x-10)/(6)=2";
+	stringEquation[288] = "(x-2)/(3)-(x+1)/(4)=4";
+	stringEquation[289] = "(2x-3)/(4)-(2-x)/(3)=(x-1)/(3)";
+	stringEquation[290] = "x-(x)/(2)=2x+(1)/(3)";
+	stringEquation[291] = "(x+2)/(2)-(2x-3)/(3)=(3x+1)/(4)";
+	stringEquation[292] = "(x-1)/(5)-(5-2x)/(3)=x";
+	stringEquation[293] = "4x-2(x-5)=-x-5";
+	stringEquation[294] = "4(2-x)-3(2x..";
+	stringEquation[295] = "5x-(x-2)=2..";
+	stringEquation[296] = "x+7x-5x=80-5x";
+	stringEquation[297] = "3(x-1)-9x-30..";
+	stringEquation[298] = "6(x-2)-(x+1)=40";
+	stringEquation[299] = "6x-(x+1)-1..";
+	stringEquation[300] = "(5x-1)/(10)-(1)/(2)=1-(2-x)/(5)";
+	stringEquation[301] = "x-(2x+1)/(3)=(x-2)/(2)";
+	stringEquation[302] = "(x-2)/(5)-(x+1)/(4)=10";
+	stringEquation[303] = "(x-2)/(4)+(1)/(3)=x-(2x-1)/(3)";
+	stringEquation[304] = "(x-2)/(5)=(x-1)/(4)";
+	stringEquation[305] = "(5-x)/(9)-(x-1)/(6)..";
+	stringEquation[306] = "(x-1)/(2)+(x+1)/(3)=(x+3)/(2)";
+	stringEquation[307] = "(2x+2)/(3)+(3x-5)/(2)=9";
+	stringEquation[308] = "1-(x-1)/(2)=x-(x+2)/(3)";
+	stringEquation[309] = "(x)/(2)+(x)/(3)=(7+2x)/(3)";
+	stringEquation[310] = "(3x-2)/(4)-(4-x)/(2)..";
+	stringEquation[311] = "(x-1)/(3)-(3)/(2)=(4x)/(3)";
+	stringEquation[312] = "(1+7x)/(7)-1=(3)/(7)..";
+	stringEquation[313] = "(30x)/(60)+x=225";
+	stringEquation[314] = "(35x)/(10)-3x=-(15)/(10)";
+	stringEquation[315] = "(25x)/(2)-(21x)/(2)=(17)/(5)";
+	stringEquation[316] = "6x-(5x)/(10)=110";
+	stringEquation[317] = "7x-(x)/(2)=26";
+	stringEquation[318] = "4x-10=(5x)/(10)+(75)/(10)";
+	stringEquation[319] = "(3)/(5)+x=(x+3)/(5)-(x-5)/(3)";
+	stringEquation[320] = "x+(3x-9)/(5)..";
 }
 
 function getEquationsPlan ( ) {

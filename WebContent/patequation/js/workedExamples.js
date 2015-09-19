@@ -1,4 +1,7 @@
 function tutorialWorkedExamples ( ) {
+	var cookieName = "showTutorial" + currentPos;
+	setCookieDays (cookieName, "1", 1);
+	
 	$.guider({
 		name: "start",
 		next: "start2",
@@ -45,11 +48,14 @@ function tutorialWorkedExamples ( ) {
 }
 
 function finishTutorial ( ) {
+	var cookieName = "showTutorial" + currentPos;
+	setCookieDays (cookieName, "2", 1);
+	
 	$.guider({
 		name: "finish",
 		next: "finish2",
 		title: "Primeiro passo da equação resolvido com sucesso!",
-		description: "A explicação de qual operação o PAT2Math usou para resolver este passo você vê no post-it à direita.",
+		description: "A explicação de qual operação o PAT2Math usou para resolver este passo você vê no post-it abaixo da caixa de texto.",
 	    alignButtons: "right", 
 	    buttons: {
 	    	Próximo: {
@@ -87,6 +93,8 @@ function showExplanation (regrasCookie) {
 		var temp = regra.nome.toUpperCase() + "<br>" + regra.explicacao;
 		texto += "<br><br>" + temp;
 	}
+	
+	moveHint();
 	
 	$("#hintText").html(texto);
     $("#hintText").show('blind', 500);

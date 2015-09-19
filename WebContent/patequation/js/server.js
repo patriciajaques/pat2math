@@ -363,7 +363,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     selectedEquation.currentStep = "";
                     
                     if (selectedEquation.steps.length >= 10)
-                    	insertLines();
+                    	insertLines(false, idEquation);
 
 //                    if (next.indexOf("^2") !== -1) {
 //                        selectedEquation.twoAnswers = true;

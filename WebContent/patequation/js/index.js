@@ -31,7 +31,7 @@ var regras;
 var regraWE;
 var stepWE;
 var nextLineServer;
-var enableWorkedExample = false;
+var enableWorkedExample = true;
 //Ver se a condição acima também desativa as instruções dos Worked Examples
 var isWorkedExample = false;
 var isTourInterativo = false;
@@ -155,15 +155,35 @@ function showNotificationDoNotCloseLoginWindow() {
 		}
 	}
 }
-function insertLines ( ) {
+
+function insertLines (verifyLinesHeight, idEquation) {
 	var lines = document.getElementById('lines').innerHTML;
 	var newLines = lines + '<div class="hLine"></div> <div class="hLine"></div>';
-	document.getElementById('lines').innerHTML = newLines;
-	var heightString = $('#paper-1').css('height');
-	var height = heightString.split ("px");
-	height = parseInt (height[0]);
-	height += 124;
+	
+	var cookieName = "linesHeight" + currentPos + "" + idEquation;
+	var linesHeight = getCookie (cookieName);
+	var numLinesInserted = 2;
+	var height = 800;
+	
+	if (linesHeight !== "") {
+		var lh = linesHeight.split (" ");
+		numLinesInserted = parseInt(lh[0]);
+		height = parseInt(lh[1]);
+		
+		if (verifyLinesHeight) 
+			for (var i = 2; i < numLinesInserted; i+=2)
+				newLines += ' <div class="hLine"></div> <div class="hLine"></div>';		
+		
+		numLinesInserted += 2;
+	}
+	
+	height += 64;
 	document.getElementById('paper-1').style.height = height + 'px';
+	document.getElementById('lines').innerHTML = newLines;
+	
+	linesHeight = numLinesInserted + " " + height;
+	
+	setCookieDays (cookieName, linesHeight, 1);
 }
 
 function showCalculator ( ) {
@@ -437,7 +457,7 @@ function rel ( ) {
 	    		    	    	}
 	    	         } 
 
-		    	     if (isTourInterativo === false) {
+		    	     if (isTourInterativo === false && isWorkedExample === false) {
 		    	    		selectedEquation = null;
 		    	    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
 		    	     }
@@ -1528,8 +1548,22 @@ function moveHint() {
 		}
 	}
 	
+	var height = 865;
+	
+	var cookieName = "linesHeight" + currentPos + "" + idEquation;
+	var linesHeight = getCookie (cookieName);
+	
+	if (linesHeight !== "") {
+		height = parseInt (linesHeight[1]) + 65;
+	}
+	
+	var maxHeight = height - top;
+	
+	maxHeight = maxHeight + "px";
 	top = top + "px";
+	
 	document.getElementById('hintText').style.top = top;
+	document.getElementById('hintText').style.maxHeight = maxHeight;
 }
 function hint() {
 	moveHint();

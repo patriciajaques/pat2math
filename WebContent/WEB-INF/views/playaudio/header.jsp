@@ -1,3 +1,8 @@
+<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css"/>
+<link href='http://fonts.googleapis.com/css?family=Petit+Formal+Script' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css'> 
+<link href='http://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+
 <style>
      #audio {
                 background: url("/pat2math/patequation/img/modal_audio.png") no-repeat scroll center center transparent;

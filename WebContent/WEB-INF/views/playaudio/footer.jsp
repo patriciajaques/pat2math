@@ -1,10 +1,28 @@
 <script src="/pat2math/patequation/js/index.js"></script>
+<script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
 
 <script>
 var i;
 var tipoAudio = getCookie ("tipoAudio");
 setColor();
 
+if (tipoAudio === "2")
+	setTimeout ('showNotification()', 1000);
+
+	
+function showNotification ( ) {
+	$.guider({
+    	title: "Adicionamos uma nova história sobre a matemática!",
+    	description: "Clique no botão play para ouvir.",
+        alignButtons: "center",
+    	buttons: {
+    		OK: {
+				click: true,
+				className: "primary"
+			}
+    	}   	            
+    	}).show();
+}
 
 function setColor ( ) {
 	var color = Math.floor((Math.random() * 2) + 1);
@@ -78,7 +96,8 @@ function playAudio ( ) {
 	} else {
 		var display = document.getElementById('play').style.display;
 		document.getElementById('play').style.display = 'none';
-		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="//www.youtube.com/embed/-sa-Gq3OM5A?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/K0IZ6IkX8BA?autoplay=1" frameborder="0" allowfullscreen></iframe>';	                                               
+		//Próximo áudio: audio3
 		mostraProgressoAudio2();
 		setTimeout('endAudio()', 350000);
 	}
