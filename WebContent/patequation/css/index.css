@@ -58,7 +58,7 @@
     width: 70px;
     height: 70px;
     margin-left: 933px;
-    margin-top: -452px;
+    top: 464px;
     cursor: pointer;
     position: fixed;
 }
@@ -85,7 +85,7 @@
     width: 70px;
     height: 70px;
     margin-left: 933px;
-    margin-top: -526px;
+    top: 390px;
     cursor: pointer;
     position: fixed;
 }
