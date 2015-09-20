@@ -88,6 +88,26 @@ function calculateLength (equation) {
 	return length;
 }
 
+function calculateUsedLines ( ) {
+	usedLines = 0;
+	
+	if (selectedEquation.equation.indexOf ("/") !== -1) {
+		usedLines++;
+	}
+	
+	var steps = selectedEquation.steps;
+	
+	for (var i = 0; i < steps.length; i++) {
+		if (steps[i].step.indexOf ("/") === -1) {
+			usedLines++;
+		}
+		
+		else {
+			usedLines += 2;
+		}
+	}
+}
+
 function enableContent(id) {
 	$.post(
 		appContext + "content/enable",
@@ -253,7 +273,7 @@ function loadExercise(id) {
 			cookieName = "isWorkedExample" + currentPos;
 			
 			if (enableWorkedExample) {
-			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
+			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202 || idEquation === 220 || idEquation === 230 || idEquation === 241 || idEquation === 257) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
         	        $("#workedExamplesBlock").show();
@@ -269,7 +289,8 @@ function loadExercise(id) {
         	        else
         	            requestStep (selectedEquation.equation);
         	        
-        	        if (idEquation === 29 && selectedEquation.isComplete === false) { //Colocar o tutorial na primeira equação do plano 10, pois eles ainda não viram os Worked Examples
+        	       // idEquation === 29 && 
+        	        if (selectedEquation.isComplete === false) { 
         	        	var cookieName = "showTutorial" + currentPos;
         	        	
         	        	if (getCookie (cookieName) === "")
@@ -334,6 +355,8 @@ function loadExercise(id) {
 		
 	else
 		blockMenu = false;
+	
+	setTimeout ('calculateUsedLines()', 1000);
 	loadingHide();	
 	
 	
@@ -423,7 +446,7 @@ function loadExerciseTest(id) {
             cookieName = "isWorkedExample" + currentPos;
             
             if (enableWorkedExample) {
-			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202) {
+			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202 || idEquation === 220 || idEquation === 230 || idEquation === 241 || idEquation === 257) {
         	        setCookieDays (cookieName, "true", 1);   
         	        isWorkedExample = true;
         	        $("#workedExamplesBlock").show();
@@ -496,6 +519,7 @@ function loadExerciseTest(id) {
 	if (isTourInterativo && id !== 201)
 		clickEquation("");
 	
+	setTimeout ('calculateUsedLines()', 1000);
 	loadingHide();
 }
 
@@ -886,18 +910,18 @@ function getSortedIds ( ) {
 
 }
 
-function getFirstEquations ( ) {
-	firstEquations = new Array ( );
-	firstEquations[2] = "x+4=10";
-	firstEquations[3] = "4x=-28";
-	firstEquations[4] = "(x)/(2)=12";
-	firstEquations[5] = "3x+10=91";
-	firstEquations[6] = "3*(2x-1)=2*(x+1)+3";
-	firstEquations[7] = "4*(x+1)=12";
-	firstEquations[8] = "x+(x)/(4)=20";
-	firstEquations[10] = "3-2*(x+3)=x-18";
-	firstEquations[11] = "(x-1)/(5)=x-(2x-1)/(3)";
-}
+//function getFirstEquations ( ) {
+//	firstEquations = new Array ( );
+//	firstEquations[2] = "x+4=10";
+//	firstEquations[3] = "4x=-28";
+//	firstEquations[4] = "(x)/(2)=12";
+//	firstEquations[5] = "3x+10=91";
+//	firstEquations[6] = "3*(2x-1)=2*(x+1)+3";
+//	firstEquations[7] = "4*(x+1)=12";
+//	firstEquations[8] = "x+(x)/(4)=20";
+//	firstEquations[10] = "3-2*(x+3)=x-18";
+//	firstEquations[11] = "(x-1)/(5)=x-(2x-1)/(3)";
+//}
 
 function getStringEquations ( ) {
 	stringEquation = new Array ( );
@@ -1168,8 +1192,17 @@ function getEquationsPlan ( ) {
 	equationPlan[7] = new EquationPlan (144, 8);
 	equationPlan[8] = new EquationPlan (168, 10);
 	equationPlan[10] = new EquationPlan (187, 11);
-	equationPlan[11] = new EquationPlan (202, null);
-	
+	equationPlan[11] = new EquationPlan (202, 12);
+	equationPlan[12] = new EquationPlan (220, 13);
+	equationPlan[13] = new EquationPlan (230, 14);
+	equationPlan[14] = new EquationPlan (241, 15);
+	equationPlan[15] = new EquationPlan (251, 16);
+	equationPlan[16] = new EquationPlan (257, 17);
+	equationPlan[17] = new EquationPlan (270, 18);
+	equationPlan[18] = new EquationPlan (279, 19);
+	equationPlan[19] = new EquationPlan (293, 20);
+	equationPlan[19] = new EquationPlan (300, 21);
+	equationPlan[19] = new EquationPlan (313, null);
 }
 
 //var plano1 = 

@@ -23,7 +23,7 @@ var x2_SOLUTION = 4;
 var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 var stringEquation;
-var firstEquations;
+//var firstEquations;
 var sortedIds;
 var equationPlan;
 var concluded = 0;
@@ -42,8 +42,9 @@ var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
 var numUnlockedPlans = 1;
-
-
+var numLines = 20;
+var heightSheet = 800;
+var usedLines;
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -156,34 +157,37 @@ function showNotificationDoNotCloseLoginWindow() {
 	}
 }
 
+
 function insertLines (verifyLinesHeight, idEquation) {
 	var lines = document.getElementById('lines').innerHTML;
-	var newLines = lines + '<div class="hLine"></div> <div class="hLine"></div>';
-	
 	var cookieName = "linesHeight" + currentPos + "" + idEquation;
-	var linesHeight = getCookie (cookieName);
-	var numLinesInserted = 2;
-	var height = 800;
+	var linesHeight;
+	var numLinesInserted;
 	
-	if (linesHeight !== "") {
+	if (verifyLinesHeight) {
+		linesHeight = getCookie (cookieName);
 		var lh = linesHeight.split (" ");
 		numLinesInserted = parseInt(lh[0]);
-		height = parseInt(lh[1]);
+		heightSheet = parseInt(lh[1]);
 		
-		if (verifyLinesHeight) 
-			for (var i = 2; i < numLinesInserted; i+=2)
-				newLines += ' <div class="hLine"></div> <div class="hLine"></div>';		
-		
-		numLinesInserted += 2;
+		for (var i = 0; i < numLinesInserted; i+=2) 
+			lines += '<div class="hLine"></div><div class="hLine"></div>';
+			
+		numLines += numLinesInserted;
 	}
 	
-	height += 64;
-	document.getElementById('paper-1').style.height = height + 'px';
-	document.getElementById('lines').innerHTML = newLines;
+	else {		
+		numLines += 2;
+		numLinesInserted = numLines - 20;
+		lines += '<div class="hLine"></div><div class="hLine"></div>';
+		heightSheet += 64;	
+		linesHeight = numLinesInserted + " " + heightSheet;
+		
+		setCookieDays (cookieName, linesHeight, 1);
+	}
 	
-	linesHeight = numLinesInserted + " " + height;
-	
-	setCookieDays (cookieName, linesHeight, 1);
+	document.getElementById('paper-1').style.height = heightSheet + 'px';
+	document.getElementById('lines').innerHTML = lines;
 }
 
 function showCalculator ( ) {
@@ -457,10 +461,10 @@ function rel ( ) {
 	    		    	    	}
 	    	         } 
 
-		    	     if (isTourInterativo === false && isWorkedExample === false) {
-		    	    		selectedEquation = null;
-		    	    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
-		    	     }
+//		    	     if (isTourInterativo === false && isWorkedExample === false) {
+//		    	    		selectedEquation = null;
+//		    	    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
+//		    	     }
 		    	 }
 		     },  
 		     error : function(e) {  
@@ -576,6 +580,8 @@ $(document).ready(function() {
                 checkEquation();
             }
 
+        } else if (key === 112) { //F1
+        		enableWorkedExample = false;
         } else if (key === 9) { //tab key
             $(".labelDefault:first").focus();
         } else if (event.altKey) {
@@ -683,14 +689,14 @@ $(document).ready(function() {
     focus();
     
     $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null && blockMenu === false) {
+    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false) {
     	    $("#topics").fadeOut();
     	    $("#topicsAux").show();
     	}
     });
     
     $("#topicsAux").mouseover (function() {
-    	if (blockMenu === false && (isWorkedExample === false || selectedEquation.isComplete === true)) {
+    	if (blockMenu === false) {
     	    $("#topics").fadeIn();
     	    $("#topicsAux").hide();
     	}
@@ -698,7 +704,7 @@ $(document).ready(function() {
     
     getSortedIds();
     getStringEquations();
-    getFirstEquations();
+//    getFirstEquations();
     getEquationsPlan();
     getRegras();
     rel();
@@ -778,6 +784,9 @@ $(document).ready(function() {
 			document.getElementById('hintText').style.left = "40%";
 	}
 
+	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
+
+	
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
@@ -1548,19 +1557,10 @@ function moveHint() {
 		}
 	}
 	
-	var height = 865;
-	
-	var cookieName = "linesHeight" + currentPos + "" + idEquation;
-	var linesHeight = getCookie (cookieName);
-	
-	if (linesHeight !== "") {
-		height = parseInt (linesHeight[1]) + 65;
-	}
-	
-	var maxHeight = height - top;
-	
-	maxHeight = maxHeight + "px";
+	var maxHeight = heightSheet - top;
+
 	top = top + "px";
+	maxHeight = maxHeight + "px";
 	
 	document.getElementById('hintText').style.top = top;
 	document.getElementById('hintText').style.maxHeight = maxHeight;
