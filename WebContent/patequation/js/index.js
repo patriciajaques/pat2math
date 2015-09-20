@@ -31,7 +31,7 @@ var regras;
 var regraWE;
 var stepWE;
 var nextLineServer;
-var enableWorkedExample = true;
+var enableWorkedExample = false;
 //Ver se a condição acima também desativa as instruções dos Worked Examples
 var isWorkedExample = false;
 var isTourInterativo = false;
