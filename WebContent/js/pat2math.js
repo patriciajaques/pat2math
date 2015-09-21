@@ -231,6 +231,9 @@ function loadExercise(id) {
 	if (getCookie (cookieName) !== "")
 		insertLines(true, id);
 	
+	if (isTourInterativo === false)
+		blockMenu = false;
+	
 	$.ajax({
 		type: 'GET',
 		url: appContext + "student/loadExercise",
@@ -363,8 +366,9 @@ function loadExercise(id) {
 }
 
 function loadNextExercise(id) {	
-	if (isTourInterativo)
+	if (isTourInterativo === false)
 		blockMenu = false;
+	
 	$.ajax({
 		type: 'GET',
 		url: appContext + "student/loadExercise",
