@@ -120,7 +120,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-	if (id === 9 || numUnlockedPlans >= id) {
+//	if (id === 9 || numUnlockedPlans >= id) {
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -134,10 +134,10 @@ function loadTasks(id) {
 					$("#tasks" + id).slideDown(700);				
 					tasksRemaining=$(".task").length;
 					
-					if (id !== 9) {
-					    var firstEquation = firstEquations[id];
-					    getResolution (firstEquation);
-					}
+//					if (id !== 9) {
+//					    var firstEquation = firstEquations[id];
+//					    getResolution (firstEquation);
+//					}
 					
 					planoAtual=id;
 					
@@ -208,7 +208,7 @@ function loadTasks(id) {
 
 	}
 	
-	}
+//	}
 	var cookieName = "currentPlan" + currentPos;
 	setCookieDays (cookieName, id, 1);
 }
@@ -925,6 +925,16 @@ function getSortedIds ( ) {
 //	firstEquations[8] = "x+(x)/(4)=20";
 //	firstEquations[10] = "3-2*(x+3)=x-18";
 //	firstEquations[11] = "(x-1)/(5)=x-(2x-1)/(3)";
+//	firstEquations[12] = "9-2*(x+3)=x-18";
+//	firstEquations[13] = "(x)/(4)-2=(x-3)/(2)";
+//	firstEquations[14] = "2*(2x-4)=5-((x)/(2)+4)";
+//	firstEquations[15] = "x+8x-2x=81-2x";
+//	firstEquations[16] = "(x-1)/(2)=x-(2x-1)/(3)";
+//	firstEquations[17] = "9-2*(x+3)=x-18";
+//	firstEquations[18] = "(x)/(3)-(7)/(8)=(x)/(4)-1";
+//	firstEquations[19] = "4x-2*(x-5)=-x-5";
+//	firstEquations[20] = "(5x-1)/(10)-(1)/(2)=1-(2-x)/(5)";
+//	firstEquations[21] = "(30x)/(60)+x=225";
 //}
 
 function getStringEquations ( ) {

@@ -403,93 +403,92 @@ function rel ( ) {
 		    		if (unlockedPlans.indexOf ("Plano de aula 2") !== -1) {
 		    			$("#lplan3").hide();
 		    			numUnlockedPlans = 3;
-		    		}
-		    		
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 3") !== -1) {
-		    			$("#lplan4").hide();
-		    			numUnlockedPlans = 4;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 4") !== -1) {
-		    			$("#lplan5").hide();
-		    			numUnlockedPlans = 5;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 5") !== -1) {
-		    			$("#lplan6").hide();
-		    			numUnlockedPlans = 6;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 6") !== -1) {
-		    			$("#lplan7").hide();
-		    			numUnlockedPlans = 7;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 7") !== -1) {
-		    			$("#lplan8").hide();
-		    			numUnlockedPlans = 8;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 8") !== -1) {
-		    			$("#lplan10").hide();
-		    			numUnlockedPlans = 10;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 9") !== -1) {
-		    			$("#lplan11").hide();
-		    			numUnlockedPlans = 11;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 10") !== -1) {
-		    			$("#lplan12").hide();
-		    			numUnlockedPlans = 12;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 11") !== -1) {
-		    			$("#lplan13").hide();
-		    			numUnlockedPlans = 13;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 12") !== -1) {
-		    			$("#lplan14").hide();
-		    			numUnlockedPlans = 14;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 13") !== -1) {
-		    			$("#lplan15").hide();
-		    			numUnlockedPlans = 15;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 14") !== -1) {
-		    			$("#lplan16").hide();
-		    			numUnlockedPlans = 16;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 15") !== -1) {
-		    			$("#lplan17").hide();
-		    			numUnlockedPlans = 17;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 16") !== -1) {
-		    			$("#lplan18").hide();
-		    			numUnlockedPlans = 18;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 17") !== -1) {
-		    			$("#lplan19").hide();
-		    			numUnlockedPlans = 19;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 18") !== -1) {
-		    			$("#lplan20").hide();
-		    			numUnlockedPlans = 20;
-		    		}
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 19") !== -1) {
-		    			$("#lplan21").hide();
-		    			numUnlockedPlans = 21;
-		    		}
+		    			
+		    			if (unlockedPlans.indexOf ("Plano de aula 3") !== -1) {
+			    			$("#lplan4").hide();
+			    			numUnlockedPlans = 4;
+			    			
+			    			if (unlockedPlans.indexOf ("Plano de aula 4") !== -1) {
+				    			$("#lplan5").hide();
+				    			numUnlockedPlans = 5;
+				    			
+				    			if (unlockedPlans.indexOf ("Plano de aula 5") !== -1) {
+					    			$("#lplan6").hide();
+					    			numUnlockedPlans = 6;
+					    			
+					    			if (unlockedPlans.indexOf ("Plano de aula 6") !== -1) {
+						    			$("#lplan7").hide();
+						    			numUnlockedPlans = 7;
+						    			
+						    			if (unlockedPlans.indexOf ("Plano de aula 7") !== -1) {
+							    			$("#lplan8").hide();
+							    			numUnlockedPlans = 8;
+							    			
+							    			if (unlockedPlans.indexOf ("Plano de aula 8") !== -1) {
+								    			$("#lplan10").hide();
+								    			numUnlockedPlans = 10;
+								    			
+								    			if (unlockedPlans.indexOf ("Plano de aula 9") !== -1) {
+									    			$("#lplan11").hide();
+									    			numUnlockedPlans = 11;
+									    			
+									    			if (unlockedPlans.indexOf ("Plano de aula 10") !== -1) {
+										    			$("#lplan12").hide();
+										    			numUnlockedPlans = 12;
+										    			
+										    			if (unlockedPlans.indexOf ("Plano de aula 11") !== -1) {
+											    			$("#lplan13").hide();
+											    			numUnlockedPlans = 13;
+											    			
+											    			if (unlockedPlans.indexOf ("Plano de aula 12") !== -1) {
+												    			$("#lplan14").hide();
+												    			numUnlockedPlans = 14;
+												    			
+												    			if (unlockedPlans.indexOf ("Plano de aula 13") !== -1) {
+													    			$("#lplan15").hide();
+													    			numUnlockedPlans = 15;
+													    			
+													    			if (unlockedPlans.indexOf ("Plano de aula 14") !== -1) {
+														    			$("#lplan16").hide();
+														    			numUnlockedPlans = 16;
+														    			
+														    			if (unlockedPlans.indexOf ("Plano de aula 15") !== -1) {
+															    			$("#lplan17").hide();
+															    			numUnlockedPlans = 17;
+															    			
+															    			if (unlockedPlans.indexOf ("Plano de aula 16") !== -1) {
+																    			$("#lplan18").hide();
+																    			numUnlockedPlans = 18;
+																    			
+																    			if (unlockedPlans.indexOf ("Plano de aula 17") !== -1) {
+																	    			$("#lplan19").hide();
+																	    			numUnlockedPlans = 19;
+																	    			
+																	    			if (unlockedPlans.indexOf ("Plano de aula 18") !== -1) {
+																		    			$("#lplan20").hide();
+																		    			numUnlockedPlans = 20;
+																		    			
+																		    			if (unlockedPlans.indexOf ("Plano de aula 19") !== -1) {
+																			    			$("#lplan21").hide();
+																			    			numUnlockedPlans = 21;
+																			    		}
+																		    		}
+																	    		}
+																    		}	    		
+															    		}
+														    		}
+													    		}
+												    		}
+											    		}
+										    		}
+									    		}
+								    		}
+							    		}
+						    		}
+					    		}
+				    		}
+			    		}
+		    		}		    		
 		    		
 		        	if (numUnlockedPlans < 4)
 		        		checkTour();
