@@ -120,7 +120,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-//	if (id === 9 || numUnlockedPlans >= id) {
+	if (id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -208,7 +208,7 @@ function loadTasks(id) {
 
 	}
 	
-//	}
+	}
 	var cookieName = "currentPlan" + currentPos;
 	setCookieDays (cookieName, id, 1);
 }

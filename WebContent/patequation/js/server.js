@@ -227,8 +227,32 @@ function requestServer (type, last, next, typeOperation, element) {
                         	else if (numUnlockedPlans == 3)
                         		plan2Explanation("");
                         	
-                        	else
+                        	else {
+                        		if (numUnlockedPlans > 10) {
+                        			document.getElementById("lplan12").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan13").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan14").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan15").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan16").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan17").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan18").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan19").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan20").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+                        			document.getElementById("lplan21").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';  
+                        			setTimeout (function() {$("lplan12").hide();}, 20000);
+                        			setTimeout (function() {$("lplan13").hide();}, 20000);
+                        			setTimeout (function() {$("lplan14").hide();}, 20000);
+                        			setTimeout (function() {$("lplan15").hide();}, 20000);
+                        			setTimeout (function() {$("lplan16").hide();}, 20000);
+                        			setTimeout (function() {$("lplan17").hide();}, 20000);
+                        			setTimeout (function() {$("lplan18").hide();}, 20000);
+                        			setTimeout (function() {$("lplan19").hide();}, 20000);
+                        			setTimeout (function() {$("lplan20").hide();}, 20000);
+                        			setTimeout (function() {$("lplan21").hide();}, 20000);
+                        		}
+                        			
                         	    setTimeout ("newPlan()", 2000);
+                        	}
                         	
                         	divName = "#lplan" + numUnlockedPlans;
                         	setTimeout (function() {$(divName).hide();}, 20000);

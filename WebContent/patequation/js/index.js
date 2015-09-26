@@ -430,6 +430,16 @@ function rel ( ) {
 								    			
 								    			if (unlockedPlans.indexOf ("Plano de aula 9") !== -1) {
 									    			$("#lplan11").hide();
+									    			$("#lplan12").hide();
+									    			$("#lplan13").hide();
+									    			$("#lplan14").hide();
+									    			$("#lplan15").hide();
+									    			$("#lplan16").hide();
+									    			$("#lplan17").hide();
+									    			$("#lplan18").hide();
+									    			$("#lplan19").hide();
+									    			$("#lplan20").hide();
+									    			$("#lplan21").hide();
 									    			numUnlockedPlans = 11;
 									    			
 									    			if (unlockedPlans.indexOf ("Plano de aula 10") !== -1) {
