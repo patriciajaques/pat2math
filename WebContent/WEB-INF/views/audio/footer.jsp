@@ -43,8 +43,7 @@
 	
 
 function verificaAudio ( ) {
-
-// 	var idGroup = ${student.group.id};
+	var idGroup = ${student.group.id};
 	var cookieName = "playAudio" + currentPos;
 	
 	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3

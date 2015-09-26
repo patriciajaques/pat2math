@@ -2,8 +2,15 @@
 <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
 
 <script>
+var currentPos = getCookie ("pos");
+var cookieName = "playAudio" + currentPos;
+
+if (getCookie (cookieName) === "false")
+	location.href="/pat2math/student/home";	
+	
 var i;
 var tipoAudio = getCookie ("tipoAudio");
+var showConfirmation = true;
 setColor();
 
 if (tipoAudio === "2")
@@ -61,7 +68,7 @@ function mostraProgressoAudio1 ( ) {
 	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/12.gif border=0>"', 351996);
 } 
 
-function mostraProgressoAudio2 ( ) {
+function mostraProgressoAudio2 ( ) {	
 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
 	
 	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/1.gif border=0>"', 29166);
@@ -80,6 +87,7 @@ function mostraProgressoAudio2 ( ) {
 }
 
 function endAudio ( ) {
+	showConfirmation = false;
 	currentPos = getCookie ("pos");
 	var cookieName = "playAudio" + currentPos;
 	setCookieDays (cookieName, "false", 1);
@@ -87,6 +95,14 @@ function endAudio ( ) {
 }
 
 function playAudio ( ) {	
+
+		window.onbeforeunload = function () {
+			if (showConfirmation) {
+				return "confirmacaoSaida";
+			}
+		}
+	
+	
 	if (tipoAudio === "1") {
 		var display = document.getElementById('play').style.display;
 		document.getElementById('play').style.display = 'none';
