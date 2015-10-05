@@ -11,15 +11,16 @@ if (getCookie (cookieName) === "false")
 var i;
 var tipoAudio = getCookie ("tipoAudio");
 var showConfirmation = true;
+var tempoAudio = 352000;
 setColor();
 
-if (tipoAudio === "2")
-	setTimeout ('showNotification()', 1000);
+// if (tipoAudio === "2")
+// 	setTimeout ('showNotification()', 1000);
 
 	
 function showNotification ( ) {
 	$.guider({
-    	title: "Adicionamos uma nova história sobre a matemática!",
+    	title: "Adicionamos um novo áudio!",
     	description: "Clique no botão play para ouvir.",
         alignButtons: "center",
     	buttons: {
@@ -51,6 +52,17 @@ function setColor ( ) {
 	}
 }
 
+function mostraProgressoAudio ( ) {
+	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
+	var tamanhoBarraProgresso = 12;
+	var parcelaTempo = Math.round(tempoAudio/(tamanhoBarraProgresso+1));
+	
+	for (var i = 1; i <= tamanhoBarraProgresso; i++) {
+		var innerHTML = 'document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/' + i + '.gif border=0>"';
+		var tempo = parcelaTempo * i;
+		setTimeout (innerHTML, tempo);
+	}
+}
 function mostraProgressoAudio1 ( ) {
 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
 	
@@ -71,10 +83,10 @@ function mostraProgressoAudio1 ( ) {
 function mostraProgressoAudio2 ( ) {	
 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
 	
-	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/1.gif border=0>"', 29166);
-	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/2.gif border=0>"', 58332);
-	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/3.gif border=0>"', 87498);
-	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/4.gif border=0>"', 116664);
+	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/1.gif border=0>"', 22692);
+	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/2.gif border=0>"', 45384);
+	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/3.gif border=0>"', 68076);
+	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/4.gif border=0>"', 90768);
 	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/5.gif border=0>"', 145830);
 	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/6.gif border=0>"', 174996);
 	setTimeout ('document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/7.gif border=0>"', 204162);
@@ -102,20 +114,19 @@ function playAudio ( ) {
 			}
 		}
 	
-	
 	if (tipoAudio === "1") {
 		var display = document.getElementById('play').style.display;
 		document.getElementById('play').style.display = 'none';
 		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-		mostraProgressoAudio1();
-		setTimeout('endAudio()', 352000);
+		setTimeout('endAudio()', tempoAudio);
 	} else {
+		tempoAudio = 295000;
 		var display = document.getElementById('play').style.display;
 		document.getElementById('play').style.display = 'none';
-		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/K0IZ6IkX8BA?autoplay=1" frameborder="0" allowfullscreen></iframe>';	                                               
-		//Próximo áudio: audio3
-		mostraProgressoAudio2();
-		setTimeout('endAudio()', 350000);
+		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ok7eZZ7OxWM?autoplay=1" frameborder="0" allowfullscreen></iframe>';	                                               
+		setTimeout('endAudio()', tempoAudio);
 	}
+	
+	mostraProgressoAudio();
 }
 </script>
