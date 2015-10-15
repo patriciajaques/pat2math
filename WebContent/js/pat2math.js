@@ -615,7 +615,11 @@ function nextEquationClick ( ) {
 	}
 	
 	else {
-		loadNextExercise (idEquation + 1);
+		if (idEquation !== 241) //equação 242 foi removida
+			loadNextExercise (idEquation + 1);
+		
+		else
+			loadNextExercise (idEquation + 2);
 		loadEquation (0);
 	}
 	
@@ -633,7 +637,7 @@ var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
            202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219,
            220, 221, 222, 223, 224, 225, 226, 227, 228, 229,
            230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240,
-           241, 242, 243, 244, 245, 246, 247, 248, 249, 250,
+           241, 243, 244, 245, 246, 247, 248, 249, 250,
            251, 252, 253, 254, 255, 256,
            257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269,
            270, 271, 272, 273, 274, 275, 276, 277, 278,
@@ -1112,9 +1116,8 @@ function getStringEquations ( ) {
 	stringEquation[237] = "(x)/(2)+(x-1)/(3)=3";
 	stringEquation[238] = "(x-2)/(4)+2x=(5x)/(2)";
 	stringEquation[239] = "(x)/(3)+(2x+2)/(4)=3x+7";
-	stringEquation[240] = "(x-1)/(7)-(2x+6)/(8)=(4x-14)/(14)-1";
-	stringEquation[241] = "2(2x-4)=5-((x)/(2)+4)";
-	stringEquation[242] = "x+3=2(x-(1)/(2))";
+	stringEquation[240] = "(x-1)/(7)-(2x+6)/(8)..";
+	stringEquation[241] = "2(2x-4)=5-((x)/(2)..";
 	stringEquation[243] = "(3(x-4))/(4)-1=x..";
 	stringEquation[244] = "4x-2(x-5)..";
 	stringEquation[245] = "(2x-1)/(4)-(x-1)/(3)..";

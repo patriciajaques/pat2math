@@ -46,17 +46,17 @@ function verificaAudio ( ) {
 // 	var idGroup = ${student.group.id};
 	var cookieName = "playAudio" + currentPos;
 	
-	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3
-        if (id < 239 || id === 274 || id === 290 || id === 291)
-            setCookieDays ("tipoAudio", "1", 1);
+// 	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3
+//         if (id < 239 || id === 274 || id === 290 || id === 291)
+//             setCookieDays ("tipoAudio", "1", 1);
             
-        else
-        	setCookieDays ("tipoAudio", "2", 1);
+//         else
+//         	setCookieDays ("tipoAudio", "2", 1);
         
-        location.href= '/pat2math/playaudio';
-    }
+//         location.href= '/pat2math/playaudio';
+//     }
     
-    else 
+//     else 
     	location.href= '/pat2math/student/home'; 
 }
 

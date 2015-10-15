@@ -584,8 +584,8 @@ $(document).ready(function() {
 //	});
 	var cookieName = "playAudio" + currentPos;
 	
-	if (getCookie (cookieName) !== "false")
-		location.href="/pat2math/audio";	
+//	if (getCookie (cookieName) !== "false")
+//		location.href="/pat2math/audio";	
 	
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
