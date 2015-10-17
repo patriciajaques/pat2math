@@ -769,63 +769,63 @@ $(document).ready(function() {
     getRegras();
     rel();
     
-	cookieName = "openQuest" + currentPos;
-
-	if (getCookie (cookieName) === "") {
-	    cookieName = "isQuestOpen" + currentPos;
-	
-	    if (getCookie (cookieName) === "true")
-		    openQuest();
-	
-	    else {
-	    	cookieName = "timeQuest" + currentPos;
-	    	var time = getCookie (cookieName);
-	    	
-	    	if (time === "") {
-	            time = Math.floor((Math.random() * 1500) + 1) * 1000; 
-	        
-	            var hour = getCurrentHour();
-	            cookieName = "lastHour" + currentPos;
-	            setCookieDays (cookieName, hour, 1);
-	        
-	            var minutes = getCurrentMinutes();  
-	            cookieName = "lastMinutes" + currentPos;
-	            setCookieDays (cookieName, minutes, 1);
-	            
-	            var seconds = getCurrentSeconds();
-	            cookieName = "lastSeconds" + currentPos;
-	            setCookieDays (cookieName, seconds, 1);
-	    	}
-	    	
-	    	else {
-	    		var currentHour = getCurrentHour();
-	    		var currentMinutes = getCurrentMinutes();
-	    		var currentSeconds = getCurrentSeconds();
-	    		
-	    		cookieName = "lastHour" + currentPos;
-	    		var lastHour = parseInt (getCookie (cookieName));
-	    		
-	    		cookieName = "lastMinutes" + currentPos;
-	    		var lastMinutes = parseInt (getCookie (cookieName));
-	    		
-	    		cookieName = "lastSeconds" + currentPos;
-	    		var lastSeconds = parseInt (getCookie (cookieName));
-	    		
-	    		var difference = subtractTime(lastHour, lastMinutes, lastSeconds, currentHour, currentMinutes, currentSeconds);
-	    		
-	    		time = parseInt (time);
-	    		time = time - difference;
-	    		
-	    		if (time < 0)
-	    			time = 2000;
-	    	}
-	        
-	    	cookieName = "timeQuest" + currentPos;
-	    	setCookieDays (cookieName, time, 1);
-	    	
-	        setTimeout ('openQuest()', time);
-	    }
-	}
+//	cookieName = "openQuest" + currentPos;
+//
+//	if (getCookie (cookieName) === "") {
+//	    cookieName = "isQuestOpen" + currentPos;
+//	
+//	    if (getCookie (cookieName) === "true")
+//		    openQuest();
+//	
+//	    else {
+//	    	cookieName = "timeQuest" + currentPos;
+//	    	var time = getCookie (cookieName);
+//	    	
+//	    	if (time === "") {
+//	            time = Math.floor((Math.random() * 1500) + 1) * 1000; 
+//	        
+//	            var hour = getCurrentHour();
+//	            cookieName = "lastHour" + currentPos;
+//	            setCookieDays (cookieName, hour, 1);
+//	        
+//	            var minutes = getCurrentMinutes();  
+//	            cookieName = "lastMinutes" + currentPos;
+//	            setCookieDays (cookieName, minutes, 1);
+//	            
+//	            var seconds = getCurrentSeconds();
+//	            cookieName = "lastSeconds" + currentPos;
+//	            setCookieDays (cookieName, seconds, 1);
+//	    	}
+//	    	
+//	    	else {
+//	    		var currentHour = getCurrentHour();
+//	    		var currentMinutes = getCurrentMinutes();
+//	    		var currentSeconds = getCurrentSeconds();
+//	    		
+//	    		cookieName = "lastHour" + currentPos;
+//	    		var lastHour = parseInt (getCookie (cookieName));
+//	    		
+//	    		cookieName = "lastMinutes" + currentPos;
+//	    		var lastMinutes = parseInt (getCookie (cookieName));
+//	    		
+//	    		cookieName = "lastSeconds" + currentPos;
+//	    		var lastSeconds = parseInt (getCookie (cookieName));
+//	    		
+//	    		var difference = subtractTime(lastHour, lastMinutes, lastSeconds, currentHour, currentMinutes, currentSeconds);
+//	    		
+//	    		time = parseInt (time);
+//	    		time = time - difference;
+//	    		
+//	    		if (time < 0)
+//	    			time = 2000;
+//	    	}
+//	        
+//	    	cookieName = "timeQuest" + currentPos;
+//	    	setCookieDays (cookieName, time, 1);
+//	    	
+//	        setTimeout ('openQuest()', time);
+//	    }
+//	}
 	
 	cookieName = "regraWE" + currentPos;
 	var regrasCookie = getCookie (cookieName);
