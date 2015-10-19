@@ -132,6 +132,17 @@ var usedLines;
 //    return passo;
 //}
 
+//color é uma String em hexadecimal com # na frente
+function setBackgroundColor (color) {
+	document.body.style.background = color;
+}
+
+function setPaperColor (color) {
+	var paper = document.getElementById('paper-1');
+	paper.style.backgroundColor = color;
+}
+
+
 function showNotificationDoNotCloseLoginWindow() {
 	var currentHour = getCurrentHour();
 	
