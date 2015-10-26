@@ -120,7 +120,36 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-	if (id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
+	//if (id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
+		if(id === 2){
+			setBackgroundColor("#D1F1FC"); 
+		}
+		else if(id === 3 || id === 11  || id === 19){
+			setBackgroundColor("#FFE1F8"); 
+		}
+		else if(id === 4 || id === 12 || id === 20){
+			setBackgroundColor("#EEE8AA"); 
+		}
+		else if(id === 5 || id === 13 || id === 21){
+			setBackgroundColor("#E0FFFF"); 
+		}
+		else if(id === 6 || id === 14){
+			setBackgroundColor("#E6E6FA"); 
+		}
+		else if(id === 7  || id === 15){
+			setBackgroundColor("#FFECB7"); 
+		}
+		else if(id === 8 || id === 16){
+			setBackgroundColor("#FCC291"); 
+		}
+		else if(id === 9 || id === 17){
+			setBackgroundColor("#FFF0F5"); 
+		}
+		else if(id === 10 || id === 18){
+			setBackgroundColor("#B0E0E6"); 
+		}
+				
+		
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -208,9 +237,10 @@ function loadTasks(id) {
 
 	}
 	
-	}
+	//}
 	var cookieName = "currentPlan" + currentPos;
 	setCookieDays (cookieName, id, 1);
+	
 }
 
 function padlockClick ( ) {
