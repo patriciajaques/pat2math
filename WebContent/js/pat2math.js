@@ -120,7 +120,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-	//if (id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
+	if (id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
 		if(id === 2){
 			setBackgroundColor("#D1F1FC"); 
 		}
@@ -237,7 +237,7 @@ function loadTasks(id) {
 
 	}
 	
-	//}
+	}
 	var cookieName = "currentPlan" + currentPos;
 	setCookieDays (cookieName, id, 1);
 	
@@ -637,21 +637,21 @@ function nextEquationClick ( ) {
 	//Seleciona a equação atual no array ordenado, e verifica a sua posição no array original. 
 	//Esta variável recebe a posição seguinte da equação no array original.	
 	
-	if (idEquation < 29 || (idEquation > 49 && idEquation < 144) || idEquation === 160 || idEquation === 180) {
-		var newPos = sortedIds[idEquation].pos + 1;
-		loadNextExercise (ids[newPos]);
-		loadEquation (0);
-		//pos++; //Avança uma posição do array ordenado
-	}
+//	if (idEquation < 29 || (idEquation > 49 && idEquation < 144) || idEquation === 160 || idEquation === 180) {
+	var newPos = sortedIds[idEquation].pos + 1;
+	loadNextExercise (ids[newPos]);
+	loadEquation (0);
+	//pos++; //Avança uma posição do array ordenado
+//	}
 	
-	else {
-		if (idEquation !== 241) //equação 242 foi removida
-			loadNextExercise (idEquation + 1);
-		
-		else
-			loadNextExercise (idEquation + 2);
-		loadEquation (0);
-	}
+//	else {
+//		if (idEquation !== 241) //equação 242 foi removida
+//			loadNextExercise (idEquation + 1);
+//		
+//		else
+//			loadNextExercise (idEquation + 2);
+//		loadEquation (0);
+//	}
 	
 }
 
@@ -665,16 +665,14 @@ var ids = [13, 14, 15, 16, 107, 108, 109, 110, 21, 22, 23, 24, 25, 26,
            168, 169, 170, 171, 172, 173, 174, 176, 177, 178,
            187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
            202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219,
-           220, 221, 222, 223, 224, 225, 226, 227, 228, 229,
+           220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 251, 252, 253, 254, 255, 256,
            230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240,
-           241, 243, 244, 245, 246, 247, 248, 249, 250,
-           251, 252, 253, 254, 255, 256,
-           257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269,
-           270, 271, 272, 273, 274, 275, 276, 277, 278,
-           279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292,
-           293, 294, 295, 296, 297, 298, 299,
-           300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312,
-           313, 314, 315, 316, 317, 318, 319, 320];
+           270, 271, 272, 273, 274, 275, 276, 277, 278, 293, 294, 295, 296, 297, 298, 299,
+           241, 243, 244, 245, 246, 247, 248, 249, 250, 257,
+           258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269,   
+           313, 314, 315, 316, 317, 318, 319, 320,
+           279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292,     
+           300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312];
  
 
 

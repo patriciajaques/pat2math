@@ -261,7 +261,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         selectedEquation.isComplete = true;
                         
                       //Verifica se o ID da equação atual não é o da última equação de um dos planos de aula                                        162
-                    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219 && idEquation !== 229 && idEquation !== 240 && idEquation !== 250 && idEquation !== 256 && idEquation !== 269 && idEquation !== 278 && idEquation !== 292 && idEquation !== 299 && idEquation !== 312 && idEquation !== 320)                  		
+                    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219 && idEquation !== 256 && idEquation !== 240 && idEquation !== 299 && idEquation !== 257 && idEquation !== 269 && idEquation !== 320 && idEquation !== 292 && idEquation !== 312)                  		
                             showNextButton (nextLineServer);
                     	
                     	else 

@@ -36,6 +36,7 @@ var enableWorkedExample = false;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
+var showNews = true;
 var currentPos = getCookie ("pos");
 var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
 var showPlan2Explanation = "true";
@@ -142,6 +143,26 @@ function setPaperColor (color) {
 	paper.style.backgroundColor = color;
 }
 
+function news() {
+	var cookieName = "news" + currentPos;
+	setCookieDays (cookieName, "false", 1);
+	
+	$.guider({
+		title : "Novidades",
+		description : "Redistribuímos as equações dos planos de aula #10 ao #19 entre planos #10 ao #17, para uma melhor organização das equações. Mas não se preocupe, todos os passos já resolvidos das equações foram preservados." +
+				      "<br><br>Adicionamos os planos de aula #18 e #19 com equações inéditas.",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "center",
+		onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		buttons : {
+			Legal: {
+				click : true,
+				className : "primary",
+			}
+		}
+	}).show();
+}
 
 function showNotificationDoNotCloseLoginWindow() {
 	var currentHour = getCurrentHour();
@@ -841,8 +862,17 @@ $(document).ready(function() {
 	cookieName = "regraWE" + currentPos;
 	var regrasCookie = getCookie (cookieName);
 	
-	if (regrasCookie != "") {
+	if (regrasCookie !== "") {
 		setTimeout (function() {showExplanation(regrasCookie);}, 1000);
+	}
+	
+	if (showNews) {
+		cookieName = "news" + currentPos;
+		var news = getCookie (cookieName);
+		
+		if (news === "") {
+		setTimeout ('news()', 5000);
+		}
 	}
 	
 	var widthResolution = screen.width;
