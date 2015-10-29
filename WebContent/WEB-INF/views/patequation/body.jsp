@@ -61,7 +61,7 @@
 		<div class="locked" id="lplan10" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
 		<span class="topic" onclick="loadTasks(10)">Plano de Aula 8</span>
 		<div id="tasks10" class="tasks"></div>
-		<div class="locked" id="lplan11" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
+		<div class="locked" id="lplan11" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 	
 		<span class="topic" onclick="loadTasks(11)">Plano de Aula 9</span>
 		<div id="tasks11" class="tasks"></div>
 		<div class="locked" id="lplan12" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
@@ -71,21 +71,25 @@
 		<span class="topic" onclick="loadTasks(13)">Plano de Aula 11</span>
 		<div id="tasks13" class="tasks"></div>
 		<div class="locked" id="lplan14" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
+		<div class="exclamation"><img src="/pat2math/patequation/img/exclamacao.png"></img></div>
 		<span class="topic" onclick="loadTasks(14)">Plano de Aula 12</span>
 		<div id="tasks14" class="tasks"></div>
 		<div class="locked" id="lplan15" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
+		<div class="exclamation"><img src="/pat2math/patequation/img/exclamacao.png"></img></div>
 		<span class="topic" onclick="loadTasks(15)">Plano de Aula 13</span>
 		<div id="tasks15" class="tasks"></div>
 		<div class="locked" id="lplan16" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
 		<span class="topic" onclick="loadTasks(16)">Plano de Aula 14</span>
 		<div id="tasks16" class="tasks"></div>
 		<div class="locked" id="lplan17" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
+		<div class="exclamation"><img src="/pat2math/patequation/img/exclamacao.png"></img></div>
 		<span class="topic" onclick="loadTasks(17)">Plano de Aula 15</span>
 		<div id="tasks17" class="tasks"></div>
 		<div class="locked" id="lplan18" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
 		<span class="topic" onclick="loadTasks(18)">Plano de Aula 16</span>
 		<div id="tasks18" class="tasks"></div>
 		<div class="locked" id="lplan19" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 
+		<div class="exclamation"><img src="/pat2math/patequation/img/exclamacao.png"></img></div>
 		<span class="topic" onclick="loadTasks(19)">Plano de Aula 17</span>
 		<div id="tasks19" class="tasks"></div>
 		<div class="locked" id="lplan20" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> 

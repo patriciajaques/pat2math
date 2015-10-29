@@ -149,7 +149,7 @@ function news() {
 	
 	$.guider({
 		title : "Novidades",
-		description : "Redistribuímos as equações dos planos de aula #10 ao #19 entre planos #10 ao #17, para uma melhor organização das equações. Mas não se preocupe, todos os passos já resolvidos das equações foram preservados." +
+		description : "Redistribuímos as equações dos planos de aula #10 ao #19 entre planos #10 ao #17 (adicionamos um ícone nos planos que foram alterados), para uma melhor organização das equações. Mas não se preocupe, todos os passos já resolvidos das equações foram preservados." +
 				      "<br><br>Adicionamos os planos de aula #18 e #19 com equações inéditas.",
 		overlay : "dark",
 		width : 600,

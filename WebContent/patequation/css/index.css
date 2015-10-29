@@ -173,6 +173,12 @@
 	cursor: pointer;
 }
 
+.exclamation {
+	position: absolute;
+	margin-left: 12px;
+	margin-top: 5px;
+}
+
 #amountPoins{
 	font-weight: bold;
 	font-size: 25px;
