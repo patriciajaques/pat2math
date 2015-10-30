@@ -886,7 +886,7 @@ $(document).ready(function() {
 			document.getElementById('hintText').style.left = "40%";
 	}
 
-	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
+	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 4000);
 
 	
     // $("#hintText").hide();
