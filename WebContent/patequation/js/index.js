@@ -36,7 +36,7 @@ var enableWorkedExample = false;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
-var showNews = true;
+var showNews = false;
 var currentPos = getCookie ("pos");
 var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
 var showPlan2Explanation = "true";
@@ -625,6 +625,7 @@ $(document).ready(function() {
 	});
 	
 	showNotificationDoNotCloseLoginWindow();
+	rel();
 	
 	$("#refresh_page").tooltip();
 	$("#calculator").tooltip();
@@ -800,7 +801,7 @@ $(document).ready(function() {
 //    getFirstEquations();
     getEquationsPlan();
     getRegras();
-    rel();
+   
     
 //	cookieName = "openQuest" + currentPos;
 //
@@ -886,7 +887,7 @@ $(document).ready(function() {
 			document.getElementById('hintText').style.left = "40%";
 	}
 
-		setTimeout (function(){if (selectedEquation.equation === "x=1") {showMainMenu()}}, 1000);
+	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
 	
     // $("#hintText").hide();
@@ -894,10 +895,6 @@ $(document).ready(function() {
     // $("#newPoints").hide();
 });
 
-function showMainMenu ( ) {
-	loadingShow();
-	setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide(); loadingHide();}, 2000);
-}
 function openQuestions ( ) {
 	alert ("Questionário");
 }
