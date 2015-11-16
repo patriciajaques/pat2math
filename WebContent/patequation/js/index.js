@@ -550,7 +550,7 @@ function rel ( ) {
 	    		    	    		loadExercise (currentEquation);      		    	    		
 	    		    	    		$("#topics").fadeOut();
 	    		    	    		$("#topicsAux").show();    		
-	    		    	    	}
+	    		    	    }
 	    	         } 
 
 //		    	     if (isTourInterativo === false && isWorkedExample === false) {
@@ -625,7 +625,31 @@ $(document).ready(function() {
 	});
 	
 	showNotificationDoNotCloseLoginWindow();
-	rel();
+	
+	if (isExperimentoSaoLuis) {
+		numUnlockedPlans = 11;
+		$(".locked").hide();
+		
+		var cookieName = "currentPlan" + currentPos;
+        var currentPlanString = getCookie (cookieName);
+        if (currentPlanString !== "") {
+       		var currentPlan = parseInt (currentPlanString);
+       		loadTasks (currentPlan);
+       		 
+       		cookieName = "currentEquation" + currentPos;
+	    	    var currentEquationString = getCookie (cookieName);
+	    		
+	    	    if (currentEquationString !== "") {		    	    	  
+	    	    		var currentEquation = parseInt (currentEquationString);
+	    	    		loadExercise (currentEquation);      		    	    		
+	    	    		$("#topics").fadeOut();
+	    	    		$("#topicsAux").show();    		
+	    	    }
+        } 
+	}
+	
+	else
+		rel();
 	
 	$("#refresh_page").tooltip();
 	$("#calculator").tooltip();
@@ -887,7 +911,7 @@ $(document).ready(function() {
 			document.getElementById('hintText').style.left = "40%";
 	}
 
-	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 2000);
+	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
 	
     // $("#hintText").hide();
