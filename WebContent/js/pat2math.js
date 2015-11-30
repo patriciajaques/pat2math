@@ -120,7 +120,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-	if (id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
+	if (unlockAllPlans || id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
 		if(id === 2){
 			setBackgroundColor("#D1F1FC"); 
 		}

@@ -11,6 +11,7 @@ var progressvalue = 0;
 var tipoAudio;
 var playAudio;
 var unlockedPlans;
+var unlockAllPlans = false;
 //var numClicks;
 
 // variables for the Step object
@@ -669,6 +670,25 @@ $(document).ready(function() {
             }
     );
     
+    //Desabilita o evento de voltar para a página anterior a partir da tecla backspace 
+    $(document).unbind('keydown').bind('keydown', function (event) {
+        var doPrevent = false;
+        if (event.keyCode === 8) {
+            var d = event.srcElement || event.target;
+            if ((d.tagName.toUpperCase() === 'INPUT' && (d.type.toUpperCase() === 'TEXT' || d.type.toUpperCase() === 'PASSWORD' || d.type.toUpperCase() === 'FILE')) 
+                 || d.tagName.toUpperCase() === 'TEXTAREA') {
+                doPrevent = d.readOnly || d.disabled;
+            }
+            else {
+                doPrevent = true;
+            }
+        }
+
+        if (doPrevent) {
+            event.preventDefault();
+        }
+    });
+    
     cookieName = "isWorkedExample" + currentPos;
 	
     if (enableWorkedExample && getCookie (cookieName) !== "") {
@@ -683,8 +703,8 @@ $(document).ready(function() {
 		$("#workedExamplesBlock").hide();
     
     $(document).keyup(function(event) {
-        // key 13 = enter
         var key = event.which;
+      
         
         if (isTourInterativo && key === 27) //esc
         	exitEsc();
@@ -703,27 +723,7 @@ $(document).ready(function() {
         } else if (key === 9) { //tab key
             $(".labelDefault:first").focus();
         } else if (event.altKey) {
-            if (key === 48 || key === 96) { //alt + 0
-                $("#aPaper10").click();
-            } else if (key === 49 || key === 97) { //alt + 1
-                $("#aPaper1").click();
-            } else if (key === 50 || key === 98) { //alt + 2
-                $("#aPaper2").click();
-            } else if (key === 51 || key === 99) { //alt + 3
-                $("#aPaper3").click();
-            } else if (key === 52 || key === 100) { //alt + 4
-                $("#aPaper4").click();
-            } else if (key === 53 || key === 101) { //alt + 5
-                $("#aPaper5").click();
-            } else if (key === 54 || key === 102) { //alt + 6
-                $("#aPaper6").click();
-            } else if (key === 55 || key === 103) { //alt + 7
-                $("#aPaper7").click();
-            } else if (key === 56 || key === 104) { //alt + 8
-                $("#aPaper8").click();
-            } else if (key === 57 || key === 105) { //alt + 9
-                $("#aPaper9").click();
-            } else if (key === 66) { //alt + b
+            if (key === 66) { //alt + b
                 $("#bhaskara").click();
             } else if (key === 67) { //alt + c
                 $("#abc").click();
@@ -735,6 +735,12 @@ $(document).ready(function() {
                 $("#addLabel").click();
             } else if (key === 0) { //alt + ?
                 $("#hint").click();
+            } else if (key == 80) {
+            	if (unlockAllPlans == false) {
+            		unlockAllPlans = true;
+            	} else {
+            		unlockAllPlans = false;
+            	}
             }
         }
     });
