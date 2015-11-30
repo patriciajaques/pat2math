@@ -735,7 +735,7 @@ $(document).ready(function() {
                 $("#addLabel").click();
             } else if (key === 0) { //alt + ?
                 $("#hint").click();
-            } else if (key == 80) {
+            } else if (key == 80) { //alt + p
             	if (unlockAllPlans == false) {
             		unlockAllPlans = true;
             	} else {
