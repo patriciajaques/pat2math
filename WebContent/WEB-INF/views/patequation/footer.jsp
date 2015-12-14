@@ -6,5 +6,6 @@
 <script src="/pat2math/patequation/js/workedExamples.js"></script>
 <script src="/pat2math/patequation/js/question.js"></script>
 <script src="/pat2math/patequation/js/index.js"></script>
+<script src="/pat2math/patequation/js/decimalNumbers.js"></script>
 <script src="/pat2math/patequation/js/paper.js"></script>
 <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>

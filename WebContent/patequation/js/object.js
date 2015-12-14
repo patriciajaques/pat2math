@@ -68,3 +68,9 @@ function EquationPlan (idFirstEquation, idNextPlan) {
 	this.idFirstEquation = idFirstEquation;
 	this.idNextPlan = idNextPlan;
 }
+
+function Fraction (numerator, denominator) {
+	this.numerator = numerator;
+	this.denominator = denominator;
+	this.toString = numerator + "/" + denominator;
+}
