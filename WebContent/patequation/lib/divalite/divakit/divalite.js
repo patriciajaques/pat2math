@@ -3,8 +3,7 @@ var config = {
 		//ABSOLUTE_PATH: 'http://dl.dropbox.com/u/1260101/DivaLite/'
 		//ABSOLUTE_PATH: 'file:///E:/PATtoPhysics/PATtoPhysics/dist/divalite/'
 		//ABSOLUTE_PATH: 'file:///C:/Users/user/Documents/NetBeansProjects/PATEquationHTML/public_html/divalite/'
-        //ABSOLUTE_PATH: '/PATEquationHTML/lib/divalite/'
-		ABSOLUTE_PATH: '/pat2math/patequation/divalite/'
+                ABSOLUTE_PATH: '/pat2math/patequation/lib/divalite/'
 };
 
 //dynamically loads the CSS and Scripts
@@ -36,7 +35,13 @@ var link1 = document.createElement('link');
 link1.type= 'text/css';
 link1.rel= 'stylesheet';
 link1.href= config.ABSOLUTE_PATH+'divakit/divacharkit/divalite.css';
+
+if (enableAgent) {
 head.appendChild(link1);
+
+var hintText = document.getElementById('hintText');
+hintText.style.visibility = 'hidden';		
+
 
 loadScript(config.ABSOLUTE_PATH+'divakit/divajquery/plugins/jquery.slider.js', function() {
 	
@@ -51,7 +56,6 @@ loadScript(config.ABSOLUTE_PATH+'divakit/divajquery/plugins/jquery.slider.js', f
 					loadScript(config.ABSOLUTE_PATH+'divakit/divacharkit/charcode.js', function() {
 						
 						init(); //DivaLite
-						
 					});
 					
 				});
@@ -63,3 +67,8 @@ loadScript(config.ABSOLUTE_PATH+'divakit/divajquery/plugins/jquery.slider.js', f
 	});
 	
 });
+}
+
+
+
+

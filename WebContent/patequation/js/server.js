@@ -63,8 +63,8 @@ function requestServer (type, last, next, typeOperation, element) {
                     nextLineServer = element.parent().next();
                 }
 
-                //é só comentar essa linha e descomentar a original, para voltar a versão anterior.
-                //verifyHint(hint, codeAnim);
+                if (enableAgent)
+                	verifyHint(hint, codeAnim);
                 //abaixo está o método original
 
                 //////////////////// encontrar e substituir as equacoes por mathml
@@ -97,8 +97,11 @@ function requestServer (type, last, next, typeOperation, element) {
                 //alert(result);
 
 
-                //divaLiteTipAction(hint);
-                showHint(hint);
+                if (enableAgent)
+                	divaLiteTipAction(hint);
+                
+                else
+                	showHint(hint);
                 
                 var x = $("#hint").offset().left;
                 var y = $("#hint").offset().top;
@@ -487,8 +490,8 @@ function requestServer (type, last, next, typeOperation, element) {
                         hint = split[4];
                     }
 
-                    // divaLiteTipAction(hint);
-                    showHint(hint);
+                     divaLiteTipAction(hint);
+//                    showHint(hint);
 
 //                    $("#hintText").hide('blind', 200);
 //                    $(".verticalTape").hide('blind', 200);

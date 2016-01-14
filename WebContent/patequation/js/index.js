@@ -11,7 +11,8 @@ var progressvalue = 0;
 var tipoAudio;
 var playAudio;
 var unlockedPlans;
-var unlockAllPlans = false;
+var unlockAllPlans = false; //Alt + P habilita/desabilita
+var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilidade/desabilita
 //var numClicks;
 
 // variables for the Step object
@@ -36,7 +37,7 @@ var enableWorkedExample = false;
 //Ver se a condição acima também desativa as instruções dos Worked Examples
 var isWorkedExample = false;
 var isTourInterativo = false;
-var blockMenu = false;
+var blockMenu = true;
 var showNews = false;
 var currentPos = getCookie ("pos");
 var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
@@ -704,7 +705,6 @@ $(document).ready(function() {
     
     $(document).keyup(function(event) {
         var key = event.which;
-      
         
         if (isTourInterativo && key === 27) //esc
         	exitEsc();
@@ -720,6 +720,14 @@ $(document).ready(function() {
         } else if (key === 112) { //F1
 //        		enableWorkedExample = false;
         	insertLines (false, idEquation);
+        } else if (key === 113) {
+        	if (enableAgent === false) {
+        		setCookieDays ("enableAgent", "true", 1);
+        	} else {
+        		setCookieDays ("enableAgent", "", 0);
+        	}
+        	
+        	window.location.reload();
         } else if (key === 9) { //tab key
             $(".labelDefault:first").focus();
         } else if (event.altKey) {
@@ -736,7 +744,7 @@ $(document).ready(function() {
             } else if (key === 0) { //alt + ?
                 $("#hint").click();
             } else if (key == 80) { //alt + p
-            	if (unlockAllPlans == false) {
+            	if (unlockAllPlans === false) {
             		unlockAllPlans = true;
             	} else {
             		unlockAllPlans = false;

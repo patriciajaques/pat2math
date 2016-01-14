@@ -9,3 +9,10 @@
 <script src="/pat2math/patequation/js/decimalNumbers.js"></script>
 <script src="/pat2math/patequation/js/paper.js"></script>
 <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
+
+<!-- AGENTE PEDAGOGICO ANIMADO -->
+<script src="/pat2math/patequation/lib/divalite/divakit/divalite.js"></script>
+<script src="/pat2math/patequation/js/divaliteAux.js"></script>
+<script src="/pat2math/patequation/js/agent.js"></script>
+<!-- AGENTE PEDAGOGICO ANIMADO -->
+

@@ -317,26 +317,23 @@ DIVA_movement_factory = function(charcode)
 			if (frame == 1) {
                             
                                 //if necessary, change de position
-                                if (movement.x && movement.y && (movement.speed || movement.useGo)) {
+                                if (movement.x && movement.y && movement.speed) {
                                     
                                     var offsetBubble = 0;
                                     
                                     if (movement.ignoreDialog) {
-
+                                        
                                         var posBubble = divaCharacter.getBubblePosition();
                                         var sizBubble = divaCharacter.getBubbleHeight();
-                                        var gapBubble = 15;
+                                        var gapBubble = 0;
                                         
-                                        if (posBubble !== undefined && posBubble === 'before') {
+                                        if (posBubble != undefined && posBubble == 'before') {
                                             offsetBubble = sizBubble + gapBubble;
                                         }
 
                                     }
-                                    
-                                    if (movement.useGo)
-                                        divaCharacter.goTo(movement.x,movement.y - offsetBubble);
-                                    else
-                                        divaCharacter.moveTo(movement.x,movement.y - offsetBubble,movement.speed);
+                                  
+                                    divaCharacter.moveTo(movement.x,movement.y - offsetBubble,movement.speed);
                                     
                                 }                            
 				
@@ -347,10 +344,9 @@ DIVA_movement_factory = function(charcode)
 						adjustWidth(true,'containerWidthOriginal',movement.width);
 					}
 				}
-                                
 				//execute the speech
 				if(movement.text) {
-					divaCharacter.doSpeech(movement.text, null, movement.bubblePosition);
+					divaCharacter.doSpeech(movement.text);
 				}
 			}
 			

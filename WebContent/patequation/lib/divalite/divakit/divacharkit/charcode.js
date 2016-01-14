@@ -662,7 +662,7 @@ DIVA_character = function(args)
 	 */
 	var speakingTimeout = undefined;
 	//==================================================================
-	this.doSpeech = function(text,time,bubblePosition) {
+	this.doSpeech = function(text,time) {
 	//==================================================================			
 		//if is iconify, dont show the text
 		if (!this.isIconify()) {
@@ -681,11 +681,11 @@ DIVA_character = function(args)
 			
 			if (speakingTimeout != undefined) {
 				clearTimeout(speakingTimeout);
-				bubbleReposition(false,time,this.movementFactory, bubblePosition);
+				bubbleReposition(false,time,this.movementFactory);
 			}
 						
 			//reposition the bubble
-			bubbleReposition(true,time,this.movementFactory, bubblePosition);
+			bubbleReposition(true,time,this.movementFactory);
 			
 		}
 	};
@@ -734,36 +734,28 @@ DIVA_character = function(args)
 	 *   Private method used to reposition the bubble according char position
 	 */
 	//==================================================================
-	var bubbleReposition = function(show,time,mvFactory,forceBubblePosition) 
+	var bubbleReposition = function(show,time,mvFactory) 
 	//==================================================================
 	{
 		var bubbleHeight = parseInt(speechBubbleContainer.css('height'));
                 
                 //For some unknown reason, it is not possible to call the method getbubblePosition.
-                //Everytime that it is called here, this method here crashes!
+                //Everytime is is called here, this method crashes!
                 var bubblePosition; 
                 
-                if (forceBubblePosition) {
-                    bubblePosition = forceBubblePosition;
-                    speechBubbleContainer.data('bubblePosition',bubblePosition);
-                }
-                else {
-                
-                    if (speechBubbleContainer.data('bubblePosition') != undefined && speechBubbleContainer.data('bubblePosition') != '') {
-
-                            bubblePosition = speechBubbleContainer.data('bubblePosition');
-
-                    } else {
-
-                            if (parseFloat(container.css('top'))-parseFloat(speechBubbleContainer.css('height')) > 0) {
-                                    bubblePosition = 'before';
-                            } else {
-                                    bubblePosition = 'after';
-                            }
-                            speechBubbleContainer.data('bubblePosition',bubblePosition);
-                    }
-                
-                }
+		if (speechBubbleContainer.data('bubblePosition') != undefined && speechBubbleContainer.data('bubblePosition') != '') {
+		
+			bubblePosition = speechBubbleContainer.data('bubblePosition');
+		
+		} else {
+		
+			if (parseFloat(container.css('top'))-parseFloat(speechBubbleContainer.css('height')) > 0) {
+				bubblePosition = 'before';
+			} else {
+				bubblePosition = 'after';
+			}
+			speechBubbleContainer.data('bubblePosition',bubblePosition);
+		}
 		
 		if (show) {
 			

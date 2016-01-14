@@ -297,6 +297,7 @@
     width: 355px; /*192px*/
     overflow: auto;
     display: none;
+    visibility: visible;
 }
 
 #tourAux {
