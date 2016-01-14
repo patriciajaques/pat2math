@@ -12,7 +12,7 @@ var tipoAudio;
 var playAudio;
 var unlockedPlans;
 var unlockAllPlans = false; //Alt + P habilita/desabilita
-var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilidade/desabilita
+var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
 //var numClicks;
 
 // variables for the Step object
@@ -37,7 +37,7 @@ var enableWorkedExample = false;
 //Ver se a condição acima também desativa as instruções dos Worked Examples
 var isWorkedExample = false;
 var isTourInterativo = false;
-var blockMenu = true;
+var blockMenu = false;
 var showNews = false;
 var currentPos = getCookie ("pos");
 var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
