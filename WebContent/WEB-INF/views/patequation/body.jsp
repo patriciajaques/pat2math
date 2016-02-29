@@ -187,7 +187,7 @@
 	
 
 	<div id="newPoints">+10</div>
-	<div id="help" title="Páginas de Ajuda" onclick="textToUserInterface('(x+5)/(2)=10');"></div>
+	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
 <!--     <div id="tour" title="Tour Interativo" onclick="clickTour()"></div> -->
