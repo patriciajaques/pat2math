@@ -1,0 +1,58 @@
+.math-box {
+	display: inline-block;
+/* 	font-size: 18px; */
+}
+
+.math-box .vstack {
+	display: inline-block;
+  	position: relative;
+  	
+}
+
+.math-box .vstack > div {
+ 	position: relative;
+	text-align: center;
+	height: 0;
+}
+
+.math-box .baseline-fix {
+	display: inline-table;
+	table-layout: fixed;
+}
+
+.math-box .frac-line {
+  	width: 100%;
+  	display: inline-block;
+}
+
+.math-box .frac-line:before {
+  	display: block;
+  	border-bottom-style: solid;
+  	border-bottom-width: 1px;
+  	content: "";
+}
+
+.math-box .frac-line:after {
+  	display: block;
+  	margin-top: -1px;
+  	border-bottom-style: solid;
+  	border-bottom-width: 0.04em;
+  	content: "";
+}
+
+.numerator {
+	top: -0.677em
+}
+
+.denominator {
+ 	top: 0.888em; /*0.686em */
+}
+
+.frac-line-aux {
+	top: -0.23em;
+}
+
+.strut {
+	height: 2.008em;
+	vertical-align: -0.686em;
+}

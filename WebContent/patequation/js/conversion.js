@@ -132,6 +132,58 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
 }
 }
 
+function textToUserInterface(text) {
+	var startDenominator = text.indexOf("/") + 2;
+	
+	if (startDenominator !== -1) {
+	var endDenominator = startDenominator;
+	
+	var openParentheses = 1;
+	var closedParentheses = 0;
+	
+	while (openParentheses !== closedParentheses) {
+		endDenominator++;
+		var currentChar = text.charAt(endDenominator);
+		
+		if (currentChar === ')')
+			closedParentheses++;
+		
+		else if (currentChar === '(')
+			openParentheses++;		
+	}
+	
+	var denominator = text.substring(startDenominator, endDenominator);
+	
+	var endNumerator = startDenominator - 3;
+	var startNumerator = endNumerator - 1; 
+	
+	openParentheses = 0;
+	closedParentheses = 1;
+	
+	while (openParentheses !== closedParentheses) {
+		startNumerator--;
+		var currentChar = text.charAt(startNumerator);
+		
+		if (currentChar === '(')
+			openParentheses++;
+		
+		else if (currentChar === ')')
+			closedParentheses++;		
+	}
+	
+	var numerator = text.substring(startNumerator+1, endNumerator);
+	
+	var fraction = '<span class="math-box"><span class="strut"></span> <span class="vstack">' +
+		           '<div class="denominator">' + denominator + '</div> <div class="numerator">' + 
+		           numerator + '</div> <div class="frac-line-aux"> <span class="frac-line"></span></div>' +
+	               '<span class="baseline-fix"></span> </span> </span>';
+	
+	var fractionText = text.substring(startNumerator, endDenominator+1);
+	
+	return replaceAll(text, fractionText, fraction);
+	}
+}
+
 function textToMathml(text) { //<msup>base exponent</msup>
     var stack = new Array();
     var aux = "";
