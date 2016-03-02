@@ -34,4 +34,3 @@
 </form>
 
 <div id="mask" onclick="test56()"></div>
-<div id="firefox-box"></div>

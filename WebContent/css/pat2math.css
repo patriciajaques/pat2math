@@ -626,22 +626,6 @@ textarea:focus {
 /* 	border-radius: 15px; */
 /* 	z-index: 99999; */
 /* } */
-#firefox-box {
-	width: 602px;
-	height: 412px;
-	text-align: center;
-	display: none;
-	position: fixed; 
-    margin: auto; 
-    top: 0; 
-    right: 0; 
-    bottom: 0; 
-    left: 0;
-	background: #fff;
-	box-shadow: 0 0 5px #bbb;
-	border-radius: 15px;
-	z-index: 99999;
-}
 
 #audio-box {
 	width: 548px;
