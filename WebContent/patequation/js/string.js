@@ -151,7 +151,14 @@ function isNumber(digit) {
     var numbers = "0 1 2 3 4 5 6 7 8 9";
     if (numbers.indexOf(digit) === -1) {
         return false;
-        isCoefficient();
+    }
+    return true;
+}
+
+function isNumberOrIncognita(digit) {
+    var numbers = "0 1 2 3 4 5 6 7 8 9 x";
+    if (numbers.indexOf(digit) === -1) {
+        return false;
     }
     return true;
 }
@@ -196,4 +203,36 @@ function isOperator(digit) {
         return false;
     }
     return true;
+}
+
+function splitEquation(equation) {
+	var result = new Array();
+	var numTerms = 0;
+	var currentTerm = "";
+	
+	for (var i = 0; i < equation.length; i++) {
+		var currentChar = equation.charAt(i);
+		
+		if (isNumberOrIncognita(currentChar))
+			currentTerm += currentChar;
+		
+		else if (currentChar === "<") {
+			var startFraction = i;			
+			var endFractionString = equation.indexOf("</span></span></span>");		
+			var endFraction = endFractionString + 21;
+			
+			result[numTerms] = equation.substring(startFraction, endFraction); numTerms++;
+			i = endFraction - 1;
+		}
+		
+		else {
+			result[numTerms] = currentTerm; numTerms++;
+			result[numTerms] = currentChar; numTerms++;
+			currentTerm = "";			
+		}
+	}
+	
+	result[numTerms] = currentTerm;
+	
+	return result;
 }

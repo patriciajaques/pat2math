@@ -56,8 +56,8 @@ function requestServer (type, last, next, typeOperation, element) {
 
                 element = $(selectedSheet + " .canCopy ul");
 
-                nextLineServer;
-                if (element.parent().html().indexOf("<mfrac") !== -1) {
+                var nextLineServer;
+                if (element.parent().html().indexOf("/") !== -1) {
                     nextLineServer = element.parent().next().next();
                 } else {
                     nextLineServer = element.parent().next();
@@ -83,12 +83,11 @@ function requestServer (type, last, next, typeOperation, element) {
                         end = aux.substring(aux.indexOf("<"), aux.length);
                         aux = aux.replace(end, "");
                         //alert(result[i] + "\n" + aux);
-                        var mathml = textToMathml(aux);
+                        var mathml = textToUserInterface(aux);
                         aux = "";
                         for (var j = 0; j < mathml.length; j++) {
                             aux = aux + mathml[j];
                         }
-                        aux = "<math>" + aux + "</math>";
                         //aux = first + aux + end;
                         hint = hint.replace(result[i], aux);
                         //alert(aux);
@@ -131,12 +130,13 @@ function requestServer (type, last, next, typeOperation, element) {
                 element = $(selectedSheet + " .canCopy ul");
 
 
-                if (newHtml.indexOf("<mfrac") !== -1) {
+                if (newHtml.indexOf("/") !== -1) {
                     nextLineServer = element.parent().next().next();
                 } else {
                     nextLineServer = element.parent().next();
                 }
                 nextLineServer.html(
+                		//Aqui pode ser o local de se basear para criar mais caixinhas de input ao pressionar "/"
                         "<ul>" +
                         "<li class='labelDefault'><input type='text'></li>" +
                         "</ul>" +
@@ -177,7 +177,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     $(".verticalTape").hide('blind', 200);
                     $("#hintText").html("");
 
-                    if (element.parent().html().indexOf("<mfrac") !== -1) {
+                    if (element.parent().html().indexOf("/") !== -1) {
                         nextLineServer = element.parent().next().next();
                     } else {
                         nextLineServer = element.parent().next();
@@ -187,7 +187,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     if ((next.indexOf('d') === -1 && selectedEquation.twoAnswers === true && selectedEquation.nAnswers === 2)
                             || (next.indexOf('d') === -1 && selectedEquation.twoAnswers === false)
                             || (next.indexOf('d') === -1 && selectedEquation.twoAnswers === true && next.indexOf("±") !== -1)) {
-//                        if ($(element).parent().html().indexOf("<mfrac>") === -1) {
+//                        if ($(element).parent().html().indexOf("<m/>") === -1) {
 //                            $(element).parent().next().html("<div class='final'></div>");
 //                        } else {
 //                            $(element).parent().next().next().html("<div class='final'></div>");
@@ -420,7 +420,7 @@ function requestServer (type, last, next, typeOperation, element) {
 //                    });
 
 
-                    if (element.parent().html().indexOf("<mfrac") !== -1) {
+                    if (element.parent().html().indexOf("/") !== -1) {
                         nextLineServer = element.parent().next().next();
                     } else {
                         nextLineServer = element.parent().next();

@@ -30,7 +30,7 @@
 			    var id = ${task.content.id};
                 
                 
-      	            equationToMathml (id);     
+      	            equationToUserInterface (id);     
     	        </script>
 				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }" >
 					${task.content.equation}
@@ -45,7 +45,7 @@
 			        var id = ${task.content.id};
                 
                     
-          	            equationToMathml (id);        
+          	            equationToUserInterface (id);        
     	        </script>
 				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
@@ -63,7 +63,7 @@
 	                  var id = ${task.content.id};
 	                  
 	                  
-	                	  equationToMathml (id);           
+	                	  equationToUserInterface (id);           
     	        </script>
 				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
@@ -77,7 +77,7 @@
 			        var id = ${task.content.id};
                 
                     
-              	        equationToMathml (id);       
+              	        equationToUserInterface (id);       
     	        </script>
 				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}

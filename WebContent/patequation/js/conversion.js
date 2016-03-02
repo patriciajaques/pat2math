@@ -132,10 +132,11 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
 }
 }
 
+
 function textToUserInterface(text) {
-	var startDenominator = text.indexOf("/") + 2;
+	var startDenominator = text.indexOf(")/(") + 3;
 	
-	if (startDenominator !== -1) {
+	if (startDenominator !== 2) {
 	var endDenominator = startDenominator;
 	
 	var openParentheses = 1;
@@ -173,18 +174,24 @@ function textToUserInterface(text) {
 	
 	var numerator = text.substring(startNumerator+1, endNumerator);
 	
-	var fraction = '<span class="math-box"><span class="strut"></span> <span class="vstack">' +
-		           '<div class="denominator">' + denominator + '</div> <div class="numerator">' + 
-		           numerator + '</div> <div class="frac-line-aux"> <span class="frac-line"></span></div>' +
-	               '<span class="baseline-fix"></span> </span> </span>';
+	var fraction = '<span class="math-box"><span class="strut"></span><span class="vstack">' +
+		           '<div class="denominator">' + denominator + '</div><div class="numerator">' + 
+		           numerator + '</div><div class="frac-line-aux"><span class="frac-line"></span></div>' +
+	               '<span class="baseline-fix"></span></span></span>';
 	
 	var fractionText = text.substring(startNumerator, endDenominator+1);
 	
-	return replaceAll(text, fractionText, fraction);
+	var equationUI = replaceAll(text, fractionText, fraction);
+	
+	return textToUserInterface(equationUI);
+	}
+	
+	else {
+		return splitEquation(text);
 	}
 }
 
-function textToMathml(text) { //<msup>base exponent</msup>
+function textToUserInterfaceOld(text) { //<msup>base exponent</msup>
     var stack = new Array();
     var aux = "";
     text = replaceAll(text, "<br>", "");
@@ -487,16 +494,16 @@ function mathmlToText(math) {
     return result;
 }
 
-function equationToMathml (id) {
+function equationToUserInterface (id) {
 	var idTask = "#task" + id;
 	var eq = stringEquation[id];		
-	var temp = textToMathml (eq);
-	var equation = "<math>" + temp[0];
+	var temp = textToUserInterface (eq);
+	var equation = temp[0] + " ";
 	
-	for (var i = 1; i < temp.length; i++)
-		equation += temp[i];
+	for (var i = 1; i < temp.length - 1; i++)
+		equation += temp[i] + " ";
 	
-	equation += "</math>";
+	equation += temp[temp.length-1];
 	
 	if (eq.indexOf ("..") !== -1)
 		equation += "..";
@@ -504,8 +511,8 @@ function equationToMathml (id) {
 	$(idTask).html (equation);
 }
 
-function equationToMathml2 (equation) {		
-	var temp = textToMathml (equation);
+function equationToUserInterface2 (equation) {		
+	var temp = textToUserInterface (equation);
 	var equationMathml = "<math>" + temp[0];
 	
 	for (var i = 1; i < temp.length; i++)

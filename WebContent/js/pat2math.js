@@ -183,7 +183,7 @@ function loadTasks(id) {
 //								else 
 //									eq = "2(x-1)+3(x+1)..";
 //								
-//								var temp = textToMathml (eq);
+//								var temp = textToUserInterface (eq);
 //								var equation = "<math>" + temp[0];
 //								
 //								for (var i = 1; i < temp.length; i++)

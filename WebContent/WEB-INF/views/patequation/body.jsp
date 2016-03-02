@@ -145,7 +145,7 @@
                         <div class="hLine"></div>
                         <div class="hLine"></div>
                         <div class="hLine"></div>
-                        <div class="hLine"></div>
+                        <div class="hLine"></div>                                       
                         <div class="hLine"></div>
                         <div class="hLine"></div>
                         <div class="hLine"></div>

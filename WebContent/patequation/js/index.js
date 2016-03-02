@@ -720,7 +720,7 @@ $(document).ready(function() {
         } else if (key === 112) { //F1
 //        		enableWorkedExample = false;
         	insertLines (false, idEquation);
-        } else if (key === 113) {
+        } else if (key === 113) { //F2
         	if (enableAgent === false) {
         		setCookieDays ("enableAgent", "true", 1);
         	} else {
@@ -994,11 +994,11 @@ function loadEquation(index) {
         // get the firs valid line to put content
         var line = $(selectedSheet + " .hLineAux").next();
 
-        var stack = textToMathml(selectedEquation.equationToString);
+        var stack = textToUserInterface(selectedEquation.equationToString);
 
         var elements = "<ul>";
         for (var i = 0; i < stack.length; i++) {
-            elements = elements + "<li><math>" + stack[i] + "</math></li>";
+            elements = elements + "<li>" + stack[i] + "</li>";
         }
 
         elements = elements + "</ul>";
@@ -1011,28 +1011,28 @@ function loadEquation(index) {
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
             for (var i = 0; i < selectedEquation.steps.length; i++) {
-                stack = textToMathml(selectedEquation.steps[i].step);
+                stack = textToUserInterface(selectedEquation.steps[i].step);
                 selectedEquation.lastStep = selectedEquation.steps[i];
 
                 elements = "<ul>";
                 for (var j = 0; j < stack.length; j++) {
                     var elm = stack[j];
-                    if (elm === "<mn>x</mn>") {
+                    if (elm === "x") {
                         if (selectedEquation.lastStep.type === x1_SOLUTION) {
-                            elm = "<mn>x\'</mn>";
+                            elm = "x\'";
                             selectedEquation.nAnswers++;
                             selectedEquation.twoAnswers = true;
                         } else if (selectedEquation.lastStep.type === x2_SOLUTION) {
-                            elm = "<mn>x\"</mn>";
+                            elm = "x\'";
                         }
                     }
-                    elements = elements + "<li><math>" + elm + "</math></li>";
+                    elements = elements + "<li>" + elm + "</li>";
                 }
 
 
                 line.find("li").css("opacity", "0.5");
 
-                if (line.html().indexOf("<mfrac") !== -1) {
+                if (line.html().indexOf("frac") !== -1) {
                     line = line.next().next();
                 } else {
                     line = line.next();
@@ -1096,7 +1096,7 @@ function loadEquation(index) {
         line.addClass("canCopy");
 
         var nextLine;
-        if (elements.indexOf("<mfrac") !== -1) {
+        if (elements.indexOf("frac") !== -1) {
             nextLine = line.next().next();
         } else {
             nextLine = line.next();
@@ -1227,15 +1227,15 @@ function referenceToDelta() {
 
     $(selectedSheet + " .canMove").html(
             svg + "<ul>" +
-            "<li><math><mn>Δ</mn></math></li>" +
-            "<li><math><mn>=</mn></math></li>" +
-            "<li><math><mn>b²</mn></math></li>" +
-            "<li><math><mo>-</mo></math></li>" +
-            "<li><math><mn>4</mn></math></li>" +
-            "<li><math><mo>*</mo></math></li>" +
-            "<li><math><mn>a</mn></math></li>" +
-            "<li><math><mo>*</mo></math></li>" +
-            "<li><math><mn>c</mn></math></li>" +
+            "<li>Δ</li>" +
+            "<li>=</li>" +
+            "<li>b²</li>" +
+            "<li>-</li>" +
+            "<li>4</li>" +
+            "<li>*</li>" +
+            "<li>a</li>" +
+            "<li>*</li>" +
+            "<li>c</li>" +
             "</ul>");
 //    +
 //            "<div class='trash'></div>" +
@@ -1274,16 +1274,16 @@ function referenceToABC(a, b, c, focused) {
 
     $(selectedSheet + " .canMove").html(
             svg + "<ul>" +
-            "<li><math><mn>a</mn></math></li>" +
-            "<li><math><mn>=</mn></math></li>" +
+            "<li>a</li>" +
+            "<li>=</li>" +
             "<li class='labelDefault'><input class='a' type='text' value=" + a + "></li>" +
             "<li>;</li>" +
-            "<li><math><mn>b</mn></math></li>" +
-            "<li><math><mn>=</mn></math></li>" +
+            "<li>b</li>" +
+            "<li>=</li>" +
             "<li class='labelDefault'><input class='b' type='text' value=" + b + "></li>" +
             "<li>;</li>" +
-            "<li><math><mn>c</mn></math></li>" +
-            "<li><math><mn>=</mn></math></li>" +
+            "<li>c</li>" +
+            "<li>=</li>" +
             "<li class='labelDefault'><input class='c' type='text'  value=" + c + "></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
@@ -1538,11 +1538,11 @@ function focus() {
 
                 result = naturalToText(naturalText);
 
-                stack = textToMathml(result);
+                stack = textToUserInterface(result);
 
                 var elements = "";
                 for (var i = 0; i < stack.length; i++) {
-                    elements = elements + "<li><math>" + stack[i] + "</math></li>";
+                    elements = elements + "<li>" + stack[i] + "</li>";
                 }
                 $(this).parent().replaceWith(elements);
                 focus();
@@ -1811,6 +1811,8 @@ function checkEquation() {
 //      } cont++;
 //  }
   
+  
+  
   var passoAnterior = selectedEquation.lastStep;
   
   if (passoAnterior !== null) {
@@ -1827,6 +1829,7 @@ function checkEquation() {
 //      selectedEquation.initialEquation = passoAnterior;
 //  }
 
+  var equationServer = equation;
   var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
   if (mathml.indexOf('a') !== -1 || mathml.indexOf('b') !== -1 || mathml.indexOf('c') !== -1) {
       equation = mathml;
@@ -1849,7 +1852,7 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   
-  requestServer('e', passoAnterior, equation, "OG", $(selectedSheet + " #button"));
+  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
 
   //document.getElementById('button').style.display = 'inline';
 //}
