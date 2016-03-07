@@ -57,7 +57,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 element = $(selectedSheet + " .canCopy ul");
 
                 var nextLineServer;
-                if (element.parent().html().indexOf("/") !== -1) {
+                if (element.parent().html().indexOf("frac") !== -1) {
                     nextLineServer = element.parent().next().next();
                 } else {
                     nextLineServer = element.parent().next();
@@ -130,7 +130,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 element = $(selectedSheet + " .canCopy ul");
 
 
-                if (newHtml.indexOf("/") !== -1) {
+                if (newHtml.indexOf("frac") !== -1) {
                     nextLineServer = element.parent().next().next();
                 } else {
                     nextLineServer = element.parent().next();
@@ -177,7 +177,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     $(".verticalTape").hide('blind', 200);
                     $("#hintText").html("");
 
-                    if (element.parent().html().indexOf("/") !== -1) {
+                    if (element.parent().html().indexOf("frac") !== -1) {
                         nextLineServer = element.parent().next().next();
                     } else {
                         nextLineServer = element.parent().next();
@@ -265,7 +265,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         
                       //Verifica se o ID da equação atual não é o da última equação de um dos planos de aula                                        162
                     	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219 && idEquation !== 256 && idEquation !== 240 && idEquation !== 299 && idEquation !== 257 && idEquation !== 269 && idEquation !== 320 && idEquation !== 292 && idEquation !== 312 && idEquation !== 332 && idEquation !== 346)                  		
-                            showNextButton (nextLineServer);
+                            showNextButton(nextLineServer);
                     	
                     	else 
                     		nextLineServer.html("<div class='final'></div>");               	
@@ -420,7 +420,7 @@ function requestServer (type, last, next, typeOperation, element) {
 //                    });
 
 
-                    if (element.parent().html().indexOf("/") !== -1) {
+                    if (element.parent().html().indexOf("frac") !== -1) {
                         nextLineServer = element.parent().next().next();
                     } else {
                         nextLineServer = element.parent().next();
@@ -569,7 +569,7 @@ function requestServer (type, last, next, typeOperation, element) {
     
 }
 
-function showNextButton ( ) {
+function showNextButton (nextLineServer) {
 	 setTimeout(function(){ nextLineServer.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='loadingShow(); nextEquationClick(); loadingHide();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
 	
 }

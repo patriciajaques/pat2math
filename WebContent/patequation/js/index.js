@@ -29,9 +29,6 @@ var stringEquation;
 var sortedIds;
 var equationPlan;
 var concluded = 0;
-var regras;
-var regraWE;
-var stepWE;
 var nextLineServer;
 var enableWorkedExample = false;
 //Ver se a condição acima também desativa as instruções dos Worked Examples
@@ -48,6 +45,11 @@ var numUnlockedPlans = 1;
 var numLines = 20;
 var heightSheet = 800;
 var usedLines;
+
+//Salva o passo atual do exemplo trabalhado
+var stepWE = "stepWE" + currentPos;
+//Salva o nome da função que representa o exemplo trabalhado atual
+var functionWE = "functionWE" + currentPos;
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -838,7 +840,6 @@ $(document).ready(function() {
     getStringEquations();
 //    getFirstEquations();
     getEquationsPlan();
-    getRegras();
    
     
 //	cookieName = "openQuest" + currentPos;
@@ -1116,7 +1117,8 @@ function loadEquation(index) {
 
             } else {
                 nextLine.addClass("canMove");
-                clearLine('');
+                if (!enableWorkedExample || !isWorkedExample)
+                	clearLine('');
                 //nextLine.html(
                   //      "<ul>" +
                     //    "<li class='labelDefault'><input type='text'></li>" + //autofocus='true'
@@ -1141,6 +1143,8 @@ function loadEquation(index) {
     $("#hintText").hide('blind', 500);
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
+    
+//    resolutionEquationOfPlan1();
     
     return selectedEquation.equation;
 }
