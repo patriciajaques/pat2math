@@ -390,7 +390,10 @@ function loadExercise(id) {
 		blockMenu = false;
 	
 	setTimeout ('calculateUsedLines()', 1000);
-	loadingHide();	
+	loadingHide();
+	
+	if (id === 0) 
+		classPlan1("");
 	
 	
 }

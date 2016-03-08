@@ -30,9 +30,9 @@ var sortedIds;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
-var enableWorkedExample = false;
+var enableWorkedExample = true;
 //Ver se a condição acima também desativa as instruções dos Worked Examples
-var isWorkedExample = false;
+var isWorkedExample = true;
 var isTourInterativo = false;
 var blockMenu = false;
 var showNews = false;
@@ -344,7 +344,15 @@ function closeWindowUploadImage ( ) {
 }
 
 
-
+function createLines() {
+	var lines = '<div class="hLineAux" id="line1">.</div>';
+	
+	for (var i = 2; i <= 22; i++) 
+		lines += '<div class="hLine" id="line' + i + '"></div>';
+	
+	document.getElementById("lines").innerHTML = lines;
+	
+}
 
 function p1 ( ) {
 	$.guider({
@@ -928,7 +936,7 @@ $(document).ready(function() {
 
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
-	
+	createLines();
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
@@ -1144,7 +1152,6 @@ function loadEquation(index) {
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
     
-//    resolutionEquationOfPlan1();
     
     return selectedEquation.equation;
 }
@@ -1754,6 +1761,7 @@ function newEquation() {
 //	$("#easter-egg-loupe-box").fadeOut(700);
 //	
 //}
+
 
 function checkEquation() { 	
 //	setTimeout ('resetNumClicks()', 3000);

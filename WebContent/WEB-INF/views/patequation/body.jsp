@@ -138,29 +138,7 @@
 				     </div>
 
                     <div id="lines">
-                        <div class="hLineAux">.</div>
-                        <div class="hLine"></div>
-                        <div class="hLine" id="linha3"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>                                       
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
-                        <div class="hLine"></div>
+
         	</div>       
      	</div>
 	</div>

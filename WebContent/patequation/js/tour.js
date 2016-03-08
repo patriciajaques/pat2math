@@ -52,7 +52,7 @@ function introduction (nextStep) {
 		}
 	});
 	
-	$("#linha3").guider({
+	$("#line3").guider({
 		name: "start2",
 		next: "start3",
 		title: "Equações iniciais",
