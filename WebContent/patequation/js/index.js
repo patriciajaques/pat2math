@@ -933,6 +933,17 @@ $(document).ready(function() {
 		else
 			document.getElementById('hintText').style.left = "40%";
 	}
+	
+	if (widthResolution < 1366) {
+		var marginRightPaper = (6 - 1366 + widthResolution) + "px";
+		var marginLeftNote = (785 + 1366 - widthResolution) + "px";
+		var marginLeftButtons = (890 + 1366 - widthResolution) + "px";
+		
+		document.getElementById("paper-1").style.marginRight = marginRightPaper;
+		document.getElementById("note").style.marginLeft = marginLeftNote;
+		document.getElementById("help").style.marginLeft = marginLeftButtons;
+		document.getElementById("reportBug").style.marginLeft = marginLeftButtons;
+	}
 
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
@@ -942,9 +953,7 @@ $(document).ready(function() {
     // $("#newPoints").hide();
 });
 
-function openQuestions ( ) {
-	alert ("Questionário");
-}
+
 function showSideBar(){
 	$("#topics").show();
 	$(".hide-menu").show();

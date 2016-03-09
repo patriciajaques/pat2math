@@ -393,7 +393,7 @@ function loadExercise(id) {
 	loadingHide();
 	
 	if (id === 0) 
-		classPlan1("");
+		classPlan1();
 	
 	
 }
