@@ -262,13 +262,3 @@ function resolutionEquation(resolutionStep, idStep, skipLine) {
     centralizeCanCopy();
     line.removeClass("canCopy");
 }
-
-function resolutionEquationBackOneLine(resolutionStep) {
-	var line = $(selectedSheet + " .hLineAux").next();
-	var elements = "<ul><li>" + resolutionStep + "</li></ul>";
-	line.html(line.html() + elements);
-    
-    line.addClass("canCopy");
-    centralizeCanCopy();
-    line.removeClass("canCopy");
-}
