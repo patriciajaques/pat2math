@@ -262,13 +262,8 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                         else addProgressValue(progressvalue);
                         selectedEquation.isComplete = true;
-                        
-                      //Verifica se o ID da equação atual não é o da última equação de um dos planos de aula                                        162
-                    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 167 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219 && idEquation !== 256 && idEquation !== 240 && idEquation !== 299 && idEquation !== 257 && idEquation !== 269 && idEquation !== 320 && idEquation !== 292 && idEquation !== 312 && idEquation !== 332 && idEquation !== 346)                  		
-                            showNextButton(nextLineServer);
-                    	
-                    	else 
-                    		nextLineServer.html("<div class='final'></div>");               	
+
+                    	nextLineServer.html("<div class='final'></div>");               	
                     	
 //                    	var cookieName = "numLines" + currentPos + idEquation; 			           			
 //            			setCookieDays (cookieName, "", 0);
@@ -567,11 +562,6 @@ function requestServer (type, last, next, typeOperation, element) {
         setTimeout ('window.location.reload()', 2000);
     	
     
-}
-
-function showNextButton (nextLineServer) {
-	 setTimeout(function(){ nextLineServer.html("<div class='final'></div><div id='next_equation' title='Próxima Equação' onclick='loadingShow(); nextEquationClick(); loadingHide();' ><img src=/pat2math/patequation/img/next_equation.png></div>"); }, 2000);
-	
 }
 
 function getResolution (equation){

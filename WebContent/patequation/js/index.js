@@ -25,8 +25,6 @@ var x2_SOLUTION = 4;
 var newEquations = [new Equation("x=1", 0)];
 var equations = [new Equation("x=1", 0)];
 var stringEquation;
-//var firstEquations;
-var sortedIds;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
@@ -844,9 +842,7 @@ $(document).ready(function() {
     	}
     });
     
-    getSortedIds();
     getStringEquations();
-//    getFirstEquations();
     getEquationsPlan();
    
     

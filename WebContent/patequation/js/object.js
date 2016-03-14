@@ -53,12 +53,6 @@ function TaskItem (taskSetID, taskID){
 	this.taskID = taskID; // the id of the task
 }
 
-function EquationId (id, pos, plan) {
-	this.id = id; //ID da equação
-	this.pos = pos; //Posição em que ela está no array original (não ordenado)
-	this.plan = plan; //ID do plano em que a equação está
-}
-
 function Regra (nome, explicacao) {
 	this.nome = nome;
 	this.explicacao = explicacao;
