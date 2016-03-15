@@ -794,7 +794,7 @@ $(document).ready(function() {
 	}
 	
 	if (widthWindow < 1366) 
-		adjustPositionElements(widthWindow);
+		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
 
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
