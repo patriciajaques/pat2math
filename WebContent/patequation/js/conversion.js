@@ -3,25 +3,7 @@
 
 //translates natural language to format text PAT2Math
 //Colocar aqui a substituição do valor para a resposta do corretor do PAT2Math
-function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
-	if (isWorkedExample) {
-		loadingShowWE();	
-		
-		var cookieName = "regraWE" + currentPos;
-		var regras = getCookie (cookieName);
-		
-		if (regras !== "" && selectedEquation.steps.length > 0) 
-		    regras += " " + regraWE;
-		
-		else
-			regras = regraWE;
-		
-		setCookieDays (cookieName, regras, 1);	
-		
-		return stepWE;
-	}
-	
-	else {
+function naturalToText(natural) { 
     natural = replaceAll(natural, " ", "");
     natural = replaceAll(natural, "^2", "²");
     natural = replaceAll(natural, "ˆ2", "²");
@@ -129,7 +111,6 @@ function naturalToText(natural) { //equacao x+2(R5+2/(R3)²)²
     }
     text = replaceAll(text, "²", "^2");
     return text;
-}
 }
 
 

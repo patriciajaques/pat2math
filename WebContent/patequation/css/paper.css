@@ -42,15 +42,6 @@
 	cursor: pointer;
 }
 
-#workedExamplesBlock {
-	width: 42px;
-	height: 677px;
-	margin-left: 567px;
-	margin-top: -242px;
-	position: relative;
-	z-index: 9999;
-}
-
 #lines, .lines{
     border-left: 1px solid #FA8072;
     height: 90%;

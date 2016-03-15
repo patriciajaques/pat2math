@@ -175,7 +175,6 @@
 	<div id="reportBug-box"></div>
 	<div id="uploadImage-box"></div>
 	<div id="quest-box"></div>
-	<div id="workedExamplesBlock" title="Esta equação é um exemplo resolvido. Clique no botão play para continuar"></div>
 	<div id="topicsAux"></div>
 	<div id="tourAux"></div>
 <!-- 	<div id="easter-egg-loupe-box"></div> -->

@@ -534,34 +534,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 	showHint(split[0]);
                 }
             }
-            
-            if (isWorkedExample) {
-            	if (idEquation === 13) {
-        		    var cookieName = "showTutorial" + currentPos;
-        		    var numClicks = getCookie (cookieName);
-        		    
-        		    if (numClicks === "") {
-        		        setCookieDays (cookieName, "1", 1);
-        		        window.location.reload();
-        		    }
-        		    
-        		    else {
-        		    	if (numClicks === "1"){	    
-        		    	    setCookieDays (cookieName, "finish", 1);
-        		        }
-        		    	
-        		    	showExplanation();
-        		    	
-        		    }
-        		}             	
-            	window.location.reload();         	
-            }
-        }});
-    
-    if (isWorkedExample)
-        setTimeout ('window.location.reload()', 2000);
-    	
-    
+        }});      	  
 }
 
 function getResolution (equation){

@@ -284,13 +284,7 @@ function loadExercise(id) {
 				
 				if(data.performed) {
 					equation.isComplete = true;
-					
-					if (isWorkedExample) {
-					    isWorkedExample = false;
-					    $("#workedExamplesBlock").hide();
-					    var cookieName = "regraWE" + currentPos;
-					    setCookieDays (cookieName, "", 0);	
-					}
+
 					
 					if (isTourInterativo == false)
 					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
@@ -303,60 +297,6 @@ function loadExercise(id) {
 			
 			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
-			cookieName = "isWorkedExample" + currentPos;
-			
-			if (enableWorkedExample) {
-			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202 || idEquation === 220 || idEquation === 230 || idEquation === 241 || idEquation === 257) {
-        	        setCookieDays (cookieName, "true", 1);   
-        	        isWorkedExample = true;
-        	        $("#workedExamplesBlock").show();
-        	    
-        	        var play = document.getElementById ('button');
-        	        play.style.width = '25px';
-        	    	play.style.height = '25px';
-        	        play.style.background = 'url("/pat2math/patequation/img/play_25x25.png")';
-        	        
-        	        if (selectedEquation.lastStep !== null)
-        	    	    requestStep (selectedEquation.lastStep.step);
-        	    
-        	        else
-        	            requestStep (selectedEquation.equation);
-        	        
-        	       // idEquation === 29 && 
-        	        if (selectedEquation.isComplete === false) { 
-        	        	var cookieName = "showTutorial" + currentPos;
-        	        	
-        	        	if (getCookie (cookieName) === "")
-        	        	    tutorialWorkedExamples();
-        	        	
-        	        	else if (getCookie (cookieName) === "1")
-        	        		finishTutorial();
-        	        }
-        	        
-        	        else if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
-                    	plan2();
-                        var cookieName = "splan2" + currentPos;
-                        setCookieDays (cookieName, "false", 7);                    
-                    }
-		    	}
-			
-			    else {
-			    	if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
-                    	plan2();
-                        var cookieName = "splan2" + currentPos;
-                        setCookieDays (cookieName, "false", 7);                
-                    }
-			    	
-			    	setCookieDays (cookieName, "", 0); 
-			    	
-			    	if (isWorkedExample) {
-					    isWorkedExample = false;
-					    $("#workedExamplesBlock").hide();
-					    cookieName = "regraWE" + currentPos;
-					    setCookieDays (cookieName, "", 0);	
-					}
-			    }
-			}
 			
 //			cookieName = "numLines" + currentPos + idEquation;
 //			
@@ -392,8 +332,10 @@ function loadExercise(id) {
 	setTimeout ('calculateUsedLines()', 1000);
 	loadingHide();
 	
-	if (id === 0) 
+	if (id === 0) {
+		isWorkedExample = true;
 		classPlan1();
+	}
 	
 	
 }
@@ -426,13 +368,6 @@ function loadExerciseTest(id) {
 				if(data[2] == "1") {
 					equation.isComplete = true;
 					
-					if (isWorkedExample) {
-					    isWorkedExample = false;
-					    $("#workedExamplesBlock").hide();
-					    var cookieName = "regraWE" + currentPos;
-					    setCookieDays (cookieName, "", 0);	
-					}
-					
 					if (isTourInterativo == false)
 					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
@@ -443,61 +378,6 @@ function loadExerciseTest(id) {
 			
 			var cookieName = "currentEquation" + currentPos;
 			setCookieDays (cookieName, idEquation, 1);
-            cookieName = "isWorkedExample" + currentPos;
-            
-            if (enableWorkedExample) {
-			    if (idEquation === 29 || idEquation === 58 || idEquation === 64 || idEquation === 121 || idEquation === 144 || idEquation === 168 || idEquation === 187 || idEquation === 202 || idEquation === 220 || idEquation === 230 || idEquation === 241 || idEquation === 257) {
-        	        setCookieDays (cookieName, "true", 1);   
-        	        isWorkedExample = true;
-        	        $("#workedExamplesBlock").show();
-        	    
-        	        var play = document.getElementById ('button');
-        	        play.style.width = '25px';
-        	    	play.style.height = '25px';
-        	        play.style.background = 'url("/pat2math/patequation/img/play_25x25.png")';
-        	        
-        	        if (selectedEquation.lastStep !== null)
-        	    	    requestStep (selectedEquation.lastStep.step);
-        	    
-        	        else
-        	            requestStep (selectedEquation.equation);
-        	        
-        	        if (idEquation === 29) {
-        	        	var cookieName = "showTutorial" + currentPos;
-        	        	
-        	        	if (getCookie (cookieName) === "")
-        	        	    tutorialWorkedExamples();
-        	        	
-        	        	else if (getCookie (cookieName) === "1")
-        	        		finishTutorial();
-        	        }
-        	        
-        	        else if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
-                    	plan2();
-                        var cookieName = "splan2" + currentPos;
-                        setCookieDays (cookieName, "false", 7);                      
-                    }
-		    	}
-			
-			    else {
-			    	if (showPlan2Explanation !== "false" && idEquation >= 29 && idEquation <= 49) {
-                    	plan2();
-                        var cookieName = "splan2" + currentPos;
-                        setCookieDays (cookieName, "false", 7);                
-                    }
-			    	
-				    setCookieDays (cookieName, "", 0); 
-				    
-				    if (isWorkedExample) {
-					    isWorkedExample = false;
-					    $("#workedExamplesBlock").hide();
-					    cookieName = "regraWE" + currentPos;
-					    setCookieDays (cookieName, "", 0);	
-					}
-				    
-				    
-			    }
-			}
             
             
 			

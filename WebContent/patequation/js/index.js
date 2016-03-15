@@ -29,13 +29,11 @@ var equationPlan;
 var concluded = 0;
 var nextLineServer;
 var enableWorkedExample = true;
-//Ver se a condição acima também desativa as instruções dos Worked Examples
-var isWorkedExample = true;
+var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
 var showNews = false;
 var currentPos = getCookie ("pos");
-var isExperimentoSaoLuis = getCookie ("experimentoSaoLuis")
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
@@ -43,11 +41,6 @@ var numUnlockedPlans = 1;
 var numLines = 20;
 var heightSheet = 800;
 var usedLines;
-
-//Salva o passo atual do exemplo trabalhado
-var stepWE = "stepWE" + currentPos;
-//Salva o nome da função que representa o exemplo trabalhado atual
-var functionWE = "functionWE" + currentPos;
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -72,68 +65,6 @@ var functionWE = "functionWE" + currentPos;
 //	alert (string);
 //}
 
-
-
-//function workedExample ( ) {
-//	requestResolution ( );
-//	
-//	var passoAnterior = selectedEquation.lastStep;
-//	  
-//	if (passoAnterior !== null) {
-//	    passoAnterior = passoAnterior.step;         
-//	} else {
-//	    passoAnterior = selectedEquation.initialEquation;       	  
-//	}
-//	  
-//	var cookieName = "currentStepWE" + currentPos;   
-//    var numero = getCookie (cookieName);
-//    var n;
-//	
-//	if (numero === "") 
-//		n = 1;
-//	
-//	else
-//	    n = parseInt (numero);
-//	
-//	var passoRegra = currentStepsFirstEquation[currentStepsFirstEquation.length-n].split (";");
-//	var passo = passoRegra[1];
-//	
-//	if (n === currentStepsFirstEquation.length) {
-//		isWorkedExample = false;      
-//		setCookieDays (cookieName, "", 0);
-//    	cookieName = "isWorkedExample" + currentPos;
-//    	setCookieDays (cookieName, "", 0);
-//	}
-//	
-//	else {
-//	    numero = "" + (n+1);
-//	    setCookieDays (cookieName, numero, 1);
-//	}
-//	
-//	requestServer('e', passoAnterior, passo, "OG", $(selectedSheet + " #button"));
-//	
-//	window.location.reload();
-	
-//	for (var i = 0; i < currentStepsFirstEquation.length; i++) {
-//		var temp = currentStepsFirstEquation[i].split (";");
-//		passos[i] = temp[1];
-//	}
-//	
-//	
-//	var passo = passos[passos.length-n];
-	
-//	var equation = selectedEquation.lastStep;
-//	  
-//    if (equation !== null) 
-//	    equation = equation.step; 
-//	    
-//    else
-//    	equation = selectedEquation.initialEquation;   	
-//    
-//    var passo = getStep (equation);
-//    
-//    return passo;
-//}
 
 //color é uma String em hexadecimal com # na frente
 function setBackgroundColor (color) {
@@ -165,31 +96,6 @@ function news() {
 			}
 		}
 	}).show();
-}
-
-function showNotificationDoNotCloseLoginWindow() {
-	var currentHour = getCurrentHour();
-	
-	if (isExperimentoSaoLuis !== "" && (currentHour === 8 || currentHour === 9)) {	
-		if (currentHour === 8) 
-			setTimeout ('showNotificationDoNotCloseLoginWindow()', 300000)
-			
-		else {		
-			if (getCurrentMinutes() === 8) {
-				if (selectedEquation !== null)
-					moveHint();
-
-				$("#hintText").html("Por favor, deixe a janela de login do PAT2Math aberta para facilitar o acesso da próxima turma que utlizará o programa. Ao sair, clique no ícone vermelho com uma porta desenhada no menu principal.");
-				$("#hintText").show('blind', 500);
-				$(".verticalTape").show('fold', 500);
-
-			    setTimeout ('window.close()', 240000);
-			}
-			
-			else
-				setTimeout ('showNotificationDoNotCloseLoginWindow()', 60000);
-		}
-	}
 }
 
 
@@ -563,10 +469,6 @@ function rel ( ) {
 	    		    	    }
 	    	         } 
 
-//		    	     if (isTourInterativo === false && isWorkedExample === false) {
-//		    	    		selectedEquation = null;
-//		    	    		setTimeout (function(){$("#topics").fadeIn(); $("#topicsAux").hide();}, 1000);
-//		    	     }
 		    	 }
 		     },  
 		     error : function(e) {  
@@ -633,38 +535,12 @@ $(document).ready(function() {
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
 	});
-	
-	showNotificationDoNotCloseLoginWindow();
-	
-	if (isExperimentoSaoLuis) {
-		numUnlockedPlans = 11;
-		$(".locked").hide();
-		
-		var cookieName = "currentPlan" + currentPos;
-        var currentPlanString = getCookie (cookieName);
-        if (currentPlanString !== "") {
-       		var currentPlan = parseInt (currentPlanString);
-       		loadTasks (currentPlan);
-       		 
-       		cookieName = "currentEquation" + currentPos;
-	    	    var currentEquationString = getCookie (cookieName);
-	    		
-	    	    if (currentEquationString !== "") {		    	    	  
-	    	    		var currentEquation = parseInt (currentEquationString);
-	    	    		loadExercise (currentEquation);      		    	    		
-	    	    		$("#topics").fadeOut();
-	    	    		$("#topicsAux").show();    		
-	    	    }
-        } 
-	}
-	
-	else
+
 		rel();
 	
 	$("#refresh_page").tooltip();
 	$("#calculator").tooltip();
 	$("#calculatorIcon").tooltip();
-	$("#workedExamplesBlock").tooltip();
 	//if(!useAudio)showSideBar();
 	
 	
@@ -698,19 +574,6 @@ $(document).ready(function() {
         }
     });
     
-    cookieName = "isWorkedExample" + currentPos;
-	
-    if (enableWorkedExample && getCookie (cookieName) !== "") {
-		isWorkedExample = true;
-		$("#workedExamplesBlock").show();
-    }
-    
-    if (isWorkedExample)
-	    $("#workedExamplesBlock").show();
-	
-	else
-		$("#workedExamplesBlock").hide();
-    
     $(document).keyup(function(event) {
         var key = event.which;
         
@@ -726,7 +589,6 @@ $(document).ready(function() {
             }
 
         } else if (key === 112) { //F1
-//        		enableWorkedExample = false;
         	insertLines (false, idEquation);
         } else if (key === 113) { //F2
         	if (enableAgent === false) {
@@ -1393,11 +1255,7 @@ function trashClick(){
 	//$("body").on("click", ".hide-menu", function() {
 	
 	$(".trash").on("click",function(){
-		if (enableWorkedExample && isWorkedExample) 
-			checkEquation();
-		
-		else
-		    clearLine();
+		clearLine();
 	});
 }
 
@@ -1809,8 +1667,6 @@ function checkEquation() {
   else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
 	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
   
-//  if (isWorkedExample) 
-//	  equation = workedExample ( );
   
   
   

@@ -238,7 +238,7 @@ function classPlan2() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", true);},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", true); isWorkedExample = false;},		
 		buttons : {
 			Finalizar: {
 				click : true,
