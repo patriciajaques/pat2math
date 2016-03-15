@@ -783,6 +783,7 @@ $(document).ready(function() {
 	}
 	
 	var widthResolution = screen.width;
+	var widthWindow = window.innerWidth;
 	
 	if (widthResolution > 1440) {
 		if (widthResolution <= 1600)
@@ -792,25 +793,26 @@ $(document).ready(function() {
 			document.getElementById('hintText').style.left = "40%";
 	}
 	
-	if (widthResolution < 1366) {
-		var marginRightPaper = (6 - 1366 + widthResolution) + "px";
-		var marginLeftNote = (785 + 1366 - widthResolution) + "px";
-		var marginLeftButtons = (890 + 1366 - widthResolution) + "px";
-		
-		document.getElementById("paper-1").style.marginRight = marginRightPaper;
-		document.getElementById("note").style.marginLeft = marginLeftNote;
-		document.getElementById("help").style.marginLeft = marginLeftButtons;
-		document.getElementById("reportBug").style.marginLeft = marginLeftButtons;
-	}
+	if (widthWindow < 1366) 
+		adjustPositionElements(widthWindow);
 
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
 	createLines();
+	
+	window.onresize = function(){
+		var widthWindow = window.innerWidth;
+		
+		if (widthWindow < 1366) 
+			document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
+		
+		else 
+			document.getElementById("paper-1").style.marginRight = "6px";
+	};
     // $("#hintText").hide();
     // $(".verticalTape").hide();
     // $("#newPoints").hide();
 });
-
 
 function showSideBar(){
 	$("#topics").show();
