@@ -332,7 +332,7 @@ function loadExercise(id) {
 	setTimeout ('calculateUsedLines()', 1000);
 	loadingHide();
 	
-	if (id === 0) {
+	if (id === 1) {
 		isWorkedExample = true;
 		classPlan1();
 	}
@@ -781,3 +781,4 @@ function getEquationsPlan ( ) {
 	equationPlan[19] = new EquationPlan (300, 21);
 	equationPlan[19] = new EquationPlan (313, null);
 }
+

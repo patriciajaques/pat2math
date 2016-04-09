@@ -1,68 +1,110 @@
+<!-- <script src="/pat2math/patequation/js/index.js"></script> -->
+<!-- <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script> -->
+
+<script src="/pat2math/patequation/js/string.js"></script>
+<script src="/pat2math/patequation/js/object.js"></script>
+<script src="/pat2math/patequation/js/conversion.js"></script>
+<script src="/pat2math/patequation/js/server.js"></script>
+<script src="/pat2math/patequation/js/tour.js"></script>
+<script src="/pat2math/patequation/js/workedExamples.js"></script>
+<script src="/pat2math/patequation/js/question.js"></script>
 <script src="/pat2math/patequation/js/index.js"></script>
+<script src="/pat2math/patequation/js/decimalNumbers.js"></script>
+<script src="/pat2math/patequation/js/paper.js"></script>
 <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script>
 
+<!-- AGENTE PEDAGOGICO ANIMADO -->
+<script src="/pat2math/patequation/lib/divalite/divakit/divalite.js"></script>
+<script src="/pat2math/patequation/js/divaliteAux.js"></script>
+<script src="/pat2math/patequation/js/agent.js"></script>
+<!-- AGENTE PEDAGOGICO ANIMADO -->
+
 <script>
-var currentPos = getCookie ("pos");
-var cookieName = "playAudio" + currentPos;
 
-if (getCookie (cookieName) === "false")
-	location.href="/pat2math/student/home";	
-	
-var i;
-var tipoAudio = getCookie ("tipoAudio");
-var showConfirmation = true;
-var tempoAudio = 352000;
-setColor();
-
-// if (tipoAudio === "2")
-// 	setTimeout ('showNotification()', 1000);
-
-	
-function showNotification ( ) {
-	$.guider({
-    	title: "Adicionamos um novo áudio!",
-    	description: "Clique no botão play para ouvir.",
-        alignButtons: "center",
-    	buttons: {
-    		OK: {
-				click: true,
-				className: "primary"
-			}
-    	}   	            
-    	}).show();
+function writeInput(text) {
+	document.getElementById('inputMobile').value += text;
 }
 
-function setColor ( ) {
-	var color = Math.floor((Math.random() * 2) + 1);
+function createButtons() {
+	//Estudar uma maneira para posicionar os botões abaixo da caixa de input, os quais devem mover-se de forma dinâmica a cada passo resolvido da equação,
+	//acompanhando assim a caixa de input. Ver se é melhor posicionar manualmente ou fazer algo como na matriz de Tiles no jogo das placas WEB
+	//(o projeto está no Netbeans)
+	var buttons = "";
 	
-	if (tipoAudio === "1") {
-		if (color === 1)
-			document.body.style.background = "#FFD1EA";
+	for (var i = 1; i < 10; i++)
+		buttons += '<div class="buttonMobile" id="number' + i + '" onclick="writeInput(' + i + ')">' + i + '</div>';
+			
+	var ids = ["number0", "variable", "sum", "subtraction", "multiplication", "division"];
+	var texts = ["0", "x", "+", "-", "*", "/"];
+	
+	for (var i = 0; i < ids.length; i++)
+		buttons += '<div id="' + ids[i] + '"onclick="writeInput(' + texts[i] + ')"></div>';
+	
+	document.getElementById("buttons").innerHTML = buttons;
+}
+
+createButtons();
+// var currentPos = getCookie ("pos");
+// var cookieName = "playAudio" + currentPos;
+
+// if (getCookie (cookieName) === "false")
+// 	location.href="/pat2math/student/home";	
+	
+// var i;
+// var tipoAudio = getCookie ("tipoAudio");
+// var showConfirmation = true;
+// var tempoAudio = 352000;
+// setColor();
+
+// // if (tipoAudio === "2")
+// // 	setTimeout ('showNotification()', 1000);
+
+	
+// function showNotification ( ) {
+// 	$.guider({
+//     	title: "Adicionamos um novo áudio!",
+//     	description: "Clique no botão play para ouvir.",
+//         alignButtons: "center",
+//     	buttons: {
+//     		OK: {
+// 				click: true,
+// 				className: "primary"
+// 			}
+//     	}   	            
+//     	}).show();
+// }
+
+// function setColor ( ) {
+// 	var color = Math.floor((Math.random() * 2) + 1);
+	
+// 	if (tipoAudio === "1") {
+// 		if (color === 1)
+// 			document.body.style.background = "#FFD1EA";
 		
-		else
-			document.body.style.background = "#D1E8FF";
-	}
+// 		else
+// 			document.body.style.background = "#D1E8FF";
+// 	}
 	
-	else {
-		if (color === 1)
-			document.body.style.background = "#FFDEAE";
+// 	else {
+// 		if (color === 1)
+// 			document.body.style.background = "#FFDEAE";
 		
-		else
-			document.body.style.background = "#DFFFCC";
-	}
-}
+// 		else
+// 			document.body.style.background = "#DFFFCC";
+// 	}
+// }
 
-function mostraProgressoAudio ( ) {
-	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
-	var tamanhoBarraProgresso = 12;
-	var parcelaTempo = Math.round(tempoAudio/(tamanhoBarraProgresso+1));
+// function mostraProgressoAudio ( ) {
+// 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
+// 	var tamanhoBarraProgresso = 12;
+// 	var parcelaTempo = Math.round(tempoAudio/(tamanhoBarraProgresso+1));
 	
-	for (var i = 1; i <= tamanhoBarraProgresso; i++) {
-		var innerHTML = 'document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/' + i + '.gif border=0>"';
-		var tempo = parcelaTempo * i;
-		setTimeout (innerHTML, tempo);
-	}
-}
+// 	for (var i = 1; i <= tamanhoBarraProgresso; i++) {
+// 		var innerHTML = 'document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/' + i + '.gif border=0>"';
+// 		var tempo = parcelaTempo * i;
+// 		setTimeout (innerHTML, tempo);
+// 	}
+// }
 // function mostraProgressoAudio1 ( ) {
 // 	document.getElementById("barraProgresso").innerHTML = "<img src=/pat2math/images/0.gif border=0>";
 	
@@ -98,35 +140,35 @@ function mostraProgressoAudio ( ) {
 
 // }
 
-function endAudio ( ) {
-	showConfirmation = false;
-	currentPos = getCookie ("pos");
-	var cookieName = "playAudio" + currentPos;
-	setCookieDays (cookieName, "false", 1);
-	location.href="/pat2math/student/home";	
-}
+// function endAudio ( ) {
+// 	showConfirmation = false;
+// 	currentPos = getCookie ("pos");
+// 	var cookieName = "playAudio" + currentPos;
+// 	setCookieDays (cookieName, "false", 1);
+// 	location.href="/pat2math/student/home";	
+// }
 
-function playAudio ( ) {	
+// function playAudio ( ) {	
 
-		window.onbeforeunload = function () {
-			if (showConfirmation) {
-				return "confirmacaoSaida";
-			}
-		}
+// 		window.onbeforeunload = function () {
+// 			if (showConfirmation) {
+// 				return "confirmacaoSaida";
+// 			}
+// 		}
 	
-	if (tipoAudio === "1") {
-		var display = document.getElementById('play').style.display;
-		document.getElementById('play').style.display = 'none';
-		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';
-		setTimeout('endAudio()', tempoAudio);
-	} else {
-		tempoAudio = 295000;
-		var display = document.getElementById('play').style.display;
-		document.getElementById('play').style.display = 'none';
-		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ok7eZZ7OxWM?autoplay=1" frameborder="0" allowfullscreen></iframe>';	                                               
-		setTimeout('endAudio()', tempoAudio);
-	}
+// 	if (tipoAudio === "1") {
+// 		var display = document.getElementById('play').style.display;
+// 		document.getElementById('play').style.display = 'none';
+// 		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="//www.youtube.com/embed/zCfGR1u06Rs?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+// 		setTimeout('endAudio()', tempoAudio);
+// 	} else {
+// 		tempoAudio = 295000;
+// 		var display = document.getElementById('play').style.display;
+// 		document.getElementById('play').style.display = 'none';
+// 		document.getElementById('player').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ok7eZZ7OxWM?autoplay=1" frameborder="0" allowfullscreen></iframe>';	                                               
+// 		setTimeout('endAudio()', tempoAudio);
+// 	}
 	
-	mostraProgressoAudio();
-}
+// 	mostraProgressoAudio();
+// }
 </script>

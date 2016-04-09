@@ -12,5 +12,11 @@
 		font-weight: bold;
 		margin-top: -3px;
 		height: 20px;
+		background-color: transparent !important;
+    	margin-top: 1px;
+    	height: 19px;
+    	width: 30px;
+    	min-width: 30px;
+    	max-width: 300px;
 	}
 </style>

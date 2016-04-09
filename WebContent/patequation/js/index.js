@@ -1079,7 +1079,7 @@ function clearLine(option) {
 
     $(selectedSheet + " .canMove").html(
             svg + "<ul>" +
-            "<li class='labelDefault'><input type='text'></li>" +
+            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
             "<button id='button'></button>");
@@ -1094,6 +1094,8 @@ function clearLine(option) {
     focus();
 
     $(".labelDefault input").focus();
+    
+    
 }
 
 function referenceToDelta() {

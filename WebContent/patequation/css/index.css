@@ -583,14 +583,6 @@ span.kbd {
     position: fixed;
 }*/
 
-input[type="text"] {
-    background-color: transparent !important;
-    margin-top: 1px;
-    height: 19px;
-    width: 30px;
-    min-width: 30px;
-    max-width: 300px;
-}
 
 /* #show-menu { */
 /* 	position: absolute; */

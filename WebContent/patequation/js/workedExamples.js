@@ -248,6 +248,126 @@ function classPlan2() {
 	});
 }
 
+function classPlan3() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos resolver essa equação agora?",
+		description : "Nós vamos aplicar novamente a operação inversa. Mas cuidado: a operação inversa da subtração é a adição.",
+		width : 600,
+		alignButtons : "right",
+//		onShow: function() {window.scrollTo(0, 95);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "Vamos resolver essa equação agora?",
+		description : "Lembre-se que o objetivo é fazer sumir o -4 somando ele com outro número cujo resultado dê zero.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "3",
+		next : "4",
+		title : "Observe o que fizemos aqui",
+		description : "Nós aplicamos a operação inversa, tínhamos o 4 subtraindo ao X.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x - 4 <font color='red'>+ 4</font> = 8 <font color='red'>+ 4</font>", "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "4",
+		next : "5",
+		title : "Utilizando a operação inversa, eu somo 4 de ambos os lados",
+		position: "bottom",
+		description : "Isso sempre vai dar zero somado ao x do lado esquerdo da igualdade.",
+		onShow: function() {resolutionEquation("x - 4 <font color='red'>+ 0</font> = 8 <font color='red'>+ 4</font>", "step2", true);},
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "5",
+		next : "6",
+		title : "Dica",
+		description : "Não é necessário escrever estes dois primeiros passos, então podemos removê-los da resolução.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {document.getElementById("step1").innerHTML = "<s>x - 4 + 4 = 8 + 4</s>"; document.getElementById("step1").style.opacity = "0.5";  document.getElementById("step2").innerHTML = "<s>x + 0 = 8 + 4</s>"; document.getElementById("step2").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "6",
+		next : "7",
+		title : "Dica",
+		description : "Seguindo essa dica, nós eliminamos alguns passos e podemos ir direto aplicando a operação inversa do outro lado.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = 8 <font color='red'>+ 4 </font>", "step3", true);},		
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "7",
+		title : "Tudo pronto!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false;},		
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+}
+
+function classPlan4() {
+	
+}
 function resolutionEquation(resolutionStep, idStep, skipLine) {
 	var line = $(selectedSheet + " .hLineAux").next().next();
 	var elements = "<ul><li id='" + idStep + "'>" + resolutionStep + "</li></ul>";
