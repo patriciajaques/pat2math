@@ -4,6 +4,7 @@
 <script src="/pat2math/patequation/js/server.js"></script>
 <script src="/pat2math/patequation/js/tour.js"></script>
 <script src="/pat2math/patequation/js/workedExamples.js"></script>
+<script src="/pat2math/patequation/js/workedExamplesUtil.js"></script>
 <script src="/pat2math/patequation/js/question.js"></script>
 <script src="/pat2math/patequation/js/index.js"></script>
 <script src="/pat2math/patequation/js/decimalNumbers.js"></script>
