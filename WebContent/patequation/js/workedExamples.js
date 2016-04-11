@@ -418,13 +418,12 @@ function classPlan4() {
 	
 	$("#line4").guider({
 		name: "4",
-		next : "5",
 		title : "Mas a resolução é parecida",
 		description : "A diferença é que teremos que operar com um número negativo.",
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false;},
+		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", true); isWorkedExample = false;},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -433,22 +432,155 @@ function classPlan4() {
 		}
 	});
 }
-function resolutionEquation(resolutionStep, idStep, skipLine) {
-	var line = $(selectedSheet + " .hLineAux").next().next();
-	var elements = "<ul><li id='" + idStep + "'>" + resolutionStep + "</li></ul>";
-    
-    if (skipLine)
-    	line.html(line.html() + elements);
+
+function classPlan5() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Atenção agora!",
+		description : "Vamos voltar a trabalhar com a operação inversa da subtração.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
 	
-    else
-    	line.html(elements);
-    
-    line.addClass("canCopy");
-    centralizeCanCopy();
-    line.removeClass("canCopy");
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Para eliminar alguns passos, vamos utilizar a operação inversa direto no lado direito",
+		description : "A inversa da subtração é a soma. Então, vamos somar 3 do lado direito e eliminar o -3 do lado esquerdo.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = - 6 <font color='red'>+ 3</font>", "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		title : "Tudo pronto!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", true); isWorkedExample = false;},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
 }
 
-function showArrow() {
-	var line = $(selectedSheet + " .hLineAux").next().next();
-	line.html(line.html() + '<div id="arrow" style="margin-top:-64px; margin-left:354px; position: absolute;"><img src=/pat2math/patequation/img/arrow_green.png></div>');
+function classPlan6() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos ver agora essa outra equação",
+		description : "Novamente, queremos isolar o X do lado esquerdo.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Para eliminar alguns passos, vamos utilizar a operação inversa direto no lado direito",
+		description : "Vamos diminuir 1 do lado direito e eliminar o +1 do lado esquerdo.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 10 <font color='red'>- 1</font>", "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Opa! Aqui nós temos uma novidade!",
+		description : "Temos o -X, só que não estamos procurando o valor de -X, e sim de +X.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 9", "step2", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Como tornar esse -X positivo?",
+		description : "Podemos multiplicar ele por -1, aí ele fica +X.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9", "step3", true); blink9(true, false);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "5",
+		next : "6",
+		title : "Mas atenção!",
+		description : "Se nós multiplicarmos -1 do lado esquerdo, temos que multiplicar do lado direito também.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9 <font color='red'>* (-1)</font>", "step3", true); blink9(true, true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "6",
+		title : "Vamos nos lembrar das regras de sinais da multiplicação",
+		description : "Em cada uma das perguntas a seguir, selecione a alternativa que achar que é a resposta.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		buttons : {
+			Começar: {
+				click : function(){showQuestionsMultiplication();},
+				className : "primary"
+			}
+		}
+	});
 }

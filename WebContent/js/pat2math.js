@@ -332,10 +332,10 @@ function loadExercise(id) {
 	setTimeout ('calculateUsedLines()', 1000);
 	loadingHide();
 	
-	if (id === 0) {
+//	if (id === 0) {
 		isWorkedExample = true;
-		classPlan1();
-	}
+		classPlan6();
+//	}
 	
 	
 }
