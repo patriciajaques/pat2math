@@ -543,7 +543,7 @@ function classPlan6() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9", "step3", true); blink9(true, false);},
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9", "step3", true); blink9(true, 9);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -560,7 +560,7 @@ function classPlan6() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9 <font color='red'>* (-1)</font>", "step3", true); blink9(true, true);},
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9 <font color='red'>* (-1)</font>", "step4", true);},
 		buttons : {
 			Próximo: {
 				click : true,

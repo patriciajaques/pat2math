@@ -18,18 +18,18 @@ function showArrow() {
 	line.html(line.html() + '<div id="arrow" style="margin-top:-64px; margin-left:354px; position: absolute;"><img src=/pat2math/patequation/img/arrow_green.png></div>');
 }
 
-function blink9(show, stop) {
-	if (show) {
-		document.getElementById("step3").innerHTML = "- x * (-1) = 9";
-		
-		if (!stop)
-			setTimeout(function(){blink9(false, false);}, 800);
+function blink9(show, numBlinks) {
+	if (numBlinks !== 0) {
+		if (show) {
+			document.getElementById("step3").innerHTML = "- x <font color='red'>* (-1)</font> = 9";
+			setTimeout(function(){blink9(false, (numBlinks-1));}, 800);
+		}
+
+		else {
+			document.getElementById("step3").innerHTML = "- x <font color='red'>* (-1)</font> =";
+			setTimeout(function(){blink9(true, (numBlinks-1));}, 800);
+		}
 	}
-	
-	else {
-		document.getElementById("step3").innerHTML = "- x * (-1) =";
-		setTimeout(function(){blink9(true, false);}, 800);
-	}		
 }
 
 function showQuestionsMultiplication() {
@@ -38,9 +38,9 @@ function showQuestionsMultiplication() {
 
 function showQuestion1() {
 	$.guider({
-		title : "+ * + = ?",
+		title : "+ . + = ?",
 		description : "Mais vezes mais dá?",
-		width : 600,
+		width : 218,
 		alignButtons : "center",
 		buttons : {
 			Menos: function() {showIncorrectMessage1();},
@@ -54,9 +54,9 @@ function showQuestion1() {
 
 function showQuestion2() {
 	$.guider({
-		title : "+ * - = ?",
+		title : "+ . - = ?",
 		description : "Mais vezes menos dá?",
-		width : 600,
+		width : 218,
 		alignButtons : "center",
 		buttons : {
 			Menos: function() {showQuestion3();},
@@ -70,9 +70,9 @@ function showQuestion2() {
 
 function showQuestion3() {
 	$.guider({
-		title : "- * + = ?",
+		title : "- . + = ?",
 		description : "Menos vezes mais dá?",
-		width : 600,
+		width : 218,
 		alignButtons : "center",
 		buttons : {
 			Menos: function() {showQuestion4();},
@@ -86,9 +86,9 @@ function showQuestion3() {
 
 function showQuestion4() {
 	$.guider({
-		title : "- * - = ?",
+		title : "- . - = ?",
 		description : "Menos vezes menos dá?",
-		width : 600,
+		width : 218,
 		alignButtons : "center",
 		buttons : {
 			Menos: function() {showIncorrectMessage4();},
@@ -104,7 +104,7 @@ function showIncorrectMessage1() {
 	$.guider({
 		title : "Oops!",
 		description : "Na verdade, mais vezes mais dá mais.",
-		width : 600,
+		width : 310,
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
@@ -119,7 +119,7 @@ function showIncorrectMessage2() {
 	$.guider({
 		title : "Oops!",
 		description : "Na verdade, mais vezes menos dá menos.",
-		width : 600,
+		width : 310,
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
@@ -134,7 +134,7 @@ function showIncorrectMessage3() {
 	$.guider({
 		title : "Oops!",
 		description : "Na verdade, menos vezes mais dá menos.",
-		width : 600,
+		width : 310,
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
@@ -149,7 +149,7 @@ function showIncorrectMessage4() {
 	$.guider({
 		title : "Oops!",
 		description : "Na verdade, menos vezes menos dá mais.",
-		width : 600,
+		width : 310,
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
@@ -184,9 +184,9 @@ function continueClassPlan6() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step4", true); isWorkedExample = false;},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", true); isWorkedExample = false;},	
 		buttons : {
-			Próximo: {
+			Finalizar: {
 				click : true,
 				className : "primary"
 			}
