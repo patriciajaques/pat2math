@@ -485,8 +485,11 @@ function requestServer (type, last, next, typeOperation, element) {
                         hint = split[4];
                     }
 
-                     divaLiteTipAction(hint);
-//                    showHint(hint);
+                    if (enableAgent)
+                    	divaLiteTipAction(hint);
+                    
+                    else
+                    	showHint(hint);
 
 //                    $("#hintText").hide('blind', 200);
 //                    $(".verticalTape").hide('blind', 200);

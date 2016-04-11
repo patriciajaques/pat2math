@@ -6,7 +6,7 @@ function classPlan1() {
 		description : "Descobrir o valor de X.",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {window.scrollTo(0, 30);},
+		onShow: function() {window.scrollTo(0, 50);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -136,7 +136,7 @@ function classPlan1() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'> x = 8 </font>", "step5", true); setCookieDays (stepWE, "8", 1);},
+		onShow: function() {resolutionEquation("<font color='blue'> x = 8 </font>", "step5", true);},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -154,7 +154,7 @@ function classPlan2() {
 		description : "Esta equação é do mesmo tipo que nós já vimos anteriormente. O nosso objetivo é isolar o X no lado esquerda da igualdade, e para fazer a isso a gente subtrai por 4 nos dois lados.",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {window.scrollTo(0, 95);},
+		onShow: function() {window.scrollTo(0, 50);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -256,7 +256,7 @@ function classPlan3() {
 		description : "Nós vamos aplicar novamente a operação inversa. Mas cuidado: a operação inversa da subtração é a adição.",
 		width : 600,
 		alignButtons : "right",
-//		onShow: function() {window.scrollTo(0, 95);},
+		onShow: function() {window.scrollTo(0, 50);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -366,7 +366,72 @@ function classPlan3() {
 }
 
 function classPlan4() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos ver agora essa outra equação",
+		description : "O 4 está somando ao X.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
 	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Para eliminar alguns passos, vamos utilizar a operação inversa direto no lado direito",
+		description : "Assim, vamos diminuir 4 do outro lado",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = - 2 <font color='red'>- 4</font>", "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "3",
+		next : "4",
+		title : "Atenção",
+		description : "Observe que nós já tínhamos anteriormente do lado direito da igualdade um número negativo.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {showArrow();},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "4",
+		next : "5",
+		title : "Mas a resolução é parecida",
+		description : "A diferença é que teremos que operar com um número negativo.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false;},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
 }
 function resolutionEquation(resolutionStep, idStep, skipLine) {
 	var line = $(selectedSheet + " .hLineAux").next().next();
@@ -381,4 +446,9 @@ function resolutionEquation(resolutionStep, idStep, skipLine) {
     line.addClass("canCopy");
     centralizeCanCopy();
     line.removeClass("canCopy");
+}
+
+function showArrow() {
+	var line = $(selectedSheet + " .hLineAux").next().next();
+	line.html(line.html() + '<div id="arrow" style="margin-top:-64px; margin-left:354px; position: absolute;"><img src=/pat2math/patequation/img/arrow_green.png></div>');
 }
