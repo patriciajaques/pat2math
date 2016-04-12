@@ -1,3 +1,4 @@
+//x+2=10
 function classPlan1() {
 	$.guider({
 		name: "1",
@@ -146,6 +147,7 @@ function classPlan1() {
 	});
 }
 
+//x+4=10
 function classPlan2() {
 	$.guider({
 		name: "1",
@@ -248,6 +250,7 @@ function classPlan2() {
 	});
 }
 
+//x-4=8
 function classPlan3() {
 	$.guider({
 		name: "1",
@@ -365,6 +368,7 @@ function classPlan3() {
 	});
 }
 
+//x+4=-2
 function classPlan4() {
 	$.guider({
 		name: "1",
@@ -433,6 +437,7 @@ function classPlan4() {
 	});
 }
 
+//x-3=-6
 function classPlan5() {
 	$.guider({
 		name: "1",
@@ -454,7 +459,7 @@ function classPlan5() {
 		name: "2",
 		next : "3",
 		title : "Para eliminar alguns passos, vamos utilizar a operação inversa direto no lado direito",
-		description : "A inversa da subtração é a soma. Então, vamos somar 3 do lado direito e eliminar o -3 do lado esquerdo.",
+		description : "A inversa da subtração é a soma. Então, vamos somar 3 no lado direito e eliminar o -3 do lado esquerdo.",
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -484,6 +489,7 @@ function classPlan5() {
 	});
 }
 
+//-x+1=10
 function classPlan6() {
 	$.guider({
 		name: "1",
@@ -579,6 +585,262 @@ function classPlan6() {
 		buttons : {
 			Começar: {
 				click : function(){showQuestionsMultiplication();},
+				className : "primary"
+			}
+		}
+	});
+}
+
+//-x-10=7
+function classPlan7() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Atenção agora!",
+		description : "Vamos voltar a trabalhar com a operação inversa da subtração.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Assim como fizemos nas equações anteriores, vamos utilizar a operação inversa direto no lado direito",
+		description : "Vamos somar 10 no lado direito e eliminar o -10 do lado esquerdo.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 7 <font color='red'>+ 10</font>", "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Observe que novamente temos um X negativo",
+		description : "Para resolver esse problema, vamos multiplicar os dois lados da equação por -1.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 17", "step2", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Lembre-se das regras dos sinais",
+		description : "Menos vezes menos dá mais, e mais vezes menos dá menos.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font>= 17 <font color='red'>* (-1)</font>", "step3", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name : "5",
+		title : "Terminamos!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", true); isWorkedExample = false;},	
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+}
+	
+//-x+4=-8
+function classPlan8() {
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Vamos resolver essa equação agora?",
+			description : "Nós vamos aplicar novamente a operação inversa, dessa vez da adição.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$("#line3").guider({
+			name: "2",
+			next : "3",
+			title : "O nosso objetivo é eliminar o +4 do lado esquerdo",
+			description : "Para tanto, vamos subtrair 4 do lado esquerdo. ",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("- x = - 8 <font color='red'>- 4</font>", "step1", true);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line4").guider({
+			name: "3",
+			next : "4",
+			title : "Lembra-se o que fazemos agora?",
+			description : "Temos que multiplicar -1 nos dois lados para obter o X positivo. ",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("- x = - 12", "step2", true);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line5").guider({
+			name: "4",
+			next : "5",
+			title : "Relembrando as regras dos sinais",
+			description : "Temos números negativos nos dois lados da equação, e menos vezes menos dá mais.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font>= - 12 <font color='red'>* (-1)</font>", "step3", true);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line6").guider({
+			name: "5",
+			title : "Tudo pronto!",
+			description : "Conseguimos resolver a equação com sucesso.",
+			width : 600,
+			position: "bottom",
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false;},		
+			buttons : {
+				Finalizar: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+}
+
+//-x-15=-9
+function classPlan9() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos ver agora essa outra equação",
+		description : "Observe que todos os termos são negativos.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "A operação inversa da subtração é a soma",
+		description : "Assim, somamos 15 no lado direito para eliminar o -15 do lado esquerdo.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = - 9 <font color='red'>+ 15</font>", "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Agora nós temos o -X",
+		description : "Mas lembre-se que queremos descobrir o valor de +X.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 6", "step2", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Novamente temos um jogo de sinais",
+		description : "Você se lembra das regras? Se temos uma multiplicação de sinais iguais, temos mais no final;<br>" +
+					  "Se temos uma multiplicação de sinais diferentes, temos menos no final.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font>= 6 <font color='red'>* (-1)</font>", "step3", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "5",
+		title : "Terminamos!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		width : 600,
+		position: "bottom",
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false;},		
+		buttons : {
+			Finalizar: {
+				click : true,
 				className : "primary"
 			}
 		}
