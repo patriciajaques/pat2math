@@ -1,5 +1,21 @@
 //x+2=10
 function classPlan1() {
+	loadExerciseWE("x+2=10", 20);
+	$.guider({
+		next: "1",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
+		description : "<center>O PAT2Math é um programa que auxilia na resolução de equações algébricas. <br>Vamos conferir alguns conceitos básicos antes de começar.</center>",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary",
+			}
+		}
+	}).show();
+	
 	$.guider({
 		name: "1",
 		next : "2",
@@ -14,7 +30,7 @@ function classPlan1() {
 				className : "primary"
 			}
 		}
-	}).show();
+	});
 
 	$.guider({
 		name: "2",
@@ -133,14 +149,14 @@ function classPlan1() {
 	$("#line6").guider({
 		name: "9",
 		title : "Terminamos!",
-		description : "Agora você já sabe como resolver equações simples de primeiro grau.",
+		description : "Agora, vamos conferir alguns funcionamentos básicos do PAT2Math.",
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'> x = 8 </font>", "step5", true);},
+		onShow: function() {resolutionEquation("<font color='blue'> x = 8 </font>", "step5", true); isWorkedExample = false},
 		buttons : {
-			Finalizar: {
-				click : true,
+			"Iniciar o tour": {
+				click : function() {introduction(""); isTourInterativo = true; loadExercise(0);},
 				className : "primary"
 			}
 		}
@@ -149,6 +165,7 @@ function classPlan1() {
 
 //x+4=10
 function classPlan2() {
+	loadExerciseWE("x+4=10", 20);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -240,7 +257,7 @@ function classPlan2() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", true); isWorkedExample = false;},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -252,6 +269,7 @@ function classPlan2() {
 
 //x-4=8
 function classPlan3() {
+	loadExerciseWE("x-4=8", 20);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -358,7 +376,7 @@ function classPlan3() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false;},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -370,6 +388,7 @@ function classPlan3() {
 
 //x+4=-2
 function classPlan4() {
+	loadExerciseWE("x+4=-2", 20);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -427,7 +446,7 @@ function classPlan4() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", true); isWorkedExample = false;},
+		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -439,6 +458,7 @@ function classPlan4() {
 
 //x-3=-6
 function classPlan5() {
+	loadExerciseWE("x-3=-6", 20);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -479,7 +499,7 @@ function classPlan5() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", true); isWorkedExample = false;},
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -490,7 +510,8 @@ function classPlan5() {
 }
 
 //-x+1=10
-function classPlan6() {
+function classPlan7() {
+	loadExerciseWE("-x+1=10", 25);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -549,7 +570,7 @@ function classPlan6() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9", "step3", true); blink9(true, 9);},
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9", "step3", true); blink9(true, 15);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -592,7 +613,8 @@ function classPlan6() {
 }
 
 //-x-10=7
-function classPlan7() {
+function classPlan8() {
+	loadExerciseWE("-x-10=7", 25);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -667,7 +689,7 @@ function classPlan7() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", true); isWorkedExample = false;},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},	
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -678,7 +700,8 @@ function classPlan7() {
 }
 	
 //-x+4=-8
-function classPlan8() {
+function classPlan9() {
+	loadExerciseWE("-x+4=-8", 25);
 		$.guider({
 			name: "1",
 			next : "2",
@@ -750,7 +773,7 @@ function classPlan8() {
 			width : 600,
 			position: "bottom",
 			alignButtons : "right",
-			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false;},		
+			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -761,7 +784,8 @@ function classPlan8() {
 }
 
 //-x-15=-9
-function classPlan9() {
+function classPlan10() {
+	loadExerciseWE("-x-15=-9", 25);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -837,7 +861,7 @@ function classPlan9() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false;},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -845,4 +869,131 @@ function classPlan9() {
 			}
 		}
 	});
+}
+
+function openWorkedExample() {
+	if (planoAtual === 3) {
+		loadExerciseWE("x-4=8", 20);
+		classPlan3();
+	}
+
+	if (planoAtual === 4) {
+		loadExerciseWE("x+4=-2", 20);
+		classPlan4();
+	}
+
+	if (planoAtual === 5) {
+		loadExerciseWE("x-3=-6", 20);
+		classPlan5();
+	}
+
+	if (planoAtual === 7) {
+		loadExerciseWE("-x+1=10", 25);
+		classPlan7();
+	}
+
+	if (planoAtual === 8) {
+		loadExerciseWE("-x-10=7", 25);
+		classPlan8();
+	}
+
+	if (planoAtual === 9) {
+		loadExerciseWE("-x+4=-8", 25);
+		classPlan9();
+	}
+
+	if (planoAtual === 10) {
+		loadExerciseWE("-x-15=-9", 25);
+		classPlan10();
+	}
+
+	if (planoAtual === 12) {
+		loadExerciseWE("2x=10", 30);
+		classPlan12();
+	}
+
+	if (planoAtual === 13) {
+		loadExerciseWE("5x=-30", 30);
+		classPlan13();
+	}
+
+	if (planoAtual === 14) {
+		loadExerciseWE("-3x=15", 35);
+		classPlan14();
+	}
+
+	if (planoAtual === 15) {
+		loadExerciseWE("-4x=-28", 35);
+		classPlan15();
+	}
+
+	if (planoAtual === 17) {
+		loadExerciseWE("(x)/(4)=20", 40);
+		classPlan17();
+	}
+
+	if (planoAtual === 18) {
+		loadExerciseWE("(x)/(7)=-49", 40);
+		classPlan18();
+	}
+
+	if (planoAtual === 19) {
+		loadExerciseWE("-(x)/6)=42", 50);
+		classPlan19();
+	}
+
+	if (planoAtual === 20) {
+		loadExerciseWE("-(x)/(4)=-100", 50);
+		classPlan20();
+	}
+
+	if (planoAtual === 22) {
+		loadExerciseWE("4x-10=8", 50);
+		classPlan22();
+	}
+
+	if (planoAtual === 23) {
+		loadExerciseWE("-3x+9=-27", 60);
+		classPlan23();
+	}
+
+	if (planoAtual === 24) {
+		loadExerciseWE("5x+8-2x=10+x", 80);
+		classPlan24();
+	}
+
+	if (planoAtual === 26) {
+		loadExerciseWE("2(x+3)-5=5(x+2)", 100);
+		classPlan26();
+	}
+
+	if (planoAtual === 27) {
+		loadExerciseWE("(x+3)/(3)=(4)/(9)", 100);
+		classPlan27();
+	}
+
+	if (planoAtual === 29) {
+		loadExerciseWE("(x)/(4)+5=(2)/(3)-(5x)/(8)", 120);
+		classPlan29();
+	}
+
+	if (planoAtual === 30) {
+		loadExerciseWE("(x+2)/(5)+8=(x-3)/(4+2)", 140);
+		classPlan30();
+	}
+
+	if (planoAtual === 31) {
+		loadExerciseWE("(4(x+3))/(7)+5=(-2(-x-1))/(5+8)", 160);
+		classPlan31();
+	}
+
+	if (planoAtual === 33) {
+		loadExerciseWE("(4)/(x)+(2)/(3)-5=(8)/(6x)", 200);
+		classPlan33();
+	}
+
+	if (planoAtual === 34) {
+		loadExerciseWE("(5)/(4x-2)+9=(10)/(-4(x-3))", 300);
+		classPlan34();
+	}
 }

@@ -210,16 +210,12 @@ function requestServer (type, last, next, typeOperation, element) {
                         	var divName = "#tasks" + numUnlockedPlans;
                         	$(divName).slideUp(700);
                         	
-                        	if ((numUnlockedPlans > 0 && numUnlockedPlans < 8) || numUnlockedPlans >= 10)
-                        		numUnlockedPlans++;
-                        	
-                        	else
-                        		numUnlockedPlans = 10;
+                        	numUnlockedPlans++;
                         	
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
        
-                        	if (numUnlockedPlans == 2) {
+                        	if (numUnlockedPlans == 1) {
                         		if (selectedEquation.steps.length === 0)
         	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
                         	  
@@ -227,40 +223,20 @@ function requestServer (type, last, next, typeOperation, element) {
                         		    mainMenu("");
                         	}
                         	
-                        	else if (numUnlockedPlans == 3)
+                        	else if (numUnlockedPlans == 2)
                         		plan2Explanation("");
                         	
                         	else {
-                        		if (numUnlockedPlans > 10) {
-                        			document.getElementById("lplan12").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan13").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan14").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan15").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan16").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan17").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan18").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan19").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan20").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-                        			document.getElementById("lplan21").innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';  
-                        			setTimeout (function() {$("#lplan12").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan13").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan14").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan15").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan16").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan17").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan18").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan19").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan20").hide();}, 20000);
-                        			setTimeout (function() {$("#lplan21").hide();}, 20000);
-                        		}
-                        			
-                        	    setTimeout ("newPlan()", 2000);
+                        		setTimeout ("newPlan()", 2000);
                         	}
                         	
                         	divName = "#lplan" + numUnlockedPlans;
                         	setTimeout (function() {$(divName).hide();}, 20000);
                         }
-                        else addProgressValue(progressvalue);
+                        
+                        else 
+                        	addProgressValue(progressvalue);
+                        
                         selectedEquation.isComplete = true;
 
                     	nextLineServer.html("<div class='final'></div>");               	

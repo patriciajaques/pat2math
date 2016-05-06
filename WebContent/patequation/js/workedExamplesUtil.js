@@ -15,7 +15,7 @@ function resolutionEquation(resolutionStep, idStep, skipLine) {
 
 function showArrow() {
 	var line = $(selectedSheet + " .hLineAux").next().next();
-	line.html(line.html() + '<div id="arrow" style="margin-top:-64px; margin-left:354px; position: absolute;"><img src=/pat2math/patequation/img/arrow_green.png></div>');
+	line.html(line.html() + '<div id="arrow" style="margin-top:-64px; margin-left:327px; position: absolute;"><img src=/pat2math/patequation/img/arrow_green.png></div>');
 }
 
 function blink9(show, numBlinks) {
@@ -184,7 +184,7 @@ function continueClassPlan6() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", true); isWorkedExample = false;},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},	
 		buttons : {
 			Finalizar: {
 				click : true,

@@ -26,65 +26,77 @@
 		<!-- even id -->
 		<c:if test="${(task.id % 2) eq 0}">
 			<c:if test="${task.performed}">
-			    <script type="text/javascript">
-			    var id = ${task.content.id};
-                
-                
-      	            equationToUserInterface (id);     
-    	        </script>
+
 				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }" >
 					${task.content.equation}
 				</span>
 				<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
 				<i id="marktask${task.content.id }" class="icon-ok  icon-white"></i>
 				<br>
+				
+<!-- 				<script type="text/javascript"> -->
+<%-- 					var id = ${task.content.id}; --%>
+<!-- 					var idPlan = getIdPlan(id); -->
+					
+<!-- 					document.getElementById("task" + id).className = "task plan" + idPlan; -->
+<!-- 					document.getElementById("marktask" + id).className = "icon-ok  icon-white planOk" + idPlan; -->
+<!-- 				</script> -->
 			</c:if>
 			
 			<c:if test="${!task.performed}">
-			    <script type="text/javascript">
-			        var id = ${task.content.id};
-                
-                    
-          	            equationToUserInterface (id);        
-    	        </script>
+
 				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
 				</span>
 				<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
 				<i id="marktask${task.content.id }" class="icon-ok" style="visibility: hidden;"></i>
 				<br>
+				
+<!-- 				<script type="text/javascript"> -->
+<%-- 					var id = ${task.content.id}; --%>
+<!-- 					var idPlan = getIdPlan(id); -->
+					
+<!-- 					document.getElementById("task" + id).className = "task plan" + idPlan; -->
+<!-- 					document.getElementById("marktask" + id).className = "icon-ok  icon-white planOk" + idPlan; -->
+<!-- 				</script> -->
 			</c:if>	
 		</c:if>
 		
 		<!-- even id -->
 		<c:if test="${(task.id % 2) eq 1}">
 			<c:if test="${task.performed}">
-			    <script type="text/javascript">
-	                  var id = ${task.content.id};
-	                  
-	                  
-	                	  equationToUserInterface (id);           
-    	        </script>
-				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
+
+				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
 				</span>
 				<i style="margin-right: 6px" class="icon-pencil icon-white"></i>
 				<i id="marktask${task.content.id }" class="icon-ok  icon-white"></i>
 				<br>
+				
+<!-- 				<script type="text/javascript"> -->
+<%-- 					var id = ${task.content.id}; --%>
+<!-- 					var idPlan = getIdPlan(id); -->
+					
+<!-- 					document.getElementById("task" + id).className = "task plan" + idPlan; -->
+<!-- 					document.getElementById("marktask" + id).className = "icon-ok  icon-white planOk" + idPlan; -->
+<!-- 				</script> -->
 			</c:if>
 			<c:if test="${!task.performed}">
-			    <script type="text/javascript">
-			        var id = ${task.content.id};
-                
-                    
-              	        equationToUserInterface (id);       
-    	        </script>
-				<span class="task" onclick="loadExerciseTest(${task.content.id})" id="task${task.content.id }">
+
+				<span class="task" onclick="loadExercise(${task.content.id})" id="task${task.content.id }">
 					${task.content.equation}
 				</span>
 				<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>
 				<i id="marktask${task.content.id }" class="icon-ok" style="visibility: hidden;"></i>
 				<br>
+				
+<!-- 				<script type="text/javascript"> -->
+<%-- 					var id = ${task.content.id}; --%>
+<!-- 					var idPlan = getIdPlan(id); -->
+					
+<!-- 					document.getElementById("task" + id).className = "task plan" + idPlan; -->
+<!-- 					document.getElementById("marktask" + id).className = "icon-ok  icon-white planOk" + idPlan; -->
+<!-- 				</script> -->
 			</c:if>
 		</c:if>
 		

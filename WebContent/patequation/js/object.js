@@ -58,10 +58,10 @@ function Regra (nome, explicacao) {
 	this.explicacao = explicacao;
 }
 
-function EquationPlan (idFirstEquation, idNextPlan) {
-	this.idFirstEquation = idFirstEquation;
-	this.idNextPlan = idNextPlan;
-}
+//function EquationPlan (idFirstEquation, idNextPlan) {
+//	this.idFirstEquation = idFirstEquation;
+//	this.idNextPlan = idNextPlan;
+//}
 
 function Fraction (numerator, denominator) {
 	this.numerator = numerator;

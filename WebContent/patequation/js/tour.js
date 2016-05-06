@@ -1,18 +1,18 @@
 function introduction (nextStep) {
+	blockMenu = true;
+	
 	if (nextStep === "") {
 		$.guider({
 			name: "start",
-			next : "start2",
-			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
-			description : "<center>O PAT2Math é um programa que auxilia na resolução de equações algébricas. <br>Vamos conferir alguns funcionamentos básicos antes de começar.</center>",
-			overlay : "dark",
-			width : 600,
-			alignButtons : "right",
-			onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
-			buttons : {
+			next: "start2",
+			title: "Equações iniciais",
+			description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
+			alignButtons: "right",
+			onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+			buttons: {
 				Próximo: {
-					click : true,
-					className : "primary",
+					click: true,
+					className: "primary"
 				}
 			}
 		}).show();
@@ -37,29 +37,11 @@ function introduction (nextStep) {
 	
 	$.guider({
 		name: "start",
-		next : "start2",
-		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
-		description : "<center>O PAT2Math é um programa que auxilia na resolução de equações algébricas. <br>Vamos conferir alguns funcionamentos básicos antes de começar.</center>",
-		overlay : "dark",
-		width : 600,
-		alignButtons : "right",
-		onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
-		buttons : {
-			Próximo: {
-				click : true,
-				className : "primary",
-			}
-		}
-	});
-	
-	$("#line3").guider({
-		name: "start2",
-		next: "start3",
+		next: "start2",
 		title: "Equações iniciais",
 		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
-		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -67,16 +49,16 @@ function introduction (nextStep) {
 			}
 		}
 	});
-	
-	$("#linha3").guider({
-		name: "start3",
-        next: "start4",
+		
+	$("#line3").guider({
+		name: "start2",
+        next: "start3",
 		title: "Resolvendo uma equação",
-		description: 'Nós vamos resolver esta equação passo-a-passo. Você pode começar a resolução da forma que preferir, mas sugerimos que adicione "+2x" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada. Digite x+2x+15=45-2x+2x e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img>',  
+		description: 'Nós vamos resolver esta equação passo-a-passo. Você pode começar a resolução da forma que preferir, mas sugerimos que subtraia "-7" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada. Digite x+7-7=12-7 e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img>',  
 		width: 600,
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start3", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
 		buttons: {
             Voltar: true,
 			OK: {
@@ -652,7 +634,7 @@ function plan2Explanation (nextStep) {
 		buttons: {
 			Voltar: true,
 			Finalizar: {
-			   click : function() {exit();},
+			   click : function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2();},
                className: "primary"
             }
 		}
@@ -688,7 +670,7 @@ function checkTour ( ) {
     cookieName = "functionTour" + currentPos;
     var functionTour = getCookie (cookieName);
     	
-    if (numUnlockedPlans === 1) {
+    if (numUnlockedPlans === 0) {
     	if (functionTour === "" || functionTour === "introduction")
     		introduction(nextStep);
     	
@@ -705,10 +687,10 @@ function checkTour ( ) {
     		alternativeFirstStepTour(nextStep);
     }
     
-    else if (numUnlockedPlans === 2 && functionTour === "clickEquation") 
+    else if (numUnlockedPlans === 1 && functionTour === "clickEquation") 
 		clickEquation(nextStep);
     
-    else if (numUnlockedPlans === 3 && functionTour === "plan2Explanation") 
+    else if (numUnlockedPlans === 2 && functionTour === "plan2Explanation") 
     	plan2Explanation(nextStep);
 }
 
@@ -719,7 +701,7 @@ function newPlan ( ) {
         alignButtons: "center",
     	buttons: {
     		Legal: {
-    			click: function(){$.guider({}).hideAll(); loadTasks(numUnlockedPlans);},
+    			click: function(){$.guider({}).hideAll();},
     			className: "primary"
     		}
     	}

@@ -154,9 +154,6 @@ public class StudentController {
 		return "student.home";
 	}
 	
-	
-	
-	
 	@RequestMapping(method= RequestMethod.GET, value = "student/reload_task")
 	public String reloadTasks(Model model, HttpSession session){
 		Student student = new CurrentUser(session).student();

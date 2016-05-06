@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import pat2math.modeloAluno.Tutor;
 import br.com.pat2math.action.CurrentUser;
 import br.com.pat2math.domainBase.Exercise;
 import br.com.pat2math.repository.AllStudents;
+import br.com.pat2math.repository.AllUsers;
 import br.com.pat2math.repository.KnowledgeRepository;
 import br.com.pat2math.service.StudentService;
 import br.com.pat2math.studentModel.Knowledge;
@@ -40,6 +42,7 @@ public class ResolverController {
 	@Autowired StudentService service;
 	@Autowired AllStudents allStudents;
 	@Autowired KnowledgeRepository allKnowledges;
+	//@Autowired AllUsers users;
 	
 	private Mensagem message;
 	private Tutor tutor;
@@ -54,6 +57,8 @@ public class ResolverController {
 		String type = msg[1];
 		String equation = msg[2];
 		tutor = (Tutor) session.getAttribute("tutor");
+		
+		//User usuario = (User) users.withEmail("tkautzmann@gmail.com");
 		
 		if(tutor == null) {
 			session.setAttribute("tutor", new Tutor("", "", service.loadHelps()));

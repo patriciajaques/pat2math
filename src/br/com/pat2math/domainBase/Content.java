@@ -49,6 +49,10 @@ public class Content {
 	@JoinColumn(name="id_level", referencedColumnName="id", nullable=true)
 	private Level level;
 	
+	private String nivelDificuldade;
+	
+	private Integer pontuacao;
+	
 	private Boolean active = false;
 	
 	@Transient
@@ -129,6 +133,22 @@ public class Content {
 
 	public void setLevel(Level level) {
 		this.level = level;
+	}
+	
+	public String getNivelDificuldade() {
+		return nivelDificuldade;
+	}
+	
+	public void setNivelDificuldade(String nivelDificuldade) {
+		this.nivelDificuldade = nivelDificuldade;
+	}
+	
+	public Integer getPontuacao() {
+		return pontuacao;
+	}
+
+	public void setPontuacao(Integer pontuacao) {
+		this.pontuacao = pontuacao;
 	}
 
 	public String getType() {

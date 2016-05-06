@@ -16,7 +16,7 @@ public class Task {
 	
 	@GeneratedValue @Id
 	private Long id;
-	
+
 	private Long sequence;
 	
 	@ManyToOne

@@ -120,7 +120,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {	
-	if (unlockAllPlans || id === 9 || numUnlockedPlans >= id || numUnlockedPlans > 10) {
+	if (unlockAllPlans || numUnlockedPlans >= id) {
 		if(id === 2){
 			setBackgroundColor("#D1F1FC"); 
 		}
@@ -161,7 +161,7 @@ function loadTasks(id) {
 				function(data) {
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);				
-					tasksRemaining=$(".task").length;
+					
 					
 //					if (id !== 9) {
 //					    var firstEquation = firstEquations[id];
@@ -207,6 +207,7 @@ function loadTasks(id) {
 //							}
 //						);
 					resetProgressBar();
+					tasksRemaining = getNumEquationsPlan();
 					//here tasksremaining contains the number of equations
 					progressvalue=100/tasksRemaining;
 					progressvalue=Math.trunc(progressvalue);
@@ -217,11 +218,15 @@ function loadTasks(id) {
 					/*alert("fim: "+tasksRemaining);*/
 					if (tasksRemaining===0)addProgressValue(100);
 					else addProgressValue(progressvalue*taskSolved);
+					
+					if (taskSolved === 0 && id !== 1 && id !== 2 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) 
+						openWorkedExample();
+					
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
 			     	alert("Perdão, obtivemos um erro ao processar esta ação.");
-			 }
+			 	}
 		});
 		
 //		checkEquationTour();
@@ -229,7 +234,17 @@ function loadTasks(id) {
 		if (isTourInterativo && id === 2) 
 			classPlan("");
 		
-		
+		try {
+			var limite = planoAtual * 200;
+			
+			for (var i = planoAtual * 100; i < limite; i++)
+				var equation = document.getElementById("task" + i).innerHTML;
+				equation = replaceAll(equation, "	", "");
+			
+				equationToUserInterface(i, equation);
+			} catch (e) {
+				i = limite;
+			}
 	} else {
 		$("#tasks"+id).slideUp(700);
 	    var cookieName = "currentPlan" + currentPos;
@@ -243,6 +258,26 @@ function loadTasks(id) {
 	
 }
 
+function getNumEquationsPlan() {
+	if (planoAtual < 19 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
+		return 5;
+	
+	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 35 && planoAtual !== 25 && planoAtual !== 28 && planoAtual!== 32))
+		return 10;
+	
+	else if (planoAtual === 11)
+		return 16;
+	
+	else if (planoAtual === 25 || planoAtual === 32)
+		return 20;
+	
+	else if (planoAtual === 28 || planoAtual === 35)
+		return 15;
+	
+	else 
+		return 56;
+	
+}
 function padlockClick ( ) {
 	if (selectedEquation !== null)
 		moveHint();
@@ -250,6 +285,18 @@ function padlockClick ( ) {
 	$("#hintText").html("Para desbloquear este plano de aula, você deve resolver todas as equações do plano anterior.");
 	$("#hintText").show('blind', 500);
 	$(".verticalTape").show('fold', 500);
+}
+
+function loadExerciseWE(eq, points) {
+	isWorkedExample = true;
+	blockMenu = true;
+	
+	$("#topics").fadeOut();
+    $("#topicsAux").show();
+    
+	var equation = new Equation(eq, points);
+	newEquations[0] = equation;
+	reloadPaper(1);
 }
 
 function loadExercise(id) {	
@@ -274,7 +321,8 @@ function loadExercise(id) {
 				//Verificar neste momento se a primeira equação já está resolvida e atualizar no array de equações (atualizar nos cookies e localmente).
 				//Para avançar às próximas equações, a primeira deve estar resolvida obrigatoriamente. Se o usuário tentar acessar outra equação do mesmo plano,
 				//será redirecionado mesmo assim para a primeira equação.
-				equation = new Equation(data.equation, 100);
+				var equation = new Equation(data.equation, 100);
+				//>>>>>>>>>>>> Perguntar para o Tiago porque não funciona a instrução data.pontuacao <<<<<<<<<<<<
 				equation.id = data.id;
 				for(var j = 0; j < data.steps.length; j++) {
 					equation.steps[j] = new Step(data.steps[j], 0);
@@ -323,7 +371,7 @@ function loadExercise(id) {
 		}
 	});
 	
-	if (isTourInterativo && id !== 201)
+	if (isTourInterativo && id >= 100)
 		clickEquation("");
 		
 	else
@@ -331,11 +379,6 @@ function loadExercise(id) {
 	
 	setTimeout ('calculateUsedLines()', 1000);
 	loadingHide();
-	
-//	if (id === 0) {
-		isWorkedExample = true;
-		classPlan6();
-//	}
 	
 	
 }
@@ -396,7 +439,7 @@ function loadExerciseTest(id) {
 		}
 	});
 	
-	if (isTourInterativo && id !== 201)
+	if (isTourInterativo && id >= 100)
 		clickEquation("");
 	
 	setTimeout ('calculateUsedLines()', 1000);
@@ -474,311 +517,311 @@ function msgBox(id, msg, action) {
 	}
 }
 
-function getStringEquations ( ) {
-	stringEquation = new Array ( );
-	stringEquation[201] = "x+15=45-2x";
-	stringEquation[13] = "x+4=10";
-	stringEquation[14] = "x+1=23";
-	stringEquation[15] = "x+5=34";
-	stringEquation[16] = "x+8=12";
-	stringEquation[107] = "x-1=11";
-	stringEquation[108] = "x-6=12";
-	stringEquation[109] = "x-9=30";
-	stringEquation[110] = "x-8=19";
-	stringEquation[21] = "10+x=56";
-	stringEquation[22] = "18+x=20";
-	stringEquation[23] = "15+x=21";
-	stringEquation[24] = "120+x=220";
-	stringEquation[25] = "100+x=300";
-	stringEquation[26] = "99+x=180";
-	stringEquation[29] = "4x=-28";
-	stringEquation[30] = "9x=18";
-	stringEquation[31] = "4x=-16";
-	stringEquation[32] = "5x=-20";
-	stringEquation[33] = "12x=6";
-	stringEquation[34] = "18x=9";
-	stringEquation[35] = "7x=-21";
-	stringEquation[36] = "8x=0";
-	stringEquation[37] = "8x=32";
-	stringEquation[38] = "48x=12";
-	stringEquation[39] = "35x=-70";
-	stringEquation[40] = "6x=32";
-	stringEquation[41] = "8x=10";
-	stringEquation[42] = "5x=-100";
-	stringEquation[43] = "32x=-8";
-	stringEquation[44] = "-7x=-42";
-	stringEquation[45] = "-8x=-24";
-	stringEquation[46] = "-20x=-4";
-	stringEquation[47] = "-60=-2x";
-	stringEquation[48] = "45=-5x";
-	stringEquation[49] = "90=2x";
-	stringEquation[58] = "(x)/(2)=12";
-	stringEquation[59] = "(x)/(2)=8";
-	stringEquation[60] = "(x)/(2)=-5";
-	stringEquation[61] = "(x)/(3)=9";
-	stringEquation[62] = "(x)/(4)=-5";
-	stringEquation[55] = "(3x)/(4)=9";
-	stringEquation[56] = "(2x)/(5)=-4";
-	stringEquation[57] = "(2x)/(3)=-10";
-	stringEquation[63] = "(x)/(4)=-30";
-	stringEquation[64] = "3x+10=91";
-	stringEquation[65] = "4x+7=x+25";
-	stringEquation[111] = "6x-19=71";
-	stringEquation[67] = "2x+3=9";
-	stringEquation[68] = "5x+10=50";
-	stringEquation[112] = "6x-1=11";
-	stringEquation[70] = "7x-1=13";
-	stringEquation[71] = "2x+5=27";
-	stringEquation[72] = "7x+1=6x+6";
-	stringEquation[113] = "4x-7=3x+9";
-	stringEquation[114] = "4x-8=2x+6";
-	stringEquation[115] = "5x-3=2x-9";
-	stringEquation[116] = "2x-20=x+80";
-	stringEquation[117] = "9x-10=170";
-	stringEquation[80] = "5x-10=70";
-	stringEquation[81] = "6x=2x+28";
-	stringEquation[118] = "5x-2=18+3x";
-	stringEquation[119] = "6x-10=2x+14";
-	stringEquation[83] = "4x+8=2x+12";
-	stringEquation[84] = "9x+10=8x-7";
-	stringEquation[120] = "5x-18=4x+30";
-	stringEquation[121] = "3(2x-1)=2(x+1..";
-	stringEquation[122] = "3(x+3)-1=2";
-	stringEquation[123] = "3(x+2)=2(x-7)";
-	stringEquation[125] = "5(2x+7)-1=4..";
-	stringEquation[126] = "2(x-1)+3(x+1)..";
-	stringEquation[127] = "2(x+1)+5(x-1)..";
-	stringEquation[128] = "8(x-1)=7(x+2)";
-	stringEquation[129] = "9(x+1)=8(x-2)";
-	stringEquation[130] = "7(x-1)=6(x-1)";
-	stringEquation[131] = "5(x+2)=4(x-1)";
-	stringEquation[132] = "5(x-2)=4(x+3)";
-	stringEquation[124] = "3(x+2)-1=2..";
-	stringEquation[135] = "3(x-1)+5(x-1)..";
-	stringEquation[101] = "2(2x+3)+5(x+1)..";
-	stringEquation[136] = "11(x-7)-7(x+1)..";
-	stringEquation[137] = "3(x+5)=2(x-2)";
-	stringEquation[138] = "3(x+1)+2(2x-3)..";
-	stringEquation[105] = "8(x-2)=7(x+2)";
-	stringEquation[139] = "9(x-3)=7(x-1)";
-	stringEquation[140] = "8x-2(x+5)=20";
-	stringEquation[141] = "10(x-3)=9(x+2)";
-	stringEquation[142] = "8(x+4)=7(x-2)";
-	stringEquation[143] = "2(2x+7)+3(3x..";
-	stringEquation[144] = "4(x+1)=12";
-	stringEquation[145] = "9(x-3)+1=18";
-	stringEquation[146] = "5(3-x)=4x+18";
-	stringEquation[147] = "9x-3(2x+2)=15";
-	stringEquation[148] = "5(3-x)=2(x-4..";
-	stringEquation[149] = "3(2x-1)=-2(x..";
-	stringEquation[150] = "3(x-2)-5(x-1..";
-	stringEquation[151] = "4(x+10)-2(x-5..";
-	stringEquation[152] = "6(x-2)=-3(x+2)";
-	stringEquation[153] = "15+3(x+2)=-7..";
-	stringEquation[154] = "-5(-x-4)=-5";
-	stringEquation[155] = "2x-3=7-2(2x..";
-	stringEquation[156] = "-2(2x+1)-3(x..";
-	stringEquation[157] = "-5(x-1)-2(x+2..";
-	stringEquation[158] = "-3(x+4)+4(x-9..";
-	stringEquation[159] = "x-3(4-x)=7x..";
-	stringEquation[160] = "10+2(x-2)=5..";
-	stringEquation[180] = "2(9x-2)+3(2x..";
-	stringEquation[162] = "x+3(x-1)-2-3..";
-	stringEquation[163] = "6x-4(x-5)-3..";
-	stringEquation[166] = "7x+23-x=2x..";
-	stringEquation[167] = "7x-2(x+2)=10";
-	stringEquation[168] = "x+(x)/(4)=20";
-	stringEquation[169] = "x-(x)/(5)=10";
-	stringEquation[170] = "x+(x)/(6)=20";
-	stringEquation[171] = "(x)/(3)+(x)/(2)=15";
-	stringEquation[172] = "x-(x)/(2)=1";
-	stringEquation[173] = "(3x)/(2)-5x=-7";
-	stringEquation[174] = "(x)/(2)-(x)/(4)=12";
-	stringEquation[176] = "(3x)/(4)-(x)/(2)=-2";
-	stringEquation[177] = "(x)/(2)+(x)/(3)=1";
-	stringEquation[178] = "(x)/(2)+(x)/(7)=12";
-	stringEquation[187] = "3-2(x+3)=x-18";
-	stringEquation[188] = "3(x-4)=-1..";
-	stringEquation[189] = "50+(3x-4)=2..";
-	stringEquation[190] = "(x)/(2)+4x=15-(-x..";
-	stringEquation[191] = "2(2x-4)=5-((x)/(2)..";
-	stringEquation[192] = "4(2x-5)=3..";
-	stringEquation[193] = "(x)/(4)+2=(x-3)/(2)";
-	stringEquation[194] = "(4)/(5)+(x)/(2)=(x)/(3)-1";
-	stringEquation[195] = "x+3=2(x-(1)/(2))";
-	stringEquation[196] = "(3(x-4))/(8)-1=x..";
-	stringEquation[197] = "(x)/(3)+(x)/(2)=(7+x)/(3)";
-	stringEquation[198] = "(x-2)/(3)+2x=(5x)/2";
-	stringEquation[199] = "(x-5)/(3)+(3x-1)/(2)=4";
-	stringEquation[200] = "3(6x-8)+10=5..";
-	stringEquation[202] = "(x-1)/(5)=x-(2x-1)/(3)";
-	stringEquation[203] = "3x-2(x-5)..";
-	stringEquation[204] = "(x-1)/(2)+(x-3)/(3)=6";
-	stringEquation[205] = "(x-2)/(3)-(x+1)/(4)=4";
-	stringEquation[206] = "x-(2x-1)/(3)=(x-1)/(5)";
-	stringEquation[207] = "(x-3)/(7)=(x-1)/(4)";
-	stringEquation[208] = "(x+3)/(4)-5=x+1";
-	stringEquation[209] = "(2x)/(5)+(15x-1)/(20)=(1)/(3)";
-	stringEquation[210] = "x+7-x-2x=96..";
-	stringEquation[211] = "7x+23-x=2x..";
-	stringEquation[212] = "4(x-2)-2(x+1)..";
-	stringEquation[213] = "10(x+1)-6=2(x..";
-	stringEquation[214] = "3x-(x+1)-1..";
-	stringEquation[215] = "(x-3)/(3)+(3)/(2)=(4x)/(3)";
-	stringEquation[216] = "6x-4(x-5)-(5..";
-	stringEquation[217] = "2(x-2)+3(2x+2)..";
-	stringEquation[218] = "x-(x)/(3)=6+(x)/(2)";
-	stringEquation[219] = "10(x-6)=9(x+3)";
-	stringEquation[220] = "9-2(x+3)=x-18";
-	stringEquation[221] = "4(x-4)=-1..";
-	stringEquation[222] = "40+(3x-4)=2..";
-	stringEquation[223] = "5(2x-5)=3..";
-	stringEquation[224] = "2(6x-8)+10=3..";
-	stringEquation[225] = "3x+2(1-x)=10";
-	stringEquation[226] = "x-(3-x)=1";
-	stringEquation[227] = "x+3(x-1)-(x..";
-	stringEquation[228] = "10=3(x-2)-(x..";
-	stringEquation[229] = "2(7x-1)-3(4..";
-	stringEquation[230] = "(x)/(4)-2=(x-3)/(2)";
-	stringEquation[231] = "(4)/(5)+(x)/(2)=(x)/(3)-2";
-	stringEquation[232] = "(4x+16)/(4)-(x)/(2)=6+x";
-	stringEquation[233] = "(2x+4)/(5)-(x-10)/(6)=2";
-	stringEquation[234] = "(2x+9)/(7)-(x+1)/(4)=x+2";
-	stringEquation[235] = "(4x+9)/(9)-(x)/(15)=2x..";
-	stringEquation[236] = "x-(x)/(2)=2x+1";
-	stringEquation[237] = "(x)/(2)+(x-1)/(3)=3";
-	stringEquation[238] = "(x-2)/(4)+2x=(5x)/(2)";
-	stringEquation[239] = "(x)/(3)+(2x+2)/(4)=3x+7";
-	stringEquation[240] = "(x-1)/(7)-(2x+6)/(8)..";
-	stringEquation[241] = "2(2x-4)=5-((x)/(2)..";
-	stringEquation[243] = "(3(x-4))/(4)-1=x..";
-	stringEquation[244] = "4x-2(x-5)..";
-	stringEquation[245] = "(2x-1)/(4)-(x-1)/(3)..";
-	stringEquation[246] = "(x)/(2)-(x-1)/(3)+(17)/(12)..";
-	stringEquation[247] = "(2x-3)/(5)-(11-x)/(3)=(29)/(30)";
-	stringEquation[248] = "(x-1)/(2)+(x+1)/(3)=(2x+3)/(5)";
-	stringEquation[249] = "(3x+1)/(13)-(2-x)/(2)..";
-	stringEquation[250] = "(2x-1)/(3)-(5x-10)/(4)..";
-	stringEquation[251] = "x+8x-2x=81-2x";
-	stringEquation[252] = "7x+44-x=2x+20";
-	stringEquation[253] = "6x-2(x-3)-(12..";
-	stringEquation[254] = "10(x+1)-6=3..";
-	stringEquation[255] = "6(x-2)-2(x..";
-	stringEquation[256] = "6x-(x+1)-1..";
-	stringEquation[257] = "(x-1)/(2)=x-(2x-1)/(3)";
-	stringEquation[258] = "(x-2)/(3)-(x+1)/(4)=10";
-	stringEquation[259] = "(x-1)/(7)-(x+3)/(4)=1";
-	stringEquation[260] = "(x-3)/(5)=(x-1)/(4)";
-	stringEquation[261] = "(x+1)/(3)+(3x-1)/(2)..)";
-	stringEquation[262] = "(x)/(2)+4x=15-2..";
-	stringEquation[263] = "(1-x)/(2)=(x+1)/(2)+x";
-	stringEquation[264] = "(x)/(6)+(x)/(9)=(x-1)/(2)+2";
-	stringEquation[265] = "(x-3)/(3)-(3)/(2)=(4x)/(3)";
-	stringEquation[266] = "(x+3)/(2)+(x)/(3)=10";
-	stringEquation[267] = "(x+3)/(2)+(x+2)/(3)=12";
-	stringEquation[268] = "(x-1)/(2)=(x+1)/(3)";
-	stringEquation[269] = "(x-2)/(10)=(x-1)/(2)";
-	stringEquation[270] = "9-2(x+3)=x-18";
-	stringEquation[271] = "4(x-4)=-1..";
-	stringEquation[272] = "40+(3x-4)=2..";
-	stringEquation[273] = "5(2x-5)=3..";
-	stringEquation[274] = "2(6x-8)+10=3..";
-	stringEquation[275] = "3x+2(1-x)=10";
-	stringEquation[276] = "x-(3-x)=1";
-	stringEquation[277] = "x+3(x-1)-(x..";
-	stringEquation[278] = "10=3(x-2)-(x..";
-	stringEquation[279] = "(x)/(3)-(7)/(8)=(x)/(4)-1";
-	stringEquation[280] = "(3x-5)/(2)-(x-2)/(5)=7";
-	stringEquation[281] = "x-3=2(x-(1)/(2))";
-	stringEquation[282] = "(x+5)/(2)=(8+2x)/(5)";
-	stringEquation[283] = "(5x-10)/(2)=10-(5x-5)/(3)";
-	stringEquation[284] = "(x+3)/(8)=(5)/(4)";
-	stringEquation[285] = "(x)/(2)-5=x+(3)/(4)";
-	stringEquation[286] = "(5x-3)/(4)-(3x+8)/(2)..";
-	stringEquation[287] = "(x+4)/(5)-(x-10)/(6)=2";
-	stringEquation[288] = "(x-2)/(3)-(x+1)/(4)=4";
-	stringEquation[289] = "(2x-3)/(4)-(2-x)/(3)=(x-1)/(3)";
-	stringEquation[290] = "x-(x)/(2)=2x+(1)/(3)";
-	stringEquation[291] = "(x+2)/(2)-(2x-3)/(3)=(3x+1)/(4)";
-	stringEquation[292] = "(x-1)/(5)-(5-2x)/(3)=x";
-	stringEquation[293] = "4x-2(x-5)=-x-5";
-	stringEquation[294] = "4(2-x)-3(2x..";
-	stringEquation[295] = "5x-(x-2)=2..";
-	stringEquation[296] = "x+7x-5x=80-5x";
-	stringEquation[297] = "3(x-1)-9x-30..";
-	stringEquation[298] = "6(x-2)-(x+1)=40";
-	stringEquation[299] = "6x-(x+1)-1..";
-	stringEquation[300] = "(5x-1)/(10)-(1)/(2)=1-(2-x)/(5)";
-	stringEquation[301] = "x-(2x+1)/(3)=(x-2)/(2)";
-	stringEquation[302] = "(x-2)/(5)-(x+1)/(4)=10";
-	stringEquation[303] = "(x-2)/(4)+(1)/(3)=x-(2x-1)/(3)";
-	stringEquation[304] = "(x-2)/(5)=(x-1)/(4)";
-	stringEquation[305] = "(5-x)/(9)-(x-1)/(6)..";
-	stringEquation[306] = "(x-1)/(2)+(x+1)/(3)=(x+3)/(2)";
-	stringEquation[307] = "(2x+2)/(3)+(3x-5)/(2)=9";
-	stringEquation[308] = "1-(x-1)/(2)=x-(x+2)/(3)";
-	stringEquation[309] = "(x)/(2)+(x)/(3)=(7+2x)/(3)";
-	stringEquation[310] = "(3x-2)/(4)-(4-x)/(2)..";
-	stringEquation[311] = "(x-1)/(3)-(3)/(2)=(4x)/(3)";
-	stringEquation[312] = "(1+7x)/(7)-1=(3)/(7)..";
-	stringEquation[313] = "(30x)/(60)+x=225";
-	stringEquation[314] = "(35x)/(10)-3x=-(15)/(10)";
-	stringEquation[315] = "(25x)/(2)-(21x)/(2)=(17)/(5)";
-	stringEquation[316] = "6x-(5x)/(10)=110";
-	stringEquation[317] = "7x-(x)/(2)=26";
-	stringEquation[318] = "4x-10=(5x)/(10)+(75)/(10)";
-	stringEquation[319] = "(3)/(5)+x=(x+3)/(5)-(x-5)/(3)";
-	stringEquation[320] = "x+(3x-9)/(5)..";
-	stringEquation[321] = "11-(x+3)=x..";
-	stringEquation[322] = "4(5x-3)=1..";
-	stringEquation[323] = "9+2(x-4)=-1..";
-	stringEquation[324] = "4x=20-2(-x..";
-	stringEquation[325] = "9(x-4)=-2(x..";
-	stringEquation[326] = "4(2x-5)=10..";
-	stringEquation[327] = "6(x-3)-2(x+2)..";
-	stringEquation[328] = "10x=2(x-2)-(x..";
-	stringEquation[329] = "10-3(x-1)-(x..";
-	stringEquation[330] = "8x-(3-x)=-2..";
-	stringEquation[331] = "4x-2(1+x)=10..";
-	stringEquation[332] = "-4(3x-8)+10..";
-	stringEquation[333] = "(x-1)/(5)-(1-2x)/(2)=x";
-	stringEquation[334] = "(x-2)/(2)-(x-3)/(3)..";
-	stringEquation[335] = "2x-(x)/(2)=2x+(1)/(3)";
-	stringEquation[336] = "(x-3)/(4)-(2-x)/(3)..";
-	stringEquation[337] = "(3x-2)/(4)-(4-x)/(2)..";
-	stringEquation[338] = "(x-1)/(2)-(3x+2)/(5)=12";
-	stringEquation[339] = "(x-1)/(2)+(x+1)/(3)..";
-	stringEquation[340] = "(x)/(2)-(x)/(3)-(x)/(4)=14";
-	stringEquation[341] = "(3x+8)/(4)-4x=-11";
-	stringEquation[342] = "(x)/(5)+(x)/(7)=12";
-	stringEquation[343] = "(x+1)/(4)+(3x+1)/(2)=13";
-	stringEquation[344] = "(7x-2)/(2)-2x=10";
-	stringEquation[345] = "(x+2)/(2)+(x+1)/(3)=8";
-	stringEquation[346] = "x-3=4(x-(1)/(2))";
+//function getStringEquations ( ) {
+//	stringEquation = new Array ( );
+//	stringEquation[201] = "x+15=45-2x";
+//	stringEquation[13] = "x+4=10";
+//	stringEquation[14] = "x+1=23";
+//	stringEquation[15] = "x+5=34";
+//	stringEquation[16] = "x+8=12";
+//	stringEquation[107] = "x-1=11";
+//	stringEquation[108] = "x-6=12";
+//	stringEquation[109] = "x-9=30";
+//	stringEquation[110] = "x-8=19";
+//	stringEquation[21] = "10+x=56";
+//	stringEquation[22] = "18+x=20";
+//	stringEquation[23] = "15+x=21";
+//	stringEquation[24] = "120+x=220";
+//	stringEquation[25] = "100+x=300";
+//	stringEquation[26] = "99+x=180";
+//	stringEquation[29] = "4x=-28";
+//	stringEquation[30] = "9x=18";
+//	stringEquation[31] = "4x=-16";
+//	stringEquation[32] = "5x=-20";
+//	stringEquation[33] = "12x=6";
+//	stringEquation[34] = "18x=9";
+//	stringEquation[35] = "7x=-21";
+//	stringEquation[36] = "8x=0";
+//	stringEquation[37] = "8x=32";
+//	stringEquation[38] = "48x=12";
+//	stringEquation[39] = "35x=-70";
+//	stringEquation[40] = "6x=32";
+//	stringEquation[41] = "8x=10";
+//	stringEquation[42] = "5x=-100";
+//	stringEquation[43] = "32x=-8";
+//	stringEquation[44] = "-7x=-42";
+//	stringEquation[45] = "-8x=-24";
+//	stringEquation[46] = "-20x=-4";
+//	stringEquation[47] = "-60=-2x";
+//	stringEquation[48] = "45=-5x";
+//	stringEquation[49] = "90=2x";
+//	stringEquation[58] = "(x)/(2)=12";
+//	stringEquation[59] = "(x)/(2)=8";
+//	stringEquation[60] = "(x)/(2)=-5";
+//	stringEquation[61] = "(x)/(3)=9";
+//	stringEquation[62] = "(x)/(4)=-5";
+//	stringEquation[55] = "(3x)/(4)=9";
+//	stringEquation[56] = "(2x)/(5)=-4";
+//	stringEquation[57] = "(2x)/(3)=-10";
+//	stringEquation[63] = "(x)/(4)=-30";
+//	stringEquation[64] = "3x+10=91";
+//	stringEquation[65] = "4x+7=x+25";
+//	stringEquation[111] = "6x-19=71";
+//	stringEquation[67] = "2x+3=9";
+//	stringEquation[68] = "5x+10=50";
+//	stringEquation[112] = "6x-1=11";
+//	stringEquation[70] = "7x-1=13";
+//	stringEquation[71] = "2x+5=27";
+//	stringEquation[72] = "7x+1=6x+6";
+//	stringEquation[113] = "4x-7=3x+9";
+//	stringEquation[114] = "4x-8=2x+6";
+//	stringEquation[115] = "5x-3=2x-9";
+//	stringEquation[116] = "2x-20=x+80";
+//	stringEquation[117] = "9x-10=170";
+//	stringEquation[80] = "5x-10=70";
+//	stringEquation[81] = "6x=2x+28";
+//	stringEquation[118] = "5x-2=18+3x";
+//	stringEquation[119] = "6x-10=2x+14";
+//	stringEquation[83] = "4x+8=2x+12";
+//	stringEquation[84] = "9x+10=8x-7";
+//	stringEquation[120] = "5x-18=4x+30";
+//	stringEquation[121] = "3(2x-1)=2(x+1..";
+//	stringEquation[122] = "3(x+3)-1=2";
+//	stringEquation[123] = "3(x+2)=2(x-7)";
+//	stringEquation[125] = "5(2x+7)-1=4..";
+//	stringEquation[126] = "2(x-1)+3(x+1)..";
+//	stringEquation[127] = "2(x+1)+5(x-1)..";
+//	stringEquation[128] = "8(x-1)=7(x+2)";
+//	stringEquation[129] = "9(x+1)=8(x-2)";
+//	stringEquation[130] = "7(x-1)=6(x-1)";
+//	stringEquation[131] = "5(x+2)=4(x-1)";
+//	stringEquation[132] = "5(x-2)=4(x+3)";
+//	stringEquation[124] = "3(x+2)-1=2..";
+//	stringEquation[135] = "3(x-1)+5(x-1)..";
+//	stringEquation[101] = "2(2x+3)+5(x+1)..";
+//	stringEquation[136] = "11(x-7)-7(x+1)..";
+//	stringEquation[137] = "3(x+5)=2(x-2)";
+//	stringEquation[138] = "3(x+1)+2(2x-3)..";
+//	stringEquation[105] = "8(x-2)=7(x+2)";
+//	stringEquation[139] = "9(x-3)=7(x-1)";
+//	stringEquation[140] = "8x-2(x+5)=20";
+//	stringEquation[141] = "10(x-3)=9(x+2)";
+//	stringEquation[142] = "8(x+4)=7(x-2)";
+//	stringEquation[143] = "2(2x+7)+3(3x..";
+//	stringEquation[144] = "4(x+1)=12";
+//	stringEquation[145] = "9(x-3)+1=18";
+//	stringEquation[146] = "5(3-x)=4x+18";
+//	stringEquation[147] = "9x-3(2x+2)=15";
+//	stringEquation[148] = "5(3-x)=2(x-4..";
+//	stringEquation[149] = "3(2x-1)=-2(x..";
+//	stringEquation[150] = "3(x-2)-5(x-1..";
+//	stringEquation[151] = "4(x+10)-2(x-5..";
+//	stringEquation[152] = "6(x-2)=-3(x+2)";
+//	stringEquation[153] = "15+3(x+2)=-7..";
+//	stringEquation[154] = "-5(-x-4)=-5";
+//	stringEquation[155] = "2x-3=7-2(2x..";
+//	stringEquation[156] = "-2(2x+1)-3(x..";
+//	stringEquation[157] = "-5(x-1)-2(x+2..";
+//	stringEquation[158] = "-3(x+4)+4(x-9..";
+//	stringEquation[159] = "x-3(4-x)=7x..";
+//	stringEquation[160] = "10+2(x-2)=5..";
+//	stringEquation[180] = "2(9x-2)+3(2x..";
+//	stringEquation[162] = "x+3(x-1)-2-3..";
+//	stringEquation[163] = "6x-4(x-5)-3..";
+//	stringEquation[166] = "7x+23-x=2x..";
+//	stringEquation[167] = "7x-2(x+2)=10";
+//	stringEquation[168] = "x+(x)/(4)=20";
+//	stringEquation[169] = "x-(x)/(5)=10";
+//	stringEquation[170] = "x+(x)/(6)=20";
+//	stringEquation[171] = "(x)/(3)+(x)/(2)=15";
+//	stringEquation[172] = "x-(x)/(2)=1";
+//	stringEquation[173] = "(3x)/(2)-5x=-7";
+//	stringEquation[174] = "(x)/(2)-(x)/(4)=12";
+//	stringEquation[176] = "(3x)/(4)-(x)/(2)=-2";
+//	stringEquation[177] = "(x)/(2)+(x)/(3)=1";
+//	stringEquation[178] = "(x)/(2)+(x)/(7)=12";
+//	stringEquation[187] = "3-2(x+3)=x-18";
+//	stringEquation[188] = "3(x-4)=-1..";
+//	stringEquation[189] = "50+(3x-4)=2..";
+//	stringEquation[190] = "(x)/(2)+4x=15-(-x..";
+//	stringEquation[191] = "2(2x-4)=5-((x)/(2)..";
+//	stringEquation[192] = "4(2x-5)=3..";
+//	stringEquation[193] = "(x)/(4)+2=(x-3)/(2)";
+//	stringEquation[194] = "(4)/(5)+(x)/(2)=(x)/(3)-1";
+//	stringEquation[195] = "x+3=2(x-(1)/(2))";
+//	stringEquation[196] = "(3(x-4))/(8)-1=x..";
+//	stringEquation[197] = "(x)/(3)+(x)/(2)=(7+x)/(3)";
+//	stringEquation[198] = "(x-2)/(3)+2x=(5x)/2";
+//	stringEquation[199] = "(x-5)/(3)+(3x-1)/(2)=4";
+//	stringEquation[200] = "3(6x-8)+10=5..";
+//	stringEquation[202] = "(x-1)/(5)=x-(2x-1)/(3)";
+//	stringEquation[203] = "3x-2(x-5)..";
+//	stringEquation[204] = "(x-1)/(2)+(x-3)/(3)=6";
+//	stringEquation[205] = "(x-2)/(3)-(x+1)/(4)=4";
+//	stringEquation[206] = "x-(2x-1)/(3)=(x-1)/(5)";
+//	stringEquation[207] = "(x-3)/(7)=(x-1)/(4)";
+//	stringEquation[208] = "(x+3)/(4)-5=x+1";
+//	stringEquation[209] = "(2x)/(5)+(15x-1)/(20)=(1)/(3)";
+//	stringEquation[210] = "x+7-x-2x=96..";
+//	stringEquation[211] = "7x+23-x=2x..";
+//	stringEquation[212] = "4(x-2)-2(x+1)..";
+//	stringEquation[213] = "10(x+1)-6=2(x..";
+//	stringEquation[214] = "3x-(x+1)-1..";
+//	stringEquation[215] = "(x-3)/(3)+(3)/(2)=(4x)/(3)";
+//	stringEquation[216] = "6x-4(x-5)-(5..";
+//	stringEquation[217] = "2(x-2)+3(2x+2)..";
+//	stringEquation[218] = "x-(x)/(3)=6+(x)/(2)";
+//	stringEquation[219] = "10(x-6)=9(x+3)";
+//	stringEquation[220] = "9-2(x+3)=x-18";
+//	stringEquation[221] = "4(x-4)=-1..";
+//	stringEquation[222] = "40+(3x-4)=2..";
+//	stringEquation[223] = "5(2x-5)=3..";
+//	stringEquation[224] = "2(6x-8)+10=3..";
+//	stringEquation[225] = "3x+2(1-x)=10";
+//	stringEquation[226] = "x-(3-x)=1";
+//	stringEquation[227] = "x+3(x-1)-(x..";
+//	stringEquation[228] = "10=3(x-2)-(x..";
+//	stringEquation[229] = "2(7x-1)-3(4..";
+//	stringEquation[230] = "(x)/(4)-2=(x-3)/(2)";
+//	stringEquation[231] = "(4)/(5)+(x)/(2)=(x)/(3)-2";
+//	stringEquation[232] = "(4x+16)/(4)-(x)/(2)=6+x";
+//	stringEquation[233] = "(2x+4)/(5)-(x-10)/(6)=2";
+//	stringEquation[234] = "(2x+9)/(7)-(x+1)/(4)=x+2";
+//	stringEquation[235] = "(4x+9)/(9)-(x)/(15)=2x..";
+//	stringEquation[236] = "x-(x)/(2)=2x+1";
+//	stringEquation[237] = "(x)/(2)+(x-1)/(3)=3";
+//	stringEquation[238] = "(x-2)/(4)+2x=(5x)/(2)";
+//	stringEquation[239] = "(x)/(3)+(2x+2)/(4)=3x+7";
+//	stringEquation[240] = "(x-1)/(7)-(2x+6)/(8)..";
+//	stringEquation[241] = "2(2x-4)=5-((x)/(2)..";
+//	stringEquation[243] = "(3(x-4))/(4)-1=x..";
+//	stringEquation[244] = "4x-2(x-5)..";
+//	stringEquation[245] = "(2x-1)/(4)-(x-1)/(3)..";
+//	stringEquation[246] = "(x)/(2)-(x-1)/(3)+(17)/(12)..";
+//	stringEquation[247] = "(2x-3)/(5)-(11-x)/(3)=(29)/(30)";
+//	stringEquation[248] = "(x-1)/(2)+(x+1)/(3)=(2x+3)/(5)";
+//	stringEquation[249] = "(3x+1)/(13)-(2-x)/(2)..";
+//	stringEquation[250] = "(2x-1)/(3)-(5x-10)/(4)..";
+//	stringEquation[251] = "x+8x-2x=81-2x";
+//	stringEquation[252] = "7x+44-x=2x+20";
+//	stringEquation[253] = "6x-2(x-3)-(12..";
+//	stringEquation[254] = "10(x+1)-6=3..";
+//	stringEquation[255] = "6(x-2)-2(x..";
+//	stringEquation[256] = "6x-(x+1)-1..";
+//	stringEquation[257] = "(x-1)/(2)=x-(2x-1)/(3)";
+//	stringEquation[258] = "(x-2)/(3)-(x+1)/(4)=10";
+//	stringEquation[259] = "(x-1)/(7)-(x+3)/(4)=1";
+//	stringEquation[260] = "(x-3)/(5)=(x-1)/(4)";
+//	stringEquation[261] = "(x+1)/(3)+(3x-1)/(2)..)";
+//	stringEquation[262] = "(x)/(2)+4x=15-2..";
+//	stringEquation[263] = "(1-x)/(2)=(x+1)/(2)+x";
+//	stringEquation[264] = "(x)/(6)+(x)/(9)=(x-1)/(2)+2";
+//	stringEquation[265] = "(x-3)/(3)-(3)/(2)=(4x)/(3)";
+//	stringEquation[266] = "(x+3)/(2)+(x)/(3)=10";
+//	stringEquation[267] = "(x+3)/(2)+(x+2)/(3)=12";
+//	stringEquation[268] = "(x-1)/(2)=(x+1)/(3)";
+//	stringEquation[269] = "(x-2)/(10)=(x-1)/(2)";
+//	stringEquation[270] = "9-2(x+3)=x-18";
+//	stringEquation[271] = "4(x-4)=-1..";
+//	stringEquation[272] = "40+(3x-4)=2..";
+//	stringEquation[273] = "5(2x-5)=3..";
+//	stringEquation[274] = "2(6x-8)+10=3..";
+//	stringEquation[275] = "3x+2(1-x)=10";
+//	stringEquation[276] = "x-(3-x)=1";
+//	stringEquation[277] = "x+3(x-1)-(x..";
+//	stringEquation[278] = "10=3(x-2)-(x..";
+//	stringEquation[279] = "(x)/(3)-(7)/(8)=(x)/(4)-1";
+//	stringEquation[280] = "(3x-5)/(2)-(x-2)/(5)=7";
+//	stringEquation[281] = "x-3=2(x-(1)/(2))";
+//	stringEquation[282] = "(x+5)/(2)=(8+2x)/(5)";
+//	stringEquation[283] = "(5x-10)/(2)=10-(5x-5)/(3)";
+//	stringEquation[284] = "(x+3)/(8)=(5)/(4)";
+//	stringEquation[285] = "(x)/(2)-5=x+(3)/(4)";
+//	stringEquation[286] = "(5x-3)/(4)-(3x+8)/(2)..";
+//	stringEquation[287] = "(x+4)/(5)-(x-10)/(6)=2";
+//	stringEquation[288] = "(x-2)/(3)-(x+1)/(4)=4";
+//	stringEquation[289] = "(2x-3)/(4)-(2-x)/(3)=(x-1)/(3)";
+//	stringEquation[290] = "x-(x)/(2)=2x+(1)/(3)";
+//	stringEquation[291] = "(x+2)/(2)-(2x-3)/(3)=(3x+1)/(4)";
+//	stringEquation[292] = "(x-1)/(5)-(5-2x)/(3)=x";
+//	stringEquation[293] = "4x-2(x-5)=-x-5";
+//	stringEquation[294] = "4(2-x)-3(2x..";
+//	stringEquation[295] = "5x-(x-2)=2..";
+//	stringEquation[296] = "x+7x-5x=80-5x";
+//	stringEquation[297] = "3(x-1)-9x-30..";
+//	stringEquation[298] = "6(x-2)-(x+1)=40";
+//	stringEquation[299] = "6x-(x+1)-1..";
+//	stringEquation[300] = "(5x-1)/(10)-(1)/(2)=1-(2-x)/(5)";
+//	stringEquation[301] = "x-(2x+1)/(3)=(x-2)/(2)";
+//	stringEquation[302] = "(x-2)/(5)-(x+1)/(4)=10";
+//	stringEquation[303] = "(x-2)/(4)+(1)/(3)=x-(2x-1)/(3)";
+//	stringEquation[304] = "(x-2)/(5)=(x-1)/(4)";
+//	stringEquation[305] = "(5-x)/(9)-(x-1)/(6)..";
+//	stringEquation[306] = "(x-1)/(2)+(x+1)/(3)=(x+3)/(2)";
+//	stringEquation[307] = "(2x+2)/(3)+(3x-5)/(2)=9";
+//	stringEquation[308] = "1-(x-1)/(2)=x-(x+2)/(3)";
+//	stringEquation[309] = "(x)/(2)+(x)/(3)=(7+2x)/(3)";
+//	stringEquation[310] = "(3x-2)/(4)-(4-x)/(2)..";
+//	stringEquation[311] = "(x-1)/(3)-(3)/(2)=(4x)/(3)";
+//	stringEquation[312] = "(1+7x)/(7)-1=(3)/(7)..";
+//	stringEquation[313] = "(30x)/(60)+x=225";
+//	stringEquation[314] = "(35x)/(10)-3x=-(15)/(10)";
+//	stringEquation[315] = "(25x)/(2)-(21x)/(2)=(17)/(5)";
+//	stringEquation[316] = "6x-(5x)/(10)=110";
+//	stringEquation[317] = "7x-(x)/(2)=26";
+//	stringEquation[318] = "4x-10=(5x)/(10)+(75)/(10)";
+//	stringEquation[319] = "(3)/(5)+x=(x+3)/(5)-(x-5)/(3)";
+//	stringEquation[320] = "x+(3x-9)/(5)..";
+//	stringEquation[321] = "11-(x+3)=x..";
+//	stringEquation[322] = "4(5x-3)=1..";
+//	stringEquation[323] = "9+2(x-4)=-1..";
+//	stringEquation[324] = "4x=20-2(-x..";
+//	stringEquation[325] = "9(x-4)=-2(x..";
+//	stringEquation[326] = "4(2x-5)=10..";
+//	stringEquation[327] = "6(x-3)-2(x+2)..";
+//	stringEquation[328] = "10x=2(x-2)-(x..";
+//	stringEquation[329] = "10-3(x-1)-(x..";
+//	stringEquation[330] = "8x-(3-x)=-2..";
+//	stringEquation[331] = "4x-2(1+x)=10..";
+//	stringEquation[332] = "-4(3x-8)+10..";
+//	stringEquation[333] = "(x-1)/(5)-(1-2x)/(2)=x";
+//	stringEquation[334] = "(x-2)/(2)-(x-3)/(3)..";
+//	stringEquation[335] = "2x-(x)/(2)=2x+(1)/(3)";
+//	stringEquation[336] = "(x-3)/(4)-(2-x)/(3)..";
+//	stringEquation[337] = "(3x-2)/(4)-(4-x)/(2)..";
+//	stringEquation[338] = "(x-1)/(2)-(3x+2)/(5)=12";
+//	stringEquation[339] = "(x-1)/(2)+(x+1)/(3)..";
+//	stringEquation[340] = "(x)/(2)-(x)/(3)-(x)/(4)=14";
+//	stringEquation[341] = "(3x+8)/(4)-4x=-11";
+//	stringEquation[342] = "(x)/(5)+(x)/(7)=12";
+//	stringEquation[343] = "(x+1)/(4)+(3x+1)/(2)=13";
+//	stringEquation[344] = "(7x-2)/(2)-2x=10";
+//	stringEquation[345] = "(x+2)/(2)+(x+1)/(3)=8";
+//	stringEquation[346] = "x-3=4(x-(1)/(2))";
+//
+//}
 
-}
-
-function getEquationsPlan ( ) {
-	equationPlan = new Array ( );	
-	equationPlan[9] = new EquationPlan (201, 2);
-	equationPlan[2] = new EquationPlan (13, 3);
-	equationPlan[3] = new EquationPlan (29, 4);
-	equationPlan[4] = new EquationPlan (58, 5);
-	equationPlan[5] = new EquationPlan (64, 6);
-	equationPlan[6] = new EquationPlan (121, 7);
-	equationPlan[7] = new EquationPlan (144, 8);
-	equationPlan[8] = new EquationPlan (168, 10);
-	equationPlan[10] = new EquationPlan (187, 11);
-	equationPlan[11] = new EquationPlan (202, 12);
-	equationPlan[12] = new EquationPlan (220, 13);
-	equationPlan[13] = new EquationPlan (230, 14);
-	equationPlan[14] = new EquationPlan (241, 15);
-	equationPlan[15] = new EquationPlan (251, 16);
-	equationPlan[16] = new EquationPlan (257, 17);
-	equationPlan[17] = new EquationPlan (270, 18);
-	equationPlan[18] = new EquationPlan (279, 19);
-	equationPlan[19] = new EquationPlan (293, 20);
-	equationPlan[19] = new EquationPlan (300, 21);
-	equationPlan[19] = new EquationPlan (313, null);
-}
+//function getEquationsPlan ( ) {
+//	equationPlan = new Array ( );	
+//	equationPlan[9] = new EquationPlan (201, 2);
+//	equationPlan[2] = new EquationPlan (13, 3);
+//	equationPlan[3] = new EquationPlan (29, 4);
+//	equationPlan[4] = new EquationPlan (58, 5);
+//	equationPlan[5] = new EquationPlan (64, 6);
+//	equationPlan[6] = new EquationPlan (121, 7);
+//	equationPlan[7] = new EquationPlan (144, 8);
+//	equationPlan[8] = new EquationPlan (168, 10);
+//	equationPlan[10] = new EquationPlan (187, 11);
+//	equationPlan[11] = new EquationPlan (202, 12);
+//	equationPlan[12] = new EquationPlan (220, 13);
+//	equationPlan[13] = new EquationPlan (230, 14);
+//	equationPlan[14] = new EquationPlan (241, 15);
+//	equationPlan[15] = new EquationPlan (251, 16);
+//	equationPlan[16] = new EquationPlan (257, 17);
+//	equationPlan[17] = new EquationPlan (270, 18);
+//	equationPlan[18] = new EquationPlan (279, 19);
+//	equationPlan[19] = new EquationPlan (293, 20);
+//	equationPlan[19] = new EquationPlan (300, 21);
+//	equationPlan[19] = new EquationPlan (313, null);
+//}
 

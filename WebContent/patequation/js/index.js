@@ -37,11 +37,10 @@ var currentPos = getCookie ("pos");
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
-var numUnlockedPlans = 1;
+var numUnlockedPlans = 0;
 var numLines = 20;
 var heightSheet = 800;
 var usedLines;
-
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
@@ -196,6 +195,7 @@ function helpPage2 ( ) {
 }
 
 function helpPage ( ) {
+	
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:246px; left:1px;'> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
@@ -232,6 +232,8 @@ function uploadImage ( ) {
 	//http://www.brimg.com/
 }
 
+
+
 function closeWindowReportBug ( ) {
 	$("#mask").fadeOut(700);
 	$("#reportBug-box").fadeOut(700);
@@ -256,6 +258,31 @@ function createLines() {
 	
 	document.getElementById("lines").innerHTML = lines;
 	
+}
+
+function createPlans(numPlans) {
+	var plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> <span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
+	
+	for (var i = 2; i <= numPlans; i++)
+		plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';
+	
+	document.getElementById("the_list").innerHTML = plans;
+}
+
+function getIdPlan(idEquation) {
+	var idEquationString = "" + idEquation;
+	var idPlan;
+	
+	if (idEquationString.length === 3) 
+		idPlan = idEquationString.substring(0, 1);
+			
+	else 
+		idPlan = idEquationString.substring(0, 2);		
+	
+	
+	idPlan = parseInt(idPlan);	
+	
+	return idPlan;	
 }
 
 function p1 ( ) {
@@ -323,6 +350,39 @@ function closeWindow ( ) {
 //}
 
 
+function verifyPlans() {
+	//Fazer uma verificação especial do plano 1, se o resultado retornado em
+	//verifyPlan(1) for igual ao número de equações do plano, é para exibir
+	//o primeiro exemplo trabalhado e o tour
+	
+	var continua = true;
+	
+	for (var i = 2; i <= 22 && continua; i++) {
+		$("#lplan" + i).hide();
+		$.ajax({
+			type: "GET",
+			url: appContext + "student/showTopic",
+			data: {"idSet" : i}, 
+			success:
+				function(data) {
+					$("#plansAux").html(data);
+					var numEquations = document.getElementsByClassName("task").length;
+					var numEquationsSolved = document.getElementsByClassName("icon-ok").length;
+					var result = numEquations - numEquationsSolved;	
+					
+					if (result !== 0)
+						continua = false;
+				},
+			error:
+				 function(XMLHttpRequest, textStatus, errorThrown) {
+			     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+			 	}
+			});	
+		
+	}
+}
+
+
 /*Criar um novo usuário no localhost para testar as novas funcionalidades:
  * Se ao resolver todas as equações do plano de aula 1 aparece as mensagens de "plan2()";
  * Se ao resolver todas as equações de qualquer plano de aula (inclusive o do tour) aparece o botão
@@ -333,123 +393,24 @@ function rel ( ) {
 		     type : "Get",   
 		     url : "/pat2math/student/reload_task",     
 		     success : function(response) { 
-		    	/* $('#the_list').html('Teste'); */
-// 		      	$('#the_list').html(response);   
 		    	 unlockedPlans = response;
-		    	 
+
 		    	 if (response.indexOf ("Plano de aula 1") === -1) {
 		    	    	blockMenu = true;
-		    	    	isTourInterativo = true;
-		    	    	loadExercise(201);
-		    	    	checkTour();
+		    	    	loadExerciseWE("x+2=10", 20);
+		    	    	classPlan1();	    	    	
 		    	    }
 		    	 
 		    	 else {
-		    	      
-		    		 $("#lplan2").hide();
-		    		 numUnlockedPlans = 2;
-		    		
-		    		if (unlockedPlans.indexOf ("Plano de aula 2") !== -1) {
-		    			$("#lplan3").hide();
-		    			numUnlockedPlans = 3;
-		    			
-		    			if (unlockedPlans.indexOf ("Plano de aula 3") !== -1) {
-			    			$("#lplan4").hide();
-			    			numUnlockedPlans = 4;
-			    			
-			    			if (unlockedPlans.indexOf ("Plano de aula 4") !== -1) {
-				    			$("#lplan5").hide();
-				    			numUnlockedPlans = 5;
-				    			
-				    			if (unlockedPlans.indexOf ("Plano de aula 5") !== -1) {
-					    			$("#lplan6").hide();
-					    			numUnlockedPlans = 6;
-					    			
-					    			if (unlockedPlans.indexOf ("Plano de aula 6") !== -1) {
-						    			$("#lplan7").hide();
-						    			numUnlockedPlans = 7;
-						    			
-						    			if (unlockedPlans.indexOf ("Plano de aula 7") !== -1) {
-							    			$("#lplan8").hide();
-							    			numUnlockedPlans = 8;
-							    			
-							    			if (unlockedPlans.indexOf ("Plano de aula 8") !== -1) {
-								    			$("#lplan10").hide();
-								    			numUnlockedPlans = 10;
-								    			
-								    			if (unlockedPlans.indexOf ("Plano de aula 9") !== -1) {
-									    			$("#lplan11").hide();
-									    			$("#lplan12").hide();
-									    			$("#lplan13").hide();
-									    			$("#lplan14").hide();
-									    			$("#lplan15").hide();
-									    			$("#lplan16").hide();
-									    			$("#lplan17").hide();
-									    			$("#lplan18").hide();
-									    			$("#lplan19").hide();
-									    			$("#lplan20").hide();
-									    			$("#lplan21").hide();
-									    			numUnlockedPlans = 11;
-									    			
-									    			if (unlockedPlans.indexOf ("Plano de aula 10") !== -1) {
-										    			$("#lplan12").hide();
-										    			numUnlockedPlans = 12;
-										    			
-										    			if (unlockedPlans.indexOf ("Plano de aula 11") !== -1) {
-											    			$("#lplan13").hide();
-											    			numUnlockedPlans = 13;
-											    			
-											    			if (unlockedPlans.indexOf ("Plano de aula 12") !== -1) {
-												    			$("#lplan14").hide();
-												    			numUnlockedPlans = 14;
-												    			
-												    			if (unlockedPlans.indexOf ("Plano de aula 13") !== -1) {
-													    			$("#lplan15").hide();
-													    			numUnlockedPlans = 15;
-													    			
-													    			if (unlockedPlans.indexOf ("Plano de aula 14") !== -1) {
-														    			$("#lplan16").hide();
-														    			numUnlockedPlans = 16;
-														    			
-														    			if (unlockedPlans.indexOf ("Plano de aula 15") !== -1) {
-															    			$("#lplan17").hide();
-															    			numUnlockedPlans = 17;
-															    			
-															    			if (unlockedPlans.indexOf ("Plano de aula 16") !== -1) {
-																    			$("#lplan18").hide();
-																    			numUnlockedPlans = 18;
-																    			
-																    			if (unlockedPlans.indexOf ("Plano de aula 17") !== -1) {
-																	    			$("#lplan19").hide();
-																	    			numUnlockedPlans = 19;
-																	    			
-																	    			if (unlockedPlans.indexOf ("Plano de aula 18") !== -1) {
-																		    			$("#lplan20").hide();
-																		    			numUnlockedPlans = 20;
-																		    			
-																		    			if (unlockedPlans.indexOf ("Plano de aula 19") !== -1) {
-																			    			$("#lplan21").hide();
-																			    			numUnlockedPlans = 21;
-																			    		}
-																		    		}
-																	    		}
-																    		}	    		
-															    		}
-														    		}
-													    		}
-												    		}
-											    		}
-										    		}
-									    		}
-								    		}
-							    		}
-						    		}
-					    		}
-				    		}
-			    		}
-		    		}		    		
-		    		
-		        	if (numUnlockedPlans < 4)
+		    		 $("#lplan1").hide();
+		    		 numUnlockedPlans = 1;
+		    		 
+		    		 for (var i = 2; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) {
+		    			 $("#lplan" + i).hide();
+		    			 numUnlockedPlans = i;	    			 
+		    		 }
+		    		    		
+		        	if (numUnlockedPlans < 3)
 		        		checkTour();
 		        	
 		        	 var cookieName = "currentPlan" + currentPos;
@@ -482,11 +443,7 @@ function showNextPlanButton ( ) {
 }
 
 function nextEquationPlanClick ( ) {
-	var proximoPlano = equationPlan[planoAtual].idNextPlan;
-   	var proximaEquacao = equationPlan[planoAtual].idFirstEquation;
-   	
-   	loadTasks (proximoPlano);
-   	loadExercise (proximaEquacao);
+	
 }
 
 //Calcula a diferença entre dois tempos, na forma: hour1:minutes1 - hour2:minutes2
@@ -577,8 +534,6 @@ $(document).ready(function() {
     $(document).keyup(function(event) {
         var key = event.which;
         
-        if (isTourInterativo && key === 27) //esc
-        	exitEsc();
 
         if (key === 13) { //enter key
 
@@ -704,8 +659,7 @@ $(document).ready(function() {
     	}
     });
     
-    getStringEquations();
-    getEquationsPlan();
+//    getEquationsPlan();
    
     
 //	cookieName = "openQuest" + currentPos;
@@ -799,6 +753,7 @@ $(document).ready(function() {
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
 	createLines();
+	createPlans(36);
 	
 	window.onresize = function(){
 		var widthWindow = window.innerWidth;
@@ -1631,6 +1586,7 @@ function newEquation() {
 
 
 function checkEquation() { 	
+	
 //	setTimeout ('resetNumClicks()', 3000);
 //	
 //	if (numClicks === undefined)

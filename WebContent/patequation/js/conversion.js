@@ -475,20 +475,16 @@ function mathmlToText(math) {
     return result;
 }
 
-function equationToUserInterface (id) {
-	var idTask = "#task" + id;
-	var eq = stringEquation[id];		
-	var temp = textToUserInterface (eq);
-	var equation = temp[0] + " ";
+function equationToUserInterface (id, equation) {
+	var idTask = "#task" + id;	
+	var eq = textToUserInterface (equation);
+	equation = eq[0] + " ";
 	
-	for (var i = 1; i < temp.length - 1; i++)
-		equation += temp[i] + " ";
+	for (var i = 1; i < eq.length - 1; i++)
+		equation += eq[i] + " ";
 	
-	equation += temp[temp.length-1];
-	
-	if (eq.indexOf ("..") !== -1)
-		equation += "..";
-	
+	equation += eq[eq.length-1];
+
 	$(idTask).html (equation);
 }
 
