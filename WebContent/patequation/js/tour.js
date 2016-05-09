@@ -504,7 +504,7 @@ function classPlan (nextStep) {
 		}
 	});
 	
-	$("#tourAux").guider({
+	$.guider({
 		name: "plan2",
 		title: "Equações",
 		description: "Aqui está a lista das equações do plano de aula 1. Selecione qualquer uma delas para começar.",
@@ -684,7 +684,7 @@ function newPlan ( ) {
         onShow: function(){setTimeout(function(){loadTasks(numUnlockedPlans);}, 1000);},
     	buttons: {
     		Legal: {
-    			click: function(){$.guider({}).hideAll(); openWorkedExample(numUnlockedPlans);},
+    			click: function(){$.guider({}).hideAll(); openWorkedExample(numUnlockedPlans); resetProgressBar();},
     			className: "primary"
     		}
     	}
