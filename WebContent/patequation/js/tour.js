@@ -608,7 +608,6 @@ function plan2Explanation (nextStep) {
 	
 	$.guider({
 		name: "plan2",
-		next: "finish",
 		title: "Níveis de Dificuldade",
 		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
 		alignButtons: "right",
@@ -617,28 +616,11 @@ function plan2Explanation (nextStep) {
 		buttons: {
 			Voltar: true,
 			Próximo: {
-				click: true,
+				click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)},
 				className: "primary"
 			}
 		}
 	});
-	
-	$.guider({
-    	name: "finish",
-    	title: "Você está liberado!",
-		description: "Esperamos que você goste de utilizar o PAT2Math.",
-		position: "left",
-		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "", 0); setCookieDays (cFunctionTour, "", 0);},
-		closable: true, 
-		buttons: {
-			Voltar: true,
-			Finalizar: {
-			   click : function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2();},
-               className: "primary"
-            }
-		}
-    });	
 }
 
 function exit ( ) {
@@ -699,9 +681,10 @@ function newPlan ( ) {
     	title: "Parabéns! Você passou de fase!",
     	description: "O próximo plano de aula contém equações um pouco mais desafiadoras. Lembre-se que você pode pedir uma dica sempre que achar necessário.",
         alignButtons: "center",
+        onShow: function(){setTimeout(function(){loadTasks(numUnlockedPlans);}, 1000);},
     	buttons: {
     		Legal: {
-    			click: function(){$.guider({}).hideAll();},
+    			click: function(){$.guider({}).hideAll(); openWorkedExample(numUnlockedPlans);},
     			className: "primary"
     		}
     	}

@@ -257,7 +257,7 @@ function classPlan2() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -376,7 +376,7 @@ function classPlan3() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -446,7 +446,7 @@ function classPlan4() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -499,7 +499,7 @@ function classPlan5() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -689,7 +689,7 @@ function classPlan8() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},	
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -773,7 +773,7 @@ function classPlan9() {
 			width : 600,
 			position: "bottom",
 			alignButtons : "right",
-			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
+			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -861,7 +861,7 @@ function classPlan10() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -871,129 +871,134 @@ function classPlan10() {
 	});
 }
 
-function openWorkedExample() {
-	if (planoAtual === 3) {
+function openWorkedExample(id) {
+	if (id !== 1 && id !== 2 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) {
+	var cookieName = "currentWE" + currentPos;
+	setCookieDays (cookieName, id, 1);
+		
+	if (id === 3) {
 		loadExerciseWE("x-4=8", 20);
 		classPlan3();
 	}
 
-	if (planoAtual === 4) {
+	if (id === 4) {
 		loadExerciseWE("x+4=-2", 20);
 		classPlan4();
 	}
 
-	if (planoAtual === 5) {
+	if (id === 5) {
 		loadExerciseWE("x-3=-6", 20);
 		classPlan5();
 	}
 
-	if (planoAtual === 7) {
+	if (id === 7) {
 		loadExerciseWE("-x+1=10", 25);
 		classPlan7();
 	}
 
-	if (planoAtual === 8) {
+	if (id === 8) {
 		loadExerciseWE("-x-10=7", 25);
 		classPlan8();
 	}
 
-	if (planoAtual === 9) {
+	if (id === 9) {
 		loadExerciseWE("-x+4=-8", 25);
 		classPlan9();
 	}
 
-	if (planoAtual === 10) {
+	if (id === 10) {
 		loadExerciseWE("-x-15=-9", 25);
 		classPlan10();
 	}
 
-	if (planoAtual === 12) {
+	if (id === 12) {
 		loadExerciseWE("2x=10", 30);
 		classPlan12();
 	}
 
-	if (planoAtual === 13) {
+	if (id === 13) {
 		loadExerciseWE("5x=-30", 30);
 		classPlan13();
 	}
 
-	if (planoAtual === 14) {
+	if (id === 14) {
 		loadExerciseWE("-3x=15", 35);
 		classPlan14();
 	}
 
-	if (planoAtual === 15) {
+	if (id === 15) {
 		loadExerciseWE("-4x=-28", 35);
 		classPlan15();
 	}
 
-	if (planoAtual === 17) {
+	if (id === 17) {
 		loadExerciseWE("(x)/(4)=20", 40);
 		classPlan17();
 	}
 
-	if (planoAtual === 18) {
+	if (id === 18) {
 		loadExerciseWE("(x)/(7)=-49", 40);
 		classPlan18();
 	}
 
-	if (planoAtual === 19) {
+	if (id === 19) {
 		loadExerciseWE("-(x)/6)=42", 50);
 		classPlan19();
 	}
 
-	if (planoAtual === 20) {
+	if (id === 20) {
 		loadExerciseWE("-(x)/(4)=-100", 50);
 		classPlan20();
 	}
 
-	if (planoAtual === 22) {
+	if (id === 22) {
 		loadExerciseWE("4x-10=8", 50);
 		classPlan22();
 	}
 
-	if (planoAtual === 23) {
+	if (id === 23) {
 		loadExerciseWE("-3x+9=-27", 60);
 		classPlan23();
 	}
 
-	if (planoAtual === 24) {
+	if (id === 24) {
 		loadExerciseWE("5x+8-2x=10+x", 80);
 		classPlan24();
 	}
 
-	if (planoAtual === 26) {
+	if (id === 26) {
 		loadExerciseWE("2(x+3)-5=5(x+2)", 100);
 		classPlan26();
 	}
 
-	if (planoAtual === 27) {
+	if (id === 27) {
 		loadExerciseWE("(x+3)/(3)=(4)/(9)", 100);
 		classPlan27();
 	}
 
-	if (planoAtual === 29) {
+	if (id === 29) {
 		loadExerciseWE("(x)/(4)+5=(2)/(3)-(5x)/(8)", 120);
 		classPlan29();
 	}
 
-	if (planoAtual === 30) {
+	if (id === 30) {
 		loadExerciseWE("(x+2)/(5)+8=(x-3)/(4+2)", 140);
 		classPlan30();
 	}
 
-	if (planoAtual === 31) {
+	if (id === 31) {
 		loadExerciseWE("(4(x+3))/(7)+5=(-2(-x-1))/(5+8)", 160);
 		classPlan31();
 	}
 
-	if (planoAtual === 33) {
+	if (id === 33) {
 		loadExerciseWE("(4)/(x)+(2)/(3)-5=(8)/(6x)", 200);
 		classPlan33();
 	}
 
-	if (planoAtual === 34) {
+	if (id === 34) {
 		loadExerciseWE("(5)/(4x-2)+9=(10)/(-4(x-3))", 300);
 		classPlan34();
+	}
 	}
 }

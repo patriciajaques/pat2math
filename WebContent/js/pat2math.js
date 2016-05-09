@@ -217,11 +217,7 @@ function loadTasks(id) {
 					tasksRemaining=tasksRemaining-taskSolved;
 					/*alert("fim: "+tasksRemaining);*/
 					if (tasksRemaining===0)addProgressValue(100);
-					else addProgressValue(progressvalue*taskSolved);
-					
-					if (taskSolved === 0 && id !== 1 && id !== 2 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) 
-						openWorkedExample();
-					
+					else addProgressValue(progressvalue*taskSolved);		
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
@@ -231,7 +227,7 @@ function loadTasks(id) {
 		
 //		checkEquationTour();
 		
-		if (isTourInterativo && id === 2) 
+		if (isTourInterativo && id === 1) 
 			classPlan("");
 		
 		try {
@@ -255,6 +251,8 @@ function loadTasks(id) {
 	}
 	var cookieName = "currentPlan" + currentPos;
 	setCookieDays (cookieName, id, 1);
+	
+	
 	
 }
 

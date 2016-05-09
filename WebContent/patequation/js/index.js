@@ -755,6 +755,16 @@ $(document).ready(function() {
 	createLines();
 	createPlans(36);
 	
+	cookieName = "currentWE" + currentPos;
+	var currentWE = getCookie(cookieName);
+	
+	if (currentWE !== "") {
+		var idPlanWE = parseInt(currentWE);
+		openWorkedExample(idPlanWE);
+	}
+		
+	
+	
 	window.onresize = function(){
 		var widthWindow = window.innerWidth;
 		
