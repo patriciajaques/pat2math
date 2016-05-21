@@ -21,7 +21,7 @@
      <img class="block" id="u108_img" src="/pat2math/images/erro_500.jpg" alt="" width="1155" height="740"/>
     </div>
     <div class="clearfix colelem" id="u114-5"><!-- content -->
-     <p><a class="nonblock" href="http://200.188.161.124">Voltar</a></p>
+     <p><a class="nonblock" href="http://pat2math.unisinos.br">Voltar</a></p>
     </div>
    </div>
   </div>

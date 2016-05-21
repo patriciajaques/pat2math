@@ -52,7 +52,7 @@
 	<div id="note">
         <span id="amountPoins">0 de 0 pontos</span>
         <br><br>
-        <span>Barra de progresso:</span>
+        <span>Equações concluídas:</span>
 
         <div id="progressBar" class="progress">
             <div class="bar" role="progressbar" style="width: 0%;">

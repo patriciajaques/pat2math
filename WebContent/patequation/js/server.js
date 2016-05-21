@@ -224,7 +224,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         	}
                         	
                         	else if (numUnlockedPlans == 2)
-                        		plan2Explanation("");
+                        		setTimeout('plan2Explanation("")', 2000);
                         	
                         	else {
                         		setTimeout ("newPlan()", 2000);
@@ -235,7 +235,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                         
                         else 
-                        	addProgressValue(progressvalue);
+                        	addProgressValue(1);
                         
                         selectedEquation.isComplete = true;
 

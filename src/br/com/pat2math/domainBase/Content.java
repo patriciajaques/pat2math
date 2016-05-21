@@ -51,7 +51,7 @@ public class Content {
 	
 	private String nivelDificuldade;
 	
-	private Integer pontuacao;
+	protected Integer pontuacao;
 	
 	private Boolean active = false;
 	

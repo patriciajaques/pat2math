@@ -149,7 +149,8 @@ function loadTasks(id) {
 			setBackgroundColor("#B0E0E6"); 
 		}
 				
-		
+	var temp = $(".icon-ok.icon-white").length;
+	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
 	if(open == 'none') {	
@@ -168,7 +169,7 @@ function loadTasks(id) {
 //					    getResolution (firstEquation);
 //					}
 					
-					planoAtual=id;
+					
 					
 					$(".task").each(
 						function() {
@@ -206,18 +207,19 @@ function loadTasks(id) {
 //								}
 //							}
 //						);
+					planoAtual = id;
+					numEquacoesPlanoAtual = getNumEquationsPlan();
 					resetProgressBar();
-					tasksRemaining = getNumEquationsPlan();
+					tasksRemaining = numEquacoesPlanoAtual;
 					//here tasksremaining contains the number of equations
-					progressvalue=100/tasksRemaining;
-					progressvalue=Math.trunc(progressvalue);
 					/*alert("inicio: "+tasksRemaining);*/
-					var taskSolved=$(".icon-ok.icon-white").length;
+					
+					var taskSolved=$(".icon-ok.icon-white").length - temp;
 					/*alert("fim: "+taskSolved);*/
 					tasksRemaining=tasksRemaining-taskSolved;
 					/*alert("fim: "+tasksRemaining);*/
-					if (tasksRemaining===0)addProgressValue(100);
-					else addProgressValue(progressvalue*taskSolved);		
+					if (tasksRemaining===0)addProgressValue(numEquacoesPlanoAtual);
+					else addProgressValue(taskSolved);		
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
@@ -243,6 +245,7 @@ function loadTasks(id) {
 			}
 	} else {
 		$("#tasks"+id).slideUp(700);
+		$("#tasks"+id).html("");
 	    var cookieName = "currentPlan" + currentPos;
 		setCookieDays (cookieName, "", 0);
 
@@ -319,7 +322,7 @@ function loadExercise(id) {
 				//Verificar neste momento se a primeira equação já está resolvida e atualizar no array de equações (atualizar nos cookies e localmente).
 				//Para avançar às próximas equações, a primeira deve estar resolvida obrigatoriamente. Se o usuário tentar acessar outra equação do mesmo plano,
 				//será redirecionado mesmo assim para a primeira equação.
-				var equation = new Equation(data.equation, 100);
+				var equation = new Equation(data.equation, data.pontuacao);
 				//>>>>>>>>>>>> Perguntar para o Tiago porque não funciona a instrução data.pontuacao <<<<<<<<<<<<
 				equation.id = data.id;
 				for(var j = 0; j < data.steps.length; j++) {

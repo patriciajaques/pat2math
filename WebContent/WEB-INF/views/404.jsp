@@ -44,7 +44,7 @@
      <img class="block" id="u75_img" src="/pat2math/images/pagina_manutencao.jpg" alt="" width="1157" height="721"/>
     </div>
     <div class="clearfix colelem" id="u84-5"><!-- content -->
-     <p><a class="nonblock" href="http://200.188.161.124">Voltar</a></p>
+     <p><a class="nonblock" href="http://pat2math.unisinos.br">Voltar</a></p>
     </div>
     <div class="verticalspacer"></div>
    </div>

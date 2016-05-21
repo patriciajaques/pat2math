@@ -437,11 +437,10 @@ function mainMenu (nextStep) {
 		}
 	});
 	
-	$(".topic").guider({
+	$.guider({
 		name: "mp3",
 		title: "Acesso às Equações",
-		description: "Clique neste botão para conferir as equações do plano de aula 1.",     
-		position: "right",
+		description: 'Clique em "Plano de Aula 1" para conferir as suas equações.',     
 		alignButtons: "right",
 		onShow: function() {setCookieDays (cStepTour, "mp3", 1); setCookieDays (cFunctionTour, "mainMenu", 1);},
 		buttons: {

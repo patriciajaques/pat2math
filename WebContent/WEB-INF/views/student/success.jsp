@@ -15,6 +15,7 @@
 	<p class="left">
 		Sua conta foi criada com sucesso.<br>
 		Você ainda precisa confirmá-la
-		através de um email que acabamos de lhe enviar.
+		através de um email que acabamos de lhe enviar.<br>
+		<a href="http://pat2math.unisinos.br/pat2math/login"><font color="blue" size="2px">Clique aqui</font></a> para voltar à página de login.
 	</p>
 </div>

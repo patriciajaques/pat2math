@@ -4,10 +4,10 @@ var selectedEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
 var planoAtual; //id do plano que está selecionado
+var numEquacoesPlanoAtual;
 var idCurrentUser; // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
-var progressvalue = 0;
 var tipoAudio;
 var playAudio;
 var unlockedPlans;
@@ -396,9 +396,16 @@ function rel ( ) {
 		    	 unlockedPlans = response;
 
 		    	 if (response.indexOf ("Plano de aula 1") === -1) {
-		    	    	blockMenu = true;
-		    	    	loadExerciseWE("x+2=10", 20);
-		    	    	classPlan1();	    	    	
+		    		 	var cookieName = "stepTour" + currentPos;
+		    			
+		    		 	if (getCookie (cookieName) === "") {
+		    		 		blockMenu = true;
+		    		 		loadExerciseWE("x+2=10", 20);
+		    		 		classPlan1();	    	    	
+		    			}
+		    		 	
+		    		 	else
+		    		 		checkTour();
 		    	    }
 		    	 
 		    	 else {
@@ -1012,9 +1019,11 @@ function resetProgressBar(){
 
 function addProgressValue(value) {
     concluded += value;
-    $("#progressBar div").css("width", concluded + "%");
+    var widthBar = (concluded / numEquacoesPlanoAtual) * 100;
+    widthBar = Math.trunc(widthBar);
+    $("#progressBar div").css("width", widthBar + "%");
 //    $("#progressBar .progress-bar .progress-bar-info").attr("aria-valuenow", concluded);
-    $("#progressBar .label").text(concluded + "% concluído");
+    $("#progressBar .label").text(concluded + " / " + numEquacoesPlanoAtual);
 }
 
 function addLabelDefault() {

@@ -169,8 +169,8 @@ function classPlan2() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Vamos rever como resolvemos uma equação",
-		description : "Esta equação é do mesmo tipo que nós já vimos anteriormente. O nosso objetivo é isolar o X no lado esquerda da igualdade, e para fazer a isso a gente subtrai por 4 nos dois lados.",
+		title : "Vamos rever como resolver uma equação",
+		description : "Esta equação é do mesmo tipo que nós já vimos anteriormente. O nosso objetivo é isolar o X no lado esquerdo da igualdade, e para fazer isso a gente subtrai por 4 nos dois lados.",
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
