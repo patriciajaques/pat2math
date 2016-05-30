@@ -28,7 +28,7 @@ var stringEquation;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
-var enableWorkedExample = true;
+var enableWorkedExamples = true;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -402,8 +402,16 @@ function rel ( ) {
 		    			
 		    		 	if (getCookie (cookieName) === "") {
 		    		 		blockMenu = true;
-		    		 		loadExerciseWE("x+2=10", 20);
-		    		 		classPlan1();	    	    	
+		    		 		
+		    		 		if (enableWorkedExamples) {
+		    		 			loadExerciseWE("x+2=10", 20);
+		    		 			classPlan1();	    	   
+		    		 		}
+		    		 		
+		    		 		else {
+		    		 			isTourInterativo = true;
+		    		 			introductionWithWelcome("");
+		    		 		}
 		    			}
 		    		 	
 		    		 	else {
@@ -974,7 +982,7 @@ function loadEquation(index) {
 
             } else {
                 nextLine.addClass("canMove");
-                if (!enableWorkedExample || !isWorkedExample)
+                if (!enableWorkedExamples || !isWorkedExample)
                 	clearLine('');
                 //nextLine.html(
                   //      "<ul>" +

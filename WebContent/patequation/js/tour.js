@@ -69,6 +69,108 @@ function introduction (nextStep) {
 	});         
 }
 
+function introductionWithWelcome (nextStep) {
+	blockMenu = true;
+	
+	if (nextStep === "") {
+		$.guider({
+			name: "start",
+			next: "start2",
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
+			description : "<center>O PAT2Math é um programa que auxilia na resolução de equações algébricas. <br>Vamos conferir alguns conceitos básicos antes de começar.</center>",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	else {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Parece que tivemos problemas na sessão anterior </center>",
+			description : "Vamos continuar o tour de onde paramos.",
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	$.guider({
+		name: "start",
+		next: "start2",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
+		description : "<center>O PAT2Math é um programa que auxilia na resolução de equações algébricas. <br>Vamos conferir alguns conceitos básicos antes de começar.</center>",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary",
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "start2",
+		next: "start3",
+		title: "Equações iniciais",
+		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
+		alignButtons: "right",
+		onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "start3",
+		next: "start4",
+		title: "Equações iniciais",
+		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
+		alignButtons: "right",
+		onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+		
+	$("#line3").guider({
+		name: "start4",
+		title: "Resolvendo uma equação",
+		description: 'Nós vamos resolver esta equação passo-a-passo. Você pode começar a resolução da forma que preferir, mas sugerimos que subtraia "-7" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada. Digite x+7-7=12-7 e tecle enter ou clique no ícone<img src=/pat2math/patequation/img/lupa.png></img>',  
+		width: 600,
+		position: "bottom",
+		alignButtons: "right",
+		onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		buttons: {
+            Voltar: true,
+			OK: {
+               click: true,
+               className: "primary"
+            }
+		}
+	});         
+}
+
 //O título e a descrição devem variar se o usuário acertou o errou o passo
 //Acertou: 
 //title: "Muito bem!",

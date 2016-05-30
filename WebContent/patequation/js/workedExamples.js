@@ -872,6 +872,7 @@ function classPlan10() {
 }
 
 function openWorkedExample(id) {
+	if (enableWorkedExamples) {
 	if (id !== 1 && id !== 2 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) {
 	var cookieName = "currentWE" + currentPos;
 	setCookieDays (cookieName, id, 1);
@@ -999,6 +1000,7 @@ function openWorkedExample(id) {
 	if (id === 34) {
 		loadExerciseWE("(5)/(4x-2)+9=(10)/(-4(x-3))", 300);
 		classPlan34();
+	}
 	}
 	}
 }
