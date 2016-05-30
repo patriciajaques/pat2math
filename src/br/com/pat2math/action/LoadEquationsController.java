@@ -55,7 +55,7 @@ public class LoadEquationsController {
 		if(request.getProtocol().contains("1.0")) {
 			response.setHeader("Connection", "close");
 		}
-		//Verificar o porquê de retornar o atributo pontuacao como null, dar uma olhada também nas classes Content.java e Exercise.java
+		
 		return exercise;
 	}
 	

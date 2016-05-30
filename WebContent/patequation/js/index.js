@@ -41,6 +41,8 @@ var numUnlockedPlans = 0;
 var numLines = 20;
 var heightSheet = 800;
 var usedLines;
+var pontuacaoPlano = null;
+var pontuacaoEquacoes;
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
@@ -404,8 +406,11 @@ function rel ( ) {
 		    		 		classPlan1();	    	    	
 		    			}
 		    		 	
-		    		 	else
+		    		 	else {
+		    		 		isTourInterativo = true;
+		    		 		loadExercise(0);		    		 		
 		    		 		checkTour();
+		    		 	}
 		    	    }
 		    	 
 		    	 else {
@@ -417,8 +422,11 @@ function rel ( ) {
 		    			 numUnlockedPlans = i;	    			 
 		    		 }
 		    		    		
-		        	if (numUnlockedPlans < 3)
+		        	if (numUnlockedPlans < 3) {
+		        		isTourInterativo = true;
+		        		loadExercise(0);
 		        		checkTour();
+		        	}
 		        	
 		        	 var cookieName = "currentPlan" + currentPos;
 	    	         var currentPlanString = getCookie (cookieName);
@@ -499,7 +507,7 @@ $(document).ready(function() {
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
 	});
-
+		getPontuacaoEquacoes();
 		rel();
 	
 	$("#refresh_page").tooltip();
@@ -553,13 +561,13 @@ $(document).ready(function() {
         } else if (key === 112) { //F1
         	insertLines (false, idEquation);
         } else if (key === 113) { //F2
-        	if (enableAgent === false) {
-        		setCookieDays ("enableAgent", "true", 1);
-        	} else {
-        		setCookieDays ("enableAgent", "", 0);
-        	}
-        	
-        	window.location.reload();
+//        	if (enableAgent === false) {
+//        		setCookieDays ("enableAgent", "true", 1);
+//        	} else {
+//        		setCookieDays ("enableAgent", "", 0);
+//        	}
+//        	
+//        	window.location.reload();
         } else if (key === 9) { //tab key
             $(".labelDefault:first").focus();
         } else if (event.altKey) {

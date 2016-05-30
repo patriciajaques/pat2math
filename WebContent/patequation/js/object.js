@@ -25,13 +25,26 @@ function Equation(equation, points) {
 
     this.addPoints = addPoints;
     function addPoints(value) {
-        this.userPoints = this.userPoints + value;
-        if (value === 10) {
+    	if (value === 10) {
             this.userPassNumber += 1;
+           
         } else if (value < 0) {
-            this.userErrorPoints += (-value);
+            this.userErrorPoints -= value;
         }
-        calculatePoints(this);
+    	
+    	if (this.userPoints >= this.points - 5) {  		
+    		if (this.userPoints === this.points - 5) {
+    	        this.userPoints += 5;
+    	        calculatePoints(this);
+    		}
+    	}
+    	
+    	else {
+            this.userPoints += value;
+            calculatePoints(this);
+    	}
+        
+       
     }
 
     this.isAnswer = isAnswer;

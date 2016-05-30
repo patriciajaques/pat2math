@@ -85,7 +85,7 @@ function calculateLength (equation) {
 	
 	length -= posFracArray.length; //Referentes aos símbolos de divisão "/"
 
-	return length;
+	pontuacaoAtual = length;
 }
 
 function calculateUsedLines ( ) {
@@ -207,7 +207,8 @@ function loadTasks(id) {
 //								}
 //							}
 //						);
-					planoAtual = id;
+					planoAtual = id;	
+					getPontuacaoPlano();
 					numEquacoesPlanoAtual = getNumEquationsPlan();
 					resetProgressBar();
 					tasksRemaining = numEquacoesPlanoAtual;
@@ -279,6 +280,81 @@ function getNumEquationsPlan() {
 		return 56;
 	
 }
+
+function getPontuacaoPlano() {
+	if (planoAtual !== 11 && planoAtual !== 16 && planoAtual !== 21 && planoAtual !== 25 && planoAtual !== 32 && planoAtual < 35) {
+		if (planoAtual <= 6)
+			pontuacaoPlano = 20;
+		
+		else if (planoAtual >= 7 && planoAtual <= 10)
+			pontuacaoPlano = 25;
+		
+		else if (planoAtual === 12 || planoAtual === 13)
+			pontuacaoPlano = 30;
+		
+		else if (planoAtual === 14 || planoAtual === 15)
+			pontuacaoPlano = 35;
+		
+		else if (planoAtual === 17 || planoAtual === 18)
+			pontuacaoPlano = 40;
+		
+		else if (planoAtual === 19 || planoATual === 20)
+			pontuacaoPlano = 50;
+		
+		else if (planoAtual >= 26 && planoAtual <= 28)
+			pontuacaoPlano = 100;
+		
+		else if (planoAtual === 22)
+			pontuacaoPlano = 50;
+		
+		else if (planoAtual === 23)
+			pontuacaoPlano = 60;
+		
+		else if (planoAtual === 24)
+			pontuacaoPlano = 80;
+		
+		else if (planoAtual === 29)
+			pontuacaoPlano = 120;
+		
+		else if (planoAtual === 30)
+			pontuacaoPlano = 140;
+		
+		else if (planoAtual === 31)
+			pontuacaoPlano = 160;
+		
+		else if (planoAtual === 33)
+			pontuacaoPlano = 200;
+		
+		else
+			pontuacaoPlano = 300;	
+	}
+	
+	else
+		pontuacaoPlano = null;
+	
+}
+
+function getPontuacaoEquacoes() {
+	pontuacaoEquacoes = new Array();
+	pontuacaoEquacoes[0] = 20;
+	pontuacaoEquacoes[1100] = 20;
+	pontuacaoEquacoes[1101] = 20;
+	pontuacaoEquacoes[1102] = 20;
+	pontuacaoEquacoes[1103] = 20;
+	pontuacaoEquacoes[1104] = 20;
+	pontuacaoEquacoes[1105] = 20;
+	pontuacaoEquacoes[1106] = 20;
+	pontuacaoEquacoes[1107] = 25;
+	pontuacaoEquacoes[1108] = 25;
+	pontuacaoEquacoes[1109] = 20;
+	pontuacaoEquacoes[1110] = 25;
+	pontuacaoEquacoes[1111] = 25;
+	pontuacaoEquacoes[1112] = 25;
+	pontuacaoEquacoes[1113] = 25;
+	pontuacaoEquacoes[1114] = 25;
+	pontuacaoEquacoes[1115] = 25;
+}
+
 function padlockClick ( ) {
 	if (selectedEquation !== null)
 		moveHint();
@@ -322,8 +398,15 @@ function loadExercise(id) {
 				//Verificar neste momento se a primeira equação já está resolvida e atualizar no array de equações (atualizar nos cookies e localmente).
 				//Para avançar às próximas equações, a primeira deve estar resolvida obrigatoriamente. Se o usuário tentar acessar outra equação do mesmo plano,
 				//será redirecionado mesmo assim para a primeira equação.
-				var equation = new Equation(data.equation, data.pontuacao);
-				//>>>>>>>>>>>> Perguntar para o Tiago porque não funciona a instrução data.pontuacao <<<<<<<<<<<<
+				var equation;
+				
+				if (pontuacaoPlano !== null) 
+					equation = new Equation(data.equation, pontuacaoPlano);
+						
+				else {
+					equation = new Equation(data.equation, pontuacaoEquacoes[id]);
+				}
+				
 				equation.id = data.id;
 				for(var j = 0; j < data.steps.length; j++) {
 					equation.steps[j] = new Step(data.steps[j], 0);
@@ -335,7 +418,7 @@ function loadExercise(id) {
 					equation.isComplete = true;
 
 					
-					if (isTourInterativo == false)
+					if (isTourInterativo === false)
 					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				
@@ -412,7 +495,7 @@ function loadExerciseTest(id) {
 				if(data[2] == "1") {
 					equation.isComplete = true;
 					
-					if (isTourInterativo == false)
+					if (isTourInterativo === false)
 					    setTimeout(function(){ $("#topics").fadeIn(); blockMenu = true; }, 2000);
 				}
 				newEquations[0] = equation;
