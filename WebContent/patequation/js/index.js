@@ -556,7 +556,6 @@ $(document).ready(function() {
     
     $(document).keyup(function(event) {
         var key = event.which;
-        alert(key);
 
         if (key === 13) { //enter key
 
