@@ -29,17 +29,14 @@
 	
 	var id = parseInt (currentID);
 	
-	if ((id >= 207 && id <= 268) || (id === 274 || id === 290 || id === 291 || id === 298)) {
-		setCookieDays ("experimentoSaoLuis", "true", 1);
-	    verificaAudio();
-	}
+	//Grupo de Controle
+	if (id >= 520 && id <= 553) 
+		setCookieDays ("enableWE", "false", 1);
 	
-	else {
-		var cookieName = "playAudio" + currentPos;
-		setCookieDays (cookieName, "false", 1);
-		setCookieDays ("experimentoSaoLuis", "", 0);
-		location.href= '/pat2math/student/home'; 
-	}
+	cookieName = "playAudio" + currentPos;
+	setCookieDays (cookieName, "false", 1);
+	location.href= '/pat2math/student/home'; 
+	
 	
 
 function verificaAudio ( ) {

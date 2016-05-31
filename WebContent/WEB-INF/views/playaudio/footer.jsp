@@ -21,11 +21,6 @@
 <!-- AGENTE PEDAGOGICO ANIMADO -->
 
 <script>
-
-function writeInput(text) {
-	document.getElementById('inputMobile').value += text;
-}
-
 function createButtons() {
 	//Estudar uma maneira para posicionar os botões abaixo da caixa de input, os quais devem mover-se de forma dinâmica a cada passo resolvido da equação,
 	//acompanhando assim a caixa de input. Ver se é melhor posicionar manualmente ou fazer algo como na matriz de Tiles no jogo das placas WEB

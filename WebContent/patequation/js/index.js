@@ -28,7 +28,7 @@ var stringEquation;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
-var enableWorkedExamples = true;
+var enableWorkedExamples = getCookie ("enableWE") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -556,7 +556,7 @@ $(document).ready(function() {
     
     $(document).keyup(function(event) {
         var key = event.which;
-        
+        alert(key);
 
         if (key === 13) { //enter key
 
@@ -598,6 +598,11 @@ $(document).ready(function() {
             		unlockAllPlans = false;
             	}
             }
+        } else if (event.shiftKey) {
+        	if (key === 57) { //( key
+        		writeInput(")");
+        	}
+        	
         }
     });
 
@@ -1806,6 +1811,10 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function writeInput(text) {
+	document.getElementById('inputMobile').value += text;
 }
 
 function searchArray (elemento, array) {
