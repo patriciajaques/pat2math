@@ -597,11 +597,10 @@ $(document).ready(function() {
             		unlockAllPlans = false;
             	}
             }
-        } else if (event.shiftKey) {
-        	if (key === 57) { //( key
-        		writeInput(")");
-        	}
-        	
+//        } else if (event.shiftKey) {
+//        	if (key === 57) { //( key
+//        		writeInput(")");
+//        	}     	
         }
     });
 
