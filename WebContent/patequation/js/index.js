@@ -410,6 +410,7 @@ function rel ( ) {
 		    		 		
 		    		 		else {
 		    		 			isTourInterativo = true;
+		    		 			loadExercise(0);
 		    		 			introductionWithWelcome("");
 		    		 		}
 		    			}
