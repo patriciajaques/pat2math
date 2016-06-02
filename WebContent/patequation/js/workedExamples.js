@@ -723,6 +723,7 @@ function classPlan9() {
 			next : "3",
 			title : "O nosso objetivo é eliminar o +4 do lado esquerdo",
 			description : "Para tanto, vamos subtrair 4 do lado esquerdo. ",
+			position: "bottom",
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {resolutionEquation("- x = - 8 <font color='red'>- 4</font>", "step1", true);},
@@ -739,6 +740,7 @@ function classPlan9() {
 			next : "4",
 			title : "Lembra-se o que fazemos agora?",
 			description : "Temos que multiplicar -1 nos dois lados para obter o X positivo. ",
+			position: "bottom",
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {resolutionEquation("- x = - 12", "step2", true);},
@@ -755,6 +757,7 @@ function classPlan9() {
 			next : "5",
 			title : "Relembrando as regras dos sinais",
 			description : "Temos números negativos nos dois lados da equação, e menos vezes menos dá mais.",
+			position: "bottom",
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font>= - 12 <font color='red'>* (-1)</font>", "step3", true);},
@@ -770,6 +773,7 @@ function classPlan9() {
 			name: "5",
 			title : "Tudo pronto!",
 			description : "Conseguimos resolver a equação com sucesso.",
+			position: "bottom",
 			width : 600,
 			position: "bottom",
 			alignButtons : "right",
@@ -871,6 +875,124 @@ function classPlan10() {
 	});
 }
 
+//2x=10
+/* É necessário um tratamento especial com as frações, já que ocupam duas linhas
+ * Ver se preciso modificar o método resolutionEquation
+ * É possível modificar a cor da linha pela propriedade "color" de "style", modificar pelo ID dela
+ */
+function classPlan12() {
+	loadExerciseWE("2x=10", 25);
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Opa! Aqui temos uma novidade muito importante!",
+		description : "X possui um coeficiente.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "O que é um coeficiente?",
+		description : "É o número que multiplica X; neste caso, é o 2.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "3",
+		next : "4",
+		title : "Como fazemos para tirar o 2 daqui?",
+		description : "Seguimos o mesmo princípio da operação inversa, conforme vimos anteriormente.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "4",
+		next : "5",
+		title : "A operação inversa da multiplicação é a divisão",
+		description : "Assim, devemos passar o 2 para o outro lado dividindo o 10.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "5",
+		next : "6",
+		title : "Mas cuidado!",
+		description : "O sinal de 2 não é alterado, permanece como um número positivo. O sinal só é modificado quando trabalhamos com adição e subtração, onde a operação inversa troca o sinal.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "6",
+		next : "7",
+		title : "Observe que dividindo o 2 no lado direito, também estamos efetuando a divisão no lado esquerdo",
+		description : "Mas conforme fizemos anteriormente, podemos aplicar direto a operação inversa, não sendo necessário passar por este passo.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">2x</div><div class="frac-line-aux"><span id="lineFrac2" class="frac-line"></span></div><span class="baseline-fix"></span></span></span> = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div class="frac-line-aux"><span id="lineFrac3" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step2", true);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "7",
+		title : "Tudo pronto!",
+		description : "Ao resolver a divisão do lado direito, descobrimos o valor de X e finalizamos a resolução da equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {document.getElementById("step2").innerHTML = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green"><s>2</s></font></div><div class="numerator"><s>2x</s></div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span> = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><s>2</s></div><div class="numerator"><s>10</s></div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>'; document.getElementById("step2").style.opacity = "0.5"; resolutionEquation("<font color='blue'>x = 5</font>", "step3", true); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},	
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+} 
 function openWorkedExample(id) {
 	if (enableWorkedExamples) {
 	if (id !== 1 && id !== 2 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) {
