@@ -219,8 +219,15 @@ function loadTasks(id) {
 					/*alert("fim: "+taskSolved);*/
 					tasksRemaining=tasksRemaining-taskSolved;
 					/*alert("fim: "+tasksRemaining);*/
-					if (tasksRemaining===0)addProgressValue(numEquacoesPlanoAtual);
-					else addProgressValue(taskSolved);		
+					if (tasksRemaining===0)
+						addProgressValue(numEquacoesPlanoAtual);
+					
+					else {
+						addProgressValue(taskSolved);
+						
+						if (enableWorkedExamples && taskSolved === 0 && id > 2 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) 
+							setTimeout('classPlan' + id + '()', '1000');
+					}
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {

@@ -1,9 +1,20 @@
+//Ver também se crio um array com os passos das equações para eles serem exibidos quando o usuário
+//clicar na equação especial de exemplo trabalhado.
 function resolutionEquation(resolutionStep, idStep, skipLine) {
 	var line = $(selectedSheet + " .hLineAux").next().next();
 	var elements = "<ul><li id='" + idStep + "'>" + resolutionStep + "</li></ul>";
     
-    if (skipLine)
-    	line.html(line.html() + elements);
+    if (skipLine > 0) {
+    	if (skipLine === 1)
+    		line.html(line.html() + elements);
+    	
+    	else {
+    		line.html(line.html() + elements);
+    		var mt = (35 * contWE) + "px";
+    		document.getElementById(idStep).style.marginTop = mt;
+    		contWE++;
+    	}
+    }
 	
     else
     	line.html(elements);
@@ -93,7 +104,7 @@ function showQuestion4() {
 		buttons : {
 			Menos: function() {showIncorrectMessage4();},
 			Mais: {
-				click : function() {continueClassPlan6();},
+				click : function() {continueClassPlan7();},
 				className : "primary"
 			}
 		}
@@ -160,7 +171,7 @@ function showIncorrectMessage4() {
 	}).show();
 }
 
-function continueClassPlan6() {
+function continueClassPlan7() {
 	$.guider({
 		name : "1",
 		next : "2",
@@ -184,7 +195,7 @@ function continueClassPlan6() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", true); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", 1); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},	
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -193,3 +204,24 @@ function continueClassPlan6() {
 		}
 	});
 }
+
+//function fractionToUserInterface(fraction) {
+//	var elementsFrac = fraction.split("/");
+//	var fractionUI = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">' + elementsFrac[1] + '</div><div class="numerator">' + elementsFrac[0] + '</div><div class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
+//	
+//	return fractionUI;
+//}
+//
+//function fractionToUserInterface(fraction, colorDenominator, idDenominator) {
+//	var elementsFrac = fraction.split("/");
+//	var fractionUI = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"> <font color="' + colorDenominator + '">' elementsFrac[1] + '</font></div><div class="numerator">' + elementsFrac[0] + '</div><div id="' + idDenominator + '" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
+//	
+//	return fractionUI;
+//}
+//
+//function scratchedFractionToUserInterface(fraction) {
+//	var elementsFrac = fraction.split("/");
+//	var fractionUI = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><s>' + elementsFrac[1] + '</s></div><div class="numerator"><s>' + elementsFrac[0] + '</s></div><div class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
+//	
+//	return fractionUI;
+//}

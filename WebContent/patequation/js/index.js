@@ -37,12 +37,14 @@ var currentPos = getCookie ("pos");
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
 var cFunctionTour = "functionTour" + currentPos;
+var contWE = 1; //Variável auxiliar para os exemplos trabalhados que envolvem frações
 var numUnlockedPlans = 0;
 var numLines = 20;
 var heightSheet = 800;
 var usedLines;
 var pontuacaoPlano = null;
 var pontuacaoEquacoes;
+
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
 
@@ -266,10 +268,10 @@ function createLines() {
 
 function createPlans(numPlans) {
 	var plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> <span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
-	
-	for (var i = 2; i <= numPlans; i++)
-		plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';
-	
+		
+	for (var i = 2; i <= numPlans; i++) {
+		plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';		
+	}
 	document.getElementById("the_list").innerHTML = plans;
 }
 
@@ -412,6 +414,7 @@ function rel ( ) {
 		    		 		
 		    		 		else {
 		    		 			isTourInterativo = true;
+		    		 			loadTasks(0);
 		    		 			loadExercise(0);
 		    		 			introductionWithWelcome("");
 		    		 		}
@@ -419,6 +422,7 @@ function rel ( ) {
 		    		 	
 		    		 	else {
 		    		 		isTourInterativo = true;
+		    		 		loadTasks(0);
 		    		 		loadExercise(0);		    		 		
 		    		 		checkTour();
 		    		 	}
@@ -450,9 +454,7 @@ function rel ( ) {
 	    		    		
 	    		    	    if (currentEquationString !== "") {		    	    	  
 	    		    	    		var currentEquation = parseInt (currentEquationString);
-	    		    	    		loadExercise (currentEquation);      		    	    		
-	    		    	    		$("#topics").fadeOut();
-	    		    	    		$("#topicsAux").show();    		
+	    		    	    		setTimeout(function() {loadExercise (currentEquation); $("#topics").fadeOut(); $("#topicsAux").show();   }, 1000);      		    	    		 		
 	    		    	    }
 	    	         } 
 

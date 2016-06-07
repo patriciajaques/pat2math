@@ -782,10 +782,9 @@ function newPlan ( ) {
     	title: "Parabéns! Você passou de fase!",
     	description: "O próximo plano de aula contém equações um pouco mais desafiadoras. Lembre-se que você pode pedir uma dica sempre que achar necessário.",
         alignButtons: "center",
-        onShow: function(){setTimeout(function(){loadTasks(numUnlockedPlans);}, 1000);},
     	buttons: {
     		Legal: {
-    			click: function(){$.guider({}).hideAll(); openWorkedExample(numUnlockedPlans); resetProgressBar();},
+    			click: function(){$.guider({}).hideAll(); resetProgressBar();},
     			className: "primary"
     		}
     	}
