@@ -33,6 +33,9 @@
 	if (id >= 520 && id <= 553) 
 		setCookieDays ("enableWE", "false", 1);
 	
+	else
+		setCookieDays ("enableWE", "", 0);
+	
 	cookieName = "playAudio" + currentPos;
 	setCookieDays (cookieName, "false", 1);
 	location.href= '/pat2math/student/home'; 
