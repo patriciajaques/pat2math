@@ -864,7 +864,7 @@ function classPlan10() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font>= 6 <font color='red'>* (-1)</font>", "step3", 1);},
+		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 6 <font color='red'>* (-1)</font>", "step3", 1);},
 		buttons : {
 			Próximo: {
 				click : true,
