@@ -1004,13 +1004,93 @@ function classPlan12() {
 		}
 	});
 } 
+
+//5x=-30
+function classPlan13() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos resolver essa equação agora?",
+		description : "Observe que esta equação também tem um coeficiente.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line4").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o 5 para o outro lado",
+		description : "Lembre-se que seu sinal não deve ser alterado.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">5</font></div><div class="numerator">-30</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Atenção agora!",
+		description : "Temos a divisão de um número negativo por um número positivo.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "4",
+		next : "5",
+		title : "A regra de sinais da multiplicação também é válida para a divisão",
+		description : "Assim, a divisão de números de mesmos sinais resulta em um número positivo. Por outro lado, a divisão de números de sinais diferentes tem como resultado um número negativo.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "5",
+		title : "Tudo pronto!",
+		description : "Ao resolver a divisão do lado direito, descobrimos o valor de X e finalizamos a resolução da equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step3", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
+}
+
 function openWorkedExample(id) {	
 	//Agora os loadExerciseWE são colocados dentro da função classPlanX()
-//	if (id === 13) {
-//		loadExerciseWE("5x=-30", 30);
-//		classPlan13();
-//	}
-//
 //	if (id === 14) {
 //		loadExerciseWE("-3x=15", 35);
 //		classPlan14();
