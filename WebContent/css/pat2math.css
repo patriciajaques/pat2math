@@ -457,6 +457,22 @@ textarea:focus {
 	text-decoration: underline;
 }
 
+.taskWE {
+	margin: 0;
+	display: inline-block;
+	padding: 10px 10px;
+	font-size: 16px;
+	color: #fffc00;
+	font-weight: normal;
+	width: 150px;
+	text-align: left;
+}
+
+.taskWE:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 
 /* errors */
 

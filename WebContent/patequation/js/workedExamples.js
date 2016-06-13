@@ -1,6 +1,5 @@
 //x+2=10
 function classPlan1() {
-	loadExerciseWE("x+2=10", 20);
 	$.guider({
 		next: "1",
 		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo! </center>",
@@ -86,7 +85,7 @@ function classPlan1() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("x + 2 <font color='red'>- 2 </font> = 10", "step1", 1);},
+		onShow: function() {resolutionEquation("x + 2 <font color='red'>- 2 </font> = 10", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -165,7 +164,6 @@ function classPlan1() {
 
 //x+4=10
 function classPlan2() {
-	loadExerciseWE("x+4=10", 20);
 	$.guider({
 		name: "1",
 		next : "2",
@@ -190,7 +188,7 @@ function classPlan2() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("x + 4 <font color='red'>- 4 </font> = 10 <font color='red'>- 4 </font>", "step1", 1);},
+		onShow: function() {resolutionEquation("x + 4 <font color='red'>- 4 </font> = 10 <font color='red'>- 4 </font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -271,8 +269,7 @@ function classPlan2() {
 function classPlan3() {		
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "3", 1); 
-	
-	loadExerciseWE("x-4=8", 20);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -312,7 +309,7 @@ function classPlan3() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("x - 4 <font color='red'>+ 4</font> = 8 <font color='red'>+ 4</font>", "step1", 1);},
+		onShow: function() {resolutionEquation("x - 4 <font color='red'>+ 4</font> = 8 <font color='red'>+ 4</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -393,7 +390,7 @@ function classPlan3() {
 function classPlan4() {
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "4", 1); 
-	loadExerciseWE("x+4=-2", 20);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -418,7 +415,7 @@ function classPlan4() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("x = - 2 <font color='red'>- 4</font>", "step1", 1);},
+		onShow: function() {resolutionEquation("x = - 2 <font color='red'>- 4</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -465,7 +462,7 @@ function classPlan4() {
 function classPlan5() {
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "5", 1); 
-	loadExerciseWE("x-3=-6", 20);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -490,7 +487,7 @@ function classPlan5() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("x = - 6 <font color='red'>+ 3</font>", "step1", 1);},
+		onShow: function() {resolutionEquation("x = - 6 <font color='red'>+ 3</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -520,7 +517,7 @@ function classPlan5() {
 function classPlan7() {
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "7", 1); 
-	loadExerciseWE("-x+1=10", 25);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -545,7 +542,7 @@ function classPlan7() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x = 10 <font color='red'>- 1</font>", "step1", 1);},
+		onShow: function() {resolutionEquation("- x = 10 <font color='red'>- 1</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -625,7 +622,7 @@ function classPlan7() {
 function classPlan8() {
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "8", 1); 
-	loadExerciseWE("-x-10=7", 25);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -650,7 +647,7 @@ function classPlan8() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x = 7 <font color='red'>+ 10</font>", "step1", 1);},
+		onShow: function() {resolutionEquation("- x = 7 <font color='red'>+ 10</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -714,7 +711,7 @@ function classPlan8() {
 function classPlan9() {
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "9", 1); 
-	loadExerciseWE("-x+4=-8", 25);
+
 		$.guider({
 			name: "1",
 			next : "2",
@@ -739,7 +736,7 @@ function classPlan9() {
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
-			onShow: function() {resolutionEquation("- x = - 8 <font color='red'>- 4</font>", "step1", 1);},
+			onShow: function() {resolutionEquation("- x = - 8 <font color='red'>- 4</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 			buttons : {
 				Próximo: {
 					click : true,
@@ -804,7 +801,7 @@ function classPlan9() {
 function classPlan10() {
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "10", 1); 
-	loadExerciseWE("-x-15=-9", 25);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -829,7 +826,7 @@ function classPlan10() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x = - 9 <font color='red'>+ 15</font>", "step1", 1);},
+		onShow: function() {resolutionEquation("- x = - 9 <font color='red'>+ 15</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -891,15 +888,11 @@ function classPlan10() {
 }
 
 //2x=10
-/* É necessário um tratamento especial com as frações, já que ocupam duas linhas
- * Ver se preciso modificar o método resolutionEquation
- * É possível modificar a cor da linha pela propriedade "color" de "style", modificar pelo ID dela
- */
 function classPlan12() {
 	contWE = 1;
 	var cookieName = "currentWE" + currentPos; 
 	setCookieDays (cookieName, "12", 1); 
-	loadExerciseWE("2x=10", 25);
+
 	$.guider({
 		name: "1",
 		next : "2",
@@ -969,7 +962,7 @@ function classPlan12() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green";},
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -1039,7 +1032,7 @@ function openWorkedExample(id) {
 //	}
 //
 //	if (id === 19) {
-//		loadExerciseWE("-(x)/6)=42", 50);
+//		loadExerciseWE("-(x)/(6)=42", 50);
 //		classPlan19();
 //	}
 //

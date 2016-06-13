@@ -44,6 +44,9 @@ var heightSheet = 800;
 var usedLines;
 var pontuacaoPlano = null;
 var pontuacaoEquacoes;
+var equationsWE;
+var pointsWE;
+var resolutionsWE;
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -520,6 +523,8 @@ $(document).ready(function() {
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
 	});
+		getEquationsWE();
+		getResolutionsWE();
 		getPontuacaoEquacoes();
 		rel();
 	
@@ -870,7 +875,7 @@ function loadEquation(index) {
 
         var stack = textToUserInterface(selectedEquation.equationToString);
 
-        var elements = "<ul>";
+        var elements = "<ul id='currentEquation'>";
         for (var i = 0; i < stack.length; i++) {
             elements = elements + "<li>" + stack[i] + "</li>";
         }
@@ -1820,6 +1825,81 @@ function writeInput(text) {
 	document.getElementById('inputMobile').value += text;
 }
 
+function getEquationsWE() {
+	equationsWE = new Array();
+	pointsWE = new Array();
+	
+	equationsWE[1] = "x+2=10";
+	pointsWE[1] = 20;
+	equationsWE[2] = "x+4=10"
+	pointsWE[2] = 20;
+	equationsWE[3] = "x-4=8";
+	pointsWE[3] = 20;
+	equationsWE[4] = "x+4=-2"
+	pointsWE[4] = 20;
+	equationsWE[5] = "x-3=-6";
+	pointsWE[5] = 20;
+	equationsWE[7] = "-x+1=10"
+	pointsWE[7] = 25;
+	equationsWE[8] = "-x-10=7"
+	pointsWE[8] = 25;
+	equationsWE[9] = "-x+4=-8"
+	pointsWE[9] = 25;
+	equationsWE[10] = "-x-15=-9"
+	pointsWE[10] = 25;
+	equationsWE[12] = "2x=10"
+	pointsWE[12] = 30;
+	equationsWE[13] = "5x=-30"
+	pointsWE[13] = 30;
+	equationsWE[14] = "-3x=15"
+	pointsWE[14] = 35;
+	equationsWE[15] = "-4x=-28"
+	pointsWE[15] = 35;
+	equationsWE[17] = "(x)/(4)=20"
+	pointsWE[17] = 40;
+	equationsWE[18] = "(x)/(7)=-49"
+	pointsWE[18] = 40;
+	equationsWE[19] = "-(x)/(6)=42"
+	pointsWE[19] = 50;
+	equationsWE[20] = "-(x)/(4)=-100"
+	pointsWE[20] = 50;
+	equationsWE[22] = "4x-10=8";
+	pointsWE[22] = 50;
+	equationsWE[23] = "-3x+9=-27";
+	pointsWE[23] = 60;
+	equationsWE[24] = "5x+8-2x=10+x";
+	pointsWE[24] = 80;
+	equationsWE[26] = "2(x+3)-5=5(x+2)";
+	pointsWE[26] = 100;
+	equationsWE[27] = "(x+3)/(3)=(4)/(9)";
+	pointsWE[27] = 100;
+	equationsWE[29] = "(x)/(4)+5=(2)/(3)-(5x)/(8)";
+	pointsWE[29] = 120;
+	equationsWE[30] = "(x+2)/(5)+8=(x-3)/(4+2)";
+	pointsWE[30] = 140;
+	equationsWE[31] = "(4(x+3))/(7)+5=(-2(-x-1))/(5+8)";
+	pointsWE[31] = 160;
+	equationsWE[33] = "(4)/(x)+(2)/(3)-5=(8)/(6x)";
+	pointsWE[33] = 200;
+	equationsWE[34] = "(5)/(4x-2)+9=(10)/(-4(x-3))";
+	pointsWE[34] = 300;	
+}
+
+function getResolutionsWE() {
+	resolutionsWE = new Array();
+	
+	resolutionsWE[1] = "x + 2 - 2 = 10 - 2;x + 0 = 10 - 2;x = 10 - 2;<font color='blue'> x = 8 </font>";
+	resolutionsWE[2] = "x = 10 - 4;<font color='blue'>x = 6</font>";
+	resolutionsWE[3] = "x = 8 + 4;<font color='blue'>x = 12</font>";
+	resolutionsWE[4] = "x = - 2 - 4;<font color='blue'>x = - 6</font>";
+	resolutionsWE[5] = "x = - 6 + 3;<font color='blue'>x = - 3</font>";
+	resolutionsWE[7] = "- x = 10 - 1;- x = 9;- x * (-1) = 9 * (-1);<font color='blue'>x = - 9</font>";
+	resolutionsWE[8] = "- x = 7 + 10;- x = 17;- x * (-1) = 17 * (-1);<font color='blue'>x = - 17</font>";
+	resolutionsWE[9] = "- x = - 8 - 4;- x = - 12;<font color='blue'>x = 12</font>";
+	resolutionsWE[10] = "- x = - 9 + 15;- x = 6;<font color='blue'>x = - 6</font>";
+	resolutionsWE[12] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = 5</font>';
+	//Colocar um if que, se for identificada uma fração, deve pular duas linhas
+}
 function searchArray (elemento, array) {
 	for (var i = 0; i < array.length; i++)
 		if (array[i] === elemento)
