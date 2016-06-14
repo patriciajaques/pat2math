@@ -3,11 +3,9 @@ function resolutionEquation(resolutionStep, idStep, skipLine) {
 	var elements = "<ul><li id='" + idStep + "' style='opacity: 0.75;'>" + resolutionStep + "</li></ul>";
     
     if (skipLine > 0) {
-    	if (skipLine === 1)
-    		line.html(line.html() + elements);
+    	line.html(line.html() + elements);
     	
-    	else {
-    		line.html(line.html() + elements);
+    	if (skipLine === 2) {
     		var mt = (35 * contWE) + "px";
     		document.getElementById(idStep).style.marginTop = mt;
     		contWE++;
@@ -17,18 +15,22 @@ function resolutionEquation(resolutionStep, idStep, skipLine) {
     else
     	line.html(elements);
     
+    
     line.addClass("canCopy");
     centralizeCanCopy();
     line.removeClass("canCopy");
+    
 }
 
-function resolutionEquation(resolutionStep, idStep, skipLine, opacity) {
+function resolutionEquationChangeOpacity(resolutionStep, idStep, skipLine, opacity) {
 	resolutionEquation(resolutionStep, idStep, skipLine);
 	document.getElementById(idStep).style.opacity = opacity;
 }
 
 function getResolutionEquation(idPlan) {
 	loadExerciseWE(equationsWE[idPlan], pointsWE[idPlan]);
+	isWorkedExample = false;
+	blockMenu = false;
 	
 	document.getElementById("currentEquation").style.opacity = "0.5";
 	
@@ -36,27 +38,27 @@ function getResolutionEquation(idPlan) {
 	
 	if (idPlan < 12)
 		for (var i = 0; i < resolution.length; i++)
-			resolutionEquation(resolution[i], "step" + (i+1), 1, "0.5");
+			resolutionEquationChangeOpacity(resolution[i], "step" + (i+1), 1, "0.5");
 		
 	else {
 		//Verifica se a equação do plano atual não possui números fracionários
 		if (equationsWE[idPlan].indexOf("/" === -1))
-			resolutionEquation(resolution[0], "step1", 1, "0.5");
+			resolutionEquationChangeOpacity(resolution[0], "step1", 1, "0.5");
 		
 		else
-			resolutionEquation(resolution[0], "step1", 2, "0.5");
+			resolutionEquationChangeOpacity(resolution[0], "step1", 2, "0.5");
 		
 		for (var i = 1; i < resolution.length; i++) {
 			//Verifica se o passo anterior da resolução não possui números fracionários
 			if (resolution[i-1].indexOf("span") === -1)
-				resolutionEquation(resolution[i], "step" + (i+1), 1, "0.5");
+				resolutionEquationChangeOpacity(resolution[i], "step" + (i+1), 1, "0.5");
 			
 			else
-				resolutionEquation(resolution[i], "step" + (i+1), 2, "0.5");
+				resolutionEquationChangeOpacity(resolution[i], "step" + (i+1), 2, "0.5");
 		}
 	}
 	
-	var idFinalStep = "step" + (resolution.length-1);
+	var idFinalStep = "step" + resolution.length;
 	document.getElementById(idFinalStep).style.opacity = "0.75";
 	document.getElementById(idFinalStep).style.color = "blue";
 }

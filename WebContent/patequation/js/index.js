@@ -1898,7 +1898,6 @@ function getResolutionsWE() {
 	resolutionsWE[9] = "- x = - 8 - 4;- x = - 12;<font color='blue'>x = 12</font>";
 	resolutionsWE[10] = "- x = - 9 + 15;- x = 6;<font color='blue'>x = - 6</font>";
 	resolutionsWE[12] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = 5</font>';
-	//Colocar um if que, se for identificada uma fração, deve pular duas linhas
 }
 function searchArray (elemento, array) {
 	for (var i = 0; i < array.length; i++)

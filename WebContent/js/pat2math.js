@@ -365,6 +365,14 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[1113] = 25;
 	pontuacaoEquacoes[1114] = 25;
 	pontuacaoEquacoes[1115] = 25;
+	pontuacaoEquacoes[1602] = 35;
+	pontuacaoEquacoes[1603] = 30;
+	pontuacaoEquacoes[1604] = 35;
+	pontuacaoEquacoes[1605] = 35;
+	pontuacaoEquacoes[1606] = 30;
+	pontuacaoEquacoes[1607] = 35;
+	pontuacaoEquacoes[1608] = 30;
+	pontuacaoEquacoes[1609] = 35;
 }
 
 function padlockClick ( ) {
