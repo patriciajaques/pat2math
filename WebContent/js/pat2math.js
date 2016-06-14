@@ -364,7 +364,9 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[1112] = 25;
 	pontuacaoEquacoes[1113] = 25;
 	pontuacaoEquacoes[1114] = 25;
-	pontuacaoEquacoes[1115] = 25;
+	pontuacaoEquacoes[1115] = 25;	
+	pontuacaoEquacoes[1600] = 30;
+	pontuacaoEquacoes[1601] = 35;
 	pontuacaoEquacoes[1602] = 35;
 	pontuacaoEquacoes[1603] = 30;
 	pontuacaoEquacoes[1604] = 35;
