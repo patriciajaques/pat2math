@@ -346,6 +346,8 @@ function getPontuacaoPlano() {
 function getPontuacaoEquacoes() {
 	pontuacaoEquacoes = new Array();
 	pontuacaoEquacoes[0] = 20;
+	
+	//----- PLANO DE AULA 11 -----//
 	pontuacaoEquacoes[1100] = 20;
 	pontuacaoEquacoes[1101] = 20;
 	pontuacaoEquacoes[1102] = 20;
@@ -362,6 +364,10 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[1113] = 25;
 	pontuacaoEquacoes[1114] = 25;
 	pontuacaoEquacoes[1115] = 25;
+	
+	//----- PLANO DE AULA 16 -----//
+	pontuacaoEquacoes[1600] = 30;
+	pontuacaoEquacoes[1601] = 35;
 	pontuacaoEquacoes[1602] = 35;
 	pontuacaoEquacoes[1603] = 30;
 	pontuacaoEquacoes[1604] = 35;
