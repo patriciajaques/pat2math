@@ -121,31 +121,28 @@ function enableContent(id) {
 
 function loadTasks(id) {	
 	if (unlockAllPlans || numUnlockedPlans >= id) {
-		if(id === 2){
-			setBackgroundColor("#D1F1FC"); 
-		}
-		else if(id === 3 || id === 11  || id === 19){
+		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
-		}
-		else if(id === 4 || id === 12 || id === 20){
+		}		
+		else if(id === 2 || id === 10 || id === 18 || id === 26 || id === 34){
 			setBackgroundColor("#EEE8AA"); 
 		}
-		else if(id === 5 || id === 13 || id === 21){
+		else if(id === 3 || id === 11 || id === 19 || id === 27 || id === 35){
 			setBackgroundColor("#E0FFFF"); 
 		}
-		else if(id === 6 || id === 14){
+		else if(id === 4 || id === 12 || id === 20 || id === 28 || id === 36){
 			setBackgroundColor("#E6E6FA"); 
 		}
-		else if(id === 7  || id === 15){
+		else if(id === 5 || id === 13 || id === 21 || id === 29){
 			setBackgroundColor("#FFECB7"); 
 		}
-		else if(id === 8 || id === 16){
+		else if(id === 6 || id === 14 || id === 22 || id === 30){
 			setBackgroundColor("#E0E0E0"); 
 		}
-		else if(id === 9 || id === 17){
+		else if(id === 7 || id === 15 || id === 23 || id === 31){
 			setBackgroundColor("#FFF0F5"); 
 		}
-		else if(id === 10 || id === 18){
+		else if(id === 8 || id === 16 || id === 24 || id === 32){
 			setBackgroundColor("#B0E0E6"); 
 		}
 				
@@ -364,9 +361,7 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[1112] = 25;
 	pontuacaoEquacoes[1113] = 25;
 	pontuacaoEquacoes[1114] = 25;
-	pontuacaoEquacoes[1115] = 25;	
-	pontuacaoEquacoes[1600] = 30;
-	pontuacaoEquacoes[1601] = 35;
+	pontuacaoEquacoes[1115] = 25;
 	pontuacaoEquacoes[1602] = 35;
 	pontuacaoEquacoes[1603] = 30;
 	pontuacaoEquacoes[1604] = 35;

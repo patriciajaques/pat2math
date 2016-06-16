@@ -47,6 +47,7 @@ var pontuacaoEquacoes;
 var equationsWE;
 var pointsWE;
 var resolutionsWE;
+var colorsBackground;
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -526,6 +527,7 @@ $(document).ready(function() {
 		getEquationsWE();
 		getResolutionsWE();
 		getPontuacaoEquacoes();
+//		getColorsBackground();
 		rel();
 	
 	$("#refresh_page").tooltip();
@@ -596,16 +598,14 @@ $(document).ready(function() {
                 $("#delta").click();
             } else if (key === 76) { //alt + l
                 $("#clearLine").click();
+            } else if (key === 77) { //alt + m
+            	blockMenu = blockMenu === false;
             } else if (key === 84) { //alt + t
                 $("#addLabel").click();
             } else if (key === 0) { //alt + ?
                 $("#hint").click();
             } else if (key == 80) { //alt + p
-            	if (unlockAllPlans === false) {
-            		unlockAllPlans = true;
-            	} else {
-            		unlockAllPlans = false;
-            	}
+            	unlockAllPlans = unlockAllPlans === false;
             }
 //        } else if (event.shiftKey) {
 //        	if (key === 57) { //( key
@@ -1899,6 +1899,27 @@ function getResolutionsWE() {
 	resolutionsWE[10] = "- x = - 9 + 15;- x = 6;<font color='blue'>x = - 6</font>";
 	resolutionsWE[12] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">10</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = 5</font>';
 }
+
+//function getColorsBackground() {
+//	//----- Muito Fácil: Verde Claro -----//
+//	colorsBackground[1] = "#DEFFDE";
+//	colorsBackground[2] = "#DEFFDE";
+//	colorsBackground[3] = "#DEFFDE";
+//	colorsBackground[4] = "#DEFFDE";
+//	colorsBackground[5] = "#DEFFDE";
+//
+//	//----- Fácil-1: Azul Celeste -----//
+//	colorsBackground[7] = "#E0FFFF";
+//	colorsBackground[8] = "#E0FFFF";
+//	colorsBackground[9] = "#E0FFFF";
+//	colorsBackground[10] = "#E0FFFF";
+//	
+//	//----- Fácil-2: Verde -----//
+//	colorsBackground[12] = "#E0FFFF";
+//	colorsBackground[13] = "#E0FFFF";
+//	//----- Planos de Revisão -----//
+//	colorsBackground[6] = "#DEFFDE"; //Verde Claro
+//}
 function searchArray (elemento, array) {
 	for (var i = 0; i < array.length; i++)
 		if (array[i] === elemento)
