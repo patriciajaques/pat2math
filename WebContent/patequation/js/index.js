@@ -599,7 +599,8 @@ $(document).ready(function() {
             } else if (key === 76) { //alt + l
                 $("#clearLine").click();
             } else if (key === 77) { //alt + m
-            	blockMenu = blockMenu === false;
+            	$("#topics").fadeIn();
+        	    $("#topicsAux").hide();
             } else if (key === 84) { //alt + t
                 $("#addLabel").click();
             } else if (key === 0) { //alt + ?
