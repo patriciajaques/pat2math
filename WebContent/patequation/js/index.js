@@ -797,7 +797,8 @@ $(document).ready(function() {
 	
 	if (currentWE !== "") {
 		var idPlanWE = parseInt(currentWE);
-		openWorkedExample(idPlanWE);
+		setTimeout(function() {loadExerciseWE(equationsWE[idPlanWE], pointsWE[idPlanWE]);}, 1000);
+		setTimeout('classPlan' + idPlanWE + '()', 1200);
 	}
 		
 	

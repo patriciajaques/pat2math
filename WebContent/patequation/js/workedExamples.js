@@ -1007,6 +1007,10 @@ function classPlan12() {
 
 //5x=-30
 function classPlan13() {
+	contWE = 1;
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "13", 1); 
+	
 	$.guider({
 		name: "1",
 		next : "2",
@@ -1026,7 +1030,7 @@ function classPlan13() {
 	$("#line4").guider({
 		name: "2",
 		next : "3",
-		title : "Utilizando a operação inversa, passamos o 5 para o outro lado",
+		title : "Utilizando a operação inversa, passamos o 5 para o outro lado dividindo o -30",
 		description : "Lembre-se que seu sinal não deve ser alterado.",
 		position: "bottom",
 		width : 600,
@@ -1079,7 +1083,7 @@ function classPlan13() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step3", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1089,18 +1093,205 @@ function classPlan13() {
 	});	
 }
 
+//-3x=15
+function classPlan14() {
+	contWE = 1;
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "14", 1); 
+
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos ver agora essa outra equação",
+		description : "Observe que X possui um coeficiente negativo.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line4").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o -3 para o outro lado dividindo o 15",
+		description : "Cuidado: o sinal negativo deve ser preservado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">-3</font></div><div class="numerator">15</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "3",
+		title : "Terminamos!",
+		description : "Lembre-se que ao dividir um número positivo por um negativo, temos como resultado um número negativo.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 5</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
+}
+
+//-4x=-28
+function classPlan15() {
+	contWE = 1;
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "15", 1); 
+	
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Atenção agora!",
+		description : "Todos os termos da equação são negativos.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line4").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o -4 para o outro lado dividindo o -28",
+		description : "Lembre-se que o sinal negativo deve ser preservado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">-4</font></div><div class="numerator">-28</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "3",
+		title : "Terminamos!",
+		description : "Você se lembra da regra dos sinais? A divisão de dois números negativos resulta em um número positivo.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = 7</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
+}
+
+//(x)/(4)=20
+function classPlan17() {
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "17", 1); 
+
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Opa! Aqui temos mais uma novidade!",
+		description : "Vamos trabalhar com frações pela primeira vez.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "A incógnita X encontra-se em uma fração",
+		description : "Também podemos dizer que X possui um coeficiente fracionário, o número 1/4.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "3",
+		next : "4",
+		title : "Como fazemos para tirar o 4 daqui?",
+		description : "Seguimos o mesmo princípio da operação inversa, conforme vimos anteriormente.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "4",
+		next : "5",
+		title : "A operação inversa da divisão é a multiplicação",
+		description : "Assim, devemos passar o 4 para o outro lado multiplicando o 20.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = 20 <font color='green'>* 4</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "5",
+		title : "Tudo pronto!",
+		description : "Ao resolver a multiplicação do lado direito, descobrimos o valor de X e finalizamos a resolução da equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = 80</font>", "step2", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	
+}
+
 function openWorkedExample(id) {	
-	//Agora os loadExerciseWE são colocados dentro da função classPlanX()
-//	if (id === 14) {
-//		loadExerciseWE("-3x=15", 35);
-//		classPlan14();
-//	}
-//
-//	if (id === 15) {
-//		loadExerciseWE("-4x=-28", 35);
-//		classPlan15();
-//	}
-//
 //	if (id === 17) {
 //		loadExerciseWE("(x)/(4)=20", 40);
 //		classPlan17();
