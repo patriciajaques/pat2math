@@ -576,7 +576,7 @@ function classPlan7() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9", "step3", 1); blink9(true, 15);},
+		onShow: function() {resolutionEquation("- x <font color='green'>* (-1)</font> = 9", "step3", 1); blink9(true, 15);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -593,7 +593,7 @@ function classPlan7() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("- x <font color='red'>* (-1)</font> = 9 <font color='red'>* (-1)</font>", "step4", 1);},
+		onShow: function() {resolutionEquation("- x <font color='green'>* (-1)</font> = 9 <font color='green'>* (-1)</font>", "step4", 1);},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -605,7 +605,7 @@ function classPlan7() {
 	$.guider({
 		name: "6",
 		title : "Vamos nos lembrar das regras de sinais da multiplicação",
-		description : "Em cada uma das perguntas a seguir, selecione a alternativa que achar que é a resposta.",
+		description : "Em cada uma das perguntas a seguir, selecione a alternativa que você acha que é a resposta.",
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -1035,7 +1035,7 @@ function classPlan13() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">5</font></div><div class="numerator">-30</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">5</font></div><div class="numerator">- 30</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -1123,7 +1123,7 @@ function classPlan14() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">-3</font></div><div class="numerator">15</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">- 3</font></div><div class="numerator">15</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -1179,7 +1179,7 @@ function classPlan15() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">-4</font></div><div class="numerator">-28</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
+		onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">- 4</font></div><div class="numerator">- 28</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 1); document.getElementById("lineFrac1").style.color = "green"; document.getElementById("currentEquation").style.opacity = "0.5";},
 		buttons : {
 			Próximo: {
 				click : true,
@@ -1286,27 +1286,460 @@ function classPlan17() {
 				className : "primary"
 			}
 		}
+	});	
+}
+
+//(x)/(7)=-49
+function classPlan18() {
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "18", 1); 
+
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Vamos resolver essa equação agora?",
+			description : "Esta equação é bem parecida com a anterior, porém vamos trabalhar com um número negativo.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$("#line3").guider({
+			name: "2",
+			next : "3",
+			title : "Utilizando a operação inversa, passamos o 7 para o outro lado multiplicando o -49",
+			description : "Lembre-se que o seu sinal positivo deve ser preservado",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("x = - 49 <font color='green'>* 7</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line4").guider({
+			name: "3",
+			title : "Terminamos!",
+			description : "Lembre-se que a multiplicação de um número negativo por um positivo resulta em um número negativo",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("<font color='blue'>x = - 343</font>", "step2", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			buttons : {
+				Finalizar: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});	
+}
+
+//-(x)/(6)=42
+function classPlan19() {
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "19", 1); 
+
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Atenção agora!",
+			description : "Esta equação é um pouco diferente das anteriores, pois estamos trabalhando com uma fração negativa.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$.guider({
+			name: "2",
+			next : "3",
+			title : "Neste caso também vamos aplicar a operação inversa",
+			description : "Porém, temos que cuidar o que faremos com o sinal negativo",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$.guider({
+			name: "3",
+			next : "4",
+			title : "Temos duas formas de resolver este problema",
+			description : "A primeira seria passar o 6 para o outro lado, mantendo o sinal negativo em X",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$.guider({
+			name: "4",
+			next : "5",
+			title : "Mas também podemos passar o sinal negativo junto com o 6",
+			description : "Dessa forma, passamos o 6 para o outro lado, mas como um número negativo.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$.guider({
+			name: "5",
+			next : "6",
+			title : "Qual das duas opções você prefere?",
+			description : "Selecione-a abaixo:",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				"Manter o sinal negativo em X": {
+					click : function() {classPlan19a();},
+					className : "primary"
+				},
+				
+				"Passar o sinal negativo para o outro lado": function() {classPlan19b();}
+			}
+		});
+}
+
+function classPlan19a() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Você escolheu manter o sinal negativo em X",
+		description : "Confira a seguir os passos da resolução desta maneira:",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o 6 para o outro lado multiplicando o 42",
+		description : "Observe que mantivemos o sinal de menos, deixando o X negativo",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 42 <font color='green'>* 6</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
 	});
 	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Você se lembra como fazemos para deixar o X positivo?",
+		description : "É só a gente multiplicar por -1 os dois lados da igualdade.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = 252", "step2", 1);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
 	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Pronto!",
+		description : "Agora só falta resolvermos essas multiplicações para concluir a resolução da equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x <font color='green'>* (-1)</font>= 252 <font color='green'>* (-1)</font>", "step3", 1);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "5",
+		title : "Terminamos!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 252</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
+}
+
+function classPlan19b() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Você escolheu passar o sinal negativo para o outro lado",
+		description : "Confira a seguir os passos da resolução desta maneira:",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o 6 para o outro lado multiplicando o 42",
+		description : "Observe que neste caso o sinal de menos acompanha o número 6, o qual fica negativo do outro lado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = 42 <font color='green'>* (-6)</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		title : "Tudo pronto!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 252</font>", "step2", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
+}
+
+//-(x)/(4)=-100
+function classPlan20() {
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "20", 1); 
+
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos ver agora essa outra equação",
+		description : "Observe que ambos os lados da igualdade são negativos.",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		title : "Opa! Aqui nós também temos uma fração negativa",
+		description : "Você se lembra que temos duas formas de resolver este problema? Selecione abaixo a que você preferir:",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			"Manter o sinal negativo em X": {
+				click : function() {classPlan20a();},
+				className : "primary"
+			},
+			
+			"Passar o sinal negativo para o outro lado": function() {classPlan20b();}
+		}
+	});
+}
+
+function classPlan20a() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Você escolheu manter o sinal negativo em X",
+		description : "Confira a seguir os passos da resolução desta maneira:",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o 4 para o outro lado multiplicando o -100",
+		description : "Observe que mantivemos o sinal de menos, deixando o X negativo",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = - 100 <font color='green'>* 4</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Você se lembra como fazemos para deixar o X positivo?",
+		description : "É só a gente multiplicar por -1 os dois lados da igualdade.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x = - 400", "step2", 1);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Pronto!",
+		description : "Agora só falta resolvermos essas multiplicações para concluir a resolução da equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("- x <font color='green'>* (-1)</font>= - 400 <font color='green'>* (-1)</font>", "step3", 1);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "5",
+		title : "Terminamos!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = 400</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
+}
+
+function classPlan20b() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Você escolheu passar o sinal negativo para o outro lado",
+		description : "Confira a seguir os passos da resolução desta maneira:",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$("#line3").guider({
+		name: "2",
+		next : "3",
+		title : "Utilizando a operação inversa, passamos o 4 para o outro lado multiplicando o -100",
+		description : "Observe que neste caso o sinal de menos acompanha o número 4, o qual fica negativo do outro lado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = - 100 <font color='green'>* (-4)</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "3",
+		title : "Tudo pronto!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = 400</font>", "step2", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
 }
 
 function openWorkedExample(id) {	
-//	if (id === 17) {
-//		loadExerciseWE("(x)/(4)=20", 40);
-//		classPlan17();
-//	}
-//
-//	if (id === 18) {
-//		loadExerciseWE("(x)/(7)=-49", 40);
-//		classPlan18();
-//	}
-//
-//	if (id === 19) {
-//		loadExerciseWE("-(x)/(6)=42", 50);
-//		classPlan19();
-//	}
-//
 //	if (id === 20) {
 //		loadExerciseWE("-(x)/(4)=-100", 50);
 //		classPlan20();
