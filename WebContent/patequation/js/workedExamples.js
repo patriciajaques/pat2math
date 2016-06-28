@@ -1736,27 +1736,390 @@ function classPlan20b() {
 	});	
 }
 
+//4x-10=8
+function classPlan22() {
+	contWE = 1;
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "22", 1); 
+
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Opa! Aqui temos uma novidade muito importante!",
+			description : "Esse é o formato padrão de equações de primeiro grau.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$.guider({
+			name: "2",
+			next : "3",
+			title : "Observe que será necessário aplicarmos mais de um tipo de operação inversa",
+			description : "Temos uma multiplicação em X seguida de uma subtração.",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line3").guider({
+			name: "3",
+			next : "4",
+			title : "Vamos começar pela operação inversa da subtração, que é a adição",
+			description : "Assim, passamos o -10 para o outro lado invertendo o seu sinal.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("4x = 8 <font color='red'>+ 10</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line4").guider({
+			name: "4",
+			next : "5",
+			title : "Resolvendo a soma do lado direito, obtemos o número 18",
+			description : "Agora, o nosso próximo passo é isolar a incógnita X.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("4x = 18", "step2", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line5").guider({
+			name: "5",
+			next : "6",
+			title : "Utilizando a operação inversa da multiplicação, passamos o 4 para o outro lado dividindo o 18",
+			description : "Cuidado: estamos trabalhando com multiplicação e divisão, assim o 4 deve permanecer com o mesmo sinal (positivo).",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">4</font></div><div class="numerator">18</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step3", 1); document.getElementById("lineFrac1").style.color = "green";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line7").guider({
+			name: "6",
+			title : "Podemos simplificar esta fração dividindo por 2 em cima e em baixo",
+			description : "Assim chegamos ao resultado final da equação.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation('<font color="blue">x = </font><span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">2</font></div><div class="numerator">9</div><div id="lineFrac2" class="frac-line-aux"><span id="lineFrac2" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step4", 2); document.getElementById("lineFrac1").style.color = "blue"; isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			buttons : {
+				Finalizar: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+}
+
+//-3x+9=-27
+function classPlan23() {
+	contWE = 1;
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "23", 1); 
+
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Vamos resolver essa equação agora?",
+			description : "Esta equação é bem parecida com a anterior, porém X possui um coeficiente negativo e o termo do lado direito também é negativo.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$.guider({
+			name: "2",
+			next : "3",
+			title : "Observe que também será necessário aplicarmos mais de um tipo de operação inversa",
+			description : "Temos uma multiplicação em X seguida de uma adição.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line3").guider({
+			name: "3",
+			next : "4",
+			title : "Vamos começar pela operação inversa da adição, que é a subtração",
+			description : "Assim, passamos o +9 para o outro lado invertendo o seu sinal.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("- 3x = - 27 <font color='red'>- 9</font>", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line4").guider({
+			name: "4",
+			next : "5",
+			title : "Resolvendo a subtração do lado direito, obtemos o número -36",
+			description : "Agora, o nosso próximo passo é isolar a incógnita X.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("- 3x = - 36", "step2", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line5").guider({
+			name: "5",
+			next : "6",
+			title : "Para eliminar alguns passos, vamos passar direto o -3 dividindo o -36 no outro lado",
+			description : "Lembre-se que o sinal negativo deve ser preservado.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">-3</font></div><div class="numerator">-36</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step3", 1); document.getElementById("lineFrac1").style.color = "green";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line7").guider({
+			name: "6",
+			title : "Lembre-se que a divisão de dois números negativos resulta em um número positivo",
+			description : "Tudo pronto! Conseguimos resolver a equação com sucesso.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation('<font color="blue">x = 12</font>', "step4", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			buttons : {
+				Finalizar: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+}
+
+//5x+8-2x=10+x
+function classPlan24() {
+	contWE = 1;
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "23", 1); 
+
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Opa! Aqui temos mais uma novidade!",
+			description : "Vamos trabalhar pela primeira vez com expressões envolvendo mais de um termo de X.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$.guider({
+			name: "2",
+			next : "3",
+			title : "Neste caso, podemos dizer que temos termos semelhantes que podem ser somados ou subtraídos",
+			description : "São eles: 5x, -2x e x",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$.guider({
+			name: "3",
+			next : "4",
+			title : "Vamos começar resolvendo a subtração no lado esquerdo",
+			description : "Quando temos uma diferença de termos semelhantes, conservamos a incógnita X e subtraímos seus coeficientes.",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line3").guider({
+			name: "4",
+			next : "5",
+			title : "Nesta equação, temos que 5x - 2x = (5 - 2)x = 3x",
+			description : "O próximo passo é tirar o +8 daqui.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x + 8 = 10 + x", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line4").guider({
+			name: "5",
+			next : "6",
+			title : "A operação inversa da adição é a subtração",
+			description : "Assim, passamos o +8 para o outro lado invertendo o seu sinal.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x = 10 + x <font color='red'>- 8</font>", "step2", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line5").guider({
+			name: "5",
+			next : "6",
+			title : "Agora podemos resolver a subtração que temos no lado direito",
+			description : "Ao mesmo tempo poderíamos passar o +x, mas vamos fazer um passo de cada vez.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x = 2 + x", "step3", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line6").guider({
+			name: "6",
+			next : "7",
+			title : "A operação inversa também vale para termos em função de X",
+			description : "Dessa forma, passamos o +x para o lado esquerdo invertendo o seu sinal.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x <font color='red'> - x</font> = 2", "step4", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line7").guider({
+			name: "7",
+			next : "8",
+			title : "Ao resolver a subtração 3x - x, obtemos 2x",
+			description : "Estamos quase terminando de resolver esta equação.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("2x = 2", "step5", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line8").guider({
+			name: "8",
+			next : "9",
+			title : "Utilizando a operação inversa, passamos o 2 para o outro lado dividindo o outro número 2",
+			description : "Lembre-se que devemos preservar o seu sinal positivo.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">2</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step6", 1); document.getElementById("lineFrac1").style.color = "green";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line10").guider({
+			name: "9",
+			title : "Tudo pronto!",
+			description : "Simplificando esta fração, chegamos ao resultado 1 e concluímos o desenvolvimento da equação.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("<font color='blue'>x = 1</font>", "step7", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			buttons : {
+				Finalizar: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});	
+}
 function openWorkedExample(id) {	
-//	if (id === 20) {
-//		loadExerciseWE("-(x)/(4)=-100", 50);
-//		classPlan20();
-//	}
-//
-//	if (id === 22) {
-//		loadExerciseWE("4x-10=8", 50);
-//		classPlan22();
-//	}
-//
-//	if (id === 23) {
-//		loadExerciseWE("-3x+9=-27", 60);
-//		classPlan23();
-//	}
-//
-//	if (id === 24) {
-//		loadExerciseWE("5x+8-2x=10+x", 80);
-//		classPlan24();
-//	}
-//
 //	if (id === 26) {
 //		loadExerciseWE("2(x+3)-5=5(x+2)", 100);
 //		classPlan26();

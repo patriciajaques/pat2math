@@ -307,7 +307,7 @@ function getPontuacaoPlano() {
 		else if (planoAtual === 17 || planoAtual === 18)
 			pontuacaoPlano = 40;
 		
-		else if (planoAtual === 19 || planoATual === 20)
+		else if (planoAtual === 19 || planoAtual === 20)
 			pontuacaoPlano = 50;
 		
 		else if (planoAtual >= 26 && planoAtual <= 28)
