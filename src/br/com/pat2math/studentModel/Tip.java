@@ -12,32 +12,46 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
+/**
+ * AQUI TEM TODAS AS DICAS COM SEUS RESPECTIVOS CÓDIGOS DE TIPO DE EQUAÇÃO
+ * tip == dica == hint !!!!
+ * 
+ * @author Savanna
+ *
+ */
 @Entity
 @Table(name="tip")
 public class Tip {
 	
+	//ID na tabela
 	@Id @GeneratedValue
 	private Long id;
 	
-	@Transient
+	//
+	@Transient // == transitório 
 	private int pedidosConsecutivos = 0;
 
+	//A frase e o lugar para por o número com <...>
 	@Column(length=255, nullable=true, updatable=false)
 	private String description;
 	
+	//Código da operação == AD/SB
 	@Column(length=40, nullable=true, updatable=true)
 	private String content;
 	
+	//Puxa da tabela operation o código da operação
 	@Column(length=40, nullable=true, updatable=true)
 	private String operation;
 	
+	//Determina um nível para cada código de operação
 	@Column(length=1, nullable=true, updatable=true)
 	private Integer level;
 	
+	//1 lista da tabela resolution_step
 	@ManyToMany(mappedBy="tips", targetEntity=ResolutionStep.class)									 
 	private List<ResolutionStep> resolutionSteps = new ArrayList<ResolutionStep>();
 	
+	//1 lista da tabela animation
 	@ManyToOne
 	@JoinColumn(name="id_animation", referencedColumnName="id", nullable=false)
 	private Animation animation;
@@ -108,6 +122,10 @@ public class Tip {
 		this.id = id;
 	}
 
+	/**
+	 * Deprecated = Obsoleto = que já não se usa; arcaico, antigo.
+	 * @return
+	 */
 	public boolean isDeprecated() {
 		return deprecated;
 	}

@@ -19,7 +19,11 @@ import org.hibernate.validator.constraints.Email;
 
 import br.com.pat2math.formBeans.PasswordRecoveryForm;
 
-
+/**
+ * É uma classe da tabela user do banco de dados
+ * @author SAVANNAD
+ *
+ */
 @Entity
 @Table(name="user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -28,32 +32,41 @@ import br.com.pat2math.formBeans.PasswordRecoveryForm;
 
 public class User {
 	
+	//Cria o usuári com o e-mail
 	public User() {
 		email = "";
 	}
 	
+	//Id na tabela
 	@Id @GeneratedValue
 	private Long id;
 	
+	//Nome
 	@Size(min=3, max=80)
 	private String firstName;
 	
+	//Sobrenome
 	@Size(min=3, max=80)
 	private String lastName;
 	
+	//E-mail do usuário com tamanho máximo e mínimo
 //	@Email
 	@Size(min=5, max=120)
 	@Column(unique=true)
 	private String email;
 	
+	// Uma lista das senhas restauradas
 	@OneToMany(mappedBy="user", targetEntity=PasswordRecovery.class)
 	private List<PasswordRecovery> passwordRecoveries;
 	
+	//A senha
 	@Size(min=4, max=1000)
 	private String password;
 
+	//Tipo de regra a ser usada, se para studant ou teacher
 	private String role;
 	
+	//Se está ativo
 	private boolean enable;
 	
 	public boolean hasEmailOf(User otherUser) {

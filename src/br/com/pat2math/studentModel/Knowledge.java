@@ -9,15 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Seria uma tabela com o tipo de equação em código e uma porcetagem de conhecimento por aluno daquele determinado código,
+ * MAS PARECE QUE NÃO ESTÁ SENDO UTILIZADA
+ * @author SAVANNAD
+ *
+ */
 @Entity
 @Table(name="knowledge")
 public class Knowledge {
 	
+	//ID na tabela
 	@Id @GeneratedValue
 	private int id;
 	
+	//Percentuagem de acordo com determinado aluno e determinado código de tipo de equação
 	private float percentage;
 	
+	//Código de tipo de tipo de equação
 	private String content;
 	
 	@ManyToOne

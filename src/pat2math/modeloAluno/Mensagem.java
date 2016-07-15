@@ -6,8 +6,9 @@ import br.com.pat2math.studentModel.Tip;
 
 
 /**
- * Classe responsável pelos objetos que conterão a mensagm a ser retornada ao Tutor,
- * em forma de String 
+ * Classe responsável pelos objetos que conterão a mensagem a ser retornada ao Tutor, em forma de String 
+ * Ou seja aqui nessa classe pega-se a equação, suas resoluções, de cada aluno, se ta certa ou não,
+ * e passa pra classe Tutor 
  * @author Henrique M. Seffrin
  * @version 1.0
  * @since 30/06/2010
@@ -18,13 +19,17 @@ public class Mensagem {
 	private String idAluno;
 	private boolean respostaCerta;
 	private boolean operacaoCerta;
-	// inform se é o ultimo passo de resolção
+	// informa se é o ultimo passo de resolção
 	private boolean ultimoPasso;
 	//se a resposta é certa e foi devido a uma dica
 	private boolean usedHints;
-	// a proxima operação DEVE conter a operação utilizada, operação genérica não será aceita.
+	// a proxima operação DEVE conter a operação utilizada, operação genérica não será aceita | request = pedido
 	private boolean requestOperation;
 	//private List<Misconseption> idMisconseption;
+	/**
+	 * É um objeto da tabela Tip do Banco de Dados que tem a equação, o level desta e as resoluções, conta a quantidade de vezes que as dicas
+	 * foram chamadas 
+	 */	
 	private Tip feedback;
 	private String operacao;
 	private String respostaAluno;

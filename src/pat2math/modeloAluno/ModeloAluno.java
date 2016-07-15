@@ -52,8 +52,8 @@ import br.com.pat2math.studentModel.Tip;
  */
 /*
  * validar x=(a/b)R2
- * - permitir que a resposta do aluno contenha váriso passos resolvidos OK
- * - somar com zero após resolver equações dá smepre  errado OK
+ * - permitir que a resposta do aluno contenha vários passos resolvidos OK
+ * - somar com zero após resolver equações dá sempre  errado OK
  * - mostrar mensagem "Parabéns! Equação resolvida!" OK 
  * - Validar equação reordenada!!! OK 
   */
@@ -80,7 +80,7 @@ public class ModeloAluno extends Resolvedor{
 	private Stack<String> passos;
 	private boolean useMisconseptions;
 	private static Funcoes f=new Funcoes();
-	private Help hint;
+	private Help helpClass;
 	private boolean useHint=true;
 	private boolean useDatabase=true;
 	private boolean loadRulesFromFile=false;
@@ -93,7 +93,7 @@ public class ModeloAluno extends Resolvedor{
 	public static String groupMisc="misconseptions";
 	
 	/*
-	 * Se true o aluno acabou de requisistar uma ajuda qualquer outra ação relalizada torna esta variavel false;
+	 * Se true o aluno acabou de requisistar uma ajuda qualquer, outra ação relalizada torna esta variavel false;
 	 */
 	private boolean requestHint;
 	
@@ -162,7 +162,7 @@ public class ModeloAluno extends Resolvedor{
 	public void saveRulesToFile(){
 		ArrayList<Package> pkg=new ArrayList<Package>();
 		pkg.add(expressoes.getSession().getRuleBase().getPackage("pat2math.regras"));
-		pkg.add(hint.getPackageRules());
+		pkg.add(helpClass.getPackageRules());
 		for (Package p: pkg){
 			System.out.println("Salvando: "+p.getName());
 			try {
@@ -196,7 +196,7 @@ public class ModeloAluno extends Resolvedor{
 	 */
 	public void useDatabase(boolean use){
 		useDatabase=use;
-		useHint=use;
+		useHint=use; // Habilita o sistema use Dicas
 		useMisconseptions=use;
 	}
 	
@@ -230,7 +230,7 @@ public class ModeloAluno extends Resolvedor{
 	}
 	
 	/**
-	 * Insere a operção informada pelo aluno
+	 * Insere a operação informada pelo aluno
 	 * @param op uma constante da classe {@link Operacao}
 	 */
 	public void setOperacao(String op){
@@ -260,22 +260,22 @@ public class ModeloAluno extends Resolvedor{
 				//Aluno al=dataB.select(nome);
 				if (useHint){
 					requestHint=false;
-					if (!loadRulesFromFile)hint=new Help(this, helps);
-					else hint=new Help(Regras.loadRecourcesFromPackage("/pat2math/regras/pat2math.help"),
+					if (!loadRulesFromFile)helpClass=new Help(this, helps);
+					else helpClass=new Help(Regras.loadRecourcesFromPackage("/pat2math/regras/pat2math.help"),
 								this, helps);
 				}
 				else{
-					hint=null;
+					helpClass=null;
 					useMisconseptions=false;
 				}
 				
 			}else{
-				hint=null;
+				helpClass=null;
 				useMisconseptions=false;
 			}
 		}catch (Throwable e){
 			System.out.println("Erro ao executar o modulo de ajuda externo, alterando para o módulo interno.");
-			hint=null;
+			helpClass=null;
 			useMisconseptions=false;
 		}
 	}
@@ -290,7 +290,7 @@ public class ModeloAluno extends Resolvedor{
 		validaEquacao vE= new validaEquacao(eq);
 		Expression exp=new Expression(vE.getEquacao());
 		requestHint=false;
-		hint.getHintInfo().requestHint();
+		helpClass.getHintInfo().requestHint();
 		expressoes.clearWorkingMemory();
 		int tam= resp.size();
 		System.out.println(">>>>>> Proximo passo:");
@@ -335,7 +335,7 @@ public class ModeloAluno extends Resolvedor{
 	//TODO: ver se é necessario liberar potencia de polinomio para os tipos (x^2+1)^2
 	public List<String> mostrarPassos(String eq) throws InvalidValueException{
 		int tam=resp.size();
-		if (hint!=null)hint.getHintInfo().requestHint();
+		if (helpClass!=null)helpClass.getHintInfo().requestHint();
 		requestHint=false;
 		System.out.println(">>>>>>>> Mostrar Resolucao");
 		resolve(eq);
@@ -434,23 +434,23 @@ public class ModeloAluno extends Resolvedor{
 		return pas;
 	}
 	
-	public Tip hints (String eq, List<Tip> helps, List<Knowledge> knowledges) throws InvalidValueException{
+	public Tip hints(String eq, List<Tip> helps, List<Knowledge> knowledges) throws InvalidValueException{
 		Tip dica = null;
 		requestHint=false;
 		pontos-=2;
 		
-		if (hint!=null){
+		if (helpClass!=null){
 			System.out.println("\nDica requisitada para a equacao:"+ eq);
-			dica= hint.dica(eq, helps, knowledges);
-			PedidoAjuda pa=hint.getHintInfo();
+			dica= helpClass.dica(eq, helps, knowledges);//////////////////AQUI O DICA
+			PedidoAjuda pa=helpClass.getHintInfo();
 			pa.requestHint();
 			//dica+=";"+pa.getPedidosConsecutivos();
 			requestHint=true;
-			System.out.println("Dica retornada: "+dica.getLevel()+": "+dica.getDescription());
+			System.out.println("Dica retornada: "+dica.getLevel()+": "+dica.getDescription());// Aqui o tip pega do banco de dados - Savanna
 		}else{
 			//dica= dica(eq);
 		}
-		hint.getHintInfo().requestHint();
+		helpClass.getHintInfo().requestHint();
 		return dica;
 	}
 	
@@ -477,7 +477,7 @@ public class ModeloAluno extends Resolvedor{
 			segGrau=false;
 			String userAnswer=  usrExpression;
 			validaEquacao val =new validaEquacao(usrExpression);
-			if (hint!=null)hint.getHintInfo().madeAction();
+			if (helpClass!=null)helpClass.getHintInfo().madeAction();
 			Expression usr=new Expression(val.getEquacao(),Expression.USER);
 			//usr=Funcoes.removeAbstractTermInFractionResult(usr);
 			
@@ -604,7 +604,7 @@ public class ModeloAluno extends Resolvedor{
 			}	
 			else if (useMisconseptions){
 				List<Misconseption>misc=checkForMisconseptions(usrExpression);
-				Tip feedback=hint.parecerErro(original, usrExpression, Misconseption.toListOfString(misc), helps, knowledges);
+				Tip feedback=helpClass.parecerErro(original, usrExpression, Misconseption.toListOfString(misc), helps, knowledges);
 				Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua resposta está incorreta. Tente novamente!",feedback);
 				//monitor.logCorrecao(original,usrExpression, operacao.getOperacao(), 
 				//m.getFeedback(), m.isRespostaCerta(), m.isOperacaoCerta(), m.isUltimoPasso());
@@ -1256,7 +1256,7 @@ public class ModeloAluno extends Resolvedor{
 		possResp.clear();
 		passos.clear();
 		expressoes=null;
-		hint=null;
+		helpClass=null;
 		nome=null;
 		nomeFull=null;
 		operacao=null;
@@ -1267,7 +1267,7 @@ public class ModeloAluno extends Resolvedor{
 	
 	public MaterialInstrucionalPOJO getNextEquation(){
 		if (equacoes.isEmpty())return null;
-		hint.getHintInfo().madeAction();
+		helpClass.getHintInfo().madeAction();
 		MaterialInstrucionalPOJO eq=equacoes.get(pointer);
 		movePointer();
 		return eq;

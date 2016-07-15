@@ -12,11 +12,14 @@ import javax.persistence.Table;
 @Table(name="animation")
 public class Animation {
 	
+	//ID  que está na tabela
 	@Id @GeneratedValue
 	private Long id;
 	
+	//Código mucho loco
 	private String code;
 	
+	//1 lista tip
 	@OneToMany(mappedBy="animation", targetEntity=Tip.class)
 	private List<Tip> helps;
 

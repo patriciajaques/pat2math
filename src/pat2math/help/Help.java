@@ -41,10 +41,10 @@ import br.com.pat2math.studentModel.Tip;
 public class Help {
 
 
-	private Regras hints;
-	private Resolvedor solver;
-	private Regras rules;
-	private CommunicationHelp dataBaseHint;
+	private Regras regrasClassHints;
+	private Resolvedor resolvedorClass;
+	private Regras regrasClassRules;
+	private CommunicationHelp communicationHelpInterface;
 	//private CommunicationMA dataBaseAluno;
 	private Parser helParser;
 	private Hashtable<String, Integer> lvlsMax;
@@ -61,21 +61,21 @@ public class Help {
 
 
 	public Help (Resolvedor solver, List<Tip> helps) throws Exception{
-		this.hints=new Regras(new String[]{"/pat2math/help/hint_selection.drl"},false,null);
+		this.regrasClassHints=new Regras(new String[]{"/pat2math/help/hint_selection.drl"},false,null);
 		initVariables(solver, helps);
 	}
 
 	public Help (Package pkg, Resolvedor solver, List<Tip> helps) throws Exception{
-		this.hints=new Regras(pkg);
+		this.regrasClassHints=new Regras(pkg);
 		initVariables(solver, helps);
 	}
 	
 	private void initVariables(Resolvedor solver, List<Tip> helps){
-		this.solver=solver;
+		this.resolvedorClass=solver;
 		this.hintInfo=new PedidoAjuda();
 		
-		this.rules=solver.getRegras();
-		this.dataBaseHint= new CommunicationHelpImpl(helps);
+		this.regrasClassRules=solver.getRegras();
+		this.communicationHelpInterface= new CommunicationHelpImpl(helps);
 		//this.dataBaseAluno=new DatabaseStudentImpl();
 		//this.aluno=al;
 		this.helParser=new Parser();
@@ -93,7 +93,7 @@ public class Help {
 		 * assunto limitar o acesso até este nivel, 
 		 * 
 		 */
-		this.lvlsMax=dataBaseHint.getMaxLvlOfHints();
+		this.lvlsMax=communicationHelpInterface.getMaxLvlOfHints();
 		this.lvlsHalf=new Hashtable<String, Integer>();
 		Enumeration<String> en=lvlsMax.keys();
 		String enEl;
@@ -123,10 +123,10 @@ public class Help {
 	public Tip dica(String equacao, List<Tip> helps, List<Knowledge> knowledges) {
 		try{
 			// passo 1 - determinar os próximos passos de resolução da equação
-			Expression eq=new Expression(equacao);
-			eq.useForHints();
-			List<BTNode> folhaEqE= Expression.getFolhasPotRaiz(eq.getRoot().getEsq(), new Vector<BTNode>());
-			List<BTNode> folhaEqD= Expression.getFolhasPotRaiz(eq.getRoot().getDir(), new Vector<BTNode>());
+			Expression expression=new Expression(equacao);
+			expression.useForHints();
+			List<BTNode> folhaEqE= Expression.getFolhasPotRaiz(expression.getRoot().getEsq(), new Vector<BTNode>());
+			List<BTNode> folhaEqD= Expression.getFolhasPotRaiz(expression.getRoot().getDir(), new Vector<BTNode>());
 			//	Hashtable<String, String> PP= new Hashtable<String, String>();
 			Expression temp=null;
 			//Aluno al= dataBaseAluno.select(nomeAluno);
@@ -137,11 +137,14 @@ public class Help {
 //			return "";
 //			}
 			//teste para as operacoes basicas (+,-,*,^,R)
-			hints.clearWorkingMemory();
-			hints.inserir(eq);
-			hints.executar();
-			List<OperacaoHint> lOp=filtrarResult(hints.getResult());
-			hints.clearWorkingMemory();
+			regrasClassHints.clearWorkingMemory();
+			// Class File Editor - Savanna
+			regrasClassHints.inserir(expression);
+			// Class File Editor - Savanna
+			regrasClassHints.executar();
+			// Recebe uma lista <Object> seleciona os objetos que são OperacaoHint e põe na lOp - Savanna
+			List<OperacaoHint> lOp=filtrarResult(regrasClassHints.getResult());
+			regrasClassHints.clearWorkingMemory();
 //			Travas trava=null;
 			//checar lOp para eliminar as operações travadas
 			OperacaoHint oHint;
@@ -155,16 +158,16 @@ public class Help {
 //				}
 			}
 			//teste para as outras operacoes
-			ArrayList<Activation> actList=solver.nextRules(eq);
-			ArrayList<Activation> newActList=solver.nextRules(eq);
+			ArrayList<Activation> actList=resolvedorClass.nextRules(expression);
+			ArrayList<Activation> newActList=resolvedorClass.nextRules(expression);
 			String proxPassos = "";
 			String cod="";
 
-			Vector <Equacoes> resp=solver.getPassos();
+			Vector <Equacoes> resp=resolvedorClass.getPassos();
 			List<BTNode> dif=new ArrayList<BTNode>();
 			List<BTNode> difOI=new ArrayList<BTNode>();
 			while (!actList.isEmpty()){
-				((DefaultAgenda)rules.getAgenda()).fireActivation(solver.getNextActivation(
+				((DefaultAgenda)regrasClassRules.getAgenda()).fireActivation(resolvedorClass.getNextActivation(
 						actList,newActList));
 				actList.remove(0);
 
@@ -172,12 +175,12 @@ public class Help {
 				if (!resp.isEmpty()){
 					temp=new Expression(resp.remove(resp.size()-1).getFullEquation());
 					difOI=getEQDif(temp, folhaEqE, folhaEqD);
-					dif=difArvore(eq.getRoot(), temp.getRoot());
+					dif=difArvore(expression.getRoot(), temp.getRoot());
 					if (resp.get(resp.size()-1).getCleanEquation().startsWith("#")){
 						proxPassos=resp.remove(resp.size()-1).getCleanEquation();
 					}else{
 						Expression temp2=new Expression(resp.remove(resp.size()-1).getFullEquation());
-						List<BTNode> dif2= difArvore(eq.getRoot(), temp2.getRoot());
+						List<BTNode> dif2= difArvore(expression.getRoot(), temp2.getRoot());
 						//			List<BTNode> difOI2=getEQDif(temp2, folhaEqE, folhaEqD);
 						if (dif.size()>dif2.size())dif=dif2;
 						proxPassos=resp.remove(resp.size()-1).getCleanEquation();
@@ -210,10 +213,10 @@ public class Help {
 					lOp.get(lOp.size()-1).setExpOI(difOI);
 					if (!cod.isEmpty() /*&& !trava.hintTravado()*/)lOp.get(lOp.size()-1).setPP(temp);
 				}
-				rules.clearWorkingMemory();
-				rules.inserir((Expression)eq.clone());
+				regrasClassRules.clearWorkingMemory();
+				regrasClassRules.inserir((Expression)expression.clone());
 				newActList=new ArrayList<Activation>(Arrays.asList(
-						rules.getAgenda().getActivations()));
+						regrasClassRules.getAgenda().getActivations()));
 			}
 			//passo 2 - uma vez determinado(s) o(s) próximo(s) passo(s) obter o codigo da operacao
 			List<Hint> dica=new ArrayList<Hint>();
@@ -221,7 +224,7 @@ public class Help {
 			List<Tip> template;
 			
 			String codigo;	
-			//parte do principio que as ajudas estarão ordenadadas por nivel em ordem decrescente
+			//parte do principio que as ajudas estarão ordenadadas por nivel em ordem decrescente (5,4,3,2,1)
 			// assim ultimo nivel requisitado de uma ajuda sera achado primeiro
 			
 			ArrayList<Tip> aReq = new ArrayList<Tip>(helps);// ajudas requisitadas
@@ -255,12 +258,12 @@ public class Help {
 							//se não haver dica relacionada, no registro do aluno,
 							//então selecionar dica pelo nivel de conhecimento do aluno
 							// se sabe, nivel 1, senão (int)nivelmax/2
-							if (knowL.getPercentage()>0.5f){
+							if (knowL.getPercentage()<0.5f){
 								nxtlvl=1;
 							}else{
 								nxtlvl=lvlsHalf.get(codigo);
 							}
-							template=dataBaseHint.select(codigo, nxtlvl);
+							template=communicationHelpInterface.select(codigo, nxtlvl);
 							//eliminaAjudasUtilizadas(template, aluno);
 							selected=selecaoAleatoria(template);
 						}else{
@@ -272,11 +275,11 @@ public class Help {
 							 */ 
 							if (knowL.getPercentage()>0.5f&& nxtlvl>lvlsHalf.get(codigo)){
 								int lMax= lvlsMax.get(codigo);
-								template=dataBaseHint.select(codigo, lMax);
+								template=communicationHelpInterface.select(codigo, lMax);
 								//eliminaAjudasUtilizadas(template, aluno);
 								selected=selecaoAleatoria(template);
 							}else{
-								template=dataBaseHint.select(codigo,nxtlvl);
+								template=communicationHelpInterface.select(codigo,nxtlvl);
 								//eliminaAjudasUtilizadas(template, aluno);
 								selected=selecaoAleatoria(template);
 							}
@@ -332,16 +335,16 @@ public class Help {
 						orig.setValue(resultado.getValue());
 						orig.setEsq(orig.getEsq());
 						orig.setDir(resultado.getDir());
-						eq.setmod();
-						di=di.replace("<PP>", "<?eq>"+eq.getCleanExpression()+"</eq>");
+						expression.setmod();
+						di=di.replace("<PP>", "<?eq>"+expression.getCleanExpression()+"</eq>");
 					}
 				}
 				helParser.setOperacao(d.getOperacao().getOperacao());
 				hintInfo.update();
-				helParser.setEquacao(eq);
+				helParser.setEquacao(expression);
 				if (d.getOperacao().equals(Operacao.OPERACAO_INVERSA)) {
 					//helParser.setTermos(processOITags(d.getOperacao().getExpOI(), d.getOperacao().getPP()/*PP.get(Operacao.OPERACAO_INVERSA)*/, eq));
-					helParser.setTermos(processOITags(eq, d.getOperacao().getPP()));
+					helParser.setTermos(processOITags(expression, d.getOperacao().getPP()));
 				}
 				else helParser.setTermos(d.getOperacao().getExpDica());
 				helParser.setTexto(di);
@@ -425,7 +428,7 @@ public class Help {
 		//Travas trava=null;
 		int nxtLVL=1;
 		do{
-			content=dataBaseHint.getContentRelatedToHint(misc.get(0));
+			content=communicationHelpInterface.getContentRelatedToHint(misc.get(0));
 			//trava=getTrava(aluno.getTravas(), content);
 			//if (trava!=null) trava.decTempo();
 			indexK=aCon.indexOf(new Knowledge(0,content));
@@ -441,7 +444,7 @@ public class Help {
 					if(knowK.getPercentage()<=0.5f){
 						nxtLVL=lvlsHalf.get(misc.get(0));
 					}
-					templates=dataBaseHint.select(misc.get(0),nxtLVL);
+					templates=communicationHelpInterface.select(misc.get(0),nxtLVL);
 					//eliminaAjudasUtilizadas(templates, aluno);
 					selected=selecaoAleatoria(templates);
 				}else{
@@ -453,11 +456,11 @@ public class Help {
 //						selected=null;
 						String codigo=misc.get(0);
 						int lMax= lvlsMax.get(misc.get(0));
-						templates=dataBaseHint.select(codigo, lMax);
+						templates=communicationHelpInterface.select(codigo, lMax);
 						//eliminaAjudasUtilizadas(templates, aluno);
 						selected=selecaoAleatoria(templates);
 					}else{
-						templates=dataBaseHint.select(misc.get(0),nxtLVL);
+						templates=communicationHelpInterface.select(misc.get(0),nxtLVL);
 						//eliminaAjudasUtilizadas(templates, aluno);
 						selected=selecaoAleatoria(templates);
 					}
@@ -856,20 +859,20 @@ public class Help {
 	
 	
 	private String getNextStepForOperation(Expression eq, String operation){
-		ArrayList<Activation> actList=solver.nextRules(eq);
-		ArrayList<Activation> newActList=solver.nextRules(eq);
-		List <Equacoes> resp=solver.getPassos();
+		ArrayList<Activation> actList=resolvedorClass.nextRules(eq);
+		ArrayList<Activation> newActList=resolvedorClass.nextRules(eq);
+		List <Equacoes> resp=resolvedorClass.getPassos();
 		String nextStp="";
 		String desc="";
 		boolean done=false;
 		boolean isBasic=Arrays.binarySearch(op_basicos, operation)>=0;
 		if (isBasic){
 			eq.useForHints();
-			hints.clearWorkingMemory();
-			hints.inserir(eq);
-			hints.executar();
-			List<OperacaoHint> lOp=filtrarResult(hints.getResult());
-			hints.clearWorkingMemory();
+			regrasClassHints.clearWorkingMemory();
+			regrasClassHints.inserir(eq);
+			regrasClassHints.executar();
+			List<OperacaoHint> lOp=filtrarResult(regrasClassHints.getResult());
+			regrasClassHints.clearWorkingMemory();
 			OperacaoHint oh=null;
 			for (OperacaoHint ohint:lOp){
 				if(ohint.getOperacao().equals(operation))oh=ohint;
@@ -905,7 +908,7 @@ public class Help {
 		}
 		if (!isBasic || nextStp.isEmpty()){
 			while (!actList.isEmpty() && !done){
-				((DefaultAgenda)rules.getAgenda()).fireActivation(solver.getNextActivation(
+				((DefaultAgenda)regrasClassRules.getAgenda()).fireActivation(resolvedorClass.getNextActivation(
 						actList,newActList));
 				actList.remove(0);
 
@@ -924,10 +927,10 @@ public class Help {
 				}
 				if (Operacao.getCodigo(desc).equals(operation)) done=true;
 				else{
-					rules.clearWorkingMemory();
-					rules.inserir((Expression)eq.clone());
+					regrasClassRules.clearWorkingMemory();
+					regrasClassRules.inserir((Expression)eq.clone());
 					newActList=new ArrayList<Activation>(Arrays.asList(
-							rules.getAgenda().getActivations()));
+							regrasClassRules.getAgenda().getActivations()));
 				}
 			}
 		}
@@ -1059,7 +1062,7 @@ public class Help {
 	}
 	
 	public Package getPackageRules(){
-		return hints.getSession().getRuleBase().getPackage("pat2math.help");
+		return regrasClassHints.getSession().getRuleBase().getPackage("pat2math.help");
 	}
 	
 	public PedidoAjuda getHintInfo(){

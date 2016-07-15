@@ -19,6 +19,7 @@ import pat2math.util.TabelaSimbolos;
  */
 public class ArvoreExp {
 	
+	//Raiz
 	private BTNode root;
 	
 	/**
@@ -43,10 +44,26 @@ public class ArvoreExp {
 	 * @throws InvalidValueException
 	 */
 	public void buildTree(String exp) throws InvalidValueException{
+		int s = 0;
+		int t = 0;
+		int u = 0;
+		
+		
+		
+		
+		
+		//Armazena os símbolo em ASCII
 		TabelaSimbolos tabela=new TabelaSimbolos();
 		Infix2PosFix inf=new Infix2PosFix();
 		exp=exp.replace(" ", "");
 		exp=Expression.trocaSinalMenos(exp);
+		
+		
+		s++;
+		System.out.println("Passou aqui **"+s+"** vezes -> Começo da BuildTree");
+		
+		
+		
 		String valor="";
 		int ini=0;
 		int fim=0;
@@ -63,6 +80,7 @@ public class ArvoreExp {
 				newExp+=valor;
 				ini=fim;
 			}else{
+				//Verifica se é uma operação válida, se o tipo é válido
 				if (Funcoes.isOp(valor)){
 					fim++;
 					newExp+=valor;
@@ -96,6 +114,12 @@ public class ArvoreExp {
 		 */
 		try{
 		while(fim<newExp.length()){
+			
+			
+			t++;
+			System.out.println("Passou aqui **"+t+"** vezes -> Começo While árvore louca lol");
+			
+			
 			valor=String.valueOf(newExp.charAt(fim));
 			if(inf.isDigit(valor.charAt(0))){
 				aux=tabela.getOriginal(valor.charAt(0));
@@ -122,6 +146,10 @@ public class ArvoreExp {
 		}catch(EmptyStackException ese){
 			throw new InvalidValueException("Equação Inválida");
 		}
+		
+		u++;
+		System.out.println("Passou aqui **"+u+"** vezes -> Fim do método BuildTree");
+		
 	}
 	
 	/**

@@ -57,8 +57,8 @@ public class Infix2PosFix {
 	}
 	
 	/**
-	 * Seta uma expressão infica no objeto a fim de que
-	 * se possa cnverter para a forma posfixa
+	 * Seta uma expressão infixa no objeto a fim de que
+	 * se possa converter para a forma posfixa
 	 * @param infx uma String contendo a expressão na forma infixa
 	 */
 	public void setInfixa(String infx){
@@ -99,7 +99,7 @@ public class Infix2PosFix {
 	 * caso contrário 
 	 */
 	public boolean isDigit(char dig){
-		if (dig>=65 && dig<=255){
+		if (dig>=65 && dig<=255){ //De A maiusculo até o final da tabela, não engloba nenhum dos operadores normais
 			if (dig!='^' && dig!='_' && dig!=127 && dig!='R'&& dig!='±')return true;
 			return false;
 		}
@@ -115,14 +115,21 @@ public class Infix2PosFix {
 		String temp;
 		try{
 			for (int index=0;index<infixa.length();index++){
+				//Transforma o primeiro elemento da String em char
 				temp=String.valueOf(infixa.charAt(index));
+				//Verifica se o elemento char é valido como simbolo
+				//utlizado na representação dos valores da expressão
+				// OU SEJA se for um operador estranho
 				if (isDigit(temp.charAt(0))){
-					posfixa+=temp;
+					posfixa+=temp; //Se sim posfixa recebe
 				}else if (temp.equals("(")){
-					pilha.push(temp);
-				}else if (Funcoes.isOp(temp)){
-					while((!pilha.isEmpty()) && (precedencia(pilha.peek())>=precedencia(temp))){
-						posfixa+=pilha.pop();
+					pilha.push(temp); //Se for parenteses bota na pilha
+				//Verifica se é uma operação válida, se o tipo é válido
+				}else if (Funcoes.isOp(temp)){//peek é olhadinha... lol
+					//Se tiver alguma coisa na pilha e se o primeiro elemento da pilha o num dele for maior ou igual
+					// ao elemento que está na String temp então posfixa
+					while((!pilha.isEmpty()) && (precedencia(pilha.peek())>=precedencia(temp))){ // Precedencia == num que recebe
+						posfixa+=pilha.pop();                                         // cada operação
 					}
 					pilha.push(temp);
 				}else if (temp.equals(")")){
@@ -140,5 +147,6 @@ public class Infix2PosFix {
 		}catch (EmptyStackException ese){
 			throw new InvalidEquationException("Equação Inválida","Há um número desigual de parêntesis");
 		}
+		System.out.println("O que tem na posfixa: "+posfixa);
 	}
 }

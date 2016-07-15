@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+/**
+ * Salva a equação e trabalho atual, com Serializable
+ * @author SAVANNAD
+ *
+ */
 @Entity
 @DiscriminatorValue("equation")
 public class Exercise extends Content implements Serializable {

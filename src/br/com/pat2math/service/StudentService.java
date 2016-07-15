@@ -22,62 +22,79 @@ import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.TaskPerformed;
 import br.com.pat2math.studentModel.Tip;
 
+/**
+ * Cria atributos pelas classes interfaces para entrar em contato com as classes que conversam diretamente com as tabelas, por isso
+ * o uso do //@AutoWired na frente desses atributos, e também já manda para a tabela resolutionStep os dados do passo atual
+ * @author SAVANNAD
+ *
+ */
 @Repository
 public class StudentService {
 	
-	@Autowired private AllStudents students;
-	@Autowired private GroupRepository groups;
-	@Autowired private ExerciseRepository exercises;
-	@Autowired private TaskPerformedRepository performedTasks;
-	@Autowired private ResolutionStepRepository resolutionSteps;
-	@Autowired private HelpRepository helps;
-	@Autowired private ContentRepository contents;
+	//Criar atributos para chegar nas tabelas:
 	
+	//Interface Repository<T> T == content que aí todas abaixo extends a Repository (é Generics) ou seja não é para chegar dierto
+	// nas classes é para chamar as requisições sim ir direto à chamada ao servidor
+	@Autowired private AllStudents allStudentsRepository; //É uma interface que extends uma outra interface chamada Repository	
+	@Autowired private GroupRepository groupRepository; //É uma interface que extends uma outra interface chamada Repository	
+	@Autowired private ExerciseRepository exerciseRepository; //É uma interface que extends uma outra interface chamada Repository	
+	@Autowired private TaskPerformedRepository taskPerformedRepository; //É uma interface que extends uma outra interface chamada Repository	
+	@Autowired private ResolutionStepRepository resolutionStepRepository; //É uma interface que extends uma outra interface chamada Repository	
+	@Autowired private HelpRepository helpRepository; //É uma interface que extends uma outra interface chamada Repository	
+	@Autowired private ContentRepository contentRepository; //É uma interface que extends uma outra interface chamada Repository	
+	
+	//Spring Security Code @PreAuthorize
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	public void changeGroup(Student student, Long idGroup) {
-		student = students.get(student.getId());
-		Group group = groups.get(idGroup);
+		student = allStudentsRepository.get(student.getId());
+		Group group = groupRepository.get(idGroup);
 		student.setGroup(group);
 	}
 	
 	public void performResolutionStep(Student student, Long idContent, Mensagem message, List<Operation> operations, List<Tip> tips) {
 		
-		Content content = contents.get(idContent);
-		TaskPerformed tp = performedTasks.get(content, student);
+		Content content = contentRepository.get(idContent);// Na tabela content do BC tem todas as equações
+		TaskPerformed taskPerformed = taskPerformedRepository.get(content, student); // Na tabela taskPerformed do BC tem
+		// Informação da resolution_step, o passo de cada questão (= id), informação da content 
+		//de qual é a questão (= id_content), informação da user, de qual é usuario  (id_student) 
 		
+		//Se é o ultimo passo ele salva data e hora
 		if(message.isUltimoPasso()) {
-			tp.setFinished(true);
-			tp.setFinalTime(new Date());
+			taskPerformed.setFinished(true);
+			taskPerformed.setFinalTime(new Date());
 		}
 		
-		ResolutionStep step = new ResolutionStep();
-		step.setTimestamp(new Date());
-		step.setCorrect(message.isRespostaCerta());
-		step.setTaskPerformed(tp);
-		step.setFeedback(message.getFeedback());
-		step.setMessage(message.getMSG());
-		step.setAnswer(message.getRespostaAluno());
-		step.setOperations(operations);
-		step.setTips(tips);
+		//Salva os dados na resolução da equação em uma ID
+		ResolutionStep resolutionStep = new ResolutionStep();
+		resolutionStep.setTimestamp(new Date());
+		resolutionStep.setCorrect(message.isRespostaCerta());
+		resolutionStep.setTaskPerformed(taskPerformed);
+		resolutionStep.setFeedback(message.getFeedback());
+		resolutionStep.setMessage(message.getMSG());
+		resolutionStep.setAnswer(message.getRespostaAluno());
+		resolutionStep.setOperations(operations);
+		resolutionStep.setTips(tips);
 		
-		resolutionSteps.add(step);
+		resolutionStepRepository.add(resolutionStep);
 	}
 	
+	// Lista Exercise salva a equação e trabalho atual, com Serializable
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	public List<Exercise> loadExercises(Long id) {		
-		return exercises.getByTopic(id);
+		return exerciseRepository.getByTopic(id);
 	}
 	
+	//Retorna 1 lista com os tipos de equações, com códigos == AD/SB
 	public List<Tip> loadHelps() {
-		return helps.getAll();
+		return helpRepository.getAll();
 	}
 	
 	public Tip loadHelp(Long id) {
-		return helps.get(id);
+		return helpRepository.get(id);
 	}
 	
 	public Exercise performExercise(Long id) {
-		return exercises.get(id);
+		return exerciseRepository.get(id);
 	}
 	
 }

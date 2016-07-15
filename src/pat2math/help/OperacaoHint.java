@@ -6,7 +6,11 @@ import java.util.List;
 import pat2math.expressao.Expression;
 import pat2math.expressao.arvore.BTNode;
 import pat2math.regras.Operacao;
-
+/**
+ * Tem dois nós de dica, 1 para a Dica e 1 para a Operação Inversa, e um nós de operação, todos BTNode
+ * @author SAVANNAD
+ *
+ */
 public class OperacaoHint extends Operacao{
 
 	private List<BTNode> expDica;

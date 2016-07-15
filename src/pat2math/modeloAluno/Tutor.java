@@ -15,31 +15,45 @@ import br.com.pat2math.studentModel.ResolutionStep;
 import br.com.pat2math.studentModel.Tip;
 import br.com.pat2math.studentModel.Knowledge;
 
+/**
+ *  Precisa de uma Mensagem e de uma List<Tip> helps no contrutor do Tutor, tem como atributos ModeloAluno e Mensagem
+ *  
+ * 
+ * @author Savanna
+ *
+ */
 public class Tutor {
 
 	private String mensagem = "";
-    private ModeloAluno resolvedor;
+    
+	/**
+	 * Cria no construtor um modelo de aluno, com nome, e usa os dados do Banco de Dados
+	 */
+	private ModeloAluno modeloAluno;
+    /**
+     * A classe Mensagem manda uma mensagem para o Tutor
+     */
     private Mensagem respostaCognitivo;
     
 
     public Tutor(String nome, String nomeFull, List<Tip> helps) {
         super();
         try {
-            resolvedor = new ModeloAluno();
-            resolvedor.useDatabase(true);
-            resolvedor.setNome(nome, helps);
-            resolvedor.setNomeFull(nomeFull);
+            modeloAluno = new ModeloAluno(); // Cria um novo aluno
+            modeloAluno.useDatabase(true); // Ativa/desativa Banco de Dados com as Hints no ModeloAluno
+            modeloAluno.setNome(nome, helps); // Bota o nome e o conjunto de ticas
+            modeloAluno.setNomeFull(nomeFull); 
         } catch (Exception ex) {
             System.out.println("Erro ao criar modelo de aluno!");
         }
     }
 
     public void kill(){
-    	resolvedor.clear();
+    	modeloAluno.clear();
     }
     
     public MaterialInstrucionalPOJO informNewEquation() {
-    	MaterialInstrucionalPOJO exercicio = resolvedor.getNextEquation();
+    	MaterialInstrucionalPOJO exercicio = modeloAluno.getNextEquation();
     	return exercicio;
     }
     
@@ -52,11 +66,11 @@ public class Tutor {
     }
 
     public ModeloAluno getResolvedor() {
-        return resolvedor;
+        return modeloAluno;
     }
 
     public void setResolvedor(ModeloAluno resolvedor) {
-        this.resolvedor = resolvedor;
+        this.modeloAluno = resolvedor;
     }
 
     public String getMensagem() {
@@ -66,10 +80,16 @@ public class Tutor {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
-
+    /**
+     * 
+     * @param mensagem
+     * @param helps
+     * @param knowledges
+     * @return
+     */
     public Mensagem validaEquacao(String mensagem, List<Tip> helps, List<Knowledge> knowledges) {
         this.mensagem = mensagem;
-        resolvedor.reset();
+        modeloAluno.reset();
 
         String[] messagePart = mensagem.split("#");
         String ia, ic, ei, op, exp;
@@ -91,9 +111,9 @@ public class Tutor {
 
 
         try {
-            resolvedor.setOperacao(op);
-            resolvedor.setExpressao(ei);
-            this.respostaCognitivo = resolvedor.iniciaResolucao(exp, helps, knowledges);
+            modeloAluno.setOperacao(op);
+            modeloAluno.setExpressao(ei);
+            this.respostaCognitivo = modeloAluno.iniciaResolucao(exp, helps, knowledges);
             
         } catch (InvalidValueException e) {
             e.printStackTrace();
@@ -105,53 +125,53 @@ public class Tutor {
 
 
     public Tip getDica(String ultimoPasso, List<Tip> helps, List<Knowledge> knowledges) throws InvalidValueException {
-        return resolvedor.hints(ultimoPasso, helps, knowledges);
+        return modeloAluno.hints(ultimoPasso, helps, knowledges);
     }
 
 
     public String getProximoPasso(String ultimoPasso) throws InvalidValueException {
-        return resolvedor.proximoPasso(ultimoPasso);
+        return modeloAluno.proximoPasso(ultimoPasso);
     }
 
     public List<String> getResolucaoCompleta(String ultimoPasso) throws InvalidValueException {
         //List<String> resolucaoCompleta = ;
 
 
-        return resolvedor.mostrarPassos(ultimoPasso);
+        return modeloAluno.mostrarPassos(ultimoPasso);
     }
 
     public boolean isEndOfResolution(String s) throws InvalidValueException {
-        return resolvedor.isEndOfResolution(s);
+        return modeloAluno.isEndOfResolution(s);
     }
 
 
 	public String getNome() {
-		return resolvedor.getNomeFull();
+		return modeloAluno.getNomeFull();
 	}
 	
 	public void setEquacao(List<MaterialInstrucionalPOJO> equacao){
-		resolvedor.addNewEquation(equacao);
+		modeloAluno.addNewEquation(equacao);
 	}
 	
 	public MaterialInstrucionalPOJO setEquacao(MaterialInstrucionalPOJO equacao){
-		return resolvedor.addNewEquation(equacao);
+		return modeloAluno.addNewEquation(equacao);
 	}
 	
 	public void clearListEquations(){
-		resolvedor.clearEquations();
+		modeloAluno.clearEquations();
 	}
 	
 	public List<MaterialInstrucionalPOJO> listEquations(){
-		return resolvedor.listEquations();
+		return modeloAluno.listEquations();
 	}
 	
 	public void removeFromList(MaterialInstrucionalPOJO exercicio){
-		resolvedor.removeEquation(exercicio);
+		modeloAluno.removeEquation(exercicio);
 	}
 	
 	public List<Operation> getSteps() {
 
-		List<Equacoes> fullResult = resolvedor.getPassos();
+		List<Equacoes> fullResult = modeloAluno.getPassos();
 		List<Operation> operations = new ArrayList<Operation>();
 		for(Equacoes e : fullResult) {
 			if(e.getFullEquation().startsWith("#")) {
@@ -170,7 +190,7 @@ public class Tutor {
 	public List<String> getSteps(String equation){
 		List<String> solution = new ArrayList<String>();
 		try {
-			solution = resolvedor.mostrarPassos(equation);
+			solution = modeloAluno.mostrarPassos(equation);
 						
 		} catch (InvalidValueException e) {
 			System.out.println(e.getMessage());
@@ -182,7 +202,7 @@ public class Tutor {
 	public String getOneStep(String equation){
 		String solution="";
 		try {
-			solution = resolvedor.proximoPasso(equation);
+			solution = modeloAluno.proximoPasso(equation);
 		} catch (InvalidValueException e) {
 			System.out.println(e.getMessage());
 		}

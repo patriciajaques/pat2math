@@ -55,7 +55,6 @@ public class LoadEquationsController {
 		if(request.getProtocol().contains("1.0")) {
 			response.setHeader("Connection", "close");
 		}
-		
 		return exercise;
 	}
 	

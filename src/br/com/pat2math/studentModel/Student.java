@@ -16,22 +16,28 @@ public class Student extends User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	//Pego um grupo da tabela _group
 	@ManyToOne
 	@JoinColumn(name="id_group", referencedColumnName="id", nullable=true)
 	private Group group;
 	
+	//1 lista com knowledge
 	@OneToMany(mappedBy="student", targetEntity=Knowledge.class)
 	private List<Knowledge> knowledges;
 	
+	//1 lista lista TaskPerformed == Tempo inicial de fazer fazer a equação, tempo final, id equação, + 1 lista resolutionStep
 	@OneToMany
 	private List<TaskPerformed> tasksPerformed;
 	
+	//1 lista tip == com todos os códigos dos tipos das equações e suas respectivas AS DICAS!!
 	@Transient
 	private List<Tip> helpsRequested = new ArrayList<Tip>();
 	
+	//1 lista tip == com todos os códigos dos tipos das equações e suas respectivas AS DICAS!!
 	@Transient
 	private List<Tip> feedbacks = new ArrayList<Tip>();
 	
+	//Strings
 	private String question1, question2, question3;
 	
 	public static Student newStudent(Student student) {
