@@ -222,7 +222,7 @@ function loadTasks(id) {
 					else 
 						addProgressValue(taskSolved);
 					
-					if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 28 && id !== 32 && id !== 35 && id !== 36) { 
+					if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id < 25) { //&& id !== 28 && id !== 32 && id !== 35 && id !== 36 tem que atualizar esses números com a adição do novo plano 
 						$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
 
 						if (id > 2 && taskSolved === 0) {
@@ -273,16 +273,16 @@ function getNumEquationsPlan() {
 	if (planoAtual < 19 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
 		return 5;
 	
-	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 35 && planoAtual !== 25 && planoAtual !== 28 && planoAtual!== 32))
+	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 36 && planoAtual !== 25 && planoAtual !== 29 && planoAtual!== 33))
 		return 10;
 	
 	else if (planoAtual === 11)
 		return 16;
 	
-	else if (planoAtual === 25 || planoAtual === 32)
+	else if (planoAtual === 25 || planoAtual === 29 || planoAtual === 33)
 		return 20;
 	
-	else if (planoAtual === 28 || planoAtual === 35)
+	else if (planoAtual === 36)
 		return 15;
 	
 	else 
@@ -291,7 +291,7 @@ function getNumEquationsPlan() {
 }
 
 function getPontuacaoPlano() {
-	if (planoAtual !== 11 && planoAtual !== 16 && planoAtual !== 21 && planoAtual !== 25 && planoAtual !== 32 && planoAtual < 35) {
+	if (planoAtual !== 11 && planoAtual !== 16 && planoAtual !== 21 && planoAtual !== 25 && planoAtual !== 33 && planoAtual < 36) {
 		if (planoAtual <= 6)
 			pontuacaoPlano = 20;
 		
@@ -310,7 +310,7 @@ function getPontuacaoPlano() {
 		else if (planoAtual === 19 || planoAtual === 20)
 			pontuacaoPlano = 50;
 		
-		else if (planoAtual >= 26 && planoAtual <= 28)
+		else if (planoAtual >= 26 && planoAtual <= 29)
 			pontuacaoPlano = 100;
 		
 		else if (planoAtual === 22)
@@ -322,16 +322,16 @@ function getPontuacaoPlano() {
 		else if (planoAtual === 24)
 			pontuacaoPlano = 80;
 		
-		else if (planoAtual === 29)
+		else if (planoAtual === 30)
 			pontuacaoPlano = 120;
 		
-		else if (planoAtual === 30)
+		else if (planoAtual === 31)
 			pontuacaoPlano = 140;
 		
-		else if (planoAtual === 31)
+		else if (planoAtual === 32)
 			pontuacaoPlano = 160;
 		
-		else if (planoAtual === 33)
+		else if (planoAtual === 34)
 			pontuacaoPlano = 200;
 		
 		else

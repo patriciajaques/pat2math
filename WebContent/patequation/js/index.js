@@ -274,7 +274,8 @@ function createPlans(numPlans) {
 	var plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> <span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
 		
 	for (var i = 2; i <= numPlans; i++) {
-		plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';		
+		if (i !== 28)
+			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';		
 	}
 	document.getElementById("the_list").innerHTML = plans;
 }
@@ -1871,20 +1872,22 @@ function getEquationsWE() {
 	pointsWE[23] = 60;
 	equationsWE[24] = "5x+8-2x=10+x";
 	pointsWE[24] = 80;
-	equationsWE[26] = "2(x+3)-5=5(x+2)";
+	equationsWE[26] = "x-(3-2x)=2+(-4+2x)"; //ver se mantenho esta equação
 	pointsWE[26] = 100;
-	equationsWE[27] = "(x+3)/(3)=(4)/(9)";
+	equationsWE[27] = "2(x+3)-5=5(x+2)";
 	pointsWE[27] = 100;
-	equationsWE[29] = "(x)/(4)+5=(2)/(3)-(5x)/(8)";
-	pointsWE[29] = 120;
-	equationsWE[30] = "(x+2)/(5)+8=(x-3)/(4+2)";
-	pointsWE[30] = 140;
-	equationsWE[31] = "(4(x+3))/(7)+5=(-2(-x-1))/(5+8)";
-	pointsWE[31] = 160;
-	equationsWE[33] = "(4)/(x)+(2)/(3)-5=(8)/(6x)";
-	pointsWE[33] = 200;
-	equationsWE[34] = "(5)/(4x-2)+9=(10)/(-4(x-3))";
-	pointsWE[34] = 300;	
+	equationsWE[28] = "(x+3)/(3)=(4)/(9)";
+	pointsWE[28] = 100;
+	equationsWE[30] = "(x)/(4)+5=(2)/(3)-(5x)/(8)";
+	pointsWE[30] = 120;
+	equationsWE[31] = "(x+2)/(5)+8=(x-3)/(4+2)";
+	pointsWE[31] = 140;
+	equationsWE[32] = "(4(x+3))/(7)+5=(-2(-x-1))/(5+8)";
+	pointsWE[32] = 160;
+	equationsWE[34] = "(4)/(x)+(2)/(3)-5=(8)/(6x)";
+	pointsWE[34] = 200;
+	equationsWE[35] = "(5)/(4x-2)+9=(10)/(-4(x-3))";
+	pointsWE[35] = 300;	
 }
 
 function getResolutionsWE() {
