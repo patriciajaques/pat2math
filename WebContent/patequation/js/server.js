@@ -7,6 +7,7 @@ function requestServer (type, last, next, typeOperation, element) {
     //type = 'n' -> new equation
     //type = 'e' -> check the equation
 
+	//Arruma a multiplicação da fração para o servidor
 	next = replaceAllMultiplications(next);
     var msg = "";
     if (type === 'd') { //for hint        
@@ -16,9 +17,12 @@ function requestServer (type, last, next, typeOperation, element) {
     }
     //alert(msg);
     console.log("Mensagem enviada ao servidor >>>>> " + msg);
+  //Passa os operadores (caracteres especiais) para linguagem URL
     msg = stringToUrl(msg);
     //console.log("Mensagem enviada ao servidor URL >>>>> " + msg);
 
+    //Faz uma requisição no servidor via Java, vai para a classe ResolverController, essa requisição é passada em forma de texto (via URL)
+    //e depois que esta informação retorna, passa pelos passos abaixo do ajax
     $.ajax({url: "../../pat2math/resolver?id=" + selectedEquation.id + "&echo="  + msg + "&callback=?", //200.188.161.124 server   //10.210.2.197:8080 cassio
         dataType: 'jsonp',
         success: function(data) {
