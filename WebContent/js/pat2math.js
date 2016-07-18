@@ -222,7 +222,7 @@ function loadTasks(id) {
 					else 
 						addProgressValue(taskSolved);
 					
-					if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id < 25) { //&& id !== 28 && id !== 32 && id !== 35 && id !== 36 tem que atualizar esses números com a adição do novo plano 
+					if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 29 && id !== 33 && id < 36 ) {
 						$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
 
 						if (id > 2 && taskSolved === 0) {

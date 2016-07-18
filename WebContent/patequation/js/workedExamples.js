@@ -1706,7 +1706,7 @@ function classPlan20b() {
 		name: "2",
 		next : "3",
 		title : "Utilizando a operação inversa, passamos o 4 para o outro lado multiplicando o -100",
-		description : "Observe que neste caso o sinal de menos acompanha o número 4, o qual fica negativo do outro lado",
+		description : "Observe que neste caso o sinal de menos acompanha o número 4, que fica negativo do outro lado",
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",

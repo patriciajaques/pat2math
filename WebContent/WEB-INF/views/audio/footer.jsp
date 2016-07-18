@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script src="/pat2math/patequation/js/index.js"></script>
 <script>
+function verifyID() {
 	var currentID = "" + ${student.id};
 
 	var isLastUser = false;
@@ -29,86 +30,94 @@
 	
 	var id = parseInt (currentID);
 	
-	//Grupo de Controle
-	if (id >= 520 && id <= 553) 
+	checkGroup(id);
+}
+
+function checkGroup(id) {
+	if (id >= 520 && id <= 553) //Grupo de controle
 		setCookieDays ("enableWE", "false", 1);
 	
-	else
+	else //Grupo experimental
 		setCookieDays ("enableWE", "", 0);
 	
-	cookieName = "playAudio" + currentPos;
-	setCookieDays (cookieName, "false", 1);
-	location.href= '/pat2math/student/home'; 
-	
-	
+	redirectPage();
+}
 
-function verificaAudio ( ) {
-// 	var idGroup = ${student.group.id};
+function redirectPage() {
 	var cookieName = "playAudio" + currentPos;
+	setCookieDays (cookieName, "false", 1);
+	setTimeout ("location.href= '/pat2math/student/home';", 2000); 
+	setTimeout ("document.getElementById('go').style.visibility = 'visible';", 5000);
+}
+
+verifyID();
+// function verificaAudio ( ) {
+// // 	var idGroup = ${student.group.id};
+// 	var cookieName = "playAudio" + currentPos;
 	
-// 	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3
-//         if (id < 239 || id === 274 || id === 290 || id === 291)
-//             setCookieDays ("tipoAudio", "1", 1);
+// // 	if (getCookie (cookieName) !== "false") { //idGroup === 2 || idGroup === 3
+// //         if (id < 239 || id === 274 || id === 290 || id === 291)
+// //             setCookieDays ("tipoAudio", "1", 1);
             
-//         else
-//         	setCookieDays ("tipoAudio", "2", 1);
+// //         else
+// //         	setCookieDays ("tipoAudio", "2", 1);
         
-//         location.href= '/pat2math/playaudio';
-//     }
+// //         location.href= '/pat2math/playaudio';
+// //     }
     
-//     else 
-    	location.href= '/pat2math/student/home'; 
-}
+// //     else 
+//     	location.href= '/pat2math/student/home'; 
+// }
 
 
 
 
-function helpPageCookies ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/cookies_01.png border=0><div style='position:absolute; top:194px; left:5px;'><div style='position:absolute; top:0; left:542px;'> <a href=# onclick=helpPageCookies2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPageCookies ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/cookies_01.png border=0><div style='position:absolute; top:194px; left:5px;'><div style='position:absolute; top:0; left:542px;'> <a href=# onclick=helpPageCookies2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function helpPageCookies2 ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/cookies_02.png border=0><div style='position:absolute; top:194px; left:5px;'> <a href=# onclick=helpPageCookies()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:542px;'> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPageCookies2 ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/cookies_02.png border=0><div style='position:absolute; top:194px; left:5px;'> <a href=# onclick=helpPageCookies()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:542px;'> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function helpPagePopups ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_01.png border=0><div style='position:absolute; top:194px; left:2px;'> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPagePopups ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_01.png border=0><div style='position:absolute; top:194px; left:2px;'> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function helpPagePopups2 ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_02.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups3()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPagePopups2 ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_02.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups3()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function helpPagePopups3 ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_03.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups2()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups4()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPagePopups3 ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_03.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups2()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups4()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function helpPagePopups4 ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_04.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups3()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups5()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPagePopups4 ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_04.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups3()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <a href=# onclick=helpPagePopups5()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function helpPagePopups5 ( ) {
-	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_05.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups4()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
-	$("#mask").fadeIn(700);
-	$("#helpCookiesPopups-box").fadeIn(700);
-}
+// function helpPagePopups5 ( ) {
+// 	$("#helpCookiesPopups-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/images/popups_05.png border=0><div style='position:absolute; top:194px; left:2px;'> <a href=# onclick=helpPagePopups4()><img src=/pat2math/patequation/img/seta_left.png></img></a> <div style='position:absolute; top:0; left:551px;'> <div style='position:absolute; top:200px; left:-23px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit_text.png></img></a>");
+// 	$("#mask").fadeIn(700);
+// 	$("#helpCookiesPopups-box").fadeIn(700);
+// }
 
-function closeWindow ( ) {
-	$("#mask").fadeOut(700);
-	$("#helpCookiesPopups-box").fadeOut(700);
-}
+// function closeWindow ( ) {
+// 	$("#mask").fadeOut(700);
+// 	$("#helpCookiesPopups-box").fadeOut(700);
+// }
 
 </script>
 
