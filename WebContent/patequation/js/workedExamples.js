@@ -255,7 +255,7 @@ function classPlan2() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 6</font>", "step4", 1); exitWorkedExample();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -376,7 +376,7 @@ function classPlan3() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", 1); exitWorkedExample();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -448,7 +448,7 @@ function classPlan4() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {document.getElementById("arrow").innerHTML = ""; resolutionEquation("<font color='blue'>x = - 6</font>", "step2", 1); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -503,7 +503,7 @@ function classPlan5() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 3</font>", "step2", 1); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -697,7 +697,7 @@ function classPlan8() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 17</font>", "step4", 1); exitWorkedExample();},	
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -787,7 +787,7 @@ function classPlan9() {
 			width : 600,
 			position: "bottom",
 			alignButtons : "right",
-			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
+			onShow: function() {resolutionEquation("<font color='blue'>x = 12</font>", "step4", 1); exitWorkedExample();},		
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -877,7 +877,7 @@ function classPlan10() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", 1); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},		
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step4", 1); exitWorkedExample();},		
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -995,7 +995,7 @@ function classPlan12() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {document.getElementById("step2").innerHTML = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><s>2</s></div><div class="numerator"><s>2x</s></div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span> = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><s>2</s></div><div class="numerator"><s>10</s></div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>'; document.getElementById("step2").style.opacity = "0.5"; resolutionEquation("<font color='blue'>x = 5</font>", "step3", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},	
+		onShow: function() {document.getElementById("step2").innerHTML = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><s>2</s></div><div class="numerator"><s>2x</s></div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span> = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><s>2</s></div><div class="numerator"><s>10</s></div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>'; document.getElementById("step2").style.opacity = "0.5"; resolutionEquation("<font color='blue'>x = 5</font>", "step3", 2); exitWorkedExample();},	
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1083,7 +1083,7 @@ function classPlan13() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 6</font>", "step2", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1139,7 +1139,7 @@ function classPlan14() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 5</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 5</font>", "step2", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1195,7 +1195,7 @@ function classPlan15() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = 7</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {resolutionEquation("<font color='blue'>x = 7</font>", "step2", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1281,7 +1281,7 @@ function classPlan17() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = 80</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = 80</font>", "step2", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1337,7 +1337,7 @@ function classPlan18() {
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
-			onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 343</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 343</font>", "step2", 2); exitWorkedExample();},
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -1506,7 +1506,7 @@ function classPlan19a() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 252</font>", "step4", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 252</font>", "step4", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1556,7 +1556,7 @@ function classPlan19b() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 252</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 252</font>", "step2", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1676,7 +1676,7 @@ function classPlan20a() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = 400</font>", "step4", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = 400</font>", "step4", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1726,7 +1726,7 @@ function classPlan20b() {
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
-		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = 400</font>", "step2", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = 400</font>", "step2", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,
@@ -1831,7 +1831,7 @@ function classPlan22() {
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
-			onShow: function() {resolutionEquation('<font color="blue">x = </font><span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">2</font></div><div class="numerator"><font color="blue">9</font></div><div id="lineFrac2" class="frac-line-aux"><span id="lineFrac2" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step4", 2); document.getElementById("lineFrac2").style.color = "blue"; isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			onShow: function() {resolutionEquation('<font color="blue">x = </font><span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">2</font></div><div class="numerator"><font color="blue">9</font></div><div id="lineFrac2" class="frac-line-aux"><span id="lineFrac2" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step4", 2); document.getElementById("lineFrac2").style.color = "blue"; exitWorkedExample();},
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -1938,7 +1938,7 @@ function classPlan23() {
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
-			onShow: function() {resolutionEquation('<font color="blue">x = 12</font>', "step4", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			onShow: function() {resolutionEquation('<font color="blue">x = 12</font>', "step4", 2); exitWorkedExample();},
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -2110,7 +2110,7 @@ function classPlan24() {
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
-			onShow: function() {resolutionEquation("<font color='blue'>x = 1</font>", "step7", 2); isWorkedExample = false; blockMenu = false; var cookieName = "currentWE" + currentPos; setCookieDays (cookieName, "", 0); $("#topics").fadeIn(); $("#topicsAux").hide();},
+			onShow: function() {resolutionEquation("<font color='blue'>x = 1</font>", "step7", 2); exitWorkedExample();},
 			buttons : {
 				Finalizar: {
 					click : true,
@@ -2119,7 +2119,7 @@ function classPlan24() {
 			}
 		});	
 }
-function openWorkedExample(id) {	
+//function openWorkedExample(id) {	
 //	if (id === 26) {
 //		loadExerciseWE("2(x+3)-5=5(x+2)", 100);
 //		classPlan26();
@@ -2156,4 +2156,4 @@ function openWorkedExample(id) {
 //	}
 	
 	
-}
+//}

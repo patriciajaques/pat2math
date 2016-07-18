@@ -63,6 +63,15 @@ function getResolutionEquation(idPlan) {
 	document.getElementById(idFinalStep).style.color = "blue";
 }
 
+function exitWorkedExample() {
+	isWorkedExample = false; 
+	blockMenu = false; 
+	var cookieName = "currentWE" + currentPos; 
+	setCookieDays (cookieName, "", 0); 
+	$("#topics").fadeIn(); 
+	$("#topicsAux").hide();
+}
+
 function showArrow() {
 	var line = $(selectedSheet + " .hLineAux").next().next();
 	line.html(line.html() + '<div id="arrow" style="margin-top:-64px; margin-left:327px; position: absolute;"><img src=/pat2math/patequation/img/arrow_green.png></div>');
@@ -234,7 +243,7 @@ function continueClassPlan7() {
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", 1); isWorkedExample = false; blockMenu = false; $("#topics").fadeIn(); $("#topicsAux").hide();},	
+		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", 1); exitWorkedExample();},	
 		buttons : {
 			Finalizar: {
 				click : true,
