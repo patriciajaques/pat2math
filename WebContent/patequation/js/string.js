@@ -133,7 +133,7 @@ function hasOpenFrac(list) {
 }
 
 function splitEquation(equation) {
-    var split = new Array();
+	var split = new Array();
     var cont = 0;
     for (var i = 0; i < equation.length; i++) {
         if (isNumber(equation[i]) || isIncognita(equation[i])) {
@@ -142,6 +142,27 @@ function splitEquation(equation) {
             cont++;
             split[cont] = equation[i];
             cont++;
+        }
+    }
+    return split;
+}
+
+function splitEquationUI(equation) {
+    var split = new Array();
+    var cont = 0;
+    for (var i = 0; i < equation.length; i++) {
+        if (isNumber(equation[i]) || isIncognita(equation[i]) || equation[i] === "/" || equation[i] === "(" || equation[i] === ")") {
+        	if (split[cont] === undefined)
+        		split[cont] = "";
+        	
+        	split[cont] += equation[i];
+        } else if (isOperator(equation[i])) {
+        	if (i !== 0 && !isOperator(equation[i-1]))
+        		cont++;
+        	
+            split[cont] = equation[i];                      
+            cont++;
+            	
         }
     }
     return split;
@@ -205,34 +226,34 @@ function isOperator(digit) {
     return true;
 }
 
-function splitEquation(equation) {
-	var result = new Array();
-	var numTerms = 0;
-	var currentTerm = "";
-	
-	for (var i = 0; i < equation.length; i++) {
-		var currentChar = equation.charAt(i);
-		
-		if (isNumberOrIncognita(currentChar))
-			currentTerm += currentChar;
-		
-		else if (currentChar === "<") {
-			var startFraction = i;			
-			var endFractionString = equation.indexOf("</span></span></span>");		
-			var endFraction = endFractionString + 21;
-			
-			result[numTerms] = equation.substring(startFraction, endFraction); numTerms++;
-			i = endFraction - 1;
-		}
-		
-		else {
-			result[numTerms] = currentTerm; numTerms++;
-			result[numTerms] = currentChar; numTerms++;
-			currentTerm = "";			
-		}
-	}
-	
-	result[numTerms] = currentTerm;
-	
-	return result;
-}
+//function splitEquationUI(equation) {
+//	var result = new Array();
+//	var numTerms = 0;
+//	var currentTerm = "";
+//	
+//	for (var i = 0; i < equation.length; i++) {
+//		var currentChar = equation.charAt(i);
+//		
+//		if (isNumberOrIncognita(currentChar))
+//			currentTerm += currentChar;
+//		
+//		else if (currentChar === "<") {
+//			var startFraction = i;			
+//			var endFractionString = equation.indexOf("</span></span></span>");		
+//			var endFraction = endFractionString + 21;
+//			
+//			result[numTerms] = equation.substring(startFraction, endFraction); numTerms++;
+//			i = endFraction - 1;
+//		}
+//		
+//		else {
+//			result[numTerms] = currentTerm; numTerms++;
+//			result[numTerms] = currentChar; numTerms++;
+//			currentTerm = "";			
+//		}
+//	}
+//	
+//	result[numTerms] = currentTerm;
+//	
+//	return result;
+//}
