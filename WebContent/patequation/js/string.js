@@ -150,22 +150,112 @@ function splitEquation(equation) {
 function splitEquationUI(equation) {
     var split = new Array();
     var cont = 0;
-    for (var i = 0; i < equation.length; i++) {
-        if (isNumber(equation[i]) || isIncognita(equation[i]) || equation[i] === "/" || equation[i] === "(" || equation[i] === ")") {
+    
+    var equationUI = checkFractions(equation);
+    
+    for (var i = 0; i < equationUI.length; i++) {
+        if (isNumber(equationUI[i]) || isIncognita(equationUI[i]) || equationUI[i] === "(" || equationUI[i] === ")") {
         	if (split[cont] === undefined)
         		split[cont] = "";
         	
-        	split[cont] += equation[i];
-        } else if (isOperator(equation[i])) {
-        	if (i !== 0 && !isOperator(equation[i-1]))
+        	split[cont] += equationUI[i];
+        } 
+        
+        else if (isOperator(equationUI[i])) {
+        	if (i !== 0 && !isOperator(equationUI[i-1]))
         		cont++;
         	
-            split[cont] = equation[i];                      
+            split[cont] = equationUI[i];                      
             cont++;
             	
         }
+        
+        else if (equationUI[i] === "<") {//Foi encontrada uma fração
+        	var finalFraction = equationUI.indexOf("</fraction>") + 10; //+10 porque o termo "/fraction>" tem 10 caracteres
+        	split[cont] = equationUI.substring(i, finalFraction+1);
+        	
+        	i = finalFraction - 1; //-1 porque o for vai incrementar o i na próxima iteração
+        } 
     }
+    
     return split;
+}
+
+function checkFractions(text) {
+	var startDenominator = text.indexOf(")/(") + 3;
+
+	if (startDenominator === 2) { // indexOf === -1, não encontrou frações
+		return text;
+	}
+	
+	else {
+		var endDenominator = startDenominator;
+
+		var openedParentheses = 1;
+		var closedParentheses = 0;
+
+		while (openedParentheses !== closedParentheses) {
+			endDenominator++;
+			var currentChar = text.charAt(endDenominator);
+
+			if (currentChar === ')')
+				closedParentheses++;
+
+			else if (currentChar === '(')
+				openedParentheses++;
+		}
+
+		var denominator = text.substring(startDenominator, endDenominator);
+
+		var endNumerator = startDenominator - 3;
+		var startNumerator = endNumerator;
+
+		openedParentheses = 0;
+		closedParentheses = 1;
+
+		while (openedParentheses !== closedParentheses) {
+			startNumerator--;
+			var currentChar = text.charAt(startNumerator);
+
+			if (currentChar === '(')
+				openedParentheses++;
+
+			else if (currentChar === ')')
+				closedParentheses++;
+		}
+
+		var numerator = text.substring(startNumerator + 1, endNumerator);
+		
+		var fraction = "(" + numerator + ")/(" + denominator + ")";
+		var fractionUI = "<fraction><denominator>" + denominator + "</denominator><numerator>" + numerator + "</numerator></fraction>";
+		var newText = text.replace(fraction, fractionUI);
+		
+		return checkFractions(newText);
+	}
+//	if (startDenominator !== 2) { // indexOf != -1
+//		
+//
+//		var fraction = "<denominator>" + denominator
+//				+ "</denominator><numerator>" + numerator + "</numerator>";
+//
+//		var fractionText = text.substring(startNumerator, endDenominator + 1);
+//
+//		var partialEquation = replaceAll(text, fractionText, fraction);
+//
+//		return textToUserInterface(partialEquation);
+//	}
+//	
+//	else {
+//		var beforeDenominator = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">';
+//		var afterDenominatorAndBeforeNumerator = '</div><div class="numerator">';
+//		var afterNumerator = '</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
+//		
+//		var equationUI = replaceAll(text, "<denominator>", beforeDenominator);
+//		equationUI = replaceAll(equationUI, "</denominator><numerator>", afterDenominatorAndBeforeNumerator);
+//		equationUI = replaceAll(equationUI, "</numerator>", afterNumerator);
+//
+//		return splitEquationUI(equationUI);
+//	}
 }
 
 function isNumber(digit) {

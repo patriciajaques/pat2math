@@ -117,90 +117,33 @@ function naturalToText(natural) {
 function textToUserInterface(text) {
 	var result = splitEquationUI(text);
 	
-	var beforeDenominator = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">';
-	var afterDenominatorAndBeforeNumerator = '</div><div class="numerator">';
-	var afterNumerator = '</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
+	if (text.indexOf(")/(") !== -1) {
+		var beforeDenominator = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">';
+		var afterDenominatorAndBeforeNumerator = '</div><div class="numerator">';
+		var afterNumerator = '</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
 	
-	for (var i = 0; i < result.length; i++) {
-		if (result[i].indexOf("/") !== -1) {
-			//Por algum motivo desconhecido o navegador não reconheceu a função replaceAll nesta parte 
-			while (result[i].indexOf("(") !== -1) {
-		        result[i] = result[i].replace("(", "");
-		    }
+		for (var i = 0; i < result.length; i++) {
+			if (result[i].indexOf("<fraction>") !== -1) {
+				result[i] = result[i].replace("<fraction><denominator>", beforeDenominator);
+				result[i] = result[i].replace("</denominator><numerator>", afterDenominatorAndBeforeNumerator);
+				result[i] = result[i].replace("</numerator></fraction>", afterNumerator);
+//			//Por algum motivo desconhecido o navegador não reconheceu a função replaceAll nesta parte 
+//			while (result[i].indexOf("(") !== -1) {
+//		        result[i] = result[i].replace("(", "");
+//		    }
+//			
+//			while (result[i].indexOf(")") !== -1) {
+//		        result[i] = result[i].replace(")", "");
+//		    }
+//			
+//			var splitFrac = result[i].split("/");
 			
-			while (result[i].indexOf(")") !== -1) {
-		        result[i] = result[i].replace(")", "");
-		    }
-			
-			var splitFrac = result[i].split("/");
-			
-			result[i] = beforeDenominator + splitFrac[1] + afterDenominatorAndBeforeNumerator + splitFrac[0] + afterNumerator;		
+//			result[i] = beforeDenominator + splitFrac[1] + afterDenominatorAndBeforeNumerator + splitFrac[0] + afterNumerator;		
+			}
 		}
 	}
 	
 	return result;
-
-//	var startDenominator = text.indexOf(")/(") + 3;
-//
-//	if (startDenominator !== 2) { // indexOf != -1
-//		var endDenominator = startDenominator;
-//
-//		var openedParentheses = 1;
-//		var closedParentheses = 0;
-//
-//		while (openedParentheses !== closedParentheses) {
-//			endDenominator++;
-//			var currentChar = text.charAt(endDenominator);
-//
-//			if (currentChar === ')')
-//				closedParentheses++;
-//
-//			else if (currentChar === '(')
-//				openedParentheses++;
-//		}
-//
-//		var denominator = text.substring(startDenominator, endDenominator);
-//
-//		var endNumerator = startDenominator - 3;
-//		var startNumerator = endNumerator - 1;
-//
-//		openedParentheses = 0;
-//		closedParentheses = 1;
-//
-//		while (openedParentheses !== closedParentheses) {
-//			startNumerator--;
-//			var currentChar = text.charAt(startNumerator);
-//
-//			if (currentChar === '(')
-//				openedParentheses++;
-//
-//			else if (currentChar === ')')
-//				closedParentheses++;
-//		}
-//
-//		var numerator = text.substring(startNumerator + 1, endNumerator);
-//
-//		var fraction = "<denominator>" + denominator
-//				+ "</denominator><numerator>" + numerator + "</numerator>";
-//
-//		var fractionText = text.substring(startNumerator, endDenominator + 1);
-//
-//		var partialEquation = replaceAll(text, fractionText, fraction);
-//
-//		return textToUserInterface(partialEquation);
-//	}
-//	
-//	else {
-//		var beforeDenominator = '<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">';
-//		var afterDenominatorAndBeforeNumerator = '</div><div class="numerator">';
-//		var afterNumerator = '</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>';
-//		
-//		var equationUI = replaceAll(text, "<denominator>", beforeDenominator);
-//		equationUI = replaceAll(equationUI, "</denominator><numerator>", afterDenominatorAndBeforeNumerator);
-//		equationUI = replaceAll(equationUI, "</numerator>", afterNumerator);
-//
-//		return splitEquationUI(equationUI);
-//	}
 }
 
 function textToUserInterfaceOld(text) { //<msup>base exponent</msup>

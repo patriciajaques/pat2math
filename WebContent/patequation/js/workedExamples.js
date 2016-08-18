@@ -356,7 +356,7 @@ function classPlan3() {
 		name: "6",
 		next : "7",
 		title : "Dica",
-		description : "Seguindo essa dica, nós eliminamos alguns passos e podemos ir direto aplicando a operação inversa do outro lado.",
+		description : "Seguindo essa dica, nós eliminamos alguns passos e podemos aplicar direto a operação inversa do outro lado.",
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
