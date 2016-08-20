@@ -154,6 +154,7 @@ function splitEquationUI(equation) {
     var equationUI = checkFractions(equation);
     
     for (var i = 0; i < equationUI.length; i++) {
+    	alert (equationUI[i]);
         if (isNumber(equationUI[i]) || isIncognita(equationUI[i]) || equationUI[i] === "(" || equationUI[i] === ")") {
         	if (split[cont] === undefined)
         		split[cont] = "";
@@ -171,7 +172,7 @@ function splitEquationUI(equation) {
         }
         
         else if (equationUI[i] === "<") {//Foi encontrada uma fração
-        	var finalFraction = equationUI.indexOf("</fraction>") + 10; //+10 porque o termo "/fraction>" tem 10 caracteres
+        	var finalFraction = equationUI.indexOf("</fraction>", i) + 10; //+10 porque o termo "/fraction>" tem 10 caracteres
         	split[cont] = equationUI.substring(i, finalFraction+1);
         	
         	i = finalFraction - 1; //-1 porque o for vai incrementar o i na próxima iteração
