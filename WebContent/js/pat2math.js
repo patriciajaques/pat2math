@@ -153,7 +153,7 @@ function loadTasks(id) {
 			$("#tasks"+planoAtual).slideUp(700);
 			$("#tasks"+planoAtual).html("");
 		}
-		planoAtual = id;
+		
 		
 		$.ajax({
 			type: "GET",
@@ -162,7 +162,35 @@ function loadTasks(id) {
 			success:
 				function(data) {
 					$("#tasks" + id).html(data);
-					$("#tasks" + id).slideDown(700);										
+					$("#tasks" + id).slideDown(700);	
+					
+					planoAtual = id;
+					
+					getPontuacaoPlano();
+					numEquacoesPlanoAtual = getNumEquationsPlan();
+					resetProgressBar();
+					tasksRemaining = numEquacoesPlanoAtual;
+					//here tasksremaining contains the number of equations
+					/*alert("inicio: "+tasksRemaining);*/
+					
+					var taskSolved=$(".icon-ok.icon-white").length;
+					/*alert("fim: "+taskSolved);*/
+					tasksRemaining=tasksRemaining-taskSolved;
+					/*alert("fim: "+tasksRemaining);*/
+					if (tasksRemaining===0)
+						addProgressValue(numEquacoesPlanoAtual);
+					
+					else 
+						addProgressValue(taskSolved);
+					
+					if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 29 && id !== 33 && id < 36 ) {
+						$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
+
+						if (id > 2 && taskSolved === 0) {
+							setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
+							setTimeout('classPlan' + id + '()', 1200);
+						}
+					}
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
@@ -170,52 +198,25 @@ function loadTasks(id) {
 			     	return false;
 			 	}
 		});
-
-		getPontuacaoPlano();
-		numEquacoesPlanoAtual = getNumEquationsPlan();
-		resetProgressBar();
-		tasksRemaining = numEquacoesPlanoAtual;
-		//here tasksremaining contains the number of equations
-		/*alert("inicio: "+tasksRemaining);*/
-		
-		var taskSolved=$(".icon-ok.icon-white").length;
-		/*alert("fim: "+taskSolved);*/
-		tasksRemaining=tasksRemaining-taskSolved;
-		/*alert("fim: "+tasksRemaining);*/
-		if (tasksRemaining===0)
-			addProgressValue(numEquacoesPlanoAtual);
-		
-		else 
-			addProgressValue(taskSolved);
-		
-		if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 29 && id !== 33 && id < 36 ) {
-			$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
-
-			if (id > 2 && taskSolved === 0) {
-				setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
-				setTimeout('classPlan' + id + '()', 1200);
-			}
-		}
-		
-		checkEquationTour();
 		
 		if (isTourInterativo && id === 1) 
 			classPlan("");
 		
-		try {
-			var limite = planoAtual * 200;
-			
-			for (var i = planoAtual * 100; i < limite; i++)
-				var equation = document.getElementById("task" + i).innerHTML;
-				equation = replaceAll(equation, "	", "");
-			
-				equationToUserInterface(i, equation);
-			} catch (e) {
-				i = limite;
-			}
-			
 		var cookieName = "currentPlan" + currentPos;
 		setCookieDays (cookieName, id, 1);
+//		try {
+//			var limite = planoAtual * 200;
+//			
+//			for (var i = planoAtual * 100; i < limite; i++)
+//				var equation = document.getElementById("task" + i).innerHTML;
+//				equation = replaceAll(equation, "	", "");
+//			
+//				equationToUserInterface(i, equation);
+//			} catch (e) {
+//				i = limite;
+//			}
+			
+		
 	} else {
 		$("#tasks"+id).slideUp(700);
 		$("#tasks"+id).html("");
