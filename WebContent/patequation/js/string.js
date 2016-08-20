@@ -154,7 +154,6 @@ function splitEquationUI(equation) {
     var equationUI = checkFractions(equation);
     
     for (var i = 0; i < equationUI.length; i++) {
-    	alert (equationUI[i]);
         if (isNumber(equationUI[i]) || isIncognita(equationUI[i]) || equationUI[i] === "(" || equationUI[i] === ")") {
         	if (split[cont] === undefined)
         		split[cont] = "";
