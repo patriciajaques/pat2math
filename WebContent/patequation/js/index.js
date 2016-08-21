@@ -1226,14 +1226,6 @@ function referenceToBhaskara() { //± = &PlusMinus;
     focus();
 }
 
-function centralizeCanCopy() {
-    //coloca o canCopy ul no centro da linha
-    var width = parseInt($(selectedSheet + " .canCopy ul").css("width"));
-    var x = parseInt($(selectedSheet + " .canCopy").css("width"));
-    var test = (x / 2) - (width / 2);
-    $(selectedSheet + " .canCopy ul").css("padding-left", test);
-}
-
 function buttonClick() {
 	$(selectedSheet + " #button").button().unbind('click');   
 	$(selectedSheet + " #button").button().click(function() {    
@@ -1542,6 +1534,12 @@ function centralizeCanCopy() {
     $(selectedSheet + " .canCopy ul").css("padding-left", test);
 }
 
+function centralizeCanCopyUI() {
+    var width = parseInt($(selectedSheet + " .canCopy ul").css("width"));
+    var x = parseInt($(selectedSheet + " .canCopy").css("width"));
+    var test = (x / 2) - (width / 2);
+//    $(selectedSheet + " .canCopy ul").css("padding-left", test);
+}
 function coolAlign() {
     $(selectedSheet + " .coolAlign").position({
         of: $(selectedSheet + " .canCopy"),

@@ -1,6 +1,6 @@
 function resolutionEquation(resolutionStep, idStep, skipLine) {
 	var line = $(selectedSheet + " .hLineAux").next().next();
-	var elements = "<ul><li id='" + idStep + "' style='opacity: 0.75;'>" + resolutionStep + "</li></ul>";
+	var elements = "<ul><li id='" + idStep + "' style='opacity: 0.75; margin-left: -50%;'>" + resolutionStep + "</li></ul>";
     
     if (skipLine > 0) {
     	line.html(line.html() + elements);
@@ -14,12 +14,6 @@ function resolutionEquation(resolutionStep, idStep, skipLine) {
 	
     else
     	line.html(elements);
-    
-    
-    line.addClass("canCopy");
-    centralizeCanCopy();
-    line.removeClass("canCopy");
-    
 }
 
 function resolutionEquationChangeOpacity(resolutionStep, idStep, skipLine, opacity) {

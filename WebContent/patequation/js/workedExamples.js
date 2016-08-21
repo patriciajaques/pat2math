@@ -2036,8 +2036,8 @@ function classPlan24() {
 		});
 		
 		$("#line5").guider({
-			name: "5",
-			next : "6",
+			name: "6",
+			next : "7",
 			title : "Agora podemos resolver a subtração que temos no lado direito",
 			description : "Ao mesmo tempo poderíamos passar o +x, mas vamos fazer um passo de cada vez.",
 			position: "bottom",
@@ -2053,8 +2053,8 @@ function classPlan24() {
 		});
 		
 		$("#line6").guider({
-			name: "6",
-			next : "7",
+			name: "7",
+			next : "8",
 			title : "A operação inversa também vale para termos em função de X",
 			description : "Dessa forma, passamos o +x para o lado esquerdo invertendo o seu sinal.",
 			position: "bottom",
@@ -2070,8 +2070,8 @@ function classPlan24() {
 		});
 		
 		$("#line7").guider({
-			name: "7",
-			next : "8",
+			name: "8",
+			next : "9",
 			title : "Ao resolver a subtração 3x - x, obtemos 2x",
 			description : "Estamos quase terminando de resolver esta equação.",
 			position: "bottom",
@@ -2087,8 +2087,8 @@ function classPlan24() {
 		});
 		
 		$("#line8").guider({
-			name: "8",
-			next : "9",
+			name: "9",
+			next : "10",
 			title : "Utilizando a operação inversa, passamos o 2 para o outro lado dividindo o outro número 2",
 			description : "Lembre-se que devemos preservar o seu sinal positivo.",
 			position: "bottom",
@@ -2104,7 +2104,7 @@ function classPlan24() {
 		});
 		
 		$("#line10").guider({
-			name: "9",
+			name: "10",
 			title : "Tudo pronto!",
 			description : "Simplificando esta fração, chegamos ao resultado 1 e concluímos o desenvolvimento da equação.",
 			position: "bottom",
