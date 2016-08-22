@@ -32,7 +32,7 @@ var enableWorkedExamples = getCookie ("enableWE") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
-var showNews = false;
+var showNews = true;
 var currentPos = getCookie ("pos");
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
@@ -89,9 +89,7 @@ function news() {
 	
 	$.guider({
 		title : "Novidades",
-		description : "Redistribuímos as equações dos planos de aula #10 ao #19 entre planos #10 ao #17 (adicionamos um ícone nos planos que foram alterados), para uma melhor organização das equações. Mas não se preocupe, todos os passos já resolvidos das equações foram preservados." +
-				      "<br><br>Adicionamos os planos de aula #18 e #19 com equações inéditas." +
-				      "<br><br>Agora, ao selecionar um plano de aula, a cor de fundo da página é alterada.",
+		description : "Adicionamos o plano de aula #28, que envolve igualdade (proporção) de frações.",
 		overlay : "dark",
 		width : 600,
 		alignButtons : "center",
