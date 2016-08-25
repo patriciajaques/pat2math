@@ -32,7 +32,7 @@ var enableWorkedExamples = getCookie ("enableWE") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
-var showNews = true;
+var showNews = false;
 var currentPos = getCookie ("pos");
 var showPlan2Explanation = "true";
 var cStepTour = "stepTour" + currentPos;
