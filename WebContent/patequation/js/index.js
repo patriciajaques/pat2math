@@ -32,6 +32,7 @@ var enableWorkedExamples = getCookie ("enableWE") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
+var openAndBlockMenu = false;
 var showNews = false;
 var currentPos = getCookie ("pos");
 var showPlan2Explanation = "true";
@@ -205,7 +206,10 @@ function helpPage ( ) {
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:246px; left:1px;'> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
-	$("#topics").fadeOut();
+	
+	if (openAndBlockMenu === false) {
+		$("#topics").fadeOut();
+	}
 //	try {
 //    $.guider({
 //	description: "<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:220px; left:452px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:242px; left:-30px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>",
@@ -228,7 +232,10 @@ function reportBug ( ) {
 	$("#reportBug-box").html (html);
 	$("#mask").fadeIn(700);
 	$("#reportBug-box").fadeIn(700);
-	$("#topics").fadeOut();
+	
+	if (openAndBlockMenu === false) {
+		$("#topics").fadeOut();
+	}
 }
 
 function uploadImage ( ) {
@@ -454,7 +461,7 @@ function rel ( ) {
 	    		    		
 	    		    	    if (currentEquationString !== "") {		    	    	  
 	    		    	    		var currentEquation = parseInt (currentEquationString);
-	    		    	    		setTimeout(function() {loadExercise (currentEquation); $("#topics").fadeOut(); $("#topicsAux").show();   }, 1000);      		    	    		 		
+	    		    	    		setTimeout(function() {loadExercise (currentEquation); if (openAndBlockMenu === false) { $("#topics").fadeOut(); $("#topicsAux").show();}}, 1000);      		    	    		 		
 	    		    	    }
 	    	         } 
 
@@ -587,7 +594,11 @@ $(document).ready(function() {
             $(".labelDefault:first").focus();
         } else if (event.altKey) {
             if (key === 66) { //alt + b
-                $("#bhaskara").click();
+//                $("#bhaskara").click();
+            	//Abre o menu e bloqueia o fechamento automático
+            	$("#topics").fadeIn();
+        	    $("#topicsAux").hide();
+        	    openAndBlockMenu = true;
             } else if (key === 67) { //alt + c
                 $("#abc").click();
             } else if (key === 68) { //alt + d
@@ -679,14 +690,14 @@ $(document).ready(function() {
     focus();
     
     $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false) {
+    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu === false) {
     	    $("#topics").fadeOut();
     	    $("#topicsAux").show();
     	}
     });
     
     $("#topicsAux").mouseover (function() {
-    	if (blockMenu === false) {
+    	if (blockMenu === false && openAndBlockMenu === false) {
     	    $("#topics").fadeIn();
     	    $("#topicsAux").hide();
     	}

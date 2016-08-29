@@ -519,8 +519,10 @@ function loadExerciseTest(id) {
 }
 
 function loadingShow(){
-	$('#loading').fadeIn();
-	$("#topics").fadeOut();
+	if (openAndBlockMenu === false) {
+		$('#loading').fadeIn();
+		$("#topics").fadeOut();
+	}
 }
 
 function loadingShowWE() {
