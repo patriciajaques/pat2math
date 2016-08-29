@@ -519,7 +519,7 @@ function loadExerciseTest(id) {
 }
 
 function loadingShow(){
-	if (openAndBlockMenu === false) {
+	if (openAndBlockMenu !== "true") {
 		$('#loading').fadeIn();
 		$("#topics").fadeOut();
 	}

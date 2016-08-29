@@ -32,7 +32,7 @@ var enableWorkedExamples = getCookie ("enableWE") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
-var openAndBlockMenu = false;
+var openAndBlockMenu = getCookie("openAndBlockMenu");
 var showNews = false;
 var currentPos = getCookie ("pos");
 var showPlan2Explanation = "true";
@@ -207,7 +207,7 @@ function helpPage ( ) {
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
 	
-	if (openAndBlockMenu === false) {
+	if (openAndBlockMenu !== "true") {
 		$("#topics").fadeOut();
 	}
 //	try {
@@ -233,7 +233,7 @@ function reportBug ( ) {
 	$("#mask").fadeIn(700);
 	$("#reportBug-box").fadeIn(700);
 	
-	if (openAndBlockMenu === false) {
+	if (openAndBlockMenu !== "true") {
 		$("#topics").fadeOut();
 	}
 }
@@ -461,7 +461,7 @@ function rel ( ) {
 	    		    		
 	    		    	    if (currentEquationString !== "") {		    	    	  
 	    		    	    		var currentEquation = parseInt (currentEquationString);
-	    		    	    		setTimeout(function() {loadExercise (currentEquation); if (openAndBlockMenu === false) { $("#topics").fadeOut(); $("#topicsAux").show();}}, 1000);      		    	    		 		
+	    		    	    		setTimeout(function() {loadExercise (currentEquation); if (openAndBlockMenu !== "true") { $("#topics").fadeOut(); $("#topicsAux").show();}}, 1000);      		    	    		 		
 	    		    	    }
 	    	         } 
 
@@ -598,7 +598,18 @@ $(document).ready(function() {
             	//Abre o menu e bloqueia o fechamento automático
             	$("#topics").fadeIn();
         	    $("#topicsAux").hide();
-        	    openAndBlockMenu = true;
+        	    
+        	    if (openAndBlockMenu !== "true") {
+        	    	openAndBlockMenu = "true";
+        	    	setCookieDays("openAndBlockMenu", "true", 1);
+        	    }
+        	    
+        	    else {
+        	    	openAndBlockMenu = "";
+        	    	setCookieDays("openAndBlockMenu", "", 0);
+        	    }
+        	    
+        	    
             } else if (key === 67) { //alt + c
                 $("#abc").click();
             } else if (key === 68) { //alt + d
@@ -690,14 +701,14 @@ $(document).ready(function() {
     focus();
     
     $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu === false) {
+    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
     	    $("#topics").fadeOut();
     	    $("#topicsAux").show();
     	}
     });
     
     $("#topicsAux").mouseover (function() {
-    	if (blockMenu === false && openAndBlockMenu === false) {
+    	if (blockMenu === false && openAndBlockMenu !== "true") {
     	    $("#topics").fadeIn();
     	    $("#topicsAux").hide();
     	}
