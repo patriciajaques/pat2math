@@ -439,10 +439,27 @@ function rel ( ) {
 		    		 $("#lplan1").hide();
 		    		 numUnlockedPlans = 1;
 		    		 
-		    		 for (var i = 2; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) {
-		    			 $("#lplan" + i).hide();
-		    			 numUnlockedPlans = i;	    			 
+		    		 var cookieName = "lastUsers" + currentPos;
+		    		 var currentID = getCookie(cookieName);
+		    			
+		    		 //Verificação especial para as usuárias Marina Haach e Marcelle Sandy,
+		    		 //que perderam a resolução dos primeiros planos. Para elas os planos são todos
+		    		 //liberados, como solução provisória
+		    		 if (currentID === "281" || currentID === "488") {
+		    			 for (var i = 2; i <= 36; i++) 
+		    				 $("#lplan" + i).hide();	    				 	    			 	    			 
+		    			 
+		    			 numUnlockedPlans = 36;
+		    		}
+		    			
+		    		 
+		    		 else {
+		    			 for (var i = 2; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) {
+		    				 $("#lplan" + i).hide();
+		    				 numUnlockedPlans = i;	    			 
+		    			 }
 		    		 }
+		    		 
 		    		    		
 		        	if (numUnlockedPlans < 3) {
 		        		isTourInterativo = true;
@@ -450,7 +467,7 @@ function rel ( ) {
 		        		checkTour();
 		        	}
 		        	
-		        	 var cookieName = "currentPlan" + currentPos;
+		        	 cookieName = "currentPlan" + currentPos;
 	    	         var currentPlanString = getCookie (cookieName);
 	    	         if (currentPlanString !== "") {
 	    	        		var currentPlan = parseInt (currentPlanString);
@@ -527,6 +544,9 @@ $(document).ready(function() {
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
 	});
+	
+	
+
 		getEquationsWE();
 		getResolutionsWE();
 		getPontuacaoEquacoes();
@@ -1580,30 +1600,31 @@ function stringToUrl(string) {
 }
 
 function moveHint() {
-	var steps = selectedEquation.steps;
-	var top = 253;
-	
-	if (selectedEquation.equation.indexOf ("/") !== -1) {
-		top += 32;
-	}
-	
-	for (var i = 0; i < steps.length; i++) {
-		if (steps[i].step.indexOf ("/") === -1) {
-			top += 32;
-		}
-		
-		else {
-			top += 64;
-		}
-	}
-	
-	var maxHeight = heightSheet - top;
-
-	top = top + "px";
-	maxHeight = maxHeight + "px";
-	
-	document.getElementById('hintText').style.top = top;
-	document.getElementById('hintText').style.maxHeight = maxHeight;
+	//Reajustar esse código que às vezes não funciona, e as dicas aparecem em cima da caixa de input
+//	var steps = selectedEquation.steps;
+//	var top = 253;
+//	
+//	if (selectedEquation.equation.indexOf ("/") !== -1) {
+//		top += 32;
+//	}
+//	
+//	for (var i = 0; i < steps.length; i++) {
+//		if (steps[i].step.indexOf ("/") === -1) {
+//			top += 32;
+//		}
+//		
+//		else {
+//			top += 64;
+//		}
+//	}
+//	
+//	var maxHeight = heightSheet - top;
+//
+//	top = top + "px";
+//	maxHeight = maxHeight + "px";
+//	
+//	document.getElementById('hintText').style.top = top;
+//	document.getElementById('hintText').style.maxHeight = maxHeight;
 }
 function hint() {
 	moveHint();

@@ -341,6 +341,79 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[1607] = 35;
 	pontuacaoEquacoes[1608] = 30;
 	pontuacaoEquacoes[1609] = 35;
+	
+	//----- PLANO DE AULA 21 -----//
+	pontuacaoEquacoes[2100] = 40;
+	pontuacaoEquacoes[2101] = 40;
+	pontuacaoEquacoes[2102] = 50;
+	pontuacaoEquacoes[2103] = 40;
+	pontuacaoEquacoes[2104] = 50;
+	pontuacaoEquacoes[2105] = 50;
+	pontuacaoEquacoes[2106] = 40;
+	pontuacaoEquacoes[2107] = 50;
+	pontuacaoEquacoes[2108] = 50;
+	pontuacaoEquacoes[2109] = 50;
+	
+	//----- PLANO DE AULA 25 -----//
+	pontuacaoEquacoes[2500] = 50;
+	pontuacaoEquacoes[2501] = 50;
+	pontuacaoEquacoes[2502] = 60;
+	pontuacaoEquacoes[2503] = 50;
+	pontuacaoEquacoes[2504] = 60;
+	pontuacaoEquacoes[2505] = 50;
+	pontuacaoEquacoes[2506] = 50;
+	pontuacaoEquacoes[2507] = 60;
+	pontuacaoEquacoes[2508] = 80;
+	pontuacaoEquacoes[2509] = 50;
+	pontuacaoEquacoes[2510] = 80;
+	pontuacaoEquacoes[2511] = 50;
+	pontuacaoEquacoes[2512] = 60;
+	pontuacaoEquacoes[2513] = 80;
+	pontuacaoEquacoes[2514] = 80;
+	pontuacaoEquacoes[2515] = 80;
+	pontuacaoEquacoes[2516] = 60;
+	pontuacaoEquacoes[2517] = 60;
+	pontuacaoEquacoes[2518] = 80;
+	pontuacaoEquacoes[2519] = 80;
+	
+	//----- PLANO DE AULA 33 -----//
+	pontuacaoEquacoes[3300] = 140;
+	pontuacaoEquacoes[3301] = 120;
+	pontuacaoEquacoes[3302] = 140;
+	pontuacaoEquacoes[3303] = 160;
+	pontuacaoEquacoes[3304] = 140;
+	pontuacaoEquacoes[3305] = 120;
+	pontuacaoEquacoes[3306] = 160;
+	pontuacaoEquacoes[3307] = 140;
+	pontuacaoEquacoes[3308] = 120;
+	pontuacaoEquacoes[3309] = 120;
+	pontuacaoEquacoes[3310] = 160;
+	pontuacaoEquacoes[3311] = 140;
+	pontuacaoEquacoes[3312] = 120;
+	pontuacaoEquacoes[3313] = 160;
+	pontuacaoEquacoes[3314] = 120;
+	pontuacaoEquacoes[3315] = 160;
+	pontuacaoEquacoes[3316] = 140;
+	pontuacaoEquacoes[3317] = 140;
+	pontuacaoEquacoes[3318] = 160;
+	pontuacaoEquacoes[3319] = 120;
+	
+	//----- PLANO DE AULA 36 -----//
+	pontuacaoEquacoes[3600] = 300;
+	pontuacaoEquacoes[3601] = 200;
+	pontuacaoEquacoes[3602] = 300;
+	pontuacaoEquacoes[3603] = 300;
+	pontuacaoEquacoes[3604] = 200;
+	pontuacaoEquacoes[3605] = 300;
+	pontuacaoEquacoes[3606] = 200;
+	pontuacaoEquacoes[3607] = 300;
+	pontuacaoEquacoes[3608] = 300;
+	pontuacaoEquacoes[3609] = 200;
+	pontuacaoEquacoes[3610] = 200;
+	pontuacaoEquacoes[3611] = 300;
+	pontuacaoEquacoes[3612] = 200;
+	pontuacaoEquacoes[3613] = 300;
+	pontuacaoEquacoes[3614] = 200;
 }
 
 function padlockClick ( ) {

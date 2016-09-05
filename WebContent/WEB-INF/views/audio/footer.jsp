@@ -30,6 +30,9 @@ function verifyID() {
 	
 	var id = parseInt (currentID);
 	
+	
+	
+	if (getCookie(cookieName))
 	checkGroup(id);
 }
 

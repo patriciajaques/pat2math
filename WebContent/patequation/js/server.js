@@ -216,8 +216,6 @@ function requestServer (type, last, next, typeOperation, element) {
                         	
                         	numUnlockedPlans++;
                         	
-                        	if (numUnlockedPlans === 28)
-                        		numUnlockedPlans++;
                         	
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
