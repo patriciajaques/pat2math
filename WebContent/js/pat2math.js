@@ -238,17 +238,24 @@ function getNumEquationsPlan() {
 	if (planoAtual < 19 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
 		return 5;
 	
-	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 36 && planoAtual !== 25 && planoAtual !== 29 && planoAtual!== 33))
+	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 36 && planoAtual !== 25 && planoAtual !== 26 && planoAtual !== 29 && planoAtual!== 33))
 		return 10;
 	
 	else if (planoAtual === 11)
 		return 16;
 	
-	else if (planoAtual === 25 || planoAtual === 29 || planoAtual === 33)
+	else if (planoAtual === 25 || planoAtual === 33) // || planoAtual === 29
 		return 20;
+	
+	else if (planoAtual === 26) //foi removida uma equação desse plano que apresentava problemas
+		return 9;
+	
+	else if (planoAtual === 29) //idem
+		return 19;
 	
 	else if (planoAtual === 36)
 		return 15;
+	
 	
 	else 
 		return 56;
