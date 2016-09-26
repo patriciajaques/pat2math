@@ -34,11 +34,19 @@ function verifyID() {
 }
 
 function checkGroup(id) {
-	if (id >= 520 && id <= 553) //Grupo de controle
-		setCookieDays ("enableWE", "false", 1);
+// 	if (id >= 520 && id <= 553) //Grupo de controle
+// 		setCookieDays ("enableWE", "false", 1);
 	
-	else //Grupo experimental
-		setCookieDays ("enableWE", "", 0);
+// 	else //Grupo experimental
+// 		setCookieDays ("enableWE", "", 0);
+	
+	if (id >= 762 && id <= 788) {
+		//Redirecionar para a página dos enunciados de problemas do Bruno
+	}
+	
+	else if (id >= 729 && id <= 760) {
+		//Redirecionar para a página dos enunciados de problemas do Pedro
+	}
 	
 	redirectPage();
 }
