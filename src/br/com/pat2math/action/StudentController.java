@@ -203,6 +203,49 @@ public class StudentController {
 		return "audio";
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/translator2")
+	public String translator2(Model model, HttpSession session) {
+		Student student = new CurrentUser(session).student();
+		if (student==null) return "user.login";
+		Tutor tutor = (Tutor)session.getAttribute("tutor");
+		if (tutor==null){
+			session.setAttribute("tutor", new Tutor("", "", allHelps.getActives()));
+		}
+		Group studentGroup = student.getGroup();
+		Plan plan;
+		if(studentGroup != null)
+			plan = allPlans.getWithTopics(student.getGroup().getPlan().getId());
+		else
+			plan = allPlans.getWithTopics(1L);
+		
+		Collections.sort(plan.getTopics());
+		List<Topic> topics = plan.getTopics();
+		
+		// TODO: puts this logic on outer loop API
+		// always add first
+		List<Topic> activeTopics = new ArrayList<Topic>();
+		activeTopics.add(topics.get(0));
+		
+		for(int i = 0; i < topics.size(); i++) {
+			SetOfTasks set = topics.get(i).getSet();
+			boolean finished = true;
+			for(Task task : set.getTasks()) {
+				TaskPerformed tp = tasksPerformed.get(task.getContent(), student);
+				if(tp == null || !tp.isFinished()) {
+					finished = false;
+				}
+			}
+			if(finished && i < (topics.size() -1)) {
+				activeTopics.add(topics.get(i+1));
+			} else {
+				break;
+			}
+		}
+		model.addAttribute("topics", activeTopics);
+	//	model.addAttribute("student", student);
+		return "translator2";
+	}
+	
 	
 	private Student formToStudent(StudentForm formStudent) {
 		Student student = new Student();

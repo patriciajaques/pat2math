@@ -1062,8 +1062,8 @@ function loadEquation(index) {
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
     
-    
     return selectedEquation.equation;
+    
 }
 
 function calculatePoints(equation) {
@@ -1986,3 +1986,4 @@ function searchArray (elemento, array) {
 	
 	return -1;	
 }
+

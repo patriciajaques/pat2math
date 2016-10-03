@@ -40,21 +40,21 @@ function checkGroup(id) {
 // 	else //Grupo experimental
 // 		setCookieDays ("enableWE", "", 0);
 	
-	if (id >= 762 && id <= 788) {
-		//Redirecionar para a página dos enunciados de problemas do Bruno
-	}
+	if ((id >= 729 && id <= 760) || (id >= 797 && id <= 806)) 
+		redirectPage("/pat2math/translation");
 	
-	else if (id >= 729 && id <= 760) {
-		//Redirecionar para a página dos enunciados de problemas do Pedro
-	}
+	else if ((id >= 762 && id <= 788) || (id >= 807 && id <= 816)) 
+		redirectPage("/pat2math/translation2"); //Versão de controle do TCC do Pedro
 	
-	redirectPage();
+	else 
+		redirectPage("/pat2math/student/home");
+	
 }
 
-function redirectPage() {
+function redirectPage(url) {
 	var cookieName = "playAudio" + currentPos;
 	setCookieDays (cookieName, "false", 1);
-	setTimeout ("location.href= '/pat2math/student/home';", 2000); 
+	setTimeout ("location.href= '" + url + "';", 2000); 
 	setTimeout ("document.getElementById('go').style.visibility = 'visible';", 5000);
 }
 
