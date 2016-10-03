@@ -42,9 +42,9 @@
 	</definition>
 	
 	<definition name="translator2" extends="student.page">
-		<put-attribute name="body" value="/WEB-INF/views/pattranslationPedro/body.jsp"/>
-		<put-attribute name="header" value="/WEB-INF/views/pattranslationPedro/header.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/pattranslationPedro/footer.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/patTranslationControle/body.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/patTranslationControle/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/patTranslationControle/footer.jsp"/>
 	</definition>
 	
 	<definition name="playaudio" extends="student.page">

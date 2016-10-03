@@ -41,10 +41,10 @@ function checkGroup(id) {
 // 		setCookieDays ("enableWE", "", 0);
 	
 	if ((id >= 729 && id <= 760) || (id >= 797 && id <= 806)) 
-		redirectPage("/pat2math/translation");
+		redirectPage("/pat2math/translator"); //Versão experimental
 	
 	else if ((id >= 762 && id <= 788) || (id >= 807 && id <= 816)) 
-		redirectPage("/pat2math/translation2"); //Versão de controle do TCC do Pedro
+		redirectPage("/pat2math/translator2"); //Versão controle
 	
 	else 
 		redirectPage("/pat2math/student/home");
