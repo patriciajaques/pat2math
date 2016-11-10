@@ -60,8 +60,15 @@ function getResolutionEquation(idPlan) {
 function exitWorkedExample() {
 	isWorkedExample = false; 
 	blockMenu = false; 
+	
 	var cookieName = "currentWE" + currentPos; 
+	var currentWE = getCookie(cookieName);
 	setCookieDays (cookieName, "", 0); 
+	
+	//Cria um cookie que indica que o usuário já visualizou o exemplo trabalhado atual
+	cookieName = ("visualizedWE" + currentWE) + currentPos;
+	setCookieMinutes(cookieName, "visualized", 10);
+	
 	$("#topics").fadeIn(); 
 	$("#topicsAux").hide();
 }

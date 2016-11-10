@@ -11,7 +11,7 @@ var tasksRemaining; //the number of equations unsolved per topic
 var tipoAudio;
 var playAudio;
 var unlockedPlans;
-var unlockAllPlans = false; //Alt + P habilita/desabilita
+var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
 //var numClicks;
 
@@ -29,6 +29,7 @@ var equationPlan;
 var concluded = 0;
 var nextLineServer;
 var enableWorkedExamples = getCookie ("enableWE") === "";
+var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
@@ -274,11 +275,20 @@ function createLines() {
 }
 
 function createPlans(numPlans) {
-	var plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div> <span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
-		
-	for (var i = 2; i <= numPlans; i++) {
-		plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';		
+	var plans = '<span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
+
+	if (unlockAllPlans) {
+		for (var i = 2; i <= numPlans; i++) 
+			plans += '<span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 	}
+	
+	else {
+		plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
+		
+		for (var i = 2; i <= numPlans; i++) 
+			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
+	}
+	
 	document.getElementById("the_list").innerHTML = plans;
 }
 
@@ -408,7 +418,7 @@ function rel ( ) {
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 
-		    	 if (response.indexOf ("Plano de aula 1") === -1) {
+		    	 if (enableTourInterativo && response.indexOf ("Plano de aula 1") === -1) {
 		    		 	var cookieName = "stepTour" + currentPos;
 		    			
 		    		 	if (getCookie (cookieName) === "") {
@@ -591,7 +601,6 @@ $(document).ready(function() {
     
     $(document).keyup(function(event) {
         var key = event.which;
-
         if (key === 13) { //enter key
 
             if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
@@ -612,6 +621,14 @@ $(document).ready(function() {
 //        	window.location.reload();
         } else if (key === 9) { //tab key
             $(".labelDefault:first").focus();
+            
+        } else if (key === 27 && isWorkedExample) {//esc key
+        	//Interrompe a execução do exemplo trabalhado atual
+        	$.guider({	
+        	}).hideAll();
+        	exitWorkedExample();
+        	loadExercise(planoAtual*100);
+        	$("#topicsAux").show();
         } else if (event.altKey) {
             if (key === 66) { //alt + b
 //                $("#bhaskara").click();
@@ -627,9 +644,7 @@ $(document).ready(function() {
         	    else {
         	    	openAndBlockMenu = "";
         	    	setCookieDays("openAndBlockMenu", "", 0);
-        	    }
-        	    
-        	    
+        	    }       	       	    
             } else if (key === 67) { //alt + c
                 $("#abc").click();
             } else if (key === 68) { //alt + d
@@ -640,11 +655,31 @@ $(document).ready(function() {
             	$("#topics").fadeIn();
         	    $("#topicsAux").hide();
             } else if (key === 84) { //alt + t
-                $("#addLabel").click();
+            	if (getCookie("enableTour") === "")
+            		setCookieDays("enableTour", "false", 1);
+            	
+            	else
+            		setCookieDays("enableTour", "", 0);
+            	
+            	window.location.reload();
+            } else if (key === 87) { //alt + w
+            	if (getCookie("enableWE") === "")
+            		setCookieDays("enableWE", "false", 1);
+            	
+            	else
+            		setCookieDays("enableWE", "", 0);
+            	
+            	window.location.reload();
             } else if (key === 0) { //alt + ?
                 $("#hint").click();
             } else if (key == 80) { //alt + p
-            	unlockAllPlans = unlockAllPlans === false;
+            	if (getCookie("unlockAllPlans") === "")
+            		setCookieDays("unlockAllPlans", "true", 1);
+            	
+            	else
+            		setCookieDays("unlockAllPlans", "", 0);
+            	
+            	window.location.reload();
             }
 //        } else if (event.shiftKey) {
 //        	if (key === 57) { //( key

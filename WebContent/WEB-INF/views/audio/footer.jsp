@@ -34,20 +34,17 @@ function verifyID() {
 }
 
 function checkGroup(id) {
-// 	if (id >= 520 && id <= 553) //Grupo de controle
-// 		setCookieDays ("enableWE", "false", 1);
+	if (id >= 819 && id <= 828) { //Usuários de teste da Joice
+		setCookieDays("enableWE", "false", 1);
+		setCookieDays("enableTour", "false", 1);
+	}
 	
-// 	else //Grupo experimental
-// 		setCookieDays ("enableWE", "", 0);
+	else {
+		setCookieDays("enableWE", "", 0);
+		setCookieDays("enableTour", "", 0);
+	}
 	
-	if ((id >= 729 && id <= 760) || (id >= 797 && id <= 806)) 
-		redirectPage("/pat2math/translator"); //Versão experimental
-	
-	else if ((id >= 762 && id <= 788) || (id >= 807 && id <= 816)) 
-		redirectPage("/pat2math/translator2"); //Versão controle
-	
-	else 
-		redirectPage("/pat2math/student/home");
+	redirectPage("/pat2math/student/home");
 	
 }
 
