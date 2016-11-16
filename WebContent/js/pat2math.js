@@ -475,8 +475,12 @@ function loadExercise(id) {
 				if (pontuacaoPlano !== null) 
 					equation = new Equation(data.equation, pontuacaoPlano);
 						
-				else {
+				else if (pontuacaoEquacoes[id] !== undefined && pontuacaoEquacoes[id] !== null){
 					equation = new Equation(data.equation, pontuacaoEquacoes[id]);
+				}
+				
+				else {
+					equation = new Equation(data.equation, 100);
 				}
 				
 				equation.id = data.id;
