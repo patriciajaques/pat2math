@@ -996,6 +996,8 @@ function loadEquation(index) {
 
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
+        	calculateUsedLines();
+        	   	
             for (var i = 0; i < selectedEquation.steps.length; i++) {
                 stack = textToUserInterface(selectedEquation.steps[i].step);
                 selectedEquation.lastStep = selectedEquation.steps[i];

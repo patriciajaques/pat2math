@@ -106,6 +106,10 @@ function calculateUsedLines ( ) {
 			usedLines += 2;
 		}
 	}
+	
+	while (usedLines >= numLines - 4) {
+		insertLines(false, idEquation);
+	}
 }
 
 function enableContent(id) {
@@ -536,8 +540,7 @@ function loadExercise(id) {
 		
 	else
 		blockMenu = false;
-	
-	setTimeout ('calculateUsedLines()', 1000);
+		
 	loadingHide();
 	
 	
