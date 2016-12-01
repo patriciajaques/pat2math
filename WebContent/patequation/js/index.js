@@ -497,8 +497,8 @@ function rel ( ) {
 		    				 for (; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) {
 		    					 $("#lplan" + i).hide();    			 
 		    				 }
-		    			 
-		    				 numUnlockedPlans = i;
+		    			     //Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
+		    				 numUnlockedPlans = i - 1;
 		    			 }
 		    		 }
 		    		 
