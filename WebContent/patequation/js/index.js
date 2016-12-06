@@ -489,13 +489,6 @@ function rel ( ) {
 		    			//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
 		    			numUnlockedPlans = i - 1;
 		    		}
-		    		 
-		    		    		
-		        	if (numUnlockedPlans < 3 && enableTourInterativo) {
-		        		isTourInterativo = true;
-		        		loadExercise(0);
-		        		checkTour();
-		        	}
 		        	
 		        	 cookieName = "currentPlan" + currentPos;
 	    	         var currentPlanString = getCookie (cookieName);
