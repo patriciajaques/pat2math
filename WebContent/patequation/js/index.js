@@ -486,7 +486,7 @@ function rel ( ) {
 		    				$("#lplan" + i).hide();    			 
 		    		    }
 	
-		    			// Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
+		    			//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
 		    			numUnlockedPlans = i - 1;
 		    		}
 		    		 
