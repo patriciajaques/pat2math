@@ -473,37 +473,25 @@ function rel ( ) {
 		    		 
 		    		 var cookieName = "lastUsers" + currentPos;
 		    		 var currentID = getCookie(cookieName);
-		    			
-		    		 //Verificação especial para as usuárias Marina Haach e Marcelle Sandy,
-		    		 //que perderam a resolução dos primeiros planos. Para elas os planos são todos
-		    		 //liberados, como solução provisória
-		    		 if (currentID === "281" || currentID === "488") {
-		    			 for (var i = 2; i <= numPlanosAula; i++) 
-		    				 $("#lplan" + i).hide();	    				 	    			 	    			 
-		    			 
-		    			 numUnlockedPlans = numPlanosAula;
-		    		}
-		    			
+		    				    			
 		    		 
-		    		 else {
-		    			 if (unlockedPlans.indexOf("Plano de revisão 1") !== -1) {
-		    				 createRevisionPlans();	
-
-		    			 }
+		    		 if (unlockedPlans.indexOf("Plano de revisão 1") !== -1) {
+		    			createRevisionPlans();	
+		    	     }
 		    			 
-		    			 else {		    			 
-		    				 var i = 2;
+		    		else {		    			 
+		    			var i = 2;
 
-		    				 for (; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) {
-		    					 $("#lplan" + i).hide();    			 
-		    				 }
-		    			     //Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
-		    				 numUnlockedPlans = i - 1;
-		    			 }
-		    		 }
+		    			for (; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) {
+		    				$("#lplan" + i).hide();    			 
+		    		    }
+	
+		    			// Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
+		    			numUnlockedPlans = i - 1;
+		    		}
 		    		 
 		    		    		
-		        	if (numUnlockedPlans < 3) {
+		        	if (numUnlockedPlans < 3 && enableTourInterativo) {
 		        		isTourInterativo = true;
 		        		loadExercise(0);
 		        		checkTour();
