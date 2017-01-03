@@ -125,6 +125,15 @@ function enableContent(id) {
 
 function loadTasks(id) {
 	if (unlockAllPlans || numUnlockedPlans >= id) {
+		
+//		if (id < idDoUltimoPlanoDeIntrodução) {
+//			isIntroductionToEquationPlan = true;
+//		Demais comandos...
+//		}
+//		
+//		else
+//			isIntroductionToEquationPlan = false; 
+//		
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
 		}		
@@ -165,6 +174,10 @@ function loadTasks(id) {
 			data: {"idSet" : id}, 
 			success:
 				function(data) {
+				
+				if (isIntroductionToEquationPlan === false) {
+					data = replaceAll(data, "x", "__");
+				}
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);	
 					

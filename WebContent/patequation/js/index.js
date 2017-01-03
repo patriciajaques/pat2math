@@ -52,6 +52,8 @@ var equationsWE;
 var pointsWE;
 var resolutionsWE;
 var colorsBackground;
+var isIntroductionToEquationPlan = false; 
+
 
 //var cont = 0;
 //var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
@@ -965,7 +967,12 @@ function loadEquation(index) {
 
         var elements = "<ul id='currentEquation'>";
         for (var i = 0; i < stack.length; i++) {
-            elements = elements + "<li>" + stack[i] + "</li>";
+        	if (stack[i] === "x" && isIntroductionToEquationPlan) {
+        		stack[i] = "__";
+        	}
+        	
+        	else
+        		elements = elements + "<li>" + stack[i] + "</li>";
         }
 
         elements = elements + "</ul>";
