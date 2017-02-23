@@ -175,7 +175,7 @@ function loadTasks(id) {
 			success:
 				function(data) {
 				
-				if (isIntroductionToEquationPlan === false) {
+				if (isIntroductionToEquationPlan) {
 					data = replaceAll(data, "x", "__");
 				}
 					$("#tasks" + id).html(data);
