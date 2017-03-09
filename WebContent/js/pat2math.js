@@ -250,6 +250,9 @@ function loadTasks(id) {
 	
 	}
 	
+	else {
+		padlockClick();
+	}
 	
 	
 	
