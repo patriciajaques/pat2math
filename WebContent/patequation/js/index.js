@@ -285,18 +285,18 @@ function isIntro(equation){
 }
 
 function createIntroductionPlans() {
-	var plans = '<span class="topic" onclick="createPlans()">Planos de aula</span> <span class="topic" onclick="loadTasks(1)">Plano de Revisão 1</span> <div id="tasks1" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="createPlans()">Planos de aula</span> <span class="topic" onclick="loadTasks(1)">Introdução 1</span> <div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
-			plans += '<span class="topic" onclick="loadTasks(' + i + ')">Plano de introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+			plans += '<span class="topic" onclick="loadTasks(' + i + ')">Introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 	}
 	
 	else {
 		plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
 		
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
-			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
+			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
 	}
 	
 	document.getElementById("the_list").innerHTML = plans;
@@ -469,7 +469,7 @@ function rel() {
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 
-		    	 if (enableTourInterativo && response.indexOf ("Plano de aula 1") === -1) {
+		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Plano de introdução" + numPlanosIntroducao) !== -1) {
 		    		 	var cookieName = "stepTour" + currentPos;
 		    			
 		    		 	if (getCookie (cookieName) === "") {

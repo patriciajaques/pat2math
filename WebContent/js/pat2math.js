@@ -195,16 +195,21 @@ function loadTasks(id) {
 					else 
 						addProgressValue(taskSolved);
 					
-					if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id < 25) { //id !== 25 && id !== 29 && id !== 33 && id < 36 
-						$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
+					//Verificação especial se o aluno já está nos planos de aula convencionais
+					if (id > numPlanosIntroducao) {
+						id -= numPlanosIntroducao;
+					
+						if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id < 25) { //id !== 25 && id !== 29 && id !== 33 && id < 36 
+							$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
 
-						//Verificação especial via cookie, caso o usuário já tenha visualizado o exemplo trabalhado,
-						//mas ainda não concluiu a resolução de nenhuma equação
-						var cookieName = ("visualizedWE" + id) + currentPos;
+							//Verificação especial via cookie, caso o usuário já tenha visualizado o exemplo trabalhado,
+							//mas ainda não concluiu a resolução de nenhuma equação
+							var cookieName = ("visualizedWE" + id) + currentPos;
 
-						if ((id > 2 || enableTourInterativo === false) && taskSolved === 0 && getCookie(cookieName) === "") {
-							setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
-							setTimeout('classPlan' + id + '()', 1200);
+							if ((id > 2 || enableTourInterativo === false) && taskSolved === 0 && getCookie(cookieName) === "") {
+								setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
+								setTimeout('classPlan' + id + '()', 1200);
+							}
 						}
 					}
 			  	},
