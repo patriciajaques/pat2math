@@ -124,16 +124,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {
-	if (unlockAllPlans || numUnlockedPlans >= id) {
-		
-//		if (id < idDoUltimoPlanoDeIntrodução) {
-//			isIntroductionToEquationPlan = true;
-//		Demais comandos...
-//		}
-//		
-//		else
-//			isIntroductionToEquationPlan = false; 
-//		
+	if (unlockAllPlans || numUnlockedPlans >= id) {	
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
 		}		
@@ -173,11 +164,15 @@ function loadTasks(id) {
 			url: appContext + "student/showTopic",
 			data: {"idSet" : id}, 
 			success:
-				function(data) {
-				
-				if (isIntroductionToEquationPlan) {
+				function(data) {			
+				if (id <= numPlanosIntroducao) {
+					isIntroductionToEquationPlan = true;
 					data = replaceAll(data, "x", "__");
 				}
+				
+				else 
+					isIntroductionToEquationPlan = false;
+							
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);	
 					
