@@ -31,6 +31,7 @@ var stringEquation;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
+var enableIntroductionPlans = false;
 var enableWorkedExamples = getCookie ("enableWE") === "";
 var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
@@ -303,8 +304,11 @@ function createIntroductionPlans() {
 }
 
 function createPlans() {
+	var plans;
+	
+	if (enableIntroductionPlans) {
 	var introPlans = '<span class="topic" onclick="createIndroductionPlans()">Planos de Introdução</span>';
-	var plans = introPlans + '<span class="topic" onclick="loadTasks(' + (numPlanosIntroducao + 1) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
+	plans = introPlans + '<span class="topic" onclick="loadTasks(' + (numPlanosIntroducao + 1) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
 		plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;	
@@ -319,8 +323,29 @@ function createPlans() {
 		for (var i = 2; i <= numPlanosAula; i++) 
 			plans += '<div class="locked" id="lplan' + (i + numPlanosIntroducao) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';			
 	}
+	}
+	
+	else {
+		plans = '<span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
+
+		if (unlockAllPlans) {
+			plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;			
+
+			for (var i = 2; i <= numPlanosAula; i++) 
+				plans += '<span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+		}	
+
+		else {
+			plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
+			
+			for (var i = 2; i <= numPlanosAula; i++) 
+				plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
+		}
+
+	}
 	
 	document.getElementById("the_list").innerHTML = plans;
+	
 }
 
 function createRevisionPlans() {
@@ -909,7 +934,12 @@ $(document).ready(function() {
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
 	createLines();
-	createIntroductionPlans();
+	
+	if (enableIntroductionPlans)
+		createIntroductionPlans();
+	
+	else
+		createPlans();
 	
 	cookieName = "currentWE" + currentPos;
 	var currentWE = getCookie(cookieName);
