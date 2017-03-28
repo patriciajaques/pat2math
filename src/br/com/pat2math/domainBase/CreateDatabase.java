@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 public class CreateDatabase {
 	public static void main(String[] args) {
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pat2math");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("feeper");
 		EntityManager em = emf.createEntityManager();
 		em.close();
 		

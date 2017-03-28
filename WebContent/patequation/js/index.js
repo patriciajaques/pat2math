@@ -31,7 +31,7 @@ var stringEquation;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
-var enableIntroductionPlans = false;
+var enableIntroductionPlans = getCookie("enableIntroductionPlans") === "";
 var enableWorkedExamples = getCookie ("enableWE") === "";
 var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
@@ -286,7 +286,7 @@ function isIntro(equation){
 }
 
 function createIntroductionPlans() {
-	var plans = '<span class="topic" onclick="createPlans()">Planos de aula</span> <span class="topic" onclick="loadTasks(1)">Introdução 1</span> <div id="tasks1" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(1)"></span> <span class="topic" onclick="loadTasks(1)">Introdução 1</span> <div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
@@ -326,20 +326,20 @@ function createPlans() {
 	}
 	
 	else {
-		plans = '<span class="topic" onclick="loadTasks(1)">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
+		plans = '<span class="topic" onclick="loadTasks(' + (1 + numPlanosIntroducao) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks' + (1 + numPlanosIntroducao) + '"></div>';
 
 		if (unlockAllPlans) {
 			plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;			
 
 			for (var i = 2; i <= numPlanosAula; i++) 
-				plans += '<span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+				plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
 		}	
 
 		else {
 			plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
 			
 			for (var i = 2; i <= numPlanosAula; i++) 
-				plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
+				plans += '<div class="locked" id="lplan' + (i + numPlanosIntroducao) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';			
 		}
 
 	}
@@ -494,7 +494,7 @@ function rel() {
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 
-		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Plano de introdução" + numPlanosIntroducao) !== -1) {
+		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
 		    		 	var cookieName = "stepTour" + currentPos;
 		    			
 		    		 	if (getCookie (cookieName) === "") {
@@ -534,18 +534,18 @@ function rel() {
 		    	     }
 		    			 
 		    		else {		    			 
-		    			var i = 2;
+		    			var i = 1;
 
-		    			for (; unlockedPlans.indexOf ("Plano de introdução " + i) !== -1 && i <= numPlanosIntroducao; i++) {
-		    				$("#lplan" + i).hide();    			 
-		    		    }
-		    			
-		    			for (; unlockedPlans.indexOf ("Plano de aula " + (i - numPlanosIntroducao)) !== -1; i++) {
-		    				$("#lplan" + i).hide();    			 
-		    		    }
-	
-		    			//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
-		    			numUnlockedPlans = i - 1;
+		    			if (enableIntroductionPlans) {
+		    				for (; unlockedPlans.indexOf ("Introdução " + i) !== -1 && i <= numPlanosIntroducao; i++) 
+		    					$("#lplan" + i).hide();    			 
+		    				    			
+		    				for (; unlockedPlans.indexOf ("Plano de aula " + (i - numPlanosIntroducao)) !== -1; i++) 
+		    					$("#lplan" + i).hide();    			 
+		    		    
+		    				//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
+		    				numUnlockedPlans = i - 1;
+		    			}
 		    		}
 		        	
 		        	 cookieName = "currentPlan" + currentPos;
@@ -701,6 +701,7 @@ $(document).ready(function() {
         	loadExercise(planoAtual*100);
         	$("#topicsAux").show();
         } else if (event.altKey) {
+        	alert (key);
             if (key === 66) { //alt + b
 //                $("#bhaskara").click();
             	//Abre o menu e bloqueia o fechamento automático
@@ -720,6 +721,18 @@ $(document).ready(function() {
                 $("#abc").click();
             } else if (key === 68) { //alt + d
                 $("#delta").click();
+            } else if (key === 73) { //alt + i
+            	if (getCookie("enableIntroductionPlans") === "") {
+            		setCookieDays("enableIntroductionPlans", "false", 1);
+            		setCookieDays("unlockAllPlans", "true", 1);
+            	}
+            	
+            	else {
+            		setCookieDays("enableIntroductionPlans", "", 0);
+            		setCookieDays("unlockAllPlans", "", 0);
+            	}
+            	
+            	window.location.reload();
             } else if (key === 76) { //alt + l
                 $("#clearLine").click();
             } else if (key === 77) { //alt + m

@@ -152,7 +152,7 @@ function loadTasks(id) {
 	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
-	if(open == 'none') {
+	if(open == 'none' || open === undefined) {
 		if (planoAtual !== null) {
 			$("#tasks"+planoAtual).slideUp(700);
 			$("#tasks"+planoAtual).html("");

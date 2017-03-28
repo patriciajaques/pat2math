@@ -216,6 +216,9 @@ function requestServer (type, last, next, typeOperation, element) {
                         	
                         	numUnlockedPlans++;
                         	
+                        	if (numUnlockedPlans === 7)
+                            	window.location.reload();
+                        	
                         	
                         	divName = "lplan" + numUnlockedPlans;
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
@@ -518,6 +521,9 @@ function requestServer (type, last, next, typeOperation, element) {
                 	showHint(split[0]);
                 }
             }
+            
+            
+            
         }});      	  
 }
 
