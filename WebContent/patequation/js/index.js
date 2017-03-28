@@ -286,7 +286,7 @@ function isIntro(equation){
 }
 
 function createIntroductionPlans() {
-	var plans = '<span class="topic" onclick="loadTasks(1)"></span> <span class="topic" onclick="loadTasks(1)">Introdução 1</span> <div id="tasks1" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(1)">Introdução 1</span><div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
@@ -701,7 +701,6 @@ $(document).ready(function() {
         	loadExercise(planoAtual*100);
         	$("#topicsAux").show();
         } else if (event.altKey) {
-        	alert (key);
             if (key === 66) { //alt + b
 //                $("#bhaskara").click();
             	//Abre o menu e bloqueia o fechamento automático
@@ -1041,12 +1040,16 @@ function loadEquation(index) {
 
         var elements = "<ul id='currentEquation'>";
         for (var i = 0; i < stack.length; i++) {
-        	if (stack[i] === "x" && isIntroductionToEquationPlan) {
-        		stack[i] = "__";
+        	if (isIntroductionToEquationPlan) {
+        		if (stack[i] === "x")
+        			stack[i] = "__";
+        		
+        		else if (stack[i].indexOf("x</div>") !== -1)
+        			stack[i] = replaceAll(stack[i], "x</div>", "  </div>");
         	}
+        		
         	
-        	else
-        		elements = elements + "<li>" + stack[i] + "</li>";
+        	elements = elements + "<li>" + stack[i] + "</li>";
         }
 
         elements = elements + "</ul>";

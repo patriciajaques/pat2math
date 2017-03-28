@@ -168,6 +168,7 @@ function loadTasks(id) {
 				if (id <= numPlanosIntroducao) {
 					isIntroductionToEquationPlan = true;
 					data = replaceAll(data, "x", "__");
+					data = replaceAll(data, "loadE__ercise", "loadExercise");
 				}
 				
 				else 
