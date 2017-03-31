@@ -169,6 +169,11 @@ function loadTasks(id) {
 					isIntroductionToEquationPlan = true;
 					data = replaceAll(data, "x", "__");
 					data = replaceAll(data, "loadE__ercise", "loadExercise");
+					//As três primeiras equações do primeiro plano são diretas, porém o sistema não aceita que a equação inicial
+					//já seja a resposta, por isso é realizada essa manipulação
+					data = replaceAll(data, "2+2", "4");
+					data = replaceAll(data, "10+3", "13");
+					data = replaceAll(data, "2+7", "9");
 				}
 				
 				else 
@@ -449,8 +454,8 @@ function getPontuacaoEquacoes() {
 }
 
 function padlockClick ( ) {
-	if (selectedEquation !== null)
-		moveHint();
+//	if (selectedEquation !== null)
+//		moveHint();
 
 	$("#hintText").html("Para desbloquear este plano de aula, você deve resolver todas as equações do plano anterior.");
 	$("#hintText").show('blind', 500);
@@ -561,6 +566,40 @@ function loadExercise(id) {
 	loadingHide();
 	
 	
+}
+
+function nextEquation() {
+	if (idEquation < numEquacoesPlanoAtual - 1)
+		loadExercise(idEquation + 1);
+	
+	else if (tasksRemaining === 0) {
+		loadTasks(planoAtual);
+		loadTasks(planoAtual + 1);
+		loadExercise(planoAtual * 100);
+	}
+	
+	else {
+		$("#hintText").html("Para desbloquear o próximo plano de aula, você deve resolver todas as equações do plano atual.");
+		$("#hintText").show('blind', 500);
+		$(".verticalTape").show('fold', 500);
+	}
+}
+
+function previousEquation() {	
+	if (idEquation > planoAtual * 100) //Verifica se o id atual é maior que o id da primeira equação do plano
+		loadExercise(idEquation - 1);
+	
+	else if (planoAtual > 1) {
+		loadTasks(planoAtual);
+		loadTasks(planoAtual - 1);
+		loadExercise(planoAtual * 100 + numEquacoesPlanoAtual - 1);
+	}
+	
+	else {
+		$("#hintText").html("Você não pode mais voltar, já está na primeira equação do primeiro plano de aula.");
+		$("#hintText").show('blind', 500);
+		$(".verticalTape").show('fold', 500);
+	}
 }
 
 function loadExerciseTest(id) {

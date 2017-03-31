@@ -1039,6 +1039,18 @@ function loadEquation(index) {
         var stack = textToUserInterface(selectedEquation.equationToString);
 
         var elements = "<ul id='currentEquation'>";
+        
+        //Verificação para as três primeiras equações que são da forma x=a+b. Dado que a+b=c, a interface gráfica deverá mostrar
+        //__=c. Isso precisou ser feito porque o resolvedor não aceita digitar um passo igual à equação.
+        if (idEquation <= 102) {
+        	var expression = stack.pop();
+        	expression = stack.pop() + expression;
+        	expression = stack.pop() + expression;
+        	
+        	var result = eval(expression);
+        	stack.push("" + result); //A stack deve ter elementos String
+        }
+        
         for (var i = 0; i < stack.length; i++) {
         	if (isIntroductionToEquationPlan) {
         		if (stack[i] === "x")
