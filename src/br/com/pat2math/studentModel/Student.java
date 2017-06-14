@@ -43,7 +43,7 @@ public class Student extends User implements Serializable {
 	public static Student newStudent(Student student) {
 		student.defineRole();
 		student.defineQuestionsDefault();
-		student.desactivate();
+		student.activate();
 		return student;
 	}
 	

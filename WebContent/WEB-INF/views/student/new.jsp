@@ -2,8 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div class="box">
-	<form:form action="/pat2math/signUp" modelAttribute="formStudent" 
-					accept-charset="utf-8">
+	<form:form action="	" modelAttribute="formStudent" accept-charset="utf-8">
 						
 		<form:errors path="*" class="error-global">
 			<div class="error-global">

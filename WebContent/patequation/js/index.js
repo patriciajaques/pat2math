@@ -1,6 +1,6 @@
 var numPlanosAula = 33;
 var numPlanosRevisao = 10;
-var numPlanosIntroducao = 6;
+var numPlanosIntroducao = 0;
 var selectedSheet = "#paper-1";
 var selectedEquation;
 //var currentStepsFirstEquation;
@@ -31,7 +31,7 @@ var stringEquation;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
-var enableIntroductionPlans = getCookie("enableIntroductionPlans") === "";
+var enableIntroductionPlans = false;
 var enableWorkedExamples = getCookie ("enableWE") === "";
 var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;

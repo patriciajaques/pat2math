@@ -66,6 +66,26 @@ public class StudentController {
 		return "student.new";
 	}
 	
+	@RequestMapping(value = "/student/new_facebook_student")
+	public String newFacebookStudent(String name, String email, String id, Model model) {
+//		model.addAttribute("user", new User());
+		Student student = Student.newStudent(new Student());
+		String[] nameSplit = name.split(" ");
+		String firstName = nameSplit[0];
+		String lastName = "";
+		for(int i=0; i<nameSplit.length;i++){
+			lastName += nameSplit[i]+" ";
+		}
+		student.setFirstName(firstName);
+		student.setLastName(lastName);
+		student.setEmail(email);
+		String passwordHash = encoder.encode(id);
+		student.setPassword(passwordHash);
+		em.persist(student);
+		model.addAttribute("user", student);
+		return "redirect:/student/home";
+	}
+	
 	@RequestMapping("signUp")
 	public String save(@ModelAttribute("formStudent")
 		@Valid StudentForm formStudent, BindingResult result, Model model) 
