@@ -35,6 +35,12 @@
 		<put-attribute name="footer" value="/WEB-INF/views/patequation/footer.jsp"/>
 	</definition>
 	
+	<definition name="student.patexpression" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/patexpression/body.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/patexpression/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/patexpression/footer.jsp"/>
+	</definition>
+	
 	<definition name="student.mobile" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/mobile/body.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/mobile/header.jsp"/>
