@@ -165,7 +165,7 @@ function loadTasks(id) {
 			data: {"idSet" : id}, 
 			success:
 				function(data) {			
-				if (id <= numPlanosIntroducao) {
+				if (id <= numPlanosIntroducao && enableIntroductionPlans) {
 					isIntroductionToEquationPlan = true;
 					data = replaceAll(data, "x", "__");
 					data = replaceAll(data, "loadE__ercise", "loadExercise");

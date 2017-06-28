@@ -326,7 +326,7 @@ function createPlans() {
 	}
 	
 	else {
-		plans = '<span class="topic" onclick="loadTasks(' + (1 + numPlanosIntroducao) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks' + (1 + numPlanosIntroducao) + '"></div>';
+		plans = '<span class="topic" onclick="loadTasks(' + (1 + numPlanosIntroducao) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
 
 		if (unlockAllPlans) {
 			plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;			
@@ -494,7 +494,8 @@ function rel() {
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 
-		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
+		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
+//		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
 		    		 	var cookieName = "stepTour" + currentPos;
 		    			
 		    		 	if (getCookie (cookieName) === "") {
@@ -1042,14 +1043,14 @@ function loadEquation(index) {
         
         //Verificação para as três primeiras equações que são da forma x=a+b. Dado que a+b=c, a interface gráfica deverá mostrar
         //__=c. Isso precisou ser feito porque o resolvedor não aceita digitar um passo igual à equação.
-        if (idEquation <= 102) {
-        	var expression = stack.pop();
-        	expression = stack.pop() + expression;
-        	expression = stack.pop() + expression;
-        	
-        	var result = eval(expression);
-        	stack.push("" + result); //A stack deve ter elementos String
-        }
+//        if (idEquation <= 102) {
+//        	var expression = stack.pop();
+//        	expression = stack.pop() + expression;
+//        	expression = stack.pop() + expression;
+//        	
+//        	var result = eval(expression);
+//        	stack.push("" + result); //A stack deve ter elementos String
+//        }
         
         for (var i = 0; i < stack.length; i++) {
         	if (isIntroductionToEquationPlan) {

@@ -456,7 +456,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                     }        
                 }
-                else if (split[1] === "false") {
+                else if (split[1] === "false") {                	
                     $(element).css("background", "url('img/bad.png') no-repeat center");
                     $(element).effect("bounce", 500, setTimeout(function() {
                         $(element).removeAttr("style").hide().fadeIn();
@@ -514,6 +514,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     	    firstStepTour("", "Oops!", "Por errar este passo da equação, você perdeu 5 pontos e recebeu uma dica.");
                     }
 
+                    document.getElementById('inputMobile').style.border = "1px solid red";
                 }
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada
