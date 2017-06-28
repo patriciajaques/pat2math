@@ -6,7 +6,6 @@
 	<p class="msg">Senha atualizada com sucesso</p>
 </c:if>
 
-
 <form class="box" action="/pat2math/j_spring_security_check" method="post" accept-charset="utf-8">
 	<p>
 		<img src="/pat2math/images/Pat2MathBETA.png" />
@@ -19,28 +18,36 @@
 	</p>
 	
 	<p>
-		<input id="password" placeholder="senha" type='password' name='j_password'>
-			
+		<input id="password" placeholder="senha" type='password' name='j_password'>			
 	</p>
 	
-	<br> 
+	<br>
 
 	<!-- 	<input type="checkbox" name="_spring_security_remember_me" /> Lembrar-me -->
 	<input class="btn btn-large" id="loginButton" value="Login" type="submit">
 	
 	<br><br>
 		
-	<p style="color: black; font-size: 20px;"> Entre com Facebook </p>
-	
-	<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-	</fb:login-button>
+	<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();" <span class="_4z_f fwb"> Entre com o Facebook </span>
+    </fb:login-button>
 	
 	<c:if test="${param.failed == true}">
 		<p class="error" style="font-size: 16px;margin-top: 15px"">Usuário ou senha inválidos</p>
 	</c:if>
 	
+	<br><br>
+	
 	<p class="left"><a href="/pat2math/student/new">Cadastre-se</a></p> 
  	<p class="left"><a href="user/forgotPassword">Esqueci minha senha</a></p>
+ 	
+ 	<br>
+ 	
+ 	<div id="facebookButtonLike" style="text-align: center" class="box">
+ 		<p>
+ 			<h3 style="color: black"> Curta nossa página no Facebook </h3>
+ 		</p>
+ 		<div style="text-align: center; width: 250px;" class="fb-like" data-href="https://www.facebook.com/Pat2Math" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
+ 	</div>
 </form>
 
 <div id="mask" onclick="test56()"></div>
@@ -48,13 +55,20 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
 	
-	function fazLogin(email, id) {
+	FB.init({
+	    appId      : '669959713214349',
+	    xfbml      : true,
+	    version    : 'v2.9'
+	  });
+	
+	function fazLogin(response) {
 		document.getElementById('email').style.visibility = "hidden";
 		document.getElementById('password').style.visibility = "hidden";
 		document.getElementById('loginButton').style.visibility = "hidden";
 		document.getElementById('loginWithFacebook').style.visibility = "visible";
-		document.getElementById('email').value = ""+email;
-		document.getElementById('password').value = ""+id;
+		document.getElementById('email').value = ""+response.email;
+		document.getElementById('password').value = ""+response.id;
+		FB.logout();
 		document.getElementById('loginButton').click(); 
 	}
 	function statusChangeCallback(response){
@@ -122,12 +136,19 @@
 			   if (response.authResponse) {
 			     var access_token =   FB.getAuthResponse()['accessToken'];
 			     FB.api('/me', {fields: 'name,email'}, function(response) {
-			     fazLogin(response.email,response.id);
+			    	 //session.setAttribute( "user", response );
+			     	fazLogin(response);
 			     });
 			   } else {
 			     console.log('User cancelled login or did not fully authorize.');
 			   }
 			 }, {scope: 'email'});
 	  }
+	  
+	  //function logout(){
+		//FB.logout(function(response) {
+			   // Person is now logged out
+			//});  
+	  //}
 
 </script>
