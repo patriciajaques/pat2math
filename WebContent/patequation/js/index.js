@@ -1777,15 +1777,23 @@ function hint() {
 	moveHint();
 
     if (!selectedEquation.isComplete) {
-        var equation = $(selectedSheet + " .canCopy li").toArray();
-        equation = getEquation(equation);
-        if (selectedEquation.twoAnswers === true) {
-            if (equation === "" || equation === null) {
-                equation = selectedEquation.initialEquation;
-            } else if (equation.indexOf('a') !== -1 || equation.indexOf('b') !== -1 || equation.indexOf('c') !== -1) {
-                equation = selectedEquation.initialEquation;
-            }
-        }
+    	var equation;
+    	
+    	if (selectedEquation.lastStep !== null)
+    		equation = selectedEquation.lastStep.step;
+    	
+    	else
+    		equation = selectedEquation.equation;
+    	
+//        var equation = $(selectedSheet + " .canCopy li").toArray();
+//        equation = getEquation(equation);
+//        if (selectedEquation.twoAnswers === true) {
+//            if (equation === "" || equation === null) {
+//                equation = selectedEquation.initialEquation;
+//            } else if (equation.indexOf('a') !== -1 || equation.indexOf('b') !== -1 || equation.indexOf('c') !== -1) {
+//                equation = selectedEquation.initialEquation;
+//            }
+//        }
         requestServer('d', equation, "", "", null);
     } else {
         $("#hintText").html("*Equação já finalizada!");
