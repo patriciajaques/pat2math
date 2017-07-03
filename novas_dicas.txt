@@ -1,4 +1,4 @@
-AD
+﻿AD
 1 Há dois termos nesta equação que você pode somar. Tente descobrir quais são eles.#EI
 2 Qual operação você deve fazer entre os termos <eq t+> e <eq +t>?#TE
 3 Os termos <eq t+>  e <eq +t> devem ser somados.#EQ

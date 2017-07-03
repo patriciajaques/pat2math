@@ -35,8 +35,8 @@ public class Operacao {
 	/*
 	 * Operações experimentais que visam substituir OI
 	 */
-	public static final String PRINCIPIO_ADITIVO="PA";
-	public static final String PRINCIPIO_MULTIPLICATIVO="PM";	
+	public static final String PRINCIPIO_ADITIVO="OI";
+	public static final String PRINCIPIO_MULTIPLICATIVO="OI";	
 	
 	/*
 	 * Operações com frações 

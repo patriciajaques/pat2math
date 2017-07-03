@@ -1,4 +1,4 @@
-Operação	Nível	Conteúdo	Descrição	Animation
+﻿Operação	Nível	Conteúdo	Descrição	Animation
 AD	1	AD	Há dois termos nesta equação que você pode somar. Tente descobrir quais são eles.	EI
 AD	2	AD	Qual operação você deve fazer entre os termos <eq t+> e <eq +t>?	TE
 AD	3	AD	Os termos <eq t+>  e <eq +t> devem ser somados.	EQ
@@ -138,45 +138,45 @@ OI_Dv(-)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas 
 OI_Dv(-)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
 OI_Dv(+)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
 OI_Dv(+)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(+)_Mt(+)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
-OI_Mt(+)_Mt(-)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
-OI_Mt(-)_Mt(+)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
-OI_Mt(-)_Mt(-)	1	OI	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
-OI_Mt(+)_Mt(+)	2	OI	Qual é a operação?	RA
-OI_Mt(+)_Mt(-)	2	OI	Qual é a operação?	RA
-OI_Mt(-)_Mt(+)	2	OI	Qual é a operação?	RA
-OI_Mt(-)_Mt(-)	2	OI	Qual é a operação?	RA
-OI_Mt(+)_Mt(+)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
-OI_Mt(+)_Mt(-)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
-OI_Mt(-)_Mt(+)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
-OI_Mt(-)_Mt(-)	3	OI	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
-OI_Mt(+)_Ad	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
-OI_Mt(+)_Sb	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
-OI_Mt(-)_Ad	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
-OI_Mt(-)_Sb	1	OI	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
-OI_Mt(+)_Ad	2	OI	Qual a operação inversa da multiplicação?	RA
-OI_Mt(+)_Sb	2	OI	Qual a operação inversa da multiplicação?	RA
-OI_Mt(-)_Ad	2	OI	Qual a operação inversa da multiplicação?	RA
-OI_Mt(-)_Sb	2	OI	Qual a operação inversa da multiplicação?	RA
-OI_Mt(+)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(+)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(-)_Ad	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(-)_Sb	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(+)_Dv(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
-OI_Mt(-)_Dv(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
-OI_Mt(+)_Dv(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
-OI_Mt(-)_Dv(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
-OI_Mt(+)_Dv(-)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
-OI_Mt(-)_Dv(+)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
-OI_Mt(+)_Dv(-)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
-OI_Mt(-)_Dv(+)	2	OI	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
-OI_Mt(+)_Dv(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(-)_Dv(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(+)_Dv(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(-)_Dv(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(+)_Dv(-)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
-OI_Mt(-)_Dv(+)	1	OI	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
-OI_Mt(+)_Dv(-)	2	OI	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
-OI_Mt(-)_Dv(+)	2	OI	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
-OI_Mt(+)_Dv(-)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
-OI_Mt(-)_Dv(+)	3	OI	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(+)_Mt(+)	1	PM	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+PM_Mt(+)_Mt(-)	1	PM	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+PM_Mt(-)_Mt(+)	1	PM	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+PM_Mt(-)_Mt(-)	1	PM	Na regra de operação inversa, a operação do termo é alterada, não o sinal.	RA
+PM_Mt(+)_Mt(+)	2	PM	Qual é a operação?	RA
+PM_Mt(+)_Mt(-)	2	PM	Qual é a operação?	RA
+PM_Mt(-)_Mt(+)	2	PM	Qual é a operação?	RA
+PM_Mt(-)_Mt(-)	2	PM	Qual é a operação?	RA
+PM_Mt(+)_Mt(+)	3	PM	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+PM_Mt(+)_Mt(-)	3	PM	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+PM_Mt(-)_Mt(+)	3	PM	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+PM_Mt(-)_Mt(-)	3	PM	Considerando que a equação não se altera se operarmos os dois membros pela mesma quantidade, que tal dividirmos ambos os lados pelo termo que você escolheu?	RA
+PM_Mt(+)_Ad	1	PM	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+PM_Mt(+)_Sb	1	PM	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+PM_Mt(-)_Ad	1	PM	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+PM_Mt(-)_Sb	1	PM	A operação inversa que você realizou não é possível de ser realizada., pois as operações são incompatíveis.	RA
+PM_Mt(+)_Ad	2	PM	Qual a operação inversa da multiplicação?	RA
+PM_Mt(+)_Sb	2	PM	Qual a operação inversa da multiplicação?	RA
+PM_Mt(-)_Ad	2	PM	Qual a operação inversa da multiplicação?	RA
+PM_Mt(-)_Sb	2	PM	Qual a operação inversa da multiplicação?	RA
+PM_Mt(+)_Ad	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(+)_Sb	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(-)_Ad	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(-)_Sb	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(+)_Dv(-)	1	PM	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+PM_Mt(-)_Dv(+)	1	PM	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+PM_Mt(+)_Dv(-)	1	PM	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+PM_Mt(-)_Dv(+)	1	PM	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+PM_Mt(+)_Dv(-)	2	PM	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+PM_Mt(-)_Dv(+)	2	PM	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+PM_Mt(+)_Dv(-)	2	PM	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+PM_Mt(-)_Dv(+)	2	PM	Está alteração a mais que você fez seria correta se fosse operação inversa de duas outras operações.	RA
+PM_Mt(+)_Dv(-)	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(-)_Dv(+)	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(+)_Dv(-)	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(-)_Dv(+)	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(+)_Dv(-)	1	PM	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+PM_Mt(-)_Dv(+)	1	PM	Você quase acertou na regra da operação inversa, pois algo a mais foi alterado.	RA
+PM_Mt(+)_Dv(-)	2	PM	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
+PM_Mt(-)_Dv(+)	2	PM	Esta alteração a mais que você fez seria correto se fosse operação inversa de duas outras operações.	RA
+PM_Mt(+)_Dv(-)	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA
+PM_Mt(-)_Dv(+)	3	PM	Na operação inversa, não se altera o sinal do termo, apenas a operação. A operação inversa é multiplicação/divisão e não adição/subtração.	RA

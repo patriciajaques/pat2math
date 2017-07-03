@@ -41,7 +41,7 @@ public class Tutor {
         try {
             modeloAluno = new ModeloAluno(); // Cria um novo aluno
             modeloAluno.useDatabase(true); // Ativa/desativa Banco de Dados com as Hints no ModeloAluno
-            modeloAluno.setNome(nome, helps); // Bota o nome e o conjunto de ticas
+            modeloAluno.setNome(nome, helps); // Bota o nome e o conjunto de dicas
             modeloAluno.setNomeFull(nomeFull); 
         } catch (Exception ex) {
             System.out.println("Erro ao criar modelo de aluno!");
