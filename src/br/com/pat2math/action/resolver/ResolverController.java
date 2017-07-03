@@ -152,7 +152,7 @@ public class ResolverController {
 		} else if (type.equals ("d")) {
 			
 			//O getKnowledge() retorna as dicas e seus códigos e o size() pega o tamanho da lista
-			if(student.getKnowledges().size() < 19) {// Se o tamanho da lista for 0
+			if(student.getKnowledges().size() == 0) {// Se o tamanho da lista for 0
 				// Então cria uma outra lista que recebe List<String> operations
 				List<Knowledge> knowledges = student.applyKnowledges(
 				Arrays.asList("AD","SB","DV","MT","MM","DM","FC","" +
