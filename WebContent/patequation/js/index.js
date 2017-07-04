@@ -528,25 +528,24 @@ function rel() {
 		    		 
 		    		 var cookieName = "lastUsers" + currentPos;
 		    		 var currentID = getCookie(cookieName);
-		    				    			
-		    		 
+		    				    				    		 
 		    		 if (unlockedPlans.indexOf("Plano de revisão 1") !== -1) {
 		    			createRevisionPlans();	
 		    	     }
 		    			 
 		    		else {		    			 
-		    			var i = 1;
+		    			var i = 2;
 
-		    			if (enableIntroductionPlans) {
-		    				for (; unlockedPlans.indexOf ("Introdução " + i) !== -1 && i <= numPlanosIntroducao; i++) 
-		    					$("#lplan" + i).hide();    			 
+//		    			if (enableIntroductionPlans) {
+//		    				for (; unlockedPlans.indexOf ("Introdução " + i) !== -1 && i <= numPlanosIntroducao; i++) 
+//		    					$("#lplan" + i).hide();
+//		    			}
 		    				    			
-		    				for (; unlockedPlans.indexOf ("Plano de aula " + (i - numPlanosIntroducao)) !== -1; i++) 
-		    					$("#lplan" + i).hide();    			 
+		    			for (; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) 
+		    				$("#lplan" + i).hide();    			 
 		    		    
-		    				//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
-		    				numUnlockedPlans = i - 1;
-		    			}
+		    			//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
+		    			numUnlockedPlans = i - 1;		    			
 		    		}
 		        	
 		        	 cookieName = "currentPlan" + currentPos;

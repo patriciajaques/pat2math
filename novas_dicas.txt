@@ -27,14 +27,13 @@ DV
 5 Se você fizer  <eq />, o próximo passo (a linha inteira) da equação fica <PP>.#ER
 
 DM
-1 Como você deve fazer para multiplicar <eq t*> por (x+8)??#TE
-2 Para resolver <eq *>, primeiramente multiplique <eq t*> pelo primeiro termo da e depois pelo segundo termo da expressão <eq *t>.?#TE
-3 Você sabia que a multiplicação 2*(x+8) é igual a 2x+16??#TE
-4 Se você fizer <eq *>, o próximo passo (a linha inteira) da equação fica <PP>.?#ER
+1 Como você deve fazer para resolver a multiplicação <eq *>?#TE
+2 Para resolver <eq *>, primeiramente multiplique <eq t*> pelo primeiro termo da expressão entre parênteses e depois pelo segundo termo dessa mesma expressão.#TE
+3 Você sabia que a multiplicação 2*(4x+8) é igual a 2*4x + 2*8? Faça o mesmo procedimento na multiplicação <eq *>, adaptando os termos.#TE
 
 MM
 1 Você viu que tem frações nesta equação? Como você deve fazer a equivalência delas?#TF
-2 Observe que as frações a serem operadas possuem denominadores diferentes. Para realizar as operações nos  numeradores, (parte de cima da fração), você precisa transformar as frações de forma que todas tenham o mesmo denominador. Como você pode fazer isso?#TF
+2 Observe que as frações a serem operadas possuem denominadores diferentes. Para realizar as operações nos numeradores, (parte de cima da fração), você precisa transformar as frações de forma que todas tenham o mesmo denominador. Como você pode fazer isso?#TF
 3 Para realizar as operações sobre os numeradores das frações, você tem que calcular o Mínimo Múltiplo Comum dos termos <eq /t1> <eq /t2> <eq /t3>. Esse será o denominador das novas frações.#TF 
 4 Calculado o Mínimo Múltiplo Comum dos termos <eq /t1> <eq /t2> <eq /t3>. Coloque-o como denominador da fração e tente descobrir como fica o numerador das frações. #TF
 5 O próximo passo (a linha inteira) da equação fica <PP>.#ER

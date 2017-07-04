@@ -83,7 +83,7 @@ public class StudentController {
 		student.setPassword(passwordHash);
 		em.persist(student);
 		model.addAttribute("user", student);
-		return "redirect:/student/home";
+		return "redirect:signUpSuccess";
 	}
 	
 	@RequestMapping("signUp")
@@ -97,14 +97,14 @@ public class StudentController {
 		
 		if(student.hasEmailOf(allUsers.withEmail(student.getEmail())))
 			result.rejectValue("email", "error.duplicate");
-		if(result.hasErrors())
-			return "student.new";
+//		if(result.hasErrors())
+//			return "student.new";
 		
 		em.persist(student);
 		
-		SignUpConfirmation confirmation = SignUpConfirmation.generateForUser(student);
-		em.persist(confirmation);
-		emailService.sendConfirmationAccount(student, confirmation, "confirme sua conta");
+//		SignUpConfirmation confirmation = SignUpConfirmation.generateForUser(student);
+//		em.persist(confirmation);
+//		emailService.sendConfirmationAccount(student, confirmation, "confirme sua conta");
 		
 		model.addAttribute("user", student);
 		return "redirect:signUpSuccess";
