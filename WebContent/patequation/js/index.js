@@ -303,6 +303,13 @@ function createIntroductionPlans() {
 	document.getElementById("the_list").innerHTML = plans;
 }
 
+function createExperimentalPlan() {
+	var plans = '<span class="topic" onclick="loadTasks(10000)">Equações</span><div id="tasks10000" class="tasks"></div>';
+	unlockAllPlans = true;
+	loadTasks(10000);
+
+}
+
 function createPlans() {
 	var plans;
 	
@@ -632,7 +639,7 @@ $(document).ready(function() {
 		getResolutionsWE();
 		getPontuacaoEquacoes();
 //		getColorsBackground();
-		rel();
+		
 	
 	$("#refresh_page").tooltip();
 	$("#calculator").tooltip();
@@ -947,11 +954,25 @@ $(document).ready(function() {
 
 	createLines();
 	
-	if (enableIntroductionPlans)
+	if (enableIntroductionPlans) {
+		rel();
 		createIntroductionPlans();
+	}
 	
-	else
-		createPlans();
+	else {
+		cookieName = "lastUsers" + currentPos;
+		var currentID = getCookie(cookieName);
+		
+		if (currentID >= A && currentID <= B) {
+			createExperimentalPlan();
+		}
+		
+		else {
+			rel();
+			createPlans();
+		}
+	}
+		
 	
 	cookieName = "currentWE" + currentPos;
 	var currentWE = getCookie(cookieName);

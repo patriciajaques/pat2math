@@ -182,6 +182,24 @@ function splitEquationUI(equation) {
 }
 
 function checkFractions(text) {
+	var fof = verifyFractionOverFraction(text);
+	
+	if (text.indexOf(";") === -1 && fof !== null) {
+		var numerator = fof[0];
+		var denominator = fof[1];
+		//Replace necessário para o método não tentar ajustar as frações do numerador
+		numerator = replaceAll(numerator, "/", ";")
+		
+		var fraction = numerator + "/" + denominator;
+		fraction = checkFractions(fraction);
+		
+		//Faz o ajuste de volta para o sinal de divisão
+		fraction = replaceAll(fraction, ";", "/");
+		
+		return fraction;
+	}
+	
+	else {
 	var startDenominator = text.indexOf(")/(") + 3;
 
 	if (startDenominator === 2) { // indexOf === -1, não encontrou frações
@@ -232,6 +250,7 @@ function checkFractions(text) {
 		
 		return checkFractions(newText);
 	}
+	}
 //	if (startDenominator !== 2) { // indexOf != -1
 //		
 //
@@ -256,6 +275,50 @@ function checkFractions(text) {
 //
 //		return splitEquationUI(equationUI);
 //	}
+}
+
+//Verifica se há fração sobre fração na expressão passada por parâmetro
+//Exemplo: ((2)/(3))/(4)
+function verifyFractionOverFraction(text) {
+	if (text.charAt(0) !== '(') {
+		return null;
+	}
+	
+	else {
+		var openedParentheses = 1;
+		var i = 1;
+		var currentChar = "";
+		
+		while (openedParentheses !== 0) {
+			currentChar = text.charAt(i);
+
+			if (currentChar === '(')
+				openedParentheses++;
+
+			else if (currentChar === ')')
+				openedParentheses--;
+			
+			i++;
+		}
+		
+		currentChar = text.charAt(i);
+		
+		if (currentChar === '/') {		
+			var posClosedParentheses = text.indexOf(")", i);
+			
+			//Há fração sobre fração
+			if (posClosedParentheses === (text.length - 1)) {
+				var numerator = text.substring(0, i);
+				var denominator = text.substring((i+1));
+				var result = [numerator, denominator];
+				
+				return result;
+			}	
+		}
+		
+		//Se chegou até aqui é porque não há fração sobre fração
+		return null;
+	}
 }
 
 function isNumber(digit) {
