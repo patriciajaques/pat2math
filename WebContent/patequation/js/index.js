@@ -305,6 +305,7 @@ function createIntroductionPlans() {
 
 function createExperimentalPlan() {
 	var plans = '<span class="topic" onclick="loadTasks(10033)">Equações</span><div id="tasks10033" class="tasks"></div>';
+	document.getElementById("the_list").innerHTML = plans;
 	unlockAllPlans = true;
 	loadTasks(10033);
 
