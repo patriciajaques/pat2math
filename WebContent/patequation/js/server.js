@@ -75,28 +75,28 @@ function requestServer (type, last, next, typeOperation, element) {
 
                 //hint = "Os termos 3 e 2 estão ligados por uma operação de multiplicação.";
 
-                var patt = /<eq( id=(([0-9]+)|((\"|\')[0-9]+(\,[0-9]+)*(\"|\'))))?>([0-9\(\)\+\-\*\/xr\^=])+<\/eq>/gi;
-                var result = hint.match(patt);
-                if (result !== null && result.length > 0) {
-                    for (var i = 0; i < result.length; i++) {
-                        var aux = result[i];
-                        var first = "";
-                        var end = "";
-                        first = aux.substring(0, aux.indexOf(">") + 1);
-                        aux = aux.replace(first, "");
-                        end = aux.substring(aux.indexOf("<"), aux.length);
-                        aux = aux.replace(end, "");
-                        //alert(result[i] + "\n" + aux);
-                        var mathml = textToUserInterface(aux);
-                        aux = "";
-                        for (var j = 0; j < mathml.length; j++) {
-                            aux = aux + mathml[j];
-                        }
-                        //aux = first + aux + end;
-                        hint = hint.replace(result[i], aux);
-                        //alert(aux);
-                    }
-                }
+//                var patt = /<eq( id=(([0-9]+)|((\"|\')[0-9]+(\,[0-9]+)*(\"|\'))))?>([0-9\(\)\+\-\*\/xr\^=])+<\/eq>/gi;
+//                var result = hint.match(patt);
+//                if (result !== null && result.length > 0) {
+//                    for (var i = 0; i < result.length; i++) {
+//                        var aux = result[i];
+//                        var first = "";
+//                        var end = "";
+//                        first = aux.substring(0, aux.indexOf(">") + 1);
+//                        aux = aux.replace(first, "");
+//                        end = aux.substring(aux.indexOf("<"), aux.length);
+//                        aux = aux.replace(end, "");
+//                        //alert(result[i] + "\n" + aux);
+//                        var mathml = textToUserInterface(aux);
+//                        aux = "";
+//                        for (var j = 0; j < mathml.length; j++) {
+//                            aux = aux + mathml[j];
+//                        }
+//                        //aux = first + aux + end;
+//                        hint = hint.replace(result[i], aux);
+//                        //alert(aux);
+//                    }
+//                }
                 //alert(result);
 
 
