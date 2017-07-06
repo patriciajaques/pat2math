@@ -1977,15 +1977,144 @@ function callbackAddPoints(value) {
 }
 
 function showHint(hint) {
+	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
+	//ser manipulada
+	if (hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
+		//Variável que salva o operador da propriedade distributiva (+ ou -)
+		var operator = "+";
+		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão
+		//2(x+5), o resolvedor interpreta como (2*(x+5)) 
+		var newHint = hint.split("*");
+		newHint[0] = newHint[0].replace("(", "");
+		newHint[1] = newHint[1].replace(")", "");
+		
+		//Caso em que a propriedade distributiva envolve um sinal de menos.
+		//Ao invés de utilizar a - b, o resolvedor utiliza a + (-b)
+		if (newHint[1].indexOf("+(-") !== -1) {
+			operator = "-";
+			newHint[1] = replaceAll(newHint[1], "(", "");
+			newHint[1] = newHint[1].replace(")", "");
+			newHint[1] = newHint[1].replace("+-", "-");
+			newHint[1] = "(" + newHint[1];
+		}
+		
+		//O back-end apresentou problemas para gerar o passo da dica de nível 3 da propriedade
+		//distributiva, assim essa dica será gerada pela front-end
+		//A dica recebida pelo sistema é a expressão de propriedade distributiva atual
+    	var resolution = "";
+		var multiplier = "";
+		if (hint.indexOf("<") === 0) {
+    		var expression = newHint[1].replace("(", "");
+    		expression = expression.replace(")", "");
+    		expression = expression.replace("</eq>", "");
+    		
+    		var terms = expression.split(operator);
+    		
+    		var posMultiplier = newHint[0].indexOf(">") + 1;
+    		multiplier = newHint[0].substring(posMultiplier);
+    		
+    		//a(b+/-c)
+    		if (expression.charAt(0) !== "-" && terms.length === 2)
+    			resolution = multiplier + "*" + terms[0] + operator + multiplier + "*" + terms[1];
+    		
+    		//-a(+/-b+/-c)
+    		else if (multiplier.charAt(0) === "-") {
+    			//-a(-b+/-c)
+    			if (expression.charAt(0) === "-") {
+    				terms[1] = "-" + terms[1];
+        			resolution = multiplier + "*" + terms[1] + multiplier + "*" + operator + terms[2];
+    			}
+    			
+    			//-a(b+/-c)
+    			else 
+    				resolution = multiplier + "*" + terms[0] + multiplier + "*" + operator + terms[1];			    		
+    		}
+    		
+    		//a(-b+/-c)
+    		else {
+    			terms[1] = "-" + terms[1];
+    			resolution = multiplier + "*" + terms[1] + operator + multiplier + "*" + terms[2];
+    		}
+		}
+		
+    	if (resolution === "")
+    		hint = newHint[0] + newHint[1];
+    	
+    	else {
+    		var passoAnterior;
+    		
+    		if (selectedEquation.lastStep === null)
+    			passoAnterior = selectedEquation.initialEquation;
+    		
+    		else
+    			passoAnterior = selectedEquation.lastStep.step;
+    		
+    		var expression = multiplier + "*" + newHint[1].replace("</eq>", "");
+    		resolution = adjustExpression(resolution);
+    		
+    		hint = "Se você resolver a expressão " + newHint[0] + newHint[1] + ", o próximo passo (a linha inteira) da equação fica " + passoAnterior.replace(expression, resolution);   		
+    	}   	
+	}
+	
 	moveHint();
 	
     var lastHint = $("#hintText").html();
-    if (lastHint !== "") {
+    
+    if (lastHint !== "") {	
         lastHint = "<br><br>" + lastHint;
     }
+    
     $("#hintText").hide('blind', 200);
     $("#hintText").html("*Dica: " + hint + lastHint);
     $("#hintText").show('blind', 500);
+}
+
+function adjustExpression(expression) {	
+	var pos = expression.indexOf("*-");
+	expression = adjustExpressionAux(expression, pos, "*-", "*(-");
+	pos = expression.indexOf("--");
+	
+	expression = adjustExpressionAux(expression, pos, "*+", "*");
+	pos = expression.indexOf("--");
+	expression = adjustExpressionAux(expression, pos, "--", "-(-");
+	pos = expression.indexOf("+-");
+	expression = adjustExpressionAux(expression, pos, "+-", "-");
+
+	return expression;
+}
+
+function adjustExpressionAux(expression, pos, text, newText) {
+	var firstDigitIsNumber = expression.charAt(0) !== "-";
+	
+	if (!firstDigitIsNumber)
+		expression = expression.replace("-", "");
+		
+	while (pos !== -1) {
+		expression = expression.replace(text, newText);
+		
+		if (firstDigitIsNumber)
+			pos += 4;
+		
+		else
+			pos += 3;
+		
+		var currentDigit = "" + expression.charAt(pos);
+		
+		while (currentDigit !== "" && isNumberOrIncognita(currentDigit)) {
+			pos++;
+			currentDigit = "" + expression.charAt(pos);
+		}
+		
+		expression = expression.substring(0, pos) + ")" + expression.substring(pos);
+		
+		
+		pos = expression.indexOf(text);
+	}
+	
+	if (!firstDigitIsNumber)
+		expression = "-" + expression;
+	
+	return expression;
 }
 
 function setCookieDays(cname,cvalue,exdays) {

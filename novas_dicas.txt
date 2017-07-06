@@ -29,7 +29,8 @@ DV
 DM
 1 Como você deve fazer para resolver a multiplicação <eq *>?#TE
 2 Para resolver <eq *>, primeiramente multiplique <eq t*> pelo primeiro termo da expressão entre parênteses e depois pelo segundo termo dessa mesma expressão.#TE
-3 Você sabia que a multiplicação 2*(4x+8) é igual a 2*4x + 2*8? Faça o mesmo procedimento na multiplicação <eq *>, adaptando os termos.#TE
+3 Você sabia que a multiplicação 2*(4x+8) é igual a 2*4x + 2*8? #TE
+4 <eq *> #TE
 
 MM
 1 Você viu que tem frações nesta equação? Como você deve fazer a equivalência delas?#TF
