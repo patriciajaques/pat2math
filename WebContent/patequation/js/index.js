@@ -304,9 +304,9 @@ function createIntroductionPlans() {
 }
 
 function createExperimentalPlan() {
-	var plans = '<span class="topic" onclick="loadTasks(10000)">Equações</span><div id="tasks10000" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(10033)">Equações</span><div id="tasks10033" class="tasks"></div>';
 	unlockAllPlans = true;
-	loadTasks(10000);
+	loadTasks(10033);
 
 }
 
@@ -963,7 +963,7 @@ $(document).ready(function() {
 		cookieName = "lastUsers" + currentPos;
 		var currentID = getCookie(cookieName);
 		
-		if (currentID >= A && currentID <= B) {
+		if (currentID >= 1037 && currentID <= 1101) {
 			createExperimentalPlan();
 		}
 		
