@@ -2119,6 +2119,9 @@ function classPlan24() {
 			}
 		});	
 }
+
+//Planos de conteúdo que faltam: 26, 27, 28, 30, 31 e 32
+
 //function openWorkedExample(id) {	
 //	if (id === 26) {
 //		loadExerciseWE("2(x+3)-5=5(x+2)", 100);

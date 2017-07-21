@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/pat2math/patequation/css/index.css"/>
 <link rel="stylesheet" href="/pat2math/patequation/css/fractions.css"/>
 <link rel="stylesheet" href="/pat2math/patequation/css/paper.css"/>
-<link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css"/>
+<!-- <link rel="stylesheet" href="/pat2math/patequation/css/guider-2.1.0.min.css" type="text/css"/> -->
 <style>
 	input[type="text"] {
 		text-align: center;
