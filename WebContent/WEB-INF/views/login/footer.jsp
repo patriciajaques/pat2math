@@ -16,3 +16,22 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+<script>
+function helpPopups(title, description, width) {
+	$.guider({
+		name: "helpPopups",
+		title: title,
+		description: description,
+		overlay : "dark",
+		width : width,    
+		alignButtons: "center",
+		onShow : function() {document.getElementById("jGuider_helpPopups").style.top = "15px"},
+		buttons: {
+			OK: {
+				click: true,
+				className: "primary"
+			}
+	}
+	}).show();
+}
+</script>

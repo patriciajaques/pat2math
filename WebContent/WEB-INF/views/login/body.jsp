@@ -30,7 +30,10 @@
 		
 	<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();" <span class="_4z_f fwb"> Entre com o Facebook </span>
     </fb:login-button>
-	
+    <br>
+    <p style="color: black">
+    Se você teve algum problema para fazer o login com o Facebook, <a href="#" onclick="popupBlocked()"><font color="blue" size="2px">clique aqui</font></a>
+    	
 	<c:if test="${param.failed == true}">
 		<p class="error" style="font-size: 16px;margin-top: 15px"">Usuário ou senha inválidos</p>
 	</c:if>
@@ -46,14 +49,41 @@
  		<p>
  			<h3 style="color: black"> Curta nossa página no Facebook </h3>
  		</p>
- 		<div style="text-align: center; width: 250px;" class="fb-like" data-href="https://www.facebook.com/Pat2Math" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
+ 		<div style="text-align: center; width: 250px;" class="fb-like" data-href="https://www.facebook.com/Pat2Math" data-width="250" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
  	</div>
 </form>
 
 <div id="mask" onclick="test56()"></div>
 
+<div id="helpPopups-box">
+	
+</div>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
+	
+	function popupBlocked(){
+		if(navigator.userAgent.indexOf("Edge")!=-1){
+			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/edge.png border=0 width=98% height=90%>", "45%");
+		}
+		else if(navigator.userAgent.indexOf("OPR")!=-1){
+			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/opera.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/opera2.png border=0 width=98% height=90%>", "45%");
+		}
+		else if(navigator.userAgent.indexOf("Firefox")!=-1){
+			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/firefox.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/firefox2.png border=0 width=98% height=90%>" ,"45%");
+		}
+		else if(navigator.userAgent.indexOf("Version")!=-1){
+			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/safari.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/safari2.png border=0 width=98% height=90%>", "45%");
+		}
+		else if(navigator.userAgent.indexOf(".NET")!=-1){
+			document.getElementById("helpPopups-box").style.height = "50%";
+			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/ie.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/ie2.png border=0 width=98% height=90%>", "45%");
+		}
+		else{
+			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/chrome.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/chrome2.png border=0 width=98% height=90%>", "45%");
+		}
+				
+	}
 	
 	FB.init({
 	    appId      : '669959713214349',

@@ -559,7 +559,7 @@ textarea:focus {
 	z-index: 99999;
 }
 
-#helpCookiesPopups-box {
+#helpPopups-box {
 	width: 606px;
 	height: 440px;
 	text-align: center;
