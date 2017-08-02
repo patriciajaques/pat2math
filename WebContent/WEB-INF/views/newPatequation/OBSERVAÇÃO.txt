@@ -1,0 +1,3 @@
+O endereço para as três versões do sistema (totalmente gamificado, gamificado e sem gamificação) deverá ser o mesmo.
+Assim, deve ter um comando if/else para identificar qual é a versão correta, e chamar os arquivos JavaScript e CSS correspondentes
+da pasta WebContent/newPatequation. Mas ainda terão arquivos básicos que serão chamados nas três versões, que estão nas demais pastas.
