@@ -1,26 +1,36 @@
+var numLevels = 5;
+var currentLevel;
+var currentStage;
+var numUnlockedLevels;
+var numUnlockedStages;
+
 var stages = new Array();
-stage[1] = "O início";
-stage[2] = "Existem letras negativas?";
-stage[3] = "Coeficientes";
-stage[4] = "Não esqueça dos sinais";
-stage[5] = "Final (do primeiro nivel)";
-stage[6] = "Para onde foram os coeficientes?";
-stage[7] = "Sempre lembre dos sinais";
-stage[8] = "ax + b = c";
-stage[9] = "O que significa a fórmula anterior?";
-stage[10] = "É o formato padrão de equações de 1º grau";
-stage[11] = "Muitos termos!";
-stage[12] = "Propriedade Distributiva (PD)";
-stage[13] = "Razão e Proporção (RP)";
-stage[14] = "Você percebeu que RP pode envolver PD?";
-stage[15] = "Frações...";
-stage[16] = "...e mais frações!";
-stage[17] = "Parabéns! Você está quase lá!";
-stage[18] = "Está preparado para o desafio final?";
-stage[19] = "42";
+stages[1] = "O início";
+stages[2] = "Existem letras negativas?";
+stages[3] = "Coeficientes";
+stages[4] = "Não esqueça dos sinais";
+stages[5] = "Final (do primeiro nivel)";
+stages[6] = "Para onde foram os coeficientes?";
+stages[7] = "Sempre lembre dos sinais";
+stages[8] = "ax + b = c";
+stages[9] = "O que significa a fórmula anterior?";
+stages[10] = "É o formato padrão de equações de 1º grau";
+stages[11] = "Muitos termos!";
+stages[12] = "Propriedade Distributiva (PD)";
+stages[13] = "Razão e Proporção (RP)";
+stages[14] = "Você percebeu que RP pode envolver PD?";
+stages[15] = "Frações...";
+stages[16] = "...e mais frações!";
+stages[17] = "Parabéns! Você está quase lá!";
+stages[18] = "Está preparado para o desafio final?";
+stages[19] = "42";
 
 function getNameStage(number) {
-	return "Fase " + number + ": " + stage[number];
+	if (number < stages.length -1)
+		return "Fase " + number + ": " + stages[number];
+	
+	else
+		return stages[number];
 }
 
 function generateLevels() {
@@ -73,10 +83,10 @@ function generateStages(level) {
 		html += '<span style="visibility: hidden" class="topic" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(i) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
 	}
 	
-	html += '<span class="topic" onclick="createLevels()">Voltar ao menu de níveis</span> <div class="tasks"></div>';
+	if (level !== 5)
+		html += '<span class="topic" onclick="generateLevels()">Voltar ao menu de níveis</span> <div class="tasks"></div>';
 	
-	return html;
-	
+	document.getElementById("the_list").innerHTML = html;
 }
 
 function verifyUnlockedLevels() {

@@ -61,12 +61,11 @@ function exitWorkedExample() {
 	isWorkedExample = false; 
 	blockMenu = false; 
 	
-	var cookieName = "currentWE" + currentPos; 
-	var currentWE = getCookie(cookieName);
+	var currentWE = getCookie("currentWE");
 	setCookieDays (cookieName, "", 0); 
 	
 	//Cria um cookie que indica que o usuário já visualizou o exemplo trabalhado atual
-	cookieName = ("visualizedWE" + currentWE) + currentPos;
+	var cookieName = "visualizedWE" + currentWE;
 	setCookieMinutes(cookieName, "visualized", 10);
 	
 	$("#topics").fadeIn(); 

@@ -1,32 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script src="/pat2math/patequation/js/index.js"></script>
 <script>
 function verifyID() {
 	var currentID = "" + ${student.id};
-
-	var isLastUser = false;
-	//Os cookies do tipo lastUsersN salvam os ids dos usuários que acessaram o Pat2Math no dia
-	var cookieName = "lastUsers0";	
-	var i = 0;
+	var isPreviousUser = getCookie("previousUser") === currentID;
 	
-	//Verifica se o ID atual já está salvo em algum cookie, senão descobre a posição livre para salvar este ID.
-	while (getCookie (cookieName) !== "" && isLastUser === false) {
-		if (currentID === getCookie ("lastUsers" + i))
-			isLastUser = true;
-		
-		else {
-		    i++;
-		    cookieName = "lastUsers" + i;
-		}
+	if (isPreviousUser === false) {
+		deleteAllCookies();		
+		setCookieDays("previousUser", currentID, 1);
 	}
-	
-	//Posição que o ID atual está
-	setCookieDays ("pos", i, 1);
-	currentPos = i;
-	
-	//Caso o ID atual não for encontrado nos cookies, ele deverá ser salvo
-	if (isLastUser === false)
-		setCookieDays (cookieName, currentID, 1);
 	
 	var id = parseInt (currentID);
 	
@@ -44,13 +25,16 @@ function checkGroup(id) {
 		setCookieDays("enableTour", "", 0);
 	}
 	
-	redirectPage("/pat2math/student/home");
+	var isNewPatequation = false;
 	
+	if (isNewPatequation)
+		redirectPage("/pat2math/newpatequation");
+	
+	else
+		redirectPage("/pat2math/student/home");
 }
 
 function redirectPage(url) {
-	var cookieName = "playAudio" + currentPos;
-	setCookieDays (cookieName, "false", 1);
 	setTimeout ("location.href= '" + url + "';", 2000); 
 	setTimeout ("document.getElementById('go').style.visibility = 'visible';", 5000);
 }

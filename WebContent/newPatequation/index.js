@@ -1,3 +1,4 @@
+var levelGamification = "full"; //Opções disponíveis: full, low, without
 var numPlanosAula = 33;
 var numPlanosRevisao = 10;
 var numPlanosIntroducao = 0;
@@ -53,29 +54,280 @@ var resolutionsWE;
 var colorsBackground;
 var isIntroductionToEquationPlan = false; 
 
+$(document).ready(function() {	    	
+	$("#papers").on("click", "#refresh_page", function() {
+		window.location.reload();
+	});
+	
+	
 
-//var cont = 0;
-//var isFirstStepTour = true; //verifica se é a primeira vez que o usuário está resolvendo um passo da equação com o tour ativo
+		getEquationsWE();
+		getResolutionsWE();
+		getPontuacaoEquacoes();
+//		getColorsBackground();
+		
+	
+	$("#refresh_page").tooltip();
+	$("#calculator").tooltip();
+	$("#calculatorIcon").tooltip();
+	//if(!useAudio)showSideBar();
+	
+	
+    $("#loadingImage").hide();
+    $("#book").show("clip", 500);
+    
 
-//function getEquations ( ) {
-//	loadExercise (168);
-//	loadEquation(0);
-//	
-//	setTimeout ("var a = 2;", 3000)
-//	var string = '\\"' + selectedEquation.equation + '\\"';
-//	
-//	for (var i = 169; i < 179; i++) {
-//		if (i !== 175) {
-//		loadExercise (i);
-//		loadEquation(0);
-//		string += ' \\"' + selectedEquation.equation + '\\"';
-//		}
-//		
-//		
-//	}
-//	
-//	alert (string);
-//}
+    $("#mask").click(
+            function() {
+                $("#video-box").hide();
+                $("#mask").hide();
+            }
+    );
+    
+    //Desabilita o evento de voltar para a página anterior a partir da tecla backspace 
+    $(document).unbind('keydown').bind('keydown', function (event) {
+        var doPrevent = false;
+        if (event.keyCode === 8) {
+            var d = event.srcElement || event.target;
+            if ((d.tagName.toUpperCase() === 'INPUT' && (d.type.toUpperCase() === 'TEXT' || d.type.toUpperCase() === 'PASSWORD' || d.type.toUpperCase() === 'FILE')) 
+                 || d.tagName.toUpperCase() === 'TEXTAREA') {
+                doPrevent = d.readOnly || d.disabled;
+            }
+            else {
+                doPrevent = true;
+            }
+        }
+
+        if (doPrevent) {
+            event.preventDefault();
+        }
+    });
+    
+    $(document).keyup(function(event) {
+        var key = event.which;
+        if (key === 13) { //enter key
+
+            if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
+                $(".nextEquation").click();
+            } else {
+                checkEquation();
+            }
+
+        } else if (key === 112) { //F1
+        	insertLines (false, idEquation);
+        } else if (key === 113) { //F2
+//        	if (enableAgent === false) {
+//        		setCookieDays ("enableAgent", "true", 1);
+//        	} else {
+//        		setCookieDays ("enableAgent", "", 0);
+//        	}
+//        	
+//        	window.location.reload();
+        } else if (key === 9) { //tab key
+            $(".labelDefault:first").focus();
+            
+        } else if (key === 27 && isWorkedExample) {//esc key
+        	//Interrompe a execução do exemplo trabalhado atual
+        	$.guider({	
+        	}).hideAll();
+        	exitWorkedExample();
+        	loadExercise(planoAtual*100);
+        	$("#topicsAux").show();
+        } else if (event.altKey) {
+            if (key === 66) { //alt + b
+//                $("#bhaskara").click();
+            	//Abre o menu e bloqueia o fechamento automático
+            	$("#topics").fadeIn();
+        	    $("#topicsAux").hide();
+        	    
+        	    if (openAndBlockMenu !== "true") {
+        	    	openAndBlockMenu = "true";
+        	    	setCookieDays("openAndBlockMenu", "true", 1);
+        	    }
+        	    
+        	    else {
+        	    	openAndBlockMenu = "";
+        	    	setCookieDays("openAndBlockMenu", "", 0);
+        	    }       	       	    
+            } else if (key === 67) { //alt + c
+                $("#abc").click();
+            } else if (key === 68) { //alt + d
+                $("#delta").click();
+            } else if (key === 73) { //alt + i
+            	if (getCookie("enableIntroductionPlans") === "") {
+            		setCookieDays("enableIntroductionPlans", "false", 1);
+            		setCookieDays("unlockAllPlans", "true", 1);
+            	}
+            	
+            	else {
+            		setCookieDays("enableIntroductionPlans", "", 0);
+            		setCookieDays("unlockAllPlans", "", 0);
+            	}
+            	
+            	window.location.reload();
+            } else if (key === 76) { //alt + l
+                $("#clearLine").click();
+            } else if (key === 77) { //alt + m
+            	$("#topics").fadeIn();
+        	    $("#topicsAux").hide();
+            } else if (key === 84) { //alt + t
+            	if (getCookie("enableTour") === "")
+            		setCookieDays("enableTour", "false", 1);
+            	
+            	else
+            		setCookieDays("enableTour", "", 0);
+            	
+            	window.location.reload();
+            } else if (key === 87) { //alt + w
+            	if (getCookie("enableWE") === "")
+            		setCookieDays("enableWE", "false", 1);
+            	
+            	else
+            		setCookieDays("enableWE", "", 0);
+            	
+            	window.location.reload();
+            } else if (key === 0) { //alt + ?
+                $("#hint").click();
+            } else if (key == 80) { //alt + p
+            	if (getCookie("unlockAllPlans") === "")
+            		setCookieDays("unlockAllPlans", "true", 1);
+            	
+            	else
+            		setCookieDays("unlockAllPlans", "", 0);
+            	
+            	window.location.reload();
+            }
+//        } else if (event.shiftKey) {
+//        	if (key === 57) { //( key
+//        		writeInput(")");
+//        	}     	
+        }
+    });
+
+    papers.oncontextmenu = function(e) {
+        $(".dropdown").css("position", "absolute");
+        $(".dropdown").css("left", e.pageX + "px");
+        $(".dropdown").css("top", e.pageY - $(document).scrollTop() + "px");
+        $(".dropdown").addClass("open");
+        return false;
+    };
+
+    document.onclick = function(e) {
+        if (e.which !== 3) {
+            $(".dropdown").removeClass("open");
+        }
+    };
+
+    /*$("#book").tabs({
+        activate: function(event, ui) {
+            //alert(ui.newTab.text() + " activated!");
+        }
+    }).addClass("ui-tabs-vertical ui-helper-clearfix");*/
+    
+    // $("#book .tabs li").removeClass("ui-corner-top").addClass("ui-corner-all");
+
+
+    $(selectedSheet + " #logo").tooltip();
+    //$("#progressBar").tooltip();
+//    $("#helpSystem").tooltip();
+    $("#imgInformation").tooltip();
+
+//    $("#helpSystem").click(function() {
+//        $("#boxHelpSystem").modal();
+//        $(".collapse").removeClass("in");
+//    });
+
+    $(".canCopyTools li").draggable({
+        connectToSortable: selectedSheet + " .canMove ul",
+        helper: "clone",
+        containment: "#book",
+        appendTo: "body",
+        revert: "invalid",
+        start: function(e, ui) {
+            $(ui.helper).addClass("ui-draggable-helper");
+        },
+        stop: function(e, ui) {
+//            $(ui.helper).removeClass("ui-draggable-helper");
+        }
+    }).disableSelection();
+
+   /* $("#newEquation").button().click(function() {
+        newEquation();
+    });
+*/
+    $("#hint").button().click(function() {
+        hint();
+    });
+
+    loadEquation(0);
+
+    centralizeCanMoveAndButton();
+    sortable();
+    draggable();
+    //trashHide();
+    trashClick();
+    //trashDroppable();
+    centralizeCanCopy();
+    buttonClick();
+    focus();
+    
+    $("#topics").mouseleave (function() {
+    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
+    	    $("#topics").fadeOut();
+    	    $("#topicsAux").show();
+    	}
+    });
+    
+    $("#topicsAux").mouseover (function() {
+    	if (blockMenu === false && openAndBlockMenu !== "true") {
+    	    $("#topics").fadeIn();
+    	    $("#topicsAux").hide();
+    	}
+    });
+    
+	
+	var widthResolution = screen.width;
+	var widthWindow = window.innerWidth;
+	
+	if (widthResolution > 1440) {
+		if (widthResolution <= 1600)
+			document.getElementById('hintText').style.left = "38%";
+	
+		else
+			document.getElementById('hintText').style.left = "40%";
+	}
+	
+	if (widthWindow < 1366) 
+		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
+
+	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
+
+	createLines();
+	
+	window.onresize = function(){
+		var widthWindow = window.innerWidth;
+		
+		if (widthWindow < 1366) 
+			document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
+		
+		else 
+			document.getElementById("paper-1").style.marginRight = "6px";
+	};
+	
+	startNewPatequation();
+});
+
+function startNewPatequation() {
+	if (levelGamification != "without") {
+		generateLevels();
+	}
+	
+	else {
+		
+	}
+	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
+	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
+}
 
 
 //color é uma String em hexadecimal com # na frente
@@ -580,366 +832,7 @@ function getCurrentMinutes ( ) {
 function getCurrentSeconds ( ) {
 	return new Date().getSeconds();
 }
-$(document).ready(function() {	    
-//	$("body").on("click", ".hide-menu", function() {
-//		$("#topics").hide("slide", { direction: "left" }, 1000);
-//		$(this).removeClass("hide-menu");
-//		$(this).addClass("show-menu");
-//	});
-//	
-//	
-//	
-//	$("body").on("click", ".show-menu", function() {
-//		$("#topics").show("slide", { direction: "left" }, 1000);
-//		$(this).removeClass("show-menu");
-//		$(this).addClass("hide-menu");
-//	});
-	
-//	if (getCookie (cookieName) !== "false")
-//		location.href="/pat2math/audio";	
-	
-	$("#papers").on("click", "#refresh_page", function() {
-		window.location.reload();
-	});
-	
-	
 
-		getEquationsWE();
-		getResolutionsWE();
-		getPontuacaoEquacoes();
-//		getColorsBackground();
-		
-	
-	$("#refresh_page").tooltip();
-	$("#calculator").tooltip();
-	$("#calculatorIcon").tooltip();
-	//if(!useAudio)showSideBar();
-	
-	
-    $("#loadingImage").hide();
-    $("#book").show("clip", 500);
-    
-
-    $("#mask").click(
-            function() {
-                $("#video-box").hide();
-                $("#mask").hide();
-            }
-    );
-    
-    //Desabilita o evento de voltar para a página anterior a partir da tecla backspace 
-    $(document).unbind('keydown').bind('keydown', function (event) {
-        var doPrevent = false;
-        if (event.keyCode === 8) {
-            var d = event.srcElement || event.target;
-            if ((d.tagName.toUpperCase() === 'INPUT' && (d.type.toUpperCase() === 'TEXT' || d.type.toUpperCase() === 'PASSWORD' || d.type.toUpperCase() === 'FILE')) 
-                 || d.tagName.toUpperCase() === 'TEXTAREA') {
-                doPrevent = d.readOnly || d.disabled;
-            }
-            else {
-                doPrevent = true;
-            }
-        }
-
-        if (doPrevent) {
-            event.preventDefault();
-        }
-    });
-    
-    $(document).keyup(function(event) {
-        var key = event.which;
-        if (key === 13) { //enter key
-
-            if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
-                $(".nextEquation").click();
-            } else {
-                checkEquation();
-            }
-
-        } else if (key === 112) { //F1
-        	insertLines (false, idEquation);
-        } else if (key === 113) { //F2
-//        	if (enableAgent === false) {
-//        		setCookieDays ("enableAgent", "true", 1);
-//        	} else {
-//        		setCookieDays ("enableAgent", "", 0);
-//        	}
-//        	
-//        	window.location.reload();
-        } else if (key === 9) { //tab key
-            $(".labelDefault:first").focus();
-            
-        } else if (key === 27 && isWorkedExample) {//esc key
-        	//Interrompe a execução do exemplo trabalhado atual
-        	$.guider({	
-        	}).hideAll();
-        	exitWorkedExample();
-        	loadExercise(planoAtual*100);
-        	$("#topicsAux").show();
-        } else if (event.altKey) {
-            if (key === 66) { //alt + b
-//                $("#bhaskara").click();
-            	//Abre o menu e bloqueia o fechamento automático
-            	$("#topics").fadeIn();
-        	    $("#topicsAux").hide();
-        	    
-        	    if (openAndBlockMenu !== "true") {
-        	    	openAndBlockMenu = "true";
-        	    	setCookieDays("openAndBlockMenu", "true", 1);
-        	    }
-        	    
-        	    else {
-        	    	openAndBlockMenu = "";
-        	    	setCookieDays("openAndBlockMenu", "", 0);
-        	    }       	       	    
-            } else if (key === 67) { //alt + c
-                $("#abc").click();
-            } else if (key === 68) { //alt + d
-                $("#delta").click();
-            } else if (key === 73) { //alt + i
-            	if (getCookie("enableIntroductionPlans") === "") {
-            		setCookieDays("enableIntroductionPlans", "false", 1);
-            		setCookieDays("unlockAllPlans", "true", 1);
-            	}
-            	
-            	else {
-            		setCookieDays("enableIntroductionPlans", "", 0);
-            		setCookieDays("unlockAllPlans", "", 0);
-            	}
-            	
-            	window.location.reload();
-            } else if (key === 76) { //alt + l
-                $("#clearLine").click();
-            } else if (key === 77) { //alt + m
-            	$("#topics").fadeIn();
-        	    $("#topicsAux").hide();
-            } else if (key === 84) { //alt + t
-            	if (getCookie("enableTour") === "")
-            		setCookieDays("enableTour", "false", 1);
-            	
-            	else
-            		setCookieDays("enableTour", "", 0);
-            	
-            	window.location.reload();
-            } else if (key === 87) { //alt + w
-            	if (getCookie("enableWE") === "")
-            		setCookieDays("enableWE", "false", 1);
-            	
-            	else
-            		setCookieDays("enableWE", "", 0);
-            	
-            	window.location.reload();
-            } else if (key === 0) { //alt + ?
-                $("#hint").click();
-            } else if (key == 80) { //alt + p
-            	if (getCookie("unlockAllPlans") === "")
-            		setCookieDays("unlockAllPlans", "true", 1);
-            	
-            	else
-            		setCookieDays("unlockAllPlans", "", 0);
-            	
-            	window.location.reload();
-            }
-//        } else if (event.shiftKey) {
-//        	if (key === 57) { //( key
-//        		writeInput(")");
-//        	}     	
-        }
-    });
-
-    papers.oncontextmenu = function(e) {
-        $(".dropdown").css("position", "absolute");
-        $(".dropdown").css("left", e.pageX + "px");
-        $(".dropdown").css("top", e.pageY - $(document).scrollTop() + "px");
-        $(".dropdown").addClass("open");
-        return false;
-    };
-
-    document.onclick = function(e) {
-        if (e.which !== 3) {
-            $(".dropdown").removeClass("open");
-        }
-    };
-
-    /*$("#book").tabs({
-        activate: function(event, ui) {
-            //alert(ui.newTab.text() + " activated!");
-        }
-    }).addClass("ui-tabs-vertical ui-helper-clearfix");*/
-    
-    // $("#book .tabs li").removeClass("ui-corner-top").addClass("ui-corner-all");
-
-
-    $(selectedSheet + " #logo").tooltip();
-    //$("#progressBar").tooltip();
-//    $("#helpSystem").tooltip();
-    $("#imgInformation").tooltip();
-
-//    $("#helpSystem").click(function() {
-//        $("#boxHelpSystem").modal();
-//        $(".collapse").removeClass("in");
-//    });
-
-    $(".canCopyTools li").draggable({
-        connectToSortable: selectedSheet + " .canMove ul",
-        helper: "clone",
-        containment: "#book",
-        appendTo: "body",
-        revert: "invalid",
-        start: function(e, ui) {
-            $(ui.helper).addClass("ui-draggable-helper");
-        },
-        stop: function(e, ui) {
-//            $(ui.helper).removeClass("ui-draggable-helper");
-        }
-    }).disableSelection();
-
-   /* $("#newEquation").button().click(function() {
-        newEquation();
-    });
-*/
-    $("#hint").button().click(function() {
-        hint();
-    });
-
-    loadEquation(0);
-
-    centralizeCanMoveAndButton();
-    sortable();
-    draggable();
-    //trashHide();
-    trashClick();
-    //trashDroppable();
-    centralizeCanCopy();
-    buttonClick();
-    focus();
-    
-    $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
-    	    $("#topics").fadeOut();
-    	    $("#topicsAux").show();
-    	}
-    });
-    
-    $("#topicsAux").mouseover (function() {
-    	if (blockMenu === false && openAndBlockMenu !== "true") {
-    	    $("#topics").fadeIn();
-    	    $("#topicsAux").hide();
-    	}
-    });
-    
-//    getEquationsPlan();
-   
-    
-//	cookieName = "openQuest" + currentPos;
-//
-//	if (getCookie (cookieName) === "") {
-//	    cookieName = "isQuestOpen" + currentPos;
-//	
-//	    if (getCookie (cookieName) === "true")
-//		    openQuest();
-//	
-//	    else {
-//	    	cookieName = "timeQuest" + currentPos;
-//	    	var time = getCookie (cookieName);
-//	    	
-//	    	if (time === "") {
-//	            time = Math.floor((Math.random() * 1500) + 1) * 1000; 
-//	        
-//	            var hour = getCurrentHour();
-//	            cookieName = "lastHour" + currentPos;
-//	            setCookieDays (cookieName, hour, 1);
-//	        
-//	            var minutes = getCurrentMinutes();  
-//	            cookieName = "lastMinutes" + currentPos;
-//	            setCookieDays (cookieName, minutes, 1);
-//	            
-//	            var seconds = getCurrentSeconds();
-//	            cookieName = "lastSeconds" + currentPos;
-//	            setCookieDays (cookieName, seconds, 1);
-//	    	}
-//	    	
-//	    	else {
-//	    		var currentHour = getCurrentHour();
-//	    		var currentMinutes = getCurrentMinutes();
-//	    		var currentSeconds = getCurrentSeconds();
-//	    		
-//	    		cookieName = "lastHour" + currentPos;
-//	    		var lastHour = parseInt (getCookie (cookieName));
-//	    		
-//	    		cookieName = "lastMinutes" + currentPos;
-//	    		var lastMinutes = parseInt (getCookie (cookieName));
-//	    		
-//	    		cookieName = "lastSeconds" + currentPos;
-//	    		var lastSeconds = parseInt (getCookie (cookieName));
-//	    		
-//	    		var difference = subtractTime(lastHour, lastMinutes, lastSeconds, currentHour, currentMinutes, currentSeconds);
-//	    		
-//	    		time = parseInt (time);
-//	    		time = time - difference;
-//	    		
-//	    		if (time < 0)
-//	    			time = 2000;
-//	    	}
-//	        
-//	    	cookieName = "timeQuest" + currentPos;
-//	    	setCookieDays (cookieName, time, 1);
-//	    	
-//	        setTimeout ('openQuest()', time);
-//	    }
-//	}
-	
-	var widthResolution = screen.width;
-	var widthWindow = window.innerWidth;
-	
-	if (widthResolution > 1440) {
-		if (widthResolution <= 1600)
-			document.getElementById('hintText').style.left = "38%";
-	
-		else
-			document.getElementById('hintText').style.left = "40%";
-	}
-	
-	if (widthWindow < 1366) 
-		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
-
-	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
-
-	createLines();
-	
-	if (enableIntroductionPlans) {
-		rel();
-		createIntroductionPlans();
-	}
-	
-	else {
-		rel();
-		createPlans();	
-	}
-		
-	var currentWE = getCookie("currentWE");
-	
-	if (currentWE !== "") {
-		var idPlanWE = parseInt(currentWE);
-		setTimeout(function() {loadExerciseWE(equationsWE[idPlanWE], pointsWE[idPlanWE]);}, 1000);
-		setTimeout('classPlan' + idPlanWE + '()', 1200);
-	}
-		
-	
-	
-	window.onresize = function(){
-		var widthWindow = window.innerWidth;
-		
-		if (widthWindow < 1366) 
-			document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
-		
-		else 
-			document.getElementById("paper-1").style.marginRight = "6px";
-	};
-    // $("#hintText").hide();
-    // $(".verticalTape").hide();
-    // $("#newPoints").hide();
-});
 
 function showSideBar(){
 	$("#topics").show();

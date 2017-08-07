@@ -8,7 +8,7 @@ function introduction (nextStep) {
 			title: "Equações iniciais",
 			description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 			alignButtons: "right",
-			onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+			onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
 			buttons: {
 				Próximo: {
 					click: true,
@@ -41,7 +41,7 @@ function introduction (nextStep) {
 		title: "Equações iniciais",
 		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {setCookieDays ("stepTour", "start", 1); setCookieDays ("functionTour", "introduction", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -58,7 +58,7 @@ function introduction (nextStep) {
 		width: 600,
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
 		buttons: {
             Voltar: true,
 			OK: {
@@ -129,7 +129,7 @@ function introductionWithWelcome (nextStep) {
 		title: "Equações iniciais",
 		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		alignButtons: "right",
-		onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -144,7 +144,7 @@ function introductionWithWelcome (nextStep) {
 		title: "Equações iniciais",
 		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.",    
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {setCookieDays ("stepTour", "start", 1); setCookieDays ("functionTour", "introduction", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -160,7 +160,7 @@ function introductionWithWelcome (nextStep) {
 		width: 600,
 		position: "bottom",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "start2", 1); setCookieDays (cFunctionTour, "introduction", 1);},
+		onShow: function() {setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
 		buttons: {
             Voltar: true,
 			OK: {
@@ -184,7 +184,7 @@ function firstStepTour (nextStep, title, description) {
 	    	title: title,
 	    	description: description,
 	    	alignButtons: "right",
-	    	onShow: function() {setCookieDays (cStepTour, "fstep", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+	    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
 	    	buttons: {
 	    		Próximo: {
 	    			click: true,
@@ -218,7 +218,7 @@ function firstStepTour (nextStep, title, description) {
     	title: title,
     	description: description,
     	alignButtons: "right",
-    	onShow: function() {setCookieDays (cStepTour, "fstep", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -235,7 +235,7 @@ function firstStepTour (nextStep, title, description) {
     	description: "Observe este painel. Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
-    	onShow: function() {setCookieDays (cStepTour, "fstep2", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+    	onShow: function() {setCookieDays ("stepTour", "fstep2", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -252,7 +252,7 @@ function firstStepTour (nextStep, title, description) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep3", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep3", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -269,7 +269,7 @@ function firstStepTour (nextStep, title, description) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão. Você perde 2 pontos para cada dica que solicitar.",
     			position: "bottom",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep4", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -287,7 +287,7 @@ function firstStepTour (nextStep, title, description) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
-    	    	onShow: function() {setCookieDays (cStepTour, "fstep5", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+    	    	onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -302,7 +302,7 @@ function firstStepTour (nextStep, title, description) {
     			title: "Agora é com você",
     			description: "Continue resolvendo a equação da forma que preferir.",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep6", 1); setCookieDays (cFunctionTour, "firstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep6", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				OK: {
@@ -322,7 +322,7 @@ function alternativeFirstStepTour (nextStep) {
 	    	title: "Parabéns! O plano de aula 1 foi desbloqueado",
 	    	description: "Confira a seguir mais algumas considerações.",
 	    	alignButtons: "right",
-	    	onShow: function() {setCookieDays (cStepTour, "fstep", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+	    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
 	    	buttons: {
 	    		Próximo: {
 	    			click: true,
@@ -356,7 +356,7 @@ function alternativeFirstStepTour (nextStep) {
     	title: "Parabéns! O plano de aula 1 foi desbloqueado",
     	description: "Confira a seguir mais algumas considerações.",
     	alignButtons: "right",
-    	onShow: function() {setCookieDays (cStepTour, "fstep", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -373,7 +373,7 @@ function alternativeFirstStepTour (nextStep) {
     	description: "Observe este painel. Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.",
     	position: "left",
     	alignButtons: "right",
-    	onShow: function() {setCookieDays (cStepTour, "fstep2", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    	onShow: function() {setCookieDays ("stepTour", "fstep2", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     	buttons: {
     		Voltar: true,
     		Próximo: {
@@ -390,7 +390,7 @@ function alternativeFirstStepTour (nextStep) {
     			description: "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.",
     			position: "left",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep3", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep3", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -407,7 +407,7 @@ function alternativeFirstStepTour (nextStep) {
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão. Você perde 2 pontos para cada dica que solicitar.",
     			position: "bottom",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep4", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -425,7 +425,7 @@ function alternativeFirstStepTour (nextStep) {
     	    	position: "left",
     	    	alignButtons: "right",
     	    	closable: true, 
-    	    	onShow: function() {setCookieDays (cStepTour, "fstep5", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    	    	onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     	    	buttons: {
     	    		Voltar: true,
     	    		Próximo: {
@@ -442,7 +442,7 @@ function alternativeFirstStepTour (nextStep) {
     			description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
     			position: "right",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep6", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep6", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     			buttons: {
     				Próximo: {
     					click: true,
@@ -457,7 +457,7 @@ function alternativeFirstStepTour (nextStep) {
     			description: "Clique neste botão para conferir as equações do plano de aula 1.",     
     			position: "right",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays (cStepTour, "fstep5", 1); setCookieDays (cFunctionTour, "alternativeFirstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				OK: {
@@ -479,7 +479,7 @@ function mainMenu (nextStep) {
 	    	title: "Parabéns!",
 	    	description: "O plano de aula 1 foi desbloqueado e agora você tem acesso ao menu principal.",
 	        alignButtons: "right",
-	        onShow: function() {setCookieDays (cStepTour, "mp", 1); setCookieDays (cFunctionTour, "mainMenu", 1);},
+	        onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
 	    	buttons: {
 	    		Próximo: {
 	    			click: true,
@@ -513,7 +513,7 @@ function mainMenu (nextStep) {
     	title: "Parabéns!",
     	description: "O plano de aula 1 foi desbloqueado e agora você tem acesso ao menu principal.",
         alignButtons: "right",
-        onShow: function() {setCookieDays (cStepTour, "mp", 1); setCookieDays (cFunctionTour, "mainMenu", 1);},
+        onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
     	buttons: {
     		Próximo: {
     			click: true,
@@ -530,7 +530,7 @@ function mainMenu (nextStep) {
 		description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
 		position: "right",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "mp2", 1); setCookieDays (cFunctionTour, "mainMenu", 1);},
+		onShow: function() {setCookieDays ("stepTour", "mp2", 1); setCookieDays ("functionTour", "mainMenu", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -544,7 +544,7 @@ function mainMenu (nextStep) {
 		title: "Acesso às Equações",
 		description: 'Clique em "Plano de Aula 1" para conferir as suas equações.',     
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "mp3", 1); setCookieDays (cFunctionTour, "mainMenu", 1);},
+		onShow: function() {setCookieDays ("stepTour", "mp3", 1); setCookieDays ("functionTour", "mainMenu", 1);},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -563,7 +563,7 @@ function classPlan (nextStep) {
 			title: "Planos de Aula",
 			description: "Os planos de aula são como as fases de um jogo. Cada plano possui várias equações, que podem ser resolvidas na ordem que você quiser.",
 			alignButtons: "right", 
-			onShow: function() {setCookieDays (cStepTour, "plan", 1); setCookieDays (cFunctionTour, "classPlan", 1);},
+			onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
 			buttons: {
 				Próximo: {
 					click: true,
@@ -596,7 +596,7 @@ function classPlan (nextStep) {
 		title: "Planos de Aula",
 		description: "Os planos de aula são como as fases de um jogo. Cada plano possui várias equações, que podem ser resolvidas na ordem que você quiser.",
 		alignButtons: "right", 
-		onShow: function() {setCookieDays (cStepTour, "plan", 1); setCookieDays (cFunctionTour, "classPlan", 1);},
+		onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -610,7 +610,7 @@ function classPlan (nextStep) {
 		title: "Equações",
 		description: "Aqui está a lista das equações do plano de aula 1. Selecione qualquer uma delas para começar.",
 	    alignButtons: "right", 
-	    onShow: function() {setCookieDays (cStepTour, "plan", 1); setCookieDays (cFunctionTour, "classPlan", 1);},
+	    onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
 	    buttons: {
 			Voltar: true,
 			OK: {
@@ -624,8 +624,8 @@ function classPlan (nextStep) {
 function clickEquation (nextStep) {
 	isTourInterativo = false;
 	blockMenu = false;
-	setCookieDays (cStepTour, "", 0);
-	setCookieDays (cFunctionTour, "", 0);
+	setCookieDays ("stepTour", "", 0);
+	setCookieDays ("functionTour", "", 0);
 	
 	$.guider({
 		name: "click",
@@ -665,7 +665,7 @@ function plan2Explanation (nextStep) {
 			title: "Passando de Fase",
 			description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.",
 			alignButtons: "right",
-			onShow: function() {setCookieDays (cStepTour, "plan2Start", 1); setCookieDays (cFunctionTour, "plan2Explanation", 1);},
+			onShow: function() {setCookieDays ("stepTour", "plan2Start", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
 			buttons: {
 				Próximo: {
 					click: true,
@@ -698,7 +698,7 @@ function plan2Explanation (nextStep) {
 		title: "Passando de Fase",
 		description: "Ao resolver todas as equações de um plano de aula, você libera o próximo.",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "plan2Start", 1); setCookieDays (cFunctionTour, "plan2Explanation", 1);},
+		onShow: function() {setCookieDays ("stepTour", "plan2Start", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
 		buttons: {
 			Próximo: {
 				click: true,
@@ -712,7 +712,7 @@ function plan2Explanation (nextStep) {
 		title: "Níveis de Dificuldade",
 		description: "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!",
 		alignButtons: "right",
-		onShow: function() {setCookieDays (cStepTour, "plan2", 1); setCookieDays (cFunctionTour, "plan2Explanation", 1);},
+		onShow: function() {setCookieDays ("stepTour", "plan2", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
 		width: 610,
 		buttons: {
 			Voltar: true,
@@ -738,20 +738,14 @@ function exit ( ) {
 //        $("#topicsAux").show();
 //	}
     
-    var pos = getCookie ("pos");
-	var cookieName = "stepTour" + pos;
-	setCookieDays (cookieName, "", 0);
-	cookieName = "functionTour" + pos;
-	setCookieDays (cookieName, "", 0);
-	cookieName = "openTour" + pos;
-	setCookieDays (cookieName, "false", 7);
+	setCookieDays ("stepTour", "", 0);
+	setCookieDays ("functionTour", "", 0);
+	setCookieDays ("openTour", "false", 7);
 }
 
 function checkTour ( ) {
-	var cookieName = "stepTour" + currentPos;
-	var nextStep = getCookie (cookieName);
-    cookieName = "functionTour" + currentPos;
-    var functionTour = getCookie (cookieName);
+	var nextStep = getCookie ("stepTour");
+    var functionTour = getCookie ("functionTour");
     	
     if (numUnlockedPlans === 0) {
     	if (functionTour === "" || functionTour === "introduction")

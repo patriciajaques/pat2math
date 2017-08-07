@@ -210,9 +210,7 @@ function loadTasks(id) {
 
 							//Verificação especial via cookie, caso o usuário já tenha visualizado o exemplo trabalhado,
 							//mas ainda não concluiu a resolução de nenhuma equação
-							var cookieName = ("visualizedWE" + id) + currentPos;
-
-							if ((id > 2 || enableTourInterativo === false) && taskSolved === 0 && getCookie(cookieName) === "") {
+							if ((id > 2 || enableTourInterativo === false) && taskSolved === 0 && getCookie("visualizedWE") === "") {
 								setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
 								setTimeout('classPlan' + id + '()', 1200);
 							}
@@ -229,8 +227,7 @@ function loadTasks(id) {
 		if (isTourInterativo && id === 1) 
 			classPlan("");
 		
-		var cookieName = "currentPlan" + currentPos;
-		setCookieDays (cookieName, id, 1);
+		setCookieDays ("currentPlan", id, 1);
 //		try {
 //			var limite = planoAtual * 200;
 //			
@@ -248,8 +245,7 @@ function loadTasks(id) {
 		$("#tasks"+id).slideUp(700);
 		$("#tasks"+id).html("");
 		planoAtual = null;
-	    var cookieName = "currentPlan" + currentPos;
-		setCookieDays (cookieName, "", 0);
+		setCookieDays ("currentPlan", "", 0);
 		
 
 	}
@@ -478,7 +474,7 @@ function loadExercise(id) {
 //	setCurrentEquation (id);	
 	loadingShow();
 	
-	var cookieName = "linesHeight" + currentPos + "" + id;
+	var cookieName = "linesHeight" + id;
 	
 	if (getCookie (cookieName) !== "")
 		insertLines(true, id);
@@ -528,9 +524,7 @@ function loadExercise(id) {
 			}
 			reloadPaper(1);
 			
-			
-			var cookieName = "currentEquation" + currentPos;
-			setCookieDays (cookieName, idEquation, 1);
+			setCookieDays ("currentEquation", idEquation, 1);
 			
 //			cookieName = "numLines" + currentPos + idEquation;
 //			
@@ -605,7 +599,7 @@ function previousEquation() {
 function loadExerciseTest(id) {
 	loadingShow();
 
-    var cookieName = "linesHeight" + currentPos + "" + id;
+    var cookieName = "linesHeight" + id;
     
 	if (getCookie (cookieName) !== "")
 		insertLines(true, id);
@@ -638,8 +632,7 @@ function loadExerciseTest(id) {
 			reloadPaper(1);
 			idEquation=id;
 			
-			var cookieName = "currentEquation" + currentPos;
-			setCookieDays (cookieName, idEquation, 1);
+			setCookieDays ("currentEquation", idEquation, 1);
             
             
 			

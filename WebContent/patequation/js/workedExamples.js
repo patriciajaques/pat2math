@@ -267,8 +267,8 @@ function classPlan2() {
 
 //x-4=8
 function classPlan3() {		
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "3", 1); 
+	
+	setCookieDays ("currentWE", "3", 1); 
 
 	$.guider({
 		name: "1",
@@ -388,8 +388,8 @@ function classPlan3() {
 
 //x+4=-2
 function classPlan4() {
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "4", 1); 
+	
+	setCookieDays ("currentWE", "4", 1); 
 
 	$.guider({
 		name: "1",
@@ -460,8 +460,8 @@ function classPlan4() {
 
 //x-3=-6
 function classPlan5() {
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "5", 1); 
+	
+	setCookieDays ("currentWE", "5", 1); 
 
 	$.guider({
 		name: "1",
@@ -515,8 +515,8 @@ function classPlan5() {
 
 //-x+1=10
 function classPlan7() {
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "7", 1); 
+	
+	setCookieDays ("currentWE", "7", 1); 
 
 	$.guider({
 		name: "1",
@@ -620,8 +620,8 @@ function classPlan7() {
 
 //-x-10=7
 function classPlan8() {
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "8", 1); 
+	
+	setCookieDays ("currentWE", "8", 1); 
 
 	$.guider({
 		name: "1",
@@ -709,8 +709,8 @@ function classPlan8() {
 	
 //-x+4=-8
 function classPlan9() {
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "9", 1); 
+	
+	setCookieDays ("currentWE", "9", 1); 
 
 		$.guider({
 			name: "1",
@@ -799,8 +799,8 @@ function classPlan9() {
 
 //-x-15=-9
 function classPlan10() {
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "10", 1); 
+	
+	setCookieDays ("currentWE", "10", 1); 
 
 	$.guider({
 		name: "1",
@@ -890,8 +890,8 @@ function classPlan10() {
 //2x=10
 function classPlan12() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "12", 1); 
+	
+	setCookieDays ("currentWE", "12", 1); 
 
 	$.guider({
 		name: "1",
@@ -1008,8 +1008,8 @@ function classPlan12() {
 //5x=-30
 function classPlan13() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "13", 1); 
+	
+	setCookieDays ("currentWE", "13", 1); 
 	
 	$.guider({
 		name: "1",
@@ -1096,8 +1096,8 @@ function classPlan13() {
 //-3x=15
 function classPlan14() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "14", 1); 
+	
+	setCookieDays ("currentWE", "14", 1); 
 
 	$.guider({
 		name: "1",
@@ -1152,8 +1152,8 @@ function classPlan14() {
 //-4x=-28
 function classPlan15() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "15", 1); 
+	
+	setCookieDays ("currentWE", "15", 1); 
 	
 	$.guider({
 		name: "1",
@@ -1208,8 +1208,8 @@ function classPlan15() {
 //(x)/(4)=20
 function classPlan17() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "17", 1); 
+	
+	setCookieDays ("currentWE", "17", 1); 
 
 	$.guider({
 		name: "1",
@@ -1294,8 +1294,8 @@ function classPlan17() {
 //(x)/(7)=-49
 function classPlan18() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "18", 1); 
+	
+	setCookieDays ("currentWE", "18", 1); 
 
 		$.guider({
 			name: "1",
@@ -1350,8 +1350,8 @@ function classPlan18() {
 //-(x)/(6)=42
 function classPlan19() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "19", 1); 
+	
+	setCookieDays ("currentWE", "19", 1); 
 
 		$.guider({
 			name: "1",
@@ -1569,8 +1569,8 @@ function classPlan19b() {
 //-(x)/(4)=-100
 function classPlan20() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "20", 1); 
+	
+	setCookieDays ("currentWE", "20", 1); 
 
 	$.guider({
 		name: "1",
@@ -1739,8 +1739,8 @@ function classPlan20b() {
 //4x-10=8
 function classPlan22() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "22", 1); 
+	
+	setCookieDays ("currentWE", "22", 1); 
 
 		$.guider({
 			name: "1",
@@ -1845,8 +1845,8 @@ function classPlan22() {
 //-3x+9=-27
 function classPlan23() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "23", 1); 
+	
+	setCookieDays ("currentWE", "23", 1); 
 
 		$.guider({
 			name: "1",
@@ -1952,8 +1952,8 @@ function classPlan23() {
 //5x+8-2x=10+x
 function classPlan24() {
 	contWE = 1;
-	var cookieName = "currentWE" + currentPos; 
-	setCookieDays (cookieName, "23", 1); 
+	
+	setCookieDays ("currentWE", "23", 1); 
 
 		$.guider({
 			name: "1",
