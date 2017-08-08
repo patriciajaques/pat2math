@@ -4,6 +4,13 @@ var currentStage;
 var numUnlockedLevels;
 var numUnlockedStages;
 
+var levels = new Array();
+levels[1] = "Básico";
+levels[2] = "Intermediário";
+levels[3] = "Avançado";
+levels[4] = "Expert";
+levels[5] = "Season Finale";
+
 var stages = new Array();
 stages[1] = "O início";
 stages[2] = "Existem letras negativas?";
@@ -25,8 +32,22 @@ stages[17] = "Parabéns! Você está quase lá!";
 stages[18] = "Está preparado para o desafio final?";
 stages[19] = "42";
 
+var colorsLevels = new Array();
+colorsLevels[1] = "#3acf3a"; //Verde
+colorsLevels[2] = "#c6c600"; //Amarelo Escuro
+colorsLevels[3] = "#DA8E16"; //Laranja
+colorsLevels[4] = "#a50000"; //Vermelho Escuro
+colorsLevels[5] = "#292929"; //Preto
+
+var colorsStagesPerLevel= new Array();
+colorsStagesPerLevel[1] = "#3acf3ab3"; //Verde com um pouco de transparência
+colorsStagesPerLevel[2] = "#c6c600b3"; //Amarelo Escuro com um pouco de transparência
+colorsStagesPerLevel[3] = "#DA8E16CC"; //Laranja com um pouco de transparência
+colorsStagesPerLevel[4] = "#a50000b3"; //Vermelho Escuro com um pouco de transparência
+colorsStagesPerLevel[5] = "#292929cc"; //Preto com um pouco de transparência
+
 function getNameStage(number) {
-	if (number < stages.length -1)
+	if (number < stages.length -1) 
 		return "Fase " + number + ": " + stages[number];
 	
 	else
@@ -34,26 +55,40 @@ function getNameStage(number) {
 }
 
 function generateLevels() {
-	var html = '<span class="topic" onclick="generateStages(1);">Básico</span> <div id="tasksLevel1" class="tasks"></div>' +
-				 '<div class="locked" id="lockLevel2" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-				 '<span class="topic" onclick="generateStages(2);">Intermediário</span> <div id="tasksLevel2" class="tasks"></div>' +
-				 '<div class="locked" id="lockLevel3" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-				 '<span class="topic" onclick="generateStages(3);">Avançado</span> <div id="tasksLevel3" class="tasks"></div>' +
-				 '<div class="locked" id="lockLevel4" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-				 '<span class="topic" onclick="generateStages(4);">Expert</span> <div id="tasksLevel4" class="tasks"></div>' +
-				 '<div class="locked" id="lockLevel5" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-				 '<span class="topic" onclick="generateStages(5);">Season Finale</span> <div id="tasksLevel5" class="tasks"></div>';
+	var html = '<span class="topic" style="background: ' + colorsLevels[1] + '; margin-bottom: 10px;" onclick="generateStages(1);">' + levels[1] + '</span> <div id="tasksLevel1" class="tasks"></div>';
 	
+	for (var i = 2; i < levels.length; i++) {
+		html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
+				'<span class="topic" style="background: ' + colorsLevels[i] + '; margin-bottom: 10px;" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
+	}
+
 	document.getElementById("the_list").innerHTML = html;
 }
 
-//Fazer um sistema de as fases irem aparecendo uma por vez, e não aparecer todas com cadeados.
-//Desta maneira, com exceção da primeira fase de cada nível, as outras deverão ter a visibilidade escondida (hidden)
-//Há uma função JavaScript que faz o update na visibilidade facilmente, pela document.getElementById(ID).style.visibility = "inline"
-//Assim que o usuário resolver a última equação da última fase, deverá voltar para a tela dos níveis automaticamente, e aparecer o cadeado aberto no próximo nível
-//De forma similar aos planos de aula atuais. 
-//Além disso, em cada um dos níveis, abaixo de todas as fases deverá ter um botão "Voltar para o nível anterior", pode ser apenas uma seta para a esquerda
-//ou um botão no formato padrão dos planos com o escrito "Voltar à seleção de níveis"
+function generateOthersLevels(levelOpened, htmlLevelOpened) {
+	var html = '';
+	
+	if (levelOpened === 5) {
+		html = htmlLevelOpened;
+	}
+	
+	else {
+	for (var i = 1; i < levels.length; i++) {
+		var htmlLevel = '<span class="topic" style="margin-bottom: 10px; background: ' + colorsLevels[i] + ';" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
+		
+		if (i === levelOpened) {
+			htmlLevel = htmlLevel.replace("10px", "2px");
+			html += htmlLevel + htmlLevelOpened;
+		}
+		
+		else if (numUnlockedLevels <= i) {
+			html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + htmlLevel;
+		}
+	}
+	}
+	
+ 	document.getElementById("the_list").innerHTML = html;
+}
 
 function generateStages(level) {
 	var firstStage, finalStage;
@@ -76,17 +111,24 @@ function generateStages(level) {
 	
 	var currentPlanDataBase = level + 1000;
 	
-	var html = '<span class="topic" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+	var html;
 	
-	for (var i = firstStage + 1; i <= finalStage; i++) {
+	if (firstStage === 19)
+		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+
+	else {
+	html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+	
+	for (var i = firstStage + 1; i < finalStage; i++) {
 		currentPlanDataBase++;
-		html += '<span style="visibility: hidden" class="topic" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(i) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+		html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + i + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
+				'<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">&nbsp</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
 	}
 	
-	if (level !== 5)
-		html += '<span class="topic" onclick="generateLevels()">Voltar ao menu de níveis</span> <div class="tasks"></div>';
-	
-	document.getElementById("the_list").innerHTML = html;
+	html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + finalStage + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
+	'<span class="topic" style="width: 255px; margin-left: 5px; margin-bottom: 10px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + (currentPlanDataBase+1) + ')">&nbsp</span> <div id="tasks"' + (currentPlanDataBase+1) + 'class="tasks"></div>';
+	}
+	generateOthersLevels(level, html);
 }
 
 function verifyUnlockedLevels() {

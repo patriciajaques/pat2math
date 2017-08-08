@@ -453,7 +453,19 @@ function padlockClick ( ) {
 //	if (selectedEquation !== null)
 //		moveHint();
 
-	$("#hintText").html("Para desbloquear este plano de aula, você deve resolver todas as equações do plano anterior.");
+	$("#hintText").html("Para desbloquear este plano, você deve resolver todas as equações do plano anterior.");
+	$("#hintText").show('blind', 500);
+	$(".verticalTape").show('fold', 500);
+}
+
+function padlockClickStage ( ) {
+	$("#hintText").html("Para desbloquear esta fase, você deve resolver todas as equações da fase anterior.");
+	$("#hintText").show('blind', 500);
+	$(".verticalTape").show('fold', 500);
+}
+
+function padlockClickLevel ( ) {
+	$("#hintText").html("Para desbloquear este nível, você deve completar todas as fases do nível anterior.");
 	$("#hintText").show('blind', 500);
 	$(".verticalTape").show('fold', 500);
 }

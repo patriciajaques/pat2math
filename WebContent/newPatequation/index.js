@@ -318,6 +318,10 @@ $(document).ready(function() {
 });
 
 function startNewPatequation() {
+	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
+	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
+	numUnlockedLevels = 1; //Provisório
+	
 	if (levelGamification != "without") {
 		generateLevels();
 	}
@@ -325,8 +329,7 @@ function startNewPatequation() {
 	else {
 		
 	}
-	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
-	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
+
 }
 
 
