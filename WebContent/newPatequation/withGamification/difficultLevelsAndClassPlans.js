@@ -73,18 +73,18 @@ function generateOthersLevels(levelOpened, htmlLevelOpened) {
 	}
 	
 	else {
-	for (var i = 1; i < levels.length; i++) {
-		var htmlLevel = '<span class="topic" style="margin-bottom: 10px; background: ' + colorsLevels[i] + ';" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
+		for (var i = 1; i < levels.length; i++) {
+			var htmlLevel = '<span class="topic" style="margin-bottom: 10px; background: ' + colorsLevels[i] + ';" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
 		
-		if (i === levelOpened) {
-			htmlLevel = htmlLevel.replace("10px", "2px");
-			html += htmlLevel + htmlLevelOpened;
-		}
+			if (i === levelOpened) {
+				htmlLevel = htmlLevel.replace("10px", "2px");
+				html += htmlLevel + htmlLevelOpened;
+			}
 		
-		else if (numUnlockedLevels <= i) {
-			html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + htmlLevel;
+			else if (numUnlockedLevels <= i) {
+				html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + htmlLevel;
+			}
 		}
-	}
 	}
 	
  	document.getElementById("the_list").innerHTML = html;
@@ -109,7 +109,7 @@ function generateStages(level) {
 		firstStage = finalStage = 19;
 	}
 	
-	var currentPlanDataBase = level + 1000;
+	var currentPlanDataBase = firstStage + 1000;
 	
 	var html;
 	
@@ -117,20 +117,24 @@ function generateStages(level) {
 		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
 
 	else {
-	html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
 	
-	for (var i = firstStage + 1; i < finalStage; i++) {
-		currentPlanDataBase++;
-		html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + i + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-				'<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">&nbsp</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+		for (var i = firstStage + 1; i < finalStage; i++) {
+			currentPlanDataBase++;
+			html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + i + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
+					'<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">&nbsp</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+		}
+	
+		html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + finalStage + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
+		'<span class="topic" style="width: 255px; margin-left: 5px; margin-bottom: 10px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + (currentPlanDataBase+1) + ')">&nbsp</span> <div id="tasks"' + (currentPlanDataBase+1) + 'class="tasks"></div>';
 	}
 	
-	html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + finalStage + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-	'<span class="topic" style="width: 255px; margin-left: 5px; margin-bottom: 10px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + (currentPlanDataBase+1) + ')">&nbsp</span> <div id="tasks"' + (currentPlanDataBase+1) + 'class="tasks"></div>';
-	}
 	generateOthersLevels(level, html);
 }
 
+function click42() {
+	window.open("https://www.google.com.br/search?q=resposta+para+a+vida%2C+o+universo+e+tudo+mais");
+}
 function verifyUnlockedLevels() {
 	
 }

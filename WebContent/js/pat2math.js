@@ -242,11 +242,19 @@ function loadTasks(id) {
 			
 		
 	} else {
-		$("#tasks"+id).slideUp(700);
-		$("#tasks"+id).html("");
-		planoAtual = null;
-		setCookieDays ("currentPlan", "", 0);
 		
+		if (id !== 1019) {
+			$("#tasks"+id).slideUp(700);
+			$("#tasks"+id).html("");
+			planoAtual = null;
+			setCookieDays ("currentPlan", "", 0);
+		}
+		
+		//Easter Egg do plano final do TCC. Se o usuário clicar sobre o 42 após abrir o menu com as equações disponíveis, ele será redirecionado para a página do Google
+		//com a calculadora indicando 42 para "resposta para a vida, o universo e tudo mais"
+		else {
+			click42();
+		}
 
 	}
 	
