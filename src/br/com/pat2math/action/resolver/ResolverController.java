@@ -110,12 +110,11 @@ public class ResolverController {
 		
 		// Carrega as informaçoes da sessão atual
 		Student student = new CurrentUser(httpSession).student();
-		
+
 		//Se não encontrar o estudante atual na sessão, diz que não tá logado
 		if(student == null) {
 			echo = "Você não está logado!";
-		
-			
+				
 			
 		// Se o type for e == check the equation
 		} else if(type.equals("e")) {

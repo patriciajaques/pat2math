@@ -1940,9 +1940,14 @@ function callbackAddPoints(value) {
 }
 
 function showHint(hint) {
+	//Caso a dica contenha um ponto final e seja a que mostra ao aluno o próximo passo completo, este ponto é removido para facilitar a cópia do passo.
+	if (hint.indexOf("próximo passo") && hint.charAt(hint.length-1) === ".") {
+		hint = hint.substring(0, hint.length-1);
+	}
+	
 	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
 	//ser manipulada
-	if (hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
+	if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
 		//Variável que salva o operador da propriedade distributiva (+ ou -)
 		var operator = "+";
 		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão

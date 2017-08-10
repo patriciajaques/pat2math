@@ -33,11 +33,18 @@ stages[18] = "Está preparado para o desafio final?";
 stages[19] = "42";
 
 var colorsLevels = new Array();
-colorsLevels[1] = "#3acf3a"; //Verde
-colorsLevels[2] = "#c6c600"; //Amarelo Escuro
-colorsLevels[3] = "#DA8E16"; //Laranja
-colorsLevels[4] = "#a50000"; //Vermelho Escuro
-colorsLevels[5] = "#292929"; //Preto
+colorsLevels[1] = "#82C785"; //Verde
+colorsLevels[2] = "#76bdda"; //Azul
+colorsLevels[3] = "#F9A31B"; //Laranja
+colorsLevels[4] = "#E4392C"; //Vermelho ou #E2233C
+colorsLevels[5] = "#1E120D"; //Preto
+
+var colorsTextLevels = new Array();
+colorsTextLevels[1] = "darkgreen"; //Verde escuro
+colorsTextLevels[2] = "#3b6577"; //Azul escuro
+colorsTextLevels[3] = "#9c6500"; //Laranja escuro
+colorsTextLevels[4] = "darkred"; //Vermelho escuro
+colorsTextLevels[5] = "#ababab"; //Cinza claro
 
 var colorsStagesPerLevel= new Array();
 colorsStagesPerLevel[1] = "#3acf3ab3"; //Verde com um pouco de transparência
@@ -55,11 +62,11 @@ function getNameStage(number) {
 }
 
 function generateLevels() {
-	var html = '<span class="topic" style="background: ' + colorsLevels[1] + '; margin-bottom: 10px;" onclick="generateStages(1);">' + levels[1] + '</span> <div id="tasksLevel1" class="tasks"></div>';
+	var html = '<span class="topic" style="background: ' + colorsLevels[1] + '; color: ' + colorsTextLevels[1] + '; margin-bottom: 10px;" onclick="generateStages(1);">' + levels[1] + '</span> <div id="tasksLevel1" class="tasks"></div>';
 	
 	for (var i = 2; i < levels.length; i++) {
 		html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
-				'<span class="topic" style="background: ' + colorsLevels[i] + '; margin-bottom: 10px;" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
+				'<span class="topic" style="background: ' + colorsLevels[i] + '; color: ' + colorsTextLevels[i] + '; margin-bottom: 10px;" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
 	}
 
 	document.getElementById("the_list").innerHTML = html;

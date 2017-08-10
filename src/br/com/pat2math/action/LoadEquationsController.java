@@ -1,6 +1,7 @@
 package br.com.pat2math.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import br.com.pat2math.repository.TaskPerformedRepository;
 import br.com.pat2math.studentModel.ResolutionStep;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.TaskPerformed;
+import br.com.pat2math.studentModel.Tip;
 
 @Controller @Transactional
 public class LoadEquationsController {
@@ -34,6 +36,8 @@ public class LoadEquationsController {
 	public @ResponseBody Exercise loadExercise(Long exerciseId, HttpSession session,
 			HttpServletResponse response, HttpServletRequest request) throws IOException {
 		Student student = (Student) session.getAttribute("user");
+		//Reseta o nível das dicas com a troca da equação
+		student.setHelpsRequested(new ArrayList<Tip>());
 		
 		Exercise exercise = (Exercise) contents.get(exerciseId);
 		TaskPerformed taskPerformed = performedTasks.get(exercise, student);
