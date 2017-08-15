@@ -111,14 +111,21 @@ function requestServer (type, last, next, typeOperation, element) {
 
                 var scrollTop = $(document).scrollTop();
 
-                $("#newPoints").css("left", (x + 80) + "px");
-                $("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                if (levelGamification !== "without") {
+                	var lostPoints = -2;
+                	
+                	if (levelGamification === "full") {
+                		//Verifica as dicas gratuitas, o nível e a pontuação perdida, e coloca em lostPoints
+                	}
+                	
+                	$("#newPoints").css("left", (x + 80) + "px");
+                	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                $("#newPoints").text("-2");
-                $("#newPoints").css("color", "orange");
+                	$("#newPoints").text(lostPoints);
+                	$("#newPoints").css("color", "orange");
 
-                $("#newPoints").show("puff", 500, callbackAddPoints(-2));
-
+                	$("#newPoints").show("puff", 500, callbackAddPoints(lostPoints));
+                }
 
             } else if (type === 'n') {  //for new equation
 
@@ -308,13 +315,16 @@ function requestServer (type, last, next, typeOperation, element) {
 
                             var scrollTop = $(document).scrollTop();
 
-                            $("#newPoints").css("left", (x - 50) + "px");
-                            $("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                            if (levelGamification !== "without") {
+                            	var winPoints = 10;
+                            	$("#newPoints").css("left", (x - 50) + "px");
+                            	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                            $("#newPoints").text("+10");
-                            $("#newPoints").css("color", "green");
+                            	$("#newPoints").text(winPoints);
+                            	$("#newPoints").css("color", "green");
 
-                            $("#newPoints").show("puff", 500, callbackAddPoints(10));
+                            	$("#newPoints").show("puff", 500, callbackAddPoints(winPoints));
+                            }
                         }
                         //$(".labelDefault").focus();
                     } else {
@@ -326,17 +336,18 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         var scrollTop = $(document).scrollTop();
 
-                        $("#newPoints").css("left", (x - 50) + "px");
-                        $("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                        if (levelGamification !== "without") {
+                        	$("#newPoints").css("left", (x - 50) + "px");
+                        	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                        var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
+                        	var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
 
-                        $("#newPoints").text("+" + result);
-                        $("#newPoints").css("color", "green");
+                        	$("#newPoints").text("+" + result);
+                        	$("#newPoints").css("color", "green");
 
 
-                        $("#newPoints").show("puff", 500, callbackAddPoints(result));
-
+                        	$("#newPoints").show("puff", 500, callbackAddPoints(result));
+                       }
                         //divaLiteAction("happy;Parabéns! Continue assim amigo...");
                     }
                     selectedEquation.steps.push(step);
@@ -489,14 +500,21 @@ function requestServer (type, last, next, typeOperation, element) {
 
                     var scrollTop = $(document).scrollTop();
 
-                    $("#newPoints").css("left", (x - 50) + "px");
-                    $("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                    if (levelGamification !== "without") {
+                    	var lostPoints = -5;
+                    	
+                    	if (levelGamification === "full") {
+                    		//Verifica os erros gratuitos e a pontuação perdida, e coloca em lostPoints
+                    	}
+                    	
+                    	$("#newPoints").css("left", (x - 50) + "px");
+                    	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                    $("#newPoints").text("-5");
-                    $("#newPoints").css("color", "orange");
+                    	$("#newPoints").text(lostPoints);
+                    	$("#newPoints").css("color", "orange");
 
-                    $("#newPoints").show("puff", 500, callbackAddPoints(-5));
-
+                    	$("#newPoints").show("puff", 500, callbackAddPoints(lostPoints));
+                    }
 
                     if (selectedEquation.currentStep.indexOf('a') !== -1 && selectedEquation.currentStep.indexOf('b') !== -1 && selectedEquation.currentStep.indexOf('c') !== -1) {
                         var abc = identifyABC(selectedEquation.currentStep);

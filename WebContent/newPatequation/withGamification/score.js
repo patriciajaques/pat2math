@@ -1,6 +1,7 @@
 var totalScore;
 var levelScore = new Array();
 var stageScore = new Array();
+//A pontuação da equação atual já é salva no objeto selectedEquation, verificar se esta variável ainda é necessária (a equationScore)
 var equationScore = new Array();
 
 function getTotalScore() {
