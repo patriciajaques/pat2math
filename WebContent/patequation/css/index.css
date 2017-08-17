@@ -288,8 +288,6 @@
     background: none repeat scroll 0 0 #82C785;
     box-shadow: 3px 3px 6px #222222;
     color: #000;
-    top: 0%;
-    left: 44%;
     height: auto;
     max-height: 158px;
     padding: 1em 1.5em;
@@ -298,6 +296,9 @@
     overflow: auto;
     display: none;
     visibility: visible;
+    font-size: 13px;
+    margin-top: 32px;
+    margin-left: -130px;
 }
 
 #tourAux {

@@ -63,9 +63,6 @@
         <button id="hint" class="btn">D i c a</button>
     </div>
     
-    <div id="hintBox">
-        <div id="hintText"></div>
-    </div>
      <div id="papers" style="text-align: center; margin-top: -119px">
    		<div id="paper-1"  style="display: inline-block;"> 		    
    			<div id="refresh_page" title="Atualizar a página"></div>
