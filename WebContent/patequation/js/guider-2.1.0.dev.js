@@ -203,7 +203,7 @@
 							},
 							typeof _guide.s.buttons[i].click == "boolean"
 								? 
-									(i.toLowerCase() == "não, obrigado." || i.toLowerCase() == "finalizar" || i.toLowerCase() == "entendi"|| i.toLowerCase() == "ok" || i.toLowerCase() == "legal") &&
+									(i.toLowerCase() == "não, obrigado." || i.toLowerCase() == "finalizar" || i.toLowerCase() == "entendi"|| i.toLowerCase() == "ok" || i.toLowerCase() == "legal" || i.toLowerCase() == "sim") &&
 										_plugin.hideAll ||
 									(i.toLowerCase() == "próximo" || i.toLowerCase() == "só se for agora!" || i.toLowerCase() == "vamos começar!" || i.toLowerCase() == "sim, por favor." || i.toLowerCase() == "desejo recomeçar o tour.") &&
 										_plugin.next ||

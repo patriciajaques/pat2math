@@ -457,25 +457,31 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[3614] = 200;
 }
 
+function showPadlockMessage(title, description) {
+	$.guider({
+    	title: title,
+    	description: description,
+        alignButtons: "center",
+        overlay: "dark",
+    	buttons: {
+    		OK: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	}).show();
+}
 function padlockClick ( ) {
-//	if (selectedEquation !== null)
-//		moveHint();
-
-	$("#hintText").html("Para desbloquear este plano, você deve resolver todas as equações do plano anterior.");
-	$("#hintText").show('blind', 500);
-	$(".verticalTape").show('fold', 500);
+	showPadlockMessage ("Ops, você ainda não liberou este plano de aula", "Para desbloqueá-lo, você deve resolver todas as equações do plano anterior");
 }
 
 function padlockClickStage ( ) {
-	$("#hintText").html("Para desbloquear esta fase, você deve resolver todas as equações da fase anterior.");
-	$("#hintText").show('blind', 500);
-	$(".verticalTape").show('fold', 500);
+	showPadlockMessage ("Ops, você ainda não liberou esta fase", "Para desbloqueá-la, você deve resolver todas as equações da fase anterior");
 }
 
 function padlockClickLevel ( ) {
-	$("#hintText").html("Para desbloquear este nível, você deve completar todas as fases do nível anterior.");
-	$("#hintText").show('blind', 500);
-	$(".verticalTape").show('fold', 500);
+	showPadlockMessage ("Ops, você ainda não liberou este nível", "Para desbloqueá-lo, você deve completar todas as fases do nível anterior");
 }
 
 function loadExerciseWE(eq, points) {

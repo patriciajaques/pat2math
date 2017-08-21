@@ -1223,11 +1223,13 @@ function clearLine(option) {
 
     $(selectedSheet + " .canMove").html(
             svg + "<ul>" +
-            "<li class='labelDefault'><input type='text' id='inputMobile'></li> <li><div id='hintBox'><div id='hintText'></div></div></li>" +
+            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>");
+            "<button id='button'></button>" +
+            "<div id='hintBox'><div id='hintText'></div></div>");
 
+    $("hintBox").removeClass('canMove');
     centralizeCanMoveAndButton();
     sortable();
     draggable();

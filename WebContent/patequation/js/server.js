@@ -406,10 +406,11 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
                     nextLineServer.html(
                             "<ul>" +
-                            "<li class='labelDefault'><input type='text'></li>" +
+                            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
                             "</ul>" +
                             "<div class='trash'></div>" +
-                            "<button id='button'></button>");
+                            "<button id='button'></button>" +
+                            "<div id='hintBox'><div id='hintText'></div></div>");
                     $(selectedSheet + " .canCopy li").draggable("disable");
                     $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                     $(selectedSheet + " .formula li").css("opacity", "0.5");

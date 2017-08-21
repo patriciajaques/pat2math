@@ -25,7 +25,7 @@ function checkGroup(id) {
 		setCookieDays("enableTour", "", 0);
 	}
 	
-	var isNewPatequation = false;
+	var isNewPatequation = true;
 	
 	if (isNewPatequation)
 		redirectPage("/pat2math/newpatequation");

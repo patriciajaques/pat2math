@@ -289,14 +289,6 @@ $(document).ready(function() {
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
 	
-	if (widthResolution > 1440) {
-		if (widthResolution <= 1600)
-			document.getElementById('hintText').style.left = "38%";
-	
-		else
-			document.getElementById('hintText').style.left = "40%";
-	}
-	
 	if (widthWindow < 1366) 
 		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
 
@@ -322,7 +314,7 @@ function startNewPatequation() {
 	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
 	numUnlockedLevels = 1; //Provisório
 	
-	document.getElementById("topics").style.background = "#F5F6F7";
+	document.getElementById("topics").style.background = "silver";
 	
 	if (levelGamification != "without") {
 		generateLevels();
@@ -1129,10 +1121,11 @@ function clearLine(option) {
 
     $(selectedSheet + " .canMove").html(
             svg + "<ul>" +
-            "<li class='labelDefault'><input type='text' id='inputMobile'></li> <li><div id='hintBox'><div id='hintText'></div></div></li>" +
+            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>");
+            "<button id='button'></button>" +
+            "<div id='hintBox'><div id='hintText'></div></div>");
 
     centralizeCanMoveAndButton();
     sortable();

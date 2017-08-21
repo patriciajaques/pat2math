@@ -51,6 +51,11 @@ function requestServer (type, last, next, typeOperation, element) {
                 //split[1] = int - número de vezes que ele pediu dica por operação
                 //split[2] = int - dicas consecutivas total num determinado intervalo (1 min)
 
+            	if (tryResolveByMyself === true) {
+            		firstErrorOrHint();
+            	}
+            	
+            	else {
                 var hint = split[0];
                 var codeAnim = undefined;
 
@@ -127,8 +132,13 @@ function requestServer (type, last, next, typeOperation, element) {
                 	$("#newPoints").show("puff", 500, callbackAddPoints(lostPoints));
                 }
 
+            }
             } else if (type === 'n') {  //for new equation
-
+            	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
+            	if (tryResolveByMyself === true) {
+            		tryResolveByMyself = false;
+            	}
+            	
                 var valores = splitEquation(data[0]);
                 var newHtml = "<ul>";
                 for (var i = 0; i < valores.length; i++) {
@@ -328,6 +338,10 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                         //$(".labelDefault").focus();
                     } else {
+                    	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
+                    	if (tryResolveByMyself === true) {
+                    		tryResolveByMyself = false;
+                    	}
                         /*addProgressValue(10);*/
                         selectedEquation.lastStep = null;
 
@@ -357,6 +371,10 @@ function requestServer (type, last, next, typeOperation, element) {
 //                alert("Resposta Correta! =D");
                 }
                 else if (split[1] === "true" && split[2] === "true") {
+                	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
+                	if (tryResolveByMyself === true) {
+                		tryResolveByMyself = false;
+                	}
 //                	var cookieName = "numLines" + currentPos + idEquation; 			
 //        			var numLinesString = getCookie (cookieName);
 //        			var numLines = parseInt (numLinesString);
@@ -417,10 +435,11 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
                     nextLineServer.html(
                             "<ul>" +
-                            "<li class='labelDefault'><input type='text'></li>" +
+                            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
                             "</ul>" +
                             "<div class='trash'></div>" +
-                            "<button id='button'></button>");
+                            "<button id='button'></button>" +
+                            "<div id='hintBox'><div id='hintText'></div></div>");
                     $(selectedSheet + " .canCopy li").draggable("disable");
                     $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                     $(selectedSheet + " .formula li").css("opacity", "0.5");
@@ -453,13 +472,16 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         var scrollTop = $(document).scrollTop();
 
-                        $("#newPoints").css("left", (x - 50) + "px");
-                        $("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                        if (levelGamification !== "without") {
+                        	$("#newPoints").css("left", (x - 50) + "px");
+                        	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                        $("#newPoints").text("+10");
-                        $("#newPoints").css("color", "green");
+                        	$("#newPoints").text("+10");
+                        	$("#newPoints").css("color", "green");
 
-                        $("#newPoints").show("puff", 500, callbackAddPoints(10));
+                        	$("#newPoints").show("puff", 500, callbackAddPoints(10));
+                        
+                        }
                         
                         if (isTourInterativo) {
                         	if (selectedEquation.steps.length === 1)
@@ -467,7 +489,12 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                     }        
                 }
-                else if (split[1] === "false") {                	
+                else if (split[1] === "false") {
+                	if (tryResolveByMyself === true) {
+                		firstErrorOrHint();
+                	}
+                	
+                	else {
                     $(element).css("background", "url('img/bad.png') no-repeat center");
                     $(element).effect("bounce", 500, setTimeout(function() {
                         $(element).removeAttr("style").hide().fadeIn();
@@ -534,6 +561,7 @@ function requestServer (type, last, next, typeOperation, element) {
 
                     document.getElementById('inputMobile').style.border = "1px solid red";
                 }
+            	}
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada
                 }else if (split[0]=== "você não está logado!"){
