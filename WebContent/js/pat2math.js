@@ -124,7 +124,6 @@ function enableContent(id) {
 
 
 function loadTasks(id) {
-	unlockAllPlans = true;
 	if (unlockAllPlans || numUnlockedPlans >= id) {	
 		
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
