@@ -431,14 +431,21 @@ textarea:focus {
 
 .tasks {
 	margin: 0 0 0 0;
-	background: #59c;
+	background: #A1A1A1;
 	display: none;
 	border-radius: 5px;
-	width: 265px;
+	width: 250px;
+	margin-left: 8px;
 }
 
 .task-conteiner {
 	width: 160px;
+}
+
+.generalScore {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
 }
 
 .task {

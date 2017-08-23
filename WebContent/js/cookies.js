@@ -6,7 +6,7 @@
 //totalScore = pontuação total do usuário
 //levelScore = pontuação por nível
 //stageScore = pontuação por fase
-//equationScore = pontuação por equação
+//equationScore = pontuação da equação atual que salva da seguinte forma: [user points];[user error points]
 //currentWE = Exemplo trabalhado (Worked Example) que está sendo conferido no momento
 //linesHeight = Altura atual do caderno (no caso em que foi necessário adicionar novas linhas em uma resolução)
 

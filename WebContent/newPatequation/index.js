@@ -313,17 +313,76 @@ function startNewPatequation() {
 	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
 	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
 	numUnlockedLevels = 1; //Provisório
-	
+	numUnlockedStages = 1; //provisório
 	document.getElementById("topics").style.background = "silver";
 	
-	if (levelGamification != "without") {
-		generateLevels();
+	if (levelGamification !== "without") {
+		generateLevels();	
+		//Selecionar a equação atual (se houver) no momento de atualizar a página antes de executar o comando abaixo
+		verifyCookiesScore();
+		reloadTotalScore();
+		reloadLevelsScore();
+		reloadStagesScore();
+		
+		var splitLevel = getCookie("levelScore").split(";");
+		var splitStage = getCookie("stageScore").split(";");		
+		var i = 0;
+		
+		for (; i < splitLevel.length; i++) {
+			var indexScore = i + 1;
+			levelScore[indexScore] = parseInt(splitLevel[i]);
+			stageScore[indexScore] = parseInt(splitStage[i]);
+		}
+		
+		for (; i < splitStage.length; i++) {
+			stageScore[i+1] = parseInt(splitStage[i]);
+		}
 	}
 	
 	else {
 		
 	}
 
+}
+
+function verifyCookiesScore() {
+	if (getCookie("totalScore") === "") {
+		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
+			
+		if (database) {
+			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
+		}
+			
+		else 
+			setCookieDays("totalScore", "0");
+	}
+		
+	if (getCookie("levelScore") === "") {
+		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
+		
+		if (database) {
+			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
+		}
+		
+		else 
+			setCookieDays("levelScore", "0;0;0;0;0");
+		
+	}
+	
+	if (getCookie("stageScore") === "") {
+		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
+		
+		if (database) {
+			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
+		}
+		
+		else 
+			setCookieDays("stageScore", "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0");		
+	}
+	
+	if (selectedEquation !== null) {
+		//No banco de dados deverá ser salva também a pontuação perdida em cada equação, é só acrescentar uma coluna na tabela correspondente do dump atual
+	}
 }
 
 

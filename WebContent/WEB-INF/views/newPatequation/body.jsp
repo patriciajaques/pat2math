@@ -17,7 +17,10 @@
     	
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout"><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /></a></p>
+			<p><a href="/pat2math/j_spring_security_logout"><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px; margin-top: -96px; margin-left: 7px" /></a></p>
+			<p><div class="generalScore" id="totalScore" style="margin-top: -26px;"></div>
+			<p><div class="generalScore" id="levelScore"></div>
+			<p><div class="generalScore" id="stageScore"></div>	
 <!-- 			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /><span id="exitText">&nbspSair</span></a></p> -->
 <!--  			<p><button type="button" onclick="getResolution()">Teste Resolução</button></p> -->
 <!-- 			<p><button type="button" onclick="getStep()">Teste Passo</button></p> -->

@@ -124,7 +124,9 @@ function enableContent(id) {
 
 
 function loadTasks(id) {
+	unlockAllPlans = true;
 	if (unlockAllPlans || numUnlockedPlans >= id) {	
+		
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
 		}		
@@ -148,7 +150,11 @@ function loadTasks(id) {
 		}
 		else if(id === 8 || id === 16 || id === 24 || id === 32){
 			setBackgroundColor("#B0E0E6"); 
-		}			
+		}		
+		
+		if (levelGamification !== undefined && levelGamification !== "without") {
+			document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[id-1000];
+		}
 	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
@@ -183,6 +189,9 @@ function loadTasks(id) {
 					$("#tasks" + id).slideDown(700);	
 					
 					planoAtual = id;
+					
+					if (levelGamification !== undefined && levelGamification !== "without") 
+						currentStage = id - 1000;
 					
 					getPontuacaoPlano();
 					numEquacoesPlanoAtual = getNumEquationsPlan();
@@ -269,6 +278,30 @@ function loadTasks(id) {
 }
 
 function getNumEquationsPlan() {
+	if (levelGamification !== undefined) {
+		if (planoAtual === 1001 || planoAtual === 1003 || planoAtual === 1006)
+			return 4;
+		
+		else if (planoAtual === 1002 || planoAtual === 1004 || planoAtual === 1007)
+			return 5;
+		
+		else if (planoAtual === 1005)
+			return 8;
+		
+		else if (planoAtual === 1010 || planoAtual === 1014)
+			return 16;
+		
+		else if (planoAtual === 1018)
+			return 15;
+		
+		else if (planoAtual === 1019)
+			return 42;
+		
+		else
+			return 10;
+	}
+	
+	else {
 	if (planoAtual < 19 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
 		return 5;
 	
@@ -293,6 +326,7 @@ function getNumEquationsPlan() {
 	
 	else 
 		return 56;
+	}
 	
 }
 

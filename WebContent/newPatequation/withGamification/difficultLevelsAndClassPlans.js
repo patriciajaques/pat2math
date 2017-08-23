@@ -48,7 +48,7 @@ colorsTextLevels[5] = "#ababab"; //Cinza claro
 
 var colorsStagesPerLevel= new Array();
 colorsStagesPerLevel[1] = "#3acf3ab3"; //Verde com um pouco de transparência
-colorsStagesPerLevel[2] = "#c6c600b3"; //Amarelo Escuro com um pouco de transparência
+colorsStagesPerLevel[2] = "#76bddab3"; //Azul com um pouco de transparência
 colorsStagesPerLevel[3] = "#DA8E16CC"; //Laranja com um pouco de transparência
 colorsStagesPerLevel[4] = "#a50000b3"; //Vermelho Escuro com um pouco de transparência
 colorsStagesPerLevel[5] = "#292929cc"; //Preto com um pouco de transparência
@@ -81,7 +81,7 @@ function generateOthersLevels(levelOpened, htmlLevelOpened) {
 	
 	else {
 		for (var i = 1; i < levels.length; i++) {
-			var htmlLevel = '<span class="topic" style="margin-bottom: 10px; background: ' + colorsLevels[i] + ';" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
+			var htmlLevel = '<span class="topic" style="background: ' + colorsLevels[i] + '; color: ' + colorsTextLevels[i] + '; margin-bottom: 10px; background: ' + colorsLevels[i] + ';" onclick="generateStages(' + i + ');">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
 		
 			if (i === levelOpened) {
 				htmlLevel = htmlLevel.replace("10px", "2px");
@@ -98,6 +98,8 @@ function generateOthersLevels(levelOpened, htmlLevelOpened) {
 }
 
 function generateStages(level) {
+	currentLevel = level;
+	
 	var firstStage, finalStage;
 	
 	if (level < 5) {
@@ -121,10 +123,10 @@ function generateStages(level) {
 	var html;
 	
 	if (firstStage === 19)
-		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks' + currentPlanDataBase + '" class="tasks"></div>';
 
 	else {
-		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks"' + currentPlanDataBase + 'class="tasks"></div>';
+		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks' + currentPlanDataBase + '" class="tasks"></div>';
 	
 		for (var i = firstStage + 1; i < finalStage; i++) {
 			currentPlanDataBase++;
@@ -135,6 +137,8 @@ function generateStages(level) {
 		html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + finalStage + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
 		'<span class="topic" style="width: 255px; margin-left: 5px; margin-bottom: 10px; background: ' + colorsStagesPerLevel[level] + '" onclick="loadTasks(' + (currentPlanDataBase+1) + ')">&nbsp</span> <div id="tasks"' + (currentPlanDataBase+1) + 'class="tasks"></div>';
 	}
+	
+	document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[level];
 	
 	generateOthersLevels(level, html);
 }
