@@ -6,52 +6,48 @@ var stageScore = new Array();
 function addOrRemoveScore(amount) {
 	totalScore += amount;
 	levelScore[currentLevel] += amount;
-	stageScore[currentStage] += amount;
+//	stageScore[currentStage] += amount;
 	
 	updateScoreUI();
 	updateScoreCookies();
-	updateScoreDataBase();
+	updateScoreDataBase(amount);
 	
 }
-
 function updateScoreUI() {
 	document.getElementById("totalScore").innerHTML = "Pontuação total: " + totalScore;
 	document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[currentLevel];
-	document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[currentStage];
+//	document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[currentStage];
 }
 function updateScoreCookies() {
 	setCookieDays("totalScore", totalScore, 1);
 	
 	var splitLevel = getCookie("levelScore").split(";");
-	var splitStage = getCookie("stageScore").split(";");
+//	var splitStage = getCookie("stageScore").split(";");
 	
 	splitLevel[currentLevel-1] = levelScore[currentLevel];
-	splitStage[currentStage-1] = stageScore[currentStage];
+//	splitStage[currentStage-1] = stageScore[currentStage];
 	
 	var newCookieLevel = splitLevel[0];
-	var newCookieStage = splitStage[0];
+//	var newCookieStage = splitStage[0];
 	var i = 1;
 	
 	for (; i < splitLevel.length; i++) {
 		newCookieLevel += ";" + splitLevel[i];
-		newCookieStage += ";" + splitStage[i];
+//		newCookieStage += ";" + splitStage[i];
 	}
 	
-	for (; i < splitStage.length; i++) {
-		newCookieStage += ";" + splitStage[i];
-	}
+//	for (; i < splitStage.length; i++) {
+//		newCookieStage += ";" + splitStage[i];
+//	}
 	
 	setCookieDays("levelScore", newCookieLevel, 1);
-	setCookieDays("stageScore", newCookieStage, 1);
+//	setCookieDays("stageScore", newCookieStage, 1);
 	
 	var cookieEquationScore = selectedEquation.userPoints + ";" + selectedEquation.userErrorPoints;
-	
-	setCookieDays("equationScore", cookieEquationScore, 1);
+	var cookieName = "equationScore" + idEquation;
+	setCookieMinutes(cookieName, cookieEquationScore, 10);
 }
 
-function updateScoreDataBase() {
-	//Neste momento deverão ser salvos no banco de dados na tabela correspondente todas as pontuações (total, por nível, por fase e por equação (a por equação está na variável selectedEquation, e deverá ser salvo no banco de dados também a pontuação perdida por equação, adicionar essa coluna na tabela))
-}
 
 function reloadTotalScore() {
 	totalScore = parseInt(getCookie("totalScore"));
@@ -72,4 +68,55 @@ function reloadStagesScore() {
 	for (var i = 0; i < split.length; i++) {
 		stageScore[i+1] = parseInt(split[i]);
 	}
+}
+
+function getTotalScoreDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/getScore",
+		data : {
+			"level" : 0
+		},
+		success : function(data) {
+			setCookieDays("totalScore", data, 1);
+			reloadTotalScore();
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		},
+	});
+}
+
+function getLevelsScoreDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/getScore",
+		data : {
+			"level" : 1
+		},
+		success : function(data) {
+			setCookieDays("levelScore", data, 1);
+			reloadLevelsScore();
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		},
+	});
+}
+
+function updateScoreDataBase(amount) {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/updateScore",
+		data : {
+			"amount" : amount,
+			"level" : currentLevel
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		},
+	});
 }

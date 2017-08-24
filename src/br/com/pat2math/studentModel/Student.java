@@ -37,12 +37,20 @@ public class Student extends User implements Serializable {
 	@Transient
 	private List<Tip> feedbacks = new ArrayList<Tip>();
 	
-	//Strings
-	private String question1, question2, question3;
+	//Pontuações gerais
+	private int totalScore, scoreLevel1, scoreLevel2, scoreLevel3, scoreLevel4, scoreLevel5;
+	
+	//Recompensas especiais
+	private boolean rewardWorkedExamples, rewardFinal;
+	
+	//Progresso
+	private int currentLevel, currentPlan, numEquationsSolved, numErrors, numHints;
 	
 	public static Student newStudent(Student student) {
 		student.defineRole();
-		student.defineQuestionsDefault();
+		student.defineScoresDefault();
+		student.defineSpecialRewardsDefault();
+		student.defineProgressDefault();
 		student.activate();
 		return student;
 	}
@@ -62,8 +70,45 @@ public class Student extends User implements Serializable {
 		this.setRole("ROLE_STUDENT");
 	}
 	
-	public void defineQuestionsDefault ( ) {
-		question1 = question2 = question3 = "0";
+	public void defineScoresDefault() {
+		totalScore = 0;
+		scoreLevel1 = 0;
+		scoreLevel2 = 0;
+		scoreLevel3 = 0;
+		scoreLevel4 = 0;
+		scoreLevel5 = 0;
+	}
+	
+	public void defineSpecialRewardsDefault() {
+		rewardWorkedExamples = false;
+		rewardFinal = false;	
+	}
+	
+	public void defineProgressDefault() {
+		currentLevel = 1;
+		currentPlan = 1;
+		numEquationsSolved = 0;
+		numErrors = 0;
+		numHints = 0;
+	}
+	
+	public void addOrRemovePoints(int amount, int level) {
+		totalScore += amount;
+		
+		if (level == 1)
+			scoreLevel1 += amount;
+		
+		else if (level == 2)
+			scoreLevel2 += amount;
+		
+		else if (level == 3)
+			scoreLevel3 += amount;
+		
+		else if (level == 4)
+			scoreLevel4 += amount;
+		
+		else
+			scoreLevel5 += amount;	
 	}
 	
 	public Group getGroup() {
@@ -106,29 +151,113 @@ public class Student extends User implements Serializable {
 		this.tasksPerformed = tasksPerformed;
 	}
 
-	public String getQuestion1() {
-		return question1;
+	public int getTotalScore() {
+		return totalScore;
 	}
 
-	public void setQuestion1(String question1) {
-		this.question1 = question1;
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
 	}
 
-	public String getQuestion2() {
-		return question2;
+	public int getScoreLevel1() {
+		return scoreLevel1;
 	}
 
-	public void setQuestion2(String question2) {
-		this.question2 = question2;
+	public void setScoreLevel1(int scoreLevel1) {
+		this.scoreLevel1 = scoreLevel1;
 	}
 
-	public String getQuestion3() {
-		return question3;
+	public int getScoreLevel2() {
+		return scoreLevel2;
 	}
 
-	public void setQuestion3(String question3) {
-		this.question3 = question3;
+	public void setScoreLevel2(int scoreLevel2) {
+		this.scoreLevel2 = scoreLevel2;
 	}
+
+	public int getScoreLevel3() {
+		return scoreLevel3;
+	}
+
+	public void setScoreLevel3(int scoreLevel3) {
+		this.scoreLevel3 = scoreLevel3;
+	}
+
+	public int getScoreLevel4() {
+		return scoreLevel4;
+	}
+
+	public void setScoreLevel4(int scoreLevel4) {
+		this.scoreLevel4 = scoreLevel4;
+	}
+
+	public int getScoreLevel5() {
+		return scoreLevel5;
+	}
+
+	public void setScoreLevel5(int scoreLevel5) {
+		this.scoreLevel5 = scoreLevel5;
+	}
+
+	public boolean isRewardWorkedExamples() {
+		return rewardWorkedExamples;
+	}
+
+	public void setRewardWorkedExamples(boolean rewardWorkedExamples) {
+		this.rewardWorkedExamples = rewardWorkedExamples;
+	}
+
+	public boolean isRewardFinal() {
+		return rewardFinal;
+	}
+
+	public void setRewardFinal(boolean rewardFinal) {
+		this.rewardFinal = rewardFinal;
+	}
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public void setCurrentLevel(int currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+	public int getCurrentPlan() {
+		return currentPlan;
+	}
+
+	public void setCurrentPlan(int currentPlan) {
+		this.currentPlan = currentPlan;
+	}
+
+	public int getNumEquationsSolved() {
+		return numEquationsSolved;
+	}
+
+	public void setNumEquationsSolved(int numEquationsSolved) {
+		this.numEquationsSolved = numEquationsSolved;
+	}
+
+	public int getNumErrors() {
+		return numErrors;
+	}
+
+	public void setNumErrors(int numErrors) {
+		this.numErrors = numErrors;
+	}
+
+	public int getNumHints() {
+		return numHints;
+	}
+
+	public void setNumHints(int numHints) {
+		this.numHints = numHints;
+	}
+	
+	
+
+	
 	
 	
 	

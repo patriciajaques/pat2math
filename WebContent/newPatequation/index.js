@@ -320,69 +320,62 @@ function startNewPatequation() {
 		generateLevels();	
 		//Selecionar a equação atual (se houver) no momento de atualizar a página antes de executar o comando abaixo
 		verifyCookiesScore();
-		reloadTotalScore();
 		reloadLevelsScore();
-		reloadStagesScore();
+//		reloadStagesScore();
 		
 		var splitLevel = getCookie("levelScore").split(";");
-		var splitStage = getCookie("stageScore").split(";");		
+//		var splitStage = getCookie("stageScore").split(";");		
 		var i = 0;
 		
 		for (; i < splitLevel.length; i++) {
 			var indexScore = i + 1;
 			levelScore[indexScore] = parseInt(splitLevel[i]);
-			stageScore[indexScore] = parseInt(splitStage[i]);
+//			stageScore[indexScore] = parseInt(splitStage[i]);
 		}
 		
-		for (; i < splitStage.length; i++) {
-			stageScore[i+1] = parseInt(splitStage[i]);
-		}
+//		for (; i < splitStage.length; i++) {
+//			stageScore[i+1] = parseInt(splitStage[i]);
+//		}
 	}
 	
 	else {
 		
 	}
+	
+	
 
 }
 
 function verifyCookiesScore() {
-	if (getCookie("totalScore") === "") {
-		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
-			
-		if (database) {
-			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
-		}
-			
-		else 
-			setCookieDays("totalScore", "0");
-	}
-		
-	if (getCookie("levelScore") === "") {
-		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
-		
-		if (database) {
-			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
-		}
-		
-		else 
-			setCookieDays("levelScore", "0;0;0;0;0");
-		
-	}
+	if (getCookie("totalScore") === "") 
+		getTotalScoreDataBase();
 	
-	if (getCookie("stageScore") === "") {
-		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
+	else 
+		reloadTotalScore();
 		
-		if (database) {
-			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
-		}
-		
-		else 
-			setCookieDays("stageScore", "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0");		
-	}
+	if (getCookie("levelScore") === "") 
+		getLevelsScoreDataBase();
 	
-	if (selectedEquation !== null) {
-		//No banco de dados deverá ser salva também a pontuação perdida em cada equação, é só acrescentar uma coluna na tabela correspondente do dump atual
-	}
+	else 
+		reloadLevelsScore();
+	
+//	if (getCookie("stageScore") === "")
+//		setCookieDays("stageScore", "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0");
+	
+//	if (getCookie("stageScore") === "") {
+//		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
+//		
+//		if (database) {
+//			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
+//		}
+//		
+//		else 
+//			setCookieDays("stageScore", "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0");		
+//	}
+//	
+//	if (selectedEquation !== null) {
+//		//No banco de dados deverá ser salva também a pontuação perdida em cada equação, é só acrescentar uma coluna na tabela correspondente do dump atual
+//	}
 }
 
 
@@ -493,7 +486,7 @@ function helpPage2 ( ) {
 }
 
 function helpPage ( ) {
-	
+	addOrRemoveScore(500);
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:246px; left:1px;'> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
@@ -1125,6 +1118,15 @@ function loadEquation(index) {
 }
 
 function calculatePoints(equation) {
+	var cookieName = "equationScore" + idEquation;
+	var contentCookie = getCookie(cookieName);
+	
+	if (contentCookie !== "") {
+		var split = contentCookie.split(";");
+		equation.userPoints = parseInt(split[0]);
+		equation.userErrorPoints = parseInt(split[1]);
+	}
+	
     $("#amountPoins").text(equation.userPoints + " de " + equation.points + " pontos");
 }
 
@@ -1142,7 +1144,6 @@ function resetProgressBar(){
 	concluded=0;
 	addProgressValue(0);
 }
-
 
 function addProgressValue(value) {
     concluded += value;

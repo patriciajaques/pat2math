@@ -123,6 +123,8 @@ function requestServer (type, last, next, typeOperation, element) {
                 		//Verifica as dicas gratuitas, o nível e a pontuação perdida, e coloca em lostPoints
                 	}
                 	
+                	addOrRemoveScore(lostPoints);
+                	
                 	$("#newPoints").css("left", (x + 80) + "px");
                 	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
@@ -327,6 +329,8 @@ function requestServer (type, last, next, typeOperation, element) {
 
                             if (levelGamification !== "without") {
                             	var winPoints = 10;
+                            	addOrRemoveScore(winPoints);
+                            	
                             	$("#newPoints").css("left", (x - 50) + "px");
                             	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
@@ -355,11 +359,12 @@ function requestServer (type, last, next, typeOperation, element) {
                         	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
                         	var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
-
+                        	addOrRemoveScore(result);
+                        	
                         	$("#newPoints").text("+" + result);
                         	$("#newPoints").css("color", "green");
 
-
+                        	
                         	$("#newPoints").show("puff", 500, callbackAddPoints(result));
                        }
                         //divaLiteAction("happy;Parabéns! Continue assim amigo...");
@@ -473,6 +478,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         var scrollTop = $(document).scrollTop();
 
                         if (levelGamification !== "without") {
+                        	addOrRemoveScore(10);
                         	$("#newPoints").css("left", (x - 50) + "px");
                         	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
@@ -533,6 +539,8 @@ function requestServer (type, last, next, typeOperation, element) {
                     	if (levelGamification === "full") {
                     		//Verifica os erros gratuitos e a pontuação perdida, e coloca em lostPoints
                     	}
+                    	
+                    	addOrRemoveScore(lostPoints);
                     	
                     	$("#newPoints").css("left", (x - 50) + "px");
                     	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
