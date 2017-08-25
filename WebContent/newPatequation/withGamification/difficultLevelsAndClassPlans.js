@@ -115,7 +115,8 @@ function generateOthersLevels(levelOpened, htmlLevelOpened) {
 			}
 		
 			else if (unlockedLevels < i) {
-				html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + htmlLevel;
+				html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +
+				'<span class="topic" style="background: ' + colorsLevels[i] + '; color: ' + colorsTextLevels[i] + '; margin-bottom: 10px; background: ' + colorsLevels[i] + ';" onclick="padlockClickLevel()">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';;
 			}
 		}
 	}
