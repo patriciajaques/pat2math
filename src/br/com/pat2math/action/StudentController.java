@@ -400,7 +400,7 @@ public class StudentController {
 	//level = 1 obtém as pontuações de cada um dos níveis
 	@RequestMapping(value = "newPatequation/getScore", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String getScore(int level, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
-		Student student = new CurrentUser(session).student();		
+		Student student = sd.get(new CurrentUser(session).student().getId());	
 		String score = "";
 		if (level == 0)
 			score += student.getTotalScore();
@@ -423,6 +423,24 @@ public class StudentController {
 		sd.alter(student);
 	
 		return "Pontuação atualizada com sucesso";
+	}
+	
+	@RequestMapping(value = "newPatequation/getLevelAndPlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getLevelAndPlan(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		String level = "" + student.getCurrentLevel();
+		String classPlan = "" + student.getCurrentPlan();
+		
+		return level + ";" + classPlan;
+	}
+	
+	@RequestMapping(value = "newPatequation/completePlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String completePlan(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.completePlan();
+		sd.alter(student);
+	
+		return "Progresso atualizado com sucesso";
 	}
 	
 	private Student formToStudent(StudentForm formStudent) {

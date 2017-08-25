@@ -124,7 +124,7 @@ function enableContent(id) {
 
 
 function loadTasks(id) {
-	if (unlockAllPlans || numUnlockedPlans >= id) {		
+	if (unlockAllPlans || unlockedPlans >= (id - 1000)) {		
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
 		}		
@@ -149,10 +149,6 @@ function loadTasks(id) {
 		else if(id === 8 || id === 16 || id === 24 || id === 32){
 			setBackgroundColor("#B0E0E6"); 
 		}		
-		
-		if (levelGamification !== undefined && levelGamification !== "without") {
-			document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[id-1000];
-		}
 	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
@@ -182,7 +178,26 @@ function loadTasks(id) {
 				
 				else 
 					isIntroductionToEquationPlan = false;
-							
+				
+				if (levelGamification !== "without" && currentLevel === undefined) {
+					var level = 1;
+					
+					if (id > 1005) {
+						if (id < 1011)
+							level = 2;
+						
+						else if (id < 1015)
+							level = 3;
+						
+						else if (id < 1019)
+							level = 4;
+						
+						else
+							level = 5;
+					}
+					
+					generateStages(level);
+				}
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);	
 					
@@ -222,6 +237,17 @@ function loadTasks(id) {
 								setTimeout('classPlan' + id + '()', 1200);
 							}
 						}
+					}
+					
+					if (taskSolved === 0)
+						firstPlanAccess();
+					
+					if (levelGamification === "full") {
+						document.getElementById("logo").style.marginLeft = "153px";
+						document.getElementById("freeHints").style.display = "block";
+						document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+						document.getElementById("freeErrors").style.display = "block";
+						document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
 					}
 			  	},
 			 error:
@@ -277,10 +303,10 @@ function loadTasks(id) {
 
 function getNumEquationsPlan() {
 	if (levelGamification !== undefined) {
-		if (planoAtual === 1001 || planoAtual === 1003 || planoAtual === 1006)
+		if (planoAtual === 1001)
 			return 4;
 		
-		else if (planoAtual === 1002 || planoAtual === 1004 || planoAtual === 1007)
+		else if (planoAtual === 1002 || planoAtual === 1003 || planoAtual === 1006 || planoAtual === 1004 || planoAtual === 1007)
 			return 5;
 		
 		else if (planoAtual === 1005)
@@ -329,6 +355,36 @@ function getNumEquationsPlan() {
 }
 
 function getPontuacaoPlano() {
+	if (levelGamification !== undefined) {
+		if (planoAtual === 1001)
+			pontuacaoPlano = 20;
+		
+		else if (planoAtual === 1002)
+			pontuacaoPlano = 25;
+		
+		else if (planoAtual === 1003)
+			pontuacaoPlano = 30;
+		
+		else if (planoAtual === 1004)
+			pontuacaoPlano = 35;
+		
+		else if (planoAtual === 1005)
+			pontuacaoPlano = 40;
+		
+		else if (planoAtual === 1006)
+			pontuacaoPlano = 40;
+		
+		else if (planoAtual === 1007)
+			pontuacaoPlano = 45;
+		
+		else if (planoAtual === 1008)
+			pontuacaoPlano = 50;
+		
+		else if (planoAtual === 1009)
+			pontuacaoPlano = 60;
+	}
+	
+	else {
 	if (planoAtual !== 11 && planoAtual !== 16 && planoAtual !== 21 && planoAtual !== 25 && planoAtual !== 33 && planoAtual < 36) {
 		if (planoAtual <= 6)
 			pontuacaoPlano = 20;
@@ -378,6 +434,7 @@ function getPontuacaoPlano() {
 	
 	else
 		pontuacaoPlano = null;
+	}
 	
 }
 

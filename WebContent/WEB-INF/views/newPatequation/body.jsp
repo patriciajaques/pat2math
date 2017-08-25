@@ -70,6 +70,8 @@
    		<div id="paper-1"  style="display: inline-block;"> 		    
    			<div id="refresh_page" title="Atualizar a página"></div>
    			<div id="logo" title="PAT2Math =D"></div>
+   			<div class="limitsHintsAndErrors" id="freeHints"></div>
+   			<div class="limitsHintsAndErrors" id="freeErrors"></div>
 
 					<div style="display: none;" id="date">
 				         <div id="dateDay" class="dates"></div>

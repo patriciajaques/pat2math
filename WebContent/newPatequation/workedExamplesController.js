@@ -8,10 +8,10 @@ function firstPlanAccess() {
 	loadExercise(idFirstEquation);
 	
 	$.guider({
-    	description: "Você sabe resolver essa equação?",
-        alignButtons: "right",
+    	title: "Você sabe resolver essa equação?",
+        alignButtons: "center",
     	buttons: {
-    		"Não": function() {var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+    		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan]); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
     		"Sim": true,
     		"Não tenho certeza": function() {imNotSure(numberCurrentPlan);}
     	}
@@ -21,10 +21,10 @@ function firstPlanAccess() {
 
 function imNotSure(plan) {
 	$.guider({
-    	description: "Deseja tentar resolver sozinho a primeira equação ou conferir um exercício resolvido?",
-        alignButtons: "right",
+    	title: "Deseja tentar resolver sozinho a primeira equação ou conferir um exercício resolvido?",
+        alignButtons: "center",
     	buttons: {
-    		"Quero ver um exercício resolvido": function() {var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
+    		"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan]); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
     		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll();}
     	}
     	            
@@ -38,13 +38,13 @@ function firstErrorOrHint() {
 	$.guider({
     	title: "Você gostaria de conferir um exercício resolvido antes de continuar?",
 		description: "Recomendamos que sim para facilitar na resolução de suas suas dúvidas",
-        alignButtons: "right",
+        alignButtons: "center",
     	buttons: {
     		"Sim": { 			
-    			click: function() {var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+    			click: function() {loadExerciseWE(equationsWE[numberCurrentPlan]); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
     			className: "primary"
     		},
-    		"Não": function() {if (alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
+    		"Não": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
     	} 	            
     	}).show();
 }
@@ -53,7 +53,7 @@ function questionSpecialReward(plan) {
 	$.guider({
 		title: "Tem certeza?",
 		description: "Se você conferir o exercício resolvido, lhe daremos uma recompensa especial",
-		alignButtons: "right",
+		alignButtons: "center",
 		onShow: function() {setCookieDays ("stepTour", "plan2Start", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
 		buttons: {
 			"Quero conferir e ganhar a recompensa! :D": {
@@ -68,7 +68,10 @@ function questionSpecialReward(plan) {
 
 function getSpecialReward(plan) {
 	//Colocar aqui os comandos para o usuário ganhar a recompensa especial
-	var functionName = "classPlan" + numberCurrentPlan + "();"; 
+	alert ("Ainda estamos trabalhando na sua recompensa especial. Para garantir, peça ajuda ao membro do projeto que está acompanhando esta seção e diga a ele o seu nome e que você deseja receber a recompensa especial");
+	loadExerciseWE(equationsWE[plan]);
+	var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);
+	
 	setTimeout(functionName, 100);
 	
 }

@@ -120,10 +120,20 @@ function requestServer (type, last, next, typeOperation, element) {
                 	var lostPoints = -2;
                 	
                 	if (levelGamification === "full") {
-                		//Verifica as dicas gratuitas, o nível e a pontuação perdida, e coloca em lostPoints
+                		if (freeHints[planoAtual-1001] > 0) {
+                			freeHints[planoAtual-1001]--;
+                			lostPoints = 0;
+                			
+                			var cookie = freeHints[0];
+                			
+                			for (var i = 0; i < freeHints.length; i++)
+                				cookie += ";" + freeHints[i];
+                			
+                			setCookieDays("freeHints", cookie, 1);
+                			document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+                		}
+                		
                 	}
-                	
-                	addOrRemoveScore(lostPoints);
                 	
                 	$("#newPoints").css("left", (x + 80) + "px");
                 	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
@@ -233,32 +243,9 @@ function requestServer (type, last, next, typeOperation, element) {
                         	var divName = "#tasks" + numUnlockedPlans;
                         	$(divName).slideUp(700);
                         	
-                        	numUnlockedPlans++;
-                        	
-                        	if (numUnlockedPlans === 7)
-                            	window.location.reload();
-                        	
-                        	
-                        	divName = "lplan" + numUnlockedPlans;
-                        	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-       
-                        	if (numUnlockedPlans == 1) {
-                        		if (selectedEquation.steps.length === 0)
-        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
-                        	  
-                        		else
-                        		    mainMenu("");
-                        	}
-                        	
-                        	else if (numUnlockedPlans == 2)
-                        		setTimeout('plan2Explanation("")', 2000);
-                        	
-                        	else {
-                        		setTimeout ("newPlan()", 2000);
-                        	}
-                        	
-                        	divName = "#lplan" + numUnlockedPlans;
-                        	setTimeout (function() {$(divName).hide();}, 20000);
+                        	if (levelGamification !== "without")
+                        		completePlan();
+                        	  	
                         }
                         
                         else 
@@ -328,9 +315,7 @@ function requestServer (type, last, next, typeOperation, element) {
                             var scrollTop = $(document).scrollTop();
 
                             if (levelGamification !== "without") {
-                            	var winPoints = 10;
-                            	addOrRemoveScore(winPoints);
-                            	
+                            	var winPoints = 10;                      	
                             	$("#newPoints").css("left", (x - 50) + "px");
                             	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
@@ -359,7 +344,6 @@ function requestServer (type, last, next, typeOperation, element) {
                         	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
                         	var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
-                        	addOrRemoveScore(result);
                         	
                         	$("#newPoints").text("+" + result);
                         	$("#newPoints").css("color", "green");
@@ -478,7 +462,6 @@ function requestServer (type, last, next, typeOperation, element) {
                         var scrollTop = $(document).scrollTop();
 
                         if (levelGamification !== "without") {
-                        	addOrRemoveScore(10);
                         	$("#newPoints").css("left", (x - 50) + "px");
                         	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
@@ -500,24 +483,12 @@ function requestServer (type, last, next, typeOperation, element) {
                 		firstErrorOrHint();
                 	}
                 	
-                	else {
                     $(element).css("background", "url('img/bad.png') no-repeat center");
                     $(element).effect("bounce", 500, setTimeout(function() {
                         $(element).removeAttr("style").hide().fadeIn();
                     }, 1000));
 
-                    var hint;
-                    if (split[5] !== "" && split[5] !== null && split[5]!== "null") {
-                        hint = split[5];
-                    } else {
-                        hint = split[4];
-                    }
-
-                    if (enableAgent)
-                    	divaLiteTipAction(hint);
                     
-                    else
-                    	showHint(hint);
 
 //                    $("#hintText").hide('blind', 200);
 //                    $(".verticalTape").hide('blind', 200);
@@ -537,10 +508,20 @@ function requestServer (type, last, next, typeOperation, element) {
                     	var lostPoints = -5;
                     	
                     	if (levelGamification === "full") {
-                    		//Verifica os erros gratuitos e a pontuação perdida, e coloca em lostPoints
+                    		if (freeErrors[planoAtual-1001] > 0) {
+                    			freeErrors[planoAtual-1001]--;
+                    			lostPoints = 0;
+                    			
+                    			var cookie = freeErrors[0];
+                    			
+                    			for (var i = 0; i < freeErrors.length; i++)
+                    				cookie += ";" + freeErrors[i];
+                    			
+                    			setCookieDays("freeErrors", cookie, 1);
+                    			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
+                    		}
                     	}
-                    	
-                    	addOrRemoveScore(lostPoints);
+             
                     	
                     	$("#newPoints").css("left", (x - 50) + "px");
                     	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
@@ -568,7 +549,20 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
 
                     document.getElementById('inputMobile').style.border = "1px solid red";
-                }
+                
+                	
+                	var hint;
+                    if (split[5] !== "" && split[5] !== null && split[5]!== "null") {
+                        hint = split[5];
+                    } else {
+                        hint = split[4];
+                    }
+
+                    if (enableAgent)
+                    	divaLiteTipAction(hint);
+                    
+                    else
+                    	showHint(hint);
             	}
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada

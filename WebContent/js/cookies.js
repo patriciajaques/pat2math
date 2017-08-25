@@ -3,6 +3,8 @@
 //currentPlan = ID do plano/fase que o usuário está resolvendo no momento
 //currentEquation = ID da equação que o usuário está resolvendo no momento
 
+//unlockedLevels = número de níveis desbloqueados;
+//unlockedPlans = número de planos de aula desbloqueados;
 //totalScore = pontuação total do usuário
 //levelScore = pontuação por nível
 //stageScore = pontuação por fase

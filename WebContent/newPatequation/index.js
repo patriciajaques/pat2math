@@ -1,4 +1,6 @@
-var levelGamification = "full"; //Opções disponíveis: full, low, without
+var levelGamification = getCookie("levelGamification"); //Opções disponíveis: full, low, without
+var freeHints;
+var freeErrors;
 var numPlanosAula = 33;
 var numPlanosRevisao = 10;
 var numPlanosIntroducao = 0;
@@ -38,7 +40,7 @@ var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
-var openAndBlockMenu = getCookie("openAndBlockMenu");
+var openAndBlockMenu = "true";
 var showNews = false;
 var showPlan2Explanation = "true";
 var contWE = 1; //Variável auxiliar para os exemplos trabalhados que envolvem frações
@@ -64,6 +66,7 @@ $(document).ready(function() {
 		getEquationsWE();
 		getResolutionsWE();
 		getPontuacaoEquacoes();
+		getFreeHintsAndErrors();
 //		getColorsBackground();
 		
 	
@@ -312,26 +315,44 @@ $(document).ready(function() {
 function startNewPatequation() {
 	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
 	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
-	numUnlockedLevels = 1; //Provisório
-	numUnlockedStages = 1; //provisório
+	
 	document.getElementById("topics").style.background = "silver";
 	
 	if (levelGamification !== "without") {
-		generateLevels();	
-		//Selecionar a equação atual (se houver) no momento de atualizar a página antes de executar o comando abaixo
-		verifyCookiesScore();
-		reloadLevelsScore();
+		getLevelsAndPlansUnlockedDataBase();
+		
+		if (levelGamification === "full") {
+			if (getCookie("novidadeDicas") === "") {
+				setCookieDays("novidadeDicas", "ja apresentada", 1);
+				
+				$.guider({
+					title : "Agora você tem dicas e erros gratuítos disponíveis (que não ocasionam perda de pontos)",
+					description : "Lembre-se que você pode pedir dicas e errar passos da equação se os limites chegarem a zero, porém eles terão custos na sua pontuação. Aproveite-os com responsabilidade. Mas não hesite de pedir ajuda se você tiver dificuldades após a utilização dos limites gratuitos, o mais importante é o seu aprendizado.",
+					overlay : "dark",
+					width : 600,
+					alignButtons : "center",
+					buttons : {
+						OK: {
+							click : true,
+							className : "primary",
+						}
+					}
+				}).show();
+			}		
+		}
+//		verifyCookiesScore();
+//		reloadLevelsScore();
 //		reloadStagesScore();
 		
-		var splitLevel = getCookie("levelScore").split(";");
+//		var splitLevel = getCookie("levelScore").split(";");
 //		var splitStage = getCookie("stageScore").split(";");		
-		var i = 0;
-		
-		for (; i < splitLevel.length; i++) {
-			var indexScore = i + 1;
-			levelScore[indexScore] = parseInt(splitLevel[i]);
-//			stageScore[indexScore] = parseInt(splitStage[i]);
-		}
+//		var i = 0;
+//		
+//		for (; i < splitLevel.length; i++) {
+//			var indexScore = i + 1;
+//			levelScore[indexScore] = parseInt(splitLevel[i]);
+////			stageScore[indexScore] = parseInt(splitStage[i]);
+//		}
 		
 //		for (; i < splitStage.length; i++) {
 //			stageScore[i+1] = parseInt(splitStage[i]);
@@ -339,7 +360,28 @@ function startNewPatequation() {
 	}
 	
 	else {
+		generateStagesWithoutGamification();
+		document.getElementById("amountPoins").style.display = "none";
+		unlockAllPlans = true;
+	}
+	
+	var cookiePlan = getCookie("currentPlan");
+	
+	if (cookiePlan !== "") {
+		var idPlan = parseInt(cookiePlan);
 		
+		var cookieEquation = getCookie("currentEquation");
+		
+		if (cookieEquation !== "") {
+			var idEquation = parseInt(cookieEquation);
+		}
+		
+		unlockAllPlans = true;
+		loadTasks(idPlan);
+		loadExercise(idEquation);		
+		unlockAllPlans = false;
+		$("#topics").fadeIn();
+	    $("#topicsAux").hide();
 	}
 	
 	
@@ -378,6 +420,91 @@ function verifyCookiesScore() {
 //	}
 }
 
+function completePlan() {
+	unlockedPlans++;
+	var divName = "lockStage" + unlockedPlans;
+	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+	
+	setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
+	
+	if (unlockedLevels !== undefined && unlockedPlans === 6 || unlockedPlans === 11 || unlockedPlans === 15 || unlockedPlans === 19) {
+		unlockedLevels++;
+		divName = "lockLevel" + unlockedLevels;
+		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+		setTimeout("document.getElementById(divName).style.display = 'none';", 10000);
+		
+	}
+	
+	completePlanDataBase();
+}
+
+function getFreeHintsAndErrors() {
+	var cookieHints = getCookie("freeHints");
+	
+	if (cookieHints === "")
+		freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8];
+	
+	else {
+		freeHints = new Array();
+		var split = cookieHints.split(";");
+		
+		for (var i = 0; i < split.length; i++) {
+			freeHints[i] = parseInt(split[i]);
+		}
+	}
+	
+	var cookieErrors = getCookie ("freeErrors");
+	
+	if (cookieErrors === "")
+		freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3];
+	
+	else {
+		freeErrors = new Array();
+		var split = cookieErrors.split(";");
+		
+		for (var i = 0; i < split.length; i++) {
+			freeErrors[i] = parseInt(split[i]);
+		}
+	}
+}
+function getLevelsAndPlansUnlockedDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/getLevelAndPlan",
+		data : {
+			
+		},
+		success : function(data) {
+			var split = data.split(";");
+			unlockedLevels = parseInt(split[0]);
+			unlockedPlans = parseInt(split[1]);
+			
+			generateLevels();
+			
+			if (levelGamification === "full")
+				getTotalScoreDataBase();
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function completePlanDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/completePlan",
+		data : {
+			
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
 
 //color é uma String em hexadecimal com # na frente
 function setBackgroundColor (color) {
@@ -486,7 +613,6 @@ function helpPage2 ( ) {
 }
 
 function helpPage ( ) {
-	addOrRemoveScore(500);
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:246px; left:1px;'> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
@@ -1118,15 +1244,6 @@ function loadEquation(index) {
 }
 
 function calculatePoints(equation) {
-	var cookieName = "equationScore" + idEquation;
-	var contentCookie = getCookie(cookieName);
-	
-	if (contentCookie !== "") {
-		var split = contentCookie.split(";");
-		equation.userPoints = parseInt(split[0]);
-		equation.userErrorPoints = parseInt(split[1]);
-	}
-	
     $("#amountPoins").text(equation.userPoints + " de " + equation.points + " pontos");
 }
 
@@ -2042,64 +2159,16 @@ function writeInput(text) {
 
 function getEquationsWE() {
 	equationsWE = new Array();
-	pointsWE = new Array();
+	pointsWE = 100;
 	
-	equationsWE[1] = "x+2=10";
-	pointsWE[1] = 20;
-	equationsWE[2] = "x+4=10"
-	pointsWE[2] = 20;
-	equationsWE[3] = "x-4=8";
-	pointsWE[3] = 20;
-	equationsWE[4] = "x+4=-2"
-	pointsWE[4] = 20;
-	equationsWE[5] = "x-3=-6";
-	pointsWE[5] = 20;
-	equationsWE[7] = "-x+1=10"
-	pointsWE[7] = 25;
-	equationsWE[8] = "-x-10=7"
-	pointsWE[8] = 25;
-	equationsWE[9] = "-x+4=-8"
-	pointsWE[9] = 25;
-	equationsWE[10] = "-x-15=-9"
-	pointsWE[10] = 25;
-	equationsWE[12] = "2x=10"
-	pointsWE[12] = 30;
-	equationsWE[13] = "5x=-30"
-	pointsWE[13] = 30;
-	equationsWE[14] = "-3x=15"
-	pointsWE[14] = 35;
-	equationsWE[15] = "-4x=-28"
-	pointsWE[15] = 35;
-	equationsWE[17] = "(x)/(4)=20"
-	pointsWE[17] = 40;
-	equationsWE[18] = "(x)/(7)=-49"
-	pointsWE[18] = 40;
-	equationsWE[19] = "-(x)/(6)=42"
-	pointsWE[19] = 50;
-	equationsWE[20] = "-(x)/(4)=-100"
-	pointsWE[20] = 50;
-	equationsWE[22] = "4x-10=8";
-	pointsWE[22] = 50;
-	equationsWE[23] = "-3x+9=-27";
-	pointsWE[23] = 60;
-	equationsWE[24] = "5x+8-2x=10+x";
-	pointsWE[24] = 80;
-	equationsWE[26] = "x-(3-2x)=2+(-4+2x)"; //ver se mantenho esta equação
-	pointsWE[26] = 100;
-	equationsWE[27] = "2(x+3)-5=5(x+2)";
-	pointsWE[27] = 100;
-	equationsWE[28] = "(x+3)/(3)=(4)/(9)";
-	pointsWE[28] = 100;
-	equationsWE[30] = "(x)/(4)+5=(2)/(3)-(5x)/(8)";
-	pointsWE[30] = 120;
-	equationsWE[31] = "(x+2)/(5)+8=(x-3)/(4+2)";
-	pointsWE[31] = 140;
-	equationsWE[32] = "(4(x+3))/(7)+5=(-2(-x-1))/(5+8)";
-	pointsWE[32] = 160;
-	equationsWE[34] = "(4)/(x)+(2)/(3)-5=(8)/(6x)";
-	pointsWE[34] = 200;
-	equationsWE[35] = "(5)/(4x-2)+9=(10)/(-4(x-3))";
-	pointsWE[35] = 300;	
+	equationsWE[1] = "x+4=10"
+	equationsWE[2] = "-x+1=10"
+	equationsWE[3] = "2x=10"
+	equationsWE[4] = "-3x=15"
+	equationsWE[6] = "(x)/(4)=20"
+	equationsWE[7] = "(x)/(-6)=42"
+	equationsWE[8] = "4x-10=8";
+	equationsWE[9] = "-3x+9=-27";
 }
 
 function getResolutionsWE() {

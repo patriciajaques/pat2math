@@ -111,6 +111,13 @@ public class Student extends User implements Serializable {
 			scoreLevel5 += amount;	
 	}
 	
+	public void completePlan() {
+		currentPlan++;
+		
+		if (currentPlan == 6 || currentPlan == 11 || currentPlan == 15 || currentPlan == 19)
+			currentLevel++;
+	}
+	
 	public Group getGroup() {
 		return group;
 	}

@@ -27,6 +27,22 @@ function checkGroup(id) {
 	
 	var isNewPatequation = true;
 	
+	if ((id >= 1146 && id <= 1170) || (id >= 1177 && id <= 1179)) {
+		setCookieDays("levelGamification", "full", 1);
+	}
+	
+	else if ((id >= 1102 && id <= 1123) || (id >= 1171 && id <= 1173)) {
+		setCookieDays("levelGamification", "low", 1);
+	}
+	
+	else if ((id >= 1124 && id <= 1145) || (id >= 1174 && id <= 1176)) {
+		setCookieDays("levelGamification", "without", 1);
+	}
+	
+	else {
+		setCookieDays("levelGamification", "full", 1);
+	}
+	
 	if (isNewPatequation)
 		redirectPage("/pat2math/newpatequation");
 	

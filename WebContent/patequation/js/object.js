@@ -43,8 +43,9 @@ function Equation(equation, points) {
             this.userPoints += value;
             calculatePoints(this);
     	}
-        
-       
+    	
+    	if (levelGamification === "full")
+    		addOrRemoveScore(value);
     }
 
     this.isAnswer = isAnswer;

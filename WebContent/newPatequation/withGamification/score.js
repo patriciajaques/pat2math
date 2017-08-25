@@ -9,13 +9,15 @@ function addOrRemoveScore(amount) {
 //	stageScore[currentStage] += amount;
 	
 	updateScoreUI();
-	updateScoreCookies();
+//	updateScoreCookies();
 	updateScoreDataBase(amount);
 	
 }
 function updateScoreUI() {
 	document.getElementById("totalScore").innerHTML = "Pontuação total: " + totalScore;
-	document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[currentLevel];
+	
+	if (currentLevel !== undefined)
+		document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[currentLevel];
 //	document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[currentStage];
 }
 function updateScoreCookies() {
@@ -52,6 +54,7 @@ function updateScoreCookies() {
 function reloadTotalScore() {
 	totalScore = parseInt(getCookie("totalScore"));
 	document.getElementById("totalScore").innerHTML = "Pontuação total: " + totalScore;
+	
 }
 
 function reloadLevelsScore() {
@@ -78,12 +81,12 @@ function getTotalScoreDataBase() {
 			"level" : 0
 		},
 		success : function(data) {
-			setCookieDays("totalScore", data, 1);
-			reloadTotalScore();
+			totalScore = parseInt(data);
+			updateScoreUI();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Ocorreu um erro inesperado");
-		},
+		}
 	});
 }
 
@@ -95,12 +98,13 @@ function getLevelsScoreDataBase() {
 			"level" : 1
 		},
 		success : function(data) {
-			setCookieDays("levelScore", data, 1);
-			reloadLevelsScore();
+			var split = data.split(";");
+			levelScore[currentLevel] = parseInt(split[currentLevel-1]);
+			updateScoreUI();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Ocorreu um erro inesperado");
-		},
+		}
 	});
 }
 
@@ -117,6 +121,6 @@ function updateScoreDataBase(amount) {
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Ocorreu um erro inesperado");
-		},
+		}
 	});
 }

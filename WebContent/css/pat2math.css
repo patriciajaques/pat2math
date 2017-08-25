@@ -448,6 +448,16 @@ textarea:focus {
 	text-align: center;
 }
 
+.limitsHintsAndErrors {
+	font-weight: bold;
+	font-size: 15px;
+	margin-right: -318px;
+	display: none;
+}
+
+#freeHints {
+	margin-top: -44px;
+}
 .task {
 	margin: 0;
 	display: inline-block;
