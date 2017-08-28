@@ -246,6 +246,7 @@
     width: 160px;
     cursor: default;
     font-size: 16px;
+    position: fixed;
     
     /*
     background: #FFDD17;
@@ -289,16 +290,34 @@
     box-shadow: 3px 3px 6px #222222;
     color: #000;
     height: auto;
-    max-height: 158px;
+    max-height: 116px;
     padding: 1em 1.5em;
     position: fixed;
-    width: 192px;
+    width: 187px;
     overflow: auto;
     display: none;
     visibility: visible;
     font-size: 13px;
-    margin-top: 40px;
-    margin-left: 212px;
+    margin-top: 197px;
+    margin-left: 935px;
+}
+
+#feedbackError {
+    /* background: none repeat scroll 0 0 #00FF7F; */
+    background: none repeat scroll 0 0 #82C785;
+    box-shadow: 3px 3px 6px #222222;
+    color: #000;
+    height: auto;
+    max-height: 200px;
+    padding: 1em 1.5em;
+    position: fixed;
+    width: 187px;
+    overflow: auto;
+    display: none;
+    visibility: visible;
+    font-size: 13px;
+    margin-top: 42px;
+    margin-left: 220px;
 }
 
 #tourAux {

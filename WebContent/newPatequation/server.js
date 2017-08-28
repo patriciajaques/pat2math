@@ -124,13 +124,10 @@ function requestServer (type, last, next, typeOperation, element) {
                 			freeHints[planoAtual-1001]--;
                 			lostPoints = 0;
                 			
-                			var cookie = freeHints[0];
-                			
-                			for (var i = 0; i < freeHints.length; i++)
-                				cookie += ";" + freeHints[i];
-                			
-                			setCookieDays("freeHints", cookie, 1);
-                			document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+                			var contentCookie = freeHints[planoAtual-1001] + "," + (planoAtual-1001);
+		        			
+                			setCookieDays("freeHints", contentCookie, 1);
+                			//document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
                 		}
                 		
                 	}
@@ -174,7 +171,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         "<li class='labelDefault'><input type='text'></li>" +
                         "</ul>" +
                         "<div class='trash'></div>" +
-                        "<button id='button'></button>");
+                        "<button id='button'></button><div id='feedbackError'></div>");
                 $(selectedSheet + " .canCopy li").draggable("disable");
                 $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
@@ -209,6 +206,8 @@ function requestServer (type, last, next, typeOperation, element) {
                     $("#hintText").hide('blind', 200);
                     $(".verticalTape").hide('blind', 200);
                     $("#hintText").html("");
+                    $("#feedbackError").hide('blind', 200);
+                    $("#feedbackError").html("");
 
                     if (element.parent().html().indexOf("frac") !== -1) {
                         nextLineServer = element.parent().next().next();
@@ -240,7 +239,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         if (tasksRemaining===0){
                         	addProgressValue(100);
                         	
-                        	var divName = "#tasks" + numUnlockedPlans;
+                        	var divName = "#tasks" + unlockedPlans;
                         	$(divName).slideUp(700);
                         	
                         	if (levelGamification !== "without")
@@ -409,6 +408,8 @@ function requestServer (type, last, next, typeOperation, element) {
                     $("#hintText").hide('blind', 500);
                     $(".verticalTape").hide('blind', 500);
                     $("#hintText").html("");
+                    $("#feedbackError").hide('blind', 200);
+                    $("#feedbackError").html("");
 //                    $("#hintBox").animate({
 //                        'opacity': '1',
 //                        'top': '0'
@@ -427,8 +428,7 @@ function requestServer (type, last, next, typeOperation, element) {
                             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
                             "</ul>" +
                             "<div class='trash'></div>" +
-                            "<button id='button'></button>" +
-                            "<div id='hintBox'><div id='hintText'></div></div>");
+                            "<button id='button'></button><div id='feedbackError'></div>");
                     $(selectedSheet + " .canCopy li").draggable("disable");
                     $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                     $(selectedSheet + " .formula li").css("opacity", "0.5");
@@ -512,12 +512,9 @@ function requestServer (type, last, next, typeOperation, element) {
                     			freeErrors[planoAtual-1001]--;
                     			lostPoints = 0;
                     			
-                    			var cookie = freeErrors[0];
-                    			
-                    			for (var i = 0; i < freeErrors.length; i++)
-                    				cookie += ";" + freeErrors[i];
-                    			
-                    			setCookieDays("freeErrors", cookie, 1);
+                    			var contentCookie = freeErrors[planoAtual-1001] + "," + (planoAtual-1001);
+                    			        			
+                    			setCookieDays("freeErrors", contentCookie, 1);
                     			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
                     		}
                     	}
@@ -562,7 +559,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     	divaLiteTipAction(hint);
                     
                     else
-                    	showHint(hint);
+                    	showFeedbackError(hint);
             	}
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada

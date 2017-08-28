@@ -409,8 +409,7 @@ function requestServer (type, last, next, typeOperation, element) {
                             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
                             "</ul>" +
                             "<div class='trash'></div>" +
-                            "<button id='button'></button>" +
-                            "<div id='hintBox'><div id='hintText'></div></div>");
+                            "<button id='button'></button>");
                     $(selectedSheet + " .canCopy li").draggable("disable");
                     $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                     $(selectedSheet + " .formula li").css("opacity", "0.5");

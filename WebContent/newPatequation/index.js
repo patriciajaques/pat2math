@@ -1,4 +1,5 @@
 var levelGamification = getCookie("levelGamification"); //Opções disponíveis: full, low, without
+var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
 var freeHints;
 var freeErrors;
 var numPlanosAula = 33;
@@ -16,7 +17,7 @@ var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var tipoAudio;
 var playAudio;
-var unlockedPlans;
+var unlockedPlans = 0;
 var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
 //var numClicks;
@@ -63,10 +64,7 @@ $(document).ready(function() {
 	
 	
 
-		getEquationsWE();
-		getResolutionsWE();
-		getPontuacaoEquacoes();
-		getFreeHintsAndErrors();
+		
 //		getColorsBackground();
 		
 	
@@ -288,6 +286,30 @@ $(document).ready(function() {
     	}
     });
     
+    $("#hint").mouseover (function() {
+    	if (levelGamification !== undefined && levelGamification === "full") {
+    		
+    		if (idEquation !== undefined) {
+    			var contentHint = document.getElementById("hintText").innerHTML;
+    			
+    			if (contentHint === "") {
+    				var hintsAvailable = freeHints[planoAtual-1001];
+    				
+    				if (hintsAvailable > 0) {
+    					var text = "Você possui " + hintsAvailable;
+    					
+    					if (hintsAvailable > 1)
+    						text += " dicas gratuítas disponíveis";
+    					
+    					else
+    						text += " dica gratuíta disponível";
+    					showHint(text);
+    				}
+    			}
+    		}
+    	}
+    });
+    
 	
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
@@ -318,51 +340,40 @@ function startNewPatequation() {
 	
 	document.getElementById("topics").style.background = "silver";
 	
+	getEquationsWE();
+	getResolutionsWE();
+	getPontuacaoEquacoes();
+	getFreeHintsAndErrors();
+	
 	if (levelGamification !== "without") {
-		getLevelsAndPlansUnlockedDataBase();
+		unlockedPlans = getCookie("unlockedPlans");
 		
-		if (levelGamification === "full") {
-			if (getCookie("novidadeDicas") === "") {
-				setCookieDays("novidadeDicas", "ja apresentada", 1);
+		if (unlockedPlans !== "") {
+			unlockedPlans = parseInt(unlockedPlans);
+			unlockedLevels = parseInt(getCookie("unlockedLevels"));
+			generateLevels();
+			
+			if (levelGamification === "full") {
+				var totalScoreCookie = getCookie("totalScore");
 				
-				$.guider({
-					title : "Agora você tem dicas e erros gratuítos disponíveis (que não ocasionam perda de pontos)",
-					description : "Lembre-se que você pode pedir dicas e errar passos da equação se os limites chegarem a zero, porém eles terão custos na sua pontuação. Aproveite-os com responsabilidade. Mas não hesite de pedir ajuda se você tiver dificuldades após a utilização dos limites gratuitos, o mais importante é o seu aprendizado.",
-					overlay : "dark",
-					width : 600,
-					alignButtons : "center",
-					buttons : {
-						OK: {
-							click : true,
-							className : "primary",
-						}
-					}
-				}).show();
-			}		
+				if (totalScoreCookie !== "") {
+					totalScore = parseInt(totalScoreCookie);
+					updateScoreUI();
+				}
+				
+				else
+					getTotalScoreDataBase();
+			}
 		}
-//		verifyCookiesScore();
-//		reloadLevelsScore();
-//		reloadStagesScore();
 		
-//		var splitLevel = getCookie("levelScore").split(";");
-//		var splitStage = getCookie("stageScore").split(";");		
-//		var i = 0;
-//		
-//		for (; i < splitLevel.length; i++) {
-//			var indexScore = i + 1;
-//			levelScore[indexScore] = parseInt(splitLevel[i]);
-////			stageScore[indexScore] = parseInt(splitStage[i]);
-//		}
-		
-//		for (; i < splitStage.length; i++) {
-//			stageScore[i+1] = parseInt(splitStage[i]);
-//		}
+		else
+			getLevelsAndPlansUnlockedDataBase();
 	}
 	
 	else {
+		unlockAllPlans = true;
 		generateStagesWithoutGamification();
 		document.getElementById("amountPoins").style.display = "none";
-		unlockAllPlans = true;
 	}
 	
 	var cookiePlan = getCookie("currentPlan");
@@ -376,10 +387,9 @@ function startNewPatequation() {
 			var idEquation = parseInt(cookieEquation);
 		}
 		
-		unlockAllPlans = true;
 		loadTasks(idPlan);
 		loadExercise(idEquation);		
-		unlockAllPlans = false;
+
 		$("#topics").fadeIn();
 	    $("#topicsAux").hide();
 	}
@@ -422,49 +432,62 @@ function verifyCookiesScore() {
 
 function completePlan() {
 	unlockedPlans++;
-	var divName = "lockStage" + unlockedPlans;
-	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+	setCookieDays("unlockedPlans", unlockedPlans, 1);
 	
-	setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
+	if (unlockedPlans < 6) 
+		unlockedLevels = 1;
 	
-	if (unlockedLevels !== undefined && unlockedPlans === 6 || unlockedPlans === 11 || unlockedPlans === 15 || unlockedPlans === 19) {
-		unlockedLevels++;
+	else if (unlockedPlans < 11)
+		unlockedLevels = 2;
+	
+	else if (unlockedPlans < 15)
+		unlockedLevels = 3;
+	
+	else if (unlockedPlans < 19)
+		unlockedLevels = 4;
+	
+	else
+		unlockedLevels = 5;
+	
+	if (unlockedPlans === 6 || unlockedPlans === 11 || unlockedPlans === 15 || unlockedPlans === 19) {
 		divName = "lockLevel" + unlockedLevels;
 		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-		setTimeout("document.getElementById(divName).style.display = 'none';", 10000);
-		
+		divName = "level" + unlockedLevels;
+		document.getElementById(divName).onclick = function() {generateStages(unlockedLevels)};
+		setCookieDays("unlockedLevels", unlockedLevels, 1);
 	}
+	
+	else {
+		var divName = "lockStage" + unlockedPlans;
+		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+	
+		setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
+	}
+	
+	
+	
 	
 	completePlanDataBase();
 }
 
 function getFreeHintsAndErrors() {
+	freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8];
+	freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3];
+	
 	var cookieHints = getCookie("freeHints");
 	
-	if (cookieHints === "")
-		freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8];
-	
-	else {
-		freeHints = new Array();
-		var split = cookieHints.split(";");
-		
-		for (var i = 0; i < split.length; i++) {
-			freeHints[i] = parseInt(split[i]);
-		}
+	if (cookieHints !== "") {
+		var split = cookieHints.split(",");
+		var pos = parseInt(split[1]);
+		freeHints[pos] = parseInt(split[0]);
 	}
-	
+		
 	var cookieErrors = getCookie ("freeErrors");
 	
-	if (cookieErrors === "")
-		freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3];
-	
-	else {
-		freeErrors = new Array();
-		var split = cookieErrors.split(";");
-		
-		for (var i = 0; i < split.length; i++) {
-			freeErrors[i] = parseInt(split[i]);
-		}
+	if (cookieErrors !== "") {
+		var split = cookieErrors.split(",");
+		var pos = parseInt(split[1]);
+		freeErrors[pos] = parseInt(split[0]);
 	}
 }
 function getLevelsAndPlansUnlockedDataBase() {
@@ -478,6 +501,8 @@ function getLevelsAndPlansUnlockedDataBase() {
 			var split = data.split(";");
 			unlockedLevels = parseInt(split[0]);
 			unlockedPlans = parseInt(split[1]);
+			setCookieDays("unlockedLevels", unlockedLevels, 1);
+			setCookieDays("unlockedPlans", unlockedPlans, 1);
 			
 			generateLevels();
 			
@@ -495,7 +520,8 @@ function completePlanDataBase() {
 		type : "GET",
 		url : "newPatequation/completePlan",
 		data : {
-			
+			"level" : unlockedLevels,
+			"plan" : unlockedPlans
 		},
 		success : function(data) {
 			console.log(data);
@@ -1046,6 +1072,7 @@ function reloadPaper(selected) {
  * */
 
 function loadEquation(index) {
+	isLoadEquation = true;
 	var newEquation = newEquations[index];
     selectedEquation = equations[index];
     var go = false;
@@ -1205,8 +1232,8 @@ function loadEquation(index) {
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
                 //addProgressValue(10);
                 //selectedEquation.lastStep = selectedEquation;
-                nextLine.html("<div class='final'></div>");
-
+                nextLine.html("<div class='final'></div>");            
+                
                 var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                 selectedEquation.addPoints(result);
 
@@ -1233,11 +1260,21 @@ function loadEquation(index) {
         }
     }
 
+    var cookieName = "equationErrorScore" + idEquation;
+    var cookieErrorPoints = getCookie(cookieName);
+    
+    if (cookieErrorPoints !== "") {
+    	var errorPoints = parseInt(cookieErrorPoints) * (-1);
+    	selectedEquation.addPoints(errorPoints);
+    }
+    
     calculatePoints(selectedEquation);
 
     $("#hintText").hide('blind', 500);
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
+    
+    isLoadEquation = false;
     
     return selectedEquation.equation;
     
@@ -1301,8 +1338,7 @@ function clearLine(option) {
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>" +
-            "<div id='hintBox'><div id='hintText'></div></div>");
+            "<button id='button'></button><div id='feedbackError'></div>");
 
     centralizeCanMoveAndButton();
     sortable();
@@ -1389,7 +1425,7 @@ function referenceToABC(a, b, c, focused) {
             "<li class='labelDefault'><input class='c' type='text'  value=" + c + "></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>");
+            "<button id='button'></button><div id='feedbackError'></div>");
 
     $(selectedSheet + " .labelDefault .a").css("width", (a.length + 1) * 16 + "px");
     $(selectedSheet + " .labelDefault .b").css("width", (b.length + 1) * 16 + "px");
@@ -2094,15 +2130,114 @@ function showHint(hint) {
 	
 	moveHint();
 	
-    var lastHint = $("#hintText").html();
+	var lastHint = "";
+	
+	if (hint.indexOf("gratuíta") === -1)
+		lastHint = $("#hintText").html();
     
     if (lastHint !== "") {	
         lastHint = "<br><br>" + lastHint;
     }
     
     $("#hintText").hide('blind', 200);
-    $("#hintText").html("*Dica: " + hint + lastHint);
+    $("#hintText").html(hint + lastHint);
     $("#hintText").show('blind', 500);
+}
+
+function showFeedbackError(hint) {
+	//Caso a dica contenha um ponto final e seja a que mostra ao aluno o próximo passo completo, este ponto é removido para facilitar a cópia do passo.
+	if (hint.indexOf("próximo passo") && hint.charAt(hint.length-1) === ".") {
+		hint = hint.substring(0, hint.length-1);
+	}
+	
+	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
+	//ser manipulada
+	if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
+		//Variável que salva o operador da propriedade distributiva (+ ou -)
+		var operator = "+";
+		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão
+		//2(x+5), o resolvedor interpreta como (2*(x+5)) 
+		var newHint = hint.split("*");
+		newHint[0] = newHint[0].replace("(", "");
+		newHint[1] = newHint[1].replace(")", "");
+		
+		//Caso em que a propriedade distributiva envolve um sinal de menos.
+		//Ao invés de utilizar a - b, o resolvedor utiliza a + (-b)
+		if (newHint[1].indexOf("+(-") !== -1) {
+			operator = "-";
+			newHint[1] = replaceAll(newHint[1], "(", "");
+			newHint[1] = newHint[1].replace(")", "");
+			newHint[1] = newHint[1].replace("+-", "-");
+			newHint[1] = "(" + newHint[1];
+		}
+		
+		//O back-end apresentou problemas para gerar o passo da dica de nível 3 da propriedade
+		//distributiva, assim essa dica será gerada pela front-end
+		//A dica recebida pelo sistema é a expressão de propriedade distributiva atual
+    	var resolution = "";
+		var multiplier = "";
+		if (hint.indexOf("<") === 0) {
+    		var expression = newHint[1].replace("(", "");
+    		expression = expression.replace(")", "");
+    		expression = expression.replace("</eq>", "");
+    		
+    		var terms = expression.split(operator);
+    		
+    		var posMultiplier = newHint[0].indexOf(">") + 1;
+    		multiplier = newHint[0].substring(posMultiplier);
+    		
+    		//a(b+/-c)
+    		if (expression.charAt(0) !== "-" && terms.length === 2)
+    			resolution = multiplier + "*" + terms[0] + operator + multiplier + "*" + terms[1];
+    		
+    		//-a(+/-b+/-c)
+    		else if (multiplier.charAt(0) === "-") {
+    			//-a(-b+/-c)
+    			if (expression.charAt(0) === "-") {
+    				terms[1] = "-" + terms[1];
+        			resolution = multiplier + "*" + terms[1] + multiplier + "*" + operator + terms[2];
+    			}
+    			
+    			//-a(b+/-c)
+    			else 
+    				resolution = multiplier + "*" + terms[0] + multiplier + "*" + operator + terms[1];			    		
+    		}
+    		
+    		//a(-b+/-c)
+    		else {
+    			terms[1] = "-" + terms[1];
+    			resolution = multiplier + "*" + terms[1] + operator + multiplier + "*" + terms[2];
+    		}
+		}
+		
+    	if (resolution === "")
+    		hint = newHint[0] + newHint[1];
+    	
+    	else {
+    		var passoAnterior;
+    		
+    		if (selectedEquation.lastStep === null)
+    			passoAnterior = selectedEquation.initialEquation;
+    		
+    		else
+    			passoAnterior = selectedEquation.lastStep.step;
+    		
+    		var expression = multiplier + "*" + newHint[1].replace("</eq>", "");
+    		resolution = adjustExpression(resolution);
+    		
+    		hint = "Se você resolver a expressão " + newHint[0] + newHint[1] + ", o próximo passo (a linha inteira) da equação fica " + passoAnterior.replace(expression, resolution);   		
+    	}   	
+	}
+	
+    var lastHint = $("#feedbackError").html();
+    
+    if (lastHint !== "") {	
+        lastHint = "<br><br>" + lastHint;
+    }
+    
+    $("#feedbackError").hide('blind', 200);
+    $("#feedbackError").html(hint + lastHint);
+    $("#feedbackError").show('blind', 500);
 }
 
 function adjustExpression(expression) {	

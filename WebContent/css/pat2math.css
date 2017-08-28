@@ -424,7 +424,28 @@ textarea:focus {
 	border-radius: 5px;
 }
 
+.topicLevels {
+	margin: 0;
+	margin-bottom: 2px;
+	padding: 10px 0;
+	display: block;
+	font-size: 18px;
+	/* color: #aaa; */
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	width: 265px;
+	/* background: #fff; */
+	background: #F9A31B;
+	border-radius: 5px;
+}
+
 .topic:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.topicLevels:hover {
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -458,6 +479,11 @@ textarea:focus {
 #freeHints {
 	margin-top: -44px;
 }
+
+#freeErrors {
+	margin-top: -32px;
+}
+
 .task {
 	margin: 0;
 	display: inline-block;

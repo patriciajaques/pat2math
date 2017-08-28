@@ -1,4 +1,4 @@
-var totalScore;
+var totalScore = 0;
 var levelScore = new Array();
 var stageScore = new Array();
 
@@ -9,7 +9,7 @@ function addOrRemoveScore(amount) {
 //	stageScore[currentStage] += amount;
 	
 	updateScoreUI();
-//	updateScoreCookies();
+	updateScoreCookies();
 	updateScoreDataBase(amount);
 	
 }
@@ -20,34 +20,15 @@ function updateScoreUI() {
 		document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[currentLevel];
 //	document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[currentStage];
 }
+
 function updateScoreCookies() {
 	setCookieDays("totalScore", totalScore, 1);
+	var cookieName = "levelScore" + currentLevel;
+	setCookieDays(cookieName, levelScore[currentLevel], 1);
 	
-	var splitLevel = getCookie("levelScore").split(";");
-//	var splitStage = getCookie("stageScore").split(";");
-	
-	splitLevel[currentLevel-1] = levelScore[currentLevel];
-//	splitStage[currentStage-1] = stageScore[currentStage];
-	
-	var newCookieLevel = splitLevel[0];
-//	var newCookieStage = splitStage[0];
-	var i = 1;
-	
-	for (; i < splitLevel.length; i++) {
-		newCookieLevel += ";" + splitLevel[i];
-//		newCookieStage += ";" + splitStage[i];
-	}
-	
-//	for (; i < splitStage.length; i++) {
-//		newCookieStage += ";" + splitStage[i];
-//	}
-	
-	setCookieDays("levelScore", newCookieLevel, 1);
-//	setCookieDays("stageScore", newCookieStage, 1);
-	
-	var cookieEquationScore = selectedEquation.userPoints + ";" + selectedEquation.userErrorPoints;
-	var cookieName = "equationScore" + idEquation;
-	setCookieMinutes(cookieName, cookieEquationScore, 10);
+	var cookieEquationErrorScore = selectedEquation.userErrorPoints;
+	cookieName = "equationErrorScore" + idEquation;
+	setCookieMinutes(cookieName, cookieEquationErrorScore, 10);
 }
 
 
@@ -82,6 +63,7 @@ function getTotalScoreDataBase() {
 		},
 		success : function(data) {
 			totalScore = parseInt(data);
+			setCookieDays("totalScore", totalScore, 1);
 			updateScoreUI();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -99,7 +81,13 @@ function getLevelsScoreDataBase() {
 		},
 		success : function(data) {
 			var split = data.split(";");
-			levelScore[currentLevel] = parseInt(split[currentLevel-1]);
+			
+			for (var i = 0; i < split.length; i++) {
+				levelScore[i+1] = parseInt(split[i]);
+				var cookieName = "levelScore" + (i+1);
+				setCookieDays(cookieName, split[i], 1);		
+			}
+			
 			updateScoreUI();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {

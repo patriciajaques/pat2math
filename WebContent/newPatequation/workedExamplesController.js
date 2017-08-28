@@ -10,6 +10,7 @@ function firstPlanAccess() {
 	$.guider({
     	title: "Você sabe resolver essa equação?",
         alignButtons: "center",
+        onShow: function() {document.getElementById("jGuider_0").style.top = "250px";},
     	buttons: {
     		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan]); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
     		"Sim": true,

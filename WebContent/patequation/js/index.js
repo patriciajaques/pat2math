@@ -1226,8 +1226,7 @@ function clearLine(option) {
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>" +
-            "<div id='hintBox'><div id='hintText'></div></div>");
+            "<button id='button'></button>");
 
     $("hintBox").removeClass('canMove');
     centralizeCanMoveAndButton();

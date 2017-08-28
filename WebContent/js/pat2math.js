@@ -124,7 +124,34 @@ function enableContent(id) {
 
 
 function loadTasks(id) {
-	if (unlockAllPlans || unlockedPlans >= (id - 1000)) {		
+	var isUnlocked = unlockAllPlans;
+	
+	if (isUnlocked === false) {
+		if (levelGamification !== undefined) {
+			if (levelGamification !== "without") 
+				isUnlocked = unlockedPlans >= (id - 1000);
+			
+			else 
+				isUnlocked = true;	 
+		}
+		
+		else 
+			isUnlocked = numUnlockedPlans >= id;
+	}
+	
+	if (isUnlocked) {
+		currentStage = id - 1000;
+		planoAtual = id;
+		getPontuacaoPlano();
+		
+		if (levelGamification === "full") {
+			document.getElementById("logo").style.marginLeft = "153px";
+			document.getElementById("freeErrors").style.display = "block";
+			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
+//			document.getElementById("freeHints").style.display = "block";
+//			document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+		}
+	
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
 		}		
@@ -179,34 +206,30 @@ function loadTasks(id) {
 				else 
 					isIntroductionToEquationPlan = false;
 				
-				if (levelGamification !== "without" && currentLevel === undefined) {
-					var level = 1;
+				if (levelGamification !== undefined && levelGamification !== "without") {
+					currentLevel = 1;
 					
 					if (id > 1005) {
 						if (id < 1011)
-							level = 2;
+							currentLevel = 2;
 						
 						else if (id < 1015)
-							level = 3;
+							currentLevel = 3;
 						
 						else if (id < 1019)
-							level = 4;
+							currentLevel = 4;
 						
 						else
-							level = 5;
+							currentLevel = 5;
 					}
-					
-					generateStages(level);
+									
+					generateStages(currentLevel);
 				}
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);	
 					
-					planoAtual = id;
 					
-					if (levelGamification !== undefined && levelGamification !== "without") 
-						currentStage = id - 1000;
-					
-					getPontuacaoPlano();
+				
 					numEquacoesPlanoAtual = getNumEquationsPlan();
 					resetProgressBar();
 					tasksRemaining = numEquacoesPlanoAtual;
@@ -217,11 +240,23 @@ function loadTasks(id) {
 					/*alert("fim: "+taskSolved);*/
 					tasksRemaining=tasksRemaining-taskSolved;
 					/*alert("fim: "+tasksRemaining);*/
-					if (tasksRemaining===0)
+					if (tasksRemaining===0) {
 						addProgressValue(numEquacoesPlanoAtual);
+						
+						if (levelGamification !== undefined && levelGamification !== "without") { 
+							if (unlockedPlans === (id - 1000)) {
+								completePlan();
+							}
+						}
+						
+					}
 					
-					else 
+					else {
+						if (tasksRemaining===numEquacoesPlanoAtual) {
+							setCookieDays("freeErrors", "", 0);
+						}
 						addProgressValue(taskSolved);
+					}
 					
 					//Verificação especial se o aluno já está nos planos de aula convencionais
 					if (id > numPlanosIntroducao) {
@@ -240,16 +275,10 @@ function loadTasks(id) {
 					}
 					
 					//Os planos 5, 10, 14, 18 e 19 são os de revisão que não possuem exemplos trabalhados
-					if (taskSolved === 0 && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018)
+					if (levelGamification !== undefined && taskSolved === 0 && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018)
 						firstPlanAccess();
 					
-					if (levelGamification === "full") {
-						document.getElementById("logo").style.marginLeft = "153px";
-						document.getElementById("freeHints").style.display = "block";
-						document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
-						document.getElementById("freeErrors").style.display = "block";
-						document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
-					}
+					
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {

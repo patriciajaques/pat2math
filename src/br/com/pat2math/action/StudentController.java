@@ -435,9 +435,10 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "newPatequation/completePlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
-	public @ResponseBody String completePlan(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+	public @ResponseBody String completePlan(int level, int plan, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());	
-		student.completePlan();
+		student.setCurrentLevel(level);
+		student.setCurrentPlan(plan);
 		sd.alter(student);
 	
 		return "Progresso atualizado com sucesso";
