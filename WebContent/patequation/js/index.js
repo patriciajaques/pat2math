@@ -1,3 +1,4 @@
+var levelGamification = undefined;
 var numPlanosAula = 33;
 var numPlanosRevisao = 10;
 var numPlanosIntroducao = 0;
