@@ -16,26 +16,3 @@
 <script src="/pat2math/patequation/js/divaliteAux.js"></script>
 <script src="/pat2math/patequation/js/agent.js"></script>
 <!-- AGENTE PEDAGOGICO ANIMADO -->
-
-<script>
-function checkFacebookLogout() {
-	//Chamar a janela do tour para perguntar se sim ou não
-	//Se ele marcar que sim, chamar o comando para sair do Facebook
-	
-	$.guider({
-		description: "Deseja fazer logoff do Facebook também?",
-		alignButtons: "right", 
-		buttons: {
-			Sim: {
-				click: function() {},
-				className: "primary"
-			},
-			
-			Não: {
-				click: function() {$.guider({}).hideAll();
-				}
-			}
-		}
-	});
-}
-</script>
