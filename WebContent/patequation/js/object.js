@@ -30,6 +30,7 @@ function Equation(equation, points) {
            
         } else if (value < 0) {
             this.userErrorPoints -= value;
+            calculatePoints(this);
         }
     	
     	if (this.userPoints >= this.points - 5) {  		
@@ -43,8 +44,9 @@ function Equation(equation, points) {
             this.userPoints += value;
             calculatePoints(this);
     	}
-        
-       
+    	
+    	if (levelGamification !== undefined && levelGamification === "full" && isLoadEquation === false)
+    		addOrRemoveScore(value);
     }
 
     this.isAnswer = isAnswer;

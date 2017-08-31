@@ -1,3 +1,4 @@
+var levelGamification = undefined;
 var numPlanosAula = 33;
 var numPlanosRevisao = 10;
 var numPlanosIntroducao = 0;
@@ -893,14 +894,6 @@ $(document).ready(function() {
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
 	
-	if (widthResolution > 1440) {
-		if (widthResolution <= 1600)
-			document.getElementById('hintText').style.left = "38%";
-	
-		else
-			document.getElementById('hintText').style.left = "40%";
-	}
-	
 	if (widthWindow < 1366) 
 		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
 
@@ -1237,6 +1230,7 @@ function clearLine(option) {
             "<div class='trash'></div>" +
             "<button id='button'></button>");
 
+    $("hintBox").removeClass('canMove');
     centralizeCanMoveAndButton();
     sortable();
     draggable();

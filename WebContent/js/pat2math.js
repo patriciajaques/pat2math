@@ -124,7 +124,34 @@ function enableContent(id) {
 
 
 function loadTasks(id) {
-	if (unlockAllPlans || numUnlockedPlans >= id) {	
+	var isUnlocked = unlockAllPlans;
+	
+	if (isUnlocked === false) {
+		if (levelGamification !== undefined) {
+			if (levelGamification !== "without") 
+				isUnlocked = unlockedPlans >= (id - 1000);
+			
+			else 
+				isUnlocked = true;	 
+		}
+		
+		else 
+			isUnlocked = numUnlockedPlans >= id;
+	}
+	
+	if (isUnlocked) {
+		currentStage = id - 1000;
+		planoAtual = id;
+		getPontuacaoPlano();
+		
+		if (levelGamification === "full") {
+			document.getElementById("logo").style.marginLeft = "153px";
+			document.getElementById("freeErrors").style.display = "block";
+			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
+//			document.getElementById("freeHints").style.display = "block";
+//			document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+		}
+	
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
 			setBackgroundColor("#FFE1F8"); 
 		}		
@@ -148,7 +175,7 @@ function loadTasks(id) {
 		}
 		else if(id === 8 || id === 16 || id === 24 || id === 32){
 			setBackgroundColor("#B0E0E6"); 
-		}			
+		}		
 	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
@@ -178,13 +205,31 @@ function loadTasks(id) {
 				
 				else 
 					isIntroductionToEquationPlan = false;
-							
+				
+				if (levelGamification !== undefined && levelGamification !== "without") {
+					currentLevel = 1;
+					
+					if (id > 1005) {
+						if (id < 1011)
+							currentLevel = 2;
+						
+						else if (id < 1015)
+							currentLevel = 3;
+						
+						else if (id < 1019)
+							currentLevel = 4;
+						
+						else
+							currentLevel = 5;
+					}
+									
+					generateStages(currentLevel);
+				}
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);	
 					
-					planoAtual = id;
 					
-					getPontuacaoPlano();
+				
 					numEquacoesPlanoAtual = getNumEquationsPlan();
 					resetProgressBar();
 					tasksRemaining = numEquacoesPlanoAtual;
@@ -195,11 +240,23 @@ function loadTasks(id) {
 					/*alert("fim: "+taskSolved);*/
 					tasksRemaining=tasksRemaining-taskSolved;
 					/*alert("fim: "+tasksRemaining);*/
-					if (tasksRemaining===0)
+					if (tasksRemaining===0) {
 						addProgressValue(numEquacoesPlanoAtual);
+						
+						if (levelGamification !== undefined && levelGamification !== "without") { 
+							if (unlockedPlans === (id - 1000)) {
+								completePlan();
+							}
+						}
+						
+					}
 					
-					else 
+					else {
+						if (tasksRemaining===numEquacoesPlanoAtual) {
+							setCookieDays("freeErrors", "", 0);
+						}
 						addProgressValue(taskSolved);
+					}
 					
 					//Verificação especial se o aluno já está nos planos de aula convencionais
 					if (id > numPlanosIntroducao) {
@@ -216,6 +273,12 @@ function loadTasks(id) {
 							}
 						}
 					}
+					
+					//Os planos 5, 10, 14, 18 e 19 são os de revisão que não possuem exemplos trabalhados
+					if (levelGamification !== undefined && taskSolved === 0 && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018)
+						firstPlanAccess();
+					
+					
 			  	},
 			 error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
@@ -269,6 +332,30 @@ function loadTasks(id) {
 }
 
 function getNumEquationsPlan() {
+	if (levelGamification !== undefined) {
+		if (planoAtual === 1001)
+			return 4;
+		
+		else if (planoAtual === 1002 || planoAtual === 1003 || planoAtual === 1006 || planoAtual === 1004 || planoAtual === 1007)
+			return 5;
+		
+		else if (planoAtual === 1005)
+			return 8;
+		
+		else if (planoAtual === 1010 || planoAtual === 1014)
+			return 16;
+		
+		else if (planoAtual === 1018)
+			return 15;
+		
+		else if (planoAtual === 1019)
+			return 42;
+		
+		else
+			return 10;
+	}
+	
+	else {
 	if (planoAtual < 19 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
 		return 5;
 	
@@ -293,10 +380,41 @@ function getNumEquationsPlan() {
 	
 	else 
 		return 56;
+	}
 	
 }
 
 function getPontuacaoPlano() {
+	if (levelGamification !== undefined) {
+		if (planoAtual === 1001)
+			pontuacaoPlano = 20;
+		
+		else if (planoAtual === 1002)
+			pontuacaoPlano = 25;
+		
+		else if (planoAtual === 1003)
+			pontuacaoPlano = 30;
+		
+		else if (planoAtual === 1004)
+			pontuacaoPlano = 35;
+		
+		else if (planoAtual === 1005)
+			pontuacaoPlano = 40;
+		
+		else if (planoAtual === 1006)
+			pontuacaoPlano = 40;
+		
+		else if (planoAtual === 1007)
+			pontuacaoPlano = 45;
+		
+		else if (planoAtual === 1008)
+			pontuacaoPlano = 50;
+		
+		else if (planoAtual === 1009)
+			pontuacaoPlano = 60;
+	}
+	
+	else {
 	if (planoAtual !== 11 && planoAtual !== 16 && planoAtual !== 21 && planoAtual !== 25 && planoAtual !== 33 && planoAtual < 36) {
 		if (planoAtual <= 6)
 			pontuacaoPlano = 20;
@@ -346,6 +464,7 @@ function getPontuacaoPlano() {
 	
 	else
 		pontuacaoPlano = null;
+	}
 	
 }
 
@@ -457,25 +576,31 @@ function getPontuacaoEquacoes() {
 	pontuacaoEquacoes[3614] = 200;
 }
 
+function showPadlockMessage(title, description) {
+	$.guider({
+    	title: title,
+    	description: description,
+        alignButtons: "center",
+        overlay: "dark",
+    	buttons: {
+    		OK: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	}).show();
+}
 function padlockClick ( ) {
-//	if (selectedEquation !== null)
-//		moveHint();
-
-	$("#hintText").html("Para desbloquear este plano, você deve resolver todas as equações do plano anterior.");
-	$("#hintText").show('blind', 500);
-	$(".verticalTape").show('fold', 500);
+	showPadlockMessage ("Ops, você ainda não liberou este plano de aula", "Para desbloqueá-lo, você deve resolver todas as equações do plano anterior");
 }
 
 function padlockClickStage ( ) {
-	$("#hintText").html("Para desbloquear esta fase, você deve resolver todas as equações da fase anterior.");
-	$("#hintText").show('blind', 500);
-	$(".verticalTape").show('fold', 500);
+	showPadlockMessage ("Ops, você ainda não liberou esta fase", "Para desbloqueá-la, você deve resolver todas as equações da fase anterior");
 }
 
 function padlockClickLevel ( ) {
-	$("#hintText").html("Para desbloquear este nível, você deve completar todas as fases do nível anterior.");
-	$("#hintText").show('blind', 500);
-	$(".verticalTape").show('fold', 500);
+	showPadlockMessage ("Ops, você ainda não liberou este nível", "Para desbloqueá-lo, você deve completar todas as fases do nível anterior");
 }
 
 function loadExerciseWE(eq, points) {

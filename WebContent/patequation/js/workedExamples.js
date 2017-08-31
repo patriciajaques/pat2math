@@ -1347,17 +1347,13 @@ function classPlan18() {
 		});	
 }
 
-//-(x)/(6)=42
+//(x)/(-6)=42
 function classPlan19() {
-	contWE = 1;
-	
-	setCookieDays ("currentWE", "19", 1); 
-
 		$.guider({
 			name: "1",
 			next : "2",
 			title : "Atenção agora!",
-			description : "Esta equação é um pouco diferente das anteriores, pois estamos trabalhando com uma fração negativa.",
+			description : "Esta equação é um pouco diferente das anteriores, pois estamos trabalhando com denominador negativo.",
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {window.scrollTo(0, 50);},
@@ -1379,57 +1375,13 @@ function classPlan19() {
 			alignButtons : "right",
 			buttons : {
 				Próximo: {
-					click : true,
+					click : function() {classPlan19b();},
 					className : "primary"
 				}
 			}
 		});
 		
-		$.guider({
-			name: "3",
-			next : "4",
-			title : "Temos duas formas de resolver este problema",
-			description : "A primeira seria passar o 6 para o outro lado, mantendo o sinal negativo em X",
-			position: "bottom",
-			width : 600,
-			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary"
-				}
-			}
-		});
 		
-		$.guider({
-			name: "4",
-			next : "5",
-			title : "Mas também podemos passar o sinal negativo junto com o 6",
-			description : "Dessa forma, passamos o 6 para o outro lado, mas como um número negativo.",
-			position: "bottom",
-			width : 600,
-			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary"
-				}
-			}
-		});
-		
-		$.guider({
-			name: "5",
-			next : "6",
-			title : "Qual das duas opções você prefere?",
-			description : "Selecione-a abaixo:",
-			position: "bottom",
-			width : 600,
-			alignButtons : "center",
-			buttons : {
-				"Manter o sinal negativo em X": function() {classPlan19a();},				
-				"Passar o sinal negativo para o outro lado": function() {classPlan19b();}
-			}
-		});
 }
 
 function classPlan19a() {
@@ -1517,21 +1469,6 @@ function classPlan19a() {
 }
 
 function classPlan19b() {
-	$.guider({
-		name: "1",
-		next : "2",
-		title : "Você escolheu passar o sinal negativo para o outro lado",
-		description : "Confira a seguir os passos da resolução desta maneira:",
-		width : 600,
-		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : true,
-				className : "primary"
-			}
-		}
-	}).show();
-	
 	$("#line4").guider({
 		name: "2",
 		next : "3",
@@ -1547,7 +1484,7 @@ function classPlan19b() {
 				className : "primary"
 			}
 		}
-	});
+	}).show();
 	
 	$("#line5").guider({
 		name: "3",

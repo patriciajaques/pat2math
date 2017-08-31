@@ -424,21 +424,64 @@ textarea:focus {
 	border-radius: 5px;
 }
 
+.topicLevels {
+	margin: 0;
+	margin-bottom: 2px;
+	padding: 10px 0;
+	display: block;
+	font-size: 18px;
+	/* color: #aaa; */
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	width: 265px;
+	/* background: #fff; */
+	background: #F9A31B;
+	border-radius: 5px;
+}
+
 .topic:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.topicLevels:hover {
 	text-decoration: none;
 	cursor: pointer;
 }
 
 .tasks {
 	margin: 0 0 0 0;
-	background: #59c;
+	background: #A1A1A1;
 	display: none;
 	border-radius: 5px;
-	width: 265px;
+	width: 250px;
+	margin-left: 8px;
 }
 
 .task-conteiner {
 	width: 160px;
+}
+
+.generalScore {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.limitsHintsAndErrors {
+	font-weight: bold;
+	font-size: 15px;
+	margin-right: -318px;
+	display: none;
+}
+
+#freeHints {
+	margin-top: -44px;
+}
+
+#freeErrors {
+	margin-top: -32px;
 }
 
 .task {

@@ -407,7 +407,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
                     nextLineServer.html(
                             "<ul>" +
-                            "<li class='labelDefault'><input type='text'></li>" +
+                            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
                             "</ul>" +
                             "<div class='trash'></div>" +
                             "<button id='button'></button>");

@@ -1,4 +1,7 @@
-var levelGamification = "full"; //Opções disponíveis: full, low, without
+var levelGamification = getCookie("levelGamification"); //Opções disponíveis: full, low, without
+var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
+var freeHints;
+var freeErrors;
 var numPlanosAula = 33;
 var numPlanosRevisao = 10;
 var numPlanosIntroducao = 0;
@@ -14,7 +17,7 @@ var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var tipoAudio;
 var playAudio;
-var unlockedPlans;
+var unlockedPlans = 0;
 var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
 //var numClicks;
@@ -38,7 +41,7 @@ var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
 var blockMenu = false;
-var openAndBlockMenu = getCookie("openAndBlockMenu");
+var openAndBlockMenu = "true";
 var showNews = false;
 var showPlan2Explanation = "true";
 var contWE = 1; //Variável auxiliar para os exemplos trabalhados que envolvem frações
@@ -61,9 +64,7 @@ $(document).ready(function() {
 	
 	
 
-		getEquationsWE();
-		getResolutionsWE();
-		getPontuacaoEquacoes();
+		
 //		getColorsBackground();
 		
 	
@@ -285,17 +286,33 @@ $(document).ready(function() {
     	}
     });
     
+    $("#hint").mouseover (function() {
+    	if (levelGamification !== undefined && levelGamification === "full") {
+    		
+    		if (idEquation !== undefined) {
+    			var contentHint = document.getElementById("hintText").innerHTML;
+    			
+    			if (contentHint === "") {
+    				var hintsAvailable = freeHints[planoAtual-1001];
+    				
+    				if (hintsAvailable > 0) {
+    					var text = "Você possui " + hintsAvailable;
+    					
+    					if (hintsAvailable > 1)
+    						text += " dicas gratuítas disponíveis";
+    					
+    					else
+    						text += " dica gratuíta disponível";
+    					showHint(text);
+    				}
+    			}
+    		}
+    	}
+    });
+    
 	
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
-	
-	if (widthResolution > 1440) {
-		if (widthResolution <= 1600)
-			document.getElementById('hintText').style.left = "38%";
-	
-		else
-			document.getElementById('hintText').style.left = "40%";
-	}
 	
 	if (widthWindow < 1366) 
 		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
@@ -320,20 +337,200 @@ $(document).ready(function() {
 function startNewPatequation() {
 	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
 	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
-	numUnlockedLevels = 1; //Provisório
 	
-	document.getElementById("topics").style.background = "#F5F6F7";
+	document.getElementById("topics").style.background = "silver";
 	
-	if (levelGamification != "without") {
-		generateLevels();
+	getEquationsWE();
+	getResolutionsWE();
+	getPontuacaoEquacoes();
+	getFreeHintsAndErrors();
+	
+	if (levelGamification !== "without") {
+		unlockedPlans = getCookie("unlockedPlans");
+		
+		if (unlockedPlans !== "") {
+			unlockedPlans = parseInt(unlockedPlans);
+			unlockedLevels = parseInt(getCookie("unlockedLevels"));
+			generateLevels();
+			
+			if (levelGamification === "full") {
+				var totalScoreCookie = getCookie("totalScore");
+				
+				if (totalScoreCookie !== "") {
+					totalScore = parseInt(totalScoreCookie);
+					updateScoreUI();
+				}
+				
+				else
+					getTotalScoreDataBase();
+			}
+		}
+		
+		else
+			getLevelsAndPlansUnlockedDataBase();
 	}
 	
 	else {
-		
+		unlockAllPlans = true;
+		generateStagesWithoutGamification();
+		document.getElementById("amountPoins").style.display = "none";
 	}
+	
+	var cookiePlan = getCookie("currentPlan");
+	
+	if (cookiePlan !== "") {
+		var idPlan = parseInt(cookiePlan);
+		
+		var cookieEquation = getCookie("currentEquation");
+		
+		if (cookieEquation !== "") {
+			var idEquation = parseInt(cookieEquation);
+		}
+		
+		loadTasks(idPlan);
+		loadExercise(idEquation);		
+
+		$("#topics").fadeIn();
+	    $("#topicsAux").hide();
+	}
+	
+	
 
 }
 
+function verifyCookiesScore() {
+	if (getCookie("totalScore") === "") 
+		getTotalScoreDataBase();
+	
+	else 
+		reloadTotalScore();
+		
+	if (getCookie("levelScore") === "") 
+		getLevelsScoreDataBase();
+	
+	else 
+		reloadLevelsScore();
+	
+//	if (getCookie("stageScore") === "")
+//		setCookieDays("stageScore", "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0");
+	
+//	if (getCookie("stageScore") === "") {
+//		var database = false; //Aqui deverá ser a verificação da pontuação no banco de dados
+//		
+//		if (database) {
+//			//Aqui deverá ser a verificação da pontuação no banco de dados e salvar nos cookies
+//		}
+//		
+//		else 
+//			setCookieDays("stageScore", "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0");		
+//	}
+//	
+//	if (selectedEquation !== null) {
+//		//No banco de dados deverá ser salva também a pontuação perdida em cada equação, é só acrescentar uma coluna na tabela correspondente do dump atual
+//	}
+}
+
+function completePlan() {
+	unlockedPlans++;
+	setCookieDays("unlockedPlans", unlockedPlans, 1);
+	
+	if (unlockedPlans < 6) 
+		unlockedLevels = 1;
+	
+	else if (unlockedPlans < 11)
+		unlockedLevels = 2;
+	
+	else if (unlockedPlans < 15)
+		unlockedLevels = 3;
+	
+	else if (unlockedPlans < 19)
+		unlockedLevels = 4;
+	
+	else
+		unlockedLevels = 5;
+	
+	if (unlockedPlans === 6 || unlockedPlans === 11 || unlockedPlans === 15 || unlockedPlans === 19) {
+		divName = "lockLevel" + unlockedLevels;
+		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+		divName = "level" + unlockedLevels;
+		document.getElementById(divName).onclick = function() {generateStages(unlockedLevels)};
+		setCookieDays("unlockedLevels", unlockedLevels, 1);
+	}
+	
+	else {
+		var divName = "lockStage" + unlockedPlans;
+		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+	
+		setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
+	}
+	
+	
+	
+	
+	completePlanDataBase();
+}
+
+function getFreeHintsAndErrors() {
+	freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8];
+	freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3];
+	
+	var cookieHints = getCookie("freeHints");
+	
+	if (cookieHints !== "") {
+		var split = cookieHints.split(",");
+		var pos = parseInt(split[1]);
+		freeHints[pos] = parseInt(split[0]);
+	}
+		
+	var cookieErrors = getCookie ("freeErrors");
+	
+	if (cookieErrors !== "") {
+		var split = cookieErrors.split(",");
+		var pos = parseInt(split[1]);
+		freeErrors[pos] = parseInt(split[0]);
+	}
+}
+function getLevelsAndPlansUnlockedDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/getLevelAndPlan",
+		data : {
+			
+		},
+		success : function(data) {
+			var split = data.split(";");
+			unlockedLevels = parseInt(split[0]);
+			unlockedPlans = parseInt(split[1]);
+			setCookieDays("unlockedLevels", unlockedLevels, 1);
+			setCookieDays("unlockedPlans", unlockedPlans, 1);
+			
+			generateLevels();
+			
+			if (levelGamification === "full")
+				getTotalScoreDataBase();
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function completePlanDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/completePlan",
+		data : {
+			"level" : unlockedLevels,
+			"plan" : unlockedPlans
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
 
 //color é uma String em hexadecimal com # na frente
 function setBackgroundColor (color) {
@@ -442,7 +639,6 @@ function helpPage2 ( ) {
 }
 
 function helpPage ( ) {
-	
 	$("#help-box").html("<div style='position:relative; top:0px; left:0px;'> <img src=/pat2math/patequation/img/pagina_01.png border=0> <div style='position:absolute; top:246px; left:1px;'> <div style='position:absolute; top:0; left:494px;'> <a href=# onclick=helpPage2()><img src=/pat2math/patequation/img/seta_right.png></img></a> <div style='position:absolute; top:272px; left:-20px;'> <a href=# onclick=closeWindow()><img src=/pat2math/patequation/img/exit.png></img></a>");
 	$("#mask").fadeIn(700);
 	$("#help-box").fadeIn(700);
@@ -876,6 +1072,7 @@ function reloadPaper(selected) {
  * */
 
 function loadEquation(index) {
+	isLoadEquation = true;
 	var newEquation = newEquations[index];
     selectedEquation = equations[index];
     var go = false;
@@ -1035,8 +1232,8 @@ function loadEquation(index) {
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
                 //addProgressValue(10);
                 //selectedEquation.lastStep = selectedEquation;
-                nextLine.html("<div class='final'></div>");
-
+                nextLine.html("<div class='final'></div>");            
+                
                 var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                 selectedEquation.addPoints(result);
 
@@ -1063,11 +1260,21 @@ function loadEquation(index) {
         }
     }
 
+    var cookieName = "equationErrorScore" + idEquation;
+    var cookieErrorPoints = getCookie(cookieName);
+    
+    if (cookieErrorPoints !== "") {
+    	var errorPoints = parseInt(cookieErrorPoints) * (-1);
+    	selectedEquation.addPoints(errorPoints);
+    }
+    
     calculatePoints(selectedEquation);
 
     $("#hintText").hide('blind', 500);
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
+    
+    isLoadEquation = false;
     
     return selectedEquation.equation;
     
@@ -1091,7 +1298,6 @@ function resetProgressBar(){
 	concluded=0;
 	addProgressValue(0);
 }
-
 
 function addProgressValue(value) {
     concluded += value;
@@ -1132,7 +1338,7 @@ function clearLine(option) {
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>");
+            "<button id='button'></button><div id='feedbackError'></div>");
 
     centralizeCanMoveAndButton();
     sortable();
@@ -1219,7 +1425,7 @@ function referenceToABC(a, b, c, focused) {
             "<li class='labelDefault'><input class='c' type='text'  value=" + c + "></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
-            "<button id='button'></button>");
+            "<button id='button'></button><div id='feedbackError'></div>");
 
     $(selectedSheet + " .labelDefault .a").css("width", (a.length + 1) * 16 + "px");
     $(selectedSheet + " .labelDefault .b").css("width", (b.length + 1) * 16 + "px");
@@ -1924,15 +2130,114 @@ function showHint(hint) {
 	
 	moveHint();
 	
-    var lastHint = $("#hintText").html();
+	var lastHint = "";
+	
+	if (hint.indexOf("gratuíta") === -1)
+		lastHint = $("#hintText").html();
     
     if (lastHint !== "") {	
         lastHint = "<br><br>" + lastHint;
     }
     
     $("#hintText").hide('blind', 200);
-    $("#hintText").html("*Dica: " + hint + lastHint);
+    $("#hintText").html(hint + lastHint);
     $("#hintText").show('blind', 500);
+}
+
+function showFeedbackError(hint) {
+	//Caso a dica contenha um ponto final e seja a que mostra ao aluno o próximo passo completo, este ponto é removido para facilitar a cópia do passo.
+	if (hint.indexOf("próximo passo") && hint.charAt(hint.length-1) === ".") {
+		hint = hint.substring(0, hint.length-1);
+	}
+	
+	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
+	//ser manipulada
+	if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
+		//Variável que salva o operador da propriedade distributiva (+ ou -)
+		var operator = "+";
+		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão
+		//2(x+5), o resolvedor interpreta como (2*(x+5)) 
+		var newHint = hint.split("*");
+		newHint[0] = newHint[0].replace("(", "");
+		newHint[1] = newHint[1].replace(")", "");
+		
+		//Caso em que a propriedade distributiva envolve um sinal de menos.
+		//Ao invés de utilizar a - b, o resolvedor utiliza a + (-b)
+		if (newHint[1].indexOf("+(-") !== -1) {
+			operator = "-";
+			newHint[1] = replaceAll(newHint[1], "(", "");
+			newHint[1] = newHint[1].replace(")", "");
+			newHint[1] = newHint[1].replace("+-", "-");
+			newHint[1] = "(" + newHint[1];
+		}
+		
+		//O back-end apresentou problemas para gerar o passo da dica de nível 3 da propriedade
+		//distributiva, assim essa dica será gerada pela front-end
+		//A dica recebida pelo sistema é a expressão de propriedade distributiva atual
+    	var resolution = "";
+		var multiplier = "";
+		if (hint.indexOf("<") === 0) {
+    		var expression = newHint[1].replace("(", "");
+    		expression = expression.replace(")", "");
+    		expression = expression.replace("</eq>", "");
+    		
+    		var terms = expression.split(operator);
+    		
+    		var posMultiplier = newHint[0].indexOf(">") + 1;
+    		multiplier = newHint[0].substring(posMultiplier);
+    		
+    		//a(b+/-c)
+    		if (expression.charAt(0) !== "-" && terms.length === 2)
+    			resolution = multiplier + "*" + terms[0] + operator + multiplier + "*" + terms[1];
+    		
+    		//-a(+/-b+/-c)
+    		else if (multiplier.charAt(0) === "-") {
+    			//-a(-b+/-c)
+    			if (expression.charAt(0) === "-") {
+    				terms[1] = "-" + terms[1];
+        			resolution = multiplier + "*" + terms[1] + multiplier + "*" + operator + terms[2];
+    			}
+    			
+    			//-a(b+/-c)
+    			else 
+    				resolution = multiplier + "*" + terms[0] + multiplier + "*" + operator + terms[1];			    		
+    		}
+    		
+    		//a(-b+/-c)
+    		else {
+    			terms[1] = "-" + terms[1];
+    			resolution = multiplier + "*" + terms[1] + operator + multiplier + "*" + terms[2];
+    		}
+		}
+		
+    	if (resolution === "")
+    		hint = newHint[0] + newHint[1];
+    	
+    	else {
+    		var passoAnterior;
+    		
+    		if (selectedEquation.lastStep === null)
+    			passoAnterior = selectedEquation.initialEquation;
+    		
+    		else
+    			passoAnterior = selectedEquation.lastStep.step;
+    		
+    		var expression = multiplier + "*" + newHint[1].replace("</eq>", "");
+    		resolution = adjustExpression(resolution);
+    		
+    		hint = "Se você resolver a expressão " + newHint[0] + newHint[1] + ", o próximo passo (a linha inteira) da equação fica " + passoAnterior.replace(expression, resolution);   		
+    	}   	
+	}
+	
+    var lastHint = $("#feedbackError").html();
+    
+    if (lastHint !== "") {	
+        lastHint = "<br><br>" + lastHint;
+    }
+    
+    $("#feedbackError").hide('blind', 200);
+    $("#feedbackError").html(hint + lastHint);
+    $("#feedbackError").show('blind', 500);
 }
 
 function adjustExpression(expression) {	
@@ -1989,64 +2294,16 @@ function writeInput(text) {
 
 function getEquationsWE() {
 	equationsWE = new Array();
-	pointsWE = new Array();
+	pointsWE = 100;
 	
-	equationsWE[1] = "x+2=10";
-	pointsWE[1] = 20;
-	equationsWE[2] = "x+4=10"
-	pointsWE[2] = 20;
-	equationsWE[3] = "x-4=8";
-	pointsWE[3] = 20;
-	equationsWE[4] = "x+4=-2"
-	pointsWE[4] = 20;
-	equationsWE[5] = "x-3=-6";
-	pointsWE[5] = 20;
-	equationsWE[7] = "-x+1=10"
-	pointsWE[7] = 25;
-	equationsWE[8] = "-x-10=7"
-	pointsWE[8] = 25;
-	equationsWE[9] = "-x+4=-8"
-	pointsWE[9] = 25;
-	equationsWE[10] = "-x-15=-9"
-	pointsWE[10] = 25;
-	equationsWE[12] = "2x=10"
-	pointsWE[12] = 30;
-	equationsWE[13] = "5x=-30"
-	pointsWE[13] = 30;
-	equationsWE[14] = "-3x=15"
-	pointsWE[14] = 35;
-	equationsWE[15] = "-4x=-28"
-	pointsWE[15] = 35;
-	equationsWE[17] = "(x)/(4)=20"
-	pointsWE[17] = 40;
-	equationsWE[18] = "(x)/(7)=-49"
-	pointsWE[18] = 40;
-	equationsWE[19] = "-(x)/(6)=42"
-	pointsWE[19] = 50;
-	equationsWE[20] = "-(x)/(4)=-100"
-	pointsWE[20] = 50;
-	equationsWE[22] = "4x-10=8";
-	pointsWE[22] = 50;
-	equationsWE[23] = "-3x+9=-27";
-	pointsWE[23] = 60;
-	equationsWE[24] = "5x+8-2x=10+x";
-	pointsWE[24] = 80;
-	equationsWE[26] = "x-(3-2x)=2+(-4+2x)"; //ver se mantenho esta equação
-	pointsWE[26] = 100;
-	equationsWE[27] = "2(x+3)-5=5(x+2)";
-	pointsWE[27] = 100;
-	equationsWE[28] = "(x+3)/(3)=(4)/(9)";
-	pointsWE[28] = 100;
-	equationsWE[30] = "(x)/(4)+5=(2)/(3)-(5x)/(8)";
-	pointsWE[30] = 120;
-	equationsWE[31] = "(x+2)/(5)+8=(x-3)/(4+2)";
-	pointsWE[31] = 140;
-	equationsWE[32] = "(4(x+3))/(7)+5=(-2(-x-1))/(5+8)";
-	pointsWE[32] = 160;
-	equationsWE[34] = "(4)/(x)+(2)/(3)-5=(8)/(6x)";
-	pointsWE[34] = 200;
-	equationsWE[35] = "(5)/(4x-2)+9=(10)/(-4(x-3))";
-	pointsWE[35] = 300;	
+	equationsWE[1] = "x+4=10"
+	equationsWE[2] = "-x+1=10"
+	equationsWE[3] = "2x=10"
+	equationsWE[4] = "-3x=15"
+	equationsWE[6] = "(x)/(4)=20"
+	equationsWE[7] = "(x)/(-6)=42"
+	equationsWE[8] = "4x-10=8";
+	equationsWE[9] = "-3x+9=-27";
 }
 
 function getResolutionsWE() {

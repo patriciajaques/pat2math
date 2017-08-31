@@ -51,6 +51,11 @@ function requestServer (type, last, next, typeOperation, element) {
                 //split[1] = int - número de vezes que ele pediu dica por operação
                 //split[2] = int - dicas consecutivas total num determinado intervalo (1 min)
 
+            	if (tryResolveByMyself === true) {
+            		firstErrorOrHint();
+            	}
+            	
+            	else {
                 var hint = split[0];
                 var codeAnim = undefined;
 
@@ -115,7 +120,16 @@ function requestServer (type, last, next, typeOperation, element) {
                 	var lostPoints = -2;
                 	
                 	if (levelGamification === "full") {
-                		//Verifica as dicas gratuitas, o nível e a pontuação perdida, e coloca em lostPoints
+                		if (freeHints[planoAtual-1001] > 0) {
+                			freeHints[planoAtual-1001]--;
+                			lostPoints = 0;
+                			
+                			var contentCookie = freeHints[planoAtual-1001] + "," + (planoAtual-1001);
+		        			
+                			setCookieDays("freeHints", contentCookie, 1);
+                			//document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+                		}
+                		
                 	}
                 	
                 	$("#newPoints").css("left", (x + 80) + "px");
@@ -127,8 +141,13 @@ function requestServer (type, last, next, typeOperation, element) {
                 	$("#newPoints").show("puff", 500, callbackAddPoints(lostPoints));
                 }
 
+            }
             } else if (type === 'n') {  //for new equation
-
+            	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
+            	if (tryResolveByMyself === true) {
+            		tryResolveByMyself = false;
+            	}
+            	
                 var valores = splitEquation(data[0]);
                 var newHtml = "<ul>";
                 for (var i = 0; i < valores.length; i++) {
@@ -152,7 +171,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         "<li class='labelDefault'><input type='text'></li>" +
                         "</ul>" +
                         "<div class='trash'></div>" +
-                        "<button id='button'></button>");
+                        "<button id='button'></button><div id='feedbackError'></div>");
                 $(selectedSheet + " .canCopy li").draggable("disable");
                 $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
@@ -187,6 +206,8 @@ function requestServer (type, last, next, typeOperation, element) {
                     $("#hintText").hide('blind', 200);
                     $(".verticalTape").hide('blind', 200);
                     $("#hintText").html("");
+                    $("#feedbackError").hide('blind', 200);
+                    $("#feedbackError").html("");
 
                     if (element.parent().html().indexOf("frac") !== -1) {
                         nextLineServer = element.parent().next().next();
@@ -218,35 +239,12 @@ function requestServer (type, last, next, typeOperation, element) {
                         if (tasksRemaining===0){
                         	addProgressValue(100);
                         	
-                        	var divName = "#tasks" + numUnlockedPlans;
+                        	var divName = "#tasks" + unlockedPlans;
                         	$(divName).slideUp(700);
                         	
-                        	numUnlockedPlans++;
-                        	
-                        	if (numUnlockedPlans === 7)
-                            	window.location.reload();
-                        	
-                        	
-                        	divName = "lplan" + numUnlockedPlans;
-                        	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
-       
-                        	if (numUnlockedPlans == 1) {
-                        		if (selectedEquation.steps.length === 0)
-        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
-                        	  
-                        		else
-                        		    mainMenu("");
-                        	}
-                        	
-                        	else if (numUnlockedPlans == 2)
-                        		setTimeout('plan2Explanation("")', 2000);
-                        	
-                        	else {
-                        		setTimeout ("newPlan()", 2000);
-                        	}
-                        	
-                        	divName = "#lplan" + numUnlockedPlans;
-                        	setTimeout (function() {$(divName).hide();}, 20000);
+                        	if (levelGamification !== "without")
+                        		completePlan();
+                        	  	
                         }
                         
                         else 
@@ -316,7 +314,7 @@ function requestServer (type, last, next, typeOperation, element) {
                             var scrollTop = $(document).scrollTop();
 
                             if (levelGamification !== "without") {
-                            	var winPoints = 10;
+                            	var winPoints = 10;                      	
                             	$("#newPoints").css("left", (x - 50) + "px");
                             	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
@@ -328,6 +326,10 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                         //$(".labelDefault").focus();
                     } else {
+                    	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
+                    	if (tryResolveByMyself === true) {
+                    		tryResolveByMyself = false;
+                    	}
                         /*addProgressValue(10);*/
                         selectedEquation.lastStep = null;
 
@@ -341,11 +343,11 @@ function requestServer (type, last, next, typeOperation, element) {
                         	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
                         	var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
-
+                        	
                         	$("#newPoints").text("+" + result);
                         	$("#newPoints").css("color", "green");
 
-
+                        	
                         	$("#newPoints").show("puff", 500, callbackAddPoints(result));
                        }
                         //divaLiteAction("happy;Parabéns! Continue assim amigo...");
@@ -357,6 +359,10 @@ function requestServer (type, last, next, typeOperation, element) {
 //                alert("Resposta Correta! =D");
                 }
                 else if (split[1] === "true" && split[2] === "true") {
+                	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
+                	if (tryResolveByMyself === true) {
+                		tryResolveByMyself = false;
+                	}
 //                	var cookieName = "numLines" + currentPos + idEquation; 			
 //        			var numLinesString = getCookie (cookieName);
 //        			var numLines = parseInt (numLinesString);
@@ -402,6 +408,8 @@ function requestServer (type, last, next, typeOperation, element) {
                     $("#hintText").hide('blind', 500);
                     $(".verticalTape").hide('blind', 500);
                     $("#hintText").html("");
+                    $("#feedbackError").hide('blind', 200);
+                    $("#feedbackError").html("");
 //                    $("#hintBox").animate({
 //                        'opacity': '1',
 //                        'top': '0'
@@ -417,10 +425,10 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
                     nextLineServer.html(
                             "<ul>" +
-                            "<li class='labelDefault'><input type='text'></li>" +
+                            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
                             "</ul>" +
                             "<div class='trash'></div>" +
-                            "<button id='button'></button>");
+                            "<button id='button'></button><div id='feedbackError'></div>");
                     $(selectedSheet + " .canCopy li").draggable("disable");
                     $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                     $(selectedSheet + " .formula li").css("opacity", "0.5");
@@ -453,13 +461,16 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         var scrollTop = $(document).scrollTop();
 
-                        $("#newPoints").css("left", (x - 50) + "px");
-                        $("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                        if (levelGamification !== "without") {
+                        	$("#newPoints").css("left", (x - 50) + "px");
+                        	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                        $("#newPoints").text("+10");
-                        $("#newPoints").css("color", "green");
+                        	$("#newPoints").text("+10");
+                        	$("#newPoints").css("color", "green");
 
-                        $("#newPoints").show("puff", 500, callbackAddPoints(10));
+                        	$("#newPoints").show("puff", 500, callbackAddPoints(10));
+                        
+                        }
                         
                         if (isTourInterativo) {
                         	if (selectedEquation.steps.length === 1)
@@ -467,24 +478,17 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                     }        
                 }
-                else if (split[1] === "false") {                	
+                else if (split[1] === "false") {
+                	if (tryResolveByMyself === true) {
+                		firstErrorOrHint();
+                	}
+                	
                     $(element).css("background", "url('img/bad.png') no-repeat center");
                     $(element).effect("bounce", 500, setTimeout(function() {
                         $(element).removeAttr("style").hide().fadeIn();
                     }, 1000));
 
-                    var hint;
-                    if (split[5] !== "" && split[5] !== null && split[5]!== "null") {
-                        hint = split[5];
-                    } else {
-                        hint = split[4];
-                    }
-
-                    if (enableAgent)
-                    	divaLiteTipAction(hint);
                     
-                    else
-                    	showHint(hint);
 
 //                    $("#hintText").hide('blind', 200);
 //                    $(".verticalTape").hide('blind', 200);
@@ -504,8 +508,17 @@ function requestServer (type, last, next, typeOperation, element) {
                     	var lostPoints = -5;
                     	
                     	if (levelGamification === "full") {
-                    		//Verifica os erros gratuitos e a pontuação perdida, e coloca em lostPoints
+                    		if (freeErrors[planoAtual-1001] > 0) {
+                    			freeErrors[planoAtual-1001]--;
+                    			lostPoints = 0;
+                    			
+                    			var contentCookie = freeErrors[planoAtual-1001] + "," + (planoAtual-1001);
+                    			        			
+                    			setCookieDays("freeErrors", contentCookie, 1);
+                    			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
+                    		}
                     	}
+             
                     	
                     	$("#newPoints").css("left", (x - 50) + "px");
                     	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
@@ -533,7 +546,21 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
 
                     document.getElementById('inputMobile').style.border = "1px solid red";
-                }
+                
+                	
+                	var hint;
+                    if (split[5] !== "" && split[5] !== null && split[5]!== "null") {
+                        hint = split[5];
+                    } else {
+                        hint = split[4];
+                    }
+
+                    if (enableAgent)
+                    	divaLiteTipAction(hint);
+                    
+                    else
+                    	showFeedbackError(hint);
+            	}
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada
                 }else if (split[0]=== "você não está logado!"){

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pat2math.modeloAluno.Tutor;
+import br.com.pat2math.dao.StudentDao;
 import br.com.pat2math.domainBase.Plan;
 import br.com.pat2math.domainBase.SetOfTasks;
 import br.com.pat2math.domainBase.Task;
@@ -54,6 +57,7 @@ public class StudentController {
 	@PersistenceContext private EntityManager em;
 	@Autowired private BCryptPasswordEncoder encoder;
 	@Autowired private TaskPerformedRepository tasksPerformed;
+	@Autowired private StudentDao sd;
 	
 	@RequestMapping("/home")
 	public String home() {
@@ -392,6 +396,53 @@ public class StudentController {
 		return "translator2";
 	}
 	
+	//level = 0 obtém a pontuação total
+	//level = 1 obtém as pontuações de cada um dos níveis
+	@RequestMapping(value = "newPatequation/getScore", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getScore(int level, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		String score = "";
+		if (level == 0)
+			score += student.getTotalScore();
+		
+		else {
+			score += student.getScoreLevel1();
+			score += ";" + student.getScoreLevel2();
+			score += ";" + student.getScoreLevel3();
+			score += ";" + student.getScoreLevel4();
+			score += ";" + student.getScoreLevel5();
+		}
+		
+		return score;
+	}
+	
+	@RequestMapping(value = "newPatequation/updateScore", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String updateScore(int amount, int level, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		student.addOrRemovePoints(amount, level);
+		sd.alter(student);
+	
+		return "Pontuação atualizada com sucesso";
+	}
+	
+	@RequestMapping(value = "newPatequation/getLevelAndPlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getLevelAndPlan(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		String level = "" + student.getCurrentLevel();
+		String classPlan = "" + student.getCurrentPlan();
+		
+		return level + ";" + classPlan;
+	}
+	
+	@RequestMapping(value = "newPatequation/completePlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String completePlan(int level, int plan, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setCurrentLevel(level);
+		student.setCurrentPlan(plan);
+		sd.alter(student);
+	
+		return "Progresso atualizado com sucesso";
+	}
 	
 	private Student formToStudent(StudentForm formStudent) {
 		Student student = new Student();
@@ -400,6 +451,7 @@ public class StudentController {
 		student.setLastName(formStudent.getLastName());
 		String passwordHash = encoder.encode(formStudent.getPassword());
 		student.setPassword(passwordHash);
+		
 		return student;
 	}
 	

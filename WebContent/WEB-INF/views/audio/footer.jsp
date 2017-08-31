@@ -2,12 +2,18 @@
 <script>
 function verifyID() {
 	var currentID = "" + ${student.id};
-	var isPreviousUser = getCookie("previousUser") === currentID;
+	var previousUser = getCookie("previousUser");
 	
-	if (isPreviousUser === false) {
-		deleteAllCookies();		
-		setCookieDays("previousUser", currentID, 1);
+	if (previousUser !== "") {
+		if (previousUser !== currentID) {
+			deleteAllCookies();
+			setCookieDays("previousUser", currentID, 1);
+		}
 	}
+	
+	else
+		setCookieDays("previousUser", currentID, 1);
+	
 	
 	var id = parseInt (currentID);
 	
@@ -15,23 +21,34 @@ function verifyID() {
 }
 
 function checkGroup(id) {
-	if (id >= 819 && id <= 828) { //Usuários de teste da Joice
-		setCookieDays("enableWE", "false", 1);
-		setCookieDays("enableTour", "false", 1);
+	var isNewPatequation = true;
+	
+	if ((id >= 1146 && id <= 1170) || (id >= 1177 && id <= 1179) || (id >= 1224 && id <= 1240)) {
+		setCookieDays("levelGamification", "full", 1);
+		alert("Todos os problemas da sessão passada foram corrigidos! Lembrando novamente que o sistema de dicas está mais otimizado, e que a cada clique no botão de dica, a dica mostrada é mais específica (poderá haver desconto na sua pontuação se você não tiver dicas gratuitas disponíveis).");
+	}
+	
+	else if ((id >= 1102 && id <= 1123) || (id >= 1171 && id <= 1173) || (id >= 1241 && id <= 1257)) {
+		setCookieDays("levelGamification", "low", 1);
+		alert("Todos os problemas da sessão passada foram corrigidos! Lembrando novamente que o sistema de dicas está mais otimizado, e que a cada clique no botão de dica, a dica mostrada é mais específica (a cada solicitação de dica você perde apenas 2 pontos).");
+
+	}
+	
+	else if ((id >= 1124 && id <= 1145) || (id >= 1174 && id <= 1176) || (id >= 1258 && id <= 1273)) {
+		setCookieDays("levelGamification", "without", 1);
+		alert("Todos os problemas da sessão passada foram corrigidos! Lembrando novamente que o sistema de dicas está mais otimizado, e que a cada clique no botão de dica, a dica mostrada é mais específica.");
+
 	}
 	
 	else {
-		setCookieDays("enableWE", "", 0);
-		setCookieDays("enableTour", "", 0);
+		isNewPatequation = false;
 	}
 	
-	var isNewPatequation = false;
-	
-	if (isNewPatequation)
+ 	if (isNewPatequation)
 		redirectPage("/pat2math/newpatequation");
 	
-	else
-		redirectPage("/pat2math/student/home");
+ 	else
+ 		redirectPage("/pat2math/student/home");
 }
 
 function redirectPage(url) {

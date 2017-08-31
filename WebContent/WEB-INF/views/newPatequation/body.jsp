@@ -17,7 +17,10 @@
     	
     	<div class="left">
 			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
-			<p><a href="/pat2math/j_spring_security_logout"><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /></a></p>
+			<p><a href="/pat2math/j_spring_security_logout"><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px; margin-top: -96px; margin-left: 7px" /></a></p>
+			<p><div class="generalScore" id="totalScore" style="margin-top: -26px;"></div>
+			<p><div class="generalScore" id="levelScore"></div>
+			<p><div class="generalScore" id="stageScore"></div>	
 <!-- 			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /><span id="exitText">&nbspSair</span></a></p> -->
 <!--  			<p><button type="button" onclick="getResolution()">Teste Resolução</button></p> -->
 <!-- 			<p><button type="button" onclick="getStep()">Teste Passo</button></p> -->
@@ -60,16 +63,16 @@
             </div>
         </div>
 
-        <button id="hint" class="btn">D i c a</button>
+        <button id="hint" class="btn">D i c a</button>    
     </div>
+     <div id='hintBox'><div id='hintText'></div></div>
     
-    <div id="hintBox">
-        <div id="hintText"></div>
-    </div>
-     <div id="papers" style="text-align: center; margin-top: -119px">
+     <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;"> 		    
    			<div id="refresh_page" title="Atualizar a página"></div>
    			<div id="logo" title="PAT2Math =D"></div>
+   			<div class="limitsHintsAndErrors" id="freeHints"></div>
+   			<div class="limitsHintsAndErrors" id="freeErrors"></div>
 
 					<div style="display: none;" id="date">
 				         <div id="dateDay" class="dates"></div>
