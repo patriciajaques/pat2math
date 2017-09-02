@@ -90,6 +90,17 @@
     position: fixed;
 }
 
+#rewardWorkedExamples {
+    background: url("/pat2math/patequation/img/lampada.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 348px;
+    top: 538px;
+    cursor: pointer;
+    position: fixed;
+    display: none;
+}
+
 
 #calculatorAccess{
     background: url("../img/calculatorIcon.png") no-repeat scroll center center transparent;

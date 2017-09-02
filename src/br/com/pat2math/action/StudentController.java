@@ -444,6 +444,26 @@ public class StudentController {
 		return "Progresso atualizado com sucesso";
 	}
 	
+	@RequestMapping(value = "newPatequation/rewardWorkedExamples", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getRewardWorkedExamples(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		
+		if (student.isRewardWorkedExamples())
+			return "true";
+	
+		else
+			return "false";
+	}
+	
+	@RequestMapping(value = "newPatequation/saveRewardWorkedExamples", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String saveRewardWorkedExamples(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setRewardWorkedExamples(true);
+		sd.alter(student);
+		
+		return "Recompensa salva com sucesso";
+	}
+	
 	private Student formToStudent(StudentForm formStudent) {
 		Student student = new Student();
 		student.setEmail(formStudent.getEmail());

@@ -9,6 +9,7 @@
 <script src="/pat2math/newPatequation/workedExamples.js"></script>
 <script src="/pat2math/newPatequation/workedExamplesController.js"></script>
 <script src="/pat2math/newPatequation/withGamification/difficultLevelsAndClassPlans.js"></script>
+<script src="/pat2math/newPatequation/withGamification/fullGamification/specialRewards.js"></script>
 <script src="/pat2math/newPatequation/withGamification/score.js"></script>
 <script src="/pat2math/newPatequation/index.js"></script>
 <script src="/pat2math/patequation/js/decimalNumbers.js"></script>

@@ -368,6 +368,13 @@ function startNewPatequation() {
 		
 		else
 			getLevelsAndPlansUnlockedDataBase();
+		
+		var cookieColor = getCookie("colorBackground");
+		
+		if (cookieColor !== "")
+			setBackgroundColor(cookieColor);
+		
+		verifyWorkedExamplesReward();
 	}
 	
 	else {
@@ -398,6 +405,24 @@ function startNewPatequation() {
 
 }
 
+function verifyWorkedExamplesReward() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/rewardWorkedExamples",
+		data : {
+
+		},
+		success : function(data) {
+			if (data === "true") {			
+				workedExamplesReward();
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+	
+}
 function verifyCookiesScore() {
 	if (getCookie("totalScore") === "") 
 		getTotalScoreDataBase();
@@ -534,6 +559,7 @@ function completePlanDataBase() {
 
 //color é uma String em hexadecimal com # na frente
 function setBackgroundColor (color) {
+	var cookieColor = setCookieDays("colorBackground", color, 1);
 	document.body.style.background = color;
 }
 

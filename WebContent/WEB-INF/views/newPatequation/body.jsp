@@ -110,6 +110,7 @@
 	
 
 	<div id="newPoints">+10</div>
+	<div id="rewardWorkedExamples" title="Fui ajudado pelo PAT2Math :D O que será que esse botão faz?" onclick="changeColor()"></div>
 	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->

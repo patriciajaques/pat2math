@@ -69,8 +69,8 @@ function questionSpecialReward(plan) {
 }
 
 function getSpecialReward(plan) {
-	//Colocar aqui os comandos para o usuário ganhar a recompensa especial
-	alert ("Ainda estamos trabalhando na sua recompensa especial. Para garantir, peça ajuda ao membro do projeto que está acompanhando esta seção e diga a ele o seu nome e que você deseja receber a recompensa especial");
+	workedExamplesReward();
+	saveWorkedExamplesReward();
 	loadExerciseWE(equationsWE[plan]);
 	var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);
 	
