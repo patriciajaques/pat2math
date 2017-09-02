@@ -57,7 +57,7 @@ function setBackgroundVerde() {
 }
 
 function setBackgroundAmarelo() {
-	setBackgroundColor("rgb(255, 252, 220) none repeat scroll 0% 0%");
+	setBackgroundColor("rgb(255, 247, 163) none repeat scroll 0% 0%");
 }
 
 function setBackgroundRosa() {
