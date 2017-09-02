@@ -2388,6 +2388,7 @@ function getEquationsWE() {
 	equationsWE[8] = "4x-10=8";
 	equationsWE[9] = "-3x+9=-27";
 	equationsWE[11] = "5x+8-2x=10+x";
+	equationsWE[12] = "5(2+x)=4(2x-3)"
 }
 
 function getResolutionsWE() {

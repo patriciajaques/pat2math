@@ -728,10 +728,6 @@ function classPlan9() {
 
 //5x+8-2x=10+x
 function classPlan11() {
-	contWE = 1;
-	
-	setCookieDays ("currentWE", "23", 1); 
-
 		$.guider({
 			name: "1",
 			next : "2",
@@ -895,4 +891,322 @@ function classPlan11() {
 				}
 			}
 		});	
+}
+
+function classPlan12() {
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Apresentamos as equações com propriedade distributiva",
+		description : "Essas equações são mais fáceis do que parecem. Vamos explicar passo-a-passo para você entender direitinho",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "O que é a propriedade distributiva?",
+		description : "É uma propriedade da multiplicação que nos diz que, na multiplicação de números quaisquer, podemos converter qualquer um deles em uma soma ou subtração que o resultado permanecerá o mesmo",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "3",
+		next : "4",
+		title : "Vamos conferir um exemplo na prática",
+		description : "Considere a multiplicação 5 * 7 = 35. Existem várias maneiras de escrever o número 7 na forma de adição ou subtração. Uma delas é 4 + 3",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "4",
+		next : "5",
+		title : "Dessa maneira, temos 5(4 + 3) = 35",
+		description : "Como estamos trabalhando com números definidos, a opção mais fácil seria somar primeiro 4 + 3, e depois multiplicar por 5",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "5",
+		next : "6",
+		title : "Qual seria a outra forma de resolver?",
+		description : "Podemos distribuir essa multiplicação em uma soma de produtos. Essa distribuição é realizada em duas etapas",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "6",
+		next : "7",
+		title : "Primeira etapa (exemplo 5(4 + 3) = 35)",
+		description : "Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Neste exemplo temos 5 * 4",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "7",
+		next : "8",
+		title : "Segunda etapa (exemplo 5(4 + 3) = 35)",
+		description : "Multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão (no nosso exemplo é o sinal de mais). Assim, temos 5 * 4 + 5 * 3",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "8",
+		next : "9",
+		title : "Agora é só calcular a nova expressão",
+		description : "Temos que 5 * 4 = 20 e 5 * 3 = 15. Somando os dois resultados temos 20 + 15 = 35, exatamente o valor da multiplicação 5 * 7",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "9",
+		next : "10",
+		title : "Vamos aplicar os conceitos aprendidos na nossa equação",
+		description : "Vamos começar pela primeira propriedade distributiva, que é 5(2 + x). Mesmo trabalhando com incógnitas, as regras não mudam",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "10",
+		next : "11",
+		title : "Primeira etapa",
+		description : "Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Neste caso temos 5 * 2",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "11",
+		next : "12",
+		title : "Segunda etapa",
+		description : "Multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão (no nosso exemplo é o sinal de mais). Assim, temos 5 * 2 + 5x",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "12",
+		next : "13",
+		title : "Agora faremos a mesma coisa na próxima propriedade distributiva",
+		description : "Não esqueça que, como estamos trabalhando com equações, precisamos reescrever o lado esquerdo para manter a igualdade",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("5 * 2 + 5x = 4(2x-3)", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "13",
+		next : "14",
+		title : "Vamos tentar resolver as duas etapas em único passo?",
+		description : "Relembrando as instruções: Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Em seguida, multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "14",
+		next : "15",
+		title : "Dessa maneira, temos: 4(2x - 3) = 4 * 2x - 4 * 3",
+		description : "Observe que a única diferença em relação à primeira expressão é que temos uma subtração. Nesse caso é só substituir o sinal de mais pelo sinal de menos",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("5 * 2 + 5x = 4 * 2x - 4 * 3", "step2", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "15",
+		next : "16",
+		title : "Agora resolvemos todas as multiplicações pendentes",
+		description : "Quando você estiver mais familiarizado com a propriedade distributiva, poderá inclusive calcular direto as duas multiplicações. Observe: 4(2x - 3) = 8x - 12",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("10 + 5x = 8x - 12", "step3", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "16",
+		next : "17",
+		title : "Agora nós temos uma equação já conhecida do plano de aula anterior",
+		description : "É uma equação de primeiro grau com vários termos",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "17",
+		next : "18",
+		title : "Passamos os termos em função de X para o lado esquerdo, e os demais números para o lado direito",
+		description : "Lembre-se da regra das operações inversas: Se temos uma adição de um lado, teremos uma subtração do outro. Se temos uma multiplicação de um lado, teremos uma divisão do outro",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("5x - 8x = -12 - 10", "step4", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line7").guider({
+		name: "18",
+		next : "19",
+		title : "Temos que 5x - 8x = - 3x e -12 - 10 = -22",
+		description : "Observe que os dois lados da equação são negativos. Você lembra daquela multiplicação por -1 que utilizamos várias vezes no segundo plano de aula? Podemos aplicar ela aqui também para facilitar o nosso cálculo",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("-3x = -22", "step5", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line8").guider({
+		name: "19",
+		next : "20",
+		title : "Multiplicando por - 1 os dois lados da equação, ambos se tornam positivos",
+		description : "Agora só falta passar o 3 para o lado direito dividindo o 22 para concluir a resolução",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("3x = 22", "step6", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line9").guider({
+		name: "20",
+		title : "Terminamos!",
+		description : "Observe que a fração-resultado já está em seu formato irredutível, portanto não precisamos simplificar. E não se preocupe se você esquecer alguma etapa da propriedade distributiva: Você pode pedir dicas a qualquer momento ou até mesmo conferir novamente este exercício resolvido",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation('<font color="blue">x = </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">3</font></div><div class="numerator"><font color="blue">22</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step7", 1);},
+		alignButtons : "right",
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
 }
