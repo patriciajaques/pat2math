@@ -724,3 +724,175 @@ function classPlan9() {
 		});
 		
 }
+
+
+//5x+8-2x=10+x
+function classPlan11() {
+	contWE = 1;
+	
+	setCookieDays ("currentWE", "23", 1); 
+
+		$.guider({
+			name: "1",
+			next : "2",
+			title : "Opa! Aqui temos mais uma novidade!",
+			description : "Vamos trabalhar pela primeira vez com expressões envolvendo mais de um termo de X.",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {window.scrollTo(0, 50);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		}).show();
+		
+		$.guider({
+			name: "2",
+			next : "3",
+			title : "Neste caso, podemos dizer que temos termos semelhantes que podem ser somados ou subtraídos",
+			description : "São eles: 5x, -2x e x",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$.guider({
+			name: "3",
+			next : "4",
+			title : "Vamos começar resolvendo a subtração no lado esquerdo",
+			description : "Quando temos uma diferença de termos semelhantes, conservamos a incógnita X e subtraímos seus coeficientes.",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line3").guider({
+			name: "4",
+			next : "5",
+			title : "Nesta equação, temos que 5x - 2x = (5 - 2)x = 3x",
+			description : "O próximo passo é tirar o +8 daqui.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x + 8 = 10 + x", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line4").guider({
+			name: "5",
+			next : "6",
+			title : "A operação inversa da adição é a subtração",
+			description : "Assim, passamos o +8 para o outro lado invertendo o seu sinal.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x = 10 + x <font color='red'>- 8</font>", "step2", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line5").guider({
+			name: "6",
+			next : "7",
+			title : "Agora podemos resolver a subtração que temos no lado direito",
+			description : "Ao mesmo tempo poderíamos passar o +x, mas vamos fazer um passo de cada vez.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x = 2 + x", "step3", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line6").guider({
+			name: "7",
+			next : "8",
+			title : "A operação inversa também vale para termos em função de X",
+			description : "Dessa forma, passamos o +x para o lado esquerdo invertendo o seu sinal.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("3x <font color='red'> - x</font> = 2", "step4", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line7").guider({
+			name: "8",
+			next : "9",
+			title : "Ao resolver a subtração 3x - x, obtemos 2x",
+			description : "Estamos quase terminando de resolver esta equação.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("2x = 2", "step5", 1);},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line8").guider({
+			name: "9",
+			next : "10",
+			title : "Utilizando a operação inversa, passamos o 2 para o outro lado dividindo o outro número 2",
+			description : "Lembre-se que devemos preservar o seu sinal positivo.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">2</font></div><div class="numerator">2</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step6", 1); document.getElementById("lineFrac1").style.color = "green";},
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});
+		
+		$("#line10").guider({
+			name: "10",
+			title : "Tudo pronto!",
+			description : "Simplificando esta fração, chegamos ao resultado 1 e concluímos o desenvolvimento da equação.",
+			position: "bottom",
+			width : 600,
+			alignButtons : "right",
+			onShow: function() {resolutionEquation("<font color='blue'>x = 1</font>", "step7", 2); exitWorkedExample();},
+			buttons : {
+				Finalizar: {
+					click : true,
+					className : "primary"
+				}
+			}
+		});	
+}

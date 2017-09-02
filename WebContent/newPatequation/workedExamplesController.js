@@ -13,7 +13,7 @@ function firstPlanAccess() {
         alignButtons: "center",
         onShow: function() {document.getElementById("jGuider_firstPlanAccess").style.top = "250px";},
     	buttons: {
-    		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan]); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+    		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
     		"Sim": true,
     		"Não tenho certeza": function() {imNotSure(numberCurrentPlan);}
     	}
@@ -26,7 +26,7 @@ function imNotSure(plan) {
     	title: "Deseja tentar resolver sozinho a primeira equação ou conferir um exercício resolvido?",
         alignButtons: "center",
     	buttons: {
-    		"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan]); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
+    		"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
     		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll();}
     	}
     	            
@@ -43,7 +43,7 @@ function firstErrorOrHint() {
         alignButtons: "center",
     	buttons: {
     		"Sim": { 			
-    			click: function() {loadExerciseWE(equationsWE[numberCurrentPlan]); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+    			click: function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
     			className: "primary"
     		},
     		"Não": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
@@ -71,7 +71,7 @@ function questionSpecialReward(plan) {
 function getSpecialReward(plan) {
 	workedExamplesReward();
 	saveWorkedExamplesReward();
-	loadExerciseWE(equationsWE[plan]);
+	loadExerciseWE(equationsWE[plan], 0);
 	var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);
 	
 	setTimeout(functionName, 100);

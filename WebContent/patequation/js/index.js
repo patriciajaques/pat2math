@@ -477,7 +477,7 @@ function rel() {
 	   $.ajax({  
 		     type : "Get",   
 		     url : "/pat2math/student/reload_task",
-		     async: false,
+//		     async: false,
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {

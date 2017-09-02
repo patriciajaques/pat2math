@@ -1,5 +1,6 @@
 var levelGamification = getCookie("levelGamification"); //Opções disponíveis: full, low, without
 var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
+var asyncAjax = getCookie("asyncAjax") !== "";
 var freeHints;
 var freeErrors;
 var numPlanosAula = 33;
@@ -171,6 +172,14 @@ $(document).ready(function() {
             } else if (key === 77) { //alt + m
             	$("#topics").fadeIn();
         	    $("#topicsAux").hide();
+            } else if (key === 83) { //alt + s
+            	if (getCookie("asyncAjax") === "")
+            		setCookieDays("asyncAjax", "true", 1);
+            	
+            	else
+            		setCookieDays("asyncAjax", "", 0);
+            	
+            	window.location.reload();
             } else if (key === 84) { //alt + t
             	if (getCookie("enableTour") === "")
             		setCookieDays("enableTour", "false", 1);
