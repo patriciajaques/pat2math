@@ -446,7 +446,8 @@ function verifyPlans() {
 		$.ajax({
 			type: "GET",
 			url: appContext + "student/showTopic",
-			data: {"idSet" : i}, 
+			data: {"idSet" : i},
+			async: false,
 			success:
 				function(data) {
 					$("#plansAux").html(data);
@@ -461,7 +462,7 @@ function verifyPlans() {
 				 function(XMLHttpRequest, textStatus, errorThrown) {
 			     	alert("Perdão, obtivemos um erro ao processar esta ação.");
 			 	}
-			});	
+		});	
 		
 	}
 }
@@ -475,10 +476,10 @@ function verifyPlans() {
 function rel() {
 	   $.ajax({  
 		     type : "Get",   
-		     url : "/pat2math/student/reload_task",     
+		     url : "/pat2math/student/reload_task",
+		     async: false,
 		     success : function(response) { 
 		    	 unlockedPlans = response;
-
 		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
 //		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
 		    		 	if (getCookie ("stepTour") === "") {
