@@ -1794,6 +1794,7 @@ function centralizeCanCopyUI() {
 //    $(selectedSheet + " .canCopy ul").css("padding-left", test);
 }
 function coolAlign() {
+	levelXNegativeHint = 0;
     $(selectedSheet + " .coolAlign").position({
         of: $(selectedSheet + " .canCopy"),
         my: "right center",
@@ -2049,9 +2050,32 @@ function showHint(hint) {
 		hint = hint.substring(0, hint.length-1);
 	}
 	
+	if (hint === "null" || hint.indexOf("Infelizmente") !== -1) {
+		var lastCorrectStep = selectedEquation.lastStep.step;
+		var split = lastCorrectStep.split("=");
+
+		//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
+		//Se ocorrer exceção, é que não é desse tipo 
+		try {
+			var constant = "" + parseInt(split[1]);
+			hint = xNegativeHint[levelXNegativeHint];
+			
+			if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
+				hint = hint.replace("[CONSTANT]", constant);
+					
+			if (levelXNegativeHint < 4)
+				levelXNegativeHint++;
+			
+		} catch (e) {
+			hint = "Infelizmente não há mais dicas disponíveis";
+		}
+		
+		
+	}
+	
 	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
 	//ser manipulada
-	if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
+	else if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
 		//Variável que salva o operador da propriedade distributiva (+ ou -)
 		var operator = "+";
 		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão
@@ -2150,9 +2174,33 @@ function showFeedbackError(hint) {
 		hint = hint.substring(0, hint.length-1);
 	}
 	
+	if (hint === "null" || hint.indexOf("Infelizmente") !== -1) {
+		var lastCorrectStep = selectedEquation.lastStep.step;
+		var split = lastCorrectStep.split("=");
+
+		//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
+		//Se ocorrer exceção, é que não é desse tipo 
+		try {
+			var constant = "" + parseInt(split[1]);
+			hint = xNegativeHint[levelXNegativeHint];
+			
+			if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
+				hint = hint.replace("[CONSTANT]", constant);
+					
+			if (levelXNegativeHint < 4)
+				levelXNegativeHint++;
+			
+		} catch (e) {
+			hint = "Infelizmente não há mais dicas disponíveis";
+		}
+		
+		
+	}
+	
+	
 	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
 	//ser manipulada
-	if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
+	else if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
 		//Variável que salva o operador da propriedade distributiva (+ ou -)
 		var operator = "+";
 		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão

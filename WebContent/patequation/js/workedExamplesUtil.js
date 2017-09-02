@@ -212,7 +212,7 @@ function showIncorrectMessage4() {
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
-				click : function(){continueClassPlan6();},
+				click : function(){continueClassPlan7();},
 				className : "primary"
 			}
 		}

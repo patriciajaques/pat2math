@@ -53,7 +53,7 @@ function checkGroup(id) {
 
 function redirectPage(url) {
 	setTimeout ("location.href= '" + url + "';", 2000); 
-	setTimeout ("document.getElementById('go').style.visibility = 'visible';", 5000);
+	//setTimeout ("document.getElementById('go').style.visibility = 'visible';", 5000);
 }
 
 verifyID();

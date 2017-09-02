@@ -67,11 +67,11 @@ colorsTextLevels[4] = "darkred"; //Vermelho escuro
 colorsTextLevels[5] = "#ababab"; //Cinza claro
 
 var colorsStagesPerLevel= new Array();
-colorsStagesPerLevel[1] = "#3acf3ab3"; //Verde com um pouco de transparência
-colorsStagesPerLevel[2] = "#76bddab3"; //Azul com um pouco de transparência
-colorsStagesPerLevel[3] = "#DA8E16CC"; //Laranja com um pouco de transparência
-colorsStagesPerLevel[4] = "#a50000b3"; //Vermelho Escuro com um pouco de transparência
-colorsStagesPerLevel[5] = "#292929cc"; //Preto com um pouco de transparência
+colorsStagesPerLevel[1] = "rgba(58, 207, 58, 0.7) none repeat scroll 0% 0%"; //Verde com um pouco de transparência
+colorsStagesPerLevel[2] = "rgba(118, 189, 218, 0.7) none repeat scroll 0% 0%"; //Azul com um pouco de transparência
+colorsStagesPerLevel[3] = "rgba(218, 142, 22, 0.8) none repeat scroll 0% 0%"; //Laranja com um pouco de transparência
+colorsStagesPerLevel[4] = "rgba(165, 0, 0, 0.7) none repeat scroll 0% 0%"; //Vermelho Escuro com um pouco de transparência
+//colorsStagesPerLevel[5] = "#292929cc"; //Preto com um pouco de transparência
 
 function getNameStage(number) {
 	if (number < stages.length -1) 

@@ -3,6 +3,7 @@
 <script src="/pat2math/patequation/js/object.js"></script>
 <script src="/pat2math/patequation/js/conversion.js"></script>
 <script src="/pat2math/newPatequation/server.js"></script>
+<script src="/pat2math/newPatequation/hints.js"></script>
 <script src="/pat2math/patequation/js/tour.js"></script>
 <script src="/pat2math/patequation/js/workedExamplesUtil.js"></script>
 <script src="/pat2math/newPatequation/workedExamples.js"></script>
