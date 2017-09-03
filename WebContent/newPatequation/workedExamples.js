@@ -202,6 +202,7 @@ function classPlan2() {
 }
 
 function classPlan3() {
+	contWE = 1;
 	$.guider({
 		name: "1",
 		next : "2",
@@ -315,6 +316,7 @@ function classPlan3() {
 } 
 
 function classPlan4() {
+	contWE = 1;
 	$.guider({
 		name: "1",
 		next : "2",
@@ -451,6 +453,7 @@ function classPlan6() {
 }
 
 function classPlan7() {
+	contWE = 1;
 	$.guider({
 		name: "1",
 		next : "2",
@@ -522,6 +525,7 @@ $("#line5").guider({
 }
 
 function classPlan8() {
+	contWE = 1;
 		$.guider({
 			name: "1",
 			next : "2",
@@ -624,6 +628,7 @@ function classPlan8() {
 
 //-3x+9=-27
 function classPlan9() {
+	contWE = 1;
 		$.guider({
 			name: "1",
 			next : "2",
@@ -728,6 +733,7 @@ function classPlan9() {
 
 //5x+8-2x=10+x
 function classPlan11() {
+	contWE = 1;
 		$.guider({
 			name: "1",
 			next : "2",
@@ -894,6 +900,7 @@ function classPlan11() {
 }
 
 function classPlan12() {
+	contWE = 1;
 	$.guider({
 		name: "1",
 		next : "2",
@@ -1202,6 +1209,158 @@ function classPlan12() {
 		width : 600,
 		onShow: function() {resolutionEquation('<font color="blue">x = </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">3</font></div><div class="numerator"><font color="blue">22</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step7", 1);},
 		alignButtons : "right",
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+}
+
+function classPlan13() {
+	contWE = 1;
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos resolver essa equação agora?",
+		description : "Observe que há uma igualdade de frações. Essa igualdade é chamada de razão e proporção",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "Como resolvemos uma razão e proporção?",
+		description : "Basicamente utilizaremos duas vezes a regra da operação inversa da divisão. Mas antes disso, vamos analizar melhor a nossa equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "3",
+		next : "4",
+		title : "Você percebeu que a fração do lado direito pode ser simplificada?",
+		description : "Podemos dividir por 100 o seu numerador e denominador, o que facilitará bastante para a próxima etapa",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">x</font></div><div class="numerator">10</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span> = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">-6</font></div><div class="numerator">5</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Agora observe os termos destacados em verde e azul",
+		description : "São os denominadores das duas frações, e a partir deles que aplicaremos a regra da operação inversa. Você deve ter notado que a incógnita X está em um denominador, mas veremos no próximo passo que isso não será um problema",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "5",
+		next : "6",
+		title : "Sabemos que a operação inversa da divisão é a multiplicação",
+		description : "Assim, podemos passar o primeiro denominador para o outro lado multiplicando o numerador da segunda fração, e vice-versa. Cuidado: O segundo denominador era negativo. Quando trabalhamos com multiplicação e divisão, o sinal é preservado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('10 <font color="blue">* (-6)</font> = 5 <font color="green">* x</font>', "step2", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line7").guider({
+		name: "6",
+		next : "7",
+		title : "Agora resolvemos as multiplicações: 10 * (-6) = -60 e 5 * x = 5x",
+		description : "Observe que a incógnita X está no lado direito da equação. Como é uma igualdade simples de dois termos, podemos trocá-los de lado sem modificar nenhuma operação ou sinal",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 2; resolutionEquation('-60 = 5x', "step3", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line8").guider({
+		name: "7",
+		next : "8",
+		title : "Estamos quase lá",
+		description : "Falta somente dividir -60 por 5, que é o coeficiente de X",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 2; resolutionEquation('5x = -60', "step4", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line10").guider({
+		name: "8",
+		next : "9",
+		title : "Observe que os números 60 e 5 são múltiplos entre si",
+		description : "Portanto, podemos simplficar esta fração e chegar em um número inteiro como resultado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 2; resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">5</div><div class="numerator">-60</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step5", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line11").guider({
+		name: "9",
+		title : "Terminamos!",
+		description : "Lembre-se sempre de três coisas quando for resolver razões e proporções:<br>1º) Verifique se é possível simplificar uma ou as duas frações para facilitar nos cálculos<br>2º) Você sempre passará os denominadores para os outros lados multiplicando os numeradores<br>3º) Os numeradores podem ser compostos por uma expressão de adição ou subtração, como por exemplo 2x + 3. Nesse caso, a multiplicação deverá ser realizada nos dois termos dessa expressão",
+		position: "bottom",
+		width : 670,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = -12</font>", "step6", 2);},
 		buttons : {
 			Finalizar: {
 				click : true,

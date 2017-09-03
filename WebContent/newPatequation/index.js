@@ -350,7 +350,6 @@ function startNewPatequation() {
 	document.getElementById("topics").style.background = "silver";
 	
 	getEquationsWE();
-	getResolutionsWE();
 	getPontuacaoEquacoes();
 	getFreeHintsAndErrors();
 	
@@ -2388,40 +2387,8 @@ function getEquationsWE() {
 	equationsWE[8] = "4x-10=8";
 	equationsWE[9] = "-3x+9=-27";
 	equationsWE[11] = "5x+8-2x=10+x";
-	equationsWE[12] = "5(2+x)=4(2x-3)"
-}
-
-function getResolutionsWE() {
-	resolutionsWE = new Array();
-	
-	resolutionsWE[1] = "x + 2 - 2 = 10 - 2;x + 0 = 10 - 2;x = 10 - 2;<font color='blue'> x = 8 </font>";
-	resolutionsWE[2] = "x = 10 - 4;<font color='blue'>x = 6</font>";
-	resolutionsWE[3] = "x = 8 + 4;<font color='blue'>x = 12</font>";
-	resolutionsWE[4] = "x = - 2 - 4;<font color='blue'>x = - 6</font>";
-	resolutionsWE[5] = "x = - 6 + 3;<font color='blue'>x = - 3</font>";
-	resolutionsWE[7] = "- x = 10 - 1;- x = 9;- x * (-1) = 9 * (-1);<font color='blue'>x = - 9</font>";
-	resolutionsWE[8] = "- x = 7 + 10;- x = 17;- x * (-1) = 17 * (-1);<font color='blue'>x = - 17</font>";
-	resolutionsWE[9] = "- x = - 8 - 4;- x = - 12;<font color='blue'>x = 12</font>";
-	resolutionsWE[10] = "- x = - 9 + 15;- x = 6;<font color='blue'>x = - 6</font>";
-	resolutionsWE[12] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">2</div><div class="numerator">10</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = 5</font>';
-	resolutionsWE[13] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">5</div><div class="numerator">- 30</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = - 6</font>';
-	resolutionsWE[14] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">- 3</div><div class="numerator">15</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = - 5</font>';
-	resolutionsWE[15] = 'x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">- 4</div><div class="numerator">- 28</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>;<font color="blue">x = 7</font>'
-	resolutionsWE[17] = "x = 20 * 4;x = 80";
-	resolutionsWE[18] = "x = - 49 * 7;x = - 343";
-	
-	//Sorteia uma das formas de resolução das equações dos planos 19 e 20
-	var selectSteps = Math.floor((Math.random() * 2) + 1);
-	
-	if (selectSteps === 1) {
-		resolutionsWE[19] = "- x = 42 * 6;- x = 252;- x * (-1) = 252 * (-1);x = <font color='blue'>x = - 252</font>";
-		resolutionsWE[20] = "- x = - 100 * 4;- x = - 400;- x * (-1) = - 400 * (-1);x = <font color='blue'>x = 400</font>";
-	}
-	
-	else {
-		resolutionsWE[19] = "x = 42 * (-6);<font color='blue'>x = - 252</font>";
-		resolutionsWE[20] = "x = - 100 * (-4);<font color='blue'>x = 400</font>";
-	}
+	equationsWE[12] = "5(2+x)=4(2x-3)";
+	equationsWE[13] = "(10)/(x)=(500)/(-600)";
 }
 
 //function getColorsBackground() {
