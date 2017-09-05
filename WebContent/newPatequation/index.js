@@ -59,10 +59,25 @@ var colorsBackground;
 var isIntroductionToEquationPlan = false; 
 
 $(document).ready(function() {	    	
+//	$("#papers").on("click", "#refresh_page", function() {
+//		$.guider({
+//			title : "Resultados de uma pesquisa estatística",
+//			description : "Uma pesquisa envolvendo uma amostra de 9 alunos do curso de Sistemas de Informação foi realizada nesses dias e hoje já temos o resultado. Ainda estamos organizando o dia para o comunicado oficial, mas para não correr o risco de eu não conseguir participar no horário combinado decidi adiantar para hoje: <br><br>Patrícia Augustin Jaques Maillard, em nome dos formandos de Sistemas de Informação de 2017/2, comunico que você foi a escolhida para ser a nossa professora homenageada :D",
+//			overlay : "dark",
+//			width : 600,
+//			alignButtons : "center",
+//			buttons : {
+//				"Aceitar o convite :D": {
+//					click : function(){$.guider({	}).hideAll();},
+//					className : "primary",
+//				}
+//			}
+//		}).show();
+//	});
+	
 	$("#papers").on("click", "#refresh_page", function() {
 		window.location.reload();
 	});
-	
 	
 
 		
@@ -292,30 +307,6 @@ $(document).ready(function() {
     	if (blockMenu === false && openAndBlockMenu !== "true") {
     	    $("#topics").fadeIn();
     	    $("#topicsAux").hide();
-    	}
-    });
-    
-    $("#hint").mouseover (function() {
-    	if (levelGamification !== undefined && levelGamification === "full") {
-    		
-    		if (idEquation !== undefined) {
-    			var contentHint = document.getElementById("hintText").innerHTML;
-    			
-    			if (contentHint === "") {
-    				var hintsAvailable = freeHints[planoAtual-1001];
-    				
-    				if (hintsAvailable > 0) {
-    					var text = "Você possui " + hintsAvailable;
-    					
-    					if (hintsAvailable > 1)
-    						text += " dicas gratuítas disponíveis";
-    					
-    					else
-    						text += " dica gratuíta disponível";
-    					showHint(text);
-    				}
-    			}
-    		}
     	}
     });
     
@@ -2202,6 +2193,36 @@ function showHint(hint) {
     $("#hintText").show('blind', 500);
 }
 
+function verifyFreeHints() {
+	var hintsAvailable = freeHints[planoAtual-1001];
+	
+	if (hintsAvailable > 0) {
+		var text = " dicas gratuitas disponíveis";
+		
+		if (hintsAvailable === 1)
+			text = " dica gratuíta disponível";
+		
+		document.getElementById("freeHints").innerHTML = hintsAvailable + text;
+	}
+	
+	else {
+		document.getElementById("freeHints").innerHTML = "";
+	}
+}
+
+function verifiyFreeErrors() {
+	var freeErrorsAvailable = freeErrors[planoAtual-1001];
+	
+	if (freeErrors > 0) {
+		document.getElementById("logo").style.marginLeft = "153px";
+		document.getElementById("freeErrors").style.display = "block";
+		document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrorsAvailable;
+	}
+	
+	else {
+		document.getElementById("freeErrors").style.display = "none";
+	}
+}
 function showFeedbackError(hint) {
 	//Caso a dica contenha um ponto final e seja a que mostra ao aluno o próximo passo completo, este ponto é removido para facilitar a cópia do passo.
 	if (hint.indexOf("próximo passo") && hint.charAt(hint.length-1) === ".") {

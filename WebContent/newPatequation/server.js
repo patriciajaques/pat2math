@@ -120,7 +120,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 if (levelGamification !== "without") {
                 	var lostPoints = -2;
                 	
-                	if (levelGamification === "full") {
+                	if (levelGamification === "full") {      			
                 		if (freeHints[planoAtual-1001] > 0) {
                 			freeHints[planoAtual-1001]--;
                 			lostPoints = 0;
@@ -128,9 +128,9 @@ function requestServer (type, last, next, typeOperation, element) {
                 			var contentCookie = freeHints[planoAtual-1001] + "," + (planoAtual-1001);
 		        			
                 			setCookieDays("freeHints", contentCookie, 1);
-                			//document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
-                		}
-                		
+                			
+                			verifyFreeHints();
+                	}
                 	}
                 	
                 	$("#newPoints").css("left", (x + 80) + "px");
@@ -516,8 +516,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     			var contentCookie = freeErrors[planoAtual-1001] + "," + (planoAtual-1001);
                     			        			
                     			setCookieDays("freeErrors", contentCookie, 1);
-                    			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
-                    		}
+                    			verifyFreeErrors();                    		}
                     	}
              
                     	

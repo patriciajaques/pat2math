@@ -63,7 +63,8 @@
             </div>
         </div>
 
-        <button id="hint" class="btn">D i c a</button>    
+        <button id="hint" class="btn">D i c a</button>
+        <div id="freeHints" style="width: 212px; margin-left: -20px; margin-top: 2px;"></div>    
     </div>
      <div id='hintBox'><div id='hintText'></div></div>
     
@@ -71,7 +72,7 @@
    		<div id="paper-1"  style="display: inline-block;"> 		    
    			<div id="refresh_page" title="Atualizar a página"></div>
    			<div id="logo" title="PAT2Math =D"></div>
-   			<div class="limitsHintsAndErrors" id="freeHints"></div>
+   			<div class="limitsHintsAndErrors" id="freeHintsOld"></div>
    			<div class="limitsHintsAndErrors" id="freeErrors"></div>
 
 					<div style="display: none;" id="date">

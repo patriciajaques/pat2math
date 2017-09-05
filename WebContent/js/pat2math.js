@@ -145,11 +145,8 @@ function loadTasks(id) {
 		getPontuacaoPlano();
 		
 		if (levelGamification === "full") {
-			document.getElementById("logo").style.marginLeft = "153px";
-			document.getElementById("freeErrors").style.display = "block";
-			document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrors[planoAtual-1001];
-//			document.getElementById("freeHints").style.display = "block";
-//			document.getElementById("freeHints").innerHTML = "Dicas gratuitas disponíveis: " + freeHints[planoAtual-1001];
+			verifyFreeErrors();
+			verifyFreeHints();
 		}
 	
 		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
