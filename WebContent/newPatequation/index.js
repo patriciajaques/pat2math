@@ -495,8 +495,8 @@ function completePlan() {
 }
 
 function getFreeHintsAndErrors() {
-	freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8];
-	freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3];
+	freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8, 14, 10, 15, 15, 20, 20, 24, 28, 34, 42];
+	freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3, 5, 4, 5, 5, 10, 7, 10, 14, 17, 42];
 	
 	var cookieHints = getCookie("freeHints");
 	
