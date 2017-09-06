@@ -1,7 +1,45 @@
 var tryResolveByMyself = false; //Fluxo alternativo dos exemplos trabalhados, quando o usuário seleciona que não tem certeza e quer tentar resolver sozinho
 var alreadyReceivedSpecialReward = false; // Aqui deverá ser a verificação se o aluno já ganhou uma vez essa recompensa especial, se sim ele não pode ganhar novamente
 
+
+function addWorkedExampleInEquationsMenu() {
+	var idTasks = "tasks" + planoAtual;
+	var numWorkedExample = planoAtual - 1000;
+	
+	var html = '<span class="taskWE" onclick="accessWorkedExample(' + numWorkedExample + ');" id="taskWE"' + planoAtual + '>Exercício resolvido</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>';
+	document.getElementById(idTasks).innerHTML = html + document.getElementById(idTasks).innerHTML;
+}
+
+function accessWorkedExample(number) {
+	var functionName = "classPlan" + number + "();";
+	
+	if (levelGamification === "full") {
+		$.guider({
+			title: "Você deseja conferir um exercício resolvido compatível com o plano atual?",
+			description: "A visualização custará apenas 8 pontos (lembre-se que você tem direito à uma exibição gratuíta no início de cada plano de aula)",
+	        alignButtons: "center",
+	    	buttons: {
+	    		"Sim": {
+	    			click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number]); setTimeout(functionName, 100);},
+	    			className: "primary"
+	    		},
+	    		
+	    		"Não": function() {$.guider({}).hideAll();}
+	    	}
+	    	            
+	    	}).show();
+	}
+	
+	else {
+		loadExerciseWE(equationsWE[number]); 
+		setTimeout(functionName, 100);
+	}
+}
+
 function firstPlanAccess() {
+	$("#topics").fadeOut();
+    $("#topicsAux").show();
+    
 	var idFirstEquation = planoAtual * 100;
 	var numberCurrentPlan = planoAtual - 1000;
 	
@@ -14,7 +52,7 @@ function firstPlanAccess() {
         onShow: function() {document.getElementById("jGuider_firstPlanAccess").style.top = "250px";},
     	buttons: {
     		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
-    		"Sim": true,
+    		"Sim": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide();},
     		"Não tenho certeza": function() {imNotSure(numberCurrentPlan);}
     	}
     	            
@@ -27,11 +65,13 @@ function imNotSure(plan) {
         alignButtons: "center",
     	buttons: {
     		"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
-    		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll();}
+    		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide();}
     	}
     	            
     	}).show();
 }
+
+
 
 function firstErrorOrHint() {
 	tryResolveByMyself = false;

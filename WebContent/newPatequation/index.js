@@ -2210,7 +2210,7 @@ function verifyFreeHints() {
 	}
 }
 
-function verifiyFreeErrors() {
+function verifyFreeErrors() {
 	var freeErrorsAvailable = freeErrors[planoAtual-1001];
 	
 	if (freeErrors > 0) {
