@@ -397,10 +397,7 @@ function getPontuacaoPlano() {
 		else if (planoAtual === 1004)
 			pontuacaoPlano = 35;
 		
-		else if (planoAtual === 1005)
-			pontuacaoPlano = 40;
-		
-		else if (planoAtual === 1006)
+		else if (planoAtual === 1005 || planoAtual === 1006)
 			pontuacaoPlano = 40;
 		
 		else if (planoAtual === 1007)
@@ -409,8 +406,26 @@ function getPontuacaoPlano() {
 		else if (planoAtual === 1008)
 			pontuacaoPlano = 50;
 		
-		else if (planoAtual === 1009)
+		else if (planoAtual === 1009 || planoAtual === 1010)
 			pontuacaoPlano = 60;
+		
+		else if (planoAtual === 1011)
+			pontuacaoPlano = 80;
+		
+		else if (planoAtual === 1012 || planoAtual === 1013 || planoAtual === 1014)
+			pontuacaoPlano = 100;
+		
+		else if (planoAtual === 1015)
+			pontuacaoPlano = 130;
+		
+		else if (planoAtual === 1016)
+			pontuacaoPlano = 170;
+		
+		else if (planoAtual === 1017 || planoAtual === 1018)
+			pontuacaoPlano = 200;
+		
+		else
+			pontuacaoPlano = 42;
 	}
 	
 	else {
