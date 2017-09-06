@@ -20,7 +20,7 @@ function accessWorkedExample(number) {
 	        alignButtons: "center",
 	    	buttons: {
 	    		"Sim": {
-	    			click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number]); setTimeout(functionName, 100);},
+	    			click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number], 0); setTimeout(functionName, 100);},
 	    			className: "primary"
 	    		},
 	    		
