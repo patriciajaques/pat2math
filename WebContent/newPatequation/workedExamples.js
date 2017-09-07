@@ -1207,7 +1207,7 @@ function classPlan12() {
 		description : "Observe que a fração-resultado já está em seu formato irredutível, portanto não precisamos simplificar. E não se preocupe se você esquecer alguma etapa da propriedade distributiva: Você pode pedir dicas a qualquer momento ou até mesmo conferir novamente este exercício resolvido",
 		position: "bottom",
 		width : 600,
-		onShow: function() {resolutionEquation('<font color="blue">x = </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">3</font></div><div class="numerator"><font color="blue">22</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step7", 1);},
+		onShow: function() {resolutionEquation('<font color="blue">x = </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">3</font></div><div class="numerator"><font color="blue">22</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step7", 1); exitWorkedExample();},
 		alignButtons : "right",
 		buttons : {
 			Finalizar: {
@@ -1360,7 +1360,7 @@ function classPlan13() {
 		position: "bottom",
 		width : 670,
 		alignButtons : "right",
-		onShow: function() {resolutionEquation("<font color='blue'>x = -12</font>", "step6", 2);},
+		onShow: function() {resolutionEquation("<font color='blue'>x = -12</font>", "step6", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
 				click : true,

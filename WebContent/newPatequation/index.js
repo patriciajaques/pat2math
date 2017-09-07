@@ -2213,7 +2213,7 @@ function verifyFreeHints() {
 function verifyFreeErrors() {
 	var freeErrorsAvailable = freeErrors[planoAtual-1001];
 	
-	if (freeErrors > 0) {
+	if (freeErrorsAvailable > 0) {
 		document.getElementById("logo").style.marginLeft = "153px";
 		document.getElementById("freeErrors").style.display = "block";
 		document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrorsAvailable;
@@ -2229,24 +2229,25 @@ function showFeedbackError(hint) {
 		hint = hint.substring(0, hint.length-1);
 	}
 	
+	//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
 	if (hint === "null" || hint.indexOf("Infelizmente") !== -1) {
 		var lastCorrectStep = selectedEquation.lastStep.step;
 		var split = lastCorrectStep.split("=");
-
-		//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
-		//Se ocorrer exceção, é que não é desse tipo 
-		try {
-			var constant = "" + parseInt(split[1]);
-			hint = xNegativeHint[levelXNegativeHint];
+		
+		if (split[0].toLowerCase() === "-x") {	
+			try {
+				var constant = "" + parseInt(split[1]);
+				hint = xNegativeHint[levelXNegativeHint];
 			
-			if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
-				hint = hint.replace("[CONSTANT]", constant);
+				if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
+					hint = hint.replace("[CONSTANT]", constant);
 					
-			if (levelXNegativeHint < 4)
-				levelXNegativeHint++;
-			
-		} catch (e) {
-			hint = "Infelizmente não há mais dicas disponíveis";
+				if (levelXNegativeHint < 4)
+					levelXNegativeHint++;			
+			//Se ocorrer exceção, confirma que não é desse tipo
+			} catch (e) {
+				hint = "Infelizmente não há mais dicas disponíveis";
+			}
 		}
 		
 		
