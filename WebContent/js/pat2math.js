@@ -272,9 +272,11 @@ function loadTasks(id) {
 					}
 					
 					//Os planos 5, 10, 14, 18 e 19 são os de revisão que não possuem exemplos trabalhados
-					if (levelGamification !== undefined && taskSolved === 0 && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018) {
-						firstPlanAccess();
+					if (levelGamification !== undefined && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018) {
 						addWorkedExampleInEquationsMenu();
+						
+						if (taskSolved === 0)
+							firstPlanAccess();
 					}
 					
 					
