@@ -192,16 +192,16 @@ public class ResolverController {
 	}
 	
 	
-	@RequestMapping(value="/saveQuestion")
-	public String get(String answer1, String answer2, String answer3, HttpSession session, Model model, String echo, String callback) 
-			throws InvalidValueException, UnsupportedEncodingException {
-		Student student = new CurrentUser(session).student();
-		student.setQuestion1 (answer1);
-		student.setQuestion2 (answer2);
-		student.setQuestion3 (answer3);
-		allStudentsRepository.alter (student);
-		return "ok";
-	}
+//	@RequestMapping(value="/saveQuestion")
+//	public String get(String answer1, String answer2, String answer3, HttpSession session, Model model, String echo, String callback) 
+//			throws InvalidValueException, UnsupportedEncodingException {
+//		Student student = new CurrentUser(session).student();
+//		student.setQuestion1 (answer1);
+//		student.setQuestion2 (answer2);
+//		student.setQuestion3 (answer3);
+//		allStudentsRepository.alter (student);
+//		return "ok";
+//	}
 	
 	@RequestMapping("/resolverAPI")
 	public String get2(Long id, HttpSession session, Model model, String echo, String callback) 
