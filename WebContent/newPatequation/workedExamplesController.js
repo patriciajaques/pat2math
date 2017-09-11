@@ -6,7 +6,7 @@ function addWorkedExampleInEquationsMenu() {
 	var idTasks = "tasks" + planoAtual;
 	var numWorkedExample = planoAtual - 1000;
 	
-	var html = '<span class="taskWE" onclick="accessWorkedExample(' + numWorkedExample + ');" id="taskWE"' + planoAtual + '>Exercício resolvido</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>';
+	var html = '<span class="taskWE" onclick="accessWorkedExample(' + numWorkedExample + ');" id="taskWE"' + planoAtual + '>' + equationsWE[numWorkedExample] + '</span><i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>';
 	document.getElementById(idTasks).innerHTML = html + document.getElementById(idTasks).innerHTML;
 }
 
@@ -15,7 +15,7 @@ function accessWorkedExample(number) {
 	
 	if (levelGamification === "full") {
 		$.guider({
-			title: "Você deseja conferir um exercício resolvido compatível com o plano atual?",
+			title: "Você deseja conferir este exercício resolvido?",
 			description: "A visualização custará apenas 8 pontos (lembre-se que você tem direito à uma exibição gratuíta no início de cada plano de aula)",
 	        alignButtons: "center",
 	    	buttons: {
@@ -37,6 +37,7 @@ function accessWorkedExample(number) {
 }
 
 function firstPlanAccess() {
+	if (isTourInterativo === false) {
 	$("#topics").fadeOut();
     $("#topicsAux").show();
     
@@ -57,6 +58,7 @@ function firstPlanAccess() {
     	}
     	            
     	}).show();
+	}
 }
 
 function imNotSure(plan) {
@@ -79,7 +81,7 @@ function firstErrorOrHint() {
 	
 	$.guider({
     	title: "Você gostaria de conferir um exercício resolvido antes de continuar?",
-		description: "Recomendamos que sim para facilitar na resolução de suas suas dúvidas",
+		description: "Recomendamos que sim para facilitar na resolução de suas dúvidas",
         alignButtons: "center",
     	buttons: {
     		"Sim": { 			

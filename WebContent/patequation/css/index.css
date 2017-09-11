@@ -71,14 +71,15 @@
 /*     position: fixed; */
 /* } */
 
-/* #tour{ */
-/*     background: url("/pat2math/patequation/img/tour.png") no-repeat scroll center center transparent; */
-/*     width: 70px; */
-/*     height: 70px; */
-/*     margin-left: 933px; */
-/*     margin-top: 3px; */
-/*     cursor: pointer; */
-/* } */
+#tour{
+    background: url("/pat2math/patequation/img/tour.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    margin-top: -322px;
+    position: fixed;
+    cursor: pointer;
+}
 
 #reportBug {
     background: url("/pat2math/patequation/img/reportar_bug.png") no-repeat scroll center center transparent;
@@ -319,16 +320,17 @@
     box-shadow: 3px 3px 6px #222222;
     color: #000;
     height: auto;
-    max-height: 200px;
+    width: 300px;
+    max-height: 100px;
+    max-width: 300px;
     padding: 1em 1.5em;
     position: fixed;
-    width: 187px;
     overflow: auto;
     display: none;
     visibility: visible;
     font-size: 13px;
-    margin-top: 42px;
-    margin-left: 220px;
+    top: 0px;
+    margin-left: 158px;
 }
 
 #tourAux {

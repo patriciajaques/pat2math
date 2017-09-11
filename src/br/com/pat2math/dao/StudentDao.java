@@ -22,5 +22,19 @@ public class StudentDao extends GenericDao<Student> implements AllStudents {
 		}
 	
 	}
+	
+//	@Override
+//	public Student[] withIdInterval(Long firstID, Long lastID) {
+//		
+//		String jpql = "from Student s left join fetch " +
+//				"s.knowledges where s.id = :id";
+//		try {
+//			return (Student[]) em.createQuery(jpql)
+//				.setParameter("id", id).getResultList();
+//		} catch(NoResultException nre) {
+//			return null;
+//		}
+//	
+//	}
 
 }

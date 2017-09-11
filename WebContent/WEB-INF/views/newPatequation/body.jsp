@@ -70,7 +70,7 @@
     
      <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;"> 		    
-   			<div id="refresh_page" title="Atualizar a página"></div>
+   			<div id="refresh_page" title="Atualizar a página" onclick="window.location.reload();"></div>
    			<div id="logo" title="PAT2Math =D"></div>
    			<div class="limitsHintsAndErrors" id="freeHintsOld"></div>
    			<div class="limitsHintsAndErrors" id="freeErrors"></div>
@@ -115,7 +115,7 @@
 	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
-<!--     <div id="tour" title="Tour Interativo" onclick="clickTour()"></div> -->
+    <div id="tour" title="Tour Interativo" onclick="tourTCC()"></div>
     <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>

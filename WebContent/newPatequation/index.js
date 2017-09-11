@@ -59,32 +59,33 @@ var colorsBackground;
 var isIntroductionToEquationPlan = false; 
 
 $(document).ready(function() {	    	
+	//Primeira versão
 //	$("#papers").on("click", "#refresh_page", function() {
-//		$.guider({
-//			title : "Resultados de uma pesquisa estatística",
-//			description : "Uma pesquisa envolvendo uma amostra de 9 alunos do curso de Sistemas de Informação foi realizada nesses dias e hoje já temos o resultado. Ainda estamos organizando o dia para o comunicado oficial, mas para não correr o risco de eu não conseguir participar no horário combinado decidi adiantar para hoje: <br><br>Patrícia Augustin Jaques Maillard, em nome dos formandos de Sistemas de Informação de 2017/2, comunico que você foi a escolhida para ser a nossa professora homenageada :D",
-//			overlay : "dark",
-//			width : 600,
-//			alignButtons : "center",
-//			buttons : {
-//				"Aceitar o convite :D": {
-//					click : function(){$.guider({	}).hideAll();},
-//					className : "primary",
-//				}
+//	$.guider({
+//		title : "Resultados de uma pesquisa estatística",
+//		description : "Uma pesquisa envolvendo uma amostra de 9 alunos do curso de Sistemas de Informação foi realizada nesses dias e hoje já temos o resultado. Ainda estamos organizando o dia para o comunicado oficial, mas para não correr o risco de eu não conseguir participar no horário combinado decidi adiantar para hoje: <br><br>Patrícia Augustin Jaques Maillard, em nome dos formandos de Sistemas de Informação de 2017/2, comunico que você foi a escolhida para ser a nossa professora homenageada :D",
+//		overlay : "dark",
+//		width : 600,
+//		alignButtons : "center",
+//		buttons : {
+//			"Aceitar o convite :D": {
+//				click : function(){$.guider({	}).hideAll();},
+//				className : "primary",
 //			}
-//		}).show();
-//	});
+//		}
+//	}).show();
+//});
 	
-	$("#papers").on("click", "#refresh_page", function() {
-		window.location.reload();
-	});
+	
 	
 
 		
 //		getColorsBackground();
 		
 	
-	$("#refresh_page").tooltip();
+	if (getCookie("gift") === "")
+		$("#refresh_page").tooltip();
+	
 	$("#calculator").tooltip();
 	$("#calculatorIcon").tooltip();
 	//if(!useAudio)showSideBar();
@@ -170,7 +171,10 @@ $(document).ready(function() {
                 $("#abc").click();
             } else if (key === 68) { //alt + d
                 $("#delta").click();
-            } else if (key === 73) { //alt + i
+            } else if (key === 71) { //alt + g	
+                gift();
+            } 
+            else if (key === 73) { //alt + i
             	if (getCookie("enableIntroductionPlans") === "") {
             		setCookieDays("enableIntroductionPlans", "false", 1);
             		setCookieDays("unlockAllPlans", "true", 1);
@@ -334,6 +338,301 @@ $(document).ready(function() {
 	startNewPatequation();
 });
 
+//Concluir a implementação desta função, e lembrar de colocar if e else que adaptam os textos para os três grupos diferentes
+//Relembrar todos os novos recursos: dicas otimizadas, opção de conferir um exercício resolvido logo que começa um plano, se clicar
+//no botão "não" da mensagem ou "não tenho certeza", dicas e erros gratuitos (indicar com os balões do tour os locais deles)
+//e salvamento da pontuação no sistema (indicar o local no menu, estes dois itens são somente para o grupo 100% gamificado)
+//Ver alguma propriedade para alterar do menu para que os balões do tour apareçam sobre ele, e não atrás dele
+//Colocar um cookie controlador para o Tour não ser exibido a cada vez que atualizar a página
+//OBS: para fazer o if/else, é só colocar nomes específicos nos campos "name" e "next"
+function tourTCC() {
+	isTourInterativo = true;
+	var next = "gamification1";
+	
+	if (levelGamification === "low")
+		next = "lowGamification1";
+	
+	else if (levelGamification === "without")
+		next = "withoutGamification1";
+			
+	$.guider({
+		name: "start",
+		next: next,
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo de volta! </center>",
+		description : "<center>Fizemos uma série de atualizações e correções desde a sua última visita :D <br>Confira um breve tour antes de continuar.</center>",
+		overlay : "dark",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary",
+			}
+		}
+	}).show();
+	
+	$("#levelScore").guider({
+		name: "gamification1",
+		next: "gamification2",
+		position: "right",
+		title: "Pontuação total e por nível",
+		description: "Aqui você tem acesso à sua pontuação total (considerando o progresso em todas as equações já resolvidas) e a do nível atual (neste exemplo, o nível selecionado é o Básico). Além disso, agora as suas pontuações são salvas no sistema",    
+		alignButtons: "right",
+		onShow: function() {generateStages(1);},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#hint").guider({
+		name: "gamification2",
+		next: "gamification3",
+		title: "Dicas",
+		position: "left",
+		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "gamification3",
+		next: "gamification4",
+		title: "As dicas estão organizadas em níveis",
+		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas. Utilize-as com responsabilidade, uma vez que a cada solicitação você perde 2 pontos. Por outro lado, não deixe de utilizá-las quando você estiver com dificuldades, o seu aprendizado é o fator mais importante",    
+		alignButtons: "right",
+		onShow: function() {loadTasks(1001);},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#freeHints").guider({
+		name: "gamification4",
+		next: "gamification5",
+		title: "Dicas gratuitas",
+		position: "left",
+		description: "Você possui dicas que podem ser solicitadas gratuitamente, isto é, sem a perda de pontos. Você pode verificar a quantidade de dicas gratuítas disponíveis neste painel",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#freeErrors").guider({
+		name: "gamification5",
+		next: "gamification6",
+		title: "Erros gratuitos",
+		position: "bottom",
+		description: "Assim como você pode pedir dicas gratuitas, você também pode errar e não perder pontos por isso. A quantidade de erros gratuitos pode ser visualizada aqui no cabeçalho do caderno",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "gamification6",
+		next: "gamification7",
+		title: "As quantidades disponíveis de dicas e erros gratuitos variam de acordo com a complexidade da fase atual",
+		description: "Assim, quanto mais avançada for a fase e/ou mais equações ela tiver, mais dicas e erros gratuitos você receberá",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "gamification7",
+		next: "gamification8",
+		title: "Exercícios resolvidos",
+		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar a cada fase desbloqueada. A cada nova fase que você desbloquear, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "gamification8",
+		next: "gamification9",
+		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
+		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "gamification9",
+		next: "finish",
+		title: "Eu posso conferir um exercício resolvido sem perder pontos?",
+		description: "Claro! Você tem direito a uma visualização gratuita por fase, a partir daquela mesma mensagem inicial que comentamos agora pouco. Mas não se preocupe: as visualizações adicionais custam apenas 8 pontos.",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#hint").guider({
+		name: "lowGamification1",
+		next: "lowGamification2",
+		title: "Dicas",
+		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
+		alignButtons: "right",
+		position: "left",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "lowGamification2",
+		next: "lowGamification3",
+		title: "As dicas estão organizadas em níveis",
+		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas. Utilize-as com responsabilidade, uma vez que a cada solicitação você perde 2 pontos. Por outro lado, não deixe de utilizá-las quando você estiver com dificuldades, o seu aprendizado é o fator mais importante.",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "lowGamification3",
+		next: "lowGamification4",
+		title: "Exercícios resolvidos",
+		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar a cada fase desbloqueada. A cada nova fase que você desbloquear, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "lowGamification4",
+		next: "finish",
+		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
+		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#hint").guider({
+		name: "withoutGamification1",
+		next: "withoutGamification2",
+		title: "Dicas",
+		position: "left",
+		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "withoutGamification2",
+		next: "withoutGamification3",
+		title: "As dicas estão organizadas em níveis",
+		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+
+	$.guider({
+		name: "withoutGamification3",
+		next: "withoutGamification4",
+		title: "Exercícios resolvidos",
+		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar em cada plano de aula. Quando você abrir um plano pela primeira vez, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
+		alignButtons: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "withoutGamification4",
+		next: "finish",
+		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
+		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
+		alignButtons: "right",
+		position: "right",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#tour").guider({
+		name: "finish",
+		title: "Terminamos!",
+		description: "Se você desejar, poderá acessar o tour novamente clicando neste botão",    
+		alignButtons: "right",
+		position: "left",
+		onShow: function() {completeTour();},
+		buttons: {
+			Finalizar: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+}
 function startNewPatequation() {
 	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
 	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
@@ -386,22 +685,68 @@ function startNewPatequation() {
 	
 	if (cookiePlan !== "") {
 		var idPlan = parseInt(cookiePlan);
+		loadTasks(idPlan);
 		
 		var cookieEquation = getCookie("currentEquation");
 		
-		if (cookieEquation !== "") {
+		if (cookieEquation !== "") {		
 			var idEquation = parseInt(cookieEquation);
+			loadExercise(idEquation);	
 		}
 		
-		loadTasks(idPlan);
-		loadExercise(idEquation);		
 
 		$("#topics").fadeIn();
 	    $("#topicsAux").hide();
 	}
 	
-	
+	verifyTour();
+}
 
+function verifyTour() {
+	if (getCookie("tourViewed") === "") {
+		$.ajax({
+			type : "GET",
+			url : "newPatequation/tour",
+			data : {
+
+			},
+			success : function(data) {
+				if (data === "false") {			
+					tourTCC();
+				}
+				
+				else {
+					setCookieDays("tourViewed", "true", 1);
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log("Ocorreu um erro inesperado");
+			}
+		});
+	}
+}
+
+function completeTour() {
+	isTourInterativo = false;
+	
+	if (levelGamification === "full")
+		generateStages(1);
+	
+	setCookieDays("tourViewed", "true", 1);
+	
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/setTour",
+		data : {
+
+		},
+		success : function(data) {	
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
 }
 
 function verifyWorkedExamplesReward() {
@@ -2224,113 +2569,42 @@ function verifyFreeErrors() {
 	}
 }
 function showFeedbackError(hint) {
+	if (hint.indexOf("Infelizmente") !== -1) {
+		//Se não encontrou um feedback de erro, deverá exibir uma dica normal
+		var equation;
+    	
+    	if (selectedEquation.lastStep !== null)
+    		equation = selectedEquation.lastStep.step;
+    	
+    	else
+    		equation = selectedEquation.equation;
+    	
+		requestServer('d', equation, "", "", "feedbackError");
+	}
+	
+	else {
+		//Caso a dica contenha um ponto final e seja a que mostra ao aluno o próximo passo completo, este ponto é removido para facilitar a cópia do passo.
+		if (hint.indexOf("próximo passo") && hint.charAt(hint.length-1) === ".") {
+			hint = hint.substring(0, hint.length-1);
+		}
+		
+		var lastHint = $("#feedbackError").html();
+    
+		if (lastHint !== "") {	
+			lastHint = "<br><br>" + lastHint;
+		}
+    
+		$("#feedbackError").hide('blind', 200);
+		$("#feedbackError").html(hint + lastHint);
+		$("#feedbackError").show('blind', 500);
+	}
+}
+
+//Função chamada pelo servidor quando não há mais feedbacks de erro disponíveis, aí mostra uma dica
+function showFeedbackError2(hint) {
 	//Caso a dica contenha um ponto final e seja a que mostra ao aluno o próximo passo completo, este ponto é removido para facilitar a cópia do passo.
 	if (hint.indexOf("próximo passo") && hint.charAt(hint.length-1) === ".") {
 		hint = hint.substring(0, hint.length-1);
-	}
-	
-	//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
-	if (hint === "null" || hint.indexOf("Infelizmente") !== -1) {
-		var lastCorrectStep = selectedEquation.lastStep.step;
-		var split = lastCorrectStep.split("=");
-		
-		if (split[0].toLowerCase() === "-x") {	
-			try {
-				var constant = "" + parseInt(split[1]);
-				hint = xNegativeHint[levelXNegativeHint];
-			
-				if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
-					hint = hint.replace("[CONSTANT]", constant);
-					
-				if (levelXNegativeHint < 4)
-					levelXNegativeHint++;			
-			//Se ocorrer exceção, confirma que não é desse tipo
-			} catch (e) {
-				hint = "Infelizmente não há mais dicas disponíveis";
-			}
-		}
-		
-		
-	}
-	
-	
-	//Verifica se a dica é de uma propriedade distributiva e se não é a dica de nível 3, que não precisa
-	//ser manipulada
-	else if (hint.indexOf(")*(") === -1 && hint.indexOf("*(") !== -1 && hint.indexOf("Você sabia que a multiplicação") === -1) {
-		//Variável que salva o operador da propriedade distributiva (+ ou -)
-		var operator = "+";
-		//Os comandos abaixo ajustam o visual da propriedade distributiva. Por exemplo, na expressão
-		//2(x+5), o resolvedor interpreta como (2*(x+5)) 
-		var newHint = hint.split("*");
-		newHint[0] = newHint[0].replace("(", "");
-		newHint[1] = newHint[1].replace(")", "");
-		
-		//Caso em que a propriedade distributiva envolve um sinal de menos.
-		//Ao invés de utilizar a - b, o resolvedor utiliza a + (-b)
-		if (newHint[1].indexOf("+(-") !== -1) {
-			operator = "-";
-			newHint[1] = replaceAll(newHint[1], "(", "");
-			newHint[1] = newHint[1].replace(")", "");
-			newHint[1] = newHint[1].replace("+-", "-");
-			newHint[1] = "(" + newHint[1];
-		}
-		
-		//O back-end apresentou problemas para gerar o passo da dica de nível 3 da propriedade
-		//distributiva, assim essa dica será gerada pela front-end
-		//A dica recebida pelo sistema é a expressão de propriedade distributiva atual
-    	var resolution = "";
-		var multiplier = "";
-		if (hint.indexOf("<") === 0) {
-    		var expression = newHint[1].replace("(", "");
-    		expression = expression.replace(")", "");
-    		expression = expression.replace("</eq>", "");
-    		
-    		var terms = expression.split(operator);
-    		
-    		var posMultiplier = newHint[0].indexOf(">") + 1;
-    		multiplier = newHint[0].substring(posMultiplier);
-    		
-    		//a(b+/-c)
-    		if (expression.charAt(0) !== "-" && terms.length === 2)
-    			resolution = multiplier + "*" + terms[0] + operator + multiplier + "*" + terms[1];
-    		
-    		//-a(+/-b+/-c)
-    		else if (multiplier.charAt(0) === "-") {
-    			//-a(-b+/-c)
-    			if (expression.charAt(0) === "-") {
-    				terms[1] = "-" + terms[1];
-        			resolution = multiplier + "*" + terms[1] + multiplier + "*" + operator + terms[2];
-    			}
-    			
-    			//-a(b+/-c)
-    			else 
-    				resolution = multiplier + "*" + terms[0] + multiplier + "*" + operator + terms[1];			    		
-    		}
-    		
-    		//a(-b+/-c)
-    		else {
-    			terms[1] = "-" + terms[1];
-    			resolution = multiplier + "*" + terms[1] + operator + multiplier + "*" + terms[2];
-    		}
-		}
-		
-    	if (resolution === "")
-    		hint = newHint[0] + newHint[1];
-    	
-    	else {
-    		var passoAnterior;
-    		
-    		if (selectedEquation.lastStep === null)
-    			passoAnterior = selectedEquation.initialEquation;
-    		
-    		else
-    			passoAnterior = selectedEquation.lastStep.step;
-    		
-    		var expression = multiplier + "*" + newHint[1].replace("</eq>", "");
-    		resolution = adjustExpression(resolution);
-    		
-    		hint = "Se você resolver a expressão " + newHint[0] + newHint[1] + ", o próximo passo (a linha inteira) da equação fica " + passoAnterior.replace(expression, resolution);   		
-    	}   	
 	}
 	
     var lastHint = $("#feedbackError").html();
@@ -2343,7 +2617,6 @@ function showFeedbackError(hint) {
     $("#feedbackError").html(hint + lastHint);
     $("#feedbackError").show('blind', 500);
 }
-
 function adjustExpression(expression) {	
 	var pos = expression.indexOf("*-");
 	expression = adjustExpressionAux(expression, pos, "*-", "*(-");
@@ -2433,6 +2706,58 @@ function getEquationsWE() {
 //	//----- Planos de Revisão -----//
 //	colorsBackground[6] = "#DEFFDE"; //Verde Claro
 //}
+
+function gift() {
+	if (getCookie("gift") !== "") {
+		document.getElementById("refresh_page").style.backgroundImage = "url('/pat2math/images/Gift.png')";
+		document.getElementById("refresh_page").title = "???";
+		$("#refresh_page").tooltip();
+		document.getElementById("refresh_page").onclick = function() {
+			$.guider({
+				title : "Resultados de uma pesquisa estatística",
+				description : "Uma pesquisa envolvendo uma população - 1 de todas as pessoas do meu dia a dia teve o seu início em 2013 e foi concluída nesses dias. Essa pesquisa teve como objetivo identificar o acontecimento mais importante da minha época de graduação da Unisinos que envolveu ao mesmo tempo a minha vida acadêmica, profissional e pessoal. 100% das pessoas envolvidas concordaram que esse acontecimento foi no dia 17 de Março de 2014 às 10:45.",
+				overlay : "dark",
+				width : 600,
+				alignButtons : "center",
+				buttons : {
+					"O que aconteceu no dia 17/03/2014 às 10:45?": {
+						click : function(){$.guider({
+							title : "Voltando para 10/03/2014 às 10:45",
+							description : '<iframe src="https://giphy.com/embed/xT8qB45TTnypO1h6KY" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/doctor-who-opening-intro-xT8qB45TTnypO1h6KY"></a></p>',
+							overlay : "dark",
+							width : 600,
+							onShow: function() {setTimeout(function() {$.guider({
+								title : "Chegamos!",
+								description : 'Agora também será explicado o porquê de ser uma "população - 1", a única pessoa que não participou da pesquisa foi o próprio resultado :D<br><img src="/pat2math/images/17-03-2014 10-45.png"></img><br><br>Muito obrigado por essa grande oportunidade, que proporcionou uma excelente amizade além do projeto de trabalho. Também nunca vou esquecer da participação especial do Rafael Ávila, que além de ser uma ótima pessoa e professor, foi graças a ele que essa oportunidade tornou-se possível.',
+								overlay : "dark",
+								width : 935,
+								alignButtons : "center",
+								buttons : {
+									"Voltar para o dia de hoje": {
+										click : function(){$.guider({
+											description : 'Espero que tenha gostado dessa "viagem no tempo" e da montagem como um todo, assim como gostou da primeira :D E só por curiosidade, o GIF que coloquei na janela intermediária é do seriado Doctor Who criado pela BBC e que está no ar desde 1963, e aquele objeto que estava voando no espaço é a TARDIS (Time And Relative Dimension(s) In Space), a nave especial desse doutor que consegue manipular o tempo e espaço e viajar para onde ele quiser. Se tu ainda não conheces esse seriado recomendo muito assistir, o bom é que os episódios não tem uma ligação tão direta entre eles, aí tu podes assistir como se fossem filmes separados.',
+											overlay : "dark",
+											width : 600,
+											alignButtons : "center",
+											buttons : {
+												"Concluir a viagem no tempo :D": {
+													click : function(){$.guider({	}).hideAll();},
+													className : "primary",
+												}
+											}
+										}).show();},
+										className : "primary",
+									}
+								}
+							}).show();}, 6000);}
+						}).show();},
+						className : "primary",
+					}
+				}
+			}).show();
+		}
+	}
+}
 function searchArray (elemento, array) {
 	for (var i = 0; i < array.length; i++)
 		if (array[i] === elemento)

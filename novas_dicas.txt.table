@@ -44,15 +44,15 @@ EqPrim_Sb_Inc	1	SB	Ops! Verifiquei que você errou a última operação realizad
 EqPrim_Mt_Inc	1	MT	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
 EqPrim_Dv_Inc	1	DV	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
 EqPrim_Dv_Simp	1	DV	Ops! Verifiquei que você errou a última operação realizada. Dê uma revisada no resultado.	AO
-EqPrim_Ad_Num	2	AD	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Sb_Num	2	SB	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Mt_Num	2	MT	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Dv_Num	2	DV	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Ad_Inc	2	AD	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Sb_Inc	2	SB	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Mt_Inc	2	MT	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Dv_Inc	2	DV	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
-EqPrim_Dv_Simp	2	DV	Aplique novamente a operação de X sobre os  termos a e b e confira novamente o resultado obtido.	RA
+EqPrim_Ad_Num	2	AD	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Sb_Num	2	SB	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Mt_Num	2	MT	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Dv_Num	2	DV	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Ad_Inc	2	AD	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Sb_Inc	2	SB	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Mt_Inc	2	MT	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Dv_Inc	2	DV	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
+EqPrim_Dv_Simp	2	DV	Aplique novamente a operação de X sobre os mesmos termos e confira novamente o resultado obtido.	RA
 EqPrim_Ad_Num	3	AD	O próximo passo (a linha inteira) da equação fica <PP>.	ER
 EqPrim_Sb_Num	3	SB	O próximo passo (a linha inteira) da equação fica <PP>.	ER
 EqPrim_Mt_Num	3	MT	O próximo passo (a linha inteira) da equação fica <PP>.	ER

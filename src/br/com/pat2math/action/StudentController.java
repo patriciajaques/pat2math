@@ -464,6 +464,26 @@ public class StudentController {
 		return "Recompensa salva com sucesso";
 	}
 	
+	@RequestMapping(value = "newPatequation/tour", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String tour(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		String result = "true";
+		
+		if (student.isTourWasViewed() == false)
+			result = "false";
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "newPatequation/setTour", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String setTour(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setTourWasViewed(true);
+		sd.alter(student);
+		
+		return "Informação atualizada com sucesso";
+	}
+	
 	private Student formToStudent(StudentForm formStudent) {
 		Student student = new Student();
 		student.setEmail(formStudent.getEmail());

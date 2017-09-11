@@ -649,6 +649,8 @@ function loadExercise(id) {
 		data: {"exerciseId" : id},
 		dataType: 'json',
 		success: function(data) {
+			numFracs = 0;
+			
 			if(data != null) {
 				//Verificar neste momento se a primeira equação já está resolvida e atualizar no array de equações (atualizar nos cookies e localmente).
 				//Para avançar às próximas equações, a primeira deve estar resolvida obrigatoriamente. Se o usuário tentar acessar outra equação do mesmo plano,

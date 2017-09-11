@@ -12,6 +12,7 @@
 //currentWE = Exemplo trabalhado (Worked Example) que está sendo conferido no momento
 //linesHeight = Altura atual do caderno (no caso em que foi necessário adicionar novas linhas em uma resolução)
 
+//tourViewed = indica se o usuário já passou pelo tour interativo especial do TCC
 //stepTour = Passo atual do tour interativo
 //functionTour = Função (método)atual do tour interativo
 
@@ -56,7 +57,7 @@ function deleteAllCookies() {
         var eqPos = cookie.indexOf("=");
         var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
         
-        if (name !== "JSESSIONID")
+        if (name.indexOf("JSESSIONID") === -1)
         	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 }

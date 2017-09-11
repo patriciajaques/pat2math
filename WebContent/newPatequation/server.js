@@ -1,7 +1,6 @@
 //Colocar uma verificação se o passo digitado é do tipo x=[número]. Se for e estiver correto,
 //deve ser identificado como solução da equação, às vezes isso não acontece.
 
-
 function requestServer (type, last, next, typeOperation, element) {
     //type = 'd' -> hint
     //type = 'n' -> new equation
@@ -52,6 +51,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 //split[1] = int - número de vezes que ele pediu dica por operação
                 //split[2] = int - dicas consecutivas total num determinado intervalo (1 min)
 
+            	if (element === null) {
             	if (tryResolveByMyself === true) {
             		firstErrorOrHint();
             	}
@@ -142,6 +142,12 @@ function requestServer (type, last, next, typeOperation, element) {
                 	$("#newPoints").show("puff", 500, callbackAddPoints(lostPoints));
                 }
 
+            }
+            }
+            
+            else {
+            	//Caso em que não há mais feedbacks de erro disponíveis, aí mostra uma dica no lugar dele
+            	showFeedbackError2(split[0]);
             }
             } else if (type === 'n') {  //for new equation
             	//Se o aluno acertou o passo da equação, esse fluxo alternativo não deve ser executado
@@ -418,7 +424,6 @@ function requestServer (type, last, next, typeOperation, element) {
 //                        $(document).css('overflow', 'auto');
 //                    });
 
-
                     if (element.parent().html().indexOf("frac") !== -1) {
                         nextLineServer = element.parent().next().next();
                     } else {
@@ -430,6 +435,9 @@ function requestServer (type, last, next, typeOperation, element) {
                             "</ul>" +
                             "<div class='trash'></div>" +
                             "<button id='button'></button><div id='feedbackError'></div>");
+                    
+                    
+                    
                     $(selectedSheet + " .canCopy li").draggable("disable");
                     $(selectedSheet + " .canCopy li").css("opacity", "0.5");
                     $(selectedSheet + " .formula li").css("opacity", "0.5");

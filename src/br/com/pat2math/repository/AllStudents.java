@@ -5,5 +5,6 @@ import br.com.pat2math.studentModel.Student;
 public interface AllStudents extends Repository<Student> {
 	
 	public Student withEmail(String email);
+//	public Student[] withIdInterval(Long firstID, Long lastID);
 	
 }

@@ -46,6 +46,9 @@ public class Student extends User implements Serializable {
 	//Progresso
 	private int currentLevel, currentPlan, numEquationsSolved, numErrors, numHints;
 	
+	//Indica se o usuário já viu o tour interativo do TCC
+	private boolean tourWasViewed;
+	
 	public static Student newStudent(Student student) {
 		student.defineRole();
 		student.defineScoresDefault();
@@ -261,6 +264,15 @@ public class Student extends User implements Serializable {
 	public void setNumHints(int numHints) {
 		this.numHints = numHints;
 	}
+
+	public boolean isTourWasViewed() {
+		return tourWasViewed;
+	}
+
+	public void setTourWasViewed(boolean tourWasViewed) {
+		this.tourWasViewed = tourWasViewed;
+	}
+	
 	
 	
 
