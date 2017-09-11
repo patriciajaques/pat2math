@@ -338,13 +338,6 @@ $(document).ready(function() {
 	startNewPatequation();
 });
 
-//Concluir a implementação desta função, e lembrar de colocar if e else que adaptam os textos para os três grupos diferentes
-//Relembrar todos os novos recursos: dicas otimizadas, opção de conferir um exercício resolvido logo que começa um plano, se clicar
-//no botão "não" da mensagem ou "não tenho certeza", dicas e erros gratuitos (indicar com os balões do tour os locais deles)
-//e salvamento da pontuação no sistema (indicar o local no menu, estes dois itens são somente para o grupo 100% gamificado)
-//Ver alguma propriedade para alterar do menu para que os balões do tour apareçam sobre ele, e não atrás dele
-//Colocar um cookie controlador para o Tour não ser exibido a cada vez que atualizar a página
-//OBS: para fazer o if/else, é só colocar nomes específicos nos campos "name" e "next"
 function tourTCC() {
 	isTourInterativo = true;
 	var next = "gamification1";
