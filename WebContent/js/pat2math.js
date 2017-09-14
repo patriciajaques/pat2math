@@ -334,10 +334,10 @@ function loadTasks(id) {
 
 function getNumEquationsPlan() {
 	if (levelGamification !== undefined) {
-		if (planoAtual === 1001)
+		if (planoAtual === 1001 || planoAtual === 1006)
 			return 4;
 		
-		else if (planoAtual === 1002 || planoAtual === 1003 || planoAtual === 1006 || planoAtual === 1004 || planoAtual === 1007)
+		else if (planoAtual === 1002 || planoAtual === 1003 || planoAtual === 1004 || planoAtual === 1007)
 			return 5;
 		
 		else if (planoAtual === 1005)
