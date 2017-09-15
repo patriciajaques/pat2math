@@ -474,54 +474,52 @@ function classPlan7() {
 		name: "2",
 		next : "3",
 		title : "Neste caso também vamos aplicar a operação inversa",
-		description : "Porém, temos que cuidar o que faremos com o sinal negativo",
+		description : "Só temos que cuidar para manter o sinal negativo do -6 ao passá-lo para o outro lado da equação",
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
-				click : function() {classPlan7b();},
+				click : true,
 				className : "primary"
 			}
 		}
 	});
 	
+	$("#line4").guider({
+		name: "3",
+		next : "4",
+		title : "Utilizando a operação inversa, passamos o -6 para o outro lado multiplicando o 42",
+		description : "Agora só falta resolver a multiplicação 42 * (-6)",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("x = 42 <font color='green'>* (-6)</font>", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+
+	$("#line5").guider({
+		name: "4",
+		title : "Tudo pronto!",
+		description : "Conseguimos resolver a equação com sucesso.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 252</font>", "step2", 2); exitWorkedExample();},
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});	
 	
-}
-
-function classPlan7b() {
-$("#line4").guider({
-	name: "2",
-	next : "3",
-	title : "Utilizando a operação inversa, passamos o 6 para o outro lado multiplicando o 42",
-	description : "Observe que neste caso o sinal de menos acompanha o número 6, o qual fica negativo do outro lado",
-	position: "bottom",
-	width : 600,
-	alignButtons : "right",
-	onShow: function() {resolutionEquation("x = 42 <font color='green'>* (-6)</font>", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
-	buttons : {
-		Próximo: {
-			click : true,
-			className : "primary"
-		}
-	}
-}).show();
-
-$("#line5").guider({
-	name: "3",
-	title : "Tudo pronto!",
-	description : "Conseguimos resolver a equação com sucesso.",
-	position: "bottom",
-	width : 600,
-	alignButtons : "right",
-	onShow: function() {contWE = 1; resolutionEquation("<font color='blue'>x = - 252</font>", "step2", 2); exitWorkedExample();},
-	buttons : {
-		Finalizar: {
-			click : true,
-			className : "primary"
-		}
-	}
-});	
+	
 }
 
 function classPlan8() {
