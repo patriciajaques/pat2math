@@ -1,6 +1,6 @@
 
 <script src="/pat2math/patequation/js/string.js"></script>
-<script src="/pat2math/patequation/js/object.js"></script>
+<script src="/pat2math/newPatequation/object.js"></script>
 <script src="/pat2math/patequation/js/conversion.js"></script>
 <script src="/pat2math/newPatequation/server.js"></script>
 <script src="/pat2math/newPatequation/hints.js"></script>
