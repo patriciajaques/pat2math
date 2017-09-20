@@ -725,8 +725,7 @@ function plan2Explanation (nextStep) {
 }
 
 function exit ( ) {
-	$.guider({	
-	}).hideAll();
+	$.guider({	}).hideAll();
 	
 	isTourInterativo = false; 
 	blockMenu = true;

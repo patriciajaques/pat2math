@@ -129,6 +129,7 @@
 	
 	
 	<div class="modal" id="msg-box"></div>
+	<div id="noticeHint" style="display: none;"><div class="jGuider ui-draggable ui-draggable-disabled ui-state-disabled" style="display: block; position: absolute; width: 530px; top: 62.9667px; left: 808.15px;" id="jGuider_gamification2" aria-disabled="true"><div class="jgContent" style="background: #82C785;"><div class="jgTitle">Dicas</div><div class="jgNoDrag"><div class="jgClose"></div><div class="jgDesc">Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada</div><div class="jgButtons jgAlignCenter"><button class="primary" onclick="document.getElementById('noticeHint').style.display='none';">Entendi</button></div></div></div><span class="jgArrow jg-left" style="border-width: 30px 0px 30px 30px; margin-top: -30px;"><span style="border-width: 30px 0px 30px 30px; top: -30px;"></span></span></div></div>
 <!-- 		<div id="calculatorIcon" title='Calculadora' onclick="showCalculator()"><img src=/pat2math/patequation/img/calculadora.png border=0></div> -->
 <!-- 		<div id="calculator" title='Digite a expressão desejada e clique em "="'> -->
 <!-- 	<form name="calculator" > <input type="textfield" name="ans" value=""> -->

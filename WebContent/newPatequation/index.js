@@ -693,6 +693,11 @@ function startNewPatequation() {
 	}
 	
 	verifyTour();
+	
+	if (getCookie("noticeHint") === "") {
+		setCookieDays("noticeHint", "false", 1);
+		document.getElementById("noticeHint").style.display="inline";
+	}
 }
 
 function verifyTour() {
