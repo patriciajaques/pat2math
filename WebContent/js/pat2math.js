@@ -140,9 +140,17 @@ function loadTasks(id) {
 	}
 	
 	if (isUnlocked) {
+		if (planoAtual !== undefined) {
+			$("#tasks"+planoAtual).slideUp(700);
+			$("#tasks"+planoAtual).html("");
+			planoAtual = undefined;
+			setCookieDays ("currentPlan", "", 0);
+		}
 		currentStage = id - 1000;
 		planoAtual = id;
 		getPontuacaoPlano();
+		
+		
 		
 		if (levelGamification === "full") {
 			verifyFreeErrors();
@@ -323,7 +331,7 @@ function loadTasks(id) {
 		if (id !== 1019) {
 			$("#tasks"+id).slideUp(700);
 			$("#tasks"+id).html("");
-			planoAtual = null;
+			planoAtual = undefined;
 			setCookieDays ("currentPlan", "", 0);
 		}
 		
