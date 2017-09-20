@@ -24,29 +24,29 @@ function Equation(equation, points) {
     this.steps = new Array(); //array of Step (object Step)
 
     this.addPoints = addPoints;
+ 
     function addPoints(value) {
-    	if (value === 10) {
-            this.userPassNumber += 1;
-           
-        } else if (value < 0) {
-            this.userErrorPoints -= value;
-            calculatePoints(this);
-        }
-    	
-    	if (this.userPoints >= this.points - 5) {  		
-    		if (this.userPoints === this.points - 5) {
-    	        this.userPoints += 5;
-    	        calculatePoints(this);
-    		}
+    	if (value > 0) { 
+            this.userPassNumber += 1;        
+            this.userPoints += value;
     	}
     	
     	else {
-            this.userPoints += value;
-            calculatePoints(this);
+    		this.userPoints += value;
+            this.userErrorPoints -= value;     
+        }
+    	
+    	calculatePoints(this);
+    	
+    	if (levelGamification !== undefined && levelGamification !== "without" && isLoadEquation === false) {
+    		updateScoreEquationCookie();
+    		
+    		if (levelGamification === "full")
+    			addOrRemoveScore(value);
     	}
     	
-    	if (levelGamification !== undefined && levelGamification === "full" && isLoadEquation === false)
-    		addOrRemoveScore(value);
+    	
+
     }
 
     this.isAnswer = isAnswer;

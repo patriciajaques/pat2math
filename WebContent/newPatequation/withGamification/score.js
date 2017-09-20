@@ -13,6 +13,7 @@ function addOrRemoveScore(amount) {
 	updateScoreDataBase(amount);
 	
 }
+
 function updateScoreUI() {
 	document.getElementById("totalScore").innerHTML = "Pontuação total: " + totalScore;
 	
@@ -25,7 +26,9 @@ function updateScoreCookies() {
 	setCookieDays("totalScore", totalScore, 1);
 	var cookieName = "levelScore" + currentLevel;
 	setCookieDays(cookieName, levelScore[currentLevel], 1);
-	
+}
+
+function updateScoreEquationCookie() {
 	var cookieEquationErrorScore = selectedEquation.userErrorPoints;
 	cookieName = "equationErrorScore" + idEquation;
 	setCookieMinutes(cookieName, cookieEquationErrorScore, 10);

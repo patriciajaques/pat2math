@@ -683,7 +683,7 @@ function startNewPatequation() {
 		var cookieEquation = getCookie("currentEquation");
 		
 		if (cookieEquation !== "") {		
-			var idEquation = parseInt(cookieEquation);
+			idEquation = parseInt(cookieEquation);
 			loadExercise(idEquation);	
 		}
 		
@@ -1525,8 +1525,12 @@ function loadEquation(index) {
                 }
 
                 elements = elements + "</ul><div class='cool coolAlign'></div>";
-                if (!selectedEquation.isAnswer()) {
-                    selectedEquation.addPoints(10);
+                
+                if (!selectedEquation.isAnswer() && levelGamification !== "without") {
+                	var totalPoints = 10 + selectedEquation.userPoints + selectedEquation.userErrorPoints;
+                    
+                    if (totalPoints <= selectedEquation.points - 5)
+                    	selectedEquation.addPoints(10);
                 }
                 line.html(line.html() + elements);
 
@@ -1623,21 +1627,9 @@ function loadEquation(index) {
         }
     }
 
-    var cookieName = "equationErrorScore" + idEquation;
-    var cookieErrorPoints = getCookie(cookieName);
-    
-    if (cookieErrorPoints !== "") {
-    	var errorPoints = parseInt(cookieErrorPoints) * (-1);
-    	selectedEquation.addPoints(errorPoints);
-    }
-    
-    calculatePoints(selectedEquation);
-
     $("#hintText").hide('blind', 500);
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
-    
-    isLoadEquation = false;
     
     return selectedEquation.equation;
     
@@ -2257,8 +2249,9 @@ function newEquation() {
 //}
 
 
-function checkEquation() { 	
-	
+function checkEquation() { 
+	if (isLoadEquation)
+		isLoadEquation = false;
 //	setTimeout ('resetNumClicks()', 3000);
 //	
 //	if (numClicks === undefined)

@@ -351,11 +351,11 @@ function requestServer (type, last, next, typeOperation, element) {
 
                         	var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                         	
-                        	$("#newPoints").text("+" + result);
-                        	$("#newPoints").css("color", "green");
-
-                        	
-                        	$("#newPoints").show("puff", 500, callbackAddPoints(result));
+                        	if (result > 0) {
+                        		$("#newPoints").text("+" + result);
+                        		$("#newPoints").css("color", "green");                      	
+                        		$("#newPoints").show("puff", 500, callbackAddPoints(result));
+                        	}
                        }
                         //divaLiteAction("happy;Parabéns! Continue assim amigo...");
                     }
@@ -471,13 +471,17 @@ function requestServer (type, last, next, typeOperation, element) {
                         var scrollTop = $(document).scrollTop();
 
                         if (levelGamification !== "without") {
-                        	$("#newPoints").css("left", (x - 50) + "px");
-                        	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
+                        	var totalPoints = 10 + selectedEquation.userPoints + selectedEquation.userErrorPoints;
+                            
+                            if (totalPoints <= selectedEquation.points - 5) {
+                            	$("#newPoints").css("left", (x - 50) + "px");
+                            	$("#newPoints").css("top", (y + 5 - scrollTop) + "px");
 
-                        	$("#newPoints").text("+10");
-                        	$("#newPoints").css("color", "green");
+                            	$("#newPoints").text("+10");
+                            	$("#newPoints").css("color", "green");
 
-                        	$("#newPoints").show("puff", 500, callbackAddPoints(10));
+                            	$("#newPoints").show("puff", 500, callbackAddPoints(10));
+                            }
                         
                         }
                         

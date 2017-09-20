@@ -24,6 +24,8 @@ function Equation(equation, points) {
     this.steps = new Array(); //array of Step (object Step)
 
     this.addPoints = addPoints;
+    
+   
     function addPoints(value) {
     	if (value === 10) {
             this.userPassNumber += 1;

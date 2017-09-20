@@ -275,8 +275,21 @@ function loadTasks(id) {
 					if (levelGamification !== undefined && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018) {
 						addWorkedExampleInEquationsMenu();
 						
-						if (taskSolved === 0)
-							firstPlanAccess();
+						if (taskSolved === 0) {
+							var cookieEquation = getCookie("currentEquation");
+							
+							if (cookieEquation !== "") {
+								var stringIdPlan = "" + id;
+								
+								//Se a String do ID do plano selecionado estiver na primeira posição da String do ID da equação, significa que
+								//a equação salva no cookie é a deste plano, e o aluno já viu a janela de confirmação do firstPlanAccess()
+								if (cookieEquation.indexOf(stringIdPlan) !== 0)
+									firstPlanAccess();
+							}
+							
+							else
+								firstPlanAccess();
+						}
 					}
 					
 					
@@ -684,6 +697,18 @@ function loadExercise(id) {
 				newEquations[0] = equation;
 			}
 			reloadPaper(1);
+			
+			if (levelGamification !== "without") {
+		        var cookieName = "equationErrorScore" + idEquation;
+		        var cookieErrorPoints = getCookie(cookieName);
+		        
+		        if (cookieErrorPoints !== "") {
+		        	var errorPoints = parseInt(cookieErrorPoints) * (-1);
+		        	selectedEquation.addPoints(errorPoints);
+		        }
+		        
+		        calculatePoints(selectedEquation);
+		    }
 			
 			setCookieDays ("currentEquation", idEquation, 1);
 			
