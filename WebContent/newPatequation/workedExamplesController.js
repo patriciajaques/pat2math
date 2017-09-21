@@ -53,7 +53,7 @@ function firstPlanAccess() {
         onShow: function() {document.getElementById("jGuider_firstPlanAccess").style.top = "250px";},
     	buttons: {
     		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
-    		"Sim": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide();},
+    		"Sim": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();},
     		"Não tenho certeza": function() {imNotSure(numberCurrentPlan);}
     	}
     	            
@@ -67,7 +67,7 @@ function imNotSure(plan) {
         alignButtons: "center",
     	buttons: {
     		"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
-    		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide();}
+    		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
     	}
     	            
     	}).show();

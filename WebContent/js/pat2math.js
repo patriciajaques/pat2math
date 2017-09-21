@@ -364,8 +364,11 @@ function getNumEquationsPlan() {
 		else if (planoAtual === 1005)
 			return 8;
 		
-		else if (planoAtual === 1010 || planoAtual === 1014)
+		else if (planoAtual === 1010)
 			return 16;
+		
+		else if (planoAtual === 1014)
+			return 17;
 		
 		else if (planoAtual === 1018)
 			return 15;

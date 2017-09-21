@@ -1238,7 +1238,7 @@ function classPlan13() {
 		name: "2",
 		next : "3",
 		title : "Como resolvemos uma razão e proporção?",
-		description : "Basicamente utilizaremos duas vezes a regra da operação inversa da divisão. Mas antes disso, vamos analizar melhor a nossa equação.",
+		description : "Basicamente utilizaremos duas vezes a regra da operação inversa da divisão. Mas antes disso, vamos analisar melhor a nossa equação.",
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1361,7 +1361,7 @@ function classPlan13() {
 		onShow: function() {resolutionEquation("<font color='blue'>x = -12</font>", "step6", 2); exitWorkedExample();},
 		buttons : {
 			Finalizar: {
-				click : true,
+				click : function() {if (planoAtual === 1013) reasonAndProportionNotice();},
 				className : "primary"
 			}
 		}

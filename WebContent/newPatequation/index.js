@@ -694,8 +694,30 @@ function startNewPatequation() {
 	
 	if (getCookie("noticeHint") === "") {
 		setCookieDays("noticeHint", "false", 1);
+		
+		if (window.innerWidth > 1600)
+			document.getElementById("noticeHintModal").style.left = "752.15px";
+		
 		document.getElementById("noticeHint").style.display="inline";
 	}
+}
+
+//Explica a limitação do resolvedor nas equações de razão e proporção
+function reasonAndProportionNotice() {
+	$.guider({
+		name: "rpnotice",
+		title : "<center> <img src=/pat2math/images/warning-icon.png></img><br> Atenção! </center>",
+		description : "<center>Atualmente, o sistema possui uma pequena limitação com equações de razão e proporção. O primeiro passo que envolver uma multiplicação simples com X, você precisará colocar o sinal de vezes (asterisco) para o sistema corrigir como certo. <br><br>Por exemplo, se você chegar em uma multiplicação de 5 por X, terá que digitar 5 * x. Somente no próximo passo poderá escrever 5x.</center>",
+		width: 600,
+		overlay : "dark",
+		alignButtons : "center",
+		buttons : {
+			Entendi: {
+				click : true,
+				className : "primary",
+			}
+		}
+	}).show();
 }
 
 function verifyTour() {
