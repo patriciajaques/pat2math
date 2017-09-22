@@ -2221,6 +2221,9 @@ function moveHint() {
 //	document.getElementById('hintText').style.maxHeight = maxHeight;
 }
 function hint() {
+	if (isLoadEquation)
+		isLoadEquation = false;
+	
 	moveHint();
 
     if (!selectedEquation.isComplete) {
