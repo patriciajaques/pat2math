@@ -692,14 +692,14 @@ function startNewPatequation() {
 	    $("#topicsAux").hide();
 	}
 	
-	if (getCookie("noticeHint") === "") {
-		setCookieDays("noticeHint", "false", 1);
-		
-		if (window.innerWidth > 1600)
-			document.getElementById("noticeHintModal").style.left = "752.15px";
-		
-		document.getElementById("noticeHint").style.display="inline";
-	}
+//	if (getCookie("noticeHint") === "") {
+//		setCookieDays("noticeHint", "false", 1);
+//		
+//		if (window.innerWidth > 1600)
+//			document.getElementById("noticeHintModal").style.left = "752.15px";
+//		
+//		document.getElementById("noticeHint").style.display="inline";
+//	}
 }
 
 //Explica a limitação do resolvedor nas equações de razão e proporção
