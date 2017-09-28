@@ -670,7 +670,8 @@ function startNewPatequation() {
 		if (cookieColor !== "")
 			setBackgroundColor(cookieColor);
 		
-		verifyWorkedExamplesReward();
+		if (levelGamification === "full")
+			verifyWorkedExamplesReward();
 	}
 	
 	else {
