@@ -1367,3 +1367,246 @@ function classPlan13() {
 		}
 	});
 }
+
+function classPlan14() {
+	contWE = 1;
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Atenção agora!",
+		description : "Vamos trabalhar pela primeira vez com equações que envolvem adição e subtração de frações com denominadores diferentes",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "O primeiro passo é a aplicação do Mínimo Múltiplo Comum (MMC) em todos os denominadores",
+		description : "Lembre-se que os denominadores são os números de baixo das frações",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "3",
+		next : "4",
+		title : "O que acontece com os termos que não são frações?",
+		description : "Teremos que considerá-los como uma fração inteira. Todos os números inteiros podem ser representados como uma fração de denominador 1",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "4",
+		next : "5",
+		title : "Cuidado! Esta mesma regra é válida para a variável X e seu coeficiente",
+		description : "Nessa equação, os termos inteiros são -10 e 5x. Dessa maneira, temos -10/1 e -5x/1",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "5",
+		next : "6",
+		title : "Agora vamos calcular o Mínimo Múltiplo Comum de todos os denominadores",
+		description : "Assim, temos MMC(2, 4, 1, 1). Você pode fazer esse cálculo no caderno ou mentalmente se já tiver mais prática ",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "6",
+		next : "7",
+		title : "Calculando o MMC(2, 4, 1, 1) chegamos ao número 4",
+		description : "O próximo passo é aplicar uma propriedade para transformar todos os termos da equação em números inteiros",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "7",
+		next : "8",
+		title : "Como funciona essa propriedade?",
+		description : "Ela nos diz que, para transformar uma fração em um número inteiro, dividimos o resultado do MMC pelo denominador dela, e em seguida multiplicamos pelo seu numerador. CUIDADO: Você só pode aplicar essa propriedade em equações, ela não pode ser utilizada em cálculos simples de frações com denominadores diferentes, como por exemplo 2/5 + 3/4.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "8",
+		next : "9",
+		title : "Vamos conferir um exemplo na prática",
+		description : "Observe a primeira fração (3x/2). O resultado do MMC neste exercício é o 4, então teríamos 4 : 2 * 3x. Lembre-se que o PAT2Math não permite esse operador de divisão, assim precisamos calcular a divisão e digitar diretamente 2 * 3x.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "9",
+		next : "10",
+		title : "Agora nós aplicamos essa propriedade em todos os termos da equação",
+		description : "Cuidado: todos os sinais devem ser preservados. ",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("2 * 3x - 1 * x - 4 * 10 = 4 * 5x", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "10",
+		next : "11",
+		title : "O próximo passo é resolver todas as multiplicações pendentes",
+		description : "Você lembra das regras das expressões numéricas? Sempre que tivermos uma conta de multiplicação ou divisão, ela deve ser resolvida primeiro. Nesse caso nós temos mais de uma conta nessas condições e não há parênteses, assim podemos resolver todas essas multiplicações ao mesmo tempo. Só precisamos cuidar os sinais ",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("6x - x - 40 = 20x", "step2", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "11",
+		next : "12",
+		title : "Chegamos em uma equação normal com múltiplos termos",
+		description : "Como já estamos mais experientes com equações desse tipo, podemos aplicar mais de uma propriedade em um único passo. Neste exercício, podemos unir os termos semelhantes 6x - x e já ajustar os demais termos daquela maneira já conhecida: termos que envolvem X no lado esquerdo, demais números no lado direito. Somente precisamos cuidar de aplicar corretamente as operações inversas: o -40 (subtração) passará a ser 40 (adição) no outro lado, e o 20x (adição) passará a ser -20x (subtração) no outro lado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("5x - 20x = 40", "step3", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line7").guider({
+		name: "12",
+		next : "13",
+		title : "Estamos quase lá",
+		description : "Agora só falta aplicar a última regra de operação inversa",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("-15x = 40", "step4", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line9").guider({
+		name: "13",
+		next : "14",
+		title : "Utilizando a operação inversa da multiplicação, passamos o -15 para o outro lado dividindo o 40",
+		description : "Relembramos mais uma vez: ao trabalhar com operações inversas de multiplicação e divisão, o sinal é preservado.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">-15</div><div class="numerator">40</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step5", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line9").guider({
+		name: "14",
+		next : "15",
+		title : "Será que já terminamos?",
+		description : "Ainda não. Observe que os números 40 e -15 são múltiplos entre si, assim ainda podemos simplificar esta fração. Você lembra dos critérios de divisibilidade? O do 5 é o seguinte: qualquer número que termine em 5 ou em 0 é divisível por 5. Assim, podemos dividir por 5 o denominador e o denominador dessa fração, e colocaremos o resultado no próximo passo",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line11").guider({
+		name: "15",
+		title : "Agora sim!",
+		description : "O número 8 não termina em 5 ou 0, portanto chegamos à etapa final da simplificação e resolvemos a equaçaõ com sucesso",
+		position: "bottom",
+		width : 600,
+		onShow: function() {contWE = 2; resolutionEquation('<font color="blue">x = - </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">5</font></div><div class="numerator"><font color="blue">8</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step6", 2); exitWorkedExample();},
+		alignButtons : "right",
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	
+}

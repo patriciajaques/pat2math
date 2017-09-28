@@ -20,12 +20,6 @@ function saveWorkedExamplesReward() {
 	
 }
 function changeColor() {
-	//Se tiver uma janela modal do tour em aberto, a recompensa ainda não poderá ser acessada
-	if (document.getElementsByClassName("jGuider ui-draggable").length !== 0) {
-		alert ("Termine de ver o exercício resolvido antes de abrir a sua recompensa :D");
-	}
-	
-	else {
 	var description = '<a href=# onclick="setBackgroundAzul()">Azul</a>' +
 					  '<br><a href=# onclick="setBackgroundVerde()">Verde</a>' +
 					  '<br><a href=# onclick="setBackgroundAmarelo()">Amarelo</a>' +
@@ -45,7 +39,6 @@ function changeColor() {
     		}
         }           
     	}).show();
-	}
 }
 
 function setBackgroundAzulCiano() {

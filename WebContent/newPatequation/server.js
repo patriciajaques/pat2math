@@ -24,7 +24,6 @@ function requestServer (type, last, next, typeOperation, element) {
     //e depois que esta informação retorna, passa pelos passos abaixo do ajax
     $.ajax({url: "../../pat2math/resolver?id=" + selectedEquation.id + "&echo="  + msg + "&callback=?", //200.188.161.124 server   //10.210.2.197:8080 cassio
         dataType: 'jsonp',
-        async: asyncAjax,
         success: function(data) {
             //alert(data[0]);
             console.log("Server answer ->  " + data[0]);
