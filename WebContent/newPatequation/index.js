@@ -2494,18 +2494,22 @@ function showHint(hint) {
 	if (hint === "null" || hint.indexOf("Infelizmente") !== -1) {
 		var lastCorrectStep = selectedEquation.lastStep.step;
 		var split = lastCorrectStep.split("=");
+		
 
 		//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
 		//Se ocorrer exceção, é que não é desse tipo 
 		try {
-			var constant = "" + parseInt(split[1]);
-			hint = xNegativeHint[levelXNegativeHint];
+			var constant = parseInt(split[1]);
 			
-			if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
-				hint = hint.replace("[CONSTANT]", constant);
+			if (constant < 0) {
+				hint = xNegativeHint[levelXNegativeHint];
+			
+				if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
+					hint = hint.replace("[CONSTANT]", constant);
 					
-			if (levelXNegativeHint < 4)
-				levelXNegativeHint++;
+				if (levelXNegativeHint < 4)
+					levelXNegativeHint++;
+			}
 			
 		} catch (e) {
 			hint = "Infelizmente não há mais dicas disponíveis";
