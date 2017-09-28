@@ -2501,7 +2501,7 @@ function showHint(hint) {
 		try {
 			var constant = parseInt(split[1]);
 			
-			if (constant < 0) {
+			if (split[0] === "-x" || split[0] === "-X") {
 				hint = xNegativeHint[levelXNegativeHint];
 			
 				if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
