@@ -1368,7 +1368,7 @@ function classPlan13() {
 	});
 }
 
-function classPlan14() {
+function classPlan15() {
 	contWE = 1;
 	$.guider({
 		name: "1",
@@ -1419,7 +1419,7 @@ function classPlan14() {
 	$.guider({
 		name: "4",
 		next : "5",
-		title : "Cuidado! Esta mesma regra é válida para a variável X e seu coeficiente",
+		title : "Essa mesma regra também é válida para a variável X e seu coeficiente",
 		description : "Nessa equação, os termos inteiros são -10 e 5x. Dessa maneira, temos -10/1 e -5x/1",
 		width : 600,
 		alignButtons : "right",
@@ -1465,7 +1465,7 @@ function classPlan14() {
 		name: "7",
 		next : "8",
 		title : "Como funciona essa propriedade?",
-		description : "Ela nos diz que, para transformar uma fração em um número inteiro, dividimos o resultado do MMC pelo denominador dela, e em seguida multiplicamos pelo seu numerador. CUIDADO: Você só pode aplicar essa propriedade em equações, ela não pode ser utilizada em cálculos simples de frações com denominadores diferentes, como por exemplo 2/5 + 3/4.",
+		description : "Ela nos diz que, para transformar uma fração em um número inteiro, dividimos o resultado do MMC pelo denominador dela, e em seguida multiplicamos pelo seu numerador. CUIDADO: Essa propriedade utiliza conceitos de operação inversa e só pode ser aplicada em equações",
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1498,7 +1498,7 @@ function classPlan14() {
 		description : "Cuidado: todos os sinais devem ser preservados. ",
 		position: "bottom",
 		width : 600,
-		onShow: function() {resolutionEquation("2 * 3x - 1 * x - 4 * 10 = 4 * 5x", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
+		onShow: function() {resolutionEquation("2 * 3x - 1x - 4 * 10 = 4 * 5x", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
 		alignButtons : "right",
 		buttons : {
 			Próximo: {
@@ -1529,7 +1529,7 @@ function classPlan14() {
 		name: "11",
 		next : "12",
 		title : "Chegamos em uma equação normal com múltiplos termos",
-		description : "Como já estamos mais experientes com equações desse tipo, podemos aplicar mais de uma propriedade em um único passo. Neste exercício, podemos unir os termos semelhantes 6x - x e já ajustar os demais termos daquela maneira já conhecida: termos que envolvem X no lado esquerdo, demais números no lado direito. Somente precisamos cuidar de aplicar corretamente as operações inversas: o -40 (subtração) passará a ser 40 (adição) no outro lado, e o 20x (adição) passará a ser -20x (subtração) no outro lado",
+		description : "Como já estamos mais experientes em equações desse tipo, podemos aplicar mais de uma propriedade em um único passo. Neste exercício, podemos unir os termos semelhantes 6x - x e ajustar os demais termos daquela maneira já conhecida: termos que envolvem X no lado esquerdo, demais números no lado direito. Somente precisamos cuidar para aplicar corretamente as operações inversas",
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1580,7 +1580,7 @@ function classPlan14() {
 		name: "14",
 		next : "15",
 		title : "Será que já terminamos?",
-		description : "Ainda não. Observe que os números 40 e -15 são múltiplos entre si, assim ainda podemos simplificar esta fração. Você lembra dos critérios de divisibilidade? O do 5 é o seguinte: qualquer número que termine em 5 ou em 0 é divisível por 5. Assim, podemos dividir por 5 o denominador e o denominador dessa fração, e colocaremos o resultado no próximo passo",
+		description : "Ainda não. Observe que os números 40 e -15 são múltiplos entre si, assim ainda podemos simplificar esta fração. Você lembra dos critérios de divisibilidade? O do 5 é o seguinte: qualquer número que termine em 5 ou em 0 é divisível por 5. Assim, podemos dividir por 5 o numerador e o denominador dessa fração, e colocaremos o resultado no próximo passo",
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",

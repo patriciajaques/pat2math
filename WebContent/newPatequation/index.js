@@ -2755,7 +2755,7 @@ function getEquationsWE() {
 	equationsWE[11] = "5x+8-2x=10+x";
 	equationsWE[12] = "5(2+x)=4(2x-3)";
 	equationsWE[13] = "(10)/(x)=(500)/(-600)";
-	equationsWE[14] = "(3x)/(2)-(x)/(4)-10=5x";
+	equationsWE[15] = "(3x)/(2)-(x)/(4)-10=5x";
 }
 
 //function getColorsBackground() {
