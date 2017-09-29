@@ -816,8 +816,8 @@ function verifyWorkedExamplesReward() {
 									     "<br><br>Tarefas necessárias:" +
 									     "<br><br>1. Selecione o nível de dificuldade que você parou na semana passada e a última fase aberta" +
 									     "<br><br>2. Selecione uma equação do menu, recomendamos que seja a que você achar mais difícil" +
-									     "<br><br>3. Utilize todas as suas dicas gratuitas na equação solucionadas, seguindo as regras abaixo. <br>ATENÇÃO: você deve cumprir todas as regras listadas abaixo, senão a sua recompensa especial será perdida" +
-									     "<br><br>a) Você deverá pedir no mínimo 2 dicas e no máximo 4 dicas em cada passo da equação. Você verá na prática como os níveis das dicas funcionam, por isso leia-as com atenção" +
+									     "<br><br>3. Utilize todas as suas dicas gratuitas na equação selecionada, seguindo as regras abaixo. <br>ATENÇÃO: você deve cumprir todas as regras listadas abaixo, senão a sua recompensa especial será perdida" +
+									     "<br><br>a) Você deverá pedir no mínimo 2 dicas e no máximo 4 dicas em cada passo da equação. Assim, você verá na prática como os níveis das dicas funcionam, por isso leia-as com atenção" +
 									     "<br><br>b) Se você chegar à resposta final da equação antes de pedir todas as dicas gratuitas, você poderá selecionar uma nova equação para solicitar as que restaram. Lembre-se de aplicar a regra anterior também para essa nova equação" +
 									     "<br><br>4. Clique novamente na caixa de presente. Se você seguiu todas as regras da tarefa anterior, ela será aberta e aparecerá uma mensagem de confirmação :D",    
 							alignButtons: "center",
