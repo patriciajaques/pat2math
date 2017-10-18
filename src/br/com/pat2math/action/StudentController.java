@@ -7,6 +7,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -88,6 +89,15 @@ public class StudentController {
 		em.persist(student);
 		model.addAttribute("user", student);
 		return "redirect:signUpSuccess";
+	}
+	
+	// metodo para pegar os 10 estudantes com a maior pontuação
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "newPatequation/top10")
+	public List<Student> topTotalScore(){
+		long size = sd.size();
+		System.out.println(size);
+		return null;
 	}
 	
 	@RequestMapping("signUp")
@@ -437,6 +447,7 @@ public class StudentController {
 	@RequestMapping(value = "newPatequation/completePlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String completePlan(int level, int plan, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());	
+		getAllStudents(model, session, request, response);
 		student.setCurrentLevel(level);
 		student.setCurrentPlan(plan);
 		sd.alter(student);
@@ -447,6 +458,7 @@ public class StudentController {
 	@RequestMapping(value = "newPatequation/rewardWorkedExamples", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String getRewardWorkedExamples(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());	
+		
 		
 		if (student.isRewardWorkedExamples())
 			return "true";
@@ -467,6 +479,7 @@ public class StudentController {
 	@RequestMapping(value = "newPatequation/tour", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String tour(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());
+		
 		String result = "true";
 		
 		if (student.isTourWasViewed() == false)
@@ -482,6 +495,14 @@ public class StudentController {
 		sd.alter(student);
 		
 		return "Informação atualizada com sucesso";
+	}
+	
+	@RequestMapping(value = "newPatequation/getAllStudents", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getAllStudents(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+//		Verificar o que está causando o erro no método sd.getall(); 
+		
+		ArrayList<Student> students = (ArrayList<Student>) sd.getAll();
+				return null;
 	}
 	
 	private Student formToStudent(StudentForm formStudent) {

@@ -117,6 +117,7 @@
 <!--     <div id="equationTour"></div> -->
     <div id="tour" title="Tour Interativo" onclick="tourTCC()"></div>
     <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
+    <div id="ranking" title="Veja o ranking do PAT2Math" onclick="ranking()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>
 	<div id="reportBug-box"></div>

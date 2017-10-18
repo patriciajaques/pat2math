@@ -1,6 +1,10 @@
 package br.com.pat2math.dao;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 import br.com.pat2math.repository.AllStudents;
 import br.com.pat2math.studentModel.Student;
@@ -23,14 +27,15 @@ public class StudentDao extends GenericDao<Student> implements AllStudents {
 	
 	}
 	
+	
 //	@Override
-//	public Student[] withIdInterval(Long firstID, Long lastID) {
-//		
+//	public Student[] getUsers() {
+		
 //		String jpql = "from Student s left join fetch " +
-//				"s.knowledges where s.id = :id";
+//				"s.knowledges";
 //		try {
 //			return (Student[]) em.createQuery(jpql)
-//				.setParameter("id", id).getResultList();
+//				.setParameter().getResultList();
 //		} catch(NoResultException nre) {
 //			return null;
 //		}

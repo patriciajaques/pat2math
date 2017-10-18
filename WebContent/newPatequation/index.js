@@ -13,7 +13,7 @@ var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
 var planoAtual; //id do plano que está selecionado
 var numEquacoesPlanoAtual;
-var idCurrentUser; // the id of the current user logged on
+var idCurrentUser = getCookie("previousUser"); // the id of the current user logged on
 var idTaskVideo;// the id of the video in database
 var tasksRemaining; //the number of equations unsolved per topic
 var tipoAudio;
@@ -626,6 +626,51 @@ function tourTCC() {
 		}
 	});
 }
+
+function ranking(){
+	var next = "top10";
+	
+	$.ajax({
+		type: "GET",
+		url: appContext + "newPatequation/top10",
+		success:
+			function(data) {
+				console.log(data);
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+		 	}
+		});	
+	
+	$.guider({
+		name: "top10",
+		title: "TOP 10",
+		description: "<table align='center', border='solid-black'>" +
+						"<tr align='center'> <th align='center'> Nome </th> <th align='center'> Pontuação </th> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"<tr> <td> </td> <td> </td> </tr>" +
+						"</table>",
+		alignButtons: "center",
+		position: "center",
+		buttons: {
+			Finalizar: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}).show();
+}
+
 function startNewPatequation() {
 	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
 	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc

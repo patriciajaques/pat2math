@@ -81,6 +81,16 @@
     cursor: pointer;
 }
 
+#ranking{
+    background: url("/pat2math/patequation/img/trofeu.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    margin-top: -550px;
+    position: fixed;
+    cursor: pointer;
+}
+
 #reportBug {
     background: url("/pat2math/patequation/img/reportar_bug.png") no-repeat scroll center center transparent;
     width: 70px;
