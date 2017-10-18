@@ -447,7 +447,7 @@ function verifyPlans() {
 			type: "GET",
 			url: appContext + "student/showTopic",
 			data: {"idSet" : i},
-			async: false,
+			//async: false,
 			success:
 				function(data) {
 					$("#plansAux").html(data);

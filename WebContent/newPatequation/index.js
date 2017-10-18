@@ -83,7 +83,7 @@ $(document).ready(function() {
 //		getColorsBackground();
 		
 	
-	if (getCookie("gift") === "")
+	if (getCookie("gift") === "" && levelGamification !== "full")
 		$("#refresh_page").tooltip();
 	
 	$("#calculator").tooltip();
@@ -318,9 +318,12 @@ $(document).ready(function() {
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
 	
-	if (widthWindow < 1366) 
+	if (widthWindow < 1366) {
 		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
-
+		document.getElementById("rewardWorkedExamples").style.marginLeft = "390px";
+		document.getElementById("help").style.marginLeft = "975px";
+	}
+	
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
 
 	createLines();
@@ -328,8 +331,11 @@ $(document).ready(function() {
 	window.onresize = function(){
 		var widthWindow = window.innerWidth;
 		
-		if (widthWindow < 1366) 
+		if (widthWindow < 1366) {
 			document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
+			document.getElementById("rewardWorkedExamples").style.marginLeft = "390px";
+			document.getElementById("help").style.marginLeft = "975px";
+		}
 		
 		else 
 			document.getElementById("paper-1").style.marginRight = "6px";
@@ -672,10 +678,9 @@ function ranking(){
 }
 
 function startNewPatequation() {
-	//Nesta função deverão ser chamados todos os métodos e comandos quando o usuário entra no sistema ou atualiza a página.
-	//Esses comandos são como os que obtêm os dados para mostrar na tela, a equação e o plano que o usuário parou, etc
-	
 	document.getElementById("topics").style.background = "silver";
+	document.getElementById("reportBug").style.display = "none";
+	document.getElementById("tour").style.display = "none";
 	
 	getEquationsWE();
 	getPontuacaoEquacoes();
@@ -710,7 +715,8 @@ function startNewPatequation() {
 		if (cookieColor !== "")
 			setBackgroundColor(cookieColor);
 		
-		verifyWorkedExamplesReward();
+		if (levelGamification === "full")
+			verifyWorkedExamplesReward();
 	}
 	
 	else {
@@ -822,6 +828,57 @@ function verifyWorkedExamplesReward() {
 		success : function(data) {
 			if (data === "true") {			
 				workedExamplesReward();
+				
+			}
+			
+			else {
+				document.getElementById("refresh_page").style.backgroundImage = "url('/pat2math/images/Gift.png')";
+				document.getElementById("refresh_page").title = "???";
+				$("#refresh_page").tooltip();
+				
+				document.getElementById("refresh_page").onclick = function() {
+					if (planoAtual !== undefined && freeHints[planoAtual-1001] === 0) {
+							$.guider({
+								title: "Você já está pronto para receber esta recompensa!",
+								description: "Depois de clicar no botão abaixo, verifique o que mudou na tela do PAT2Math",    
+								alignButtons: "center",
+								onShow: function() {saveWorkedExamplesReward();},
+								overlay : "dark",
+								buttons: {
+									"Atualizar a página e receber a recompensa :D": {
+										click: function() {window.location.reload();},
+										className: "primary"
+									}
+								}
+							}).show();
+					}
+					
+					else {
+						$.guider({
+							title: "Esta caixa de presente está trancada!",
+							description: "Para abri-la, você precisará concluir o objetivo abaixo:" +
+									     "<br><br>Objetivo geral: Entender como funciona o sistema de ajuda do PAT2Math, para conseguir aproveitá-lo da melhor maneira possível" +
+									     "<br><br>Tarefas necessárias:" +
+									     "<br><br>1. Selecione o nível de dificuldade que você parou na semana passada e a última fase aberta" +
+									     "<br><br>2. Selecione uma equação do menu, recomendamos que seja a que você achar mais difícil" +
+									     "<br><br>3. Utilize todas as suas dicas gratuitas na equação selecionada, seguindo as regras abaixo. <br>ATENÇÃO: você deve cumprir todas as regras listadas abaixo, senão a sua recompensa especial será perdida" +
+									     "<br><br>a) Você deverá pedir no mínimo 2 dicas e no máximo 4 dicas em cada passo da equação. Assim, você verá na prática como os níveis das dicas funcionam, por isso leia-as com atenção" +
+									     "<br><br>b) Se você chegar à resposta final da equação antes de pedir todas as dicas gratuitas, você poderá selecionar uma nova equação para solicitar as que restaram. Lembre-se de aplicar a regra anterior também para essa nova equação" +
+									     "<br><br>4. Clique novamente na caixa de presente. Se você seguiu todas as regras da tarefa anterior, ela será aberta e aparecerá uma mensagem de confirmação :D",    
+							alignButtons: "center",
+							overlay : "dark",
+							onShow: function() {$("#topics").fadeOut(); $("#topicsAux").show();},
+							width : 704,
+							buttons: {
+								OK: {
+									click: function() {$("#topics").fadeIn(); $("#topicsAux").hide(); $.guider({}).hideAll();},
+									
+									className: "primary"
+								}
+							}
+						}).show();
+					}
+				};
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -2482,18 +2539,22 @@ function showHint(hint) {
 	if (hint === "null" || hint.indexOf("Infelizmente") !== -1) {
 		var lastCorrectStep = selectedEquation.lastStep.step;
 		var split = lastCorrectStep.split("=");
+		
 
 		//Verifica se a dica é do tipo -x=[constante], caso não previsto no banco de dicas
 		//Se ocorrer exceção, é que não é desse tipo 
 		try {
-			var constant = "" + parseInt(split[1]);
-			hint = xNegativeHint[levelXNegativeHint];
+			var constant = parseInt(split[1]);
 			
-			if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
-				hint = hint.replace("[CONSTANT]", constant);
+			if (split[0] === "-x" || split[0] === "-X") {
+				hint = xNegativeHint[levelXNegativeHint];
+			
+				if (levelXNegativeHint === 3 || levelXNegativeHint === 4) 
+					hint = hint.replace("[CONSTANT]", constant);
 					
-			if (levelXNegativeHint < 4)
-				levelXNegativeHint++;
+				if (levelXNegativeHint < 4)
+					levelXNegativeHint++;
+			}
 			
 		} catch (e) {
 			hint = "Infelizmente não há mais dicas disponíveis";
@@ -2743,6 +2804,7 @@ function getEquationsWE() {
 	equationsWE[11] = "5x+8-2x=10+x";
 	equationsWE[12] = "5(2+x)=4(2x-3)";
 	equationsWE[13] = "(10)/(x)=(500)/(-600)";
+	equationsWE[15] = "(3x)/(2)-(x)/(4)-10=5x";
 }
 
 //function getColorsBackground() {
