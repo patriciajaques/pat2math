@@ -79,6 +79,7 @@
     margin-top: -322px;
     position: fixed;
     cursor: pointer;
+    display: none;
 }
 
 #ranking{
@@ -86,7 +87,7 @@
     width: 70px;
     height: 70px;
     margin-left: 933px;
-    margin-top: -550px;
+    margin-top: -323px;
     position: fixed;
     cursor: pointer;
 }
@@ -96,7 +97,7 @@
     width: 70px;
     height: 70px;
     margin-left: 933px;
-    top: 390px;
+    top: 612px;
     cursor: pointer;
     position: fixed;
 }

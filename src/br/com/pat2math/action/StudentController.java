@@ -92,13 +92,50 @@ public class StudentController {
 	}
 	
 	// metodo para pegar os 10 estudantes com a maior pontuação
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "newPatequation/top10")
-	public List<Student> topTotalScore(){
-		long size = sd.size();
-		System.out.println(size);
-		return null;
-	}
+		@RequestMapping(value = "newPatequation/top10", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+		public @ResponseBody String topTotalScore(int id, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+			int posicao = 1;
+			List<Student> estudantes= sd.obterRanking();
+			String retorno = "<div align = 'center'><table align: center>";
+			retorno += "<tr align = 'center'> <th align = 'center'> Posição </th> <th align = 'center'> Nome </th> <th align = 'center'> Pontuação </th> </tr>";
+			int cont = -5;
+			while(posicao<=estudantes.size()) {
+				if(posicao<=10) {
+					if(estudantes.get(posicao-1).getId()==id) {
+						retorno += "<tr><td align = 'center'><b>" + posicao +"</b><td align = 'center'><b>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getTotalScore() + "</b></td></tr>";
+						posicao++;
+						while(posicao<=15) {
+							retorno += "<tr><td align = 'center'>" + posicao +"<td align = 'center'>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getTotalScore() + "</td></tr>";
+							posicao++;
+						}
+						break;
+						
+					}else {
+						retorno += "<tr><td align = 'center'>" + posicao +"<td align = 'center'>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getTotalScore() + "</td></tr>";
+					}
+				}
+				else if(estudantes.get(posicao-1).getId()==id) {
+					retorno += "<tr><td align = 'center'> <td align = 'center'> ... </td><td align = 'center'> </td></tr>";
+					while(cont<=5 && posicao<estudantes.size()) {
+						if((posicao+cont)>10) {
+							if(cont==0) {
+								retorno += "<tr><td align = 'center'><b>" + (posicao+cont) +"</b><td align = 'center'><b>" + estudantes.get(posicao+cont-1).getFirstName() + " " + estudantes.get(posicao+cont-1).getLastName() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao+cont-1).getTotalScore() + "</b></td></tr>";
+							}else {
+								retorno += "<tr><td align = 'center'>" + (posicao+cont) +"<td align = 'center'>" + estudantes.get(posicao+cont-1).getFirstName() + " " + estudantes.get(posicao+cont-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao+cont-1).getTotalScore() + "</td></tr>";
+							}
+						}
+						cont++;
+					}
+					if(cont>5) {
+						break;
+					}
+				}
+				posicao++;
+			}
+			retorno += "</table></div><br><br>";
+			retorno += "<div class=\"fb-share-button\" data-href=\"http://pat2math.unisinos.br\" data-layout=\"button\" data-size=\"large\" data-mobile-iframe=\"true\"><a class=\"fb-xfbml-parse-ignore\" target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fpat2math.unisinos.br%2F&amp;src=sdkpreparse\">Compartilhar</a></div>";
+			return retorno;
+		}
 	
 	@RequestMapping("signUp")
 	public String save(@ModelAttribute("formStudent")

@@ -335,6 +335,8 @@ $(document).ready(function() {
 			document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
 			document.getElementById("rewardWorkedExamples").style.marginLeft = "390px";
 			document.getElementById("help").style.marginLeft = "975px";
+			document.getElementById("ranking").style.marginLeft = "975px";
+			document.getElementById("reportBug").style.marginLeft = "975px";
 		}
 		
 		else 
@@ -633,54 +635,9 @@ function tourTCC() {
 	});
 }
 
-function ranking(){
-	var next = "top10";
-	
-	$.ajax({
-		type: "GET",
-		url: appContext + "newPatequation/top10",
-		success:
-			function(data) {
-				console.log(data);
-			},
-		error:
-			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
-		 	}
-		});	
-	
-	$.guider({
-		name: "top10",
-		title: "TOP 10",
-		description: "<table align='center', border='solid-black'>" +
-						"<tr align='center'> <th align='center'> Nome </th> <th align='center'> Pontuação </th> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"<tr> <td> </td> <td> </td> </tr>" +
-						"</table>",
-		alignButtons: "center",
-		position: "center",
-		buttons: {
-			Finalizar: {
-				click: true,
-				className: "primary"
-			}
-		}
-	}).show();
-}
 
 function startNewPatequation() {
 	document.getElementById("topics").style.background = "silver";
-	document.getElementById("reportBug").style.display = "none";
-	document.getElementById("tour").style.display = "none";
 	
 	getEquationsWE();
 	getPontuacaoEquacoes();
@@ -751,6 +708,35 @@ function startNewPatequation() {
 //		
 //		document.getElementById("noticeHint").style.display="inline";
 //	}
+}
+
+function ranking(){
+	$.ajax({
+		type: "GET",
+		url: "newPatequation/top10",
+		data: {"id" : idCurrentUser},
+		success:
+			function(data) {
+				$.guider({
+					name: "top10",
+					title: "RANKING",
+					description: data,									
+					alignButtons: "center",
+					position: "center",
+					buttons: {
+						Fechar: {
+							click: true,
+							className: "primary"
+						}
+					}
+				}).show();
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+		 	}
+		});	
+// "<div class='fb-share-button' data-href='https://developers.facebook.com/docs/plugins/' data-layout='button' data-size='large' data-mobile-iframe='true'><a class='fb-xfbml-parse-ignore' target='_blank' href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse'>Compartilhar</a></div>"
 }
 
 //Explica a limitação do resolvedor nas equações de razão e proporção

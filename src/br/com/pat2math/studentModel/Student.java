@@ -38,16 +38,16 @@ public class Student extends User implements Serializable {
 	private List<Tip> feedbacks = new ArrayList<Tip>();
 	
 	//Pontuações gerais
-	private int totalScore, scoreLevel1, scoreLevel2, scoreLevel3, scoreLevel4, scoreLevel5;
+	private Integer totalScore, scoreLevel1, scoreLevel2, scoreLevel3, scoreLevel4, scoreLevel5;
 	
 	//Recompensas especiais
-	private boolean rewardWorkedExamples, rewardFinal;
+	private Boolean rewardWorkedExamples, rewardFinal;
 	
 	//Progresso
-	private int currentLevel, currentPlan, numEquationsSolved, numErrors, numHints;
+	private Integer currentLevel, currentPlan, numEquationsSolved, numErrors, numHints;
 	
 	//Indica se o usuário já viu o tour interativo do TCC
-	private boolean tourWasViewed;
+	private Boolean tourWasViewed;
 	
 	public static Student newStudent(Student student) {
 		student.defineRole();
