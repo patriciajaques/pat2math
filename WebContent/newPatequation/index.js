@@ -714,12 +714,12 @@ function ranking(){
 	$.ajax({
 		type: "GET",
 		url: "newPatequation/top10",
-		data: {"id" : idCurrentUser},
+		data: {"id" : idCurrentUser, "rankingGeral" : false},
 		success:
 			function(data) {
 				$.guider({
 					name: "top10",
-					title: "RANKING",
+					title: "RANKING DA TURMA",
 					description: data,									
 					alignButtons: "center",
 					position: "center",
@@ -735,8 +735,7 @@ function ranking(){
 			 function(XMLHttpRequest, textStatus, errorThrown) {
 		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
 		 	}
-		});	
-// "<div class='fb-share-button' data-href='https://developers.facebook.com/docs/plugins/' data-layout='button' data-size='large' data-mobile-iframe='true'><a class='fb-xfbml-parse-ignore' target='_blank' href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse'>Compartilhar</a></div>"
+		});
 }
 
 //Explica a limitação do resolvedor nas equações de razão e proporção

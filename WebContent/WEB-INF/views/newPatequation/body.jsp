@@ -146,3 +146,44 @@
 <!-- <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)"> -->
 <!-- </form> -->
 <!-- 	</div> -->
+
+<script>
+function compartilharFacebook(){
+	FB.ui({
+		method: 'feed',
+		name: 'PAT2Math teste',
+		link: 'pat2math.unisinos.br/pat2math/ranking',
+		picture: 'http://pat2math.unisinos.br/pat2math/images/Pat2MathBETA.png',
+		caption: 'LEGENDA',
+		description: 'DESCRIÇÃO'
+	});
+}
+
+function rankingGeral(){
+	$.ajax({
+		type: "GET",
+		url: "newPatequation/top10",
+		data: {"id" : idCurrentUser, "rankingGeral" : true},
+		success:
+			function(data) {
+				$.guider({
+					name: "top10",
+					title: "RANKING GERAL",
+					description: data,									
+					alignButtons: "center",
+					position: "center",
+					buttons: {
+						Fechar: {
+							click: true,
+							className: "primary"
+						}
+					}
+				}).show();
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+		 	}
+		});
+}
+</script>

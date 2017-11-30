@@ -91,11 +91,17 @@ public class StudentController {
 		return "redirect:signUpSuccess";
 	}
 	
-	// metodo para pegar os 10 estudantes com a maior pontuação
+	// metodo para gerar o ranking
 		@RequestMapping(value = "newPatequation/top10", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
-		public @ResponseBody String topTotalScore(int id, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		public @ResponseBody String topTotalScore(long id, boolean rankingGeral, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+			List<Student> estudantes;
+			if(rankingGeral) {
+				estudantes= sd.obterRanking();
+			}else {
+				Student s = sd.obterTurma(id);
+				estudantes= sd.obterRankingTurma(sd.obterTurma(id).getTurma());
+			}
 			int posicao = 1;
-			List<Student> estudantes= sd.obterRanking();
 			String retorno = "<div align = 'center'><table align: center>";
 			retorno += "<tr align = 'center'> <th align = 'center'> Posição </th> <th align = 'center'> Nome </th> <th align = 'center'> Pontuação </th> </tr>";
 			int cont = -5;
@@ -104,7 +110,7 @@ public class StudentController {
 					if(estudantes.get(posicao-1).getId()==id) {
 						retorno += "<tr><td align = 'center'><b>" + posicao +"</b><td align = 'center'><b>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getTotalScore() + "</b></td></tr>";
 						posicao++;
-						while(posicao<=15) {
+						while(posicao<=15 && posicao<=estudantes.size()) {
 							retorno += "<tr><td align = 'center'>" + posicao +"<td align = 'center'>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getTotalScore() + "</td></tr>";
 							posicao++;
 						}
@@ -132,8 +138,12 @@ public class StudentController {
 				}
 				posicao++;
 			}
-			retorno += "</table></div><br><br>";
-			retorno += "<div class=\"fb-share-button\" data-href=\"http://pat2math.unisinos.br\" data-layout=\"button\" data-size=\"large\" data-mobile-iframe=\"true\"><a class=\"fb-xfbml-parse-ignore\" target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fpat2math.unisinos.br%2F&amp;src=sdkpreparse\">Compartilhar</a></div>";
+			retorno += "</table></div><br>";
+			if(!rankingGeral) {
+				retorno += "<a href='#' onclick='rankingGeral()'> Confira o ranking geral do PAT2Math </a><br>";
+			}
+			retorno += "<br> Compartilhe sua pontuação no Facebook: <br>";
+		    retorno += "<a id='compartilhar_facebook' href='#' title='Compartilhe sua pontuação no Facebook' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
 			return retorno;
 		}
 	
@@ -223,6 +233,19 @@ public class StudentController {
 		model.addAttribute("topics", activeTopics);
 	//	model.addAttribute("student", student);
 		return "student.home";
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/ranking")
+	public String ranking(Model model, HttpSession session) {
+		Student student = new CurrentUser(session).student();		
+		return "ranking";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/knowledgeTest")
+	public String knowledgeTest(Model model, HttpSession session) {
+		Student student = new CurrentUser(session).student();		
+		return "knowledgeTest";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/newpatequation")

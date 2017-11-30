@@ -49,12 +49,17 @@ public class Student extends User implements Serializable {
 	//Indica se o usuário já viu o tour interativo do TCC
 	private Boolean tourWasViewed;
 	
+	//Turma do estudante
+	private Integer turma;
+	
+	
 	public static Student newStudent(Student student) {
 		student.defineRole();
 		student.defineScoresDefault();
 		student.defineSpecialRewardsDefault();
 		student.defineProgressDefault();
 		student.activate();
+		student.setTurma(0); //Padrão para os usuários fora do colégio São Luís
 		return student;
 	}
 	
@@ -273,7 +278,13 @@ public class Student extends User implements Serializable {
 		this.tourWasViewed = tourWasViewed;
 	}
 	
+	public void setTurma(Integer turma) {
+		this.turma = turma;
+	}
 	
+	public Integer getTurma() {
+		return turma;
+	}
 	
 
 	

@@ -33,4 +33,27 @@ public class StudentDao extends GenericDao<Student> implements AllStudents {
 		}
 	}
 	
+	public Student obterTurma(long id){		
+		String jpql = "from Student where id = :id";
+		try {
+			return (Student) em.createQuery(jpql)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch(NoResultException nre) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Student> obterRankingTurma(int turma){
+		String jpql = "from Student where totalScore is not null and turma = :turma order by totalScore desc";
+		try {
+			return (List<Student>) em.createQuery(jpql)
+				.setParameter("turma", turma)
+				.getResultList();
+		} catch(NoResultException nre) {
+			return null;
+		}
+	}
+	
 }

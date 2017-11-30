@@ -759,6 +759,34 @@ function loadExercise(id) {
 	
 }
 
+function loadExerciseKnowledgeTest(id) {	
+//	setCurrentEquation (id);	
+	loadingShow();
+	
+		$.ajax({
+		type: 'GET',
+		url: appContext + "student/loadExercise",
+		data: {"exerciseId" : id},
+		dataType: 'json',
+		success: function(data) {
+			if(data != null) {
+				var equation = new Equation(data.equation, 100);
+				
+				equation.id = data.id;
+				for(var j = 0; j < data.steps.length; j++) {
+					equation.steps[j] = new Step(data.steps[j], 0);
+				}
+					
+				idEquation=id;
+				
+				newEquations[0] = equation;
+			}
+			reloadPaper(1);	
+		}
+	});
+	loadingHide();
+}
+
 function nextEquation() {
 	if (idEquation < numEquacoesPlanoAtual - 1)
 		loadExercise(idEquation + 1);
