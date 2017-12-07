@@ -51,7 +51,8 @@
             <p id="clearCanvas">x</p>
         </div>
     </div> -->
-
+	
+	<button id="startTest" onclick="knowledgeTest()"> Iniciar teste</button>
     <div id="mask" onclick="test56()"></div>
 
 <!-- 	<div id="plansAux" style='visibility: hidden'></div> -->
@@ -66,3 +67,146 @@
 <!-- <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)"> -->
 <!-- </form> -->
 <!-- 	</div> -->
+
+<script>
+function knowledgeTest(){
+	var planoAtual = 1;
+	var proceed = true;
+	while(proceed){
+		if(planoAtual==1){
+			var idEquacao = parseInt(Math.random() * 5);
+			alert(idEquacao);
+			loadExerciseKnowledgeTest(100+idEquacao);
+			proceed = false;
+		}
+		else if(planoAtual==2){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(200+idEquacao);
+		}
+		else if(planoAtual==3){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(300+idEquacao);
+		}
+		else if(planoAtual==4){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(400+idEquacao);
+		}
+		else if(planoAtual==5){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(500+idEquacao);
+		}
+		else if(planoAtual==7){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(700+idEquacao);
+		}
+		else if(planoAtual==8){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(800+idEquacao);
+		}
+		else if(planoAtual==9){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(900+idEquacao);
+		}
+		else if(planoAtual==10){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1000+idEquacao);
+		}
+		else if(planoAtual==12){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1200+idEquacao);
+		}
+		else if(planoAtual==13){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1300+idEquacao);
+		}
+		else if(planoAtual==14){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1400+idEquacao);
+		}
+		else if(planoAtual==15){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1500+idEquacao);
+		}
+		else if(planoAtual==17){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1700+idEquacao);
+		}
+		else if(planoAtual==18){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1800+idEquacao);
+		}
+		else if(planoAtual==19){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(1900+idEquacao);
+		}
+		else if(planoAtual==20){
+			var idEquacao = parseInt(Math.random() * 5);
+			loadExerciseKnowledgeTest(2000+idEquacao);
+		}
+		else if(planoAtual==22){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(2200+idEquacao);
+		}
+		else if(planoAtual==23){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(2300+idEquacao);
+		}
+		else if(planoAtual==24){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(2400+idEquacao);
+		}
+		else if(planoAtual==26){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(2600+idEquacao);
+		}
+		else if(planoAtual==27){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(2700+idEquacao);
+		}
+		else if(planoAtual==28){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(2800+idEquacao);
+		}
+		else if(planoAtual==30){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(3000+idEquacao);
+		}
+		else if(planoAtual==31){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(3100+idEquacao);
+		}
+		else if(planoAtual==32){
+			var idEquacao = parseInt(Math.random() * 10);
+			loadExerciseKnowledgeTest(3200+idEquacao);
+		}
+	}
+}
+
+function loadExerciseKnowledgeTest(id) {	
+//	setCurrentEquation (id);	
+	loadingShow();
+	
+		$.ajax({
+		type: 'GET',
+		url: "/pat2math/student/loadExercise",
+		data: {"exerciseId" : id},
+		dataType: 'json',
+		success: function(data) {
+			if(data != null) {
+				var equation = new Equation(data.equation, 100);
+				
+				equation.id = data.id;
+				for(var j = 0; j < data.steps.length; j++) {
+					equation.steps[j] = new Step(data.steps[j], 0);
+				}
+					
+				idEquation=id;
+				
+				newEquations[0] = equation;
+			}
+			reloadPaper(1);	
+		}
+	});
+	loadingHide();
+}
+</script>
