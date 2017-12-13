@@ -608,7 +608,7 @@ function classPlan (nextStep) {
 	$.guider({
 		name: "plan2",
 		title: "Equações",
-		description: "Aqui está a lista das equações do plano de aula 1. Selecione qualquer uma delas para começar.",
+		description: "Aqui está a lista das equações da primeira fase. Selecione qualquer uma delas para começar.",
 	    alignButtons: "right", 
 	    onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
 	    buttons: {

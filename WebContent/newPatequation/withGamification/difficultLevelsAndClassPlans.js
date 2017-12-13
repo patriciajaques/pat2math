@@ -10,26 +10,48 @@ levels[3] = "Avançado";
 levels[4] = "Expert";
 levels[5] = "Season Finale";
 
+var firstStagePerLevel = newArray();
+firstStagePerLevel[1] = 1;
+firstStagePerLevel[2] = 12;
+firstStagePerLevel[3] = 22;
+firstStagePerLevel[4] = 30;
+firstStagePerLevel[5] = 42;
+
 var stages = new Array();
 stages[1] = "O início";
-stages[2] = "Existem letras negativas?";
-stages[3] = "Coeficientes";
-stages[4] = "Não esqueça dos sinais";
-stages[5] = "Final (do primeiro nivel)";
-stages[6] = "Para onde foram os coeficientes?";
-stages[7] = "Sempre lembre dos sinais";
-stages[8] = "ax + b = c";
-stages[9] = "O que significa a fórmula anterior?";
-stages[10] = "É o formato padrão de equações de 1º grau";
-stages[11] = "Muitos termos!";
-stages[12] = "Propriedade Distributiva (PD)";
-stages[13] = "Razão e Proporção (RP)";
-stages[14] = "Você percebeu que RP pode envolver PD?";
-stages[15] = "Frações...";
-stages[16] = "...e mais frações!";
-stages[17] = "Parabéns! Você está quase lá!";
-stages[18] = "Está preparado para o desafio final?";
-stages[19] = "42";
+stages[2] = "A forma mais básica das equações";
+stages[3] = "Uma pequena mudança";
+stages[4] = "Resultado negativo";
+stages[5] = "(Quase) Tudo negativo";
+stages[6] = "Um pouco de cada";
+stages[7] = "Existem letras negativas?";
+stages[8] = "Na matemática existe!";
+stages[9] = "A incógnita e o resultado negativos";
+stages[10] = "Tudo negativo!";
+stages[11] = "Uma revisão de tudo o que você viu até agora";
+stages[12] = "Coeficientes";
+stages[13] = "Coeficientes e resultado negativo";
+stages[14] = "Não esqueça dos sinais";
+stages[15] = "Tudo negativo! Versão 2.0";
+stages[16] = "Final (do primeiro nível)";
+stages[17] = "Para onde foram os coeficientes?";
+stages[18] = "Sempre lembre dos sinais";
+stages[19] = "Fração negativa";
+stages[20] = "Fração negativa (e o resultado também!)";
+stages[21] = "Tome cuidado com os sinais";
+stages[22] = "ax + b = c";
+stages[23] = "O que significa a fórmula anterior?";
+stages[24] = "É o formato padrão de equações de 1º grau";
+stages[25] = "Muitos termos (e equações)!";
+stages[26] = "Muitos parênteses!";
+stages[27] = "Propriedade Distributiva (PD)";
+stages[28] = "Razão e Proporção (RP)";
+stages[29] = "Você percebeu que RP pode envolver PD?";
+stages[30] = "Frações...";
+stages[31] = "...e mais frações!";
+stages[32] = "Parabéns! Você está quase lá!";
+stages[33] = "Está preparado para o desafio final?";
+stages[42] = "42";
 
 var stagesWithoutGamification = new Array();
 stagesWithoutGamification[1] = "1. Relembrando o básico";
@@ -157,44 +179,37 @@ function generateStages(level) {
 		
 	}
 	
-	var firstStage, finalStage;
+	var firstStage = firstStagePerLevel[level];
+	var finalStage;
 	
 	if (level < 5) {
-		if (level < 3) {
-			firstStage = 1 + (level-1) * 5;
-			finalStage = firstStage + 4;
-		}
+		if (level < 4) 
+			finalStage = firstStagePerLevel[level+1] - 1;
 		
-		else {
-			firstStage = 11 + (level-3) * 4;
-			finalStage = firstStage + 3;
-		}
+		else 
+			finalStage = 33;	
 	}
 	
 	else {
-		firstStage = finalStage = 19;
+		firstStage = finalStage = 42;
 	}
-	
-	var currentPlanDataBase = firstStage + 1000;
 	
 	var html;
 	
-	if (firstStage === 19)
-		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks' + currentPlanDataBase + '" class="tasks"></div>';
+	if (firstStage === 42)
+		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks42" class="tasks"></div>';
 
 	else {
-		html = '<span class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks' + currentPlanDataBase + '" class="tasks"></div>';
+		html = '<span class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + firstStage + ')">' + getNameStage(firstStage) + '</span> <div id="tasks' + firstStage + '" class="tasks"></div>';
 	
 		for (var i = firstStage + 1; i <= finalStage; i++) {
-			currentPlanDataBase++;
-			
 			if (unlockedPlans < i) {
 				html += '<div class="locked" style="margin-left: 122px;" id="lockStage' + i + '" onclick="padlockClickStage()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' +		
-				'<span id="stage' + i + '" class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + currentPlanDataBase + ')">&nbsp</span> <div id="tasks' + currentPlanDataBase + '" class="tasks"></div>';
+				'<span id="stage' + i + '" class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + i + ')">&nbsp</span> <div id="tasks' + i + '" class="tasks"></div>';
 			}
 			
 			else {
-				html += '<span class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(i) + '</span> <div id="tasks' + currentPlanDataBase + '" class="tasks"></div>';
+				html += '<span class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + i + ')">' + getNameStage(i) + '</span> <div id="tasks' + i + '" class="tasks"></div>';
 			}
 		}
 	

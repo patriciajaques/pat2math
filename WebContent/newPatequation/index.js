@@ -1,4 +1,4 @@
-var levelGamification = getCookie("levelGamification"); //Opções disponíveis: full, low, without
+var levelGamification = "full"; //Opções disponíveis: full, low, without
 var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
 var asyncAjax = getCookie("asyncAjax") !== "";
 var freeHints;
@@ -908,22 +908,22 @@ function completePlan() {
 	unlockedPlans++;
 	setCookieDays("unlockedPlans", unlockedPlans, 1);
 	
-	if (unlockedPlans < 6) 
+	if (unlockedPlans < 12) 
 		unlockedLevels = 1;
 	
-	else if (unlockedPlans < 11)
+	else if (unlockedPlans < 22)
 		unlockedLevels = 2;
 	
-	else if (unlockedPlans < 15)
+	else if (unlockedPlans < 30)
 		unlockedLevels = 3;
 	
-	else if (unlockedPlans < 19)
+	else if (unlockedPlans < 34)
 		unlockedLevels = 4;
 	
 	else
 		unlockedLevels = 5;
 	
-	if (unlockedPlans === 6 || unlockedPlans === 11 || unlockedPlans === 15 || unlockedPlans === 19) {
+	if (unlockedPlans === 12 || unlockedPlans === 22 || unlockedPlans === 30 || unlockedPlans === 34) {
 		divName = "lockLevel" + unlockedLevels;
 		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
 		divName = "level" + unlockedLevels;
