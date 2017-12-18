@@ -1,7 +1,7 @@
 var totalScore = 0;
 var levelScore = new Array();
 var stageScore = new Array();
-
+var scoresStages = new Array();
 //Para diminuir a pontuação, a quantidade passada por parâmetro deve ser negativa
 function addOrRemoveScore(amount) {
 	totalScore += amount;

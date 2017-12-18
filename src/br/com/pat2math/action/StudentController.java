@@ -519,8 +519,18 @@ public class StudentController {
 	public @ResponseBody String getRewardWorkedExamples(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());	
 		
-		
 		if (student.isRewardWorkedExamples())
+			return "true";
+	
+		else
+			return "false";
+	}
+	
+	@RequestMapping(value = "newPatequation/rewardFinal", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getRewardFinal(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		
+		if (student.isRewardFinal())
 			return "true";
 	
 		else
@@ -535,6 +545,17 @@ public class StudentController {
 		
 		return "Recompensa salva com sucesso";
 	}
+	
+	@RequestMapping(value = "newPatequation/saveRewardFinal", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String saveRewardFinal(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setRewardWorkedExamples(true);
+		student.setRewardFinal(true);
+		sd.alter(student);
+		
+		return "Recompensa salva com sucesso";
+	}
+
 	
 	@RequestMapping(value = "newPatequation/tour", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String tour(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	

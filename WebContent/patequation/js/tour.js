@@ -262,9 +262,26 @@ function firstStepTour (nextStep, title, description) {
     			}
     		});
     	    
-    	    $("#hint").guider({
+
+    		$.guider({
     			name: "fstep4",
     			next: "fstep5",
+    			position: "right",
+    			title: "Pontuação total e por nível",
+    			description: "Você também tem acesso à pontuação total e por nível. Você poderá conferi-las no menu principal assim que terminar este tour.",    
+    			alignButtons: "right",
+    			onShow: function() {generateStages(1);},
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#hint").guider({
+    			name: "fstep5",
+    			next: "fstep6",
     			title: "Pedindo dicas",
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão. Você perde 2 pontos para cada dica que solicitar.",
     			position: "bottom",
@@ -279,9 +296,53 @@ function firstStepTour (nextStep, title, description) {
     			}
     		});
     	    
+    	    $("#freeHints").guider({
+    			name: "fstep6",
+    			next: "fstep7",
+    			title: "Dicas gratuitas",
+    			position: "left",
+    			description: "Você possui dicas que podem ser solicitadas gratuitamente, isto é, sem a perda de pontos. Você pode verificar a quantidade de dicas gratuítas disponíveis neste painel",    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    		
+    		$("#freeErrors").guider({
+    			name: "fstep7",
+    			next: "fstep8",
+    			title: "Erros gratuitos",
+    			position: "bottom",
+    			description: "Assim como você pode pedir dicas gratuitas, você também pode errar e não perder pontos por isso. A quantidade de erros gratuitos pode ser visualizada aqui no cabeçalho do caderno",    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    		
+    		$.guider({
+    			name: "fstep8",
+    			next: "fstep9",
+    			title: "As quantidades disponíveis de dicas e erros gratuitos variam de acordo com a complexidade da fase atual",
+    			description: "Assim, quanto mais avançada for a fase e/ou mais equações ela tiver, mais dicas e erros gratuitos você receberá",    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
     	    $("#help").guider({
-    	    	name: "fstep5",
-    	    	next: "fstep6",
+    	    	name: "fstep9",
+    	    	next: "fstep10",
     	    	title: "Teclas utilizadas",
     	    	description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
     	    	position: "left",
@@ -298,7 +359,7 @@ function firstStepTour (nextStep, title, description) {
     	    	});
     	    
     	    $.guider({
-    			name: "fstep6",
+    			name: "fstep10",
     			title: "Agora é com você",
     			description: "Continue resolvendo a equação da forma que preferir.",
     			alignButtons: "right",
@@ -353,7 +414,7 @@ function alternativeFirstStepTour (nextStep) {
 	$.guider({
 		name: "fstep",
     	next: "fstep2",
-    	title: "Parabéns! O plano de aula 1 foi desbloqueado",
+    	title: "Parabéns! A primeira fase foi desbloqueada",
     	description: "Confira a seguir mais algumas considerações.",
     	alignButtons: "right",
     	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
@@ -400,14 +461,30 @@ function alternativeFirstStepTour (nextStep) {
     			}
     		});
     	    
-    	    $("#hint").guider({
+    	    $.guider({
     			name: "fstep4",
     			next: "fstep5",
+    			position: "right",
+    			title: "Pontuação total e por nível",
+    			description: "Você também tem acesso à pontuação total e por nível. Você poderá conferi-las no menu principal assim que terminar este tour.",    
+    			alignButtons: "right",
+    			onShow: function() {generateStages(1);},
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#hint").guider({
+    			name: "fstep5",
+    			next: "fstep6",
     			title: "Pedindo dicas",
     			description: "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão. Você perde 2 pontos para cada dica que solicitar.",
     			position: "bottom",
     			alignButtons: "right",
-    			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+    			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				Próximo: {
@@ -417,9 +494,53 @@ function alternativeFirstStepTour (nextStep) {
     			}
     		});
     	    
+    	    $("#freeHints").guider({
+    			name: "fstep6",
+    			next: "fstep7",
+    			title: "Dicas gratuitas",
+    			position: "left",
+    			description: "Você possui dicas que podem ser solicitadas gratuitamente, isto é, sem a perda de pontos. Você pode verificar a quantidade de dicas gratuítas disponíveis neste painel",    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    		
+    		$("#freeErrors").guider({
+    			name: "fstep7",
+    			next: "fstep8",
+    			title: "Erros gratuitos",
+    			position: "bottom",
+    			description: "Assim como você pode pedir dicas gratuitas, você também pode errar e não perder pontos por isso. A quantidade de erros gratuitos pode ser visualizada aqui no cabeçalho do caderno",    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    		
+    		$.guider({
+    			name: "fstep8",
+    			next: "fstep9",
+    			title: "As quantidades disponíveis de dicas e erros gratuitos variam de acordo com a complexidade da fase atual",
+    			description: "Assim, quanto mais avançada for a fase e/ou mais equações ela tiver, mais dicas e erros gratuitos você receberá",    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
     	    $("#help").guider({
-    	    	name: "fstep5",
-    	    	next: "fstep6",
+    	    	name: "fstep9",
+    	    	next: "fstep10",
     	    	title: "Teclas utilizadas",
     	    	description: "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.",
     	    	position: "left",
@@ -436,8 +557,8 @@ function alternativeFirstStepTour (nextStep) {
     	    	});
     	    
     	    $("#topics").guider({
-    			name: "fstep6",
-    			next: "fstep7",
+    			name: "fstep10",
+    			next: "fstep11",
     			title: "Menu principal",
     			description: "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.",       
     			position: "right",
@@ -451,10 +572,10 @@ function alternativeFirstStepTour (nextStep) {
     			}
     		});
     		
-    		$(".topic").guider({
-    			name: "fstep7",
+    		$.guider({
+    			name: "fstep11",
     			title: "Acesso às Equações",
-    			description: "Clique neste botão para conferir as equações do plano de aula 1.",     
+    			description: "Clique na Fase 1 para conferir as suas equações.",     
     			position: "right",
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
@@ -477,7 +598,7 @@ function mainMenu (nextStep) {
 			name: "mp",
 	    	next: "mp2",
 	    	title: "Parabéns!",
-	    	description: "O plano de aula 1 foi desbloqueado e agora você tem acesso ao menu principal.",
+	    	description: "A fase 1 foi desbloqueada e agora você tem acesso ao menu principal.",
 	        alignButtons: "right",
 	        onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
 	    	buttons: {
@@ -511,7 +632,7 @@ function mainMenu (nextStep) {
 		name: "mp",
     	next: "mp2",
     	title: "Parabéns!",
-    	description: "O plano de aula 1 foi desbloqueado e agora você tem acesso ao menu principal.",
+    	description: "A fase 1 foi desbloqueada e agora você tem acesso ao menu principal.",
         alignButtons: "right",
         onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
     	buttons: {
@@ -542,7 +663,7 @@ function mainMenu (nextStep) {
 	$.guider({
 		name: "mp3",
 		title: "Acesso às Equações",
-		description: 'Clique em "Plano de Aula 1" para conferir as suas equações.',     
+		description: 'Clique na Fase 1 para conferir as suas equações.',     
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "mp3", 1); setCookieDays ("functionTour", "mainMenu", 1);},
 		buttons: {

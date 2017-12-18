@@ -10,7 +10,7 @@ levels[3] = "Avançado";
 levels[4] = "Expert";
 levels[5] = "Season Finale";
 
-var firstStagePerLevel = newArray();
+var firstStagePerLevel = new Array();
 firstStagePerLevel[1] = 1;
 firstStagePerLevel[2] = 12;
 firstStagePerLevel[3] = 22;
@@ -33,7 +33,7 @@ stages[12] = "Coeficientes";
 stages[13] = "Coeficientes e resultado negativo";
 stages[14] = "Não esqueça dos sinais";
 stages[15] = "Tudo negativo! Versão 2.0";
-stages[16] = "Final (do primeiro nível)";
+stages[16] = "Uma fase sem nome";
 stages[17] = "Para onde foram os coeficientes?";
 stages[18] = "Sempre lembre dos sinais";
 stages[19] = "Fração negativa";
@@ -178,6 +178,9 @@ function generateStages(level) {
 			getLevelsScoreDataBase();
 		
 	}
+	
+	if (unlockedPlans === 12 || unlockedPlans === 22 || unlockedPlans === 30 || unlockedPlans >= 34)
+		theRoadSoFar();
 	
 	var firstStage = firstStagePerLevel[level];
 	var finalStage;

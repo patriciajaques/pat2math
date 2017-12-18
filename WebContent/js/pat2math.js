@@ -127,16 +127,7 @@ function loadTasks(id) {
 	var isUnlocked = unlockAllPlans;
 	
 	if (isUnlocked === false) {
-		if (levelGamification !== undefined) {
-			if (levelGamification !== "without") 
-				isUnlocked = unlockedPlans >= (id - 1000);
-			
-			else 
-				isUnlocked = true;	 
-		}
-		
-		else 
-			isUnlocked = numUnlockedPlans >= id;
+		isUnlocked = unlockedPlans >= id;
 	}
 	
 	if (isUnlocked) {
@@ -157,30 +148,30 @@ function loadTasks(id) {
 			verifyFreeHints();
 		}
 	
-		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
-			setBackgroundColor("#FFE1F8"); 
-		}		
-		else if(id === 2 || id === 10 || id === 18 || id === 26 || id === 34){
-			setBackgroundColor("#EEE8AA"); 
-		}
-		else if(id === 3 || id === 11 || id === 19 || id === 27 || id === 35){
-			setBackgroundColor("#E0FFFF"); 
-		}
-		else if(id === 4 || id === 12 || id === 20 || id === 28 || id === 36){
-			setBackgroundColor("#E6E6FA"); 
-		}
-		else if(id === 5 || id === 13 || id === 21 || id === 29){
-			setBackgroundColor("#FFECB7"); 
-		}
-		else if(id === 6 || id === 14 || id === 22 || id === 30){
-			setBackgroundColor("#E0E0E0"); 
-		}
-		else if(id === 7 || id === 15 || id === 23 || id === 31){
-			setBackgroundColor("#FFF0F5"); 
-		}
-		else if(id === 8 || id === 16 || id === 24 || id === 32){
-			setBackgroundColor("#B0E0E6"); 
-		}		
+//		if(id === 1 || id === 9  || id === 17 || id === 25 || id === 33){
+//			setBackgroundColor("#FFE1F8"); 
+//		}		
+//		else if(id === 2 || id === 10 || id === 18 || id === 26 || id === 34){
+//			setBackgroundColor("#EEE8AA"); 
+//		}
+//		else if(id === 3 || id === 11 || id === 19 || id === 27 || id === 35){
+//			setBackgroundColor("#E0FFFF"); 
+//		}
+//		else if(id === 4 || id === 12 || id === 20 || id === 28 || id === 36){
+//			setBackgroundColor("#E6E6FA"); 
+//		}
+//		else if(id === 5 || id === 13 || id === 21 || id === 29){
+//			setBackgroundColor("#FFECB7"); 
+//		}
+//		else if(id === 6 || id === 14 || id === 22 || id === 30){
+//			setBackgroundColor("#E0E0E0"); 
+//		}
+//		else if(id === 7 || id === 15 || id === 23 || id === 31){
+//			setBackgroundColor("#FFF0F5"); 
+//		}
+//		else if(id === 8 || id === 16 || id === 24 || id === 32){
+//			setBackgroundColor("#B0E0E6"); 
+//		}		
 	
 	var open = $("#tasks"+id).css("display");
 	tasksRemaining=0;
@@ -264,23 +255,23 @@ function loadTasks(id) {
 					}
 					
 					//Verificação especial se o aluno já está nos planos de aula convencionais
-					if (id > numPlanosIntroducao) {
-						id -= numPlanosIntroducao;
+//					if (id > numPlanosIntroducao) {
+//						id -= numPlanosIntroducao;
+//					
+//						if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id < 25) { //id !== 25 && id !== 29 && id !== 33 && id < 36 
+//							$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
+//
+//							//Verificação especial via cookie, caso o usuário já tenha visualizado o exemplo trabalhado,
+//							//mas ainda não concluiu a resolução de nenhuma equação
+//							if ((id > 2 || enableTourInterativo === false) && taskSolved === 0 && getCookie("visualizedWE") === "") {
+//								setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
+//								setTimeout('classPlan' + id + '()', 1200);
+//							}
+//						}
+//					}
 					
-						if (enableWorkedExamples && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id < 25) { //id !== 25 && id !== 29 && id !== 33 && id < 36 
-							$("#tasks" + id).html('<span class="taskWE" onclick="getResolutionEquation(' + id + ')" id="taskWE"' + id + '>' + equationsWE[id] + '</span> <i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>' + document.getElementById("tasks" + id).innerHTML);
-
-							//Verificação especial via cookie, caso o usuário já tenha visualizado o exemplo trabalhado,
-							//mas ainda não concluiu a resolução de nenhuma equação
-							if ((id > 2 || enableTourInterativo === false) && taskSolved === 0 && getCookie("visualizedWE") === "") {
-								setTimeout(function() {loadExerciseWE(equationsWE[id], pointsWE[id]);}, 1000);
-								setTimeout('classPlan' + id + '()', 1200);
-							}
-						}
-					}
-					
-					//Os planos 5, 10, 14, 18 e 19 são os de revisão que não possuem exemplos trabalhados
-					if (levelGamification !== undefined && id !== 1005 && id !== 1010 && id !== 1014 && id < 1018) {
+					//Os planos 26, 31 e 32 ainda não possuem exemplos trabalhados
+					if (id !== 1 && id !== 6 && id !== 11 && id !== 16 && id !== 21 && id !== 25 && id !== 26 && id !== 29 && id <= 30) {
 						addWorkedExampleInEquationsMenu();
 						
 						if (taskSolved === 0) {
@@ -346,7 +337,7 @@ function loadTasks(id) {
 	}
 	
 	else {
-		padlockClick();
+		padlockClickStage();
 	}
 	
 	
@@ -354,34 +345,34 @@ function loadTasks(id) {
 }
 
 function getNumEquationsPlan() {
-	if (levelGamification !== undefined) {
-		if (planoAtual === 1001 || planoAtual === 1006)
-			return 4;
-		
-		else if (planoAtual === 1002 || planoAtual === 1003 || planoAtual === 1004 || planoAtual === 1007)
-			return 5;
-		
-		else if (planoAtual === 1005)
-			return 8;
-		
-		else if (planoAtual === 1010)
-			return 16;
-		
-		else if (planoAtual === 1014)
-			return 17;
-		
-		else if (planoAtual === 1018)
-			return 15;
-		
-		else if (planoAtual === 1019)
-			return 42;
-		
-		else
-			return 10;
-	}
-	
-	else {
-	if (planoAtual < 19 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
+//	if (levelGamification !== undefined) {
+//		if (planoAtual === 1001 || planoAtual === 1006)
+//			return 4;
+//		
+//		else if (planoAtual === 1002 || planoAtual === 1003 || planoAtual === 1004 || planoAtual === 1007)
+//			return 5;
+//		
+//		else if (planoAtual === 1005)
+//			return 8;
+//		
+//		else if (planoAtual === 1010)
+//			return 16;
+//		
+//		else if (planoAtual === 1014)
+//			return 17;
+//		
+//		else if (planoAtual === 1018)
+//			return 15;
+//		
+//		else if (planoAtual === 1019)
+//			return 42;
+//		
+//		else
+//			return 10;
+//	}
+//	
+//	else {
+	if (planoAtual < 19 && planoAtual !== 0 && planoAtual !== 6 && planoAtual !== 11 && planoAtual !== 16)
 		return 5;
 	
 	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 36 && planoAtual !== 25 && planoAtual !== 26 && planoAtual !== 29 && planoAtual!== 33))
@@ -402,11 +393,11 @@ function getNumEquationsPlan() {
 	else if (planoAtual === 36)
 		return 15;
 	
+	else if (planoAtual === 0)
+		return 1;
 	
-	else 
-		return 56;
-	}
-	
+	else
+		return 42;
 }
 
 function getPontuacaoPlano() {
@@ -495,11 +486,11 @@ function getPontuacaoPlano() {
 		else if (planoAtual === 32)
 			pontuacaoPlano = 160;
 		
-		else if (planoAtual === 34)
+		else if (planoAtual === 33)
 			pontuacaoPlano = 200;
 		
 		else
-			pontuacaoPlano = 300;	
+			pontuacaoPlano = 42;	
 	}
 	
 	else
@@ -677,18 +668,14 @@ function loadExercise(id) {
 				//Verificar neste momento se a primeira equação já está resolvida e atualizar no array de equações (atualizar nos cookies e localmente).
 				//Para avançar às próximas equações, a primeira deve estar resolvida obrigatoriamente. Se o usuário tentar acessar outra equação do mesmo plano,
 				//será redirecionado mesmo assim para a primeira equação.
+				
 				var equation;
 				
-				if (pontuacaoPlano !== null) 
-					equation = new Equation(data.equation, pontuacaoPlano);
-						
-				else if (pontuacaoEquacoes[id] !== undefined && pontuacaoEquacoes[id] !== null){
-					equation = new Equation(data.equation, pontuacaoEquacoes[id]);
-				}
+				if (id !== 0)
+					equation = new Equation(data.equation, scoresStages[planoAtual]);
 				
-				else {
-					equation = new Equation(data.equation, 100);
-				}
+				else
+					equation = new Equation(data.equation, 20);
 				
 				equation.id = data.id;
 				for(var j = 0; j < data.steps.length; j++) {

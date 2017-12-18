@@ -4,7 +4,7 @@ var alreadyReceivedSpecialReward = false; // Aqui deverá ser a verificação se
 
 function addWorkedExampleInEquationsMenu() {
 	var idTasks = "tasks" + planoAtual;
-	var numWorkedExample = planoAtual - 1000;
+	var numWorkedExample = planoAtual;
 	
 	var html = '<span class="taskWE" onclick="accessWorkedExample(' + numWorkedExample + ');" id="taskWE"' + planoAtual + '>' + equationsWE[numWorkedExample] + '</span><i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>';
 	document.getElementById(idTasks).innerHTML = html + document.getElementById(idTasks).innerHTML;
@@ -42,7 +42,7 @@ function firstPlanAccess() {
     $("#topicsAux").show();
     
 	var idFirstEquation = planoAtual * 100;
-	var numberCurrentPlan = planoAtual - 1000;
+	var numberCurrentPlan = planoAtual;
 	
 	loadExercise(idFirstEquation);
 	

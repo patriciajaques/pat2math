@@ -6,7 +6,7 @@
 <script src="/pat2math/newPatequation/hints.js"></script>
 <script src="/pat2math/patequation/js/tour.js"></script>
 <script src="/pat2math/patequation/js/workedExamplesUtil.js"></script>
-<script src="/pat2math/newPatequation/workedExamples.js"></script>
+<script src="/pat2math/patequation/js/workedExamples.js"></script>
 <script src="/pat2math/newPatequation/workedExamplesController.js"></script>
 <script src="/pat2math/newPatequation/withGamification/difficultLevelsAndClassPlans.js"></script>
 <script src="/pat2math/newPatequation/withGamification/fullGamification/specialRewards.js"></script>

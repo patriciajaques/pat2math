@@ -19,6 +19,27 @@ function saveWorkedExamplesReward() {
 	});
 	
 }
+
+function finalReward() {
+	$("#help-box").html("<img src='/pat2math/patequation/img/ImLegend2.png' width='358px' height='500px'></img><div style='cursor: pointer; margin-top: 42px; font-size: 74px; '><a href=# onclick=closeWindow() style='font-size: 74px;'>I'm Legend</a></div><div id='theEnd' style='cursor: pointer; visibility: hidden; margin-top: 68px; '><a href=# onclick='closeWindow()' style='font-size: 22px'>The End?</a></div> <script> setTimeout(function() {document.getElementById('theEnd').style.visibility = 'visible'}, 4000); </script>");
+	$("#mask").fadeIn(700);
+	$("#help-box").fadeIn(700);
+	document.getElementById("imLegend").style.visibility = "visible";
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/saveRewardFinal",
+		data : {
+
+		},
+		success : function(data) {
+			console.log("Recompensa adquirida com sucesso");
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
 function changeColor() {
 	var description = '<a href=# onclick="setBackgroundAzul()">Azul</a>' +
 					  '<br><a href=# onclick="setBackgroundVerde()">Verde</a>' +
@@ -68,6 +89,4 @@ function setBackgroundCinza() {
 function setBackgroundBranco() {
 	setBackgroundColor("white");
 }
-function finalReward() {
-	
-}
+

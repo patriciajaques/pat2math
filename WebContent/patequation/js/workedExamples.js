@@ -2057,6 +2057,719 @@ function classPlan24() {
 		});	
 }
 
+function classPlan27() {
+	contWE = 1;
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Apresentamos as equações com propriedade distributiva",
+		description : "Essas equações são mais fáceis do que parecem. Vamos explicar passo-a-passo para você entender direitinho",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "O que é a propriedade distributiva?",
+		description : "É uma propriedade da multiplicação que nos diz que, na multiplicação de números quaisquer, podemos converter qualquer um deles em uma soma ou subtração que o resultado permanecerá o mesmo",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "3",
+		next : "4",
+		title : "Vamos conferir um exemplo na prática",
+		description : "Considere a multiplicação 5 * 7 = 35. Existem várias maneiras de escrever o número 7 na forma de adição ou subtração. Uma delas é 4 + 3",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "4",
+		next : "5",
+		title : "Dessa maneira, temos 5(4 + 3) = 35",
+		description : "Como estamos trabalhando com números definidos, a opção mais fácil seria somar primeiro 4 + 3, e depois multiplicar por 5",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "5",
+		next : "6",
+		title : "Qual seria a outra forma de resolver?",
+		description : "Podemos distribuir essa multiplicação em uma soma de produtos. Essa distribuição é realizada em duas etapas",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "6",
+		next : "7",
+		title : "Primeira etapa (exemplo 5(4 + 3) = 35)",
+		description : "Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Neste exemplo temos 5 * 4",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "7",
+		next : "8",
+		title : "Segunda etapa (exemplo 5(4 + 3) = 35)",
+		description : "Multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão (no nosso exemplo é o sinal de mais). Assim, temos 5 * 4 + 5 * 3",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "8",
+		next : "9",
+		title : "Agora é só calcular a nova expressão",
+		description : "Temos que 5 * 4 = 20 e 5 * 3 = 15. Somando os dois resultados temos 20 + 15 = 35, exatamente o valor da multiplicação 5 * 7",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "9",
+		next : "10",
+		title : "Vamos aplicar os conceitos aprendidos na nossa equação",
+		description : "Vamos começar pela primeira propriedade distributiva, que é 5(2 + x). Mesmo trabalhando com incógnitas, as regras não mudam",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "10",
+		next : "11",
+		title : "Primeira etapa",
+		description : "Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Neste caso temos 5 * 2",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "11",
+		next : "12",
+		title : "Segunda etapa",
+		description : "Multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão (no nosso exemplo é o sinal de mais). Assim, temos 5 * 2 + 5x",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "12",
+		next : "13",
+		title : "Agora faremos a mesma coisa na próxima propriedade distributiva",
+		description : "Não esqueça que, como estamos trabalhando com equações, precisamos reescrever o lado esquerdo para manter a igualdade",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("5 * 2 + 5x = 4(2x-3)", "step1", 1); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line3").guider({
+		name: "13",
+		next : "14",
+		title : "Vamos tentar resolver as duas etapas em único passo?",
+		description : "Relembrando as instruções: Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Em seguida, multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "14",
+		next : "15",
+		title : "Dessa maneira, temos: 4(2x - 3) = 4 * 2x - 4 * 3",
+		description : "Observe que a única diferença em relação à primeira expressão é que temos uma subtração. Nesse caso é só substituir o sinal de mais pelo sinal de menos",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("5 * 2 + 5x = 4 * 2x - 4 * 3", "step2", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "15",
+		next : "16",
+		title : "Agora resolvemos todas as multiplicações pendentes",
+		description : "Quando você estiver mais familiarizado com a propriedade distributiva, poderá inclusive calcular direto as duas multiplicações. Observe: 4(2x - 3) = 8x - 12",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("10 + 5x = 8x - 12", "step3", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "16",
+		next : "17",
+		title : "Agora nós temos uma equação já conhecida do plano de aula anterior",
+		description : "É uma equação de primeiro grau com vários termos",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "17",
+		next : "18",
+		title : "Passamos os termos em função de X para o lado esquerdo, e os demais números para o lado direito",
+		description : "Lembre-se da regra das operações inversas: Se temos uma adição de um lado, teremos uma subtração do outro. Se temos uma multiplicação de um lado, teremos uma divisão do outro",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("5x - 8x = -12 - 10", "step4", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line7").guider({
+		name: "18",
+		next : "19",
+		title : "Temos que 5x - 8x = - 3x e -12 - 10 = -22",
+		description : "Observe que os dois lados da equação são negativos. Você lembra daquela multiplicação por -1 que utilizamos várias vezes no segundo plano de aula? Podemos aplicar ela aqui também para facilitar o nosso cálculo",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("-3x = -22", "step5", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line8").guider({
+		name: "19",
+		next : "20",
+		title : "Multiplicando por - 1 os dois lados da equação, ambos se tornam positivos",
+		description : "Agora só falta passar o 3 para o lado direito dividindo o 22 para concluir a resolução",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("3x = 22", "step6", 1);},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line9").guider({
+		name: "20",
+		title : "Terminamos!",
+		description : "Observe que a fração-resultado já está em seu formato irredutível, portanto não precisamos simplificar. E não se preocupe se você esquecer alguma etapa da propriedade distributiva: Você pode pedir dicas a qualquer momento ou até mesmo conferir novamente este exercício resolvido",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation('<font color="blue">x = </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">3</font></div><div class="numerator"><font color="blue">22</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step7", 1); exitWorkedExample();},
+		alignButtons : "right",
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+}
+
+function classPlan28() {
+	contWE = 1;
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Vamos resolver essa equação agora?",
+		description : "Observe que há uma igualdade de frações. Essa igualdade é chamada de razão e proporção",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "Como resolvemos uma razão e proporção?",
+		description : "Basicamente utilizaremos duas vezes a regra da operação inversa da divisão. Mas antes disso, vamos analisar melhor a nossa equação.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "3",
+		next : "4",
+		title : "Você percebeu que a fração do lado direito pode ser simplificada?",
+		description : "Podemos dividir por 100 o seu numerador e denominador, o que facilitará bastante para a próxima etapa",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('<span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="green">x</font></div><div class="numerator">10</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span> = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">-6</font></div><div class="numerator">5</div><div class="frac-line-aux"><span class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "4",
+		next : "5",
+		title : "Agora observe os termos destacados em verde e azul",
+		description : "São os denominadores das duas frações, e a partir deles que aplicaremos a regra da operação inversa. Você deve ter notado que a incógnita X está em um denominador, mas veremos no próximo passo que isso não será um problema",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "5",
+		next : "6",
+		title : "Sabemos que a operação inversa da divisão é a multiplicação",
+		description : "Assim, podemos passar o primeiro denominador para o outro lado multiplicando o numerador da segunda fração, e vice-versa. Cuidado: O segundo denominador era negativo. Quando trabalhamos com multiplicação e divisão, o sinal é preservado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation('10 <font color="blue">* (-6)</font> = 5 <font color="green">* x</font>', "step2", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line7").guider({
+		name: "6",
+		next : "7",
+		title : "Agora resolvemos as multiplicações: 10 * (-6) = -60 e 5 * x = 5x",
+		description : "Observe que a incógnita X está no lado direito da equação. Como é uma igualdade simples de dois termos, podemos trocá-los de lado sem modificar nenhuma operação ou sinal",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 2; resolutionEquation('-60 = 5x', "step3", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line8").guider({
+		name: "7",
+		next : "8",
+		title : "Estamos quase lá",
+		description : "Falta somente dividir -60 por 5, que é o coeficiente de X",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 2; resolutionEquation('5x = -60', "step4", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line10").guider({
+		name: "8",
+		next : "9",
+		title : "Observe que os números 60 e 5 são múltiplos entre si",
+		description : "Portanto, podemos simplficar esta fração e chegar em um número inteiro como resultado",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 2; resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">5</div><div class="numerator">-60</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step5", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line11").guider({
+		name: "9",
+		title : "Terminamos!",
+		description : "Lembre-se sempre de três coisas quando for resolver razões e proporções:<br>1º) Verifique se é possível simplificar uma ou as duas frações para facilitar nos cálculos<br>2º) Você sempre passará os denominadores para os outros lados multiplicando os numeradores<br>3º) Os numeradores podem ser compostos por uma expressão de adição ou subtração, como por exemplo 2x + 3. Nesse caso, a multiplicação deverá ser realizada nos dois termos dessa expressão",
+		position: "bottom",
+		width : 670,
+		alignButtons : "right",
+		onShow: function() {resolutionEquation("<font color='blue'>x = -12</font>", "step6", 2); exitWorkedExample();},
+		buttons : {
+			Finalizar: {
+				click : function() {if (planoAtual === 1013) reasonAndProportionNotice();},
+				className : "primary"
+			}
+		}
+	});
+}
+
+function classPlan29() {
+	contWE = 1;
+	$.guider({
+		name: "1",
+		next : "2",
+		title : "Atenção agora!",
+		description : "Vamos trabalhar pela primeira vez com equações que envolvem adição e subtração de frações com denominadores diferentes",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {window.scrollTo(0, 50);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	}).show();
+	
+	$.guider({
+		name: "2",
+		next : "3",
+		title : "O primeiro passo é a aplicação do Mínimo Múltiplo Comum (MMC) em todos os denominadores",
+		description : "Lembre-se que os denominadores são os números de baixo das frações",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "3",
+		next : "4",
+		title : "O que acontece com os termos que não são frações?",
+		description : "Teremos que considerá-los como uma fração inteira. Todos os números inteiros podem ser representados como uma fração de denominador 1",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "4",
+		next : "5",
+		title : "Essa mesma regra também é válida para a variável X e seu coeficiente",
+		description : "Nessa equação, os termos inteiros são -10 e 5x. Dessa maneira, temos -10/1 e -5x/1",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "5",
+		next : "6",
+		title : "Agora vamos calcular o Mínimo Múltiplo Comum de todos os denominadores",
+		description : "Assim, temos MMC(2, 4, 1, 1). Você pode fazer esse cálculo no caderno ou mentalmente se já tiver mais prática ",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "6",
+		next : "7",
+		title : "Calculando o MMC(2, 4, 1, 1) chegamos ao número 4",
+		description : "O próximo passo é aplicar uma propriedade para transformar todos os termos da equação em números inteiros",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "7",
+		next : "8",
+		title : "Como funciona essa propriedade?",
+		description : "Ela nos diz que, para transformar uma fração em um número inteiro, dividimos o resultado do MMC pelo denominador dela, e em seguida multiplicamos pelo seu numerador. CUIDADO: Essa propriedade utiliza conceitos de operação inversa e só pode ser aplicada em equações",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "8",
+		next : "9",
+		title : "Vamos conferir um exemplo na prática",
+		description : "Observe a primeira fração (3x/2). O resultado do MMC neste exercício é o 4, então teríamos 4 : 2 * 3x. Lembre-se que o PAT2Math não permite esse operador de divisão, assim precisamos calcular a divisão e digitar diretamente 2 * 3x.",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line4").guider({
+		name: "9",
+		next : "10",
+		title : "Agora nós aplicamos essa propriedade em todos os termos da equação",
+		description : "Cuidado: todos os sinais devem ser preservados. ",
+		position: "bottom",
+		width : 600,
+		onShow: function() {resolutionEquation("2 * 3x - 1x - 4 * 10 = 4 * 5x", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line5").guider({
+		name: "10",
+		next : "11",
+		title : "O próximo passo é resolver todas as multiplicações pendentes",
+		description : "Você lembra das regras das expressões numéricas? Sempre que tivermos uma conta de multiplicação ou divisão, ela deve ser resolvida primeiro. Nesse caso nós temos mais de uma conta nessas condições e não há parênteses, assim podemos resolver todas essas multiplicações ao mesmo tempo. Só precisamos cuidar os sinais ",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("6x - x - 40 = 20x", "step2", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line6").guider({
+		name: "11",
+		next : "12",
+		title : "Chegamos em uma equação normal com múltiplos termos",
+		description : "Como já estamos mais experientes em equações desse tipo, podemos aplicar mais de uma propriedade em um único passo. Neste exercício, podemos unir os termos semelhantes 6x - x e ajustar os demais termos daquela maneira já conhecida: termos que envolvem X no lado esquerdo, demais números no lado direito. Somente precisamos cuidar para aplicar corretamente as operações inversas",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("5x - 20x = 40", "step3", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line7").guider({
+		name: "12",
+		next : "13",
+		title : "Estamos quase lá",
+		description : "Agora só falta aplicar a última regra de operação inversa",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation("-15x = 40", "step4", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line9").guider({
+		name: "13",
+		next : "14",
+		title : "Utilizando a operação inversa da multiplicação, passamos o -15 para o outro lado dividindo o 40",
+		description : "Relembramos mais uma vez: ao trabalhar com operações inversas de multiplicação e divisão, o sinal é preservado.",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		onShow: function() {contWE = 1; resolutionEquation('x = <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator">-15</div><div class="numerator">40</div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step5", 2);},
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line9").guider({
+		name: "14",
+		next : "15",
+		title : "Será que já terminamos?",
+		description : "Ainda não. Observe que os números 40 e -15 são múltiplos entre si, assim ainda podemos simplificar esta fração. Você lembra dos critérios de divisibilidade? O do 5 é o seguinte: qualquer número que termine em 5 ou em 0 é divisível por 5. Assim, podemos dividir por 5 o numerador e o denominador dessa fração, e colocaremos o resultado no próximo passo",
+		position: "bottom",
+		width : 600,
+		alignButtons : "right",
+		buttons : {
+			Próximo: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	$("#line11").guider({
+		name: "15",
+		title : "Agora sim!",
+		description : "O número 8 não termina em 5 ou 0, portanto chegamos à etapa final da simplificação e resolvemos a equaçaõ com sucesso",
+		position: "bottom",
+		width : 600,
+		onShow: function() {contWE = 2; resolutionEquation('<font color="blue">x = - </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">5</font></div><div class="numerator"><font color="blue">8</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step6", 2); exitWorkedExample();},
+		alignButtons : "right",
+		buttons : {
+			Finalizar: {
+				click : true,
+				className : "primary"
+			}
+		}
+	});
+	
+	
+}
 //Planos de conteúdo que faltam: 26, 27, 28, 30, 31 e 32
 
 //function openWorkedExample(id) {	

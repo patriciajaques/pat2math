@@ -120,11 +120,11 @@ function requestServer (type, last, next, typeOperation, element) {
                 	var lostPoints = -2;
                 	
                 	if (levelGamification === "full") {      			
-                		if (freeHints[planoAtual-1001] > 0) {
-                			freeHints[planoAtual-1001]--;
+                		if (freeHints[planoAtual] > 0) {
+                			freeHints[planoAtual]--;
                 			lostPoints = 0;
                 			
-                			var contentCookie = freeHints[planoAtual-1001] + "," + (planoAtual-1001);
+                			var contentCookie = freeHints[planoAtual] + "," + (planoAtual);
 		        			
                 			setCookieDays("freeHints", contentCookie, 1);
                 			
@@ -248,9 +248,19 @@ function requestServer (type, last, next, typeOperation, element) {
                         	var divName = "#tasks" + unlockedPlans;
                         	$(divName).slideUp(700);
                         	
-                        	if (levelGamification !== "without")
+                        	if (selectedEquation.equation === "x+7=12") {
+                        		if (selectedEquation.steps.length === 0)
+        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        	  
+                        		else
+                        		    mainMenu("");
+                        	}
+                        	
+                        	else if (levelGamification !== "without")
                         		completePlan();
-                        	  	
+                        	
+                        	else if (numUnlockedPlans == 2)
+                        		setTimeout('plan2Explanation("")', 2000);
                         }
                         
                         else 
@@ -520,11 +530,11 @@ function requestServer (type, last, next, typeOperation, element) {
                     	var lostPoints = -5;
                     	
                     	if (levelGamification === "full") {
-                    		if (freeErrors[planoAtual-1001] > 0) {
-                    			freeErrors[planoAtual-1001]--;
+                    		if (freeErrors[planoAtual] > 0) {
+                    			freeErrors[planoAtual]--;
                     			lostPoints = 0;
                     			
-                    			var contentCookie = freeErrors[planoAtual-1001] + "," + (planoAtual-1001);
+                    			var contentCookie = freeErrors[planoAtual] + "," + (planoAtual);
                     			        			
                     			setCookieDays("freeErrors", contentCookie, 1);
                     			verifyFreeErrors();                    		}

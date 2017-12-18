@@ -134,6 +134,7 @@
 	<div id="quest-box"></div>
 	<div id="topicsAux"></div>
 	<div id="tourAux"></div>
+	<div id="imLegend" title="I'm Legend"><img src= "/pat2math/patequation/img/ImLegend.jpg" height="310px" width="232px"></img></div>
 <!-- 	<div id="plansAux" style='visibility: hidden'></div> -->
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	

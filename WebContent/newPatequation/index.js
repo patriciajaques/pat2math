@@ -41,8 +41,9 @@ var enableWorkedExamples = getCookie ("enableWE") === "";
 var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
 var isTourInterativo = false;
+var openTourInterativo = false;
 var blockMenu = false;
-var openAndBlockMenu = "true";
+var openAndBlockMenu = "false";
 var showNews = false;
 var showPlan2Explanation = "true";
 var contWE = 1; //Variável auxiliar para os exemplos trabalhados que envolvem frações
@@ -257,6 +258,7 @@ $(document).ready(function() {
 
 
     $(selectedSheet + " #logo").tooltip();
+    $("#imLegend").tooltip();
     //$("#progressBar").tooltip();
 //    $("#helpSystem").tooltip();
     $("#imgInformation").tooltip();
@@ -639,13 +641,13 @@ function tourTCC() {
 function startNewPatequation() {
 	document.getElementById("topics").style.background = "silver";
 	
+	verifyTourInterativo();
 	getEquationsWE();
-	getPontuacaoEquacoes();
+	getScoresStages();
 	getFreeHintsAndErrors();
 	
 	if (levelGamification !== "without") {
 		unlockedPlans = getCookie("unlockedPlans");
-		
 		if (unlockedPlans !== "") {
 			unlockedPlans = parseInt(unlockedPlans);
 			unlockedLevels = parseInt(getCookie("unlockedLevels"));
@@ -672,8 +674,10 @@ function startNewPatequation() {
 		if (cookieColor !== "")
 			setBackgroundColor(cookieColor);
 		
-		if (levelGamification === "full")
+		if (levelGamification === "full") {
 			verifyWorkedExamplesReward();
+			verifyFinalReward();
+		}
 	}
 	
 	else {
@@ -815,55 +819,24 @@ function verifyWorkedExamplesReward() {
 				workedExamplesReward();
 				
 			}
-			
-			else {
-				document.getElementById("refresh_page").style.backgroundImage = "url('/pat2math/images/Gift.png')";
-				document.getElementById("refresh_page").title = "???";
-				$("#refresh_page").tooltip();
-				
-				document.getElementById("refresh_page").onclick = function() {
-					if (planoAtual !== undefined && freeHints[planoAtual-1001] === 0) {
-							$.guider({
-								title: "Você já está pronto para receber esta recompensa!",
-								description: "Depois de clicar no botão abaixo, verifique o que mudou na tela do PAT2Math",    
-								alignButtons: "center",
-								onShow: function() {saveWorkedExamplesReward();},
-								overlay : "dark",
-								buttons: {
-									"Atualizar a página e receber a recompensa :D": {
-										click: function() {window.location.reload();},
-										className: "primary"
-									}
-								}
-							}).show();
-					}
-					
-					else {
-						$.guider({
-							title: "Esta caixa de presente está trancada!",
-							description: "Para abri-la, você precisará concluir o objetivo abaixo:" +
-									     "<br><br>Objetivo geral: Entender como funciona o sistema de ajuda do PAT2Math, para conseguir aproveitá-lo da melhor maneira possível" +
-									     "<br><br>Tarefas necessárias:" +
-									     "<br><br>1. Selecione o nível de dificuldade que você parou na semana passada e a última fase aberta" +
-									     "<br><br>2. Selecione uma equação do menu, recomendamos que seja a que você achar mais difícil" +
-									     "<br><br>3. Utilize todas as suas dicas gratuitas na equação selecionada, seguindo as regras abaixo. <br>ATENÇÃO: você deve cumprir todas as regras listadas abaixo, senão a sua recompensa especial será perdida" +
-									     "<br><br>a) Você deverá pedir no mínimo 2 dicas e no máximo 4 dicas em cada passo da equação. Assim, você verá na prática como os níveis das dicas funcionam, por isso leia-as com atenção" +
-									     "<br><br>b) Se você chegar à resposta final da equação antes de pedir todas as dicas gratuitas, você poderá selecionar uma nova equação para solicitar as que restaram. Lembre-se de aplicar a regra anterior também para essa nova equação" +
-									     "<br><br>4. Clique novamente na caixa de presente. Se você seguiu todas as regras da tarefa anterior, ela será aberta e aparecerá uma mensagem de confirmação :D",    
-							alignButtons: "center",
-							overlay : "dark",
-							onShow: function() {$("#topics").fadeOut(); $("#topicsAux").show();},
-							width : 704,
-							buttons: {
-								OK: {
-									click: function() {$("#topics").fadeIn(); $("#topicsAux").hide(); $.guider({}).hideAll();},
-									
-									className: "primary"
-								}
-							}
-						}).show();
-					}
-				};
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+	
+}
+
+function verifyFinalReward() {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/rewardFinal",
+		data : {
+
+		},
+		success : function(data) {
+			if (data === "true") {			
+				document.getElementById("imLegend").style.visibility = "visible";
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -906,6 +879,10 @@ function verifyCookiesScore() {
 
 function completePlan() {
 	unlockedPlans++;
+	
+	if (unlockedPlans > 33 && document.getElementById("imLegend").style.visibility === "hidden")
+		finalReward();
+	
 	setCookieDays("unlockedPlans", unlockedPlans, 1);
 	
 	if (unlockedPlans < 12) 
@@ -920,8 +897,28 @@ function completePlan() {
 	else if (unlockedPlans < 34)
 		unlockedLevels = 4;
 	
-	else
+	else {
 		unlockedLevels = 5;
+		unlockedPlans = 42;
+	}
+	
+	if (unlockedPlans === 7) {
+		workedExamplesReward();
+		saveWorkedExamplesReward();
+		
+		$.guider({
+			title: "Parabéns! Você recebeu uma recompensa pelo seu progresso no PAT2Math",
+			description: "Verifique o que mudou na tela do sistema.",    
+			alignButtons: "center",
+			overlay : "dark",
+			buttons: {
+				"Legal :D": {
+					click: function() {$.guider({	}).hideAll();},
+					className: "primary"
+				}
+			}
+		}).show();
+	}
 	
 	if (unlockedPlans === 12 || unlockedPlans === 22 || unlockedPlans === 30 || unlockedPlans === 34) {
 		divName = "lockLevel" + unlockedLevels;
@@ -945,8 +942,8 @@ function completePlan() {
 }
 
 function getFreeHintsAndErrors() {
-	freeHints = [1, 2, 2, 3, 5, 4, 4, 8, 8, 14, 10, 15, 15, 20, 20, 24, 28, 34, 42];
-	freeErrors = [1, 1, 1, 2, 2, 2, 2, 3, 3, 5, 4, 5, 5, 10, 7, 10, 14, 17, 42];
+	freeHints = [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 6, 3, 3, 4, 4, 8, 8, 8, 8, 12, 15, 15, 15, 25, 20, 25, 28, 32, 40, 42];
+	freeErrors = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2, 2, 3, 3, 4, 4, 4, 4, 6, 8, 8, 8, 13, 10, 13, 14, 16, 20, 42];
 	
 	var cookieHints = getCookie("freeHints");
 	
@@ -964,6 +961,45 @@ function getFreeHintsAndErrors() {
 		freeErrors[pos] = parseInt(split[0]);
 	}
 }
+
+function getScoresStages() {
+	scoresStages[1] = 20;
+	scoresStages[2] = 20;
+	scoresStages[3] = 20;
+	scoresStages[4] = 20;
+	scoresStages[5] = 20;
+	scoresStages[6] = 20;
+	scoresStages[7] = 25;
+	scoresStages[8] = 25;
+	scoresStages[9] = 25;
+	scoresStages[10] = 25;
+	scoresStages[11] = 25;
+	scoresStages[12] = 30;
+	scoresStages[13] = 30;
+	scoresStages[14] = 35;
+	scoresStages[15] = 35;
+	scoresStages[16] = 40;
+	scoresStages[17] = 40;
+	scoresStages[18] = 40;
+	scoresStages[19] = 50;
+	scoresStages[20] = 50;
+	scoresStages[21] = 50;
+	scoresStages[22] = 70;
+	scoresStages[23] = 80;
+	scoresStages[24] = 100;
+	scoresStages[25] = 100;
+	scoresStages[26] = 110;
+	scoresStages[27] = 120;
+	scoresStages[28] = 130;
+	scoresStages[29] = 130;
+	scoresStages[30] = 150;
+	scoresStages[31] = 160;
+	scoresStages[32] = 180;
+	scoresStages[33] = 200;
+	scoresStages[42] = 42;
+	
+}
+
 function getLevelsAndPlansUnlockedDataBase() {
 	$.ajax({
 		type : "GET",
@@ -1047,6 +1083,30 @@ function insertLines (verifyLinesHeight, idEquation) {
 	
 	document.getElementById('paper-1').style.height = heightSheet + 'px';
 	document.getElementById('lines').innerHTML = lines;
+}
+
+function theRoadSoFar() {
+	var solvedEquations = [0, 71, 133, 233, 283];
+	var completedStages = [0, 11, 21, 29, 33];
+	
+	$.guider({
+		title : "O Caminho Até Aqui",
+		description : '<div style="text-align: left;">' +
+					  'Equações resolvidas: ' + solvedEquations[currentLevel] + 
+					  '\nFases concluídas: ' + completedStages[currentLevel] + 
+					  '\nPontuação total: ' + totalScore + '</div>',
+		overlay : "dark",
+		width : 600,
+		alignButtons : "center",
+		buttons : {
+			OK: {
+				click : true,
+				className : "primary",
+			}
+		}
+	}).show();
+	
+	
 }
 
 function showCalculator ( ) {
@@ -1189,6 +1249,43 @@ function isIntro(equation){
 		isIntroductionToEquationPlan = true;
 }
 
+function verifyTourInterativo() {
+	 $.ajax({  
+	     type : "Get",   
+	     url : "/pat2math/student/reload_task",
+//	     async: false,
+	     success : function(response) { 
+	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
+//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
+	    		 	if (getCookie ("stepTour") === "") {
+	    		 		blockMenu = true;
+	    		 		
+	    		 		if (enableWorkedExamples) {
+	    		 			loadExerciseWE("x+2=10", 20);
+	    		 			classPlan1();	    	   
+	    		 		}
+	    		 		
+	    		 		else {
+	    		 			isTourInterativo = true;
+	    		 			loadTasks(0);
+	    		 			loadExercise(0);
+	    		 			introductionWithWelcome("");
+	    		 		}
+	    			}
+	    		 	
+	    		 	else {
+	    		 		isTourInterativo = true;
+	    		 		loadTasks(0);
+	    		 		loadExercise(0);		    		 		
+	    		 		checkTour();
+	    		 	}
+	    	    }
+	     },  
+	     error : function(e) {  
+	      alert('Error: ' + e);   
+	     }  
+	    }); 
+}
 function createIntroductionPlans() {
 	var plans = '<span class="topic" onclick="loadTasks(1)">Introdução 1</span><div id="tasks1" class="tasks"></div>';
 
@@ -2644,7 +2741,7 @@ function showHint(hint) {
 }
 
 function verifyFreeHints() {
-	var hintsAvailable = freeHints[planoAtual-1001];
+	var hintsAvailable = freeHints[planoAtual];
 	
 	if (hintsAvailable > 0) {
 		var text = " dicas gratuitas disponíveis";
@@ -2661,7 +2758,7 @@ function verifyFreeHints() {
 }
 
 function verifyFreeErrors() {
-	var freeErrorsAvailable = freeErrors[planoAtual-1001];
+	var freeErrorsAvailable = freeErrors[planoAtual];
 	
 	if (freeErrorsAvailable > 0) {
 		document.getElementById("logo").style.marginLeft = "153px";
