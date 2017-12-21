@@ -218,8 +218,9 @@ function loadTasks(id) {
 						else
 							currentLevel = 5;
 					}
-									
-					generateStages(currentLevel);
+					
+					if (id !== 34 && id !== 35)
+						generateStages(currentLevel);
 				}
 					$("#tasks" + id).html(data);
 					$("#tasks" + id).slideDown(700);	

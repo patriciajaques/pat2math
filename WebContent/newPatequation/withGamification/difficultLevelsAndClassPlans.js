@@ -114,8 +114,13 @@ function generateLevels() {
 			html += '<div class="locked" id="lockLevel' + i + '" onclick="padlockClickLevel()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>';
 			html += '<span id="level' + i + '" class="topicLevels" style="background: ' + colorsLevels[i] + '; color: ' + colorsTextLevels[i] + '; margin-bottom: 10px;" onclick="padlockClickLevel()">' + levels[i] + '</span> <div id="tasksLevel' + i + '" class="tasks"></div>';
 		}
-
 	}
+	
+	if (unlockedLevels === 6) {
+		unlockAllPlans = true;
+		html += '<span class="topic" onclick="createRevisionPlans()">Modo Infinito</span>';
+	}
+	
 
 	document.getElementById("the_list").innerHTML = html;
 }
@@ -200,7 +205,7 @@ function generateStages(level) {
 	var html;
 	
 	if (firstStage === 42)
-		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + currentPlanDataBase + ')">' + getNameStage(firstStage) + '</span> <div id="tasks42" class="tasks"></div>';
+		html = '<span class="topic" style="width: 255px; margin-left: 5px; background: ' + colorsLevels[level] + '" onclick="loadTasks(' + 42 + ')">' + getNameStage(firstStage) + '</span> <div id="tasks42" class="tasks"></div>';
 
 	else {
 		html = '<span class="topic" style="width: 255px; margin-left: 5px;" onclick="loadTasks(' + firstStage + ')">' + getNameStage(firstStage) + '</span> <div id="tasks' + firstStage + '" class="tasks"></div>';

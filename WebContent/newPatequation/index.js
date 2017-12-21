@@ -4,7 +4,7 @@ var asyncAjax = getCookie("asyncAjax") !== "";
 var freeHints;
 var freeErrors;
 var numPlanosAula = 33;
-var numPlanosRevisao = 10;
+var numPlanosRevisao = 2;
 var numPlanosIntroducao = 0;
 var selectedSheet = "#paper-1";
 var selectedEquation;
@@ -897,6 +897,11 @@ function completePlan() {
 	else if (unlockedPlans < 34)
 		unlockedLevels = 4;
 	
+	else if (unlockedPlans > 42) {
+		unlockedLevels = 6;
+		generateLevels();
+	}
+	
 	else {
 		unlockedLevels = 5;
 		unlockedPlans = 42;
@@ -1358,19 +1363,12 @@ function createPlans() {
 }
 
 function createRevisionPlans() {
-	var plans = '<span class="topic" onclick="createPlans()">Planos de aula</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">Plano de Revisão 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
-	var numTotalPlanos = numPlanosAula + numPlanosRevisao;
-	if (unlockAllPlans) {		
-		for (var i = numPlanosAula + 2; i <= numTotalPlanos; i++) 
-			plans += '<span class="topic" onclick="loadTasks(' + i + ')">Plano de Revisão ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
-	}
+	var plans = '<span class="topic" onclick="generateLevels()">Modo Campanha</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">Fase 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
+	var numTotalPlanos = numPlanosAula + numPlanosRevisao;		
 	
-	else {
-		plans = '<div class="locked" id="lplan' + (numPlanosAula+2) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
-		
-		for (var i = numPlanosAula + 2; i <= numTotalPlanos; i++) 
-			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Plano de Aula ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
-	}
+	for (var i = numPlanosAula + 2; i <= numTotalPlanos; i++) 
+		plans += '<span class="topic" onclick="loadTasks(' + i + ')">Fase ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+
 	
 	document.getElementById("the_list").innerHTML = plans;
 }
