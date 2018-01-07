@@ -77,7 +77,7 @@ function imNotSure(plan) {
 
 function firstErrorOrHint() {
 	tryResolveByMyself = false;
-	var numberCurrentPlan = planoAtual - 1000;
+	var numberCurrentPlan = planoAtual;
 	
 	$.guider({
     	title: "Você gostaria de conferir um exercício resolvido antes de continuar?",

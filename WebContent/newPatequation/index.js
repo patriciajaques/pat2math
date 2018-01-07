@@ -1,4 +1,5 @@
 var levelGamification = "full"; //Opções disponíveis: full, low, without
+var finalAnswerCurrentEquation;
 var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
 var asyncAjax = getCookie("asyncAjax") !== "";
 var freeHints;
@@ -347,7 +348,14 @@ $(document).ready(function() {
 	
 	startNewPatequation();
 });
-
+function correctEquation(answer) {
+	var verifyEquality = replaceAll(answer, "x", finalAnswerCurrentEquation);
+	var ve = verifyEquality.split("=");
+	var left = eval(ve[0]);
+	var right = eval(ve[1]);
+	
+	return left === right;
+}
 function tourTCC() {
 	isTourInterativo = true;
 	var next = "gamification1";

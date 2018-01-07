@@ -602,6 +602,18 @@ function getStep(){
 	requestStep(equation);
 }
 
+function requestFinalAnswer() {
+	$.ajax({url: "/pat2math/getSteps",
+        data: {"lastStep":selectedEquation.equation},
+        success: function(data) {
+        	var steps = data.steps;
+        	var finalStep = steps[0].split(";");
+        	finalStep = finalStep[1].split("=");
+        	finalAnswerCurrentEquation = finalStep[1];
+        }
+ });
+}
+
 function requestResolution ( ){
 	 $.ajax({url: "/pat2math/getSteps",
 	        data: {"lastStep":selectedEquation.equation},
