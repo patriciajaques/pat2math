@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pat2math.expressao.arvore.InvalidValueException;
@@ -266,5 +267,11 @@ public class ResolverController {
 		
 		return op;
 		
+	}
+	
+	@RequestMapping(value = "newPatequation/registerStep", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String registerStep(String step, boolean correction, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+	
+		return "Progresso atualizado com sucesso";
 	}
 }

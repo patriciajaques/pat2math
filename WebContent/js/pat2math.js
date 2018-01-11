@@ -240,10 +240,8 @@ function loadTasks(id) {
 					if (tasksRemaining===0) {
 						addProgressValue(numEquacoesPlanoAtual);
 						
-						if (levelGamification !== undefined && levelGamification !== "without") { 
-							if (unlockedPlans === (id - 1000)) {
-								completePlan();
-							}
+						if (unlockedPlans <= id) {
+							completePlan();
 						}
 						
 					}

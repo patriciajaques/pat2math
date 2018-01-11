@@ -2,10 +2,21 @@ package br.com.pat2math.service;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import pat2math.modeloAluno.Mensagem;
+import br.com.pat2math.action.CurrentUser;
 import br.com.pat2math.domainBase.Content;
 import br.com.pat2math.domainBase.Exercise;
 import br.com.pat2math.repository.ContentRepository;
@@ -51,6 +62,9 @@ public class StudentService {
 		student.setGroup(group);
 	}
 	
+	public void registerStepInDataBase(Student student, Long idContent, List<Operation> operations, List<Tip> tips) {
+		
+	}
 	public void performResolutionStep(Student student, Long idContent, Mensagem message, List<Operation> operations, List<Tip> tips) {
 		
 		Content content = contentRepository.get(idContent);// Na tabela content do BC tem todas as equações
@@ -96,5 +110,7 @@ public class StudentService {
 	public Exercise performExercise(Long id) {
 		return exerciseRepository.get(id);
 	}
+	
+	
 	
 }

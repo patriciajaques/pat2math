@@ -1,6 +1,25 @@
 //Colocar uma verificação se o passo digitado é do tipo x=[número]. Se for e estiver correto,
 //deve ser identificado como solução da equação, às vezes isso não acontece.
 
+function registerStepInDataBase (type, last, next, typeOperation, element) {
+	var correction = correctEquation(next);
+	
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/registerStep",
+		data : {
+			"step" : next,
+			"correction" : correction
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
 function requestServer (type, last, next, typeOperation, element) {
     //type = 'd' -> hint
     //type = 'n' -> new equation

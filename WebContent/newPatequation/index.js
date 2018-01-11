@@ -202,13 +202,14 @@ $(document).ready(function() {
             	
             	window.location.reload();
             } else if (key === 84) { //alt + t
-            	if (getCookie("enableTour") === "")
-            		setCookieDays("enableTour", "false", 1);
+            	var unlockPlan = prompt("Digite o número da fase que você deseja desbloquear:");
+            	unlockPlan = parseInt(unlockPlan);
             	
-            	else
-            		setCookieDays("enableTour", "", 0);
+            	if (unlockedPlans === undefined || unlockedPlans === null)
+            		unlockedPlans = 1;
             	
-            	window.location.reload();
+            	for (var i = unlockedPlans; i < unlockPlan; i++)
+            		completePlan();
             } else if (key === 87) { //alt + w
             	if (getCookie("enableWE") === "")
             		setCookieDays("enableWE", "false", 1);
@@ -886,6 +887,9 @@ function verifyCookiesScore() {
 }
 
 function completePlan() {
+	if (unlockedPlans === undefined || unlockedPlans === null)
+		unlockedPlans = 1;
+	
 	unlockedPlans++;
 	
 	if (unlockedPlans > 33 && document.getElementById("imLegend").style.visibility === "hidden")
@@ -2881,18 +2885,47 @@ function getEquationsWE() {
 	equationsWE = new Array();
 	pointsWE = 100;
 	
-	equationsWE[1] = "x+4=10"
-	equationsWE[2] = "-x+1=10"
-	equationsWE[3] = "2x=10"
-	equationsWE[4] = "-3x=15"
-	equationsWE[6] = "(x)/(4)=20"
-	equationsWE[7] = "(x)/(-6)=42"
-	equationsWE[8] = "4x-10=8";
-	equationsWE[9] = "-3x+9=-27";
-	equationsWE[11] = "5x+8-2x=10+x";
-	equationsWE[12] = "5(2+x)=4(2x-3)";
-	equationsWE[13] = "(10)/(x)=(500)/(-600)";
-	equationsWE[15] = "(3x)/(2)-(x)/(4)-10=5x";
+	equationsWE[1] = "x+2=10";
+	equationsWE[2] = "x+4=10"
+	equationsWE[3] = "x-4=8";
+	equationsWE[4] = "x+4=-2"
+	equationsWE[5] = "x-3=-6";
+	equationsWE[7] = "-x+1=10"
+	equationsWE[8] = "-x-10=7"
+	equationsWE[9] = "-x+4=-8"
+	equationsWE[10] = "-x-15=-9"
+	equationsWE[12] = "2x=10"
+	equationsWE[13] = "5x=-30"
+	equationsWE[14] = "-3x=15"
+	equationsWE[15] = "-4x=-28"
+	equationsWE[17] = "(x)/(4)=20"
+	equationsWE[18] = "(x)/(7)=-49"
+	equationsWE[19] = "-(x)/(6)=42"
+	equationsWE[20] = "-(x)/(4)=-100"
+	equationsWE[22] = "4x-10=8";
+	equationsWE[23] = "-3x+9=-27";
+	equationsWE[24] = "5x+8-2x=10+x";
+	equationsWE[26] = "x-(3-2x)=2+(-4+2x)"; //ver se mantenho esta equação
+	equationsWE[27] = "2(x+3)-5=5(x+2)";
+	equationsWE[28] = "(x+3)/(3)=(4)/(9)";
+	equationsWE[30] = "(x)/(4)+5=(2)/(3)-(5x)/(8)";
+	equationsWE[31] = "(x+2)/(5)+8=(x-3)/(4+2)";
+	equationsWE[32] = "(4(x+3))/(7)+5=(-2(-x-1))/(5+8)";
+	equationsWE[34] = "(4)/(x)+(2)/(3)-5=(8)/(6x)";
+	equationsWE[35] = "(5)/(4x-2)+9=(10)/(-4(x-3))";
+	
+//	equationsWE[1] = "x+4=10"
+//	equationsWE[2] = "-x+1=10"
+//	equationsWE[3] = "2x=10"
+//	equationsWE[4] = "-3x=15"
+//	equationsWE[6] = "(x)/(4)=20"
+//	equationsWE[7] = "(x)/(-6)=42"
+//	equationsWE[8] = "4x-10=8";
+//	equationsWE[9] = "-3x+9=-27";
+//	equationsWE[11] = "5x+8-2x=10+x";
+//	equationsWE[12] = "5(2+x)=4(2x-3)";
+//	equationsWE[13] = "(10)/(x)=(500)/(-600)";
+//	equationsWE[15] = "(3x)/(2)-(x)/(4)-10=5x";
 }
 
 //function getColorsBackground() {
