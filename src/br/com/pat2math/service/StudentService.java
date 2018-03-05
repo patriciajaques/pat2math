@@ -62,9 +62,51 @@ public class StudentService {
 		student.setGroup(group);
 	}
 	
-	public void registerStepInDataBase(Student student, Long idContent, List<Operation> operations, List<Tip> tips) {
+	public void registerStepInDataBase(Student student, Long idContent, List<Operation> operations, List<Tip> tips, boolean isCorrect, String answer) {
+		Content content = contentRepository.get(idContent);// Na tabela content do BC tem todas as equações
+		TaskPerformed taskPerformed = taskPerformedRepository.get(content, student); // Na tabela taskPerformed do BC tem
+		// Informação da resolution_step, o passo de cada questão (= id), informação da content 
+		//de qual é a questão (= id_content), informação da user, de qual é usuario  (id_student) 
 		
+		boolean isFinalStep = false;
+		
+		if (isCorrect) {
+			String[] split = answer.split("=");
+			
+			if (split[0].equals("x")) {
+				try {
+					double number = Double.parseDouble(split[1]);
+					isFinalStep = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Não é a resposta final");
+				}
+			}
+		}
+		//Se é o ultimo passo ele salva data e hora
+		if(isFinalStep) {
+			taskPerformed.setFinished(true);
+			taskPerformed.setFinalTime(new Date());
+		}
+		
+		String messageFeedback = "Resposta correta";
+		
+		if (!isCorrect)
+			messageFeedback = "Resposta errada";
+		
+		//Salva os dados na resolução da equação em uma ID
+				ResolutionStep resolutionStep = new ResolutionStep();
+				resolutionStep.setTimestamp(new Date());
+				resolutionStep.setCorrect(isCorrect);
+				resolutionStep.setTaskPerformed(taskPerformed);
+				resolutionStep.setFeedback(messageFeedback);
+				resolutionStep.setMessage(messageFeedback);
+				resolutionStep.setAnswer(answer);
+				resolutionStep.setOperations(operations);
+				resolutionStep.setTips(tips);
+				
+				resolutionStepRepository.add(resolutionStep);
 	}
+	
 	public void performResolutionStep(Student student, Long idContent, Mensagem message, List<Operation> operations, List<Tip> tips) {
 		
 		Content content = contentRepository.get(idContent);// Na tabela content do BC tem todas as equações
