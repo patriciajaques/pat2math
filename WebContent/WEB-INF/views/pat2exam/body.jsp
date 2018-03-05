@@ -71,11 +71,7 @@
                 <span class="label"></span>
             </div>
         </div>
-
-        <button id="hint" class="btn">D i c a</button>
-        <div id="freeHints" style="width: 212px; margin-left: -20px; margin-top: 2px;"></div>    
     </div>
-     <div id='hintBox'><div id='hintText'></div></div>
     
      <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;"> 		    
