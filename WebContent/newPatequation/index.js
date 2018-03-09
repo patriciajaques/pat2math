@@ -322,10 +322,9 @@ $(document).ready(function() {
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
 	
-	if (widthWindow < 1366) {
-		document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
-		document.getElementById("rewardWorkedExamples").style.marginLeft = "390px";
-		document.getElementById("help").style.marginLeft = "975px";
+	if (widthWindow < 1920) {
+		var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
+		document.getElementById("help").style.marginLeft = marginLeft;
 	}
 	
 	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
@@ -335,20 +334,24 @@ $(document).ready(function() {
 	window.onresize = function(){
 		var widthWindow = window.innerWidth;
 		
-		if (widthWindow < 1366) {
-			document.getElementById("paper-1").style.marginRight = (6 - 1366 + widthWindow) + "px";
-			document.getElementById("rewardWorkedExamples").style.marginLeft = "390px";
-			document.getElementById("help").style.marginLeft = "975px";
-			document.getElementById("ranking").style.marginLeft = "975px";
-			document.getElementById("reportBug").style.marginLeft = "975px";
+		if (widthWindow < 1920) {
+			var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
+			document.getElementById("help").style.marginLeft = marginLeft;
 		}
-		
-		else 
-			document.getElementById("paper-1").style.marginRight = "6px";
 	};
 	
 	startNewPatequation();
 });
+
+function createLines() {
+	var lines = '<div class="hLineAux" id="line1">.</div>';
+	
+	for (var i = 2; i <= 22; i++) 
+		lines += '<div class="hLine" id="line' + i + '"></div>';
+	
+	document.getElementById("lines").innerHTML = lines;
+	
+}
 function correctEquation(answer) {
 	var verifyEquality = replaceAll(answer, "x", finalAnswerCurrentEquation);
 	var ve = verifyEquality.split("=");
@@ -648,8 +651,6 @@ function tourTCC() {
 
 
 function startNewPatequation() {
-	document.getElementById("topics").style.background = "silver";
-	
 	verifyTourInterativo();
 	getEquationsWE();
 	getScoresStages();
@@ -1251,15 +1252,7 @@ function closeWindowUploadImage ( ) {
 }
 
 
-function createLines() {
-	var lines = '<div class="hLineAux" id="line1">.</div>';
-	
-	for (var i = 2; i <= 22; i++) 
-		lines += '<div class="hLine" id="line' + i + '"></div>';
-	
-	document.getElementById("lines").innerHTML = lines;
-	
-}
+
 
 function isIntro(equation){
 	if(equation.indexOf > 0 && equation.indexOf < 7)

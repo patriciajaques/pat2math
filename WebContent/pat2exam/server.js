@@ -112,7 +112,11 @@ function requestServer (type, last, next, typeOperation, element) {
             } else if (type === 'e') {  //for checking
                 var isDelta = false;
 
-                if (split[3] === "true") {
+                var verification = next.split("=");
+                var v1 = verification[0] === "x";
+                var v2 = $.isNumeric(verification[1]);
+                
+                if (split[3] === "true" || (v1 && v2)) {
                     var step = new Step(next, NORMAL_SOLUTION);
                     selectedEquation.currentStep = "";
                     $(".verticalTape").hide('blind', 200);
@@ -150,9 +154,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         else 
                         	addProgressValue(1);
                         
-                        selectedEquation.isComplete = true;
-
-                    	nextLineServer.html("<div class='final'></div>");               	
+                        selectedEquation.isComplete = true;            	
                     	
 //                    	var cookieName = "numLines" + currentPos + idEquation; 			           			
 //            			setCookieDays (cookieName, "", 0);
@@ -185,7 +187,6 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                     }
 
-                    $(selectedSheet + " .canMove li").css("color", "blue");
                     $(selectedSheet + " .canCopy").removeClass("canCopy");
                     $(selectedSheet + " .canMove ul").sortable("disable");
                     //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
@@ -268,6 +269,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     element.parent().removeClass("canMove");
                     element.parent().addClass("canCopy");
 
+                    $(element).replaceWith("<div class='coolExam coolAlign'></div>");
                     centralizeCanMoveAndButton();
                     coolAlign();
                     sortable();

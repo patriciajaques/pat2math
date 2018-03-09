@@ -60,18 +60,6 @@
 	<p><span class="hide-menu">
 	 
 	</span></p>
-	
-	<div id="note">
-        <span id="amountPoins">0 de 0 pontos</span>
-        <br><br>
-        <span>Equações concluídas:</span>
-
-        <div id="progressBar" class="progress">
-            <div class="bar" role="progressbar" style="width: 0%;">
-                <span class="label"></span>
-            </div>
-        </div>
-    </div>
     
      <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;"> 		    
