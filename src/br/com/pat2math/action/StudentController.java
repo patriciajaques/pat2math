@@ -511,6 +511,23 @@ public class StudentController {
 	
 	//level = 0 obtém a pontuação total
 	//level = 1 obtém as pontuações de cada um dos níveis
+	
+	@RequestMapping(value = "pat2exam/getNotaTeste", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getNotaTeste(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		String nota = "" + student.getNotaTeste();
+		
+		return nota;
+	}
+	
+	@RequestMapping(value = "pat2exam/updateNotaTeste", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String updateNotaTeste(double nota, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		student.setNotaTeste(nota);
+		sd.alter(student);
+	
+		return "Nota atualizada com sucesso";
+	}
 	@RequestMapping(value = "newPatequation/getScore", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String getScore(int level, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());	

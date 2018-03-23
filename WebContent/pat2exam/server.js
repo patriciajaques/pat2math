@@ -20,7 +20,7 @@ function registerStepInDataBase (type, last, next, typeOperation, element) {
 	});
 }
 
-function requestServer (type, last, next, typeOperation, element) {
+function requestServer (type, last, next, typeOperation) {
     //type = 'd' -> hint
     //type = 'n' -> new equation
     //type = 'e' -> check the equation
@@ -43,6 +43,7 @@ function requestServer (type, last, next, typeOperation, element) {
     //e depois que esta informação retorna, passa pelos passos abaixo do ajax
     $.ajax({url: "../../pat2math/resolver?id=" + selectedEquation.id + "&echo="  + msg + "&callback=?", //200.188.161.124 server   //10.210.2.197:8080 cassio
         dataType: 'jsonp',
+        async : false,
         success: function(data) {
             //alert(data[0]);
             console.log("Server answer ->  " + data[0]);
@@ -71,7 +72,6 @@ function requestServer (type, last, next, typeOperation, element) {
                 $(selectedSheet + ".canCopy").html(newHtml);
                 centralizeCanCopy();
                 draggable();
-                element = $(selectedSheet + " .canCopy ul");
 
 
                 if (newHtml.indexOf("frac") !== -1) {
@@ -116,15 +116,35 @@ function requestServer (type, last, next, typeOperation, element) {
                 var v1 = verification[0] === "x";
                 var v2 = $.isNumeric(verification[1]);
                 
+              //Verificação especial para frações que não resultam em um número inteiro
+                if (v1 && !v2) {
+              	  var split = verification[1].split("/");
+              	  
+              	  if (split.length === 2) {
+              		  split[0] = replaceAll(split[0], "(", "");
+              		  split[0] = replaceAll(split[0], ")", "");
+              		  split[1] = replaceAll(split[1], "(", "");
+              		  split[1] = replaceAll(split[1], ")", "");
+              		  
+              		  if ($.isNumeric(split[0]) && $.isNumeric(split[1])) {
+              			  var expression = split[0] + "/" + split[1];
+              			  var result = eval(expression);
+              		  
+              			  if (result % 1 !== 0)
+              				  v2 = true;
+              		  }
+              	  }
+                }
+                
                 if (split[3] === "true" || (v1 && v2)) {
-                    var step = new Step(next, NORMAL_SOLUTION);
-                    selectedEquation.currentStep = "";
-                    $(".verticalTape").hide('blind', 200);
-                    if (element.parent().html().indexOf("frac") !== -1) {
-                        nextLineServer = element.parent().next().next();
-                    } else {
-                        nextLineServer = element.parent().next();
-                    }
+//                    var step = new Step(next, NORMAL_SOLUTION);
+//                    selectedEquation.currentStep = "";
+//                    $(".verticalTape").hide('blind', 200);
+//                    if (element.parent().html().indexOf("frac") !== -1) {
+//                        nextLineServer = element.parent().next().next();
+//                    } else {
+//                        nextLineServer = element.parent().next();
+//                    }
 
                     $(selectedSheet + " .trash").remove();
                     if ((next.indexOf('d') === -1 && selectedEquation.twoAnswers === true && selectedEquation.nAnswers === 2)
@@ -138,21 +158,21 @@ function requestServer (type, last, next, typeOperation, element) {
                              	    
                     	
                    
-                      $("#next_equation").tooltip();
-                        $("#marktask"+idEquation).removeAttr("style"); 
-                        $("#marktask"+idEquation).addClass("icon-white");
+//                      $("#next_equation").tooltip();
+//                        $("#marktask"+idEquation).removeAttr("style"); 
+//                        $("#marktask"+idEquation).addClass("icon-white");
                         
-                        tasksRemaining--;
+//                        tasksRemaining--;
                         
-                        if (tasksRemaining===0){
-                        	addProgressValue(100);
-                        	
-                        	var divName = "#tasks" + unlockedPlans;
-                        	$(divName).slideUp(700);
-                        }
+//                        if (tasksRemaining===0){
+//                        	addProgressValue(100);
+//                        	
+//                        	var divName = "#tasks" + unlockedPlans;
+//                        	$(divName).slideUp(700);
+//                        }
                         
-                        else 
-                        	addProgressValue(1);
+//                        else 
+//                        	addProgressValue(1);
                         
                         selectedEquation.isComplete = true;            	
                     	
@@ -170,9 +190,9 @@ function requestServer (type, last, next, typeOperation, element) {
                     }
 
 
-                    $(selectedSheet + " .coolAlign").removeClass("coolAlign");
-
-                    $(selectedSheet + " .canCopy li").draggable("disable");
+//                    $(selectedSheet + " .coolAlign").removeClass("coolAlign");
+//
+//                    $(selectedSheet + " .canCopy li").draggable("disable");
 
                     if (selectedEquation.twoAnswers === true && next.indexOf("±") === -1) {
                         var html = $(selectedSheet + " .canMove ul").html();
@@ -187,50 +207,44 @@ function requestServer (type, last, next, typeOperation, element) {
                         }
                     }
 
-                    $(selectedSheet + " .canCopy").removeClass("canCopy");
-                    $(selectedSheet + " .canMove ul").sortable("disable");
+//                    $(selectedSheet + " .canCopy").removeClass("canCopy");
+//                    $(selectedSheet + " .canMove ul").sortable("disable");
                     //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
-                    $(selectedSheet + " .canMove").removeClass("canMove");
-                    if (isDelta) {
-                        nextLineServer.addClass("canMove");
-                        clearLine();
-
-                        if (!selectedEquation.isAnswer()) {
-                            selectedEquation.lastStep = null;
-
-                            var x = $(".cool:last").offset().left;
-                            var y = $(".cool:last").offset().top;
-
-                            var scrollTop = $(document).scrollTop();
-                        }
-                        //$(".labelDefault").focus();
-                    } else {
-                        selectedEquation.lastStep = null;
-
-                        var x = $(".cool:last").offset().left;
-                        var y = $(".cool:last").offset().top;
-
-                        var scrollTop = $(document).scrollTop();
-                    }
-                    selectedEquation.steps.push(step);
+//                    $(selectedSheet + " .canMove").removeClass("canMove");
+//                    if (isDelta) {
+//                        nextLineServer.addClass("canMove");
+//                        clearLine();
+//
+//                        if (!selectedEquation.isAnswer()) {
+//                            selectedEquation.lastStep = null;
+//
+//                            var scrollTop = $(document).scrollTop();
+//                        }
+//                        //$(".labelDefault").focus();
+//                    } else {
+//                        selectedEquation.lastStep = null;
+//
+////                        var scrollTop = $(document).scrollTop();
+//                    }
+//                    selectedEquation.steps.push(step);
 
                     //element.remove();
 //                element.parent().removeClass("canMove");
 //                alert("Resposta Correta! =D");
                 }           	
-                    var step = new Step(next, NORMAL_STEP);
-                    selectedEquation.lastStep = step;
-                    selectedEquation.steps.push(step);
-                    selectedEquation.currentStep = "";
+//                    var step = new Step(next, NORMAL_STEP);
+//                    selectedEquation.lastStep = step;
+//                    selectedEquation.steps.push(step);
+//                    selectedEquation.currentStep = "";
                     
-                    if (next.indexOf ("/") === -1)
-                    	usedLines++;
-                    
-                    else
-                    	usedLines += 2;
-                    
-                    if (usedLines >= (numLines - 4))
-                    	insertLines(false, idEquation);
+//                    if (next.indexOf ("/") === -1)
+//                    	usedLines++;
+//                    
+//                    else
+//                    	usedLines += 2;
+//                    
+//                    if (usedLines >= (numLines - 4))
+//                    	insertLines(false, idEquation);
 
 //                    if (next.indexOf("^2") !== -1) {
 //                        selectedEquation.twoAnswers = true;
@@ -240,53 +254,49 @@ function requestServer (type, last, next, typeOperation, element) {
                         selectedEquation.initialEquation = next;
                     }
 
-                    $(selectedSheet + " .trash").remove();
+//                    $(selectedSheet + " .trash").remove();
+//
+//                    $(".verticalTape").hide('blind', 500);
 
-                    $(".verticalTape").hide('blind', 500);
-
-                    if (element.parent().html().indexOf("frac") !== -1) {
-                        nextLineServer = element.parent().next().next();
-                    } else {
-                        nextLineServer = element.parent().next();
-                    }
-                    nextLineServer.html(
-                            "<ul>" +
-                            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
-                            "</ul>" +
-                            "<div class='trash'></div>" +
-                            "<button id='button'></button>");
+//                    if (element.parent().html().indexOf("frac") !== -1) {
+//                        nextLineServer = element.parent().next().next();
+//                    } else {
+//                        nextLineServer = element.parent().next();
+//                    }
+//                    nextLineServer.html(
+//                            "<ul>" +
+//                            "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+//                            "</ul>" +
+//                            "<div class='trash'></div>" +
+//                            "<button id='button'></button>");
                     
                     
                     
-                    $(selectedSheet + " .canCopy li").draggable("disable");
-                    $(selectedSheet + " .canCopy li").css("opacity", "0.5");
-                    $(selectedSheet + " .formula li").css("opacity", "0.5");
-                    $(selectedSheet + " .canCopy").removeClass("canCopy");
-                    $(selectedSheet + " .canMove ul").sortable("disable");
-                    //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
-                    $(selectedSheet + " .canMove li").css("opacity", "0.75");
-                    nextLineServer.addClass("canMove");
-                    element.parent().removeClass("canMove");
-                    element.parent().addClass("canCopy");
-
-                    $(element).replaceWith("<div class='coolExam coolAlign'></div>");
-                    centralizeCanMoveAndButton();
-                    coolAlign();
-                    sortable();
-                    draggable();
-                 //   trashHide();
-                //    trashDroppable();
-                    trashClick();
-                    buttonClick();
-//                    selectedEquation.lastStep = null;
-                    focus();
+//                    $(selectedSheet + " .canCopy li").draggable("disable");
+//                    $(selectedSheet + " .canCopy li").css("opacity", "0.5");
+//                    $(selectedSheet + " .formula li").css("opacity", "0.5");
+//                    $(selectedSheet + " .canCopy").removeClass("canCopy");
+//                    $(selectedSheet + " .canMove ul").sortable("disable");
+//                    //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
+//                    $(selectedSheet + " .canMove li").css("opacity", "0.75");
+//                    nextLineServer.addClass("canMove");
+//                    element.parent().removeClass("canMove");
+//                    element.parent().addClass("canCopy");
+//
+//                    $(element).replaceWith("<div class='coolExam coolAlign'></div>");
+//                    centralizeCanMoveAndButton();
+//                    coolAlign();
+//                    sortable();
+//                    draggable();
+//                 //   trashHide();
+//                //    trashDroppable();
+//                    trashClick();
+//                    buttonClick();
+////                    selectedEquation.lastStep = null;
+//                    focus();
 
 
                     if (!selectedEquation.isAnswer()) {
-
-                        var x = $(".cool:last").offset().left;
-                        var y = $(".cool:last").offset().top;
-
                         var scrollTop = $(document).scrollTop();
                         
                     }        

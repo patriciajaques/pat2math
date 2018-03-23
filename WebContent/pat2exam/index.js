@@ -64,8 +64,178 @@ var idsExam = new Array();
 var idsExamString = "";
 var equationsExam = new Array();
 var equationsExamString = "";
+var notasParciais = new Array();
+var notaGeral = 0;
+var currentQuestion = 0;
+var resolutions = new Array();
+var testeFinalizado = false;
+var finalAnswerCurrentEquation;
 
+function getNotaTeste() {
+	$.ajax({
+		async : false,
+		type : "GET",
+		url : "pat2exam/getNotaTeste",
+		data : {
 
+		},
+		success : function(data) {
+			notaGeral = parseFloat(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function saveNotaTeste() {
+	$.ajax({
+		type : "GET",
+		url : "pat2exam/updateNotaTeste",
+		data : {
+			"nota" : notaGeral
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function calculaNotaParcial() {
+	notasParciais[currentQuestion] = 0;
+	
+	var steps = selectedEquation.steps;
+	
+	for (var i = 0; i < steps.length; i++) {
+		var isCorrect = 10;
+		
+		if (!correctEquation(steps[i].step))
+			isCorrect = 0;
+		
+		notasParciais[currentQuestion] += isCorrect;
+	}
+	
+	notasParciais[currentQuestion] /= steps.length;
+	
+	var newCookie = getCookie("notasParciais");
+	
+	if (newCookie !== "")
+		newCookie += "," + notasParciais[currentQuestion];
+	
+	else
+		newCookie += notasParciais[currentQuestion];
+	
+	setCookieDays("notasParciais", newCookie, 1);
+	calculaNotaGeral();
+}
+
+function orientacoesIniciais() {
+	$.guider({
+		title: "Orientações para o teste",
+		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A quantidade será determinada a partir da sua nota, que será multiplicada por 200.</div>",    
+		alignButtons: "center",
+		overlay : "dark",
+		onShow: function() {var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {botao[0].style.visibility = "visible";}, "10000")},
+		buttons: {
+			Entendi: {
+				click: true,
+				className: "botaoEntendi"
+			}
+		}
+	}).show();
+}
+function calculaNotaGeral() {
+	notaGeral += notasParciais[currentQuestion] / idsExam.length;
+	var notaString = "" + notaGeral;
+	
+	setCookieDays("notaGeral", notaString, 1);
+	
+	currentQuestion++;
+	
+	var currentQuestionString = "" + currentQuestion;
+	
+	setCookieDays("currentQuestion", currentQuestionString, 1);
+	
+	saveNotaTeste();
+}
+
+function finalizaTeste() {
+	testeFinalizado = true;
+	var notaArredondada = notaGeral.toFixed(1);
+	var points = notaArredondada * 200;
+	updateScoreDataBase(points);
+	
+	$.guider({
+		title: "Confira abaixo a sua nota:",
+		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal.</div>",    
+		alignButtons: "right",
+		onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}).show();
+	
+
+}
+
+function finalizaQuestao() {
+	var pos = searchResolutions(idEquation);
+	var steps = resolutions[pos].steps;
+//	var steps = resolutions[idEquation];
+	
+	requestServer('e', selectedEquation.initialEquation, steps[0], "OG");
+	
+	for (var i = 1; i < steps.length; i++) {
+		requestServer('e', steps[i-1], steps[i], "OG");
+	}
+	
+	calculaNotaParcial();
+	
+	var divBorracha = "borracha" + steps.length;
+	document.getElementById(divBorracha).style.visibility = "hidden";
+	
+	document.getElementById("finalizaQuestao").innerHTML = "Enviado para correção";
+		
+}
+
+function verifyMultiplicationsInX(expression) {
+	expression = expression.toLowerCase();
+	var pos = expression.indexOf("x");
+	
+	while (pos !== -1) {
+		if (isNumber(expression[pos-1])) {
+			var array = expression.split("");
+			insertInArray(array, "*", pos);
+			var toString = array.toString();
+			expression = replaceAll(toString, ",", "");
+			
+			pos += 2;
+		}
+		
+		else
+			pos++;
+
+		pos = expression.indexOf("x", pos);
+	}
+	
+	return expression;
+}
+
+function correctEquation(answer) {
+	answer = verifyMultiplicationsInX(answer);
+	var verifyEquality = replaceAll(answer, "x", finalAnswerCurrentEquation);
+	var ve = verifyEquality.split("=");
+	var left = eval(ve[0]);
+	var right = eval(ve[1]);
+	
+	return left === right;
+}
 //Máximo 15 equações para um período de 50 minutos
 function generateTest(numEquations) {
 	var idsExamCookie = getCookie("idsExam");
@@ -80,6 +250,17 @@ function generateTest(numEquations) {
 			idsExam[i] = parseInt(ids[i]);
 			equationsExam[i] = equations[i];
 		}
+		
+		var notaGeralCookie = getCookie("notaGeral");
+		
+		if (notaGeralCookie !== "") {
+			notaGeral = parseFloat(notaGeralCookie);
+			
+			var parciais = getCookie("notasParciais").split(",");
+			
+			for (var i = 0; i < parciais.length; i++)
+				notasParciais[i] = parseFloat(parciais[i]);		
+		}
 	}
 	
 	else {
@@ -88,7 +269,7 @@ function generateTest(numEquations) {
 		}
 	
 		else {
-			var idPlans = [32, 31, 30, 28, 27, 26, 24, 23, 22, 19, 17, 14, 12, 7, 2];
+			var idPlans = [30, 30, 27, 27, 24, 24, 23, 22, 22, 19, 17, 14, 12, 7, 2];
 			var numEquationsPlans = [10, 10, 10, 10, 10, 10, 10, 10, 10, 6, 5, 5, 5, 5, 5];
 			
 			for (var i = 0; i < numEquations; i++) {
@@ -96,6 +277,19 @@ function generateTest(numEquations) {
 				idsExam[i] = id;
 				idsExamString += id + ",";
 				getEquationById(id, i);			
+				
+				if (idPlans[i] >= 24 || idPlans[i] === 22) {
+					var id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					
+					while (id2 === id)
+						id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					
+					i++;
+					
+					idsExam[i] = id2;
+					idsExamString += id2 + ",";
+					getEquationById(id2, i);		
+				}
 			}
 			
 			setCookieDays("idsExam", idsExamString, 1);
@@ -117,6 +311,8 @@ function loadTasksExam() {
 				'<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>' +
 				'<i id="marktask' + idsExam[i] + '" class="icon-ok" style="visibility: hidden;"></i>';
 	}
+	
+	html += '<span class="task" onclick="finalizaTeste()" style="color: #fffc00; margin-left: -30px; width: 154px">Finalizar teste</span>';
 	$("#tasksExam").html(html);
 	$("#tasksExam").slideDown(700);
 }
@@ -1482,6 +1678,32 @@ function loadEquation(index) {
         centralizeCanCopy();
         line.removeClass("canCopy");
 
+        
+        if (selectedEquation.steps === null || selectedEquation.steps === undefined || selectedEquation.steps.length === 0) {
+        	var pos = searchResolutions(idEquation);
+//        	var temp = resolutions[idEquation];
+        	
+        	//if (temp !== undefined) {
+        	if (pos !== -1) {
+        		if (selectedEquation.steps === null || selectedEquation.steps === undefined)
+        			selectedEquation.steps = new Array();
+        	
+        		var steps = resolutions[pos].steps;
+        		var i = 0;
+        		
+        		for (; i < steps.length - 1; i++) 
+        			selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+        		
+        		  var verification = steps[i].split("=");
+        		  var v1 = verification[0] === "x";
+        		  var v2 = $.isNumeric(verification[1]);
+        		  
+        		  if (!v1 || !v2) 
+        			  selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+        	}
+        	
+        }
+        	
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
         	calculateUsedLines();
@@ -1512,6 +1734,15 @@ function loadEquation(index) {
                     line = line.next().next();
                 } else {
                     line = line.next();
+                }
+                
+                if (testeFinalizado) {
+                	var html = "</ul><div class='cool coolAlign'></div>";
+                	
+                	if (!correctEquation(selectedEquation.steps[i].step))
+                		html = "</ul><div class='cool coolAlign' style='background-image: url('../img/bad.png');'></div>";
+                	
+                	elements = elements + "</ul><div class='cool coolAlign'></div>";
                 }
                 
                 if (!selectedEquation.isAnswer() && levelGamification !== "without") {
@@ -1662,6 +1893,19 @@ function addLabelDefault() {
     $(".labelDefault:first input").focus();
 }
 
+function deleteStep() {
+//	var temp = resolutions[idEquation];
+//	temp.pop();
+//	setCookieDays("resolutionCurrentEquation", temp.toString(), 1);
+	var pos = searchResolutions(idEquation);
+	resolutions[pos].steps.pop();
+	
+	var cookieName = "equation" + idEquation;
+	setCookieDays(cookieName, resolutions[pos].steps.toString(), 1);
+	
+	window.location.reload();
+}
+
 function clearLine(option) {
     if (option === 'all') {
         selectedEquation.currentStep = "";
@@ -1678,9 +1922,11 @@ function clearLine(option) {
             svg + "<ul>" +
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
-            "<div class='trash'></div>" +
-            "<button id='button'></button><div id='feedbackError'></div>");
+            "<div class='borracha' id='borracha" + selectedEquation.steps.length + "'title='Apagar passo' onclick='deleteStep()'></div>" +
+            "<button id='button'></button>");
 
+    $("#borracha").tooltip();
+    
     centralizeCanMoveAndButton();
     sortable();
     draggable();
@@ -1691,6 +1937,9 @@ function clearLine(option) {
     focus();
 
     $(".labelDefault input").focus();
+    
+    if (selectedEquation.steps.length === 0)
+    	document.getElementById("borracha0").style.visibility = "hidden";
     
     
 }
@@ -2241,61 +2490,22 @@ function newEquation() {
 function checkEquation() { 
 	if (isLoadEquation)
 		isLoadEquation = false;
-//	setTimeout ('resetNumClicks()', 3000);
-//	
-//	if (numClicks === undefined)
-//		numClicks = 1;
-//	
-//	else
-//		numClicks++;
-//	
-//	if (numClicks === 5)
-//		fiveClicksOnTheLoupe();
 	
-	//var display = document.getElementById('button').style.display;
-//	if (document.getElementById ('button') === null && idEquation >= 0) {
-//		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
-//    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
-//		    nextEquationClick();
-//	}
-	
-//	else {
 	var button = document.getElementById('button');
 	if (button.style.width !== '16px') {
 		document.getElementById('button').style.visibility = "hidden";
-
     
 	$(selectedSheet + " .canMove li input").blur();
-//  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
-//  passoAnterior = getEquation(passoAnterior);
 	
   var equation = naturalToText(selectedEquation.currentStep);
   
   if (equation === "")
 	  equation = " ";
   
-  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
+  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1) {
 	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
-  
-  
-  
-  
-//  if (isTourInterativo) {
-//      if (cont === 0) {
-//      	resolutionPart1(equation);
-//      } else if (cont === 1) {
-//      	resolutionPart2(equation);
-//      } else if (cont === 2) {
-//      	resolutionPart3(equation);
-//      } else if (cont === 3) {
-//      	resolutionPart4(equation);
-//      } else if (cont === 4) {
-//      	resolutionPart5(equation);  
-//      } cont++;
-//  }
-  
-  
-  
+	  return false;
+  }
   var passoAnterior = selectedEquation.lastStep;
   
   if (passoAnterior !== null) {
@@ -2303,14 +2513,6 @@ function checkEquation() {
   } else {
       passoAnterior = selectedEquation.initialEquation;       	  
   }
-  
-  
-
-  //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
-
-//  if (selectedEquation.initialEquation === "") {
-//      selectedEquation.initialEquation = passoAnterior;
-//  }
 
   var equationServer = equation;
   var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
@@ -2335,11 +2537,141 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   
-  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+  var pos = searchResolutions(idEquation);
+  
+  if (pos !== -1) 
+	  resolutions[pos].steps.push(equationServer);
+  
+  else {
+	  pos = resolutions.length;
+	  var newResolution = new ResolutionEquation(idEquation);
+	  newResolution.steps.push(equationServer);
+	  resolutions.push(newResolution);
+  }
+  
+  var cookieName = "equation" + idEquation;
+  setCookieDays(cookieName, resolutions[pos].steps.toString(), 1);
+  
+//  if (resolutions[idEquation] === undefined)
+//	  resolutions[idEquation] = new Array();
+//  
+//  var temp = resolutions[idEquation];
+//  temp.push(equationServer);
+//  
+//  if (selectedEquation.steps === null || selectedEquation.steps === undefined) {
+//	  selectedEquation.steps = new Array();
+//  }
+  
+//  setCookieDays("resolutionCurrentEquation", temp.toString(), 1);
 
-  //document.getElementById('button').style.display = 'inline';
-//}
-}
+  var verification = equationServer.split("=");
+  var v1 = verification[0] === "x";
+  var v2 = $.isNumeric(verification[1]);
+  
+//Verificação especial para frações que não resultam em um número inteiro
+  if (v1 && !v2) {
+	  var split = verification[1].split("/");
+	  
+	  if (split.length === 2) {
+		  split[0] = replaceAll(split[0], "(", "");
+		  split[0] = replaceAll(split[0], ")", "");
+		  split[1] = replaceAll(split[1], "(", "");
+		  split[1] = replaceAll(split[1], ")", "");
+		  
+		  if ($.isNumeric(split[0]) && $.isNumeric(split[1])) {
+			  var expression = split[0] + "/" + split[1];
+			  var result = eval(expression);
+		  
+			  if (result % 1 !== 0)
+				  v2 = true;
+		  }
+	  }
+  }
+
+  var element = $(selectedSheet + " #button");
+
+  $(selectedSheet + " .trash").remove();
+
+  $(".verticalTape").hide('blind', 500);
+
+  if (element.parent().html().indexOf("frac") !== -1) {
+      nextLineServer = element.parent().next().next();
+  } else {
+      nextLineServer = element.parent().next();
+  }
+
+  var idBorrachaAnterior = "borracha" + selectedEquation.steps.length;
+  document.getElementById(idBorrachaAnterior).style.visibility = "hidden";
+  
+  var htmlLine = "<ul>" +
+  "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+  "</ul>" +
+  "<div class='borracha' id='borracha" + (selectedEquation.steps.length+1) + "' title='Apagar passo' onclick='deleteStep()'></div>" +
+  "<button id='button'></button>";
+  
+//  if (selectedEquation.steps === null || selectedEquation.steps === undefined || selectedEquation.steps.length === 0) {
+//	  htmlLine = "<ul>" +
+//      "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+//      "</ul>" +
+//      "<div id='borracha' title='Apagar passo' onclick='deleteStep()'></div>" +
+//      "<button id='button'></button>";
+//  }
+  
+//  else {
+//	  var marginTop = $('#borracha').css('margin-top');
+//	  marginTop = marginTop.replace("px", "");
+//	  marginTop = parseInt(marginTop);
+//	  var newMarginTop = marginTop + 33;
+//	  newMarginTop = newMarginTop + "px";
+//	  $('#borracha').css('margin-top', newMarginTop);
+//  }
+  nextLineServer.html(htmlLine);
+  
+  $("#borracha").tooltip();
+  
+  
+  $(selectedSheet + " .canCopy li").draggable("disable");
+  $(selectedSheet + " .canCopy li").css("opacity", "0.5");
+  $(selectedSheet + " .formula li").css("opacity", "0.5");
+  $(selectedSheet + " .canCopy").removeClass("canCopy");
+  $(selectedSheet + " .canMove ul").sortable("disable");
+  //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
+  $(selectedSheet + " .canMove li").css("opacity", "0.75");
+  nextLineServer.addClass("canMove");
+  element.parent().removeClass("canMove");
+  element.parent().addClass("canCopy");
+
+  var idCool = "cool" + selectedEquation.steps.length;
+  var divCool = "<div class='coolExam coolAlign' id='" + idCool + "'></div>";
+  $(element).replaceWith(divCool);
+  centralizeCanMoveAndButton();
+  coolAlign();
+  sortable();
+  draggable();
+//   trashHide();
+//    trashDroppable();
+  trashClick();
+  buttonClick();
+//  selectedEquation.lastStep = null;
+  focus();
+  
+  document.getElementById(idCool).style.display = "none";
+  
+  if (v1 && v2) {
+	  nextLineServer.html('<div id="finalizaQuestao"><button type="button" onclick="finalizaQuestao()">Enviar para avaliação</button></div><div class="borracha" id="borracha' + (selectedEquation.steps.length+1) + '" style="margin-top: -55px;" title="Apagar passo" onclick="deleteStep()"></div>');
+	  var step = new Step(equationServer, NORMAL_SOLUTION);
+	  selectedEquation.lastStep = step;
+      selectedEquation.steps.push(step);
+      selectedEquation.currentStep = "";
+  }
+  
+  else {
+	  selectedEquation.steps.push(new Step(equationServer, NORMAL_STEP));
+	  selectedEquation.currentStep = "";
+  }
+  
+  $("#borracha").tooltip();
+	}
 }
 
 
@@ -2771,8 +3103,27 @@ function searchArray (elemento, array) {
 	return -1;	
 }
 
+function searchResolutions(id) {
+	for (var i = 0; i < resolutions.length; i++) {
+		if (resolutions[i].id === id)
+			return i;
+	}
+	
+	return -1;
+}
+
+function insertInArray(array, element, pos) {
+	if (array[pos] !== undefined) {
+		for (var i = array.length - 1; i >= pos; i--)
+			array[i+1] = array[i];
+	}
+	
+	array[pos] = element;
+}
 
 $(document).ready(function() {	
+	
+	
 	loadEquation(0);
 
     centralizeCanMoveAndButton();
@@ -2815,5 +3166,37 @@ $(document).ready(function() {
 	$(selectedSheet + " #logo").tooltip();
 	$("#topics").fadeIn();
 	createLines();
-	generateTest(15);
+	
+	var currentQuestionCookie = getCookie("currentQuestion");
+	
+	if (currentQuestionCookie !== "") 
+		currentQuestion = parseInt(currentQuestionCookie);
+	
+	generateTest(5);
+	
+	var currentEquation = getCookie("currentEquation");
+	
+	if (currentEquation !== "") {
+		idEquation = parseInt(currentEquation);
+		var cookieName = "equation" + idEquation;
+		var resolutionCookie = getCookie(cookieName);
+	
+		if (resolutionCookie !== "") {
+			var steps = resolutionCookie.split(",");
+			var resolution = new ResolutionEquation(idEquation);
+
+			for (var i = 0; i < steps.length; i++)
+				resolution.steps.push(steps[i]);
+			
+			resolutions.push(resolution);
+		}
+		
+		loadTasksExam();
+		loadExerciseExam(idEquation);
+	}
+	
+	 $("#borracha").tooltip();
+	 
+	 if (resolutions.length === 0)
+		 orientacoesIniciais();
 });

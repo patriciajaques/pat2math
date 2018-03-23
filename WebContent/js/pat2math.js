@@ -764,6 +764,7 @@ function loadExercise(id) {
 				newEquations[0] = equation;
 			}
 			reloadPaper(1);
+			requestFinalAnswer();
 
 			if (levelGamification !== "without") {
 				var cookieName = "equationErrorScore" + idEquation;
@@ -875,12 +876,6 @@ function loadExerciseExam(id) {
 
 				if (data.performed) {
 					equation.isComplete = true;
-
-					if (isTourInterativo === false)
-						setTimeout(function() {
-							$("#topics").fadeIn();
-							blockMenu = true;
-						}, 2000);
 				}
 
 				newEquations[0] = equation;
@@ -900,6 +895,9 @@ function loadExerciseExam(id) {
 			}
 
 			setCookieDays("currentEquation", idEquation, 1);
+			
+			  
+		
 
 			// cookieName = "numLines" + currentPos + idEquation;
 			//			
@@ -921,13 +919,10 @@ function loadExerciseExam(id) {
 
 		}
 	});
+	blockMenu = false;
 
-	if (isTourInterativo && id >= 100)
-		clickEquation("");
-
-	else
-		blockMenu = false;
-
+	 $("#topics").fadeOut();
+	   $("#topicsAux").show();
 	loadingHide();
 
 }

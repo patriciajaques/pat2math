@@ -352,7 +352,32 @@ function createLines() {
 	document.getElementById("lines").innerHTML = lines;
 	
 }
+
+function verifyMultiplicationsInX(expression) {
+	expression = expression.toLowerCase();
+	var pos = expression.indexOf("x");
+	
+	while (pos !== -1) {
+		if (isNumber(expression[pos-1])) {
+			var array = expression.split("");
+			insertInArray(array, "*", pos);
+			var toString = array.toString();
+			expression = replaceAll(toString, ",", "");
+			
+			pos += 2;
+		}
+		
+		else
+			pos++;
+
+		pos = expression.indexOf("x", pos);
+	}
+	
+	return expression;
+}
+
 function correctEquation(answer) {
+	answer = verifyMultiplicationsInX(answer);
 	var verifyEquality = replaceAll(answer, "x", finalAnswerCurrentEquation);
 	var ve = verifyEquality.split("=");
 	var left = eval(ve[0]);
@@ -3001,3 +3026,11 @@ function searchArray (elemento, array) {
 	return -1;	
 }
 
+function insertInArray(array, element, pos) {
+	if (array[pos] !== undefined) {
+		for (var i = array.length - 1; i >= pos; i--)
+			array[i+1] = array[i];
+	}
+	
+	array[pos] = element;
+}
