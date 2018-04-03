@@ -555,6 +555,15 @@ public class StudentController {
 		return "Pontuação atualizada com sucesso";
 	}
 	
+	@RequestMapping(value = "newPatequation/updateScoreTotal", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String updateScoreTotal(int amount, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		student.setTotalScore(amount);
+		sd.alter(student);
+	
+		return "Pontuação total atualizada com sucesso";
+	}
+	
 	@RequestMapping(value = "newPatequation/getLevelAndPlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String getLevelAndPlan(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());

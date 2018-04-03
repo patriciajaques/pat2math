@@ -40,7 +40,7 @@ var concluded = 0;
 var nextLineServer;
 var enableIntroductionPlans = false;
 var enableWorkedExamples = getCookie ("enableWE") === "";
-var enableTourInterativo = getCookie ("enableTour") === "";
+var enableTourInterativo = false;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var openTourInterativo = false;
@@ -69,7 +69,7 @@ var notaGeral = 0;
 var currentQuestion = 0;
 var resolutions = new Array();
 var testeFinalizado = false;
-var finalAnswerCurrentEquation;
+var numEquations = 3; //Número de equações do teste
 
 function getNotaTeste() {
 	$.ajax({
@@ -104,15 +104,13 @@ function saveNotaTeste() {
 	});
 }
 
-function calculaNotaParcial() {
+function calculaNotaParcial(steps) {
 	notasParciais[currentQuestion] = 0;
-	
-	var steps = selectedEquation.steps;
 	
 	for (var i = 0; i < steps.length; i++) {
 		var isCorrect = 10;
 		
-		if (!correctEquation(steps[i].step))
+		if (!correctEquation(steps[i]))
 			isCorrect = 0;
 		
 		notasParciais[currentQuestion] += isCorrect;
@@ -135,17 +133,30 @@ function calculaNotaParcial() {
 function orientacoesIniciais() {
 	$.guider({
 		title: "Orientações para o teste",
-		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A quantidade será determinada a partir da sua nota, que será multiplicada por 200.</div>",    
+		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A quantidade será determinada a partir da sua nota, que será multiplicada por 200.</div><br><div id='fecharJanela' style='font-style: italic'>Você poderá fechar esta janela em <span id='contador'>10</span> segundos</div>",    
 		alignButtons: "center",
 		overlay : "dark",
-		onShow: function() {var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {botao[0].style.visibility = "visible";}, "10000")},
+		onShow: function() {contadorOrientacoes(); var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {document.getElementById("fecharJanela").style.display = "none"; botao[0].style.visibility = "visible";}, "10000")},
 		buttons: {
 			Entendi: {
-				click: true,
+				click: function() {setCookieDays("orientacoesIniciais", "true", 1); $.guider({	}).hideAll();},
 				className: "botaoEntendi"
 			}
 		}
 	}).show();
+}
+
+function contadorOrientacoes() {
+	setTimeout(function() {document.getElementById("contador").innerHTML = "9"}, "1000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "8"}, "2000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "7"}, "3000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "6"}, "4000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "5"}, "5000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "4"}, "6000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "3"}, "7000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "2"}, "8000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "1"}, "9000");
+	
 }
 function calculaNotaGeral() {
 	notaGeral += notasParciais[currentQuestion] / idsExam.length;
@@ -163,18 +174,32 @@ function calculaNotaGeral() {
 }
 
 function finalizaTeste() {
+	if (notasParciais.length < numEquations) {
+		if (!confirm("Você tem certeza que deseja finalizar o teste agora? Ainda existem equações em aberto")) {
+			return;
+		}
+		
+	}
 	testeFinalizado = true;
+	
 	var notaArredondada = notaGeral.toFixed(1);
+	
+	if (notaArredondada % 1 === 0)
+		notaArredondada = parseInt(notaArredondada);
+	
 	var points = notaArredondada * 200;
-	updateScoreDataBase(points);
+	updateScoreTotalDataBase(points);
+	var finalizarTesteSpan = document.getElementById("finalizarTeste");
+	finalizarTesteSpan.innerHTML = "Acessar o PAT2Math";
+	finalizarTesteSpan.setAttribute("onclick","redirectPAT2Math();");
 	
 	$.guider({
 		title: "Confira abaixo a sua nota:",
-		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal.</div>",    
-		alignButtons: "right",
-		onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
+		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal. Quando estiver pronto, clique no link \"Acessar o PAT2Math\" neste mesmo menu.</div>",    
+		alignButtons: "center",
+		width: 550,
 		buttons: {
-			Próximo: {
+			OK: {
 				click: true,
 				className: "primary"
 			}
@@ -184,9 +209,23 @@ function finalizaTeste() {
 
 }
 
+function redirectPAT2Math() {
+	location.href="/pat2math/newpatequation";
+}
 function finalizaQuestao() {
+	document.getElementById("finalizaQuestao").innerHTML = "Aguarde um momento...";
 	var pos = searchResolutions(idEquation);
 	var steps = resolutions[pos].steps;
+	var divBorracha = "borracha" + steps.length;
+	divBorracha = document.getElementById(divBorracha);
+	
+	for (var i = steps.length - 1; divBorracha === null; i--) {
+		divBorracha = "borracha" + i;
+		divBorracha = document.getElementById(divBorracha);
+	}
+	
+	divBorracha.style.visibility = "hidden";
+	
 //	var steps = resolutions[idEquation];
 	
 	requestServer('e', selectedEquation.initialEquation, steps[0], "OG");
@@ -195,10 +234,9 @@ function finalizaQuestao() {
 		requestServer('e', steps[i-1], steps[i], "OG");
 	}
 	
-	calculaNotaParcial();
+	calculaNotaParcial(steps);
 	
-	var divBorracha = "borracha" + steps.length;
-	document.getElementById(divBorracha).style.visibility = "hidden";
+	
 	
 	document.getElementById("finalizaQuestao").innerHTML = "Enviado para correção";
 		
@@ -237,7 +275,7 @@ function correctEquation(answer) {
 	return left === right;
 }
 //Máximo 15 equações para um período de 50 minutos
-function generateTest(numEquations) {
+function generateTest() {
 	var idsExamCookie = getCookie("idsExam");
 	
 	if (idsExamCookie !== "") {
@@ -279,12 +317,17 @@ function generateTest(numEquations) {
 				getEquationById(id, i);			
 				
 				if (idPlans[i] >= 24 || idPlans[i] === 22) {
+					i++;
+					
+					if (i >= numEquations)
+						break;
+					
 					var id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
 					
 					while (id2 === id)
 						id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
 					
-					i++;
+					
 					
 					idsExam[i] = id2;
 					idsExamString += id2 + ",";
@@ -312,7 +355,7 @@ function loadTasksExam() {
 				'<i id="marktask' + idsExam[i] + '" class="icon-ok" style="visibility: hidden;"></i>';
 	}
 	
-	html += '<span class="task" onclick="finalizaTeste()" style="color: #fffc00; margin-left: -30px; width: 154px">Finalizar teste</span>';
+	html += '<span id="finalizarTeste" class="task" onclick="finalizaTeste()" style="color: #fffc00; margin-left: -30px; width: 154px">Finalizar teste</span>';
 	$("#tasksExam").html(html);
 	$("#tasksExam").slideDown(700);
 }
@@ -326,14 +369,7 @@ function createLines() {
 	document.getElementById("lines").innerHTML = lines;
 	
 }
-function correctEquation(answer) {
-	var verifyEquality = replaceAll(answer, "x", finalAnswerCurrentEquation);
-	var ve = verifyEquality.split("=");
-	var left = eval(ve[0]);
-	var right = eval(ve[1]);
-	
-	return left === right;
-}
+
 function tourTCC() {
 	isTourInterativo = true;
 	var next = "gamification1";
@@ -1678,32 +1714,30 @@ function loadEquation(index) {
         centralizeCanCopy();
         line.removeClass("canCopy");
 
+        var pos = searchResolutions(idEquation);
         
-        if (selectedEquation.steps === null || selectedEquation.steps === undefined || selectedEquation.steps.length === 0) {
-        	var pos = searchResolutions(idEquation);
-//        	var temp = resolutions[idEquation];
+        if (pos !== -1) {
+        	selectedEquation.steps = new Array();
+    	
+    		var steps = resolutions[pos].steps;
+    		var i = 0;
+    		
+    		for (; i < steps.length - 1; i++) 
+    			selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+    		
+    		  var verification = steps[i].split("=");
+    		  var v1 = verification[0] === "x";
+    		  var v2 = $.isNumeric(verification[1]);
+    		  
+    		  if (!v1 || !v2) 
+    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+    		  
+    		  else
+    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_SOLUTION));
+    	}
         	
-        	//if (temp !== undefined) {
-        	if (pos !== -1) {
-        		if (selectedEquation.steps === null || selectedEquation.steps === undefined)
-        			selectedEquation.steps = new Array();
-        	
-        		var steps = resolutions[pos].steps;
-        		var i = 0;
-        		
-        		for (; i < steps.length - 1; i++) 
-        			selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
-        		
-        		  var verification = steps[i].split("=");
-        		  var v1 = verification[0] === "x";
-        		  var v2 = $.isNumeric(verification[1]);
-        		  
-        		  if (!v1 || !v2) 
-        			  selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
-        	}
-        	
-        }
-        	
+        
+        requestFinalAnswer();
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
         	calculateUsedLines();
@@ -1740,9 +1774,9 @@ function loadEquation(index) {
                 	var html = "</ul><div class='cool coolAlign'></div>";
                 	
                 	if (!correctEquation(selectedEquation.steps[i].step))
-                		html = "</ul><div class='cool coolAlign' style='background-image: url('../img/bad.png');'></div>";
+                		html = "</ul><div class='bad coolAlign'></div>";
                 	
-                	elements = elements + "</ul><div class='cool coolAlign'></div>";
+                	elements = elements + html;
                 }
                 
                 if (!selectedEquation.isAnswer() && levelGamification !== "without") {
@@ -3197,6 +3231,6 @@ $(document).ready(function() {
 	
 	 $("#borracha").tooltip();
 	 
-	 if (resolutions.length === 0)
+	 if (getCookie("orientacoesIniciais") === "")
 		 orientacoesIniciais();
 });

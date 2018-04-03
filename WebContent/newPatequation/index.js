@@ -385,6 +385,7 @@ function correctEquation(answer) {
 	
 	return left === right;
 }
+
 function tourTCC() {
 	isTourInterativo = true;
 	var next = "gamification1";

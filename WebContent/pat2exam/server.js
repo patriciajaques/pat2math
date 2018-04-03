@@ -43,7 +43,7 @@ function requestServer (type, last, next, typeOperation) {
     //e depois que esta informação retorna, passa pelos passos abaixo do ajax
     $.ajax({url: "../../pat2math/resolver?id=" + selectedEquation.id + "&echo="  + msg + "&callback=?", //200.188.161.124 server   //10.210.2.197:8080 cassio
         dataType: 'jsonp',
-        async : false,
+        async: false,
         success: function(data) {
             //alert(data[0]);
             console.log("Server answer ->  " + data[0]);
@@ -318,6 +318,7 @@ function getStep(){
 function requestFinalAnswer() {
 	$.ajax({url: "/pat2math/getSteps",
         data: {"lastStep":selectedEquation.equation},
+        async: false,
         success: function(data) {
         	var steps = data.steps;
         	var finalStep = steps[0].split(";");

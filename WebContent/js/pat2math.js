@@ -764,8 +764,7 @@ function loadExercise(id) {
 				newEquations[0] = equation;
 			}
 			reloadPaper(1);
-			requestFinalAnswer();
-
+			
 			if (levelGamification !== "without") {
 				var cookieName = "equationErrorScore" + idEquation;
 				var cookieErrorPoints = getCookie(cookieName);
