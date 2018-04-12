@@ -1,4 +1,5 @@
-var levelGamification = "full"; //Opções disponíveis: full, low, without
+var levelGamification = "without"; //Opções disponíveis: full, low, without
+var tryResolveByMyself = false;
 var finalAnswerCurrentEquation;
 var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
 var asyncAjax = getCookie("asyncAjax") !== "";
@@ -12,7 +13,6 @@ var selectedEquation;
 //var currentStepsFirstEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
-var idEquation2; //para o teste de conhecimento
 var planoAtual; //id do plano que está selecionado
 var numEquacoesPlanoAtual;
 var idCurrentUser = getCookie("previousUser"); // the id of the current user logged on
@@ -21,7 +21,7 @@ var tasksRemaining; //the number of equations unsolved per topic
 var tipoAudio;
 var playAudio;
 var unlockedPlans = 0;
-var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
+var unlockAllPlans = true; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
 //var numClicks;
 
@@ -40,7 +40,7 @@ var concluded = 0;
 var nextLineServer;
 var enableIntroductionPlans = false;
 var enableWorkedExamples = getCookie ("enableWE") === "";
-var enableTourInterativo = getCookie ("enableTour") === "";
+var enableTourInterativo = false;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var openTourInterativo = false;
@@ -60,305 +60,186 @@ var pointsWE;
 var resolutionsWE;
 var colorsBackground;
 var isIntroductionToEquationPlan = false; 
-var stepCorrect = true;
-var planoAtualKnowledgeTest = 1;
-var errosDisponiveisKnowledgeTest = 3;
-var equation2 = false; //para o testador de conhecimentos
+var idsExam = new Array();
+var idsExamString = "";
+var equationsExam = new Array();
+var equationsExamString = "";
+var notasParciais = new Array();
+var notaGeral = 0;
+var currentQuestion = 0;
+var resolutions = new Array();
+var testeFinalizado = false;
+var numEquations = 3; //Número de equações do teste
 
-$(document).ready(function() {	    	
-	//Primeira versão
-//	$("#papers").on("click", "#refresh_page", function() {
-//	$.guider({
-//		title : "Resultados de uma pesquisa estatística",
-//		description : "Uma pesquisa envolvendo uma amostra de 9 alunos do curso de Sistemas de Informação foi realizada nesses dias e hoje já temos o resultado. Ainda estamos organizando o dia para o comunicado oficial, mas para não correr o risco de eu não conseguir participar no horário combinado decidi adiantar para hoje: <br><br>Patrícia Augustin Jaques Maillard, em nome dos formandos de Sistemas de Informação de 2017/2, comunico que você foi a escolhida para ser a nossa professora homenageada :D",
-//		overlay : "dark",
-//		width : 600,
-//		alignButtons : "center",
-//		buttons : {
-//			"Aceitar o convite :D": {
-//				click : function(){$.guider({	}).hideAll();},
-//				className : "primary",
-//			}
-//		}
-//	}).show();
-//});
-	
-	
-	
+function getNotaTeste() {
+	$.ajax({
+		async : false,
+		type : "GET",
+		url : "pat2exam/getNotaTeste",
+		data : {
 
+		},
+		success : function(data) {
+			notaGeral = parseFloat(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function saveNotaTeste() {
+	$.ajax({
+		type : "GET",
+		url : "pat2exam/updateNotaTeste",
+		data : {
+			"nota" : notaGeral
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function calculaNotaParcial(steps) {
+	notasParciais[currentQuestion] = 0;
+	
+	for (var i = 0; i < steps.length; i++) {
+		var isCorrect = 10;
 		
-//		getColorsBackground();
+		if (!correctEquation(steps[i]))
+			isCorrect = 0;
 		
-	
-	if (getCookie("gift") === "" && levelGamification !== "full")
-		$("#refresh_page").tooltip();
-	
-	$("#calculator").tooltip();
-	$("#calculatorIcon").tooltip();
-	//if(!useAudio)showSideBar();
-	
-	
-    $("#loadingImage").hide();
-    $("#book").show("clip", 500);
-    
-
-    $("#mask").click(
-            function() {
-                $("#video-box").hide();
-                $("#mask").hide();
-            }
-    );
-    
-    //Desabilita o evento de voltar para a página anterior a partir da tecla backspace 
-    $(document).unbind('keydown').bind('keydown', function (event) {
-        var doPrevent = false;
-        if (event.keyCode === 8) {
-            var d = event.srcElement || event.target;
-            if ((d.tagName.toUpperCase() === 'INPUT' && (d.type.toUpperCase() === 'TEXT' || d.type.toUpperCase() === 'PASSWORD' || d.type.toUpperCase() === 'FILE')) 
-                 || d.tagName.toUpperCase() === 'TEXTAREA') {
-                doPrevent = d.readOnly || d.disabled;
-            }
-            else {
-                doPrevent = true;
-            }
-        }
-
-        if (doPrevent) {
-            event.preventDefault();
-        }
-    });
-    
-    $(document).keyup(function(event) {
-        var key = event.which;
-        if (key === 13) { //enter key
-
-            if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
-                $(".nextEquation").click();
-            } else {
-                checkEquation();
-            }
-
-        } else if (key === 112) { //F1
-        	insertLines (false, idEquation);
-        } else if (key === 113) { //F2
-//        	if (enableAgent === false) {
-//        		setCookieDays ("enableAgent", "true", 1);
-//        	} else {
-//        		setCookieDays ("enableAgent", "", 0);
-//        	}
-//        	
-//        	window.location.reload();
-        } else if (key === 9) { //tab key
-            $(".labelDefault:first").focus();
-            
-        } else if (key === 27 && isWorkedExample) {//esc key
-        	//Interrompe a execução do exemplo trabalhado atual
-        	$.guider({	
-        	}).hideAll();
-        	exitWorkedExample();
-        	loadExercise(planoAtual*100);
-        	$("#topicsAux").show();
-        } else if (event.altKey) {
-            if (key === 66) { //alt + b
-//                $("#bhaskara").click();
-            	//Abre o menu e bloqueia o fechamento automático
-            	$("#topics").fadeIn();
-        	    $("#topicsAux").hide();
-        	    
-        	    if (openAndBlockMenu !== "true") {
-        	    	openAndBlockMenu = "true";
-        	    	setCookieDays("openAndBlockMenu", "true", 1);
-        	    }
-        	    
-        	    else {
-        	    	openAndBlockMenu = "";
-        	    	setCookieDays("openAndBlockMenu", "", 0);
-        	    }       	       	    
-            } else if (key === 67) { //alt + c
-                $("#abc").click();
-            } else if (key === 68) { //alt + d
-                $("#delta").click();
-            } else if (key === 71) { //alt + g	
-                gift();
-            } 
-            else if (key === 73) { //alt + i
-            	if (getCookie("enableIntroductionPlans") === "") {
-            		setCookieDays("enableIntroductionPlans", "false", 1);
-            		setCookieDays("unlockAllPlans", "true", 1);
-            	}
-            	
-            	else {
-            		setCookieDays("enableIntroductionPlans", "", 0);
-            		setCookieDays("unlockAllPlans", "", 0);
-            	}
-            	
-            	window.location.reload();
-            } else if (key === 76) { //alt + l
-                $("#clearLine").click();
-            } else if (key === 77) { //alt + m
-            	$("#topics").fadeIn();
-        	    $("#topicsAux").hide();
-            } else if (key === 83) { //alt + s
-            	if (getCookie("asyncAjax") === "")
-            		setCookieDays("asyncAjax", "true", 1);
-            	
-            	else
-            		setCookieDays("asyncAjax", "", 0);
-            	
-            	window.location.reload();
-            } else if (key === 84) { //alt + t
-            	var unlockPlan = prompt("Digite o número da fase que você deseja desbloquear:");
-            	unlockPlan = parseInt(unlockPlan);
-            	
-            	if (unlockedPlans === undefined || unlockedPlans === null)
-            		unlockedPlans = 1;
-            	
-            	for (var i = unlockedPlans; i < unlockPlan; i++)
-            		completePlan();
-            } else if (key === 87) { //alt + w
-            	if (getCookie("enableWE") === "")
-            		setCookieDays("enableWE", "false", 1);
-            	
-            	else
-            		setCookieDays("enableWE", "", 0);
-            	
-            	window.location.reload();
-            } else if (key === 0) { //alt + ?
-                $("#hint").click();
-            } else if (key == 80) { //alt + p
-            	if (getCookie("unlockAllPlans") === "")
-            		setCookieDays("unlockAllPlans", "true", 1);
-            	
-            	else
-            		setCookieDays("unlockAllPlans", "", 0);
-            	
-            	window.location.reload();
-            }
-//        } else if (event.shiftKey) {
-//        	if (key === 57) { //( key
-//        		writeInput(")");
-//        	}     	
-        }
-    });
-
-    papers.oncontextmenu = function(e) {
-        $(".dropdown").css("position", "absolute");
-        $(".dropdown").css("left", e.pageX + "px");
-        $(".dropdown").css("top", e.pageY - $(document).scrollTop() + "px");
-        $(".dropdown").addClass("open");
-        return false;
-    };
-
-    document.onclick = function(e) {
-        if (e.which !== 3) {
-            $(".dropdown").removeClass("open");
-        }
-    };
-
-    /*$("#book").tabs({
-        activate: function(event, ui) {
-            //alert(ui.newTab.text() + " activated!");
-        }
-    }).addClass("ui-tabs-vertical ui-helper-clearfix");*/
-    
-    // $("#book .tabs li").removeClass("ui-corner-top").addClass("ui-corner-all");
-
-
-    $(selectedSheet + " #logo").tooltip();
-    $("#imLegend").tooltip();
-    //$("#progressBar").tooltip();
-//    $("#helpSystem").tooltip();
-    $("#imgInformation").tooltip();
-
-//    $("#helpSystem").click(function() {
-//        $("#boxHelpSystem").modal();
-//        $(".collapse").removeClass("in");
-//    });
-
-    $(".canCopyTools li").draggable({
-        connectToSortable: selectedSheet + " .canMove ul",
-        helper: "clone",
-        containment: "#book",
-        appendTo: "body",
-        revert: "invalid",
-        start: function(e, ui) {
-            $(ui.helper).addClass("ui-draggable-helper");
-        },
-        stop: function(e, ui) {
-//            $(ui.helper).removeClass("ui-draggable-helper");
-        }
-    }).disableSelection();
-
-   /* $("#newEquation").button().click(function() {
-        newEquation();
-    });
-*/
-    $("#hint").button().click(function() {
-        hint();
-    });
-
-    loadEquation(0);
-
-    centralizeCanMoveAndButton();
-    sortable();
-    draggable();
-    //trashHide();
-    trashClick();
-    //trashDroppable();
-    centralizeCanCopy();
-    buttonClick();
-    focus();
-    
-    $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
-    	    $("#topics").fadeOut();
-    	    $("#topicsAux").show();
-    	}
-    });
-    
-    $("#topicsAux").mouseover (function() {
-    	if (blockMenu === false && openAndBlockMenu !== "true") {
-    	    $("#topics").fadeIn();
-    	    $("#topicsAux").hide();
-    	}
-    });
-    
-	
-	var widthResolution = screen.width;
-	var widthWindow = window.innerWidth;
-	
-	if (widthWindow < 1920) {
-		var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
-		document.getElementById("help").style.marginLeft = marginLeft;
+		notasParciais[currentQuestion] += isCorrect;
 	}
 	
-	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
-
-	createLines();
+	notasParciais[currentQuestion] /= steps.length;
 	
-	window.onresize = function(){
-		var widthWindow = window.innerWidth;
-		
-		if (widthWindow < 1920) {
-			var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
-			document.getElementById("help").style.marginLeft = marginLeft;
+	var newCookie = getCookie("notasParciais");
+	
+	if (newCookie !== "")
+		newCookie += "," + notasParciais[currentQuestion];
+	
+	else
+		newCookie += notasParciais[currentQuestion];
+	
+	setCookieDays("notasParciais", newCookie, 1);
+	calculaNotaGeral();
+}
+
+function orientacoesIniciais() {
+	$.guider({
+		title: "Orientações para o teste",
+		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A quantidade será determinada a partir da sua nota, que será multiplicada por 200.</div><br><div id='fecharJanela' style='font-style: italic'>Você poderá fechar esta janela em <span id='contador'>10</span> segundos</div>",    
+		alignButtons: "center",
+		overlay : "dark",
+		onShow: function() {contadorOrientacoes(); var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {document.getElementById("fecharJanela").style.display = "none"; botao[0].style.visibility = "visible";}, "10000")},
+		buttons: {
+			Entendi: {
+				click: function() {setCookieDays("orientacoesIniciais", "true", 1); $.guider({	}).hideAll();},
+				className: "botaoEntendi"
+			}
 		}
-	};
-	
-	startNewPatequation();
-	
-	
-	
-});
+	}).show();
+}
 
-function createLines() {
-	var lines = '<div class="hLineAux" id="line1">.</div>';
+function contadorOrientacoes() {
+	setTimeout(function() {document.getElementById("contador").innerHTML = "9"}, "1000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "8"}, "2000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "7"}, "3000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "6"}, "4000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "5"}, "5000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "4"}, "6000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "3"}, "7000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "2"}, "8000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "1"}, "9000");
 	
-	for (var i = 2; i <= 22; i++) 
-		lines += '<div class="hLine" id="line' + i + '"></div>';
+}
+function calculaNotaGeral() {
+	notaGeral += notasParciais[currentQuestion] / idsExam.length;
+	var notaString = "" + notaGeral;
 	
-	document.getElementById("lines").innerHTML = lines;
+	setCookieDays("notaGeral", notaString, 1);
 	
+	currentQuestion++;
+	
+	var currentQuestionString = "" + currentQuestion;
+	
+	setCookieDays("currentQuestion", currentQuestionString, 1);
+	
+	saveNotaTeste();
+}
+
+function finalizaTeste() {
+	if (notasParciais.length < numEquations) {
+		if (!confirm("Você tem certeza que deseja finalizar o teste agora? Ainda existem equações em aberto")) {
+			return;
+		}
+		
+	}
+	testeFinalizado = true;
+	
+	var notaArredondada = notaGeral.toFixed(1);
+	
+	if (notaArredondada % 1 === 0)
+		notaArredondada = parseInt(notaArredondada);
+	
+	var points = notaArredondada * 200;
+	updateScoreTotalDataBase(points);
+	var finalizarTesteSpan = document.getElementById("finalizarTeste");
+	finalizarTesteSpan.innerHTML = "Acessar o PAT2Math";
+	finalizarTesteSpan.setAttribute("onclick","redirectPAT2Math();");
+	
+	$.guider({
+		title: "Confira abaixo a sua nota:",
+		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal. Quando estiver pronto, clique no link \"Acessar o PAT2Math\" neste mesmo menu.</div>",    
+		alignButtons: "center",
+		width: 550,
+		buttons: {
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}).show();
+	
+
+}
+
+function redirectPAT2Math() {
+	location.href="/pat2math/newpatequation";
+}
+function finalizaQuestao() {
+	document.getElementById("finalizaQuestao").innerHTML = "Aguarde um momento...";
+	var pos = searchResolutions(idEquation);
+	var steps = resolutions[pos].steps;
+	var divBorracha = "borracha" + steps.length;
+	divBorracha = document.getElementById(divBorracha);
+	
+	for (var i = steps.length - 1; divBorracha === null; i--) {
+		divBorracha = "borracha" + i;
+		divBorracha = document.getElementById(divBorracha);
+	}
+	
+	divBorracha.style.visibility = "hidden";
+	
+//	var steps = resolutions[idEquation];
+	
+	requestServer('e', selectedEquation.initialEquation, steps[0], "OG");
+	
+	for (var i = 1; i < steps.length; i++) {
+		requestServer('e', steps[i-1], steps[i], "OG");
+	}
+	
+	calculaNotaParcial(steps);
+	
+	
+	
+	document.getElementById("finalizaQuestao").innerHTML = "Enviado para correção";
+		
 }
 
 function verifyMultiplicationsInX(expression) {
@@ -393,24 +274,100 @@ function correctEquation(answer) {
 	
 	return left === right;
 }
-
-function verifyKnowledgeTest() {
-	$.ajax({
-		type: "GET",
-		url: "newPatequation/knowledgeTestWasRealized",
-		data: {}, 
-		success:
-			function(data) {
-				console.log(data);
+//Máximo 15 equações para um período de 50 minutos
+function generateTest() {
+	var idsExamCookie = getCookie("idsExam");
+	
+	if (idsExamCookie !== "") {
+		var equationsExamCookie = getCookie("equationsExam");
+		
+		var ids = idsExamCookie.split(",");
+		var equations = equationsExamCookie.split(",");
+		
+		for (var i = 0; i < numEquations; i++) {
+			idsExam[i] = parseInt(ids[i]);
+			equationsExam[i] = equations[i];
+		}
+		
+		var notaGeralCookie = getCookie("notaGeral");
+		
+		if (notaGeralCookie !== "") {
+			notaGeral = parseFloat(notaGeralCookie);
+			
+			var parciais = getCookie("notasParciais").split(",");
+			
+			for (var i = 0; i < parciais.length; i++)
+				notasParciais[i] = parseFloat(parciais[i]);		
+		}
+	}
+	
+	else {
+		if (numEquations > 15) {
+			alert ("O número de equações deve ser no máximo 15");
+		}
+	
+		else {
+			var idPlans = [30, 30, 27, 27, 24, 24, 23, 22, 22, 19, 17, 14, 12, 7, 2];
+			var numEquationsPlans = [10, 10, 10, 10, 10, 10, 10, 10, 10, 6, 5, 5, 5, 5, 5];
+			
+			for (var i = 0; i < numEquations; i++) {
+				var id = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+				idsExam[i] = id;
+				idsExamString += id + ",";
+				getEquationById(id, i);			
 				
-				if (data === "knowledgeTest")
-					location.href='/pat2math/knowledgeTest';
-			},
-		error:
-			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	//alert("Perdão, obtivemos um erro ao processar esta ação.");
-		 	}
-		});	
+				if (idPlans[i] >= 24 || idPlans[i] === 22) {
+					i++;
+					
+					if (i >= numEquations)
+						break;
+					
+					var id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					
+					while (id2 === id)
+						id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					
+					
+					
+					idsExam[i] = id2;
+					idsExamString += id2 + ",";
+					getEquationById(id2, i);		
+				}
+			}
+			
+			setCookieDays("idsExam", idsExamString, 1);
+			setTimeout(function() {setCookieDays("equationsExam", equationsExamString, 1)}, "10000");
+		}
+	}
+	
+	var html = '<span class="topic" style="width: 255px; margin-left: 5px; background: #82C785" onclick="loadTasksExam()"> Equações </span> <div id="tasks' + id + '" class="tasks"></div><div id="tasksExam" class="tasks" style="display: none;"></div>';
+	document.getElementById("the_list").innerHTML = html;
+}
+
+function loadTasksExam() {
+	var html = '<span class="task" onclick="loadExercise(' + idsExam[idsExam.length-1] + ')" id="task' + idsExam[idsExam.length-1] + '">' + equationsExam[equationsExam.length-1] + '</span>' +
+			   '<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>' +
+			   '<i id="marktask' + idsExam[idsExam.length-1] + '" class="icon-ok" style="visibility: hidden;"></i>';
+	
+	for (var i = equationsExam.length - 2; i >= 0; i--) {
+		html += '<span class="task" onclick="loadExercise(' + idsExam[i] + ')" id="task' + idsExam[i] + '">' + equationsExam[i] + '</span>' +
+				'<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>' +
+				'<i id="marktask' + idsExam[i] + '" class="icon-ok" style="visibility: hidden;"></i>';
+	}
+	
+	html += '<span id="finalizarTeste" class="task" onclick="finalizaTeste()" style="color: #fffc00; margin-left: -30px; width: 154px">Finalizar teste</span>';
+	$("#tasksExam").html(html);
+	$("#tasksExam").slideDown(700);
+}
+
+function createLines() {
+	var lines = '<div class="hLineAux" id="line1">.</div>';
+	
+	for (var i = 2; i <= 22; i++) 
+		lines += '<div class="hLine" id="line' + i + '"></div>';
+	
+	document.getElementById("lines").innerHTML = lines;
+	
 }
 
 function tourTCC() {
@@ -704,11 +661,7 @@ function tourTCC() {
 
 
 function startNewPatequation() {
-	document.getElementById("topics").style.background = "silver";
-	
-
-	
-	verifyTour();
+	verifyTourInterativo();
 	getEquationsWE();
 	getScoresStages();
 	getFreeHintsAndErrors();
@@ -769,22 +722,6 @@ function startNewPatequation() {
 
 		$("#topics").fadeIn();
 	    $("#topicsAux").hide();
-	    
-	}
-	
-	var planoAtualKnowledgeTest = getCookie("planoAtualKnowledgeTest");
-	
-	if (planoAtualKnowledgeTest !== "") {
-		planoAtualKnowledgeTest = parseInt(planoAtualKnowledgeTest);
-		setCookieDays("planoAtualKnowledgeTest", "", 0);
-		
-		if (unlockedPlans === undefined || unlockedPlans === null)
-    		unlockedPlans = 1;
-    	
-		if (planoAtualKnowledgeTest > unlockedPlans) {
-    		for (var i = unlockedPlans; i < planoAtualKnowledgeTest; i++)
-    			completePlan();
-		}
 	}
 	
 //	if (getCookie("noticeHint") === "") {
@@ -852,14 +789,13 @@ function verifyTour() {
 
 			},
 			success : function(data) {
-				if (data === "true") {			
-					verifyKnowledgeTest();
+				if (data === "false") {			
+					tourTCC();
 				}
 				
-				else {   		 		
-    		 		startTour();
+				else {
+					setCookieDays("tourViewed", "true", 1);
 				}
-
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				console.log("Ocorreu um erro inesperado");
@@ -1022,10 +958,7 @@ function completePlan() {
 	
 	else {
 		var divName = "lockStage" + unlockedPlans;
-		var lockStage = document.getElementById(divName);
-		
-		if (lockStage !== null)
-			lockStage.innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
 	
 		setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
 	}
@@ -1336,43 +1269,43 @@ function isIntro(equation){
 		isIntroductionToEquationPlan = true;
 }
 
-//function verifyTourInterativo() {
-//	 $.ajax({  
-//	     type : "Get",   
-//	     url : "/pat2math/student/reload_task",
-////	     async: false,
-//	     success : function(response) { 
-//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
-////	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
-//	    		 	if (getCookie ("stepTour") === "") {
-//	    		 		blockMenu = true;
-//	    		 		
-//	    		 		if (enableWorkedExamples) {
-//	    		 			loadExerciseWE("x+2=10", 20);
-//	    		 			classPlan1();	    	   
-//	    		 		}
-//	    		 		
-//	    		 		else {
-//	    		 			isTourInterativo = true;
-//	    		 			loadTasks(0);
-//	    		 			loadExercise(0);
-//	    		 			introductionWithWelcome("");
-//	    		 		}
-//	    			}
-//	    		 	
-//	    		 	else {
-//	    		 		isTourInterativo = true;
-//	    		 		loadTasks(0);
-//	    		 		loadExercise(0);		    		 		
-//	    		 		checkTour();
-//	    		 	}
-//	    	    }
-//	     },  
-//	     error : function(e) {  
-//	      alert('Error: ' + e);   
-//	     }  
-//	    }); 
-//}
+function verifyTourInterativo() {
+	 $.ajax({  
+	     type : "Get",   
+	     url : "/pat2math/student/reload_task",
+//	     async: false,
+	     success : function(response) { 
+	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
+//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
+	    		 	if (getCookie ("stepTour") === "") {
+	    		 		blockMenu = true;
+	    		 		
+	    		 		if (enableWorkedExamples) {
+	    		 			loadExerciseWE("x+2=10", 20);
+	    		 			classPlan1();	    	   
+	    		 		}
+	    		 		
+	    		 		else {
+	    		 			isTourInterativo = true;
+	    		 			loadTasks(0);
+	    		 			loadExercise(0);
+	    		 			introductionWithWelcome("");
+	    		 		}
+	    			}
+	    		 	
+	    		 	else {
+	    		 		isTourInterativo = true;
+	    		 		loadTasks(0);
+	    		 		loadExercise(0);		    		 		
+	    		 		checkTour();
+	    		 	}
+	    	    }
+	     },  
+	     error : function(e) {  
+	      alert('Error: ' + e);   
+	     }  
+	    }); 
+}
 function createIntroductionPlans() {
 	var plans = '<span class="topic" onclick="loadTasks(1)">Introdução 1</span><div id="tasks1" class="tasks"></div>';
 
@@ -1781,6 +1714,30 @@ function loadEquation(index) {
         centralizeCanCopy();
         line.removeClass("canCopy");
 
+        var pos = searchResolutions(idEquation);
+        
+        if (pos !== -1) {
+        	selectedEquation.steps = new Array();
+    	
+    		var steps = resolutions[pos].steps;
+    		var i = 0;
+    		
+    		for (; i < steps.length - 1; i++) 
+    			selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+    		
+    		  var verification = steps[i].split("=");
+    		  var v1 = verification[0] === "x";
+    		  var v2 = $.isNumeric(verification[1]);
+    		  
+    		  if (!v1 || !v2) 
+    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+    		  
+    		  else
+    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_SOLUTION));
+    	}
+        	
+        
+        requestFinalAnswer();
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
         	calculateUsedLines();
@@ -1812,8 +1769,15 @@ function loadEquation(index) {
                 } else {
                     line = line.next();
                 }
-
-                elements = elements + "</ul><div class='cool coolAlign'></div>";
+                
+                if (testeFinalizado) {
+                	var html = "</ul><div class='cool coolAlign'></div>";
+                	
+                	if (!correctEquation(selectedEquation.steps[i].step))
+                		html = "</ul><div class='bad coolAlign'></div>";
+                	
+                	elements = elements + html;
+                }
                 
                 if (!selectedEquation.isAnswer() && levelGamification !== "without") {
                 	var totalPoints = 10 + selectedEquation.userPoints + selectedEquation.userErrorPoints;
@@ -1884,11 +1848,9 @@ function loadEquation(index) {
         if ($(selectedSheet).html().indexOf("final") === -1) {
             
         	if (selectedEquation.isComplete || (selectedEquation.lastStep !== null && (selectedEquation.lastStep.type === x2_SOLUTION || selectedEquation.lastStep.type === NORMAL_SOLUTION))) {
-                $(selectedSheet + " .canCopy li").css("color", "blue");
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
                 //addProgressValue(10);
-                //selectedEquation.lastStep = selectedEquation;
-                nextLine.html("<div class='final'></div>");            
+                //selectedEquation.lastStep = selectedEquation;         
                 
                 var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                 selectedEquation.addPoints(result);
@@ -1965,6 +1927,19 @@ function addLabelDefault() {
     $(".labelDefault:first input").focus();
 }
 
+function deleteStep() {
+//	var temp = resolutions[idEquation];
+//	temp.pop();
+//	setCookieDays("resolutionCurrentEquation", temp.toString(), 1);
+	var pos = searchResolutions(idEquation);
+	resolutions[pos].steps.pop();
+	
+	var cookieName = "equation" + idEquation;
+	setCookieDays(cookieName, resolutions[pos].steps.toString(), 1);
+	
+	window.location.reload();
+}
+
 function clearLine(option) {
     if (option === 'all') {
         selectedEquation.currentStep = "";
@@ -1981,9 +1956,11 @@ function clearLine(option) {
             svg + "<ul>" +
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
-            "<div class='trash'></div>" +
-            "<button id='button'></button><div id='feedbackError'></div>");
+            "<div class='borracha' id='borracha" + selectedEquation.steps.length + "'title='Apagar passo' onclick='deleteStep()'></div>" +
+            "<button id='button'></button>");
 
+    $("#borracha").tooltip();
+    
     centralizeCanMoveAndButton();
     sortable();
     draggable();
@@ -1994,6 +1971,9 @@ function clearLine(option) {
     focus();
 
     $(".labelDefault input").focus();
+    
+    if (selectedEquation.steps.length === 0)
+    	document.getElementById("borracha0").style.visibility = "hidden";
     
     
 }
@@ -2544,65 +2524,22 @@ function newEquation() {
 function checkEquation() { 
 	if (isLoadEquation)
 		isLoadEquation = false;
-//	setTimeout ('resetNumClicks()', 3000);
-//	
-//	if (numClicks === undefined)
-//		numClicks = 1;
-//	
-//	else
-//		numClicks++;
-//	
-//	if (numClicks === 5)
-//		fiveClicksOnTheLoupe();
 	
-	//var display = document.getElementById('button').style.display;
-//	if (document.getElementById ('button') === null && idEquation >= 0) {
-//		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
-//    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
-//		    nextEquationClick();
-//	}
-	
-//	else {
 	var button = document.getElementById('button');
 	if (button.style.width !== '16px') {
-	button.style.width = '16px';
-	button.style.height = '16px';
-	button.style.top = '4px';
-	button.style.right = '7px';
-	button.style.background = 'url("/pat2math/images/solve_loading.gif")';
-
+		document.getElementById('button').style.visibility = "hidden";
     
 	$(selectedSheet + " .canMove li input").blur();
-//  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
-//  passoAnterior = getEquation(passoAnterior);
 	
   var equation = naturalToText(selectedEquation.currentStep);
   
   if (equation === "")
 	  equation = " ";
   
-  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
+  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1) {
 	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
-  
-  
-  
-  
-//  if (isTourInterativo) {
-//      if (cont === 0) {
-//      	resolutionPart1(equation);
-//      } else if (cont === 1) {
-//      	resolutionPart2(equation);
-//      } else if (cont === 2) {
-//      	resolutionPart3(equation);
-//      } else if (cont === 3) {
-//      	resolutionPart4(equation);
-//      } else if (cont === 4) {
-//      	resolutionPart5(equation);  
-//      } cont++;
-//  }
-  
-  
-  
+	  return false;
+  }
   var passoAnterior = selectedEquation.lastStep;
   
   if (passoAnterior !== null) {
@@ -2610,14 +2547,6 @@ function checkEquation() {
   } else {
       passoAnterior = selectedEquation.initialEquation;       	  
   }
-  
-  
-
-  //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
-
-//  if (selectedEquation.initialEquation === "") {
-//      selectedEquation.initialEquation = passoAnterior;
-//  }
 
   var equationServer = equation;
   var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
@@ -2642,15 +2571,141 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   
-  if (window.location.href.indexOf("knowledgeTest") === -1)
-	  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+  var pos = searchResolutions(idEquation);
+  
+  if (pos !== -1) 
+	  resolutions[pos].steps.push(equationServer);
+  
+  else {
+	  pos = resolutions.length;
+	  var newResolution = new ResolutionEquation(idEquation);
+	  newResolution.steps.push(equationServer);
+	  resolutions.push(newResolution);
+  }
+  
+  var cookieName = "equation" + idEquation;
+  setCookieDays(cookieName, resolutions[pos].steps.toString(), 1);
+  
+//  if (resolutions[idEquation] === undefined)
+//	  resolutions[idEquation] = new Array();
+//  
+//  var temp = resolutions[idEquation];
+//  temp.push(equationServer);
+//  
+//  if (selectedEquation.steps === null || selectedEquation.steps === undefined) {
+//	  selectedEquation.steps = new Array();
+//  }
+  
+//  setCookieDays("resolutionCurrentEquation", temp.toString(), 1);
 
-  else
-	  requestServerKnowledgeTest('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+  var verification = equationServer.split("=");
+  var v1 = verification[0] === "x";
+  var v2 = $.isNumeric(verification[1]);
+  
+//Verificação especial para frações que não resultam em um número inteiro
+  if (v1 && !v2) {
+	  var split = verification[1].split("/");
+	  
+	  if (split.length === 2) {
+		  split[0] = replaceAll(split[0], "(", "");
+		  split[0] = replaceAll(split[0], ")", "");
+		  split[1] = replaceAll(split[1], "(", "");
+		  split[1] = replaceAll(split[1], ")", "");
+		  
+		  if ($.isNumeric(split[0]) && $.isNumeric(split[1])) {
+			  var expression = split[0] + "/" + split[1];
+			  var result = eval(expression);
+		  
+			  if (result % 1 !== 0)
+				  v2 = true;
+		  }
+	  }
+  }
 
-  //document.getElementById('button').style.display = 'inline';
-//}
-}
+  var element = $(selectedSheet + " #button");
+
+  $(selectedSheet + " .trash").remove();
+
+  $(".verticalTape").hide('blind', 500);
+
+  if (element.parent().html().indexOf("frac") !== -1) {
+      nextLineServer = element.parent().next().next();
+  } else {
+      nextLineServer = element.parent().next();
+  }
+
+  var idBorrachaAnterior = "borracha" + selectedEquation.steps.length;
+  document.getElementById(idBorrachaAnterior).style.visibility = "hidden";
+  
+  var htmlLine = "<ul>" +
+  "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+  "</ul>" +
+  "<div class='borracha' id='borracha" + (selectedEquation.steps.length+1) + "' title='Apagar passo' onclick='deleteStep()'></div>" +
+  "<button id='button'></button>";
+  
+//  if (selectedEquation.steps === null || selectedEquation.steps === undefined || selectedEquation.steps.length === 0) {
+//	  htmlLine = "<ul>" +
+//      "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+//      "</ul>" +
+//      "<div id='borracha' title='Apagar passo' onclick='deleteStep()'></div>" +
+//      "<button id='button'></button>";
+//  }
+  
+//  else {
+//	  var marginTop = $('#borracha').css('margin-top');
+//	  marginTop = marginTop.replace("px", "");
+//	  marginTop = parseInt(marginTop);
+//	  var newMarginTop = marginTop + 33;
+//	  newMarginTop = newMarginTop + "px";
+//	  $('#borracha').css('margin-top', newMarginTop);
+//  }
+  nextLineServer.html(htmlLine);
+  
+  $("#borracha").tooltip();
+  
+  
+  $(selectedSheet + " .canCopy li").draggable("disable");
+  $(selectedSheet + " .canCopy li").css("opacity", "0.5");
+  $(selectedSheet + " .formula li").css("opacity", "0.5");
+  $(selectedSheet + " .canCopy").removeClass("canCopy");
+  $(selectedSheet + " .canMove ul").sortable("disable");
+  //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
+  $(selectedSheet + " .canMove li").css("opacity", "0.75");
+  nextLineServer.addClass("canMove");
+  element.parent().removeClass("canMove");
+  element.parent().addClass("canCopy");
+
+  var idCool = "cool" + selectedEquation.steps.length;
+  var divCool = "<div class='coolExam coolAlign' id='" + idCool + "'></div>";
+  $(element).replaceWith(divCool);
+  centralizeCanMoveAndButton();
+  coolAlign();
+  sortable();
+  draggable();
+//   trashHide();
+//    trashDroppable();
+  trashClick();
+  buttonClick();
+//  selectedEquation.lastStep = null;
+  focus();
+  
+  document.getElementById(idCool).style.display = "none";
+  
+  if (v1 && v2) {
+	  nextLineServer.html('<div id="finalizaQuestao"><button type="button" onclick="finalizaQuestao()">Enviar para avaliação</button></div><div class="borracha" id="borracha' + (selectedEquation.steps.length+1) + '" style="margin-top: -55px;" title="Apagar passo" onclick="deleteStep()"></div>');
+	  var step = new Step(equationServer, NORMAL_SOLUTION);
+	  selectedEquation.lastStep = step;
+      selectedEquation.steps.push(step);
+      selectedEquation.currentStep = "";
+  }
+  
+  else {
+	  selectedEquation.steps.push(new Step(equationServer, NORMAL_STEP));
+	  selectedEquation.currentStep = "";
+  }
+  
+  $("#borracha").tooltip();
+	}
 }
 
 
@@ -3082,6 +3137,15 @@ function searchArray (elemento, array) {
 	return -1;	
 }
 
+function searchResolutions(id) {
+	for (var i = 0; i < resolutions.length; i++) {
+		if (resolutions[i].id === id)
+			return i;
+	}
+	
+	return -1;
+}
+
 function insertInArray(array, element, pos) {
 	if (array[pos] !== undefined) {
 		for (var i = array.length - 1; i >= pos; i--)
@@ -3090,3 +3154,83 @@ function insertInArray(array, element, pos) {
 	
 	array[pos] = element;
 }
+
+$(document).ready(function() {	
+	
+	
+	loadEquation(0);
+
+    centralizeCanMoveAndButton();
+    sortable();
+    draggable();
+    //trashHide();
+    trashClick();
+    //trashDroppable();
+    centralizeCanCopy();
+    buttonClick();
+    focus();
+    
+    $(document).keyup(function(event) {
+        var key = event.which;
+        if (key === 13) { //enter key
+
+            if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
+                $(".nextEquation").click();
+            } else {
+                checkEquation();
+            }
+
+        } 
+    });
+    
+    $("#topics").mouseleave (function() {
+    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
+    	    $("#topics").fadeOut();
+    	    $("#topicsAux").show();
+    	}
+    });
+    
+    $("#topicsAux").mouseover (function() {
+    	if (blockMenu === false && openAndBlockMenu !== "true") {
+    	    $("#topics").fadeIn();
+    	    $("#topicsAux").hide();
+    	}
+    });
+    
+	$(selectedSheet + " #logo").tooltip();
+	$("#topics").fadeIn();
+	createLines();
+	
+	var currentQuestionCookie = getCookie("currentQuestion");
+	
+	if (currentQuestionCookie !== "") 
+		currentQuestion = parseInt(currentQuestionCookie);
+	
+	generateTest(5);
+	
+	var currentEquation = getCookie("currentEquation");
+	
+	if (currentEquation !== "") {
+		idEquation = parseInt(currentEquation);
+		var cookieName = "equation" + idEquation;
+		var resolutionCookie = getCookie(cookieName);
+	
+		if (resolutionCookie !== "") {
+			var steps = resolutionCookie.split(",");
+			var resolution = new ResolutionEquation(idEquation);
+
+			for (var i = 0; i < steps.length; i++)
+				resolution.steps.push(steps[i]);
+			
+			resolutions.push(resolution);
+		}
+		
+		loadTasksExam();
+		loadExerciseExam(idEquation);
+	}
+	
+	 $("#borracha").tooltip();
+	 
+	 if (getCookie("orientacoesIniciais") === "")
+		 orientacoesIniciais();
+});

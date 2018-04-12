@@ -115,3 +115,19 @@ function updateScoreDataBase(amount) {
 		}
 	});
 }
+
+function updateScoreTotalDataBase(amount) {
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/updateScoreTotal",
+		data : {
+			"amount" : amount,
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}

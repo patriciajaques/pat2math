@@ -54,6 +54,8 @@ public class Student extends User implements Serializable {
 	//Turma do estudante
 	private Integer turma;
 	
+	private Double notaTeste;
+	
 	
 	public static Student newStudent(Student student) {
 		student.defineRole();
@@ -296,6 +298,16 @@ public class Student extends User implements Serializable {
 
 	public void setKnowledgeTestWasRealized(Boolean knowledgeTestWasRealized) {
 		this.knowledgeTestWasRealized = knowledgeTestWasRealized;
+	}
+	
+	
+	
+	public void setNotaTeste (Double notaTeste) {
+		this.notaTeste = notaTeste;
+	}
+	
+	public Double getNotaTeste() {
+		return notaTeste;
 	}
 	
 	

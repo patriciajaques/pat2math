@@ -83,3 +83,8 @@ function Fraction (numerator, denominator) {
 	this.denominator = denominator;
 	this.toString = numerator + "/" + denominator;
 }
+
+function ResolutionEquation(id) {
+	this.id = id;
+	this.steps = new Array();
+}
