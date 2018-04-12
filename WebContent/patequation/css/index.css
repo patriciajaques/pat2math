@@ -83,6 +83,14 @@
     display: none;
 }
 
+#nextEquation {
+	background: url("/pat2math/patequation/img/next_equation.png") no-repeat center;
+	position: relative;
+	cursor: pointer;
+	height: 60px;
+	margin-top: 32px;
+}
+
 #ranking{
     background: url("/pat2math/patequation/img/trofeu.png") no-repeat scroll center center transparent;
     width: 70px;

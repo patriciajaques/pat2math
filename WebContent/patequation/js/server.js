@@ -529,6 +529,8 @@ function requestServer (type, last, next, typeOperation, element) {
         }});      	  
 }
 
+
+
 function getResolution (equation){
 	requestResolution(equation);
 }

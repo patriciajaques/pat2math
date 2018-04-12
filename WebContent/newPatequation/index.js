@@ -12,6 +12,7 @@ var selectedEquation;
 //var currentStepsFirstEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
+var idEquation2; //para o teste de conhecimento
 var planoAtual; //id do plano que está selecionado
 var numEquacoesPlanoAtual;
 var idCurrentUser = getCookie("previousUser"); // the id of the current user logged on
@@ -59,6 +60,10 @@ var pointsWE;
 var resolutionsWE;
 var colorsBackground;
 var isIntroductionToEquationPlan = false; 
+var stepCorrect = true;
+var planoAtualKnowledgeTest = 1;
+var errosDisponiveisKnowledgeTest = 3;
+var equation2 = false; //para o testador de conhecimentos
 
 $(document).ready(function() {	    	
 	//Primeira versão
@@ -341,6 +346,9 @@ $(document).ready(function() {
 	};
 	
 	startNewPatequation();
+	
+	
+	
 });
 
 function createLines() {
@@ -384,6 +392,25 @@ function correctEquation(answer) {
 	var right = eval(ve[1]);
 	
 	return left === right;
+}
+
+function verifyKnowledgeTest() {
+	$.ajax({
+		type: "GET",
+		url: "newPatequation/knowledgeTestWasRealized",
+		data: {}, 
+		success:
+			function(data) {
+				console.log(data);
+				
+				if (data === "knowledgeTest")
+					location.href='/pat2math/knowledgeTest';
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	//alert("Perdão, obtivemos um erro ao processar esta ação.");
+		 	}
+		});	
 }
 
 function tourTCC() {
@@ -677,7 +704,11 @@ function tourTCC() {
 
 
 function startNewPatequation() {
-	verifyTourInterativo();
+	document.getElementById("topics").style.background = "silver";
+	
+
+	
+	verifyTour();
 	getEquationsWE();
 	getScoresStages();
 	getFreeHintsAndErrors();
@@ -738,6 +769,22 @@ function startNewPatequation() {
 
 		$("#topics").fadeIn();
 	    $("#topicsAux").hide();
+	    
+	}
+	
+	var planoAtualKnowledgeTest = getCookie("planoAtualKnowledgeTest");
+	
+	if (planoAtualKnowledgeTest !== "") {
+		planoAtualKnowledgeTest = parseInt(planoAtualKnowledgeTest);
+		setCookieDays("planoAtualKnowledgeTest", "", 0);
+		
+		if (unlockedPlans === undefined || unlockedPlans === null)
+    		unlockedPlans = 1;
+    	
+		if (planoAtualKnowledgeTest > unlockedPlans) {
+    		for (var i = unlockedPlans; i < planoAtualKnowledgeTest; i++)
+    			completePlan();
+		}
 	}
 	
 //	if (getCookie("noticeHint") === "") {
@@ -805,13 +852,14 @@ function verifyTour() {
 
 			},
 			success : function(data) {
-				if (data === "false") {			
-					tourTCC();
+				if (data === "true") {			
+					verifyKnowledgeTest();
 				}
 				
-				else {
-					setCookieDays("tourViewed", "true", 1);
+				else {   		 		
+    		 		startTour();
 				}
+
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				console.log("Ocorreu um erro inesperado");
@@ -974,7 +1022,10 @@ function completePlan() {
 	
 	else {
 		var divName = "lockStage" + unlockedPlans;
-		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+		var lockStage = document.getElementById(divName);
+		
+		if (lockStage !== null)
+			lockStage.innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
 	
 		setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
 	}
@@ -1284,43 +1335,43 @@ function isIntro(equation){
 		isIntroductionToEquationPlan = true;
 }
 
-function verifyTourInterativo() {
-	 $.ajax({  
-	     type : "Get",   
-	     url : "/pat2math/student/reload_task",
-//	     async: false,
-	     success : function(response) { 
-	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
-//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
-	    		 	if (getCookie ("stepTour") === "") {
-	    		 		blockMenu = true;
-	    		 		
-	    		 		if (enableWorkedExamples) {
-	    		 			loadExerciseWE("x+2=10", 20);
-	    		 			classPlan1();	    	   
-	    		 		}
-	    		 		
-	    		 		else {
-	    		 			isTourInterativo = true;
-	    		 			loadTasks(0);
-	    		 			loadExercise(0);
-	    		 			introductionWithWelcome("");
-	    		 		}
-	    			}
-	    		 	
-	    		 	else {
-	    		 		isTourInterativo = true;
-	    		 		loadTasks(0);
-	    		 		loadExercise(0);		    		 		
-	    		 		checkTour();
-	    		 	}
-	    	    }
-	     },  
-	     error : function(e) {  
-	      alert('Error: ' + e);   
-	     }  
-	    }); 
-}
+//function verifyTourInterativo() {
+//	 $.ajax({  
+//	     type : "Get",   
+//	     url : "/pat2math/student/reload_task",
+////	     async: false,
+//	     success : function(response) { 
+//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
+////	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
+//	    		 	if (getCookie ("stepTour") === "") {
+//	    		 		blockMenu = true;
+//	    		 		
+//	    		 		if (enableWorkedExamples) {
+//	    		 			loadExerciseWE("x+2=10", 20);
+//	    		 			classPlan1();	    	   
+//	    		 		}
+//	    		 		
+//	    		 		else {
+//	    		 			isTourInterativo = true;
+//	    		 			loadTasks(0);
+//	    		 			loadExercise(0);
+//	    		 			introductionWithWelcome("");
+//	    		 		}
+//	    			}
+//	    		 	
+//	    		 	else {
+//	    		 		isTourInterativo = true;
+//	    		 		loadTasks(0);
+//	    		 		loadExercise(0);		    		 		
+//	    		 		checkTour();
+//	    		 	}
+//	    	    }
+//	     },  
+//	     error : function(e) {  
+//	      alert('Error: ' + e);   
+//	     }  
+//	    }); 
+//}
 function createIntroductionPlans() {
 	var plans = '<span class="topic" onclick="loadTasks(1)">Introdução 1</span><div id="tasks1" class="tasks"></div>';
 
@@ -2590,7 +2641,11 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   
-  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+  if (window.location.href.indexOf("knowledgeTest") === -1)
+	  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+
+  else
+	  requestServerKnowledgeTest('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
 
   //document.getElementById('button').style.display = 'inline';
 //}
