@@ -1135,10 +1135,9 @@ function theRoadSoFar() {
 	
 	$.guider({
 		title : "O Caminho Até Aqui",
-		description : '<div style="text-align: left;">' +
-					  'Equações resolvidas: ' + solvedEquations[currentLevel] + 
-					  '\nFases concluídas: ' + completedStages[currentLevel] + 
-					  '\nPontuação total: ' + totalScore + '</div>',
+		description : 'Equações resolvidas: ' + solvedEquations[currentLevel] + 
+					  '<br>Fases concluídas: ' + completedStages[currentLevel] + 
+					  '<br>Pontuação total: ' + totalScore,
 		overlay : "dark",
 		width : 600,
 		alignButtons : "center",
