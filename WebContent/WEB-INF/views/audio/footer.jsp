@@ -50,14 +50,15 @@ function checkGroup(id) {
 // 	}
 	
 //  	if (isNewPatequation)
-		redirectPage("/pat2math/newpatequation");
+	
+	redirectPage("newpatequation");
 	
 //  	else
 //  		redirectPage("/pat2math/student/home");
 }
 
 function redirectPage(url) {
-	setTimeout ("location.href= '" + url + "';", 2000); 
+	setTimeout ("location.href='/pat2math/" + url + "';", 2000); 
 	//setTimeout ("document.getElementById('go').style.visibility = 'visible';", 5000);
 }
 

@@ -572,17 +572,15 @@ function alternativeFirstStepTour (nextStep) {
     			}
     		});
     		
-    		$.guider({
+    	    $.guider({
     			name: "fstep11",
-    			title: "Acesso às Equações",
-    			description: "Clique na Fase 1 para conferir as suas equações.",     
-    			position: "right",
+    			title: "Antes de começar a utilizar o PAT2Math, você passará por um teste",
+    			description: 'Nós vamos medir o seu conhecimento para você começar no plano de aula mais apropriado',     
     			alignButtons: "right",
-    			onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
     			buttons: {
     				Voltar: true,
     				OK: {
-    					click: true,
+    					click: function() {exit();},
     					className: "primary"
     				}
     			}
@@ -662,10 +660,10 @@ function mainMenu (nextStep) {
 	
 	$.guider({
 		name: "mp3",
-		title: "Acesso às Equações",
-		description: 'Clique na Fase 1 para conferir as suas equações.',     
+		title: "Antes de começar a utilizar o PAT2Math, você passará por um teste",
+		description: 'Este teste medirá o seu conhecimento para você começar no plano de aula mais apropriado',     
 		alignButtons: "right",
-		onShow: function() {setCookieDays ("stepTour", "mp3", 1); setCookieDays ("functionTour", "mainMenu", 1);},
+		onShow: function() {exit();},
 		buttons: {
 			Voltar: true,
 			OK: {
@@ -847,7 +845,7 @@ function plan2Explanation (nextStep) {
 
 function exit ( ) {
 	$.guider({	}).hideAll();
-	
+	setCookieDays("tourViewed", "true", 1);
 	isTourInterativo = false; 
 	blockMenu = true;
 	
@@ -861,34 +859,53 @@ function exit ( ) {
 	setCookieDays ("stepTour", "", 0);
 	setCookieDays ("functionTour", "", 0);
 	setCookieDays ("openTour", "false", 7);
+	
+	$.ajax({
+		type : "GET",
+		url : "newPatequation/setTour",
+		data : {
+
+		},
+		success : function(data) {	
+			console.log(data);
+			
+			location.href='/pat2math/knowledgeTest';
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+	
 }
 
-function checkTour ( ) {
-	var nextStep = getCookie ("stepTour");
-    var functionTour = getCookie ("functionTour");
-    	
-    if (numUnlockedPlans === 0) {
-    	if (functionTour === "" || functionTour === "introduction")
-    		introduction(nextStep);
-    	
-    	else if (functionTour === "firstStepTour") 
-    		firstStepTour(nextStep); 
-    
-    	else if (functionTour === "mainMenu") 
-    		mainMenu(nextStep);
-    
-    	else if (functionTour === "classPlan") 
-    		classPlan(nextStep);
-    
-    	else if (functionTour == "alternativeFirstStepTour")
-    		alternativeFirstStepTour(nextStep);
-    }
-    
-    else if (numUnlockedPlans === 1 && functionTour === "clickEquation") 
-		clickEquation(nextStep);
-    
-    else if (numUnlockedPlans === 2 && functionTour === "plan2Explanation") 
-    	plan2Explanation(nextStep);
+function startTour() {
+	loadExerciseWE("x+2=10", 20);
+	classPlan1();	   
+//	var nextStep = getCookie ("stepTour");
+//    var functionTour = getCookie ("functionTour");
+//    	
+//    if (numUnlockedPlans === 0) {
+//    	if (functionTour === "" || functionTour === "introduction")
+//    		introduction(nextStep);
+//    	
+//    	else if (functionTour === "firstStepTour") 
+//    		firstStepTour(nextStep); 
+//    
+//    	else if (functionTour === "mainMenu") 
+//    		mainMenu(nextStep);
+//    
+//    	else if (functionTour === "classPlan") 
+//    		classPlan(nextStep);
+//    
+//    	else if (functionTour == "alternativeFirstStepTour")
+//    		alternativeFirstStepTour(nextStep);
+//    }
+//    
+//    else if (numUnlockedPlans === 1 && functionTour === "clickEquation") 
+//		clickEquation(nextStep);
+//    
+//    else if (numUnlockedPlans === 2 && functionTour === "plan2Explanation") 
+//    	plan2Explanation(nextStep);
 }
 
 function newPlan ( ) {

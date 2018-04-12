@@ -248,6 +248,24 @@ public class StudentController {
 		return "knowledgeTest";
 	}
 	
+	@RequestMapping(value = "newPatequation/knowledgeTestWasRealized", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String knowledgeTestWasRealized(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		if(!student.getKnowledgeTestWasRealized()) {
+			return "knowledgeTest";
+		}else {
+			return "newPatequation";
+		}
+	}
+	
+	@RequestMapping(value = "newPatequation/setKnowledgeTest", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String setKnowledgeTest(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setKnowledgeTestWasRealized(true);
+		sd.alter(student);		
+		return "Dados atualizados com sucesso!";
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/newpatequation")
 	public String newpatequation(Model model, HttpSession session) {
 		Student student = new CurrentUser(session).student();
