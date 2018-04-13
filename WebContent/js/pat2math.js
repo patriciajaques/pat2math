@@ -928,7 +928,7 @@ function loadExerciseExam(id) {
 
 function knowledgeTest(){
 	planoAtualKnowledgeTest++;
-	if(planoAtualKnowledgeTest==6 && planoAtualKnowledgeTest==11 && planoAtualKnowledgeTest==16 && planoAtualKnowledgeTest==21 && planoAtualKnowledgeTest==25 && planoAtualKnowledgeTest==29){
+	if(planoAtualKnowledgeTest==6 || planoAtualKnowledgeTest==11 || planoAtualKnowledgeTest==16 || planoAtualKnowledgeTest==21 || planoAtualKnowledgeTest==25 || planoAtualKnowledgeTest==29){
 		planoAtualKnowledgeTest++;
 	}
 	var planoAtual = planoAtualKnowledgeTest;
@@ -952,10 +952,9 @@ function knowledgeTest(){
 
 //function loadExerciseKnowledgeTest(id, id2) {	
 //	var startTest = document.getElementById('startTest');
-//	
-//	if (startTest !== null)
+//	if (startTest !== null){
 //		startTest.remove();
-//	
+//	}
 //	$.ajax({
 //		type: 'GET',
 //		url: appContext + "student/loadExercise",
@@ -963,8 +962,21 @@ function knowledgeTest(){
 //		dataType: 'json',
 //		success: function(data) {
 //			if(data != null) {
-//=======
-function loadExerciseKnowledgeTest(id) {
+//				var equation = new Equation(data.equation, 100);
+//				equation.id = data.id;
+//				for(var j = 0; j < data.steps.length; j++) {
+//					equation.steps[j] = new Step(data.steps[j], 0);
+//				}
+//				idEquation=id;
+//				newEquations[0] = equation;
+//			}
+//			reloadPaper(1);	
+//		}
+//	});	
+//	loadingHide();
+//}
+
+function loadExerciseKnowledgeTest(id, id2) {
 	// setCurrentEquation (id);
 	loadingShow();
 

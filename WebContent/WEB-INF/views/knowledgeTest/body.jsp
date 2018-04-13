@@ -52,7 +52,7 @@
         </div>
     </div> -->
 	
-	<button id="startTest" onclick="knowledgeTest()"> Iniciar teste</button>
+	<!--  <button id="startTest" onclick="knowledgeTest()"> Iniciar teste</button> -->
     <div id="mask" onclick="test56()"></div>
 
 <!-- 	<div id="plansAux" style='visibility: hidden'></div> -->
