@@ -954,32 +954,6 @@ function knowledgeTest(){
 	}
 }
 
-//function loadExerciseKnowledgeTest(id, id2) {	
-//	var startTest = document.getElementById('startTest');
-//	if (startTest !== null){
-//		startTest.remove();
-//	}
-//	$.ajax({
-//		type: 'GET',
-//		url: appContext + "student/loadExercise",
-//		data: {"exerciseId" : id},
-//		dataType: 'json',
-//		success: function(data) {
-//			if(data != null) {
-//				var equation = new Equation(data.equation, 100);
-//				equation.id = data.id;
-//				for(var j = 0; j < data.steps.length; j++) {
-//					equation.steps[j] = new Step(data.steps[j], 0);
-//				}
-//				idEquation=id;
-//				newEquations[0] = equation;
-//			}
-//			reloadPaper(1);	
-//		}
-//	});	
-//	loadingHide();
-//}
-
 function loadExerciseKnowledgeTest(id, id2) {
 	// setCurrentEquation (id);
 	loadingShow();
