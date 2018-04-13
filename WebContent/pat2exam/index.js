@@ -166,7 +166,7 @@ function orientacoesIniciais() {
 
 function tourPAT2Exam() {
 	$.guider({
-		next: "2",
+		next: "PAT2Exam2",
 		title: "Equações iniciais",
 		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
 		alignButtons: "right",
@@ -180,8 +180,8 @@ function tourPAT2Exam() {
 	}).show();
 	
 	$("#topicsAux").guider({
-		name: "2",
-		next: "3",
+		name: "PAT2Exam2",
+		next: "PAT2Exam3",
 		title: "O menu principal desaparece enquanto você está resolvendo uma equação",
 		description: "Para ele reaparecer, passe o mouse neste local",    
 		position: "right",
@@ -196,8 +196,8 @@ function tourPAT2Exam() {
 	});
 	
 	$("#button").guider({
-		name: "3",
-		next: "4",
+		name: "PAT2Exam3",
+		next: "PAT2Exam4",
 		position: "left",
 		title: "Registrando um passo no sistema",
 		description: "Clique neste botão depois de digitar um passo, ou simplesmente aperte Enter",    
@@ -212,8 +212,8 @@ function tourPAT2Exam() {
 	});
 	
 	$.guider({
-		name: "4",
-		next: "5",
+		name: "PAT2Exam4",
+		next: "PAT2Exam5",
 		title: "Apagando um passo da resolução",
 		description: "Você pode apagar passos já registrados no sistema se achar que está errado. Para isso, clique no ícone <img src=/pat2math/images/borracha24x24.png></img> que estará localizado ao lado direito do passo registrado",    
 		alignButtons: "right",
@@ -227,8 +227,8 @@ function tourPAT2Exam() {
 	});
 	
 	$.guider({
-		name: "5",
-		next: "6",
+		name: "PAT2Exam5",
+		next: "PAT2Exam6",
 		title: "Finalizando o teste",
 		description: "Clique em \"Finalizar teste\" localizado no final do menu principal quando você estiver pronto. Em seguida, o sistema fará a correção do seu teste",    
 		alignButtons: "right",
@@ -242,8 +242,8 @@ function tourPAT2Exam() {
 	});
 	
 	$.guider({
-		name: "6",
-		next: "7",
+		name: "PAT2Exam6",
+		next: "PAT2Exam7",
 		title: "Resultados",
 		description: "Após a correção, o sistema informará a sua nota. Você também poderá consultar a correção detalhada selecionando as equações desejadas no menu principal",    
 		alignButtons: "right",
@@ -257,7 +257,7 @@ function tourPAT2Exam() {
 	});
 	
 	$.guider({
-		name: "7",
+		name: "PAT2Exam7",
 		title: "Pontuação",
 		description: "O PAT2Math conta com um sistema de pontuação, e você receberá um bônus inicial de acordo com a sua nota. Por isso, resolva o teste com muita calma e atenção, como se fosse uma prova normal da escola. ",    
 		alignButtons: "right",
