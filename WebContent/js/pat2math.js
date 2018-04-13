@@ -932,7 +932,7 @@ function loadExerciseExam(id) {
 
 function knowledgeTest(){
 	planoAtualKnowledgeTest++;
-	if(planoAtualKnowledgeTest==6 && planoAtualKnowledgeTest==11 && planoAtualKnowledgeTest==16 && planoAtualKnowledgeTest==21 && planoAtualKnowledgeTest==25 && planoAtualKnowledgeTest==29){
+	if(planoAtualKnowledgeTest==6 || planoAtualKnowledgeTest==11 || planoAtualKnowledgeTest==16 || planoAtualKnowledgeTest==21 || planoAtualKnowledgeTest==25 || planoAtualKnowledgeTest==29){
 		planoAtualKnowledgeTest++;
 	}
 	var planoAtual = planoAtualKnowledgeTest;
@@ -954,21 +954,7 @@ function knowledgeTest(){
 	}
 }
 
-//function loadExerciseKnowledgeTest(id, id2) {	
-//	var startTest = document.getElementById('startTest');
-//	
-//	if (startTest !== null)
-//		startTest.remove();
-//	
-//	$.ajax({
-//		type: 'GET',
-//		url: appContext + "student/loadExercise",
-//		data: {"exerciseId" : id},
-//		dataType: 'json',
-//		success: function(data) {
-//			if(data != null) {
-//=======
-function loadExerciseKnowledgeTest(id) {
+function loadExerciseKnowledgeTest(id, id2) {
 	// setCurrentEquation (id);
 	loadingShow();
 
