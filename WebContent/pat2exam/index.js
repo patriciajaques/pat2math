@@ -69,7 +69,7 @@ var notaGeral = 0;
 var currentQuestion = 0;
 var resolutions = new Array();
 var testeFinalizado = false;
-var numEquations = 3; //Número de equações do teste
+var numEquations = 5; //Número de equações do teste
 
 function getNotaTeste() {
 	$.ajax({
@@ -133,17 +133,143 @@ function calculaNotaParcial(steps) {
 function orientacoesIniciais() {
 	$.guider({
 		title: "Orientações para o teste",
-		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A quantidade será determinada a partir da sua nota, que será multiplicada por 200.</div><br><div id='fecharJanela' style='font-style: italic'>Você poderá fechar esta janela em <span id='contador'>10</span> segundos</div>",    
-		alignButtons: "center",
+		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A sua pontuação será determinada a partir da sua nota neste teste, que será multiplicada por 200.</div><br><div id='fecharJanela' style='font-style: italic'>Você poderá fechar esta janela em <span id='contador'>10</span> segundos</div>",    
+		alignButtons: "right",
 		overlay : "dark",
-		onShow: function() {contadorOrientacoes(); var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {document.getElementById("fecharJanela").style.display = "none"; botao[0].style.visibility = "visible";}, "10000")},
+		onShow: function() {$("#topics").fadeOut(); $("#topicsAux").show(); contadorOrientacoes(); var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {document.getElementById("fecharJanela").style.display = "none"; botao[0].style.visibility = "visible";}, "10000")},
+		next: "2",
 		buttons: {
-			Entendi: {
-				click: function() {setCookieDays("orientacoesIniciais", "true", 1); $.guider({	}).hideAll();},
+			Próximo: {
+				click: true,
 				className: "botaoEntendi"
 			}
 		}
 	}).show();
+	
+	$("#topics").guider({
+		name: "2",
+		title: "Menu principal",
+		description: "Aqui você tem acesso às equações do teste. Selecione qualquer uma delas para começar",       
+		position: "right",
+		alignButtons: "center",
+		onShow: function() {setCookieDays("orientacoesIniciais", "true", 1); $("#topics").fadeIn(); $("#topicsAux").hide(); loadTasksExam();},
+		buttons: {
+			OK: {
+				click: true,
+				className: "primary"
+			}
+
+		}
+	});
+	
+}
+
+function tourPAT2Exam() {
+	$.guider({
+		next: "2",
+		title: "Equações iniciais",
+		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
+		alignButtons: "right",
+		onShow: function() {$("#topicsAux").show(); $("#topics").fadeOut();},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}).show();
+	
+	$("#topicsAux").guider({
+		name: "2",
+		next: "3",
+		title: "O menu principal desaparece enquanto você está resolvendo uma equação",
+		description: "Para ele reaparecer, passe o mouse neste local",    
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$("#button").guider({
+		name: "3",
+		next: "4",
+		position: "left",
+		title: "Registrando um passo no sistema",
+		description: "Clique neste botão depois de digitar um passo, ou simplesmente aperte Enter",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "4",
+		next: "5",
+		title: "Apagando um passo da resolução",
+		description: "Você pode apagar passos já registrados no sistema se achar que está errado. Para isso, clique no ícone <img src=/pat2math/images/borracha24x24.png></img> que estará localizado ao lado direito do passo registrado",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "5",
+		next: "6",
+		title: "Finalizando o teste",
+		description: "Clique em \"Finalizar teste\" localizado no final do menu principal quando você estiver pronto. Em seguida, o sistema fará a correção do seu teste",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "6",
+		next: "7",
+		title: "Resultados",
+		description: "Após a correção, o sistema informará a sua nota. Você também poderá consultar a correção detalhada selecionando as equações desejadas no menu principal",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "7",
+		title: "Pontuação",
+		description: "O PAT2Math conta com um sistema de pontuação, e você receberá um bônus inicial de acordo com a sua nota. Por isso, resolva o teste com muita calma e atenção, como se fosse uma prova normal da escola. ",    
+		alignButtons: "right",
+		onShow: function() {setCookieDays("tourPAT2Exam", "true", 1)},
+		buttons: {
+			Voltar: true,
+			Finalizar: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
 }
 
 function contadorOrientacoes() {

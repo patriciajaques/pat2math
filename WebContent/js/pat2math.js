@@ -154,7 +154,7 @@ function loadTasks(id) {
 			planoAtual = undefined;
 			setCookieDays("currentPlan", "", 0);
 		}
-		currentStage = id - 1000;
+		currentStage = id;
 		planoAtual = id;
 		getPontuacaoPlano();
 
@@ -230,14 +230,14 @@ function loadTasks(id) {
 									&& levelGamification !== "without") {
 								currentLevel = 1;
 
-								if (id > 1005) {
-									if (id < 1011)
+								if (id > 11) {
+									if (id < 22)
 										currentLevel = 2;
 
-									else if (id < 1015)
+									else if (id < 30)
 										currentLevel = 3;
 
-									else if (id < 1019)
+									else if (id < 42)
 										currentLevel = 4;
 
 									else
@@ -709,7 +709,7 @@ function loadExerciseWE(eq, points) {
 function loadExercise(id) {
 	// setCurrentEquation (id);
 	loadingShow();
-
+	
 	var cookieName = "linesHeight" + id;
 
 	if (getCookie(cookieName) !== "")
@@ -778,6 +778,10 @@ function loadExercise(id) {
 			}
 
 			setCookieDays("currentEquation", idEquation, 1);
+			
+			//Experimentar executar por um siteTimeout de 3 segundos, ou ver um outro local para colocar
+			if (resolutions !== undefined && resolutions !== null && getCookie("tourPAT2Exam") === "") 
+				tourPAT2Exam(); 
 
 			// cookieName = "numLines" + currentPos + idEquation;
 			//			

@@ -184,7 +184,7 @@ function generateStages(level) {
 		
 	}
 	
-	if (unlockedPlans === 12 || unlockedPlans === 22 || unlockedPlans === 30 || unlockedPlans >= 34)
+	if ((unlockedPlans === 12 && level === 2) || (unlockedPlans === 22 && level === 3) || (unlockedPlans === 30 && level === 4) || (unlockedPlans >= 34 && level === 5))
 		theRoadSoFar();
 	
 	var firstStage = firstStagePerLevel[level];

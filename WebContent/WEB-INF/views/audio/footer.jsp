@@ -50,8 +50,9 @@ function checkGroup(id) {
 // 	}
 	
 //  	if (isNewPatequation)
+// 		redirectPage("/pat2math/newpatequation");
+// 		redirectPage("/pat2math/pat2exam");
 	redirectPage("newpatequation");
-
 	
 //  	else
 //  		redirectPage("/pat2math/student/home");
