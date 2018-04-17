@@ -3282,7 +3282,7 @@ function insertInArray(array, element, pos) {
 }
 
 $(document).ready(function() {	
-	
+	isPAT2Exam = true;
 	
 	loadEquation(0);
 

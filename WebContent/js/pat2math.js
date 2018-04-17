@@ -1,4 +1,5 @@
 var appContext = "/pat2math/";
+var isPAT2Exam;
 // var currentIds = null; //Array original atual das equações
 // var currentIds2 = null; //Array ordenado atual das equações
 // var stop = true; //Variável que controla se o aluno está resolvendo as
@@ -780,7 +781,7 @@ function loadExercise(id) {
 			setCookieDays("currentEquation", idEquation, 1);
 			
 			//Experimentar executar por um siteTimeout de 3 segundos, ou ver um outro local para colocar
-			if (resolutions !== undefined && resolutions !== null && getCookie("tourPAT2Exam") === "") 
+			if (isPAT2Exam && getCookie("tourPAT2Exam") === "") 
 				tourPAT2Exam(); 
 
 			// cookieName = "numLines" + currentPos + idEquation;

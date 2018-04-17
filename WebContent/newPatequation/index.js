@@ -66,6 +66,7 @@ var errosDisponiveisKnowledgeTest = 3;
 var equation2 = false; //para o testador de conhecimentos
 
 $(document).ready(function() {	    	
+	isPAT2Exam = false;
 	//Primeira versão
 //	$("#papers").on("click", "#refresh_page", function() {
 //	$.guider({
