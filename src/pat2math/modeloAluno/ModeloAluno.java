@@ -623,7 +623,7 @@ public class ModeloAluno extends Resolvedor{
 
 
 		}catch(InvalidValueException ive){
-			Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua equação possui o seguinte err: "+ive.message());
+			Mensagem m=new Mensagem("0",false,false,false,requestHint,"Sua equação possui o seguinte erro: "+ive.message());
 			//monitor.logEquacao(original,usrExpression, operacao.getOperacao(), m.getMSG(), m.isRespostaCerta(),
 			//m.isOperacaoCerta(), m.isUltimoPasso());
 			m.setOperacao(operacao.getOperacao());
