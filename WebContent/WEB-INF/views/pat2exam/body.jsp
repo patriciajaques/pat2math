@@ -1,3 +1,12 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.10&appId=669959713214349';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -10,7 +19,48 @@
     
     <!-- <img id="loadingImage" src="img/loading.gif"/> -->
     
-
+    <div id="topics" style="overflow: auto">
+    	<div id="bar-header" >
+    		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%;">
+    	</div>
+    	
+    	<div class="left">
+			<!-- <p><a href="account" class="white-link">Perfil</a></p> -->
+			<p><a href="/pat2math/j_spring_security_logout"><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px; margin-top: -96px; margin-left: 7px" /></a></p>
+			<p><div class="generalScore" id="totalScore" style="margin-top: -26px;"></div>
+			<p><div class="generalScore" id="levelScore"></div>
+			<p><div class="generalScore" id="stageScore"></div>	
+<!-- 			<p><a href="/pat2math/j_spring_security_logout"	><img src="/pat2math/images/logout.png" style="height: 15%; width: 15%; border-radius: 5px;" /><span id="exitText">&nbspSair</span></a></p> -->
+<!--  			<p><button type="button" onclick="getResolution()">Teste Resolução</button></p> -->
+<!-- 			<p><button type="button" onclick="getStep()">Teste Passo</button></p> -->
+			
+<!-- 			<p><span class="white-link" onclick="rel()">Reload</span></p> -->
+		</div>
+    	
+		<br>
+		<%-- <c:forEach items="${topics}" var="topic">
+			<span class="topic" onclick="loadTasks(${topic.set.id})">
+				${topic.set.name}
+			</span>
+			<div id="tasks${topic.set.id}" class="tasks"></div>
+		</c:forEach> 
+		<%@ include file="./topicList.jsp"%>
+		--%>
+		
+		
+		<div id="the_list">		
+<%-- 		<%@ include file="./topicList.jsp"%> --%>
+		</div>
+		
+		<br><br><br>
+		
+		<br>
+	</div>
+	
+	<p><span class="hide-menu">
+	 
+	</span></p>
+    
      <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;"> 		    
    			<div id="refresh_page" title="Atualizar a página" onclick="window.location.reload();"></div>
@@ -52,9 +102,23 @@
         </div>
     </div> -->
 	
-	<!--  <button id="startTest" onclick="knowledgeTest()"> Iniciar teste</button> -->
-    <div id="mask" onclick="test56()"></div>
 
+	<div id="newPoints">+10</div>
+	<div id="rewardWorkedExamples" title="Fui ajudado pelo PAT2Math :D O que será que esse botão faz?" onclick="changeColor()"></div>
+	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
+    <div id="mask" onclick="test56()"></div>
+<!--     <div id="equationTour"></div> -->
+    <div id="tour" title="Tour Interativo" onclick="tourTCC()"></div>
+    <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
+    <div id="ranking" title="Veja o ranking do PAT2Math" onclick="ranking()"></div>
+	<div id="video-box"></div>
+	<div id="help-box"></div>
+	<div id="reportBug-box"></div>
+	<div id="uploadImage-box"></div>
+	<div id="quest-box"></div>
+	<div id="topicsAux"></div>
+	<div id="tourAux"></div>
+	<div id="imLegend" title="I'm Legend"><img src= "/pat2math/patequation/img/ImLegend.jpg" height="310px" width="232px"></img></div>
 <!-- 	<div id="plansAux" style='visibility: hidden'></div> -->
 <!-- 	<div id="easter-egg-loupe-box"></div> -->
 	
@@ -67,3 +131,44 @@
 <!-- <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)"> -->
 <!-- </form> -->
 <!-- 	</div> -->
+
+<script>
+function compartilharFacebook(){
+	FB.ui({
+		method: 'feed',
+		name: 'PAT2Math teste',
+		link: 'pat2math.unisinos.br/pat2math/ranking',
+		picture: 'http://pat2math.unisinos.br/pat2math/images/Pat2MathBETA.png',
+		caption: 'LEGENDA',
+		description: 'DESCRIÇÃO'
+	});
+}
+
+function rankingGeral(){
+	$.ajax({
+		type: "GET",
+		url: "newPatequation/top10",
+		data: {"id" : idCurrentUser, "rankingGeral" : true},
+		success:
+			function(data) {
+				$.guider({
+					name: "top10",
+					title: "RANKING GERAL",
+					description: data,									
+					alignButtons: "center",
+					position: "center",
+					buttons: {
+						Fechar: {
+							click: true,
+							className: "primary"
+						}
+					}
+				}).show();
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+		 	}
+		});
+}
+</script>

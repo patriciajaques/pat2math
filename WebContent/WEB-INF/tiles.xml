@@ -41,6 +41,12 @@
 		<put-attribute name="footer" value="/WEB-INF/views/newPatequation/footer.jsp"/>
 	</definition>
 	
+	<definition name="pat2exam" extends="student.page">
+		<put-attribute name="body" value="/WEB-INF/views/pat2exam/body.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/pat2exam/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/pat2exam/footer.jsp"/>
+	</definition>
+	
 	<definition name="ranking" extends="student.page">
 		<put-attribute name="body" value="/WEB-INF/views/ranking/body.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/ranking/header.jsp"/>

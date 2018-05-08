@@ -393,7 +393,7 @@ textarea:focus {
 	top: 0;
 	left: 0;
 	width: 280px;
-	background: #76bdda;
+	background: silver;
 	height: 100%;
 	overflow: scroll;
 	display: none;

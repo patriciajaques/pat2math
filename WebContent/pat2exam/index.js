@@ -1,4 +1,5 @@
-var levelGamification = "full"; //Opções disponíveis: full, low, without
+var levelGamification = "without"; //Opções disponíveis: full, low, without
+var tryResolveByMyself = false;
 var finalAnswerCurrentEquation;
 var isLoadEquation = false; //Verificador especial para, quando o usuário atualizar a página e estar com uma equação selecionada, não atualizar a pontuação total
 var asyncAjax = getCookie("asyncAjax") !== "";
@@ -12,7 +13,6 @@ var selectedEquation;
 //var currentStepsFirstEquation;
 var firstEquationIsComplete = getCookie ("firstEquationIsComplete");
 var idEquation; // the id of the equation in database
-var idEquation2; //para o teste de conhecimento
 var planoAtual; //id do plano que está selecionado
 var numEquacoesPlanoAtual;
 var idCurrentUser = getCookie("previousUser"); // the id of the current user logged on
@@ -21,7 +21,7 @@ var tasksRemaining; //the number of equations unsolved per topic
 var tipoAudio;
 var playAudio;
 var unlockedPlans = 0;
-var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
+var unlockAllPlans = true; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
 //var numClicks;
 
@@ -40,7 +40,7 @@ var concluded = 0;
 var nextLineServer;
 var enableIntroductionPlans = false;
 var enableWorkedExamples = getCookie ("enableWE") === "";
-var enableTourInterativo = getCookie ("enableTour") === "";
+var enableTourInterativo = false;
 var isWorkedExample = false;
 var isTourInterativo = false;
 var openTourInterativo = false;
@@ -60,306 +60,312 @@ var pointsWE;
 var resolutionsWE;
 var colorsBackground;
 var isIntroductionToEquationPlan = false; 
-var stepCorrect = true;
-var planoAtualKnowledgeTest = 1;
-var errosDisponiveisKnowledgeTest = 3;
-var equation2 = false; //para o testador de conhecimentos
+var idsExam = new Array();
+var idsExamString = "";
+var equationsExam = new Array();
+var equationsExamString = "";
+var notasParciais = new Array();
+var notaGeral = 0;
+var currentQuestion = 0;
+var resolutions = new Array();
+var testeFinalizado = false;
+var numEquations = 5; //Número de equações do teste
 
-$(document).ready(function() {	    	
-	isPAT2Exam = false;
-	//Primeira versão
-//	$("#papers").on("click", "#refresh_page", function() {
-//	$.guider({
-//		title : "Resultados de uma pesquisa estatística",
-//		description : "Uma pesquisa envolvendo uma amostra de 9 alunos do curso de Sistemas de Informação foi realizada nesses dias e hoje já temos o resultado. Ainda estamos organizando o dia para o comunicado oficial, mas para não correr o risco de eu não conseguir participar no horário combinado decidi adiantar para hoje: <br><br>Patrícia Augustin Jaques Maillard, em nome dos formandos de Sistemas de Informação de 2017/2, comunico que você foi a escolhida para ser a nossa professora homenageada :D",
-//		overlay : "dark",
-//		width : 600,
-//		alignButtons : "center",
-//		buttons : {
-//			"Aceitar o convite :D": {
-//				click : function(){$.guider({	}).hideAll();},
-//				className : "primary",
-//			}
-//		}
-//	}).show();
-//});
-	
-	
-	
+function getNotaTeste() {
+	$.ajax({
+		async : false,
+		type : "GET",
+		url : "pat2exam/getNotaTeste",
+		data : {
 
+		},
+		success : function(data) {
+			notaGeral = parseFloat(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function saveNotaTeste() {
+	$.ajax({
+		type : "GET",
+		url : "pat2exam/updateNotaTeste",
+		data : {
+			"nota" : notaGeral
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function calculaNotaParcial(steps) {
+	notasParciais[currentQuestion] = 0;
+	
+	for (var i = 0; i < steps.length; i++) {
+		var isCorrect = 10;
 		
-//		getColorsBackground();
+		if (!correctEquation(steps[i]))
+			isCorrect = 0;
 		
-	
-	if (getCookie("gift") === "" && levelGamification !== "full")
-		$("#refresh_page").tooltip();
-	
-	$("#calculator").tooltip();
-	$("#calculatorIcon").tooltip();
-	//if(!useAudio)showSideBar();
-	
-	
-    $("#loadingImage").hide();
-    $("#book").show("clip", 500);
-    
-
-    $("#mask").click(
-            function() {
-                $("#video-box").hide();
-                $("#mask").hide();
-            }
-    );
-    
-    //Desabilita o evento de voltar para a página anterior a partir da tecla backspace 
-    $(document).unbind('keydown').bind('keydown', function (event) {
-        var doPrevent = false;
-        if (event.keyCode === 8) {
-            var d = event.srcElement || event.target;
-            if ((d.tagName.toUpperCase() === 'INPUT' && (d.type.toUpperCase() === 'TEXT' || d.type.toUpperCase() === 'PASSWORD' || d.type.toUpperCase() === 'FILE')) 
-                 || d.tagName.toUpperCase() === 'TEXTAREA') {
-                doPrevent = d.readOnly || d.disabled;
-            }
-            else {
-                doPrevent = true;
-            }
-        }
-
-        if (doPrevent) {
-            event.preventDefault();
-        }
-    });
-    
-    $(document).keyup(function(event) {
-        var key = event.which;
-        if (key === 13) { //enter key
-
-            if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
-                $(".nextEquation").click();
-            } else {
-                checkEquation();
-            }
-
-        } else if (key === 112) { //F1
-        	insertLines (false, idEquation);
-        } else if (key === 113) { //F2
-//        	if (enableAgent === false) {
-//        		setCookieDays ("enableAgent", "true", 1);
-//        	} else {
-//        		setCookieDays ("enableAgent", "", 0);
-//        	}
-//        	
-//        	window.location.reload();
-        } else if (key === 9) { //tab key
-            $(".labelDefault:first").focus();
-            
-        } else if (key === 27 && isWorkedExample) {//esc key
-        	//Interrompe a execução do exemplo trabalhado atual
-        	$.guider({	
-        	}).hideAll();
-        	exitWorkedExample();
-        	loadExercise(planoAtual*100);
-        	$("#topicsAux").show();
-        } else if (event.altKey) {
-            if (key === 66) { //alt + b
-//                $("#bhaskara").click();
-            	//Abre o menu e bloqueia o fechamento automático
-            	$("#topics").fadeIn();
-        	    $("#topicsAux").hide();
-        	    
-        	    if (openAndBlockMenu !== "true") {
-        	    	openAndBlockMenu = "true";
-        	    	setCookieDays("openAndBlockMenu", "true", 1);
-        	    }
-        	    
-        	    else {
-        	    	openAndBlockMenu = "";
-        	    	setCookieDays("openAndBlockMenu", "", 0);
-        	    }       	       	    
-            } else if (key === 67) { //alt + c
-                $("#abc").click();
-            } else if (key === 68) { //alt + d
-                $("#delta").click();
-            } else if (key === 71) { //alt + g	
-                gift();
-            } 
-            else if (key === 73) { //alt + i
-            	if (getCookie("enableIntroductionPlans") === "") {
-            		setCookieDays("enableIntroductionPlans", "false", 1);
-            		setCookieDays("unlockAllPlans", "true", 1);
-            	}
-            	
-            	else {
-            		setCookieDays("enableIntroductionPlans", "", 0);
-            		setCookieDays("unlockAllPlans", "", 0);
-            	}
-            	
-            	window.location.reload();
-            } else if (key === 76) { //alt + l
-                $("#clearLine").click();
-            } else if (key === 77) { //alt + m
-            	$("#topics").fadeIn();
-        	    $("#topicsAux").hide();
-            } else if (key === 83) { //alt + s
-            	if (getCookie("asyncAjax") === "")
-            		setCookieDays("asyncAjax", "true", 1);
-            	
-            	else
-            		setCookieDays("asyncAjax", "", 0);
-            	
-            	window.location.reload();
-            } else if (key === 84) { //alt + t
-            	var unlockPlan = prompt(indexTXT[0]);
-            	unlockPlan = parseInt(unlockPlan);
-            	
-            	if (unlockedPlans === undefined || unlockedPlans === null)
-            		unlockedPlans = 1;
-            	
-            	for (var i = unlockedPlans; i < unlockPlan; i++)
-            		completePlan();
-            } else if (key === 87) { //alt + w
-            	if (getCookie("enableWE") === "")
-            		setCookieDays("enableWE", "false", 1);
-            	
-            	else
-            		setCookieDays("enableWE", "", 0);
-            	
-            	window.location.reload();
-            } else if (key === 0) { //alt + ?
-                $("#hint").click();
-            } else if (key == 80) { //alt + p
-            	if (getCookie("unlockAllPlans") === "")
-            		setCookieDays("unlockAllPlans", "true", 1);
-            	
-            	else
-            		setCookieDays("unlockAllPlans", "", 0);
-            	
-            	window.location.reload();
-            }
-//        } else if (event.shiftKey) {
-//        	if (key === 57) { //( key
-//        		writeInput(")");
-//        	}     	
-        }
-    });
-
-    papers.oncontextmenu = function(e) {
-        $(".dropdown").css("position", "absolute");
-        $(".dropdown").css("left", e.pageX + "px");
-        $(".dropdown").css("top", e.pageY - $(document).scrollTop() + "px");
-        $(".dropdown").addClass("open");
-        return false;
-    };
-
-    document.onclick = function(e) {
-        if (e.which !== 3) {
-            $(".dropdown").removeClass("open");
-        }
-    };
-
-    /*$("#book").tabs({
-        activate: function(event, ui) {
-            //alert(ui.newTab.text() + " activated!");
-        }
-    }).addClass("ui-tabs-vertical ui-helper-clearfix");*/
-    
-    // $("#book .tabs li").removeClass("ui-corner-top").addClass("ui-corner-all");
-
-
-    $(selectedSheet + " #logo").tooltip();
-    $("#imLegend").tooltip();
-    //$("#progressBar").tooltip();
-//    $("#helpSystem").tooltip();
-    $("#imgInformation").tooltip();
-
-//    $("#helpSystem").click(function() {
-//        $("#boxHelpSystem").modal();
-//        $(".collapse").removeClass("in");
-//    });
-
-    $(".canCopyTools li").draggable({
-        connectToSortable: selectedSheet + " .canMove ul",
-        helper: "clone",
-        containment: "#book",
-        appendTo: "body",
-        revert: "invalid",
-        start: function(e, ui) {
-            $(ui.helper).addClass("ui-draggable-helper");
-        },
-        stop: function(e, ui) {
-//            $(ui.helper).removeClass("ui-draggable-helper");
-        }
-    }).disableSelection();
-
-   /* $("#newEquation").button().click(function() {
-        newEquation();
-    });
-*/
-    $("#hint").button().click(function() {
-        hint();
-    });
-
-    loadEquation(0);
-
-    centralizeCanMoveAndButton();
-    sortable();
-    draggable();
-    //trashHide();
-    trashClick();
-    //trashDroppable();
-    centralizeCanCopy();
-    buttonClick();
-    focus();
-    
-    $("#topics").mouseleave (function() {
-    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
-    	    $("#topics").fadeOut();
-    	    $("#topicsAux").show();
-    	}
-    });
-    
-    $("#topicsAux").mouseover (function() {
-    	if (blockMenu === false && openAndBlockMenu !== "true") {
-    	    $("#topics").fadeIn();
-    	    $("#topicsAux").hide();
-    	}
-    });
-    
-	
-	var widthResolution = screen.width;
-	var widthWindow = window.innerWidth;
-	
-	if (widthWindow < 1920) {
-		var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
-		document.getElementById("help").style.marginLeft = marginLeft;
+		notasParciais[currentQuestion] += isCorrect;
 	}
 	
-	setTimeout (function(){if (selectedEquation.equation === "x=1") {$("#topics").fadeIn(); $("#topicsAux").hide();}}, 1000);
-
-	createLines();
+	notasParciais[currentQuestion] /= steps.length;
 	
-	window.onresize = function(){
-		var widthWindow = window.innerWidth;
-		
-		if (widthWindow < 1920) {
-			var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
-			document.getElementById("help").style.marginLeft = marginLeft;
+	var newCookie = getCookie("notasParciais");
+	
+	if (newCookie !== "")
+		newCookie += "," + notasParciais[currentQuestion];
+	
+	else
+		newCookie += notasParciais[currentQuestion];
+	
+	setCookieDays("notasParciais", newCookie, 1);
+	calculaNotaGeral();
+}
+
+function orientacoesIniciais() {
+	$.guider({
+		title: "Orientações para o teste",
+		description: "Resolva as equações com calma e atenção. O teste é individual e sem consulta, e tem como objetivo verificar o quanto você sabe atualmente sobre o conteúdo de equações de primeiro grau. Não é permitido conversar com os seus outros colegas e nem abrir outros sites no navegador. <br><br><div style='font-weight: bold'>Se você responder corretamente às questões, ganhará vários pontos no PAT2Math! A sua pontuação será determinada a partir da sua nota neste teste, que será multiplicada por 200.</div><br><div id='fecharJanela' style='font-style: italic'>Você poderá fechar esta janela em <span id='contador'>10</span> segundos</div>",    
+		alignButtons: "right",
+		overlay : "dark",
+		onShow: function() {$("#topics").fadeOut(); $("#topicsAux").show(); contadorOrientacoes(); var botao = document.getElementsByClassName("botaoEntendi"); botao[0].style.visibility = "hidden"; setTimeout(function() {document.getElementById("fecharJanela").style.display = "none"; botao[0].style.visibility = "visible";}, "10000")},
+		next: "2",
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "botaoEntendi"
+			}
 		}
-	};
+	}).show();
 	
-	startNewPatequation();
-	
-	
-	
-});
+	$("#topics").guider({
+		name: "2",
+		title: "Menu principal",
+		description: "Aqui você tem acesso às equações do teste. Selecione qualquer uma delas para começar",       
+		position: "right",
+		alignButtons: "center",
+		onShow: function() {setCookieDays("orientacoesIniciais", "true", 1); $("#topics").fadeIn(); $("#topicsAux").hide(); loadTasksExam();},
+		buttons: {
+			OK: {
+				click: true,
+				className: "primary"
+			}
 
-function createLines() {
-	var lines = '<div class="hLineAux" id="line1">.</div>';
+		}
+	});
 	
-	for (var i = 2; i <= 22; i++) 
-		lines += '<div class="hLine" id="line' + i + '"></div>';
+}
+
+function tourPAT2Exam() {
+	$.guider({
+		next: "PAT2Exam2",
+		title: "Equações iniciais",
+		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
+		alignButtons: "right",
+		onShow: function() {$("#topicsAux").show(); $("#topics").fadeOut();},
+		buttons: {
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}).show();
 	
-	document.getElementById("lines").innerHTML = lines;
+	$("#topicsAux").guider({
+		name: "PAT2Exam2",
+		next: "PAT2Exam3",
+		title: "O menu principal desaparece enquanto você está resolvendo uma equação",
+		description: "Para ele reaparecer, passe o mouse neste local",    
+		position: "right",
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
 	
+	$("#button").guider({
+		name: "PAT2Exam3",
+		next: "PAT2Exam4",
+		position: "left",
+		title: "Registrando um passo no sistema",
+		description: "Clique neste botão depois de digitar um passo, ou simplesmente aperte Enter",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "PAT2Exam4",
+		next: "PAT2Exam5",
+		title: "Apagando um passo da resolução",
+		description: "Você pode apagar passos já registrados no sistema se achar que está errado. Para isso, clique no ícone <img src=/pat2math/images/borracha24x24.png></img> que estará localizado ao lado direito do passo registrado",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "PAT2Exam5",
+		next: "PAT2Exam6",
+		title: "Finalizando o teste",
+		description: "Clique em \"Finalizar teste\" localizado no final do menu principal quando você estiver pronto. Em seguida, o sistema fará a correção do seu teste",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "PAT2Exam6",
+		next: "PAT2Exam7",
+		title: "Resultados",
+		description: "Após a correção, o sistema informará a sua nota. Você também poderá consultar a correção detalhada selecionando as equações desejadas no menu principal",    
+		alignButtons: "right",
+		buttons: {
+			Voltar: true,
+			Próximo: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+	
+	$.guider({
+		name: "PAT2Exam7",
+		title: "Pontuação",
+		description: "O PAT2Math conta com um sistema de pontuação, e você receberá um bônus inicial de acordo com a sua nota. Por isso, resolva o teste com muita calma e atenção, como se fosse uma prova normal da escola. ",    
+		alignButtons: "right",
+		onShow: function() {setCookieDays("tourPAT2Exam", "true", 1)},
+		buttons: {
+			Voltar: true,
+			Finalizar: {
+				click: true,
+				className: "primary"
+			}
+		}
+	});
+}
+
+function contadorOrientacoes() {
+	setTimeout(function() {document.getElementById("contador").innerHTML = "9"}, "1000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "8"}, "2000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "7"}, "3000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "6"}, "4000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "5"}, "5000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "4"}, "6000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "3"}, "7000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "2"}, "8000");
+	setTimeout(function() {document.getElementById("contador").innerHTML = "1"}, "9000");
+	
+}
+function calculaNotaGeral() {
+	notaGeral += notasParciais[currentQuestion] / idsExam.length;
+	var notaString = "" + notaGeral;
+	
+	setCookieDays("notaGeral", notaString, 1);
+	
+	currentQuestion++;
+	
+	var currentQuestionString = "" + currentQuestion;
+	
+	setCookieDays("currentQuestion", currentQuestionString, 1);
+	
+	saveNotaTeste();
+}
+
+function finalizaTeste() {
+	if (notasParciais.length < numEquations) {
+		if (!confirm("Você tem certeza que deseja finalizar o teste agora? Ainda existem equações em aberto")) {
+			return;
+		}
+		
+	}
+	testeFinalizado = true;
+	
+	var notaArredondada = notaGeral.toFixed(1);
+	
+	if (notaArredondada % 1 === 0)
+		notaArredondada = parseInt(notaArredondada);
+	
+	var points = notaArredondada * 200;
+	updateScoreTotalDataBase(points);
+	var finalizarTesteSpan = document.getElementById("finalizarTeste");
+	finalizarTesteSpan.innerHTML = "Acessar o PAT2Math";
+	finalizarTesteSpan.setAttribute("onclick","redirectPAT2Math();");
+	
+	$.guider({
+		title: "Confira abaixo a sua nota:",
+		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal. Quando estiver pronto, clique no link \"Acessar o PAT2Math\" neste mesmo menu.</div>",    
+		alignButtons: "center",
+		width: 550,
+		buttons: {
+			OK: {
+				click: true,
+				className: "primary"
+			}
+		}
+	}).show();
+	
+
+}
+
+function redirectPAT2Math() {
+	location.href="/pat2math/newpatequation";
+}
+function finalizaQuestao() {
+	document.getElementById("finalizaQuestao").innerHTML = "Aguarde um momento...";
+	var pos = searchResolutions(idEquation);
+	var steps = resolutions[pos].steps;
+	var divBorracha = "borracha" + steps.length;
+	divBorracha = document.getElementById(divBorracha);
+	
+	for (var i = steps.length - 1; divBorracha === null; i--) {
+		divBorracha = "borracha" + i;
+		divBorracha = document.getElementById(divBorracha);
+	}
+	
+	divBorracha.style.visibility = "hidden";
+	
+//	var steps = resolutions[idEquation];
+	
+	requestServer('e', selectedEquation.initialEquation, steps[0], "OG");
+	
+	for (var i = 1; i < steps.length; i++) {
+		requestServer('e', steps[i-1], steps[i], "OG");
+	}
+	
+	calculaNotaParcial(steps);
+	
+	
+	
+	document.getElementById("finalizaQuestao").innerHTML = "Enviado para correção";
+		
 }
 
 function verifyMultiplicationsInX(expression) {
@@ -394,24 +400,100 @@ function correctEquation(answer) {
 	
 	return left === right;
 }
-
-function verifyKnowledgeTest() {
-	$.ajax({
-		type: "GET",
-		url: "newPatequation/knowledgeTestWasRealized",
-		data: {}, 
-		success:
-			function(data) {
-				console.log(data);
+//Máximo 15 equações para um período de 50 minutos
+function generateTest() {
+	var idsExamCookie = getCookie("idsExam");
+	
+	if (idsExamCookie !== "") {
+		var equationsExamCookie = getCookie("equationsExam");
+		
+		var ids = idsExamCookie.split(",");
+		var equations = equationsExamCookie.split(",");
+		
+		for (var i = 0; i < numEquations; i++) {
+			idsExam[i] = parseInt(ids[i]);
+			equationsExam[i] = equations[i];
+		}
+		
+		var notaGeralCookie = getCookie("notaGeral");
+		
+		if (notaGeralCookie !== "") {
+			notaGeral = parseFloat(notaGeralCookie);
+			
+			var parciais = getCookie("notasParciais").split(",");
+			
+			for (var i = 0; i < parciais.length; i++)
+				notasParciais[i] = parseFloat(parciais[i]);		
+		}
+	}
+	
+	else {
+		if (numEquations > 15) {
+			alert ("O número de equações deve ser no máximo 15");
+		}
+	
+		else {
+			var idPlans = [30, 30, 27, 27, 24, 24, 23, 22, 22, 19, 17, 14, 12, 7, 2];
+			var numEquationsPlans = [10, 10, 10, 10, 10, 10, 10, 10, 10, 6, 5, 5, 5, 5, 5];
+			
+			for (var i = 0; i < numEquations; i++) {
+				var id = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+				idsExam[i] = id;
+				idsExamString += id + ",";
+				getEquationById(id, i);			
 				
-				if (data === "knowledgeTest")
-					location.href='/pat2math/knowledgeTest';
-			},
-		error:
-			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	//alert("Perdão, obtivemos um erro ao processar esta ação.");
-		 	}
-		});	
+				if (idPlans[i] >= 24 || idPlans[i] === 22) {
+					i++;
+					
+					if (i >= numEquations)
+						break;
+					
+					var id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					
+					while (id2 === id)
+						id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					
+					
+					
+					idsExam[i] = id2;
+					idsExamString += id2 + ",";
+					getEquationById(id2, i);		
+				}
+			}
+			
+			setCookieDays("idsExam", idsExamString, 1);
+			setTimeout(function() {setCookieDays("equationsExam", equationsExamString, 1)}, "10000");
+		}
+	}
+	
+	var html = '<span class="topic" style="width: 255px; margin-left: 5px; background: #82C785" onclick="loadTasksExam()"> Equações </span> <div id="tasks' + id + '" class="tasks"></div><div id="tasksExam" class="tasks" style="display: none;"></div>';
+	document.getElementById("the_list").innerHTML = html;
+}
+
+function loadTasksExam() {
+	var html = '<span class="task" onclick="loadExercise(' + idsExam[idsExam.length-1] + ')" id="task' + idsExam[idsExam.length-1] + '">' + equationsExam[equationsExam.length-1] + '</span>' +
+			   '<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>' +
+			   '<i id="marktask' + idsExam[idsExam.length-1] + '" class="icon-ok" style="visibility: hidden;"></i>';
+	
+	for (var i = equationsExam.length - 2; i >= 0; i--) {
+		html += '<span class="task" onclick="loadExercise(' + idsExam[i] + ')" id="task' + idsExam[i] + '">' + equationsExam[i] + '</span>' +
+				'<i style="margin-right: 6px" class="icon-pencil  icon-white"></i>' +
+				'<i id="marktask' + idsExam[i] + '" class="icon-ok" style="visibility: hidden;"></i>';
+	}
+	
+	html += '<span id="finalizarTeste" class="task" onclick="finalizaTeste()" style="color: #fffc00; margin-left: -30px; width: 154px">Finalizar teste</span>';
+	$("#tasksExam").html(html);
+	$("#tasksExam").slideDown(700);
+}
+
+function createLines() {
+	var lines = '<div class="hLineAux" id="line1">.</div>';
+	
+	for (var i = 2; i <= 22; i++) 
+		lines += '<div class="hLine" id="line' + i + '"></div>';
+	
+	document.getElementById("lines").innerHTML = lines;
+	
 }
 
 function tourTCC() {
@@ -427,8 +509,8 @@ function tourTCC() {
 	$.guider({
 		name: "start",
 		next: next,
-		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br>" + indexTXT[1] + "</center>",
-		description : "<center>" + indexTXT[2] + "</center>",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo de volta! </center>",
+		description : "<center>Fizemos uma série de atualizações e correções desde a sua última visita :D <br>Confira um breve tour antes de continuar.</center>",
 		overlay : "dark",
 		width : 600,
 		alignButtons : "right",
@@ -444,8 +526,8 @@ function tourTCC() {
 		name: "gamification1",
 		next: "gamification2",
 		position: "right",
-		title: indexTXT[3],
-		description: indexTXT[4],    
+		title: "Pontuação total e por nível",
+		description: "Aqui você tem acesso à sua pontuação total (considerando o progresso em todas as equações já resolvidas) e a do nível atual (neste exemplo, o nível selecionado é o Básico). Além disso, agora as suas pontuações são salvas no sistema",    
 		alignButtons: "right",
 		onShow: function() {generateStages(1);},
 		buttons: {
@@ -459,9 +541,9 @@ function tourTCC() {
 	$("#hint").guider({
 		name: "gamification2",
 		next: "gamification3",
+		title: "Dicas",
 		position: "left",
-		title: indexTXT[5],
-		description: indexTXT[6],    
+		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -474,8 +556,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification3",
 		next: "gamification4",
-		title: indexTXT[7],
-		description: indexTXT[8],    
+		title: "As dicas estão organizadas em níveis",
+		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas. Utilize-as com responsabilidade, uma vez que a cada solicitação você perde 2 pontos. Por outro lado, não deixe de utilizá-las quando você estiver com dificuldades, o seu aprendizado é o fator mais importante",    
 		alignButtons: "right",
 		onShow: function() {loadTasks(1001);},
 		buttons: {
@@ -489,9 +571,9 @@ function tourTCC() {
 	$("#freeHints").guider({
 		name: "gamification4",
 		next: "gamification5",
-		title: indexTXT[9],
+		title: "Dicas gratuitas",
 		position: "left",
-		description: indexTXT[10],    
+		description: "Você possui dicas que podem ser solicitadas gratuitamente, isto é, sem a perda de pontos. Você pode verificar a quantidade de dicas gratuítas disponíveis neste painel",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -504,9 +586,9 @@ function tourTCC() {
 	$("#freeErrors").guider({
 		name: "gamification5",
 		next: "gamification6",
-		title: indexTXT[11],
+		title: "Erros gratuitos",
 		position: "bottom",
-		description: indexTXT[12],    
+		description: "Assim como você pode pedir dicas gratuitas, você também pode errar e não perder pontos por isso. A quantidade de erros gratuitos pode ser visualizada aqui no cabeçalho do caderno",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -519,8 +601,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification6",
 		next: "gamification7",
-		title: indexTXT[13],
-		description: indexTXT[14],    
+		title: "As quantidades disponíveis de dicas e erros gratuitos variam de acordo com a complexidade da fase atual",
+		description: "Assim, quanto mais avançada for a fase e/ou mais equações ela tiver, mais dicas e erros gratuitos você receberá",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -533,8 +615,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification7",
 		next: "gamification8",
-		title: indexTXT[15],
-		description: indexTXT[16],    
+		title: "Exercícios resolvidos",
+		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar a cada fase desbloqueada. A cada nova fase que você desbloquear, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -547,8 +629,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification8",
 		next: "gamification9",
-		title: indexTXT[17],
-		description: indexTXT[18],    
+		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
+		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -561,8 +643,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification9",
 		next: "finish",
-		title: indexTXT[19],
-		description: indexTXT[20],    
+		title: "Eu posso conferir um exercício resolvido sem perder pontos?",
+		description: "Claro! Você tem direito a uma visualização gratuita por fase, a partir daquela mesma mensagem inicial que comentamos agora pouco. Mas não se preocupe: as visualizações adicionais custam apenas 8 pontos.",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -575,8 +657,8 @@ function tourTCC() {
 	$("#hint").guider({
 		name: "lowGamification1",
 		next: "lowGamification2",
-		title: indexTXT[21],
-		description: indexTXT[22],    
+		title: "Dicas",
+		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
 		alignButtons: "right",
 		position: "left",
 		buttons: {
@@ -590,8 +672,8 @@ function tourTCC() {
 	$.guider({
 		name: "lowGamification2",
 		next: "lowGamification3",
-		title: indexTXT[23],
-		description: indexTXT[24],    
+		title: "As dicas estão organizadas em níveis",
+		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas. Utilize-as com responsabilidade, uma vez que a cada solicitação você perde 2 pontos. Por outro lado, não deixe de utilizá-las quando você estiver com dificuldades, o seu aprendizado é o fator mais importante.",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -604,8 +686,8 @@ function tourTCC() {
 	$.guider({
 		name: "lowGamification3",
 		next: "lowGamification4",
-		title: indexTXT[25],
-		description: indexTXT[26],    
+		title: "Exercícios resolvidos",
+		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar a cada fase desbloqueada. A cada nova fase que você desbloquear, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -618,8 +700,8 @@ function tourTCC() {
 	$.guider({
 		name: "lowGamification4",
 		next: "finish",
-		title: indexTXT[27],
-		description: indexTXT[28],    
+		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
+		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -632,9 +714,9 @@ function tourTCC() {
 	$("#hint").guider({
 		name: "withoutGamification1",
 		next: "withoutGamification2",
-		title: indexTXT[29],
+		title: "Dicas",
 		position: "left",
-		description: indexTXT[30],    
+		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -647,8 +729,8 @@ function tourTCC() {
 	$.guider({
 		name: "withoutGamification2",
 		next: "withoutGamification3",
-		title: indexTXT[31],
-		description: indexTXT[32],    
+		title: "As dicas estão organizadas em níveis",
+		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -661,8 +743,8 @@ function tourTCC() {
 	$.guider({
 		name: "withoutGamification3",
 		next: "withoutGamification4",
-		title: indexTXT[33],
-		description: indexTXT[34],    
+		title: "Exercícios resolvidos",
+		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar em cada plano de aula. Quando você abrir um plano pela primeira vez, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -675,8 +757,8 @@ function tourTCC() {
 	$.guider({
 		name: "withoutGamification4",
 		next: "finish",
-		title: indexTXT[35],
-		description: indexTXT[36],    
+		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
+		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
 		alignButtons: "right",
 		position: "right",
 		buttons: {
@@ -689,8 +771,8 @@ function tourTCC() {
 	
 	$("#tour").guider({
 		name: "finish",
-		title: indexTXT[37],
-		description: indexTXT[38],    
+		title: "Terminamos!",
+		description: "Se você desejar, poderá acessar o tour novamente clicando neste botão",    
 		alignButtons: "right",
 		position: "left",
 		onShow: function() {completeTour();},
@@ -705,11 +787,7 @@ function tourTCC() {
 
 
 function startNewPatequation() {
-	document.getElementById("topics").style.background = "silver";
-	
-
-	
-	verifyTour();
+	verifyTourInterativo();
 	getEquationsWE();
 	getScoresStages();
 	getFreeHintsAndErrors();
@@ -770,22 +848,6 @@ function startNewPatequation() {
 
 		$("#topics").fadeIn();
 	    $("#topicsAux").hide();
-	    
-	}
-	
-	var planoAtualKnowledgeTest = getCookie("planoAtualKnowledgeTest");
-	
-	if (planoAtualKnowledgeTest !== "") {
-		planoAtualKnowledgeTest = parseInt(planoAtualKnowledgeTest);
-		setCookieDays("planoAtualKnowledgeTest", "", 0);
-		
-		if (unlockedPlans === undefined || unlockedPlans === null)
-    		unlockedPlans = 1;
-    	
-		if (planoAtualKnowledgeTest > unlockedPlans) {
-    		for (var i = unlockedPlans; i < planoAtualKnowledgeTest; i++)
-    			completePlan();
-		}
 	}
 	
 //	if (getCookie("noticeHint") === "") {
@@ -802,97 +864,45 @@ function ranking(){
 	$.ajax({
 		type: "GET",
 		url: "newPatequation/top10",
-		data: {"id" : idCurrentUser, "rankingGeral" : false, "idioma" : idioma},
+		data: {"id" : idCurrentUser, "rankingGeral" : false},
 		success:
 			function(data) {
-				var botao;
-				switch(idioma) {
-					default:
-					case("pt-BR"):
-						botao = {"Fechar": {click : true, className : "primary",}}
-						break;
-					case("es-ES"):
-						botao = {"Cerrar": {click : true, className : "primary",}}
-						break;
-					case("en-UK"):
-						botao = {"Close": {click : true, className : "primary",}}
-						break;
-				}
 				$.guider({
 					name: "top10",
-					title: indexTXT[74],
+					title: "RANKING DA TURMA",
 					description: data,									
 					alignButtons: "center",
 					position: "center",
-					buttons: botao
+					buttons: {
+						Fechar: {
+							click: true,
+							className: "primary"
+						}
+					}
 				}).show();
 			},
 		error:
 			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	alert(indexTXT[39]);
-		 	}
-		});
-}
-
-function rankingGeral(){
-	$.ajax({
-		type: "GET",
-		url: "newPatequation/top10",
-		data: {"id" : idCurrentUser, "rankingGeral" : true, "idioma" : idioma},
-		success:
-			function(data) {
-				var botao;
-				switch(idioma) {
-					default:
-					case("pt-BR"):
-						botao = {"Fechar": {click : true, className : "primary",}}
-						break;
-					case("es-ES"):
-						botao = {"Cerrar": {click : true, className : "primary",}}
-						break;
-					case("en-UK"):
-						botao = {"Close": {click : true, className : "primary",}}
-						break;
-				}
-				$.guider({
-					name: "top10",
-					title: indexTXT[75],
-					description: data,									
-					alignButtons: "center",
-					position: "center",
-					buttons: botao
-				}).show();
-			},
-		error:
-			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	alert(indexTXT[39]);
+		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
 		 	}
 		});
 }
 
 //Explica a limitação do resolvedor nas equações de razão e proporção
 function reasonAndProportionNotice() {
-	var botao;
-	switch(idioma) {
-		default:
-		case("pt-BR"):
-			botao = {"Entendi": {click : true, className : "primary",}}
-			break;
-		case("es-ES"):
-			botao = {"Entendi": {click : true, className : "primary",}}
-			break;
-		case("en-UK"):
-			botao = {"Got it": {click : true, className : "primary",}}
-			break;
-	}
 	$.guider({
 		name: "rpnotice",
-		title : "<center> <img src=/pat2math/images/warning-icon.png></img><br>" + indexTXT[40] + "</center>",
-		description : "<center>" + indexTXT[41] + "</center>",
+		title : "<center> <img src=/pat2math/images/warning-icon.png></img><br> Atenção! </center>",
+		description : "<center>Atualmente, o sistema possui uma pequena limitação com equações de razão e proporção. O primeiro passo que envolver uma multiplicação simples com X, você precisará colocar o sinal de vezes (asterisco) para o sistema corrigir como certo. <br><br>Por exemplo, se você chegar em uma multiplicação de 5 por X, terá que digitar 5 * x. Somente no próximo passo poderá escrever 5x.</center>",
 		width: 600,
 		overlay : "dark",
 		alignButtons : "center",
-		buttons : botao
+		buttons : {
+			Entendi: {
+				click : true,
+				className : "primary",
+			}
+		}
 	}).show();
 }
 
@@ -905,14 +915,13 @@ function verifyTour() {
 
 			},
 			success : function(data) {
-				if (data === "true") {			
-					verifyKnowledgeTest();
+				if (data === "false") {			
+					tourTCC();
 				}
 				
-				else {   		 		
-    		 		startTour();
+				else {
+					setCookieDays("tourViewed", "true", 1);
 				}
-
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				console.log("Ocorreu um erro inesperado");
@@ -1050,14 +1059,14 @@ function completePlan() {
 	if (unlockedPlans === 7) {
 		workedExamplesReward();
 		saveWorkedExamplesReward();
-		var butt = indexTXT[44];
+		
 		$.guider({
-			title: indexTXT[42],
-			description: indexTXT[43],    
+			title: "Parabéns! Você recebeu uma recompensa pelo seu progresso no PAT2Math",
+			description: "Verifique o que mudou na tela do sistema.",    
 			alignButtons: "center",
 			overlay : "dark",
 			buttons: {
-				butt: {
+				"Legal :D": {
 					click: function() {$.guider({	}).hideAll();},
 					className: "primary"
 				}
@@ -1075,10 +1084,7 @@ function completePlan() {
 	
 	else {
 		var divName = "lockStage" + unlockedPlans;
-		var lockStage = document.getElementById(divName);
-		
-		if (lockStage !== null)
-			lockStage.innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
+		document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
 	
 		setTimeout(function() {document.getElementById(divName).style.display = 'none'; divName = 'stage' + unlockedPlans; document.getElementById(divName).innerHTML = getNameStage(unlockedPlans);}, 2000);
 	}
@@ -1240,9 +1246,9 @@ function theRoadSoFar() {
 	$.guider({
 		title : "O Caminho Até Aqui",
 		description : '<div style="text-align: left;">' +
-					  indexTXT[45] + solvedEquations[currentLevel] + 
-					  '\n' + indexTXT[46] + completedStages[currentLevel] + 
-					  '\n' + indexTXT[47] + totalScore + '</div>',
+					  'Equações resolvidas: ' + solvedEquations[currentLevel] + 
+					  '\nFases concluídas: ' + completedStages[currentLevel] + 
+					  '\nPontuação total: ' + totalScore + '</div>',
 		overlay : "dark",
 		width : 600,
 		alignButtons : "center",
@@ -1389,63 +1395,63 @@ function isIntro(equation){
 		isIntroductionToEquationPlan = true;
 }
 
-//function verifyTourInterativo() {
-//	 $.ajax({  
-//	     type : "Get",   
-//	     url : "/pat2math/student/reload_task",
-////	     async: false,
-//	     success : function(response) { 
-//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
-////	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
-//	    		 	if (getCookie ("stepTour") === "") {
-//	    		 		blockMenu = true;
-//	    		 		
-//	    		 		if (enableWorkedExamples) {
-//	    		 			loadExerciseWE("x+2=10", 20);
-//	    		 			classPlan1();	    	   
-//	    		 		}
-//	    		 		
-//	    		 		else {
-//	    		 			isTourInterativo = true;
-//	    		 			loadTasks(0);
-//	    		 			loadExercise(0);
-//	    		 			introductionWithWelcome("");
-//	    		 		}
-//	    			}
-//	    		 	
-//	    		 	else {
-//	    		 		isTourInterativo = true;
-//	    		 		loadTasks(0);
-//	    		 		loadExercise(0);		    		 		
-//	    		 		checkTour();
-//	    		 	}
-//	    	    }
-//	     },  
-//	     error : function(e) {  
-//	      alert('Error: ' + e);   
-//	     }  
-//	    }); 
-//}
+function verifyTourInterativo() {
+	 $.ajax({  
+	     type : "Get",   
+	     url : "/pat2math/student/reload_task",
+//	     async: false,
+	     success : function(response) { 
+	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
+//	    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
+	    		 	if (getCookie ("stepTour") === "") {
+	    		 		blockMenu = true;
+	    		 		
+	    		 		if (enableWorkedExamples) {
+	    		 			loadExerciseWE("x+2=10", 20);
+	    		 			classPlan1();	    	   
+	    		 		}
+	    		 		
+	    		 		else {
+	    		 			isTourInterativo = true;
+	    		 			loadTasks(0);
+	    		 			loadExercise(0);
+	    		 			introductionWithWelcome("");
+	    		 		}
+	    			}
+	    		 	
+	    		 	else {
+	    		 		isTourInterativo = true;
+	    		 		loadTasks(0);
+	    		 		loadExercise(0);		    		 		
+	    		 		checkTour();
+	    		 	}
+	    	    }
+	     },  
+	     error : function(e) {  
+	      alert('Error: ' + e);   
+	     }  
+	    }); 
+}
 function createIntroductionPlans() {
-	var plans = '<span class="topic" onclick="loadTasks(1)">' + indexTXT[48] + ' 1</span><div id="tasks1" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(1)">Introdução 1</span><div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
-			plans += '<span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[48] + ' ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+			plans += '<span class="topic" onclick="loadTasks(' + i + ')">Introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 	}
 	
 	else {
 		plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
 		
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
-			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[48] + ' ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
+			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
 	}
 	
 	document.getElementById("the_list").innerHTML = plans;
 }
 
 function createExperimentalPlan() {
-	var plans = '<span class="topic" onclick="loadTasks(10033)">' + indexTXT[49] + '</span><div id="tasks10033" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(10033)">Equações</span><div id="tasks10033" class="tasks"></div>';
 	document.getElementById("the_list").innerHTML = plans;
 	unlockAllPlans = true;
 	loadTasks(10033);
@@ -1456,14 +1462,14 @@ function createPlans() {
 	var plans;
 	
 	if (enableIntroductionPlans) {
-	var introPlans = '<span class="topic" onclick="createIndroductionPlans()">'+ indexTXT[50] + '</span>';
-	plans = introPlans + '<span class="topic" onclick="loadTasks(' + (numPlanosIntroducao + 1) + ')">' + indexTXT[51] + ' 1</span> <div id="tasks1" class="tasks"></div>';
+	var introPlans = '<span class="topic" onclick="createIndroductionPlans()">Planos de Introdução</span>';
+	plans = introPlans + '<span class="topic" onclick="loadTasks(' + (numPlanosIntroducao + 1) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
-		plans = '<span class="topic" onclick="createRevisionPlans()">' + indexTXT[52] + '</span>' + plans;	
+		plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;	
 		
 		for (var i = 2; i <= numPlanosAula; i++) 
-			plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">' + indexTXT[51] + ' ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
+			plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
 	}
 	
 	else {
@@ -1478,17 +1484,17 @@ function createPlans() {
 		plans = '<span class="topic" onclick="loadTasks(' + (1 + numPlanosIntroducao) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
 
 		if (unlockAllPlans) {
-			plans = '<span class="topic" onclick="createRevisionPlans()">' + indexTXT[50] + '</span>' + plans;			
+			plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;			
 
 			for (var i = 2; i <= numPlanosAula; i++) 
-				plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">' + indexTXT[51] + ' ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
+				plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
 		}	
 
 		else {
 			plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
 			
 			for (var i = 2; i <= numPlanosAula; i++) 
-				plans += '<div class="locked" id="lplan' + (i + numPlanosIntroducao) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">' + indexTXT[51] + ' ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';			
+				plans += '<div class="locked" id="lplan' + (i + numPlanosIntroducao) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';			
 		}
 
 	}
@@ -1498,11 +1504,11 @@ function createPlans() {
 }
 
 function createRevisionPlans() {
-	var plans = '<span class="topic" onclick="generateLevels()">' + indexTXT[53] + '</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">' + indexTXT[54] + ' 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="generateLevels()">Modo Campanha</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">Fase 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
 	var numTotalPlanos = numPlanosAula + numPlanosRevisao;		
 	
 	for (var i = numPlanosAula + 2; i <= numTotalPlanos; i++) 
-		plans += '<span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[54] + ' ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+		plans += '<span class="topic" onclick="loadTasks(' + i + ')">Fase ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 
 	
 	document.getElementById("the_list").innerHTML = plans;
@@ -1616,7 +1622,7 @@ function verifyPlans() {
 				},
 			error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
-			     	alert(indexTXT[55]);
+			     	alert("Perdão, obtivemos um erro ao processar esta ação.");
 			 	}
 			});	
 		
@@ -1636,7 +1642,7 @@ function rel() {
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 
-		    	 if (enableTourInterativo && response.indexOf(indexTXT[56]+" 1") === -1) {
+		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
 //		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
 		    		 	if (getCookie ("stepTour") === "") {
 		    		 		blockMenu = true;
@@ -1666,7 +1672,7 @@ function rel() {
 		    		 $("#lplan1").hide();
 		    		 numUnlockedPlans = 1;
 		    		 	    				    				    		 
-		    		 if (unlockedPlans.indexOf(indexTXT[57] + " 1") !== -1) {
+		    		 if (unlockedPlans.indexOf("Plano de revisão 1") !== -1) {
 		    			createRevisionPlans();	
 		    	     }
 		    			 
@@ -1678,7 +1684,7 @@ function rel() {
 //		    					$("#lplan" + i).hide();
 //		    			}
 		    				    			
-		    			for (; unlockedPlans.indexOf (indexTXT[56] + " " + i) !== -1; i++) 
+		    			for (; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) 
 		    				$("#lplan" + i).hide();    			 
 		    		    
 		    			//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
@@ -1834,6 +1840,30 @@ function loadEquation(index) {
         centralizeCanCopy();
         line.removeClass("canCopy");
 
+        var pos = searchResolutions(idEquation);
+        
+        if (pos !== -1) {
+        	selectedEquation.steps = new Array();
+    	
+    		var steps = resolutions[pos].steps;
+    		var i = 0;
+    		
+    		for (; i < steps.length - 1; i++) 
+    			selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+    		
+    		  var verification = steps[i].split("=");
+    		  var v1 = verification[0] === "x";
+    		  var v2 = $.isNumeric(verification[1]);
+    		  
+    		  if (!v1 || !v2) 
+    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
+    		  
+    		  else
+    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_SOLUTION));
+    	}
+        	
+        
+        requestFinalAnswer();
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
         	calculateUsedLines();
@@ -1865,8 +1895,15 @@ function loadEquation(index) {
                 } else {
                     line = line.next();
                 }
-
-                elements = elements + "</ul><div class='cool coolAlign'></div>";
+                
+                if (testeFinalizado) {
+                	var html = "</ul><div class='cool coolAlign'></div>";
+                	
+                	if (!correctEquation(selectedEquation.steps[i].step))
+                		html = "</ul><div class='bad coolAlign'></div>";
+                	
+                	elements = elements + html;
+                }
                 
                 if (!selectedEquation.isAnswer() && levelGamification !== "without") {
                 	var totalPoints = 10 + selectedEquation.userPoints + selectedEquation.userErrorPoints;
@@ -1937,11 +1974,9 @@ function loadEquation(index) {
         if ($(selectedSheet).html().indexOf("final") === -1) {
             
         	if (selectedEquation.isComplete || (selectedEquation.lastStep !== null && (selectedEquation.lastStep.type === x2_SOLUTION || selectedEquation.lastStep.type === NORMAL_SOLUTION))) {
-                $(selectedSheet + " .canCopy li").css("color", "blue");
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
                 //addProgressValue(10);
-                //selectedEquation.lastStep = selectedEquation;
-                nextLine.html("<div class='final'></div>");            
+                //selectedEquation.lastStep = selectedEquation;         
                 
                 var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                 selectedEquation.addPoints(result);
@@ -1978,7 +2013,7 @@ function loadEquation(index) {
 }
 
 function calculatePoints(equation) {
-    $("#amountPoins").text(equation.userPoints + indexTXT[58] + equation.points + indexTXT[59]);
+    $("#amountPoins").text(equation.userPoints + " de " + equation.points + " pontos");
 }
 
 function reloadProgressBar() {
@@ -2018,6 +2053,19 @@ function addLabelDefault() {
     $(".labelDefault:first input").focus();
 }
 
+function deleteStep() {
+//	var temp = resolutions[idEquation];
+//	temp.pop();
+//	setCookieDays("resolutionCurrentEquation", temp.toString(), 1);
+	var pos = searchResolutions(idEquation);
+	resolutions[pos].steps.pop();
+	
+	var cookieName = "equation" + idEquation;
+	setCookieDays(cookieName, resolutions[pos].steps.toString(), 1);
+	
+	window.location.reload();
+}
+
 function clearLine(option) {
     if (option === 'all') {
         selectedEquation.currentStep = "";
@@ -2034,9 +2082,11 @@ function clearLine(option) {
             svg + "<ul>" +
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
-            "<div class='trash'></div>" +
-            "<button id='button'></button><div id='feedbackError'></div>");
+            "<div class='borracha' id='borracha" + selectedEquation.steps.length + "'title='Apagar passo' onclick='deleteStep()'></div>" +
+            "<button id='button'></button>");
 
+    $("#borracha").tooltip();
+    
     centralizeCanMoveAndButton();
     sortable();
     draggable();
@@ -2047,6 +2097,9 @@ function clearLine(option) {
     focus();
 
     $(".labelDefault input").focus();
+    
+    if (selectedEquation.steps.length === 0)
+    	document.getElementById("borracha0").style.visibility = "hidden";
     
     
 }
@@ -2563,7 +2616,7 @@ function hint() {
 //        }
         requestServer('d', equation, "", "", null);
     } else {
-        $("#hintText").html(indexTXT[60]);
+        $("#hintText").html("*Equação já finalizada!");
         $("#hintText").show('blind', 500);
         $(".verticalTape").show('fold', 500);
     }
@@ -2597,65 +2650,22 @@ function newEquation() {
 function checkEquation() { 
 	if (isLoadEquation)
 		isLoadEquation = false;
-//	setTimeout ('resetNumClicks()', 3000);
-//	
-//	if (numClicks === undefined)
-//		numClicks = 1;
-//	
-//	else
-//		numClicks++;
-//	
-//	if (numClicks === 5)
-//		fiveClicksOnTheLoupe();
 	
-	//var display = document.getElementById('button').style.display;
-//	if (document.getElementById ('button') === null && idEquation >= 0) {
-//		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
-//    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
-//		    nextEquationClick();
-//	}
-	
-//	else {
 	var button = document.getElementById('button');
 	if (button.style.width !== '16px') {
-	button.style.width = '16px';
-	button.style.height = '16px';
-	button.style.top = '4px';
-	button.style.right = '7px';
-	button.style.background = 'url("/pat2math/images/solve_loading.gif")';
-
+		document.getElementById('button').style.visibility = "hidden";
     
 	$(selectedSheet + " .canMove li input").blur();
-//  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
-//  passoAnterior = getEquation(passoAnterior);
 	
   var equation = naturalToText(selectedEquation.currentStep);
   
   if (equation === "")
 	  equation = " ";
   
-  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
-	  alert (indexTXT[61]);
-  
-  
-  
-  
-//  if (isTourInterativo) {
-//      if (cont === 0) {
-//      	resolutionPart1(equation);
-//      } else if (cont === 1) {
-//      	resolutionPart2(equation);
-//      } else if (cont === 2) {
-//      	resolutionPart3(equation);
-//      } else if (cont === 3) {
-//      	resolutionPart4(equation);
-//      } else if (cont === 4) {
-//      	resolutionPart5(equation);  
-//      } cont++;
-//  }
-  
-  
-  
+  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1) {
+	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
+	  return false;
+  }
   var passoAnterior = selectedEquation.lastStep;
   
   if (passoAnterior !== null) {
@@ -2663,14 +2673,6 @@ function checkEquation() {
   } else {
       passoAnterior = selectedEquation.initialEquation;       	  
   }
-  
-  
-
-  //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
-
-//  if (selectedEquation.initialEquation === "") {
-//      selectedEquation.initialEquation = passoAnterior;
-//  }
 
   var equationServer = equation;
   var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
@@ -2695,15 +2697,141 @@ function checkEquation() {
       selectedEquation.twoAnswers = true;
   }
   
-  if (window.location.href.indexOf("knowledgeTest") === -1)
-	  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+  var pos = searchResolutions(idEquation);
+  
+  if (pos !== -1) 
+	  resolutions[pos].steps.push(equationServer);
+  
+  else {
+	  pos = resolutions.length;
+	  var newResolution = new ResolutionEquation(idEquation);
+	  newResolution.steps.push(equationServer);
+	  resolutions.push(newResolution);
+  }
+  
+  var cookieName = "equation" + idEquation;
+  setCookieDays(cookieName, resolutions[pos].steps.toString(), 1);
+  
+//  if (resolutions[idEquation] === undefined)
+//	  resolutions[idEquation] = new Array();
+//  
+//  var temp = resolutions[idEquation];
+//  temp.push(equationServer);
+//  
+//  if (selectedEquation.steps === null || selectedEquation.steps === undefined) {
+//	  selectedEquation.steps = new Array();
+//  }
+  
+//  setCookieDays("resolutionCurrentEquation", temp.toString(), 1);
 
-  else
-	  requestServerKnowledgeTest('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+  var verification = equationServer.split("=");
+  var v1 = verification[0] === "x";
+  var v2 = $.isNumeric(verification[1]);
+  
+//Verificação especial para frações que não resultam em um número inteiro
+  if (v1 && !v2) {
+	  var split = verification[1].split("/");
+	  
+	  if (split.length === 2) {
+		  split[0] = replaceAll(split[0], "(", "");
+		  split[0] = replaceAll(split[0], ")", "");
+		  split[1] = replaceAll(split[1], "(", "");
+		  split[1] = replaceAll(split[1], ")", "");
+		  
+		  if ($.isNumeric(split[0]) && $.isNumeric(split[1])) {
+			  var expression = split[0] + "/" + split[1];
+			  var result = eval(expression);
+		  
+			  if (result % 1 !== 0)
+				  v2 = true;
+		  }
+	  }
+  }
 
-  //document.getElementById('button').style.display = 'inline';
-//}
-}
+  var element = $(selectedSheet + " #button");
+
+  $(selectedSheet + " .trash").remove();
+
+  $(".verticalTape").hide('blind', 500);
+
+  if (element.parent().html().indexOf("frac") !== -1) {
+      nextLineServer = element.parent().next().next();
+  } else {
+      nextLineServer = element.parent().next();
+  }
+
+  var idBorrachaAnterior = "borracha" + selectedEquation.steps.length;
+  document.getElementById(idBorrachaAnterior).style.visibility = "hidden";
+  
+  var htmlLine = "<ul>" +
+  "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+  "</ul>" +
+  "<div class='borracha' id='borracha" + (selectedEquation.steps.length+1) + "' title='Apagar passo' onclick='deleteStep()'></div>" +
+  "<button id='button'></button>";
+  
+//  if (selectedEquation.steps === null || selectedEquation.steps === undefined || selectedEquation.steps.length === 0) {
+//	  htmlLine = "<ul>" +
+//      "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
+//      "</ul>" +
+//      "<div id='borracha' title='Apagar passo' onclick='deleteStep()'></div>" +
+//      "<button id='button'></button>";
+//  }
+  
+//  else {
+//	  var marginTop = $('#borracha').css('margin-top');
+//	  marginTop = marginTop.replace("px", "");
+//	  marginTop = parseInt(marginTop);
+//	  var newMarginTop = marginTop + 33;
+//	  newMarginTop = newMarginTop + "px";
+//	  $('#borracha').css('margin-top', newMarginTop);
+//  }
+  nextLineServer.html(htmlLine);
+  
+  $("#borracha").tooltip();
+  
+  
+  $(selectedSheet + " .canCopy li").draggable("disable");
+  $(selectedSheet + " .canCopy li").css("opacity", "0.5");
+  $(selectedSheet + " .formula li").css("opacity", "0.5");
+  $(selectedSheet + " .canCopy").removeClass("canCopy");
+  $(selectedSheet + " .canMove ul").sortable("disable");
+  //$(selectedSheet + " .canMove li").attr("contenteditable", "false");
+  $(selectedSheet + " .canMove li").css("opacity", "0.75");
+  nextLineServer.addClass("canMove");
+  element.parent().removeClass("canMove");
+  element.parent().addClass("canCopy");
+
+  var idCool = "cool" + selectedEquation.steps.length;
+  var divCool = "<div class='coolExam coolAlign' id='" + idCool + "'></div>";
+  $(element).replaceWith(divCool);
+  centralizeCanMoveAndButton();
+  coolAlign();
+  sortable();
+  draggable();
+//   trashHide();
+//    trashDroppable();
+  trashClick();
+  buttonClick();
+//  selectedEquation.lastStep = null;
+  focus();
+  
+  document.getElementById(idCool).style.display = "none";
+  
+  if (v1 && v2) {
+	  nextLineServer.html('<div id="finalizaQuestao"><button type="button" onclick="finalizaQuestao()">Enviar para avaliação</button></div><div class="borracha" id="borracha' + (selectedEquation.steps.length+1) + '" style="margin-top: -55px;" title="Apagar passo" onclick="deleteStep()"></div>');
+	  var step = new Step(equationServer, NORMAL_SOLUTION);
+	  selectedEquation.lastStep = step;
+      selectedEquation.steps.push(step);
+      selectedEquation.currentStep = "";
+  }
+  
+  else {
+	  selectedEquation.steps.push(new Step(equationServer, NORMAL_STEP));
+	  selectedEquation.currentStep = "";
+  }
+  
+  $("#borracha").tooltip();
+	}
 }
 
 
@@ -2881,10 +3009,10 @@ function verifyFreeHints() {
 	var hintsAvailable = freeHints[planoAtual];
 	
 	if (hintsAvailable > 0) {
-		var text = indexTXT[72];
+		var text = " dicas gratuitas disponíveis";
 		
 		if (hintsAvailable === 1)
-			text = indexTXT[73];
+			text = " dica gratuíta disponível";
 		
 		document.getElementById("freeHints").innerHTML = hintsAvailable + text;
 	}
@@ -2900,7 +3028,7 @@ function verifyFreeErrors() {
 	if (freeErrorsAvailable > 0) {
 		document.getElementById("logo").style.marginLeft = "153px";
 		document.getElementById("freeErrors").style.display = "block";
-		document.getElementById("freeErrors").innerHTML = htmlTXT[8] + freeErrorsAvailable;
+		document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrorsAvailable;
 	}
 	
 	else {
@@ -3078,40 +3206,38 @@ function getEquationsWE() {
 
 function gift() {
 	if (getCookie("gift") !== "") {
-		var butt1 = indexTXT[62];
-		var butt2 = indexTXT[65];
 		document.getElementById("refresh_page").style.backgroundImage = "url('/pat2math/images/Gift.png')";
 		document.getElementById("refresh_page").title = "???";
 		$("#refresh_page").tooltip();
 		document.getElementById("refresh_page").onclick = function() {
 			$.guider({
-				title : indexTXT[63],
-				description : indexTXT[64],
+				title : "Resultados de uma pesquisa estatística",
+				description : "Uma pesquisa envolvendo uma população - 1 de todas as pessoas do meu dia a dia teve o seu início em 2013 e foi concluída nesses dias. Essa pesquisa teve como objetivo identificar o acontecimento mais importante da minha época de graduação da Unisinos que envolveu ao mesmo tempo a minha vida acadêmica, profissional e pessoal. 100% das pessoas envolvidas concordaram que esse acontecimento foi no dia 17 de Março de 2014 às 10:45.",
 				overlay : "dark",
 				width : 600,
 				alignButtons : "center",
 				buttons : {
-					butt2: {
+					"O que aconteceu no dia 17/03/2014 às 10:45?": {
 						click : function(){$.guider({
-							title : indexTXT[66],
+							title : "Voltando para 10/03/2014 às 10:45",
 							description : '<iframe src="https://giphy.com/embed/xT8qB45TTnypO1h6KY" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/doctor-who-opening-intro-xT8qB45TTnypO1h6KY"></a></p>',
 							overlay : "dark",
 							width : 600,
 							onShow: function() {setTimeout(function() {$.guider({
-								title : indexTXT[67],
-								description : indexTXT[68] + '<br><img src="/pat2math/images/17-03-2014 10-45.png"></img><br><br>' + indexTXT[69],
+								title : "Chegamos!",
+								description : 'Agora também será explicado o porquê de ser uma "população - 1", a única pessoa que não participou da pesquisa foi o próprio resultado :D<br><img src="/pat2math/images/17-03-2014 10-45.png"></img><br><br>Muito obrigado por essa grande oportunidade, que proporcionou uma excelente amizade além do projeto de trabalho. Também nunca vou esquecer da participação especial do Rafael Ávila, que além de ser uma ótima pessoa e professor, foi graças a ele que essa oportunidade tornou-se possível.',
 								overlay : "dark",
 								width : 935,
 								alignButtons : "center",
 								buttons : {
 									"Voltar para o dia de hoje": {
 										click : function(){$.guider({
-											description : indexTXT[70],
+											description : 'Espero que tenha gostado dessa "viagem no tempo" e da montagem como um todo, assim como gostou da primeira :D E só por curiosidade, o GIF que coloquei na janela intermediária é do seriado Doctor Who criado pela BBC e que está no ar desde 1963, e aquele objeto que estava voando no espaço é a TARDIS (Time And Relative Dimension(s) In Space), a nave especial desse doutor que consegue manipular o tempo e espaço e viajar para onde ele quiser. Se tu ainda não conheces esse seriado recomendo muito assistir, o bom é que os episódios não tem uma ligação tão direta entre eles, aí tu podes assistir como se fossem filmes separados.',
 											overlay : "dark",
 											width : 600,
 											alignButtons : "center",
 											buttons : {
-												butt1: {
+												"Concluir a viagem no tempo :D": {
 													click : function(){$.guider({	}).hideAll();},
 													className : "primary",
 												}
@@ -3137,6 +3263,15 @@ function searchArray (elemento, array) {
 	return -1;	
 }
 
+function searchResolutions(id) {
+	for (var i = 0; i < resolutions.length; i++) {
+		if (resolutions[i].id === id)
+			return i;
+	}
+	
+	return -1;
+}
+
 function insertInArray(array, element, pos) {
 	if (array[pos] !== undefined) {
 		for (var i = array.length - 1; i >= pos; i--)
@@ -3145,3 +3280,83 @@ function insertInArray(array, element, pos) {
 	
 	array[pos] = element;
 }
+
+$(document).ready(function() {	
+	isPAT2Exam = true;
+	
+	loadEquation(0);
+
+    centralizeCanMoveAndButton();
+    sortable();
+    draggable();
+    //trashHide();
+    trashClick();
+    //trashDroppable();
+    centralizeCanCopy();
+    buttonClick();
+    focus();
+    
+    $(document).keyup(function(event) {
+        var key = event.which;
+        if (key === 13) { //enter key
+
+            if ($(selectedSheet + " .nextEquation").css("cursor") === "pointer" && $(selectedSheet + " .nextEquation").css("display") !== "none") {
+                $(".nextEquation").click();
+            } else {
+                checkEquation();
+            }
+
+        } 
+    });
+    
+    $("#topics").mouseleave (function() {
+    	if (selectedEquation !== null && selectedEquation.equation !== "x=1" && blockMenu === false && openAndBlockMenu !== "true") {
+    	    $("#topics").fadeOut();
+    	    $("#topicsAux").show();
+    	}
+    });
+    
+    $("#topicsAux").mouseover (function() {
+    	if (blockMenu === false && openAndBlockMenu !== "true") {
+    	    $("#topics").fadeIn();
+    	    $("#topicsAux").hide();
+    	}
+    });
+    
+	$(selectedSheet + " #logo").tooltip();
+	$("#topics").fadeIn();
+	createLines();
+	
+	var currentQuestionCookie = getCookie("currentQuestion");
+	
+	if (currentQuestionCookie !== "") 
+		currentQuestion = parseInt(currentQuestionCookie);
+	
+	generateTest(5);
+	
+	var currentEquation = getCookie("currentEquation");
+	
+	if (currentEquation !== "") {
+		idEquation = parseInt(currentEquation);
+		var cookieName = "equation" + idEquation;
+		var resolutionCookie = getCookie(cookieName);
+	
+		if (resolutionCookie !== "") {
+			var steps = resolutionCookie.split(",");
+			var resolution = new ResolutionEquation(idEquation);
+
+			for (var i = 0; i < steps.length; i++)
+				resolution.steps.push(steps[i]);
+			
+			resolutions.push(resolution);
+		}
+		
+		loadTasksExam();
+		loadExerciseExam(idEquation);
+	}
+	
+	 $("#borracha").tooltip();
+	 
+	 if (getCookie("orientacoesIniciais") === "")
+		 orientacoesIniciais();
+});

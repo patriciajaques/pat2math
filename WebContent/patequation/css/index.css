@@ -95,6 +95,14 @@
     display: none;
 }
 
+#nextEquation {
+	background: url("/pat2math/patequation/img/next_equation.png") no-repeat center;
+	position: relative;
+	cursor: pointer;
+	height: 60px;
+	margin-top: 32px;
+}
+
 #ranking{
     background: url("/pat2math/patequation/img/trofeu.png") no-repeat scroll center center transparent;
     width: 70px;
@@ -412,6 +420,17 @@ span.kbd {
     height: 28px;
 }
 
+.bad {
+    background-image: url('../img/bad.png');
+    width: 30px;
+    height: 28px;
+}
+
+.coolExam {
+	width: 30px;
+    height: 28px;
+}
+
 .hole{
     margin-left: -35px;
     width: 30px;
@@ -691,6 +710,20 @@ math {
     padding: 2px;
     margin-left: 20px;
     margin-top: 1px;
+    background-position: center center; 
+    background-repeat: no-repeat;
+    border: solid 1px transparent; 
+}
+
+.borracha{
+    background-image: url('/pat2math/images/borracha24x24.png');
+    width: 24px;  
+    height: 24px;
+    float: right;
+    padding: 2px;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-top: -33px;
     background-position: center center; 
     background-repeat: no-repeat;
     border: solid 1px transparent; 
