@@ -95,6 +95,7 @@ $(document).ready(function() {
 		$("#refresh_page").tooltip();
 	
 	$("#calculator").tooltip();
+	$("#ranking").tooltip();
 	$("#calculatorIcon").tooltip();
 	//if(!useAudio)showSideBar();
 	

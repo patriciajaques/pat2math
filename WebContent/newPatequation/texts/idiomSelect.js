@@ -13,8 +13,15 @@ var weuTXT;							//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
 
 
 var idioma = getCookie("idiomaEscolhido");
-	if(idioma == "")
+	if(idioma == "") {
 		idioma = navigator.language;
+		
+		if (idioma == "es")
+			idioma = "es-ES";
+		
+		else if (idioma == "en")
+			idioma = "en-UK";
+	}
 	
 switch(idioma) {
 	case ("en-UK"):

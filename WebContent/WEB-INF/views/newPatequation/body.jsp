@@ -71,7 +71,7 @@
 	</span></p>
 	
 	<div id="note">
-        <span id="amountPoins">0 de 0 pontos</span>
+        <span id="amountPoins"></span>
         <br><br>
 
         <div id="progressBar" class="progress">
