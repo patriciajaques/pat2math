@@ -1,3 +1,4 @@
+
 function workedExamplesReward() {
 	document.getElementById("rewardWorkedExamples").style.display = "inline";
 	$("#rewardWorkedExamples").tooltip();
@@ -11,10 +12,10 @@ function saveWorkedExamplesReward() {
 
 		},
 		success : function(data) {
-			console.log("Recompensa adquirida com sucesso");
+			console.log(srTXT[0]);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Ocorreu um erro inesperado");
+			console.log(srTXT[1]);
 		}
 	});
 	
@@ -32,25 +33,25 @@ function finalReward() {
 
 		},
 		success : function(data) {
-			console.log("Recompensa adquirida com sucesso");
+			console.log(srTXT[0]);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Ocorreu um erro inesperado");
+			console.log(srTXT[1]);
 		}
 	});
 }
 
 function changeColor() {
-	var description = '<a href=# onclick="setBackgroundAzul()">Azul</a>' +
-					  '<br><a href=# onclick="setBackgroundVerde()">Verde</a>' +
-					  '<br><a href=# onclick="setBackgroundAmarelo()">Amarelo</a>' +
-					  '<br><a href=# onclick="setBackgroundRosa()">Rosa</a>' +
-					  '<br><a href=# onclick="setBackgroundAzulCiano()">Azul Ciano</a>' +
-					  '<br><a href=# onclick="setBackgroundCinza()">Cinza</a>' +
-					  '<br><a href=# onclick="setBackgroundBranco()">Branco</a>';
+	var description = '<a href=# onclick="setBackgroundAzul()">' + srTXT[2] + '</a>' +
+					  '<br><a href=# onclick="setBackgroundVerde()">' + srTXT[3] + '</a>' +
+					  '<br><a href=# onclick="setBackgroundAmarelo()">' + srTXT[4] + '</a>' +
+					  '<br><a href=# onclick="setBackgroundRosa()">' + srTXT[5] + '</a>' +
+					  '<br><a href=# onclick="setBackgroundAzulCiano()">' + srTXT[6] + '</a>' +
+					  '<br><a href=# onclick="setBackgroundCinza()">' + srTXT[7] + '</a>' +
+					  '<br><a href=# onclick="setBackgroundBranco()">' + srTXT[8] + '</a>';
 	
 	$.guider({
-		title: "Escolha uma cor de fundo para o PAT2Math",
+		title: srTXT[9],
         alignButtons: "center",
         description: description,
         buttons: {

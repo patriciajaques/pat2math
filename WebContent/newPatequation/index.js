@@ -202,7 +202,7 @@ $(document).ready(function() {
             	
             	window.location.reload();
             } else if (key === 84) { //alt + t
-            	var unlockPlan = prompt("Digite o número da fase que você deseja desbloquear:");
+            	var unlockPlan = prompt(indexTXT[0]);
             	unlockPlan = parseInt(unlockPlan);
             	
             	if (unlockedPlans === undefined || unlockedPlans === null)
@@ -370,8 +370,8 @@ function tourTCC() {
 	$.guider({
 		name: "start",
 		next: next,
-		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br> Bem-vindo de volta! </center>",
-		description : "<center>Fizemos uma série de atualizações e correções desde a sua última visita :D <br>Confira um breve tour antes de continuar.</center>",
+		title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img><br>" + indexTXT[1] + "</center>",
+		description : "<center>" + indexTXT[2] + "</center>",
 		overlay : "dark",
 		width : 600,
 		alignButtons : "right",
@@ -387,8 +387,8 @@ function tourTCC() {
 		name: "gamification1",
 		next: "gamification2",
 		position: "right",
-		title: "Pontuação total e por nível",
-		description: "Aqui você tem acesso à sua pontuação total (considerando o progresso em todas as equações já resolvidas) e a do nível atual (neste exemplo, o nível selecionado é o Básico). Além disso, agora as suas pontuações são salvas no sistema",    
+		title: indexTXT[3],
+		description: indexTXT[4],    
 		alignButtons: "right",
 		onShow: function() {generateStages(1);},
 		buttons: {
@@ -402,9 +402,9 @@ function tourTCC() {
 	$("#hint").guider({
 		name: "gamification2",
 		next: "gamification3",
-		title: "Dicas",
 		position: "left",
-		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
+		title: indexTXT[5],
+		description: indexTXT[6],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -417,8 +417,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification3",
 		next: "gamification4",
-		title: "As dicas estão organizadas em níveis",
-		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas. Utilize-as com responsabilidade, uma vez que a cada solicitação você perde 2 pontos. Por outro lado, não deixe de utilizá-las quando você estiver com dificuldades, o seu aprendizado é o fator mais importante",    
+		title: indexTXT[7],
+		description: indexTXT[8],    
 		alignButtons: "right",
 		onShow: function() {loadTasks(1001);},
 		buttons: {
@@ -432,9 +432,9 @@ function tourTCC() {
 	$("#freeHints").guider({
 		name: "gamification4",
 		next: "gamification5",
-		title: "Dicas gratuitas",
+		title: indexTXT[9],
 		position: "left",
-		description: "Você possui dicas que podem ser solicitadas gratuitamente, isto é, sem a perda de pontos. Você pode verificar a quantidade de dicas gratuítas disponíveis neste painel",    
+		description: indexTXT[10],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -447,9 +447,9 @@ function tourTCC() {
 	$("#freeErrors").guider({
 		name: "gamification5",
 		next: "gamification6",
-		title: "Erros gratuitos",
+		title: indexTXT[11],
 		position: "bottom",
-		description: "Assim como você pode pedir dicas gratuitas, você também pode errar e não perder pontos por isso. A quantidade de erros gratuitos pode ser visualizada aqui no cabeçalho do caderno",    
+		description: indexTXT[12],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -462,8 +462,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification6",
 		next: "gamification7",
-		title: "As quantidades disponíveis de dicas e erros gratuitos variam de acordo com a complexidade da fase atual",
-		description: "Assim, quanto mais avançada for a fase e/ou mais equações ela tiver, mais dicas e erros gratuitos você receberá",    
+		title: indexTXT[13],
+		description: indexTXT[14],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -476,8 +476,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification7",
 		next: "gamification8",
-		title: "Exercícios resolvidos",
-		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar a cada fase desbloqueada. A cada nova fase que você desbloquear, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
+		title: indexTXT[15],
+		description: indexTXT[16],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -490,8 +490,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification8",
 		next: "gamification9",
-		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
-		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
+		title: indexTXT[17],
+		description: indexTXT[18],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -504,8 +504,8 @@ function tourTCC() {
 	$.guider({
 		name: "gamification9",
 		next: "finish",
-		title: "Eu posso conferir um exercício resolvido sem perder pontos?",
-		description: "Claro! Você tem direito a uma visualização gratuita por fase, a partir daquela mesma mensagem inicial que comentamos agora pouco. Mas não se preocupe: as visualizações adicionais custam apenas 8 pontos.",    
+		title: indexTXT[19],
+		description: indexTXT[20],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -518,8 +518,8 @@ function tourTCC() {
 	$("#hint").guider({
 		name: "lowGamification1",
 		next: "lowGamification2",
-		title: "Dicas",
-		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
+		title: indexTXT[21],
+		description: indexTXT[22],    
 		alignButtons: "right",
 		position: "left",
 		buttons: {
@@ -533,8 +533,8 @@ function tourTCC() {
 	$.guider({
 		name: "lowGamification2",
 		next: "lowGamification3",
-		title: "As dicas estão organizadas em níveis",
-		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas. Utilize-as com responsabilidade, uma vez que a cada solicitação você perde 2 pontos. Por outro lado, não deixe de utilizá-las quando você estiver com dificuldades, o seu aprendizado é o fator mais importante.",    
+		title: indexTXT[23],
+		description: indexTXT[24],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -547,8 +547,8 @@ function tourTCC() {
 	$.guider({
 		name: "lowGamification3",
 		next: "lowGamification4",
-		title: "Exercícios resolvidos",
-		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar a cada fase desbloqueada. A cada nova fase que você desbloquear, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
+		title: indexTXT[25],
+		description: indexTXT[26],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -561,8 +561,8 @@ function tourTCC() {
 	$.guider({
 		name: "lowGamification4",
 		next: "finish",
-		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
-		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
+		title: indexTXT[27],
+		description: indexTXT[28],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -575,9 +575,9 @@ function tourTCC() {
 	$("#hint").guider({
 		name: "withoutGamification1",
 		next: "withoutGamification2",
-		title: "Dicas",
+		title: indexTXT[29],
 		position: "left",
-		description: "Nós otimizamos o sistema de ajuda do PAT2Math. Clique neste botão sempre que precisar de ajuda, em qualquer um dos passos da equação selecionada",    
+		description: indexTXT[30],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -590,8 +590,8 @@ function tourTCC() {
 	$.guider({
 		name: "withoutGamification2",
 		next: "withoutGamification3",
-		title: "As dicas estão organizadas em níveis",
-		description: "A cada vez que você solicita dicas em um mesmo passo, elas sobem de nível e se tornarão mais específicas",    
+		title: indexTXT[31],
+		description: indexTXT[32],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -604,8 +604,8 @@ function tourTCC() {
 	$.guider({
 		name: "withoutGamification3",
 		next: "withoutGamification4",
-		title: "Exercícios resolvidos",
-		description: "O sistema de exercícios resolvidos também foi otimizado: agora você decide se quer ou não visualizar em cada plano de aula. Quando você abrir um plano pela primeira vez, o sistema perguntará se você sabe resolver a equação atual. Se disser que não ou que não tem certeza, poderá visualizar um exercício resolvido com as mesmas características",    
+		title: indexTXT[33],
+		description: indexTXT[34],    
 		alignButtons: "right",
 		buttons: {
 			Próximo: {
@@ -618,8 +618,8 @@ function tourTCC() {
 	$.guider({
 		name: "withoutGamification4",
 		next: "finish",
-		title: "Se necessário, você poderá conferir novamente o exercício resolvido da fase atual",
-		description: "Para tanto, clique na primeira equação da lista, que possui a cor amarela",    
+		title: indexTXT[35],
+		description: indexTXT[36],    
 		alignButtons: "right",
 		position: "right",
 		buttons: {
@@ -632,8 +632,8 @@ function tourTCC() {
 	
 	$("#tour").guider({
 		name: "finish",
-		title: "Terminamos!",
-		description: "Se você desejar, poderá acessar o tour novamente clicando neste botão",    
+		title: indexTXT[37],
+		description: indexTXT[38],    
 		alignButtons: "right",
 		position: "left",
 		onShow: function() {completeTour();},
@@ -727,45 +727,97 @@ function ranking(){
 	$.ajax({
 		type: "GET",
 		url: "newPatequation/top10",
-		data: {"id" : idCurrentUser, "rankingGeral" : false},
+		data: {"id" : idCurrentUser, "rankingGeral" : false, "idioma" : idioma},
 		success:
 			function(data) {
+				var botao;
+				switch(idioma) {
+					default:
+					case("pt-BR"):
+						botao = {"Fechar": {click : true, className : "primary",}}
+						break;
+					case("es-ES"):
+						botao = {"Cerrar": {click : true, className : "primary",}}
+						break;
+					case("en-UK"):
+						botao = {"Close": {click : true, className : "primary",}}
+						break;
+				}
 				$.guider({
 					name: "top10",
-					title: "RANKING DA TURMA",
+					title: indexTXT[74],
 					description: data,									
 					alignButtons: "center",
 					position: "center",
-					buttons: {
-						Fechar: {
-							click: true,
-							className: "primary"
-						}
-					}
+					buttons: botao
 				}).show();
 			},
 		error:
 			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+		     	alert(indexTXT[39]);
+		 	}
+		});
+}
+
+function rankingGeral(){
+	$.ajax({
+		type: "GET",
+		url: "newPatequation/top10",
+		data: {"id" : idCurrentUser, "rankingGeral" : true, "idioma" : idioma},
+		success:
+			function(data) {
+				var botao;
+				switch(idioma) {
+					default:
+					case("pt-BR"):
+						botao = {"Fechar": {click : true, className : "primary",}}
+						break;
+					case("es-ES"):
+						botao = {"Cerrar": {click : true, className : "primary",}}
+						break;
+					case("en-UK"):
+						botao = {"Close": {click : true, className : "primary",}}
+						break;
+				}
+				$.guider({
+					name: "top10",
+					title: indexTXT[75],
+					description: data,									
+					alignButtons: "center",
+					position: "center",
+					buttons: botao
+				}).show();
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	alert(indexTXT[39]);
 		 	}
 		});
 }
 
 //Explica a limitação do resolvedor nas equações de razão e proporção
 function reasonAndProportionNotice() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {"Entendi": {click : true, className : "primary",}}
+			break;
+		case("es-ES"):
+			botao = {"Entendi": {click : true, className : "primary",}}
+			break;
+		case("en-UK"):
+			botao = {"Got it": {click : true, className : "primary",}}
+			break;
+	}
 	$.guider({
 		name: "rpnotice",
-		title : "<center> <img src=/pat2math/images/warning-icon.png></img><br> Atenção! </center>",
-		description : "<center>Atualmente, o sistema possui uma pequena limitação com equações de razão e proporção. O primeiro passo que envolver uma multiplicação simples com X, você precisará colocar o sinal de vezes (asterisco) para o sistema corrigir como certo. <br><br>Por exemplo, se você chegar em uma multiplicação de 5 por X, terá que digitar 5 * x. Somente no próximo passo poderá escrever 5x.</center>",
+		title : "<center> <img src=/pat2math/images/warning-icon.png></img><br>" + indexTXT[40] + "</center>",
+		description : "<center>" + indexTXT[41] + "</center>",
 		width: 600,
 		overlay : "dark",
 		alignButtons : "center",
-		buttons : {
-			Entendi: {
-				click : true,
-				className : "primary",
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
@@ -922,14 +974,14 @@ function completePlan() {
 	if (unlockedPlans === 7) {
 		workedExamplesReward();
 		saveWorkedExamplesReward();
-		
+		var butt = indexTXT[44];
 		$.guider({
-			title: "Parabéns! Você recebeu uma recompensa pelo seu progresso no PAT2Math",
-			description: "Verifique o que mudou na tela do sistema.",    
+			title: indexTXT[42],
+			description: indexTXT[43],    
 			alignButtons: "center",
 			overlay : "dark",
 			buttons: {
-				"Legal :D": {
+				butt: {
 					click: function() {$.guider({	}).hideAll();},
 					className: "primary"
 				}
@@ -1109,9 +1161,9 @@ function theRoadSoFar() {
 	$.guider({
 		title : "O Caminho Até Aqui",
 		description : '<div style="text-align: left;">' +
-					  'Equações resolvidas: ' + solvedEquations[currentLevel] + 
-					  '\nFases concluídas: ' + completedStages[currentLevel] + 
-					  '\nPontuação total: ' + totalScore + '</div>',
+					  indexTXT[45] + solvedEquations[currentLevel] + 
+					  '\n' + indexTXT[46] + completedStages[currentLevel] + 
+					  '\n' + indexTXT[47] + totalScore + '</div>',
 		overlay : "dark",
 		width : 600,
 		alignButtons : "center",
@@ -1301,28 +1353,28 @@ function verifyTourInterativo() {
 	     error : function(e) {  
 	      alert('Error: ' + e);   
 	     }  
-	    }); 
+	    });
 }
 function createIntroductionPlans() {
-	var plans = '<span class="topic" onclick="loadTasks(1)">Introdução 1</span><div id="tasks1" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(1)">' + indexTXT[48] + ' 1</span><div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
-			plans += '<span class="topic" onclick="loadTasks(' + i + ')">Introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+			plans += '<span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[48] + ' ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 	}
 	
 	else {
 		plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
 		
 		for (var i = 2; i <= numPlanosIntroducao; i++) 
-			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">Introdução ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
+			plans += '<div class="locked" id="lplan' + i + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[48] + ' ' + i + '</span> <div id="tasks' + i + '" class="tasks"></div>';			
 	}
 	
 	document.getElementById("the_list").innerHTML = plans;
 }
 
 function createExperimentalPlan() {
-	var plans = '<span class="topic" onclick="loadTasks(10033)">Equações</span><div id="tasks10033" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="loadTasks(10033)">' + indexTXT[49] + '</span><div id="tasks10033" class="tasks"></div>';
 	document.getElementById("the_list").innerHTML = plans;
 	unlockAllPlans = true;
 	loadTasks(10033);
@@ -1333,14 +1385,14 @@ function createPlans() {
 	var plans;
 	
 	if (enableIntroductionPlans) {
-	var introPlans = '<span class="topic" onclick="createIndroductionPlans()">Planos de Introdução</span>';
-	plans = introPlans + '<span class="topic" onclick="loadTasks(' + (numPlanosIntroducao + 1) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
+	var introPlans = '<span class="topic" onclick="createIndroductionPlans()">'+ indexTXT[50] + '</span>';
+	plans = introPlans + '<span class="topic" onclick="loadTasks(' + (numPlanosIntroducao + 1) + ')">' + indexTXT[51] + ' 1</span> <div id="tasks1" class="tasks"></div>';
 
 	if (unlockAllPlans) {
-		plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;	
+		plans = '<span class="topic" onclick="createRevisionPlans()">' + indexTXT[52] + '</span>' + plans;	
 		
 		for (var i = 2; i <= numPlanosAula; i++) 
-			plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
+			plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">' + indexTXT[51] + ' ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
 	}
 	
 	else {
@@ -1355,17 +1407,17 @@ function createPlans() {
 		plans = '<span class="topic" onclick="loadTasks(' + (1 + numPlanosIntroducao) + ')">Plano de Aula 1</span> <div id="tasks1" class="tasks"></div>';
 
 		if (unlockAllPlans) {
-			plans = '<span class="topic" onclick="createRevisionPlans()">Planos de revisão</span>' + plans;			
+			plans = '<span class="topic" onclick="createRevisionPlans()">' + indexTXT[50] + '</span>' + plans;			
 
 			for (var i = 2; i <= numPlanosAula; i++) 
-				plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
+				plans += '<span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">' + indexTXT[51] + ' ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';	
 		}	
 
 		else {
 			plans = '<div class="locked" id="lplan1" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div>' + plans;
 			
 			for (var i = 2; i <= numPlanosAula; i++) 
-				plans += '<div class="locked" id="lplan' + (i + numPlanosIntroducao) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">Plano de Aula ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';			
+				plans += '<div class="locked" id="lplan' + (i + numPlanosIntroducao) + '" onclick="padlockClick()"><img src="/pat2math/patequation/img/cadeado_fechado.png"></img></div><span class="topic" onclick="loadTasks(' + (i + numPlanosIntroducao) + ')">' + indexTXT[51] + ' ' + i + '</span> <div id="tasks' + (i + numPlanosIntroducao) + '" class="tasks"></div>';			
 		}
 
 	}
@@ -1375,11 +1427,11 @@ function createPlans() {
 }
 
 function createRevisionPlans() {
-	var plans = '<span class="topic" onclick="generateLevels()">Modo Campanha</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">Fase 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="generateLevels()">' + indexTXT[53] + '</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">' + indexTXT[54] + ' 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
 	var numTotalPlanos = numPlanosAula + numPlanosRevisao;		
 	
 	for (var i = numPlanosAula + 2; i <= numTotalPlanos; i++) 
-		plans += '<span class="topic" onclick="loadTasks(' + i + ')">Fase ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+		plans += '<span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[54] + ' ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 
 	
 	document.getElementById("the_list").innerHTML = plans;
@@ -1493,7 +1545,7 @@ function verifyPlans() {
 				},
 			error:
 				 function(XMLHttpRequest, textStatus, errorThrown) {
-			     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+			     	alert(indexTXT[55]);
 			 	}
 			});	
 		
@@ -1513,7 +1565,7 @@ function rel() {
 		     success : function(response) { 
 		    	 unlockedPlans = response;
 
-		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1) {
+		    	 if (enableTourInterativo && response.indexOf(indexTXT[56]+" 1") === -1) {
 //		    	 if (enableTourInterativo && response.indexOf("Plano de aula 1") === -1 && response.indexOf("Introdução" + numPlanosIntroducao) !== -1) {
 		    		 	if (getCookie ("stepTour") === "") {
 		    		 		blockMenu = true;
@@ -1543,7 +1595,7 @@ function rel() {
 		    		 $("#lplan1").hide();
 		    		 numUnlockedPlans = 1;
 		    		 	    				    				    		 
-		    		 if (unlockedPlans.indexOf("Plano de revisão 1") !== -1) {
+		    		 if (unlockedPlans.indexOf(indexTXT[57] + " 1") !== -1) {
 		    			createRevisionPlans();	
 		    	     }
 		    			 
@@ -1555,7 +1607,7 @@ function rel() {
 //		    					$("#lplan" + i).hide();
 //		    			}
 		    				    			
-		    			for (; unlockedPlans.indexOf ("Plano de aula " + i) !== -1; i++) 
+		    			for (; unlockedPlans.indexOf (indexTXT[56] + " " + i) !== -1; i++) 
 		    				$("#lplan" + i).hide();    			 
 		    		    
 		    			//Deve ser colocado o -1 porque o laço for incrementa uma vez adicional após a execução da última instrução
@@ -1855,7 +1907,7 @@ function loadEquation(index) {
 }
 
 function calculatePoints(equation) {
-    $("#amountPoins").text(equation.userPoints + " de " + equation.points + " pontos");
+    $("#amountPoins").text(equation.userPoints + indexTXT[58] + equation.points + indexTXT[59]);
 }
 
 function reloadProgressBar() {
@@ -2440,7 +2492,7 @@ function hint() {
 //        }
         requestServer('d', equation, "", "", null);
     } else {
-        $("#hintText").html("*Equação já finalizada!");
+        $("#hintText").html(indexTXT[60]);
         $("#hintText").show('blind', 500);
         $(".verticalTape").show('fold', 500);
     }
@@ -2512,7 +2564,7 @@ function checkEquation() {
 	  equation = " ";
   
   else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
-	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
+	  alert (indexTXT[61]);
   
   
   
@@ -2754,10 +2806,10 @@ function verifyFreeHints() {
 	var hintsAvailable = freeHints[planoAtual];
 	
 	if (hintsAvailable > 0) {
-		var text = " dicas gratuitas disponíveis";
+		var text = indexTXT[72];
 		
 		if (hintsAvailable === 1)
-			text = " dica gratuíta disponível";
+			text = indexTXT[73];
 		
 		document.getElementById("freeHints").innerHTML = hintsAvailable + text;
 	}
@@ -2773,7 +2825,7 @@ function verifyFreeErrors() {
 	if (freeErrorsAvailable > 0) {
 		document.getElementById("logo").style.marginLeft = "153px";
 		document.getElementById("freeErrors").style.display = "block";
-		document.getElementById("freeErrors").innerHTML = "Erros gratuitos disponíveis: " + freeErrorsAvailable;
+		document.getElementById("freeErrors").innerHTML = htmlTXT[8] + freeErrorsAvailable;
 	}
 	
 	else {
@@ -2951,38 +3003,40 @@ function getEquationsWE() {
 
 function gift() {
 	if (getCookie("gift") !== "") {
+		var butt1 = indexTXT[62];
+		var butt2 = indexTXT[65];
 		document.getElementById("refresh_page").style.backgroundImage = "url('/pat2math/images/Gift.png')";
 		document.getElementById("refresh_page").title = "???";
 		$("#refresh_page").tooltip();
 		document.getElementById("refresh_page").onclick = function() {
 			$.guider({
-				title : "Resultados de uma pesquisa estatística",
-				description : "Uma pesquisa envolvendo uma população - 1 de todas as pessoas do meu dia a dia teve o seu início em 2013 e foi concluída nesses dias. Essa pesquisa teve como objetivo identificar o acontecimento mais importante da minha época de graduação da Unisinos que envolveu ao mesmo tempo a minha vida acadêmica, profissional e pessoal. 100% das pessoas envolvidas concordaram que esse acontecimento foi no dia 17 de Março de 2014 às 10:45.",
+				title : indexTXT[63],
+				description : indexTXT[64],
 				overlay : "dark",
 				width : 600,
 				alignButtons : "center",
 				buttons : {
-					"O que aconteceu no dia 17/03/2014 às 10:45?": {
+					butt2: {
 						click : function(){$.guider({
-							title : "Voltando para 10/03/2014 às 10:45",
+							title : indexTXT[66],
 							description : '<iframe src="https://giphy.com/embed/xT8qB45TTnypO1h6KY" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/doctor-who-opening-intro-xT8qB45TTnypO1h6KY"></a></p>',
 							overlay : "dark",
 							width : 600,
 							onShow: function() {setTimeout(function() {$.guider({
-								title : "Chegamos!",
-								description : 'Agora também será explicado o porquê de ser uma "população - 1", a única pessoa que não participou da pesquisa foi o próprio resultado :D<br><img src="/pat2math/images/17-03-2014 10-45.png"></img><br><br>Muito obrigado por essa grande oportunidade, que proporcionou uma excelente amizade além do projeto de trabalho. Também nunca vou esquecer da participação especial do Rafael Ávila, que além de ser uma ótima pessoa e professor, foi graças a ele que essa oportunidade tornou-se possível.',
+								title : indexTXT[67],
+								description : indexTXT[68] + '<br><img src="/pat2math/images/17-03-2014 10-45.png"></img><br><br>' + indexTXT[69],
 								overlay : "dark",
 								width : 935,
 								alignButtons : "center",
 								buttons : {
 									"Voltar para o dia de hoje": {
 										click : function(){$.guider({
-											description : 'Espero que tenha gostado dessa "viagem no tempo" e da montagem como um todo, assim como gostou da primeira :D E só por curiosidade, o GIF que coloquei na janela intermediária é do seriado Doctor Who criado pela BBC e que está no ar desde 1963, e aquele objeto que estava voando no espaço é a TARDIS (Time And Relative Dimension(s) In Space), a nave especial desse doutor que consegue manipular o tempo e espaço e viajar para onde ele quiser. Se tu ainda não conheces esse seriado recomendo muito assistir, o bom é que os episódios não tem uma ligação tão direta entre eles, aí tu podes assistir como se fossem filmes separados.',
+											description : indexTXT[70],
 											overlay : "dark",
 											width : 600,
 											alignButtons : "center",
 											buttons : {
-												"Concluir a viagem no tempo :D": {
+												butt1: {
 													click : function(){$.guider({	}).hideAll();},
 													className : "primary",
 												}

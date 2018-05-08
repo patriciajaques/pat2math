@@ -14,22 +14,36 @@ function accessWorkedExample(number) {
 	var functionName = "classPlan" + number + "();";
 	
 	if (levelGamification === "full") {
+		var botoes;
+		switch(idioma) {
+			default:
+			case("pt-BR"):
+				botoes= {
+					"Sim": {click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number], 0); setTimeout(functionName, 100);}, className: "primary" },
+					"Não": function() {$.guider({}).hideAll();}
+				}
+				break;
+			case("es-ES"):
+				botoes= {
+					"Sí": {click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number], 0); setTimeout(functionName, 100);}, className: "primary" },
+					"No": function() {$.guider({}).hideAll();}
+				}
+				break;
+			case("en-UK"):
+				botoes= {
+					"Yes": {click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number], 0); setTimeout(functionName, 100);}, className: "primary" },
+					"No": function() {$.guider({}).hideAll();}
+				}
+				break;
+		}
 		$.guider({
-			title: "Você deseja conferir este exercício resolvido?",
-			description: "A visualização custará apenas 8 pontos (lembre-se que você tem direito à uma exibição gratuíta no início de cada plano de aula)",
-	        alignButtons: "center",
-	    	buttons: {
-	    		"Sim": {
-	    			click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number], 0); setTimeout(functionName, 100);},
-	    			className: "primary"
-	    		},
-	    		
-	    		"Não": function() {$.guider({}).hideAll();}
-	    	}
-	    	            
-	    	}).show();
+			title: wecTXT[0],
+			description: wecTXT[1],
+		    alignButtons: "center",
+			buttons: botoes
+		}).show();
+		
 	}
-	
 	else {
 		loadExerciseWE(equationsWE[number]); 
 		setTimeout(functionName, 100);
@@ -37,38 +51,81 @@ function accessWorkedExample(number) {
 }
 
 function firstPlanAccess() {
+	
 	if (isTourInterativo === false) {
-	$("#topics").fadeOut();
-    $("#topicsAux").show();
-    
-	var idFirstEquation = planoAtual * 100;
-	var numberCurrentPlan = planoAtual;
-	
-	loadExercise(idFirstEquation);
-	
-	$.guider({
-    	name: "firstPlanAccess",
-		title: "Você sabe resolver essa equação?",
-        alignButtons: "center",
-        onShow: function() {document.getElementById("jGuider_firstPlanAccess").style.top = "250px";},
-    	buttons: {
-    		"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
-    		"Sim": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();},
-    		"Não tenho certeza": function() {imNotSure(numberCurrentPlan);}
-    	}
-    	            
-    	}).show();
+		
+		$("#topics").fadeOut();
+	    $("#topicsAux").show();
+	    
+		var idFirstEquation = planoAtual * 100;
+		var numberCurrentPlan = planoAtual;
+		
+		loadExercise(idFirstEquation);
+		
+		var botoes;
+		switch(idioma) {
+			default:
+			case("pt-BR"):
+				botoes = {
+			    	"Não": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+			    	"Sim": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();},
+			    	"Não tenho certeza": function() {imNotSure(numberCurrentPlan);}
+			    }
+				break;
+			case("es-ES"):
+				botoes = {
+			    	"No": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+			    	"Sí": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();},
+			    	"No estoy seguro": function() {imNotSure(numberCurrentPlan);}
+			    }
+				break;
+			case("en-UK"):
+				botoes = {
+			    	"No": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
+			    	"Yes": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();},
+			    	"I'm not sure": function() {imNotSure(numberCurrentPlan);}
+			    }
+				break;
+		}
+		$.guider({
+	    	name: "firstPlanAccess",
+			title: wecTXT[2],
+	        alignButtons: "center",
+	        onShow: function() {document.getElementById("jGuider_firstPlanAccess").style.top = "250px";},
+	    	buttons: botoes
+	    	}).show();
 	}
 }
 
 function imNotSure(plan) {
+	
+	var botoes;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botoes = {
+				"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
+		    	"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
+		   	}
+			break;
+		case("es-ES"):
+			botoes = {
+				"Quiero ver un ejercicio resuelto": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
+				"Quiero intentar resolver solo": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
+		   	}
+			break;
+		case("en-UK"):
+			botoes = {
+				"I want to check a solved exercise": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
+				"I want to try to solve it by myself": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
+		   	}
+			break;
+	}
+	
 	$.guider({
-    	title: "Deseja tentar resolver sozinho a primeira equação ou conferir um exercício resolvido?",
+    	title: wecTXT[3],
         alignButtons: "center",
-    	buttons: {
-    		"Quero ver um exercício resolvido": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
-    		"Quero tentar resolver sozinho": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
-    	}
+    	buttons: botoes
     	            
     	}).show();
 }
@@ -76,37 +133,70 @@ function imNotSure(plan) {
 
 
 function firstErrorOrHint() {
+	
 	tryResolveByMyself = false;
 	var numberCurrentPlan = planoAtual;
 	
+	var botoes;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botoes = {
+		   		"Sim": {click: function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);}, className: "primary"},
+		   		"Não": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
+		    }
+			break;
+		case("es-ES"):
+			botoes = {
+		   		"Sí": {click: function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);}, className: "primary"},
+		    	"No": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
+		    }
+			break;
+		case("en-UK"):
+			botoes = {
+	    		"Yes": {click: function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);}, className: "primary"},
+	    		"No": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
+	    	}
+			break;
+	}
 	$.guider({
-    	title: "Você gostaria de conferir um exercício resolvido antes de continuar?",
-		description: "Recomendamos que sim para facilitar na resolução de suas dúvidas",
+    	title: wecTXT[4],
+		description: wecTXT[5],
         alignButtons: "center",
-    	buttons: {
-    		"Sim": { 			
-    			click: function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
-    			className: "primary"
-    		},
-    		"Não": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
-    	} 	            
+    	buttons: botoes	            
     	}).show();
 }
 
 function questionSpecialReward(plan) {
+	
+	var botoes;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botoes = {
+				"Quero conferir e ganhar a recompensa! :D": {click: function() {getSpecialReward(plan);}, className: "primary"},
+				"Não, obrigado.": function() {$.guider({}).hideAll();}
+			}
+			break;
+		case("es-ES"):
+			botoes = {
+				"¡Quiero ver y ganar la recompensa! :D": {click: function() {getSpecialReward(plan);}, className: "primary"},
+				"No, gracias.": function() {$.guider({}).hideAll();}
+			}
+			break;
+		case("en-UK"):
+			botoes = {
+				"I want to check and win the reward! :D": {click: function() {getSpecialReward(plan);}, className: "primary"},
+				"No, thanks.": function() {$.guider({}).hideAll();}
+			}
+			break;
+	}
 	$.guider({
-		title: "Tem certeza?",
-		description: "Se você conferir o exercício resolvido, lhe daremos uma recompensa especial",
+		title: wecTXT[6],
+		description: wecTXT[7],
 		alignButtons: "center",
 		onShow: function() {setCookieDays ("stepTour", "plan2Start", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
-		buttons: {
-			"Quero conferir e ganhar a recompensa! :D": {
-				click: function() {getSpecialReward(plan);},
-				className: "primary"
-			},
-		
-			"Não, obrigado.": true
-		}
+		buttons: botoes
 	}).show();
 }
 

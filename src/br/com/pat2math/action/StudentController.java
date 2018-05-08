@@ -3,6 +3,8 @@ package br.com.pat2math.action;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
@@ -93,7 +95,7 @@ public class StudentController {
 	
 	// metodo para gerar o ranking
 		@RequestMapping(value = "newPatequation/top10", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
-		public @ResponseBody String topTotalScore(long id, boolean rankingGeral, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		public @ResponseBody String topTotalScore(long id, boolean rankingGeral, String idioma, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 			List<Student> estudantes;
 			if(rankingGeral) {
 				estudantes= sd.obterRanking();
@@ -103,7 +105,7 @@ public class StudentController {
 			}
 			int posicao = 1;
 			String retorno = "<div align = 'center'><table align: center>";
-			retorno += "<tr align = 'center'> <th align = 'center'> Posição </th> <th align = 'center'> Nome </th> <th align = 'center'> Pontuação </th> </tr>";
+			retorno += "<tr align = 'center'> <th align = 'center'>" + getText("SudentControllerJavaTXT-0", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-1", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-2", idioma) + "</th> </tr>";
 			int cont = -5;
 			while(posicao<=estudantes.size()) {
 				if(posicao<=10) {
@@ -140,11 +142,34 @@ public class StudentController {
 			}
 			retorno += "</table></div><br>";
 			if(!rankingGeral) {
-				retorno += "<a href='#' onclick='rankingGeral()'> Confira o ranking geral do PAT2Math </a><br>";
+				retorno += "<a href='#' onclick='rankingGeral()'>" + getText("SudentControllerJavaTXT-3", idioma) + "</a><br>";
 			}
-			retorno += "<br> Compartilhe sua pontuação no Facebook: <br>";
-		    retorno += "<a id='compartilhar_facebook' href='#' title='Compartilhe sua pontuação no Facebook' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
+			retorno += "<br>" + getText("SudentControllerJavaTXT-4", idioma) + ": <br>";
+		    retorno += "<a id='compartilhar_facebook' href='#' title='" + getText("SudentControllerJavaTXT-4", idioma) + "' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
 			return retorno;
+		}
+		
+		// metodo para chamada de textos via ResourceBundle
+		@RequestMapping(value = "newPatequation/getText", method = RequestMethod.GET)
+		public @ResponseBody String getText(String key, String idioma){
+			try{
+				Locale locale;
+				if(idioma.length() == 5)
+					locale = new Locale(idioma.substring(0, 2), idioma.substring(3));
+				else locale = new Locale("pt", "BR");
+				ResourceBundle labels;
+				labels = ResourceBundle.getBundle("pat2math.i18n.IdiomBundle", locale);
+				String text;
+				text = labels.getString(key);
+				return text;
+			} catch(Exception ex) {
+				String stackTrace = "";
+				StackTraceElement[] sT = ex.getStackTrace();
+				for(int i = 0; i < sT.length && i < 5; i++) {
+					stackTrace += sT[i].toString() + "\n";
+				}
+				return stackTrace;
+			}
 		}
 	
 	@RequestMapping("signUp")

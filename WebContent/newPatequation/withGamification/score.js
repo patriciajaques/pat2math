@@ -1,3 +1,4 @@
+
 var totalScore = 0;
 var levelScore = new Array();
 var stageScore = new Array();
@@ -15,10 +16,10 @@ function addOrRemoveScore(amount) {
 }
 
 function updateScoreUI() {
-	document.getElementById("totalScore").innerHTML = "Pontuação total: " + totalScore;
+	document.getElementById("totalScore").innerHTML = scoreTXT[0] + totalScore;
 	
 	if (currentLevel !== undefined)
-		document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[currentLevel];
+		document.getElementById("levelScore").innerHTML = scoreTXT[1] + levelScore[currentLevel];
 //	document.getElementById("stageScore").innerHTML = "Pontuação na fase atual: " + stageScore[currentStage];
 }
 
@@ -37,8 +38,7 @@ function updateScoreEquationCookie() {
 
 function reloadTotalScore() {
 	totalScore = parseInt(getCookie("totalScore"));
-	document.getElementById("totalScore").innerHTML = "Pontuação total: " + totalScore;
-	
+	document.getElementById("totalScore").innerHTML = scoreTXT[0] + totalScore;
 }
 
 function reloadLevelsScore() {
@@ -70,7 +70,7 @@ function getTotalScoreDataBase() {
 			updateScoreUI();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Ocorreu um erro inesperado");
+			console.log(scoreTXT[2]);
 		}
 	});
 }
@@ -94,7 +94,7 @@ function getLevelsScoreDataBase() {
 			updateScoreUI();
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Ocorreu um erro inesperado");
+			console.log(scoreTXT[2]);
 		}
 	});
 }
@@ -111,7 +111,7 @@ function updateScoreDataBase(amount) {
 			console.log(data);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log("Ocorreu um erro inesperado");
+			console.log(scoreTXT[2]);
 		}
 	});
 }

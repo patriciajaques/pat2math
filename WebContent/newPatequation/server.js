@@ -121,7 +121,7 @@ function requestServer (type, last, next, typeOperation, element) {
 //                        //alert(aux);
 //                    }
 //                }
-                //alert(result);
+//				  alert(result);
 
 
                 if (enableAgent)
