@@ -96,160 +96,262 @@ function showQuestionsMultiplication() {
 }
 
 function showQuestion1() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {
+				"Menos" : function() {showIncorrectMessage1();},
+				"Mais": {click : function() {showQuestion2();}, className : "primary"}
+			}
+			break;
+		case("es-ES"):
+			botao = {
+				"Menos" : function() {showIncorrectMessage1();},
+				"Más": {click : function() {showQuestion2();}, className : "primary"}
+			}
+			break;
+		case("en-UK"):
+			botao = {
+				"Less" : function() {showIncorrectMessage1();},
+				"Plus": {click : function() {showQuestion2();},	className : "primary"}
+			}
+			break;
+	}
 	$.guider({
 		title : "+ . + = ?",
-		description : "Mais vezes mais dá?",
+		description : weuTXT[0],
 		width : 218,
 		alignButtons : "center",
-		buttons : {
-			Menos: function() {showIncorrectMessage1();},
-			Mais: {
-				click : function() {showQuestion2();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showQuestion2() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {
+				"Menos" : function() {showQuestion3();},
+				"Mais": {click : function() {showIncorrectMessage2();}, className : "primary"}
+			}
+			break;
+		case("es-ES"):
+			botao = {
+				"Menos" : function() {showQuestion3();},
+				"Más": {click : function() {showIncorrectMessage2();}, className : "primary"}
+			}
+			break;
+		case("en-UK"):
+			botao = {
+				"Less" : function() {showQuestion3();},
+				"Plus": {click : function() {showIncorrectMessage2();}, className : "primary"}
+			}
+			break;
+	}
 	$.guider({
 		title : "+ . - = ?",
-		description : "Mais vezes menos dá?",
+		description : weuTXT[1],
 		width : 218,
 		alignButtons : "center",
-		buttons : {
-			Menos: function() {showQuestion3();},
-			Mais: {
-				click : function() {showIncorrectMessage2();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showQuestion3() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {
+				"Menos" : function() {showQuestion4();},
+				"Mais": {click : function() {showIncorrectMessage3();}, className : "primary"}
+			}
+			break;
+		case("es-ES"):
+			botao = {
+				"Menos" : function() {showQuestion4();},
+				"Más": {click : function() {showIncorrectMessage3();}, className : "primary"}
+			}
+			break;
+		case("en-UK"):
+			botao = {
+				"Less" : function() {showQuestion4();},
+				"Plus": {click : function() {showIncorrectMessage3();}, className : "primary"}
+			}
+			break;
+	}
 	$.guider({
 		title : "- . + = ?",
-		description : "Menos vezes mais dá?",
+		description : weuTXT[2],
 		width : 218,
 		alignButtons : "center",
-		buttons : {
-			Menos: function() {showQuestion4();},
-			Mais: {
-				click : function() {showIncorrectMessage3();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showQuestion4() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {
+				"Menos" : function() {showIncorrectMessage4();},
+				"Mais": {click : function() {continueClassPlan7();}, className : "primary"}
+			}
+			break;
+		case("es-ES"):
+			botao = {
+				"Menos" : function() {showIncorrectMessage4();},
+				"Más": {click : function() {continueClassPlan7();}, className : "primary"}
+			}
+			break;
+		case("en-UK"):
+			botao = {
+				"Less" : function() {showIncorrectMessage4();},
+				"Plus": {click : function() {continueClassPlan7();}, className : "primary"}
+			}
+			break;
+	}
+
 	$.guider({
 		title : "- . - = ?",
-		description : "Menos vezes menos dá?",
+		description : weuTXT[3],
 		width : 218,
 		alignButtons : "center",
-		buttons : {
-			Menos: function() {showIncorrectMessage4();},
-			Mais: {
-				click : function() {continueClassPlan7();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showIncorrectMessage1() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {"Próximo": {click : function(){showQuestion2();}, className : "primary"}}
+			break;
+		case("es-ES"):
+			botao = {"Siguiente": {click : function(){showQuestion2();}, className : "primary"}}
+			break;
+		case("en-UK"):
+			botao = {"Next": {click : function(){showQuestion2();}, className : "primary"}}
+			break;
+	}
 	$.guider({
-		title : "Oops!",
-		description : "Na verdade, mais vezes mais dá mais.",
+		title : weuTXT[4],
+		description : weuTXT[5],
 		width : 310,
 		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : function(){showQuestion2();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showIncorrectMessage2() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {"Próximo": {click : function(){showQuestion3();}, className : "primary"}}
+			break;
+		case("es-ES"):
+			botao = {"Siguiente": {click : function(){showQuestion3();}, className : "primary"}}
+			break;
+		case("en-UK"):
+			botao = {"Next": {click : function(){showQuestion3();}, className : "primary"}}
+			break;
+	}
 	$.guider({
-		title : "Oops!",
-		description : "Na verdade, mais vezes menos dá menos.",
+		title : weuTXT[6],
+		description : weuTXT[7],
 		width : 310,
 		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : function(){showQuestion3();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showIncorrectMessage3() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {"Próximo": {click : function(){showQuestion4();}, className : "primary"}}
+			break;
+		case("es-ES"):
+			botao = {"Siguiente": {click : function(){showQuestion4();}, className : "primary"}}
+			break;
+		case("en-UK"):
+			botao = {"Next": {click : function(){showQuestion4();}, className : "primary"}}
+			break;
+	}
 	$.guider({
-		title : "Oops!",
-		description : "Na verdade, menos vezes mais dá menos.",
+		title : weuTXT[8],
+		description : weuTXT[9],
 		width : 310,
 		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : function(){showQuestion4();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function showIncorrectMessage4() {
+	var botao;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao = {"Próximo": {click : function(){continueClassPlan7();}, className : "primary",}}
+			break;
+		case("es-ES"):
+			botao = {"Siguiente": {click : function(){continueClassPlan7();}, className : "primary",}}
+			break;
+		case("en-UK"):
+			botao = {"Next": {click : function(){continueClassPlan7();}, className : "primary",}}
+			break;
+	}
 	$.guider({
-		title : "Oops!",
-		description : "Na verdade, menos vezes menos dá mais.",
+		title : weuTXT[10],
+		description : weuTXT[11],
 		width : 310,
 		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : function(){continueClassPlan7();},
-				className : "primary"
-			}
-		}
+		buttons : botao
 	}).show();
 }
 
 function continueClassPlan7() {
+	var botao1, botao2;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {"Próximo": {click : true, className : "primary",}}
+			botao2 = {"Finalizar": {click : true, className : "primary",}}
+			break;
+		case("es-ES"):
+			botao1 = {"Siguiente": {click : true, className : "primary",}}
+			botao2 = {"Finalizar": {click : true, className : "primary",}}
+			break;
+		case("en-UK"):
+			botao1 = {"Next": {click : true, className : "primary",}}
+			botao2 = {"Finish": {click : true, className : "primary",}}
+			break;
+	}
 	$.guider({
 		name : "1",
 		next : "2",
-		title : "Resumindo",
-		description : "Se temos uma multiplicação de sinais iguais, temos mais no final;<br>" +
-					  "Se temos uma multiplicação de sinais diferentes, temos menos no final.",
+		title : weuTXT[12],
+		description : weuTXT[13],
 		width : 600,
 		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : true,
-				className : "primary"
-			}
-		}
+		buttons : botao1
 	}).show();
 	
 	$("#line7").guider({
 		name : "2",
-		title : "Terminamos!",
-		description : "Conseguimos resolver a equação com sucesso e você aprendeu sobre o jogo de sinais na multiplicação.",
+		title : weuTXT[14],
+		description : weuTXT[15],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
 		onShow: function() {resolutionEquation("<font color='blue'>x = - 9</font>", "step5", 1); exitWorkedExample();},	
-		buttons : {
-			Finalizar: {
-				click : true,
-				className : "primary"
-			}
-		}
+		buttons : botao2
 	});
 }
 

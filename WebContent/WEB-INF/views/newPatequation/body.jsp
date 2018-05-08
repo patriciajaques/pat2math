@@ -1,14 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+
+<script>
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.10&appId=669959713214349';
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+}(document, 'script', 'facebook-jssdk'));
+</script>
 
     <div id="loading">
   		<img id="loading-image" src="/pat2math/images/Pat2Math_Load.gif" alt="Loading..." />
@@ -21,7 +24,13 @@
     
     <div id="topics" style="overflow: auto">
     	<div id="bar-header" >
-    		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%;">
+    		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%; margin-left: 60px">
+    		<span id="idiomSelect" onclick="languageSelection()" title="htmlTXT-1"> 
+	    		<img src="/pat2math/images/globe.png" style="width: 12%; margin-left:10px; margin-bottom:2px"/> 
+			</span>
+    		<span id="currentFlag" title="Flag"> 
+				<img src="/pat2math/images/Brazil-Flag.png" style="width: 6%; margin-left:2px; margin-top:20px"> 
+			</span>
     	</div>
     	
     	<div class="left">
@@ -64,7 +73,6 @@
 	<div id="note">
         <span id="amountPoins">0 de 0 pontos</span>
         <br><br>
-        <span>Equações concluídas:</span>
 
         <div id="progressBar" class="progress">
             <div class="bar" role="progressbar" style="width: 0%;">
@@ -79,7 +87,7 @@
     
      <div id="papers" style="text-align: center;">
    		<div id="paper-1"  style="display: inline-block;"> 		    
-   			<div id="refresh_page" title="Atualizar a página" onclick="window.location.reload();"></div>
+   			<div id="refresh_page" title="htmlTXT-3" onclick="window.location.reload();"></div>
    			<div id="logo" title="PAT2Math =D"></div>
    			<div class="limitsHintsAndErrors" id="freeHintsOld"></div>
    			<div class="limitsHintsAndErrors" id="freeErrors"></div>
@@ -120,13 +128,13 @@
 	
 
 	<div id="newPoints">+10</div>
-	<div id="rewardWorkedExamples" title="Fui ajudado pelo PAT2Math :D O que será que esse botão faz?" onclick="changeColor()"></div>
-	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
+	<div id="rewardWorkedExamples" title="htmlTXT-5" onclick="changeColor()"></div>
+	<div id="help" title="htmlTXT-0" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
-    <div id="tour" title="Tour Interativo" onclick="tourTCC()"></div>
-    <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
-    <div id="ranking" title="Veja o ranking do PAT2Math" onclick="ranking()"></div>
+    <div id="tour" title="htmlTXT-6" onclick="tourTCC()"></div>
+    <div id="reportBug" title="htmlTXT-4" onclick="reportBug()"></div>
+    <div id="ranking" title="htmlTXT-2" onclick="ranking()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>
 	<div id="reportBug-box"></div>
@@ -158,33 +166,5 @@ function compartilharFacebook(){
 		caption: 'LEGENDA',
 		description: 'DESCRIÇÃO'
 	});
-}
-
-function rankingGeral(){
-	$.ajax({
-		type: "GET",
-		url: "newPatequation/top10",
-		data: {"id" : idCurrentUser, "rankingGeral" : true},
-		success:
-			function(data) {
-				$.guider({
-					name: "top10",
-					title: "RANKING GERAL",
-					description: data,									
-					alignButtons: "center",
-					position: "center",
-					buttons: {
-						Fechar: {
-							click: true,
-							className: "primary"
-						}
-					}
-				}).show();
-			},
-		error:
-			 function(XMLHttpRequest, textStatus, errorThrown) {
-		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
-		 	}
-		});
 }
 </script>

@@ -391,6 +391,7 @@ function loadTasks(id) {
 
 }
 
+
 function getNumEquationsPlan() {
 	// if (levelGamification !== undefined) {
 	// if (planoAtual === 1001 || planoAtual === 1006)
@@ -680,19 +681,18 @@ function showPadlockMessage(title, description) {
 
 	}).show();
 }
-function padlockClick() {
-	showPadlockMessage("Ops, você ainda não liberou este plano de aula",
-			"Para desbloqueá-lo, você deve resolver todas as equações do plano anterior");
+
+function padlockClick ( ) {
+	showPadlockMessage (p2mTXT[1], p2mTXT[2]);
 }
 
-function padlockClickStage() {
-	showPadlockMessage("Ops, você ainda não liberou esta fase",
-			"Para desbloqueá-la, você deve resolver todas as equações da fase anterior");
+function padlockClickStage ( ) {
+	showPadlockMessage (p2mTXT[3], p2mTXT[4]);
 }
 
-function padlockClickLevel() {
-	showPadlockMessage("Ops, você ainda não liberou este nível",
-			"Para desbloqueá-lo, você deve completar todas as fases do nível anterior");
+function padlockClickLevel ( ) {
+	showPadlockMessage (p2mTXT[5], p2mTXT[6]);
+
 }
 
 function loadExerciseWE(eq, points) {
@@ -1027,9 +1027,7 @@ function nextEquation() {
 	}
 
 	else {
-		$("#hintText")
-				.html(
-						"Para desbloquear o próximo plano de aula, você deve resolver todas as equações do plano atual.");
+		$("#hintText").html(p2mTXT[7]);
 		$("#hintText").show('blind', 500);
 		$(".verticalTape").show('fold', 500);
 	}
@@ -1047,9 +1045,7 @@ function previousEquation() {
 	}
 
 	else {
-		$("#hintText")
-				.html(
-						"Você não pode mais voltar, já está na primeira equação do primeiro plano de aula.");
+		$("#hintText").html(p2mTXT[8]);
 		$("#hintText").show('blind', 500);
 		$(".verticalTape").show('fold', 500);
 	}

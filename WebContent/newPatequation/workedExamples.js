@@ -2,8 +2,8 @@ function classPlan1() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Vamos rever como resolver uma equação",
-		description : "O nosso objetivo é isolar o X no lado esquerdo da igualdade, e para fazer isso a gente subtrai por 4 nos dois lados.",
+		title : weTXT[0],
+		description : weTXT[1],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -18,8 +18,8 @@ function classPlan1() {
 	$("#line3").guider({
 		name: "2",
 		next : "3",
-		title : "Observe o que fizemos aqui",
-		description : "Nós aplicamos a operação inversa, tínhamos o 4 somando ao X.",
+		title : weTXT[2],
+		description : weTXT[3],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -35,8 +35,8 @@ function classPlan1() {
 	$("#line4").guider({
 		name: "3",
 		next : "4",
-		title : "Utilizando a operação inversa, eu diminuo 4 de ambos os lados",
-		description : "Isso sempre vai dar 0 somado ao x do lado esquerdo da igualdade.",
+		title : weTXT[4],
+		description : weTXT[5],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -52,8 +52,8 @@ function classPlan1() {
 	$("#line4").guider({
 		name: "4",
 		next : "5",
-		title : "Dica",
-		description : "Não é necessário escrever estes dois primeiros passos, então podemos removê-los da resolução.",
+		title : weTXT[6],
+		description : weTXT[7],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -69,8 +69,8 @@ function classPlan1() {
 	$("#line5").guider({
 		name: "5",
 		next : "6",
-		title : "Dica",
-		description : "Seguindo essa dica, nós eliminamos alguns passos e podemos ir direto aplicando a operação inversa do outro lado.",
+		title : weTXT[8],
+		description : weTXT[9],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -85,8 +85,8 @@ function classPlan1() {
 	
 	$("#line6").guider({
 		name: "6",
-		title : "Tudo pronto!",
-		description : "Conseguimos resolver a equação com sucesso.",
+		title : weTXT[10],
+		description : weTXT[11],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -104,8 +104,8 @@ function classPlan2() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Vamos ver agora essa outra equação",
-		description : "Novamente, queremos isolar o X do lado esquerdo.",
+		title : weTXT[12],
+		description : weTXT[13],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -120,8 +120,8 @@ function classPlan2() {
 	$("#line3").guider({
 		name: "2",
 		next : "3",
-		title : "Para eliminar alguns passos, vamos utilizar a operação inversa direto no lado direito",
-		description : "Vamos diminuir 1 do lado direito e eliminar o +1 do lado esquerdo.",
+		title : weTXT[14],
+		description : weTXT[15],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -137,8 +137,8 @@ function classPlan2() {
 	$("#line4").guider({
 		name: "3",
 		next : "4",
-		title : "Opa! Aqui nós temos uma novidade!",
-		description : "Temos o -X, só que não estamos procurando o valor de -X, e sim de +X.",
+		title : weTXT[16],
+		description : weTXT[17],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -154,8 +154,8 @@ function classPlan2() {
 	$("#line5").guider({
 		name: "4",
 		next : "5",
-		title : "Como tornar esse -X positivo?",
-		description : "Podemos multiplicar ele por -1, aí ele fica +X.",
+		title : weTXT[18],
+		description : weTXT[19],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -171,8 +171,8 @@ function classPlan2() {
 	$("#line6").guider({
 		name: "5",
 		next : "6",
-		title : "Mas atenção!",
-		description : "Se nós multiplicarmos -1 do lado esquerdo, temos que multiplicar do lado direito também.",
+		title : weTXT[20],
+		description : weTXT[21],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -187,8 +187,8 @@ function classPlan2() {
 	
 	$.guider({
 		name: "6",
-		title : "Vamos nos lembrar das regras de sinais da multiplicação",
-		description : "Em cada uma das perguntas a seguir, selecione a alternativa que você acha que é a resposta.",
+		title : weTXT[22],
+		description : weTXT[23],
 		width : 600,
 		position: "bottom",
 		alignButtons : "right",
@@ -206,8 +206,8 @@ function classPlan3() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Opa! Aqui temos uma novidade muito importante!",
-		description : "X possui um coeficiente.",
+		title : weTXT[24],
+		description : weTXT[25],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -222,8 +222,8 @@ function classPlan3() {
 	$.guider({
 		name: "2",
 		next : "3",
-		title : "O que é um coeficiente?",
-		description : "É o número que multiplica X; neste caso, é o 2.",
+		title : weTXT[26],
+		description : weTXT[27],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -237,8 +237,8 @@ function classPlan3() {
 	$.guider({
 		name: "3",
 		next : "4",
-		title : "Como fazemos para tirar o 2 daqui?",
-		description : "Seguimos o mesmo princípio da operação inversa, conforme vimos anteriormente.",
+		title : weTXT[28],
+		description : weTXT[29],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -252,8 +252,8 @@ function classPlan3() {
 	$.guider({
 		name: "4",
 		next : "5",
-		title : "A operação inversa da multiplicação é a divisão",
-		description : "Assim, devemos passar o 2 para o outro lado dividindo o 10.",
+		title : weTXT[30],
+		description : weTXT[31],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -267,8 +267,8 @@ function classPlan3() {
 	$("#line4").guider({
 		name: "5",
 		next : "6",
-		title : "Mas cuidado!",
-		description : "O sinal de 2 não é alterado, permanece como um número positivo. O sinal só é modificado quando trabalhamos com adição e subtração, onde a operação inversa troca o sinal.",
+		title : weTXT[32],
+		description : weTXT[33],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -284,8 +284,8 @@ function classPlan3() {
 	$("#line6").guider({
 		name: "6",
 		next : "7",
-		title : "Observe que dividindo o 2 no lado direito, também estamos efetuando a divisão no lado esquerdo",
-		description : "Mas conforme fizemos anteriormente, podemos aplicar direto a operação inversa, não sendo necessário passar por este passo.",
+		title : weTXT[34],
+		description : weTXT[35],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -300,8 +300,8 @@ function classPlan3() {
 	
 	$("#line7").guider({
 		name: "7",
-		title : "Tudo pronto!",
-		description : "Ao resolver a divisão do lado direito, descobrimos o valor de X e finalizamos a resolução da equação.",
+		title : weTXT[36],
+		description : weTXT[37],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -320,8 +320,8 @@ function classPlan4() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Vamos ver agora essa outra equação",
-		description : "Observe que X possui um coeficiente negativo.",
+		title : weTXT[38],
+		description : weTXT[39],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -336,8 +336,8 @@ function classPlan4() {
 	$("#line4").guider({
 		name: "2",
 		next : "3",
-		title : "Utilizando a operação inversa, passamos o -3 para o outro lado dividindo o 15",
-		description : "Cuidado: o sinal negativo deve ser preservado",
+		title : weTXT[40],
+		description : weTXT[41],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -352,8 +352,8 @@ function classPlan4() {
 	
 	$("#line5").guider({
 		name: "3",
-		title : "Terminamos!",
-		description : "Lembre-se que ao dividir um número positivo por um negativo, temos como resultado um número negativo.",
+		title : weTXT[42],
+		description : weTXT[43],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -375,8 +375,8 @@ function classPlan6() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Opa! Aqui temos mais uma novidade!",
-		description : "Vamos trabalhar com frações pela primeira vez.",
+		title : weTXT[44],
+		description : weTXT[45],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -391,8 +391,8 @@ function classPlan6() {
 	$.guider({
 		name: "2",
 		next : "3",
-		title : "A incógnita X encontra-se em uma fração",
-		description : "Também podemos dizer que X possui um coeficiente fracionário, o número 1/4.",
+		title : weTXT[46],
+		description : weTXT[47],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -406,8 +406,8 @@ function classPlan6() {
 	$.guider({
 		name: "3",
 		next : "4",
-		title : "Como fazemos para tirar o 4 daqui?",
-		description : "Seguimos o mesmo princípio da operação inversa, conforme vimos anteriormente.",
+		title : weTXT[48],
+		description : weTXT[49],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -421,8 +421,8 @@ function classPlan6() {
 	$("#line4").guider({
 		name: "4",
 		next : "5",
-		title : "A operação inversa da divisão é a multiplicação",
-		description : "Assim, devemos passar o 4 para o outro lado multiplicando o 20.",
+		title : weTXT[50],
+		description : weTXT[51],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -437,8 +437,8 @@ function classPlan6() {
 	
 	$("#line5").guider({
 		name: "5",
-		title : "Tudo pronto!",
-		description : "Ao resolver a multiplicação do lado direito, descobrimos o valor de X e finalizamos a resolução da equação.",
+		title : weTXT[52],
+		description : weTXT[53],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -457,8 +457,8 @@ function classPlan7() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Atenção agora!",
-		description : "Esta equação é um pouco diferente das anteriores, pois estamos trabalhando com denominador negativo.",
+		title : weTXT[54],
+		description : weTXT[55],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -473,8 +473,8 @@ function classPlan7() {
 	$.guider({
 		name: "2",
 		next : "3",
-		title : "Neste caso também vamos aplicar a operação inversa",
-		description : "Só temos que cuidar para manter o sinal negativo do -6 ao passá-lo para o outro lado da equação",
+		title : weTXT[56],
+		description : weTXT[57],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -489,8 +489,8 @@ function classPlan7() {
 	$("#line4").guider({
 		name: "3",
 		next : "4",
-		title : "Utilizando a operação inversa, passamos o -6 para o outro lado multiplicando o 42",
-		description : "Agora só falta resolver a multiplicação 42 * (-6)",
+		title : weTXT[58],
+		description : weTXT[59],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -505,8 +505,8 @@ function classPlan7() {
 
 	$("#line5").guider({
 		name: "4",
-		title : "Tudo pronto!",
-		description : "Conseguimos resolver a equação com sucesso.",
+		title : weTXT[60],
+		description : weTXT[61],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -527,8 +527,8 @@ function classPlan8() {
 		$.guider({
 			name: "1",
 			next : "2",
-			title : "Opa! Aqui temos uma novidade muito importante!",
-			description : "Esse é o formato padrão de equações de primeiro grau.",
+			title : weTXT[62],
+			description : weTXT[63],
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {window.scrollTo(0, 50);},
@@ -543,8 +543,8 @@ function classPlan8() {
 		$.guider({
 			name: "2",
 			next : "3",
-			title : "Observe que será necessário aplicarmos mais de um tipo de operação inversa",
-			description : "Temos uma multiplicação em X seguida de uma subtração.",
+			title : weTXT[64],
+			description : weTXT[65],
 			width : 600,
 			alignButtons : "right",
 			buttons : {
@@ -558,8 +558,8 @@ function classPlan8() {
 		$("#line3").guider({
 			name: "3",
 			next : "4",
-			title : "Vamos começar pela operação inversa da subtração, que é a adição",
-			description : "Assim, passamos o -10 para o outro lado invertendo o seu sinal.",
+			title : weTXT[66],
+			description : weTXT[67],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -575,8 +575,8 @@ function classPlan8() {
 		$("#line4").guider({
 			name: "4",
 			next : "5",
-			title : "Resolvendo a soma do lado direito, obtemos o número 18",
-			description : "Agora, o nosso próximo passo é isolar a incógnita X.",
+			title : weTXT[68],
+			description : weTXT[69],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -592,8 +592,8 @@ function classPlan8() {
 		$("#line5").guider({
 			name: "5",
 			next : "6",
-			title : "Utilizando a operação inversa da multiplicação, passamos o 4 para o outro lado dividindo o 18",
-			description : "Cuidado: estamos trabalhando com multiplicação e divisão, assim o 4 deve permanecer com o mesmo sinal (positivo).",
+			title : weTXT[70],
+			description : weTXT[71],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -608,8 +608,8 @@ function classPlan8() {
 		
 		$("#line7").guider({
 			name: "6",
-			title : "Podemos simplificar esta fração dividindo por 2 em cima e em baixo",
-			description : "Assim chegamos ao resultado final da equação.",
+			title : weTXT[72],
+			description : weTXT[73],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -630,8 +630,8 @@ function classPlan9() {
 		$.guider({
 			name: "1",
 			next : "2",
-			title : "Vamos resolver essa equação agora?",
-			description : "Esta equação é bem parecida com a anterior, porém X possui um coeficiente negativo e o termo do lado direito também é negativo.",
+			title : weTXT[74],
+			description : weTXT[75],
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {window.scrollTo(0, 50);},
@@ -646,8 +646,8 @@ function classPlan9() {
 		$.guider({
 			name: "2",
 			next : "3",
-			title : "Observe que também será necessário aplicarmos mais de um tipo de operação inversa",
-			description : "Temos uma multiplicação em X seguida de uma adição.",
+			title : weTXT[76],
+			description : weTXT[77],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -662,8 +662,8 @@ function classPlan9() {
 		$("#line3").guider({
 			name: "3",
 			next : "4",
-			title : "Vamos começar pela operação inversa da adição, que é a subtração",
-			description : "Assim, passamos o +9 para o outro lado invertendo o seu sinal.",
+			title : weTXT[78],
+			description : weTXT[79],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -679,8 +679,8 @@ function classPlan9() {
 		$("#line4").guider({
 			name: "4",
 			next : "5",
-			title : "Resolvendo a subtração do lado direito, obtemos o número -36",
-			description : "Agora, o nosso próximo passo é isolar a incógnita X.",
+			title : weTXT[80],
+			description : weTXT[81],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -696,8 +696,8 @@ function classPlan9() {
 		$("#line5").guider({
 			name: "5",
 			next : "6",
-			title : "Para eliminar alguns passos, vamos passar direto o -3 dividindo o -36 no outro lado",
-			description : "Lembre-se que o sinal negativo deve ser preservado.",
+			title : weTXT[82],
+			description : weTXT[83],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -712,8 +712,8 @@ function classPlan9() {
 		
 		$("#line7").guider({
 			name: "6",
-			title : "Lembre-se que a divisão de dois números negativos resulta em um número positivo",
-			description : "Tudo pronto! Conseguimos resolver a equação com sucesso.",
+			title : weTXT[84],
+			description : weTXT[85],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -735,8 +735,8 @@ function classPlan11() {
 		$.guider({
 			name: "1",
 			next : "2",
-			title : "Opa! Aqui temos mais uma novidade!",
-			description : "Vamos trabalhar pela primeira vez com expressões envolvendo mais de um termo de X.",
+			title : weTXT[86],
+			description : weTXT[87],
 			width : 600,
 			alignButtons : "right",
 			onShow: function() {window.scrollTo(0, 50);},
@@ -751,8 +751,8 @@ function classPlan11() {
 		$.guider({
 			name: "2",
 			next : "3",
-			title : "Neste caso, podemos dizer que temos termos semelhantes que podem ser somados ou subtraídos",
-			description : "São eles: 5x, -2x e x",
+			title : weTXT[88],
+			description : weTXT[89],
 			width : 600,
 			alignButtons : "right",
 			buttons : {
@@ -766,8 +766,8 @@ function classPlan11() {
 		$.guider({
 			name: "3",
 			next : "4",
-			title : "Vamos começar resolvendo a subtração no lado esquerdo",
-			description : "Quando temos uma diferença de termos semelhantes, conservamos a incógnita X e subtraímos seus coeficientes.",
+			title : weTXT[90],
+			description : weTXT[91],
 			width : 600,
 			alignButtons : "right",
 			buttons : {
@@ -781,8 +781,8 @@ function classPlan11() {
 		$("#line3").guider({
 			name: "4",
 			next : "5",
-			title : "Nesta equação, temos que 5x - 2x = (5 - 2)x = 3x",
-			description : "O próximo passo é tirar o +8 daqui.",
+			title : weTXT[92],
+			description : weTXT[93],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -798,8 +798,8 @@ function classPlan11() {
 		$("#line4").guider({
 			name: "5",
 			next : "6",
-			title : "A operação inversa da adição é a subtração",
-			description : "Assim, passamos o +8 para o outro lado invertendo o seu sinal.",
+			title : weTXT[94],
+			description : weTXT[95],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -815,8 +815,8 @@ function classPlan11() {
 		$("#line5").guider({
 			name: "6",
 			next : "7",
-			title : "Agora podemos resolver a subtração que temos no lado direito",
-			description : "Ao mesmo tempo poderíamos passar o +x, mas vamos fazer um passo de cada vez.",
+			title : weTXT[96],
+			description : weTXT[97],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -832,8 +832,8 @@ function classPlan11() {
 		$("#line6").guider({
 			name: "7",
 			next : "8",
-			title : "A operação inversa também vale para termos em função de X",
-			description : "Dessa forma, passamos o +x para o lado esquerdo invertendo o seu sinal.",
+			title : weTXT[98],
+			description : weTXT[99],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -849,8 +849,8 @@ function classPlan11() {
 		$("#line7").guider({
 			name: "8",
 			next : "9",
-			title : "Ao resolver a subtração 3x - x, obtemos 2x",
-			description : "Estamos quase terminando de resolver esta equação.",
+			title : weTXT[100],
+			description : weTXT[101],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -866,8 +866,8 @@ function classPlan11() {
 		$("#line8").guider({
 			name: "9",
 			next : "10",
-			title : "Utilizando a operação inversa, passamos o 2 para o outro lado dividindo o outro número 2",
-			description : "Lembre-se que devemos preservar o seu sinal positivo.",
+			title : weTXT[102],
+			description : weTXT[103],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -882,8 +882,8 @@ function classPlan11() {
 		
 		$("#line10").guider({
 			name: "10",
-			title : "Tudo pronto!",
-			description : "Simplificando esta fração, chegamos ao resultado 1 e concluímos o desenvolvimento da equação.",
+			title : weTXT[104],
+			description : weTXT[105],
 			position: "bottom",
 			width : 600,
 			alignButtons : "right",
@@ -902,8 +902,8 @@ function classPlan12() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Apresentamos as equações com propriedade distributiva",
-		description : "Essas equações são mais fáceis do que parecem. Vamos explicar passo-a-passo para você entender direitinho",
+		title : weTXT[106],
+		description : weTXT[107],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -918,8 +918,8 @@ function classPlan12() {
 	$.guider({
 		name: "2",
 		next : "3",
-		title : "O que é a propriedade distributiva?",
-		description : "É uma propriedade da multiplicação que nos diz que, na multiplicação de números quaisquer, podemos converter qualquer um deles em uma soma ou subtração que o resultado permanecerá o mesmo",
+		title : weTXT[108],
+		description : weTXT[109],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -933,8 +933,8 @@ function classPlan12() {
 	$.guider({
 		name: "3",
 		next : "4",
-		title : "Vamos conferir um exemplo na prática",
-		description : "Considere a multiplicação 5 * 7 = 35. Existem várias maneiras de escrever o número 7 na forma de adição ou subtração. Uma delas é 4 + 3",
+		title : weTXT[110],
+		description : weTXT[111],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -948,8 +948,8 @@ function classPlan12() {
 	$.guider({
 		name: "4",
 		next : "5",
-		title : "Dessa maneira, temos 5(4 + 3) = 35",
-		description : "Como estamos trabalhando com números definidos, a opção mais fácil seria somar primeiro 4 + 3, e depois multiplicar por 5",
+		title : weTXT[112],
+		description : weTXT[113],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -963,8 +963,8 @@ function classPlan12() {
 	$.guider({
 		name: "5",
 		next : "6",
-		title : "Qual seria a outra forma de resolver?",
-		description : "Podemos distribuir essa multiplicação em uma soma de produtos. Essa distribuição é realizada em duas etapas",
+		title : weTXT[114],
+		description : weTXT[115],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -978,8 +978,8 @@ function classPlan12() {
 	$.guider({
 		name: "6",
 		next : "7",
-		title : "Primeira etapa (exemplo 5(4 + 3) = 35)",
-		description : "Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Neste exemplo temos 5 * 4",
+		title : weTXT[116],
+		description : weTXT[117],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -993,8 +993,8 @@ function classPlan12() {
 	$.guider({
 		name: "7",
 		next : "8",
-		title : "Segunda etapa (exemplo 5(4 + 3) = 35)",
-		description : "Multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão (no nosso exemplo é o sinal de mais). Assim, temos 5 * 4 + 5 * 3",
+		title : weTXT[118],
+		description : weTXT[119],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1008,8 +1008,8 @@ function classPlan12() {
 	$.guider({
 		name: "8",
 		next : "9",
-		title : "Agora é só calcular a nova expressão",
-		description : "Temos que 5 * 4 = 20 e 5 * 3 = 15. Somando os dois resultados temos 20 + 15 = 35, exatamente o valor da multiplicação 5 * 7",
+		title : weTXT[120],
+		description : weTXT[121],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1023,8 +1023,8 @@ function classPlan12() {
 	$.guider({
 		name: "9",
 		next : "10",
-		title : "Vamos aplicar os conceitos aprendidos na nossa equação",
-		description : "Vamos começar pela primeira propriedade distributiva, que é 5(2 + x). Mesmo trabalhando com incógnitas, as regras não mudam",
+		title : weTXT[122],
+		description : weTXT[123],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1038,8 +1038,8 @@ function classPlan12() {
 	$.guider({
 		name: "10",
 		next : "11",
-		title : "Primeira etapa",
-		description : "Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Neste caso temos 5 * 2",
+		title : weTXT[124],
+		description : weTXT[125],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1053,8 +1053,8 @@ function classPlan12() {
 	$.guider({
 		name: "11",
 		next : "12",
-		title : "Segunda etapa",
-		description : "Multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão (no nosso exemplo é o sinal de mais). Assim, temos 5 * 2 + 5x",
+		title : weTXT[126],
+		description : weTXT[127],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1068,8 +1068,8 @@ function classPlan12() {
 	$("#line3").guider({
 		name: "12",
 		next : "13",
-		title : "Agora faremos a mesma coisa na próxima propriedade distributiva",
-		description : "Não esqueça que, como estamos trabalhando com equações, precisamos reescrever o lado esquerdo para manter a igualdade",
+		title : weTXT[128],
+		description : weTXT[129],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1085,8 +1085,8 @@ function classPlan12() {
 	$("#line3").guider({
 		name: "13",
 		next : "14",
-		title : "Vamos tentar resolver as duas etapas em único passo?",
-		description : "Relembrando as instruções: Multiplicar o número que está fora dos parênteses pelo primeiro termo dentro dos parênteses. Em seguida, multiplicar o número que está fora dos parênteses pelo segundo termo dentro dos parênteses, mantendo o sinal da expressão",
+		title : weTXT[130],
+		description : weTXT[131],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1101,8 +1101,8 @@ function classPlan12() {
 	$("#line4").guider({
 		name: "14",
 		next : "15",
-		title : "Dessa maneira, temos: 4(2x - 3) = 4 * 2x - 4 * 3",
-		description : "Observe que a única diferença em relação à primeira expressão é que temos uma subtração. Nesse caso é só substituir o sinal de mais pelo sinal de menos",
+		title : weTXT[132],
+		description : weTXT[133],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation("5 * 2 + 5x = 4 * 2x - 4 * 3", "step2", 1);},
@@ -1118,8 +1118,8 @@ function classPlan12() {
 	$("#line5").guider({
 		name: "15",
 		next : "16",
-		title : "Agora resolvemos todas as multiplicações pendentes",
-		description : "Quando você estiver mais familiarizado com a propriedade distributiva, poderá inclusive calcular direto as duas multiplicações. Observe: 4(2x - 3) = 8x - 12",
+		title : weTXT[134],
+		description : weTXT[135],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation("10 + 5x = 8x - 12", "step3", 1);},
@@ -1135,8 +1135,8 @@ function classPlan12() {
 	$("#line5").guider({
 		name: "16",
 		next : "17",
-		title : "Agora nós temos uma equação já conhecida do plano de aula anterior",
-		description : "É uma equação de primeiro grau com vários termos",
+		title : weTXT[136],
+		description : weTXT[137],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1151,8 +1151,8 @@ function classPlan12() {
 	$("#line6").guider({
 		name: "17",
 		next : "18",
-		title : "Passamos os termos em função de X para o lado esquerdo, e os demais números para o lado direito",
-		description : "Lembre-se da regra das operações inversas: Se temos uma adição de um lado, teremos uma subtração do outro. Se temos uma multiplicação de um lado, teremos uma divisão do outro",
+		title : weTXT[138],
+		description : weTXT[139],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation("5x - 8x = -12 - 10", "step4", 1);},
@@ -1168,8 +1168,8 @@ function classPlan12() {
 	$("#line7").guider({
 		name: "18",
 		next : "19",
-		title : "Temos que 5x - 8x = - 3x e -12 - 10 = -22",
-		description : "Observe que os dois lados da equação são negativos. Você lembra daquela multiplicação por -1 que utilizamos várias vezes no segundo plano de aula? Podemos aplicar ela aqui também para facilitar o nosso cálculo",
+		title : weTXT[140],
+		description : weTXT[141],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation("-3x = -22", "step5", 1);},
@@ -1185,8 +1185,8 @@ function classPlan12() {
 	$("#line8").guider({
 		name: "19",
 		next : "20",
-		title : "Multiplicando por - 1 os dois lados da equação, ambos se tornam positivos",
-		description : "Agora só falta passar o 3 para o lado direito dividindo o 22 para concluir a resolução",
+		title : weTXT[142],
+		description : weTXT[143],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation("3x = 22", "step6", 1);},
@@ -1201,8 +1201,8 @@ function classPlan12() {
 	
 	$("#line9").guider({
 		name: "20",
-		title : "Terminamos!",
-		description : "Observe que a fração-resultado já está em seu formato irredutível, portanto não precisamos simplificar. E não se preocupe se você esquecer alguma etapa da propriedade distributiva: Você pode pedir dicas a qualquer momento ou até mesmo conferir novamente este exercício resolvido",
+		title : weTXT[144],
+		description : weTXT[145],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation('<font color="blue">x = </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">3</font></div><div class="numerator"><font color="blue">22</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step7", 1); exitWorkedExample();},
@@ -1221,8 +1221,8 @@ function classPlan13() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Vamos resolver essa equação agora?",
-		description : "Observe que há uma igualdade de frações. Essa igualdade é chamada de razão e proporção",
+		title : weTXT[146],
+		description : weTXT[147],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -1237,8 +1237,8 @@ function classPlan13() {
 	$.guider({
 		name: "2",
 		next : "3",
-		title : "Como resolvemos uma razão e proporção?",
-		description : "Basicamente utilizaremos duas vezes a regra da operação inversa da divisão. Mas antes disso, vamos analisar melhor a nossa equação.",
+		title : weTXT[148],
+		description : weTXT[149],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1253,8 +1253,8 @@ function classPlan13() {
 	$("#line5").guider({
 		name: "3",
 		next : "4",
-		title : "Você percebeu que a fração do lado direito pode ser simplificada?",
-		description : "Podemos dividir por 100 o seu numerador e denominador, o que facilitará bastante para a próxima etapa",
+		title : weTXT[150],
+		description : weTXT[151],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1270,8 +1270,8 @@ function classPlan13() {
 	$("#line5").guider({
 		name: "4",
 		next : "5",
-		title : "Agora observe os termos destacados em verde e azul",
-		description : "São os denominadores das duas frações, e a partir deles que aplicaremos a regra da operação inversa. Você deve ter notado que a incógnita X está em um denominador, mas veremos no próximo passo que isso não será um problema",
+		title : weTXT[152],
+		description : weTXT[153],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1286,8 +1286,8 @@ function classPlan13() {
 	$("#line6").guider({
 		name: "5",
 		next : "6",
-		title : "Sabemos que a operação inversa da divisão é a multiplicação",
-		description : "Assim, podemos passar o primeiro denominador para o outro lado multiplicando o numerador da segunda fração, e vice-versa. Cuidado: O segundo denominador era negativo. Quando trabalhamos com multiplicação e divisão, o sinal é preservado",
+		title : weTXT[154],
+		description : weTXT[155],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1303,8 +1303,8 @@ function classPlan13() {
 	$("#line7").guider({
 		name: "6",
 		next : "7",
-		title : "Agora resolvemos as multiplicações: 10 * (-6) = -60 e 5 * x = 5x",
-		description : "Observe que a incógnita X está no lado direito da equação. Como é uma igualdade simples de dois termos, podemos trocá-los de lado sem modificar nenhuma operação ou sinal",
+		title : weTXT[156],
+		description : weTXT[157],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1320,8 +1320,8 @@ function classPlan13() {
 	$("#line8").guider({
 		name: "7",
 		next : "8",
-		title : "Estamos quase lá",
-		description : "Falta somente dividir -60 por 5, que é o coeficiente de X",
+		title : weTXT[158],
+		description : weTXT[159],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1337,8 +1337,8 @@ function classPlan13() {
 	$("#line10").guider({
 		name: "8",
 		next : "9",
-		title : "Observe que os números 60 e 5 são múltiplos entre si",
-		description : "Portanto, podemos simplficar esta fração e chegar em um número inteiro como resultado",
+		title : weTXT[160],
+		description : weTXT[161],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1353,8 +1353,8 @@ function classPlan13() {
 	
 	$("#line11").guider({
 		name: "9",
-		title : "Terminamos!",
-		description : "Lembre-se sempre de três coisas quando for resolver razões e proporções:<br>1º) Verifique se é possível simplificar uma ou as duas frações para facilitar nos cálculos<br>2º) Você sempre passará os denominadores para os outros lados multiplicando os numeradores<br>3º) Os numeradores podem ser compostos por uma expressão de adição ou subtração, como por exemplo 2x + 3. Nesse caso, a multiplicação deverá ser realizada nos dois termos dessa expressão",
+		title : weTXT[162],
+		description : weTXT[163],
 		position: "bottom",
 		width : 670,
 		alignButtons : "right",
@@ -1373,8 +1373,8 @@ function classPlan15() {
 	$.guider({
 		name: "1",
 		next : "2",
-		title : "Atenção agora!",
-		description : "Vamos trabalhar pela primeira vez com equações que envolvem adição e subtração de frações com denominadores diferentes",
+		title : weTXT[164],
+		description : weTXT[165],
 		width : 600,
 		alignButtons : "right",
 		onShow: function() {window.scrollTo(0, 50);},
@@ -1389,8 +1389,8 @@ function classPlan15() {
 	$.guider({
 		name: "2",
 		next : "3",
-		title : "O primeiro passo é a aplicação do Mínimo Múltiplo Comum (MMC) em todos os denominadores",
-		description : "Lembre-se que os denominadores são os números de baixo das frações",
+		title : weTXT[166],
+		description : weTXT[167],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1404,8 +1404,8 @@ function classPlan15() {
 	$.guider({
 		name: "3",
 		next : "4",
-		title : "O que acontece com os termos que não são frações?",
-		description : "Teremos que considerá-los como uma fração inteira. Todos os números inteiros podem ser representados como uma fração de denominador 1",
+		title : weTXT[168],
+		description : weTXT[169],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1419,8 +1419,8 @@ function classPlan15() {
 	$.guider({
 		name: "4",
 		next : "5",
-		title : "Essa mesma regra também é válida para a variável X e seu coeficiente",
-		description : "Nessa equação, os termos inteiros são -10 e 5x. Dessa maneira, temos -10/1 e -5x/1",
+		title : weTXT[170],
+		description : weTXT[171],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1434,8 +1434,8 @@ function classPlan15() {
 	$.guider({
 		name: "5",
 		next : "6",
-		title : "Agora vamos calcular o Mínimo Múltiplo Comum de todos os denominadores",
-		description : "Assim, temos MMC(2, 4, 1, 1). Você pode fazer esse cálculo no caderno ou mentalmente se já tiver mais prática ",
+		title : weTXT[172],
+		description : weTXT[173],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1449,8 +1449,8 @@ function classPlan15() {
 	$.guider({
 		name: "6",
 		next : "7",
-		title : "Calculando o MMC(2, 4, 1, 1) chegamos ao número 4",
-		description : "O próximo passo é aplicar uma propriedade para transformar todos os termos da equação em números inteiros",
+		title : weTXT[174],
+		description : weTXT[175],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1464,8 +1464,8 @@ function classPlan15() {
 	$.guider({
 		name: "7",
 		next : "8",
-		title : "Como funciona essa propriedade?",
-		description : "Ela nos diz que, para transformar uma fração em um número inteiro, dividimos o resultado do MMC pelo denominador dela, e em seguida multiplicamos pelo seu numerador. CUIDADO: Essa propriedade utiliza conceitos de operação inversa e só pode ser aplicada em equações",
+		title : weTXT[176],
+		description : weTXT[177],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1479,8 +1479,8 @@ function classPlan15() {
 	$.guider({
 		name: "8",
 		next : "9",
-		title : "Vamos conferir um exemplo na prática",
-		description : "Observe a primeira fração (3x/2). O resultado do MMC neste exercício é o 4, então teríamos 4 : 2 * 3x. Lembre-se que o PAT2Math não permite esse operador de divisão, assim precisamos calcular a divisão e digitar diretamente 2 * 3x.",
+		title : weTXT[178],
+		description : weTXT[179],
 		width : 600,
 		alignButtons : "right",
 		buttons : {
@@ -1494,8 +1494,8 @@ function classPlan15() {
 	$("#line4").guider({
 		name: "9",
 		next : "10",
-		title : "Agora nós aplicamos essa propriedade em todos os termos da equação",
-		description : "Cuidado: todos os sinais devem ser preservados. ",
+		title : weTXT[180],
+		description : weTXT[181],
 		position: "bottom",
 		width : 600,
 		onShow: function() {resolutionEquation("2 * 3x - 1x - 4 * 10 = 4 * 5x", "step1", 2); document.getElementById("currentEquation").style.opacity = "0.5";},
@@ -1511,8 +1511,8 @@ function classPlan15() {
 	$("#line5").guider({
 		name: "10",
 		next : "11",
-		title : "O próximo passo é resolver todas as multiplicações pendentes",
-		description : "Você lembra das regras das expressões numéricas? Sempre que tivermos uma conta de multiplicação ou divisão, ela deve ser resolvida primeiro. Nesse caso nós temos mais de uma conta nessas condições e não há parênteses, assim podemos resolver todas essas multiplicações ao mesmo tempo. Só precisamos cuidar os sinais ",
+		title : weTXT[182],
+		description : weTXT[183],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1528,8 +1528,8 @@ function classPlan15() {
 	$("#line6").guider({
 		name: "11",
 		next : "12",
-		title : "Chegamos em uma equação normal com múltiplos termos",
-		description : "Como já estamos mais experientes em equações desse tipo, podemos aplicar mais de uma propriedade em um único passo. Neste exercício, podemos unir os termos semelhantes 6x - x e ajustar os demais termos daquela maneira já conhecida: termos que envolvem X no lado esquerdo, demais números no lado direito. Somente precisamos cuidar para aplicar corretamente as operações inversas",
+		title : weTXT[184],
+		description : weTXT[185],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1545,8 +1545,8 @@ function classPlan15() {
 	$("#line7").guider({
 		name: "12",
 		next : "13",
-		title : "Estamos quase lá",
-		description : "Agora só falta aplicar a última regra de operação inversa",
+		title : weTXT[186],
+		description : weTXT[187],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1562,8 +1562,8 @@ function classPlan15() {
 	$("#line9").guider({
 		name: "13",
 		next : "14",
-		title : "Utilizando a operação inversa da multiplicação, passamos o -15 para o outro lado dividindo o 40",
-		description : "Relembramos mais uma vez: ao trabalhar com operações inversas de multiplicação e divisão, o sinal é preservado.",
+		title : weTXT[188],
+		description : weTXT[189],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1579,8 +1579,8 @@ function classPlan15() {
 	$("#line9").guider({
 		name: "14",
 		next : "15",
-		title : "Será que já terminamos?",
-		description : "Ainda não. Observe que os números 40 e -15 são múltiplos entre si, assim ainda podemos simplificar esta fração. Você lembra dos critérios de divisibilidade? O do 5 é o seguinte: qualquer número que termine em 5 ou em 0 é divisível por 5. Assim, podemos dividir por 5 o numerador e o denominador dessa fração, e colocaremos o resultado no próximo passo",
+		title : weTXT[190],
+		description : weTXT[191],
 		position: "bottom",
 		width : 600,
 		alignButtons : "right",
@@ -1594,8 +1594,8 @@ function classPlan15() {
 	
 	$("#line11").guider({
 		name: "15",
-		title : "Agora sim!",
-		description : "O número 8 não termina em 5 ou 0, portanto chegamos à etapa final da simplificação e resolvemos a equaçaõ com sucesso",
+		title : weTXT[192],
+		description : weTXT[193],
 		position: "bottom",
 		width : 600,
 		onShow: function() {contWE = 2; resolutionEquation('<font color="blue">x = - </font> <span class="math-box"><span class="strut"></span><span class="vstack"><div class="denominator"><font color="blue">5</font></div><div class="numerator"><font color="blue">8</font></div><div id="lineFrac1" class="frac-line-aux"><span id="lineFrac1" class="frac-line"></span></div><span class="baseline-fix"></span></span></span>', "step6", 2); exitWorkedExample();},
