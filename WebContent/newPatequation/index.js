@@ -23,6 +23,7 @@ var playAudio;
 var unlockedPlans = 0;
 var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
+var enableKnowledgeTest = false;
 //var numClicks;
 
 // variables for the Step object
@@ -906,7 +907,7 @@ function verifyTour() {
 
 			},
 			success : function(data) {
-				if (data === "true") {			
+				if (data === "true" && enableKnowledgeTest) {			
 					verifyKnowledgeTest();
 				}
 				
