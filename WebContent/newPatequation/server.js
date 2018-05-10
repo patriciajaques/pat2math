@@ -268,11 +268,21 @@ function requestServer (type, last, next, typeOperation, element) {
                         	$(divName).slideUp(700);
                         	
                         	if (selectedEquation.equation === "x+7=12") {
-                        		if (selectedEquation.steps.length === 0)
-        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        		if (enableKnowledgeTest) {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
                         	  
-                        		else
-                        		    mainMenu("");
+                        			else
+                        				mainMenu("");
+                        		}
+                        		
+                        		else {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTourWithoutKnowledgeTest(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        	  
+                        			else
+                        				mainMenuWithoutKnowledgeTest("");
+                        		}
                         	}
                         	
                         	else if (levelGamification !== "without")
@@ -820,11 +830,21 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
        
                         	if (numUnlockedPlans == 1) {
-                        		if (selectedEquation.steps.length === 0)
-        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        		if (enableKnowledgeTest) {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
                         	  
-                        		else
-                        		    mainMenu("");
+                        			else
+                        				mainMenu("");
+                        		}
+                        		
+                        		else {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTourWithoutKnowledgeTest(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        	  
+                        			else
+                        				mainMenuWithoutKnowledgeTest("");
+                        		}
                         	}
                         	
                         	else if (numUnlockedPlans == 2)

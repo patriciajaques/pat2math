@@ -479,6 +479,203 @@ function alternativeFirstStepTour (nextStep) {
     		}); 
 }
 
+function alternativeFirstStepTourWithoutKnowledgeTest (nextStep) {
+	if (nextStep === "") {
+		$.guider({
+			name: "fstep",
+	    	next: "fstep2",
+	    	title: tourTXT[26],
+	    	description: tourTXT[27],
+	    	alignButtons: "right",
+	    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+	    	buttons: {
+	    		Próximo: {
+	    			click: true,
+	    			className: "primary"
+	    		}
+	    	}
+	    	            
+	    	}).show();  
+	}
+	
+	else {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img>" + tourTXT[2] + "</center>",
+			description : tourTXT[3],
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+
+	$.guider({
+		name: "fstep",
+    	next: "fstep2",
+    	title: tourTXT[28],
+    	description: tourTXT[29],
+    	alignButtons: "right",
+    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+    	buttons: {
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	});  
+    	    
+    $("#note").guider({
+    	name: "fstep2",
+    	next: "fstep3",
+    	title: tourTXT[8],
+    	description: tourTXT[9],
+    	position: "left",
+    	alignButtons: "right",
+    	onShow: function() {setCookieDays ("stepTour", "fstep2", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+    	buttons: {
+    		Voltar: true,
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	});
+    	    
+    	    $("#note").guider({
+    			name: "fstep3",
+    			next: "fstep4",
+    			title: tourTXT[10],
+    			description: tourTXT[11],
+    			position: "left",
+    			alignButtons: "right",
+    			onShow: function() {setCookieDays ("stepTour", "fstep3", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $.guider({
+    			name: "fstep4",
+    			next: "fstep5",
+    			position: "right",
+    			title: tourTXT[12],
+    			description: tourTXT[13],    
+    			alignButtons: "right",
+    			onShow: function() {generateStages(1);},
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#hint").guider({
+    			name: "fstep5",
+    			next: "fstep6",
+    			title: tourTXT[14],
+    			description: tourTXT[15],
+    			position: "bottom",
+    			alignButtons: "right",
+    			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
+    			buttons: {
+    				Voltar: true,
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#freeHints").guider({
+    			name: "fstep6",
+    			next: "fstep7",
+    			title: tourTXT[16],
+    			description: tourTXT[17],
+    			position: "left",
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    		
+    		$("#freeErrors").guider({
+    			name: "fstep7",
+    			next: "fstep8",
+    			title: tourTXT[18],
+    			position: "bottom",
+    			description: tourTXT[19],    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    		
+    		$.guider({
+    			name: "fstep8",
+    			next: "fstep9",
+    			title: tourTXT[20],
+    			description: tourTXT[21],    
+    			alignButtons: "right",
+    			buttons: {
+    				Próximo: {
+    					click: true,
+    					className: "primary"
+    				}
+    			}
+    		});
+    	    
+    	    $("#help").guider({
+    	    	name: "fstep9",
+    	    	next: "fstep10",
+    	    	title: tourTXT[22],
+    	    	description: tourTXT[23],
+    	    	position: "left",
+    	    	alignButtons: "right",
+    	    	closable: true, 
+    	    	onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+    	    	buttons: {
+    	    		Voltar: true,
+    	    		Próximo: {
+    	    			click: true,
+    	    			className: "primary"
+    	    		}
+    	    	}
+    	    	});
+    	    
+    	    $("#topics").guider({
+    			name: "fstep10",
+    			title: tourTXT[30],
+    			description: tourTXT[31],       
+    			position: "right",
+    			alignButtons: "right",
+    			onShow: function() {setCookieDays ("stepTour", "fstep6", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
+    			buttons: {
+    				Finalizar: {
+    					click: function() {exit();},
+    					className: "primary"
+    				}
+    			}
+    		});
+}
+
 function mainMenu (nextStep) {
 	$("#topics").fadeIn();
     $("#topicsAux").hide();
@@ -560,6 +757,77 @@ function mainMenu (nextStep) {
 		onShow: function() {exit();},
 		buttons: botao3
 	}); 
+}
+
+function mainMenuWithoutKnowledgeTest (nextStep) {
+	$("#topics").fadeIn();
+    $("#topicsAux").hide();
+    
+	if (nextStep === "") {
+		$.guider({
+			name: "mp",
+	    	next: "mp2",
+	    	title: tourTXT[34],
+	    	description: tourTXT[35],
+	        alignButtons: "right",
+	        onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
+	    	buttons: {
+	    		Próximo: {
+	    			click: true,
+	    			className: "primary"
+	    		}
+	    	}
+	    	            
+	    	}).show();
+	}
+	
+	else {
+		$.guider({
+			next : nextStep,
+			title : "<center> <img src=/pat2math/patequation/img/logo200x166.png></img>" + tourTXT[2] + "</center>",
+			description : tourTXT[3],
+			overlay : "dark",
+			width : 600,
+			alignButtons : "right",
+			buttons : {
+				Próximo: {
+					click : true,
+					className : "primary",
+				}
+			}
+		}).show();
+	}
+	
+	$.guider({
+		name: "mp",
+    	next: "mp2",
+    	title: tourTXT[34],
+    	description: tourTXT[35],
+        alignButtons: "right",
+        onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
+    	buttons: {
+    		Próximo: {
+    			click: true,
+    			className: "primary"
+    		}
+    	}
+    	            
+    	});
+	
+	$("#topics").guider({
+		name: "mp2",
+		title: tourTXT[30],
+		description: tourTXT[31],       
+		position: "right",
+		alignButtons: "right",
+		onShow: function() {setCookieDays ("stepTour", "mp2", 1); setCookieDays ("functionTour", "mainMenu", 1);},
+		buttons: {
+			Finalizar: {
+				click: function() {exit();},
+				className: "primary"
+			}
+		}
+	});
 }
 
 function classPlan (nextStep) {
@@ -765,7 +1033,8 @@ function exit ( ) {
 		success : function(data) {	
 			console.log(data);
 			
-			location.href='/pat2math/knowledgeTest';
+			if (enableKnowledgeTest)
+				location.href='/pat2math/knowledgeTest';
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Ocorreu um erro inesperado");
