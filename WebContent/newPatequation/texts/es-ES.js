@@ -4,9 +4,11 @@ var html_esES = new Array();						//	innerHTML de elementos variados
 var levels_esES = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var p2m_esES = new Array(); 						//	pat2math/WebContent/js/pat2math.js
 var score_esES = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/score.js
+var server_esES = new Array();						//	pat2Math/WebContent/newPatequation/server.js
 var sr_esES =  new Array();							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
 var stages_esES = new Array();						//	pat2math/WebContent/newPatequation/index.js
 var stagesWithoutGamification_esES = new Array(); 	//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var tour_esES = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_esES = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_esES = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_esES = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
@@ -139,6 +141,14 @@ score_esES[1] = "Puntuación del nivel actual: ";
 score_esES[2] = "Se ha producido un error inesperado";
 
 
+server_esES[0] = "¡Muy bien!";
+server_esES[1] = "Por acertar este paso de la ecuación, usted ganó 10 puntos.";
+server_esES[2] = "¡Oops!";
+server_esES[3] = "Por errar este paso de la ecuación, usted perdió 5 puntos y recibió un consejo.";
+server_esES[4] = "Prueba finalizada";
+server_esES[5] = "La prueba de conocimientos se ha completado y se le redirige al plan de clases de la ecuación que se estaba resuelta";
+
+
 sr_esES[0] = "Recompensa adquirida con éxito";
 sr_esES[1] = "Se ha producido un error inesperado";
 sr_esES[2] = "Azul";
@@ -206,6 +216,61 @@ stagesWithoutGamification_esES[16] = "16. Fracciones compuestas";
 stagesWithoutGamification_esES[17] = "17. Fracciones + propiedad distributiva";
 stagesWithoutGamification_esES[18] = "18. Revisión de los planes anteriores";
 stagesWithoutGamification_esES[19] = "19. Revisión  final";
+
+
+tour_esES[0] = "Ecuaciones iniciales";
+tour_esES[1] = "Las ecuaciones iniciales siempre estarán en la primera línea. Para resolverlas, basta con hacer clic en los cuadros de texto en las líneas debajo de ellas y escribir el siguiente paso.";
+tour_esES[2] = "<br> Parece que tuvimos problemas en la sesión anterior";
+tour_esES[3] = "Vamos a continuar el tour de donde paramos.";
+tour_esES[4] = "Resolviendo una ecuación";
+tour_esES[5] = 'Vamos a resolver esta ecuación paso a paso. Usted puede comenzar la resolución de la forma que prefiera, pero sugerimos que reste "-7" en los dos lados de la ecuación para simplificar el segundo lado y mantener la ecuación balanceada. Escriba x + 7-7 = 12-7 y pulse enter o haga clic en el icono ';
+tour_esES[6] = "El PAT2Math es un programa que ayuda en la resolución de ecuaciones algebraicas. Vamos a ver algunos conceptos básicos antes de empezar.";
+tour_esES[7] = "¡Bienvenida!";
+tour_esES[8] = "Panel de Progreso";
+tour_esES[9] = "Observe este panel, que contiene su progreso en la resolución de las ecuaciones y muestra su puntuación de la página actual.";
+tour_esES[10] = "Puntuación";
+tour_esES[11] = "Cada vez que golpee un paso en la ecuación, usted gana 10 puntos.<br> Y si se equivoca, usted pierde 5 puntos y recibe una sugerencia.";
+tour_esES[12] = "Puntuación total y por nivel";
+tour_esES[13] = "Usted también tiene acceso a la puntuación total y por nivel. Usted podrá verlas en el menú principal tan pronto como termine este tour.";
+tour_esES[14] = "Pidiendo consejos";
+tour_esES[15] = "Siempre que se pierde en algún paso de una ecuación, siéntase a gusto de solicitar ayuda haciendo clic en este botón. Usted pierde 2 puntos para cada sugerencia que solicite.";
+tour_esES[16] = "Consejos gratuitos";
+tour_esES[17] = "Usted tiene consejos que pueden ser solicitados gratuitamente, es decir, sin la pérdida de puntos. Usted puede verificar la cantidad de consejos gratuitos disponibles en este panel";
+tour_esES[18] = "Errores gratuitos";
+tour_esES[19] = "Así como usted puede pedir sugerencias gratuitas, usted también puede errar y no perder puntos por eso. La cantidad de errores gratuitos se puede ver aquí en el encabezado del cuaderno";
+tour_esES[20] = "Las cantidades disponibles de consejos y errores gratuitos varían de acuerdo con la complejidad de la fase actual";
+tour_esES[21] = "Así, cuanto más avanzada sea la fase y / o más ecuaciones ella tenga, más consejos y errores gratuitos usted recibirá";
+tour_esES[22] = "Teclas utilizadas";
+tour_esES[23] = "Si tiene dudas acerca de las teclas utilizadas en las operaciones e interacciones con el programa, haga clic en este botón para ver la lista completa.";
+tour_esES[24] = "Ahora es contigo";
+tour_esES[25] = "Continúe resolviendo la ecuación de la forma que prefiera.";
+tour_esES[26] = "Enhorabuena, el plan de clase 1 ha sido desbloqueado";
+tour_esES[27] = "Compruebe más adelante algunas consideraciones.";
+tour_esES[28] = "Enhorabuena, la primera fase fue desbloqueada";
+tour_esES[29] = "Compruebe más adelante algunas consideraciones.";
+tour_esES[30] = "Menú principal";
+tour_esES[31] = "Aquí usted puede seleccionar los planes de clase y sus respectivas ecuaciones para resolver.";
+tour_esES[32] = "Antes de empezar a utilizar PAT2Math, usted pasará por una prueba";
+tour_esES[33] = "Vamos a probar su conocimiento para que usted pueda comenzar en el plan de clase más apropiado";
+tour_esES[34] = "¡Enhorabuena!";
+tour_esES[35] = "La fase 1 ha sido desbloqueada y ahora usted tiene acceso al menú principal.";
+tour_esES[36] = "Esta prueba medirá su conocimiento para que usted pueda comenzar en el plan de clase más apropiado";
+tour_esES[37] = "Planes de Clase";
+tour_esES[38] = "Los planes de clase son como las fases de un juego. Cada plan tiene varias ecuaciones, que se pueden resolver en el orden que desee.";
+tour_esES[39] = "Ecuaciones";
+tour_esES[40] = "Aquí está la lista de las ecuaciones de la primera fase. Seleccione cualquiera de ellas para comenzar.";
+tour_esES[41] = "¡Bien!";
+tour_esES[42] = "Ahora su meta es resolver este plan de clase, empezando por la ecuación seleccionada.";
+tour_esES[43] = "¡El menú principal ha desaparecido!";
+tour_esES[44] = "Sin problemas, sólo pase el ratón en este lugar que reaparecerá";
+tour_esES[45] = "Pasando de Fase";
+tour_esES[46] = "Al resolver todas las ecuaciones de un plan de clase, usted libera al siguiente.";
+tour_esES[47] = "Pasando de Fase";
+tour_esES[48] = "Al resolver todas las ecuaciones de un plan de clase, usted libera al siguiente.";
+tour_esES[49] = "Niveles de Dificultad";
+tour_esES[50] = "A medida que pasa de fase, el nivel de dificultad va aumentando gradualmente.<br> Pero no se preocupe: si se vuelve muy difícil, podemos ayudar!";
+tour_esES[51] = "¡Enhorabuena, has pasado de fase!";
+tour_esES[52] = "El siguiente plan de clase contiene ecuaciones un poco más desafiantes. Recuerde que usted puede pedir una sugerencia siempre que lo considere necesario.";
 
 
 we_esES[0] = "Vamos a revisar cómo resolver una ecuación";

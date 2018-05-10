@@ -1,5 +1,23 @@
 function introduction (nextStep) {
 	blockMenu = true;
+
+	var botao1;
+	var botao2;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, OK: {click: true, className: "primary"}}
+			break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, OK: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, OK: {click: true, className: "primary"}}
+			break;
+	}
 	
 	if (nextStep === "") {
 		$.guider({
@@ -9,12 +27,7 @@ function introduction (nextStep) {
 			description: tourTXT[1],    
 			alignButtons: "right",
 			onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
-			buttons: {
-				Próximo: {
-					click: true,
-					className: "primary"
-				}
-			}
+			buttons: botao1
 		}).show();
 	}
 	
@@ -26,12 +39,7 @@ function introduction (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -42,12 +50,7 @@ function introduction (nextStep) {
 		description: tourTXT[1],    
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "start", 1); setCookieDays ("functionTour", "introduction", 1);},
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao1
 	});
 		
 	$("#line3").guider({
@@ -59,18 +62,30 @@ function introduction (nextStep) {
 		position: "bottom",
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
-		buttons: {
-            Voltar: true,
-			OK: {
-               click: true,
-               className: "primary"
-            }
-		}
+		buttons: botao2
 	});         
 }
 
 function introductionWithWelcome (nextStep) {
 	blockMenu = true;
+	
+	var botao1;
+	var botao2;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, OK: {click: true, className: "primary"}}
+			break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, OK: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, OK: {click: true, className: "primary"}}
+			break;
+	}
 	
 	if (nextStep === "") {
 		$.guider({
@@ -81,12 +96,7 @@ function introductionWithWelcome (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -98,12 +108,7 @@ function introductionWithWelcome (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -115,12 +120,7 @@ function introductionWithWelcome (nextStep) {
 		overlay : "dark",
 		width : 600,
 		alignButtons : "right",
-		buttons : {
-			Próximo: {
-				click : true,
-				className : "primary",
-			}
-		}
+		buttons : botao1
 	}).show();
 	
 	$.guider({
@@ -130,12 +130,7 @@ function introductionWithWelcome (nextStep) {
 		description: tourTXT[1],    
 		alignButtons: "right",
 		onShow: function() {isTourInterativo = true; loadExercise(3); setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao1
 	});
 	
 	$.guider({
@@ -145,12 +140,7 @@ function introductionWithWelcome (nextStep) {
 		description: tourTXT[1],    
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "start", 1); setCookieDays ("functionTour", "introduction", 1);},
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao1
 	});
 		
 	$("#line3").guider({
@@ -161,13 +151,7 @@ function introductionWithWelcome (nextStep) {
 		position: "bottom",
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "start2", 1); setCookieDays ("functionTour", "introduction", 1);},
-		buttons: {
-            Voltar: true,
-			OK: {
-               click: true,
-               className: "primary"
-            }
-		}
+		buttons: botao2
 	});         
 }
 
@@ -177,6 +161,29 @@ function introductionWithWelcome (nextStep) {
 //description: "Por acertar este passo da equação, você ganhou 10 pontos.",
 
 function firstStepTour (nextStep, title, description) {
+	
+	var botao1;
+	var botao2;
+	var botao3;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, Próximo: {click: true, className: "primary"}}
+			botao3 = {Voltar: true, OK: {click: true, className: "primary"}}
+			break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
+			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, Next: {click: true, className: "primary"}}
+			botao3 = {Back: true, OK: {click: true, className: "primary"}}
+			break;
+	}
+	
 	if (nextStep === "") {
 		$.guider({
 			name: "fstep",
@@ -185,14 +192,8 @@ function firstStepTour (nextStep, title, description) {
 	    	description: description,
 	    	alignButtons: "right",
 	    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-	    	buttons: {
-	    		Próximo: {
-	    			click: true,
-	    			className: "primary"
-	    		}
-	    	}
-	    	            
-	    	}).show();
+	    	buttons: botao1
+	    }).show();
 	}
 	
 	else {
@@ -203,12 +204,7 @@ function firstStepTour (nextStep, title, description) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -219,14 +215,8 @@ function firstStepTour (nextStep, title, description) {
     	description: description,
     	alignButtons: "right",
     	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    	buttons: {
-    		Próximo: {
-    			click: true,
-    			className: "primary"
-    		}
-    	}
-    	            
-    	});
+    	buttons: botao1
+    });
     	    
     $("#note").guider({
     	name: "fstep2",
@@ -236,13 +226,7 @@ function firstStepTour (nextStep, title, description) {
     	position: "left",
     	alignButtons: "right",
     	onShow: function() {setCookieDays ("stepTour", "fstep2", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    	buttons: {
-    		Voltar: true,
-    		Próximo: {
-    			click: true,
-    			className: "primary"
-    		}
-    	}
+    	buttons: botao2
     	});
     	    
     	    $("#note").guider({
@@ -253,13 +237,7 @@ function firstStepTour (nextStep, title, description) {
     			position: "left",
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep3", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    			buttons: {
-    				Voltar: true,
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao2
     		});
 
     		$.guider({
@@ -270,12 +248,7 @@ function firstStepTour (nextStep, title, description) {
     			description: tourTXT[13],    
     			alignButtons: "right",
     			onShow: function() {generateStages(1);},
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     	    
     	    $("#hint").guider({
@@ -286,13 +259,7 @@ function firstStepTour (nextStep, title, description) {
     			position: "bottom",
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    			buttons: {
-    				Voltar: true,
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao2
     		});
     	    
     	    $("#freeHints").guider({
@@ -302,12 +269,7 @@ function firstStepTour (nextStep, title, description) {
     			description: tourTXT[17],
     			position: "left",
     			alignButtons: "right",
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     		
     		$("#freeErrors").guider({
@@ -317,12 +279,7 @@ function firstStepTour (nextStep, title, description) {
     			position: "bottom",
     			description: tourTXT[19],    
     			alignButtons: "right",
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     		
     		$.guider({
@@ -331,12 +288,7 @@ function firstStepTour (nextStep, title, description) {
     			title: tourTXT[20],
     			description: tourTXT[21],    
     			alignButtons: "right",
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     	    
     	    $("#help").guider({
@@ -348,13 +300,7 @@ function firstStepTour (nextStep, title, description) {
     	    	alignButtons: "right",
     	    	closable: true, 
     	    	onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    	    	buttons: {
-    	    		Voltar: true,
-    	    		Próximo: {
-    	    			click: true,
-    	    			className: "primary"
-    	    		}
-    	    	}
+    	    	buttons: botao2
     	    	});
     	    
     	    $.guider({
@@ -363,18 +309,35 @@ function firstStepTour (nextStep, title, description) {
     			description: tourTXT[25],
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep6", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    			buttons: {
-    				Voltar: true,
-    				OK: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao3
     		});
     	    	    
 }
 
 function alternativeFirstStepTour (nextStep) {
+	
+	var botao1;
+	var botao2;
+	var botao3;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, Próximo: {click: true, className: "primary"}}
+			botao3 = {Voltar: true, OK: {click: true, className: "primary"}}
+			break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
+			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, Next: {click: true, className: "primary"}}
+			botao3 = {Back: true, OK: {click: true, className: "primary"}}
+			break;
+	}
+	
 	if (nextStep === "") {
 		$.guider({
 			name: "fstep",
@@ -383,12 +346,7 @@ function alternativeFirstStepTour (nextStep) {
 	    	description: tourTXT[27],
 	    	alignButtons: "right",
 	    	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
-	    	buttons: {
-	    		Próximo: {
-	    			click: true,
-	    			className: "primary"
-	    		}
-	    	}
+	    	buttons: botao1
 	    	            
 	    	}).show();  
 	}
@@ -401,12 +359,7 @@ function alternativeFirstStepTour (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 
@@ -417,12 +370,7 @@ function alternativeFirstStepTour (nextStep) {
     	description: tourTXT[29],
     	alignButtons: "right",
     	onShow: function() {setCookieDays ("stepTour", "fstep", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
-    	buttons: {
-    		Próximo: {
-    			click: true,
-    			className: "primary"
-    		}
-    	}
+    	buttons: botao1
     	            
     	});  
     	    
@@ -434,13 +382,7 @@ function alternativeFirstStepTour (nextStep) {
     	position: "left",
     	alignButtons: "right",
     	onShow: function() {setCookieDays ("stepTour", "fstep2", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
-    	buttons: {
-    		Voltar: true,
-    		Próximo: {
-    			click: true,
-    			className: "primary"
-    		}
-    	}
+    	buttons: botao2
     	});
     	    
     	    $("#note").guider({
@@ -451,13 +393,7 @@ function alternativeFirstStepTour (nextStep) {
     			position: "left",
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep3", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
-    			buttons: {
-    				Voltar: true,
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao2
     		});
     	    
     	    $.guider({
@@ -468,12 +404,7 @@ function alternativeFirstStepTour (nextStep) {
     			description: tourTXT[13],    
     			alignButtons: "right",
     			onShow: function() {generateStages(1);},
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     	    
     	    $("#hint").guider({
@@ -484,13 +415,7 @@ function alternativeFirstStepTour (nextStep) {
     			position: "bottom",
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep4", 1); setCookieDays ("functionTour", "firstStepTour", 1);},
-    			buttons: {
-    				Voltar: true,
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao2
     		});
     	    
     	    $("#freeHints").guider({
@@ -500,12 +425,7 @@ function alternativeFirstStepTour (nextStep) {
     			description: tourTXT[17],
     			position: "left",
     			alignButtons: "right",
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     		
     		$("#freeErrors").guider({
@@ -515,12 +435,7 @@ function alternativeFirstStepTour (nextStep) {
     			position: "bottom",
     			description: tourTXT[19],    
     			alignButtons: "right",
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     		
     		$.guider({
@@ -529,12 +444,7 @@ function alternativeFirstStepTour (nextStep) {
     			title: tourTXT[20],
     			description: tourTXT[21],    
     			alignButtons: "right",
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     	    
     	    $("#help").guider({
@@ -546,13 +456,7 @@ function alternativeFirstStepTour (nextStep) {
     	    	alignButtons: "right",
     	    	closable: true, 
     	    	onShow: function() {setCookieDays ("stepTour", "fstep5", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
-    	    	buttons: {
-    	    		Voltar: true,
-    	    		Próximo: {
-    	    			click: true,
-    	    			className: "primary"
-    	    		}
-    	    	}
+    	    	buttons: botao2
     	    	});
     	    
     	    $("#topics").guider({
@@ -563,12 +467,7 @@ function alternativeFirstStepTour (nextStep) {
     			position: "right",
     			alignButtons: "right",
     			onShow: function() {setCookieDays ("stepTour", "fstep6", 1); setCookieDays ("functionTour", "alternativeFirstStepTour", 1);},
-    			buttons: {
-    				Próximo: {
-    					click: true,
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao1
     		});
     		
     	    $.guider({
@@ -576,19 +475,35 @@ function alternativeFirstStepTour (nextStep) {
     			title: tourTXT[32],
     			description: tourTXT[33],     
     			alignButtons: "right",
-    			buttons: {
-    				Voltar: true,
-    				OK: {
-    					click: function() {exit();},
-    					className: "primary"
-    				}
-    			}
+    			buttons: botao3
     		}); 
 }
 
 function mainMenu (nextStep) {
 	$("#topics").fadeIn();
     $("#topicsAux").hide();
+    
+    var botao1;
+	var botao2;
+	var botao3;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, Próximo: {click: true, className: "primary"}}
+			botao3 = {Voltar: true, OK: {click: true, className: "primary"}}
+		break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
+			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, Next: {click: true, className: "primary"}}
+			botao3 = {Back: true, OK: {click: true, className: "primary"}}
+			break;
+	}
     
 	if (nextStep === "") {
 		$.guider({
@@ -598,12 +513,7 @@ function mainMenu (nextStep) {
 	    	description: tourTXT[35],
 	        alignButtons: "right",
 	        onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
-	    	buttons: {
-	    		Próximo: {
-	    			click: true,
-	    			className: "primary"
-	    		}
-	    	}
+	    	buttons: botao1
 	    	            
 	    	}).show();
 	}
@@ -616,12 +526,7 @@ function mainMenu (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -632,12 +537,7 @@ function mainMenu (nextStep) {
     	description: tourTXT[35],
         alignButtons: "right",
         onShow: function() {setCookieDays ("stepTour", "mp", 1); setCookieDays ("functionTour", "mainMenu", 1);},
-    	buttons: {
-    		Próximo: {
-    			click: true,
-    			className: "primary"
-    		}
-    	}
+    	buttons: botao1
     	            
     	});
 	
@@ -649,12 +549,7 @@ function mainMenu (nextStep) {
 		position: "right",
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "mp2", 1); setCookieDays ("functionTour", "mainMenu", 1);},
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao1
 	});
 	
 	$.guider({
@@ -663,17 +558,34 @@ function mainMenu (nextStep) {
 		description: tourTXT[36],     
 		alignButtons: "right",
 		onShow: function() {exit();},
-		buttons: {
-			Voltar: true,
-			OK: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao3
 	}); 
 }
 
 function classPlan (nextStep) {
+	
+	var botao1;
+	var botao2;
+	var botao3;
+	switch(idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, Próximo: {click: true, className: "primary"}}
+			botao3 = {Voltar: true, OK: {click: true, className: "primary"}}
+		break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
+			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, Next: {click: true, className: "primary"}}
+			botao3 = {Back: true, OK: {click: true, className: "primary"}}
+			break;
+	}
+	
 	if (nextStep === "") {
 		$.guider({
 			name: "plan",
@@ -682,12 +594,7 @@ function classPlan (nextStep) {
 			description: tourTXT[38],
 			alignButtons: "right", 
 			onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
-			buttons: {
-				Próximo: {
-					click: true,
-					className: "primary"
-				}
-			}
+			buttons: botao1
 		}).show();
 	}
 	
@@ -699,12 +606,7 @@ function classPlan (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -715,12 +617,7 @@ function classPlan (nextStep) {
 		description: tourTXT[38],
 		alignButtons: "right", 
 		onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao1
 	});
 	
 	$.guider({
@@ -729,17 +626,30 @@ function classPlan (nextStep) {
 		description: tourTXT[40],
 	    alignButtons: "right", 
 	    onShow: function() {setCookieDays ("stepTour", "plan", 1); setCookieDays ("functionTour", "classPlan", 1);},
-	    buttons: {
-			Voltar: true,
-			OK: {
-				click: true,
-				className: "primary"
-			}
-		}
+	    buttons: botao3
 		});
 }
 
 function clickEquation (nextStep) {
+	
+	var botao1;
+	var botao2;
+	switch (idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, Entendi: {click: true, className: "primary"}}
+		break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, Entendi: {click: true, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, "Got it": {click: true, className: "primary"}}
+			break;
+	}
+	
 	isTourInterativo = false;
 	blockMenu = false;
 	setCookieDays ("stepTour", "", 0);
@@ -751,12 +661,7 @@ function clickEquation (nextStep) {
 		title: tourTXT[41],
 		description: tourTXT[42],
 	    alignButtons: "right", 
-	    buttons: {
-	    	Próximo: {
-                click: true,
-                className: "primary"
-            }
-	    }
+	    buttons: botao1
 		}).show();
 	
 	$("#topicsAux").guider({
@@ -765,17 +670,30 @@ function clickEquation (nextStep) {
 		description: tourTXT[44],    
 		position: "right",
 		alignButtons: "right",
-		buttons: {
-			Voltar: true,
-			Entendi: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao2
 	});
 }
 
 function plan2Explanation (nextStep) {
+	
+	var botao1;
+	var botao2;
+	switch (idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Próximo: {click: true, className: "primary"}}
+			botao2 = {Voltar: true, Próximo: {click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)}, className: "primary"}}
+		break;
+		case("es-ES"):
+			botao1 = {Siguiente: {click: true, className: "primary"}};
+			botao2 = {Volver: true, Siguiente: {click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)}, className: "primary"}}
+			break;
+		case("en-UK"):
+			botao1 = {Next: {click: true, className: "primary"}}
+			botao2 = {Back: true, Next: {click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)}, className: "primary"}}
+			break;
+	}
+	
 	if (nextStep === "") {
 		$.guider({
 			name: "plan2Start",
@@ -784,12 +702,7 @@ function plan2Explanation (nextStep) {
 			description: tourTXT[46],
 			alignButtons: "right",
 			onShow: function() {setCookieDays ("stepTour", "plan2Start", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
-			buttons: {
-				Próximo: {
-					click: true,
-					className: "primary"
-				}
-			}
+			buttons: botao1
 		}).show();
 	}
 	
@@ -801,12 +714,7 @@ function plan2Explanation (nextStep) {
 			overlay : "dark",
 			width : 600,
 			alignButtons : "right",
-			buttons : {
-				Próximo: {
-					click : true,
-					className : "primary",
-				}
-			}
+			buttons : botao1
 		}).show();
 	}
 	
@@ -817,12 +725,7 @@ function plan2Explanation (nextStep) {
 		description: tourTXT[48],
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "plan2Start", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
-		buttons: {
-			Próximo: {
-				click: true,
-				className: "primary"
-			}
-		}
+		buttons: botao1
 	});
 	
 	$.guider({
@@ -832,13 +735,7 @@ function plan2Explanation (nextStep) {
 		alignButtons: "right",
 		onShow: function() {setCookieDays ("stepTour", "plan2", 1); setCookieDays ("functionTour", "plan2Explanation", 1);},
 		width: 610,
-		buttons: {
-			Voltar: true,
-			Próximo: {
-				click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)},
-				className: "primary"
-			}
-		}
+		buttons: botao2
 	});
 }
 
@@ -908,16 +805,25 @@ function startTour() {
 }
 
 function newPlan ( ) {
+	
+	var botao1;
+	switch (idioma) {
+		default:
+		case("pt-BR"):
+			botao1 = {Legal: {click: function(){$.guider({}).hideAll(); resetProgressBar();}, className: "primary"}}
+		break;
+		case("es-ES"):
+			botao1 = {Legal: {click: function(){$.guider({}).hideAll(); resetProgressBar();}, className: "primary"}};
+			break;
+		case("en-UK"):
+			botao1 = {Nice: {click: function(){$.guider({}).hideAll(); resetProgressBar();}, className: "primary"}}
+			break;
+	}
+	
 	$.guider({
     	title: tourTXT[51],
     	description: tourTXT[52],
         alignButtons: "center",
-    	buttons: {
-    		Legal: {
-    			click: function(){$.guider({}).hideAll(); resetProgressBar();},
-    			className: "primary"
-    		}
-    	}
-    	            
-    	}).show();
+    	buttons: botao1
+    }).show();
 }

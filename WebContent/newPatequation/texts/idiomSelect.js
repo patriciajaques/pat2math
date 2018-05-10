@@ -158,7 +158,7 @@ function change_esES() {
 			alignButtons: "center",
 			title: "¡Idioma actualizado con éxito!",
 			description: "La página se actualizará",
-			buttons: {"Bueno!": {click: function() { location.reload(); }, className: "primary"}}
+			buttons: {"¡Bueno!": {click: function() { location.reload(); }, className: "primary"}}
 		}).show();
 	}
 }
