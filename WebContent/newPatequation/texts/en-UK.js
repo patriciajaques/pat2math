@@ -4,9 +4,11 @@ var html_enUK = new Array();						//	innerHTML de elementos variados
 var levels_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var p2m_enUK = new Array(); 						//	pat2math/WebContent/js/pat2math.js
 var score_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/score.js
+var server_enUK = new Array();						//	pat2Math/WebContent/newPatequation/server.js
 var sr_enUK =  new Array();							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
 var stages_enUK = new Array();						//	pat2math/WebContent/newPatequation/index.js
 var stagesWithoutGamification_enUK = new Array(); 	//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var tour_enUK = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_enUK = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_enUK = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
@@ -137,6 +139,14 @@ p2m_enUK[8] = "You can not go back, you are already in the first equation of the
 score_enUK[0] = "Total score: ";
 score_enUK[1] = "Score of the current level: ";
 score_enUK[2] = "An unexpected error occurred";
+
+
+server_ptBR[0] = "Very good!";
+server_ptBR[1] = "For solving this step of the equation, you gained 10 points.";
+server_ptBR[2] = "Oops!";
+server_ptBR[3] = "For not solving this step of the equation, you lost 5 points and gained a tip";
+server_ptBR[4] = "Test finished";
+server_ptBR[5] = "" "O teste de conhecimentos foi concluído e você será redirecionado para o plano de aula da equação que estava sendo resolvida";
 
 
 sr_enUK[0] = "Reward acquired successfully";

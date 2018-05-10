@@ -168,7 +168,7 @@ function tourPAT2Exam() {
 	$.guider({
 		next: "PAT2Exam2",
 		title: "Equações iniciais",
-		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
+		description: "index As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
 		alignButtons: "right",
 		onShow: function() {$("#topicsAux").show(); $("#topics").fadeOut();},
 		buttons: {

@@ -1,3 +1,7 @@
+<script src="/pat2math/newPatequation/texts/en-UK.js"></script>
+<script src="/pat2math/newPatequation/texts/es-ES.js"></script>
+<script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
+<script src="/pat2math/newPatequation/texts/idiomSelect.js"></script>
 <script src="/pat2math/patequation/js/string.js"></script>
 <script src="/pat2math/newPatequation/object.js"></script>
 <script src="/pat2math/patequation/js/conversion.js"></script>

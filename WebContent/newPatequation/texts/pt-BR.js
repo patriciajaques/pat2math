@@ -4,9 +4,11 @@ var html_ptBR = new Array();						//	innerHTML de elementos variados
 var levels_ptBR = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var p2m_ptBR = new Array(); 						//	pat2math/WebContent/js/pat2math.js
 var score_ptBR = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/score.js
+var server_ptBR = new Array();						//	pat2Math/WebContent/newPatequation/server.js
 var sr_ptBR =  new Array();							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
 var stages_ptBR = new Array();						//	pat2math/WebContent/newPatequation/index.js
 var stagesWithoutGamification_ptBR = new Array(); 	//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var tour_ptBR = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_ptBR = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_ptBR = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_ptBR = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
@@ -139,6 +141,14 @@ score_ptBR[1] = "Pontuação do nível atual: ";
 score_ptBR[2] = "Ocorreu um erro inesperado";
 
 
+server_ptBR[0] = "Muito bem!";
+server_ptBR[1] = "Por acertar este passo da equação, você ganhou 10 pontos.";
+server_ptBR[2] = "Oops!";
+server_ptBR[3] = "Por errar este passo da equação, você perdeu 5 pontos e recebeu uma dica.";
+server_ptBR[4] = "Teste finalizado";
+server_ptBR[5] = "O teste de conhecimentos foi concluído e você será redirecionado para o plano de aula da equação que estava sendo resolvida";
+
+
 sr_ptBR[0] = "Recompensa adquirida com sucesso";
 sr_ptBR[1] = "Ocorreu um erro inesperado";
 sr_ptBR[2] = "Azul";
@@ -206,6 +216,61 @@ stagesWithoutGamification_ptBR[16] = "16. Frações compostas";
 stagesWithoutGamification_ptBR[17] = "17. Frações + propriedade distributiva";
 stagesWithoutGamification_ptBR[18] = "18. Revisão dos planos anteriores";
 stagesWithoutGamification_ptBR[19] = "19. Revisão final";
+
+
+tour_ptBR[0] = "Equações iniciais";
+tour_ptBR[1] = "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo.";
+tour_ptBR[2] = "<br> Parece que tivemos problemas na sessão anterior ";
+tour_ptBR[3] = "Vamos continuar o tour de onde paramos.";
+tour_ptBR[4] = "Resolvendo uma equação";
+tour_ptBR[5] = 'Nós vamos resolver esta equação passo-a-passo. Você pode começar a resolução da forma que preferir, mas sugerimos que subtraia "-7" nos dois lados da equação para simplificar o segundo lado e manter a equação balanceada. Digite x+7-7=12-7 e tecle enter ou clique no ícone';
+tour_ptBR[6] = " O PAT2Math é um programa que auxilia na resolução de equações algébricas. <br>Vamos conferir alguns conceitos básicos antes de começar.";
+tour_ptBR[7] = " Bem-vindo! ";
+tour_ptBR[8] = "Painel de Progresso";
+tour_ptBR[9] = "Observe este painel. Ele contém o seu progresso na resolução das equações e mostra a sua pontuação da página atual.";
+tour_ptBR[10] = "Pontuação";
+tour_ptBR[11] = "Toda vez que acertar um passo na equação, você ganha 10 pontos.<br>E se errar, você perde 5 pontos e recebe uma dica.";
+tour_ptBR[12] = "Pontuação total e por nível";
+tour_ptBR[13] = "Você também tem acesso à pontuação total e por nível. Você poderá conferi-las no menu principal assim que terminar este tour.";
+tour_ptBR[14] = "Pedindo dicas";
+tour_ptBR[15] = "Sempre que você estiver perdido em algum passo de uma equação, sinta-se à vontade de solicitar ajuda, clicando neste botão. Você perde 2 pontos para cada dica que solicitar.";
+tour_ptBR[16] = "Dicas gratuitas";
+tour_ptBR[17] = "Você possui dicas que podem ser solicitadas gratuitamente, isto é, sem a perda de pontos. Você pode verificar a quantidade de dicas gratuítas disponíveis neste painel";
+tour_ptBR[18] = "Erros gratuitos";
+tour_ptBR[19] = "Assim como você pode pedir dicas gratuitas, você também pode errar e não perder pontos por isso. A quantidade de erros gratuitos pode ser visualizada aqui no cabeçalho do caderno";
+tour_ptBR[20] = "As quantidades disponíveis de dicas e erros gratuitos variam de acordo com a complexidade da fase atual";
+tour_ptBR[21] = "Assim, quanto mais avançada for a fase e/ou mais equações ela tiver, mais dicas e erros gratuitos você receberá";
+tour_ptBR[22] = "Teclas utilizadas";
+tour_ptBR[23] = "Caso tenha dúvidas referentes às teclas utilizadas nas operações e interações com o programa, clique neste botão para conferir a lista completa.";
+tour_ptBR[24] = "Agora é com você";
+tour_ptBR[25] = "Continue resolvendo a equação da forma que preferir.";
+tour_ptBR[26] = "Parabéns! O plano de aula 1 foi desbloqueado";
+tour_ptBR[27] = "Confira a seguir mais algumas considerações.";
+tour_ptBR[28] = "Parabéns! A primeira fase foi desbloqueada";
+tour_ptBR[29] = "Confira a seguir mais algumas considerações.";
+tour_ptBR[30] = "Menu principal";
+tour_ptBR[31] = "Aqui você pode selecionar os planos de aula e suas respectivas equações para resolver.";
+tour_ptBR[32] = "Antes de começar a utilizar o PAT2Math, você passará por um teste";
+tour_ptBR[33] = "Nós vamos medir o seu conhecimento para você começar no plano de aula mais apropriado";
+tour_ptBR[34] = "Parabéns!";
+tour_ptBR[35] = "A fase 1 foi desbloqueada e agora você tem acesso ao menu principal.";
+tour_ptBR[36] = "Este teste medirá o seu conhecimento para você começar no plano de aula mais apropriado";
+tour_ptBR[37] = "Planos de Aula";
+tour_ptBR[38] = "Os planos de aula são como as fases de um jogo. Cada plano possui várias equações, que podem ser resolvidas na ordem que você quiser.";
+tour_ptBR[39] = "Equações";
+tour_ptBR[40] = "Aqui está a lista das equações da primeira fase. Selecione qualquer uma delas para começar.";
+tour_ptBR[41] = "Ótimo!";
+tour_ptBR[42] = "Agora a sua meta é resolver este plano de aula, começando pela equação selecionada.";
+tour_ptBR[43] = "O menu principal sumiu!";
+tour_ptBR[44] = "Sem problemas. Apenas passe o mouse neste local que ele reaparecerá!";
+tour_ptBR[45] = "Passando de Fase";
+tour_ptBR[46] = "Ao resolver todas as equações de um plano de aula, você libera o próximo.";
+tour_ptBR[47] = "Passando de Fase";
+tour_ptBR[48] = "Ao resolver todas as equações de um plano de aula, você libera o próximo.";
+tour_ptBR[49] = "Níveis de Dificuldade";
+tour_ptBR[50] = "Conforme você passa de fase, o nível de dificuldade vai aumentando gradualmente.<br>Mas não se preocupe: se ficar muito difícil, nós podemos ajudar!";
+tour_ptBR[51] = "Parabéns! Você passou de fase!";
+tour_ptBR[52] = "O próximo plano de aula contém equações um pouco mais desafiadoras. Lembre-se que você pode pedir uma dica sempre que achar necessário.";
 
 
 we_ptBR[0] = "Vamos rever como resolver uma equação";

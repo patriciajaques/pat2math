@@ -7,6 +7,7 @@ var scoreTXT;						//	pat2math/WebContent/newPatequation/withGamification/score.
 var srTXT;							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
 var stages;							//	pat2math/WebContent/newPatequation/index.js
 var stagesWithoutGamification;		//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var tourTXT;						//	pat2math/WebContent/patequation/js/tour.js
 var weTXT;							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wecTXT;							//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weuTXT;							//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
@@ -15,10 +16,8 @@ var weuTXT;							//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
 var idioma = getCookie("idiomaEscolhido");
 	if(idioma == "") {
 		idioma = navigator.language;
-		
 		if (idioma == "es")
 			idioma = "es-ES";
-		
 		else if (idioma == "en")
 			idioma = "en-UK";
 	}
@@ -35,6 +34,7 @@ switch(idioma) {
 		srTXT = sr_enUK;
 		stages = stages_enUK;
 		stagesWithoutGamification = stagesWithoutGamification_enUK;
+		tourTXT = tour_enUK;
 		weTXT = we_enUK;
 		wecTXT = wec_enUK;
 		weuTXT = weu_enUK;
@@ -50,6 +50,7 @@ switch(idioma) {
 		srTXT = sr_esES;
 		stages = stages_esES;
 		stagesWithoutGamification = stagesWithoutGamification_esES;
+		tourTXT = tour_esES;
 		weTXT = we_esES;
 		wecTXT = wec_esES;
 		weuTXT = weu_esES;
@@ -66,25 +67,24 @@ switch(idioma) {
 		srTXT = sr_ptBR;
 		stages = stages_ptBR;
 		stagesWithoutGamification = stagesWithoutGamification_ptBR;
+		tourTXT = tour_ptBR;
 		weTXT = we_ptBR;
 		wecTXT = wec_ptBR;
 		weuTXT = weu_ptBR;
 		break;
 }
 
-{
-	document.getElementById("help").title = htmlTXT[0];
-	document.getElementById("idiomSelect").title = htmlTXT[1];
-	document.getElementById("ranking").title = htmlTXT[2];
-	document.getElementById("refresh_page").title = htmlTXT[3];
-	document.getElementById("reportBug").title = htmlTXT[4];
-	document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
-	document.getElementById("tour").title = htmlTXT[6];
-	document.getElementById("hint").innerHTML = htmlTXT[7];
+document.getElementById("help").title = htmlTXT[0];
+document.getElementById("idiomSelect").title = htmlTXT[1];
+document.getElementById("ranking").title = htmlTXT[2];
+document.getElementById("refresh_page").title = htmlTXT[3];
+document.getElementById("reportBug").title = htmlTXT[4];
+document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
+document.getElementById("tour").title = htmlTXT[6];
+document.getElementById("hint").innerHTML = htmlTXT[7];
 
-	document.getElementById("currentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" style="width: 6%; margin-top:16px">';
-	document.getElementById("currentFlag").title = idioma;
-}
+document.getElementById("currentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" style="width: 6%; margin-top:16px">';
+document.getElementById("currentFlag").title = idioma;
 
 function languageSelection() {
 	var button;
@@ -110,7 +110,6 @@ function languageSelection() {
 			'</div>',
 		buttons: button 
 	}).show();
-
 }
 
 function change_ptBR() {
