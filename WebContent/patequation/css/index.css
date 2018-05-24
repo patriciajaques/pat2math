@@ -53,15 +53,19 @@
     text-align: center;
 }*/
 
-#idiomSelect {
+#idiomSelection {
 	cursor: pointer;
 }
 
-#idiomSelect_esES {
+#idiomSelection_enUK {
 	cursor: pointer;
 }
 
-#idiomSelect_ptBR {
+#idiomSelection_esES {
+	cursor: pointer;
+}
+
+#idiomSelection_ptBR {
 	cursor: pointer;
 }
 

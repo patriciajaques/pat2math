@@ -75,7 +75,7 @@ switch(idioma) {
 }
 
 document.getElementById("help").title = htmlTXT[0];
-document.getElementById("idiomSelect").title = htmlTXT[1];
+document.getElementById("idiomSelection").title = htmlTXT[1];
 document.getElementById("ranking").title = htmlTXT[2];
 document.getElementById("refresh_page").title = htmlTXT[3];
 document.getElementById("reportBug").title = htmlTXT[4];
@@ -104,9 +104,9 @@ function languageSelection() {
 		title: isTXT,
 		alignButtons: "center",
 		description: '<div id="idiomas"> '+
-			'<span id="idiomSelect_ptBR" onclick="change_ptBR()" title="Português - Brasil"> <img src="/pat2math/images/pt-BR.png" style="width: 12%"/> </span>' + 
-			'<span id="idiomSelect_esES" onclick="change_esES()" title="Español - España"> <img src="/pat2math/images/es-ES.png" style="width: 12%"/> </span>' + 
-			'<span id="idiomSelect_esES" onclick="change_enUK()" title="English - United Kingdom"> <img src="/pat2math/images/en-UK.png" style="width: 12%"/> </span>' + 
+			'<span id="idiomSelection_ptBR" onclick="change_ptBR()" title="Português - Brasil"> <img src="/pat2math/images/pt-BR.png" style="width: 12%"/> </span>' + 
+			'<span id="idiomSelection_esES" onclick="change_esES()" title="Español - España"> <img src="/pat2math/images/es-ES.png" style="width: 12%"/> </span>' + 
+			'<span id="idiomSelection_esES" onclick="change_enUK()" title="English - United Kingdom"> <img src="/pat2math/images/en-UK.png" style="width: 12%"/> </span>' + 
 			'</div>',
 		buttons: button 
 	}).show();

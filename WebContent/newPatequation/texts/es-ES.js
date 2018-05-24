@@ -621,3 +621,8 @@ weu_esES[14] = "¡Terminamos!";
 weu_esES[15] = "Conseguimos resolver la ecuación con éxito y usted aprendió sobre el juego de señales en la multiplicación.";
 
 
+SudentControllerJava_ptBR[0] = "Posición";
+SudentControllerJava_ptBR[1] = "Nombre";
+SudentControllerJava_ptBR[2] = "Puntuación";
+SudentControllerJava_ptBR[3] = "Compruebe el ranking general de PAT2Math";
+SudentControllerJava_ptBR[4] = "Comparta su puntuación en Facebook";

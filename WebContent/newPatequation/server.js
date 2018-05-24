@@ -148,7 +148,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 			setCookieDays("freeHints", contentCookie, 1);
                 			
                 			verifyFreeHints();
-                	}
+                		}
                 	}
                 	
                 	$("#newPoints").css("left", (x + 80) + "px");

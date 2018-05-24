@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,7 +42,6 @@ import br.com.pat2math.repository.TaskPerformedRepository;
 import br.com.pat2math.service.GroupService;
 import br.com.pat2math.service.MailSenderService;
 import br.com.pat2math.studentModel.Group;
-import br.com.pat2math.studentModel.SignUpConfirmation;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.TaskPerformed;
 
@@ -157,17 +155,16 @@ public class StudentController {
 				if(idioma.length() == 5)
 					locale = new Locale(idioma.substring(0, 2), idioma.substring(3));
 				else locale = new Locale("pt", "BR");
-				ResourceBundle labels;
-				labels = ResourceBundle.getBundle("pat2math.i18n.IdiomBundle", locale);
-				String text;
-				text = labels.getString(key);
-				return text;
+				ResourceBundle labels = ResourceBundle.getBundle("pat2math.i18n.IdiomBundle", locale);
+				return labels.getString(key);
 			} catch(Exception ex) {
-				String stackTrace = "";
+				String stackTrace = key + " not found\n";
 				StackTraceElement[] sT = ex.getStackTrace();
-				for(int i = 0; i < sT.length && i < 5; i++) {
+				for(int i = 0; i < sT.length && i < 4; i++) {
 					stackTrace += sT[i].toString() + "\n";
 				}
+				if(sT.length > 4)
+					stackTrace += "...\n";
 				return stackTrace;
 			}
 		}

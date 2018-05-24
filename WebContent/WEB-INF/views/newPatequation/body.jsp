@@ -25,11 +25,11 @@
     <div id="topics" style="overflow: auto">
     	<div id="bar-header" >
     		<img src="/pat2math/images/logo_horizontal_pat2math.png" style="width: 50%; margin-left: 60px">
-    		<span id="idiomSelect" onclick="languageSelection()" title="htmlTXT-1"> 
+    		<span id="idiomSelection" onclick="languageSelection()" title="htmlTXT-1"> 
 	    		<img src="/pat2math/images/globe.png" style="width: 12%; margin-left:10px; margin-bottom:2px"/> 
 			</span>
     		<span id="currentFlag" title="Flag"> 
-				<img src="/pat2math/images/Brazil-Flag.png" style="width: 6%; margin-left:2px; margin-top:20px"> 
+				<img src="/pat2math/images/pt-BR.png" style="width: 6%; margin-left:2px; margin-top:20px"> 
 			</span>
     	</div>
     	
