@@ -215,7 +215,7 @@ stagesWithoutGamification_esES[15] = "15. Fracciones simples";
 stagesWithoutGamification_esES[16] = "16. Fracciones compuestas";
 stagesWithoutGamification_esES[17] = "17. Fracciones + propiedad distributiva";
 stagesWithoutGamification_esES[18] = "18. Revisión de los planes anteriores";
-stagesWithoutGamification_esES[19] = "19. Revisión  final";
+stagesWithoutGamification_esES[19] = "19. Revisión final";
 
 
 tour_esES[0] = "Ecuaciones iniciales";
