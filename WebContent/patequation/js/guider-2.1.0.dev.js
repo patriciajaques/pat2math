@@ -203,11 +203,11 @@
 							},
 							typeof _guide.s.buttons[i].click == "boolean"
 								? 
-									(i.toLowerCase() == "não, obrigado." || i.toLowerCase() == "fechar" || i.toLowerCase() == "finalizar" || i.toLowerCase() == "entendi"|| i.toLowerCase() == "ok" || i.toLowerCase() == "legal" || i.toLowerCase() == "sim") &&
+									(i.toLowerCase() == guiderKeysTXT[0] || i.toLowerCase() == guiderKeysTXT[1] || i.toLowerCase() == guiderKeysTXT[2] || i.toLowerCase() == guiderKeysTXT[3]|| i.toLowerCase() == guiderKeysTXT[4] || i.toLowerCase() == guiderKeysTXT[5] || i.toLowerCase() == guiderKeysTXT[6]) &&
 										_plugin.hideAll ||
-									(i.toLowerCase() == "próximo" || i.toLowerCase() == "só se for agora!" || i.toLowerCase() == "vamos começar!" || i.toLowerCase() == "sim, por favor." || i.toLowerCase() == "desejo recomeçar o tour.") &&
+									(i.toLowerCase() == guiderKeysTXT[7] || i.toLowerCase() == guiderKeysTXT[8] || i.toLowerCase() == guiderKeysTXT[9] || i.toLowerCase() == guiderKeysTXT[10] || i.toLowerCase() == guiderKeysTXT[11]) &&
 										_plugin.next ||
-									i.toLowerCase() == "voltar" &&
+									i.toLowerCase() == guiderKeysTXT[12] &&
 										_plugin.prev
 								:
 									function(e){

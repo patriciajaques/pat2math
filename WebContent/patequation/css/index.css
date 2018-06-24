@@ -53,6 +53,22 @@
     text-align: center;
 }*/
 
+#idiomSelection {
+	cursor: pointer;
+}
+
+#idiomSelection_enUK {
+	cursor: pointer;
+}
+
+#idiomSelection_esES {
+	cursor: pointer;
+}
+
+#idiomSelection_ptBR {
+	cursor: pointer;
+}
+
 #help {
     background: url("/pat2math/patequation/img/help.png") no-repeat scroll center center transparent;
     width: 70px;

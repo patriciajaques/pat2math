@@ -121,7 +121,7 @@ function requestServer (type, last, next, typeOperation, element) {
 //                        //alert(aux);
 //                    }
 //                }
-                //alert(result);
+//				  alert(result);
 
 
                 if (enableAgent)
@@ -148,7 +148,7 @@ function requestServer (type, last, next, typeOperation, element) {
                 			setCookieDays("freeHints", contentCookie, 1);
                 			
                 			verifyFreeHints();
-                	}
+                		}
                 	}
                 	
                 	$("#newPoints").css("left", (x + 80) + "px");
@@ -268,11 +268,21 @@ function requestServer (type, last, next, typeOperation, element) {
                         	$(divName).slideUp(700);
                         	
                         	if (selectedEquation.equation === "x+7=12") {
-                        		if (selectedEquation.steps.length === 0)
-        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        		if (enableKnowledgeTest) {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
                         	  
-                        		else
-                        		    mainMenu("");
+                        			else
+                        				mainMenu("");
+                        		}
+                        		
+                        		else {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTourWithoutKnowledgeTest(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        	  
+                        			else
+                        				mainMenuWithoutKnowledgeTest("");
+                        		}
                         	}
                         	
                         	else if (levelGamification !== "without")
@@ -515,7 +525,7 @@ function requestServer (type, last, next, typeOperation, element) {
                         
                         if (isTourInterativo) {
                         	if (selectedEquation.steps.length === 1)
-                        	    firstStepTour("", "Muito bem!", "Por acertar este passo da equação, você ganhou 10 pontos.");
+                        	    firstStepTour("", serverTXT[0], serverTXT[1]);
                         }
                     }        
                 }
@@ -582,7 +592,7 @@ function requestServer (type, last, next, typeOperation, element) {
                     
                     if (isTourInterativo) {
                     	if (selectedEquation.steps.length === 1)
-                    	    firstStepTour("", "Oops!", "Por errar este passo da equação, você perdeu 5 pontos e recebeu uma dica.");
+                    	    firstStepTour("", serverTXT[2], serverTXT[3]);
                     }
 
                     document.getElementById('inputMobile').style.border = "1px solid red";
@@ -603,7 +613,7 @@ function requestServer (type, last, next, typeOperation, element) {
             	}
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada
-                }else if (split[0]=== "você não está logado!"){
+                }else if (split[0] === "você não está logado!"){
                 	showHint(split[0]);
                 }
             }
@@ -820,11 +830,21 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                         	document.getElementById(divName).innerHTML = '<img src="/pat2math/patequation/img/cadeado_aberto.png"></img>';
        
                         	if (numUnlockedPlans == 1) {
-                        		if (selectedEquation.steps.length === 0)
-        	                		alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        		if (enableKnowledgeTest) {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTour(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
                         	  
-                        		else
-                        		    mainMenu("");
+                        			else
+                        				mainMenu("");
+                        		}
+                        		
+                        		else {
+                        			if (selectedEquation.steps.length === 0)
+                        				alternativeFirstStepTourWithoutKnowledgeTest(""); //se o usuário informou a resposta diretamente no primeiro passo da equação
+                        	  
+                        			else
+                        				mainMenuWithoutKnowledgeTest("");
+                        		}
                         	}
                         	
                         	else if (numUnlockedPlans == 2)
@@ -1065,8 +1085,8 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
         					});	
                     	$.guider({
 
-                			title: "Teste finalizado",
-                			description: "O teste de conhecimentos foi concluído e você será redirecionado para o plano de aula da equação que estava sendo resolvida",    
+                			title: serverTXT[4],
+                			description: serverTXT[5],    
                 			alignButtons: "center",
                 			buttons: {
                 				OK: {
@@ -1079,7 +1099,7 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                 }
                 else if (split[1] === "true" && split[2] === "false") {
                     // operação errada
-                }else if (split[0]=== "você não está logado!"){
+                }else if (split[0] === "você não está logado!"){
                 	showHint(split[0]);
                 }
             }
@@ -1116,7 +1136,7 @@ function requestFinalAnswer() {
         	finalStep = finalStep[1].split("=");
         	finalAnswerCurrentEquation = finalStep[1];
         }
- });
+	});
 }
 
 function requestResolution ( ){
