@@ -1,4 +1,4 @@
-var appContext = "/pat2math/";
+﻿var appContext = "/pat2math/";
 var isPAT2Exam;
 // var currentIds = null; //Array original atual das equações
 // var currentIds2 = null; //Array ordenado atual das equações
@@ -253,14 +253,11 @@ function loadTasks(id) {
 
 							numEquacoesPlanoAtual = getNumEquationsPlan();
 							resetProgressBar();
-							tasksRemaining = numEquacoesPlanoAtual;
 							// here tasksremaining contains the number of
 							// equations
-							/* alert("inicio: "+tasksRemaining); */
 
 							var taskSolved = $(".icon-ok.icon-white").length;
-							/* alert("fim: "+taskSolved); */
-							tasksRemaining = tasksRemaining - taskSolved;
+							tasksRemaining = document.getElementsByClassName("icon-pencil").length - document.getElementsByClassName("taskWE").length - taskSolved;
 							/* alert("fim: "+tasksRemaining); */
 							if (tasksRemaining === 0) {
 								addProgressValue(numEquacoesPlanoAtual);
