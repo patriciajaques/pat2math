@@ -251,13 +251,13 @@ function loadTasks(id) {
 							$("#tasks" + id).html(data);
 							$("#tasks" + id).slideDown(700);
 
-							numEquacoesPlanoAtual = getNumEquationsPlan();
+							numEquacoesPlanoAtual = document.getElementsByClassName("icon-pencil").length - document.getElementsByClassName("taskWE").length;
 							resetProgressBar();
 							// here tasksremaining contains the number of
 							// equations
 
-							var taskSolved = $(".icon-ok.icon-white").length;
-							tasksRemaining = document.getElementsByClassName("icon-pencil").length - document.getElementsByClassName("taskWE").length - taskSolved;
+							var taskSolved = $(".icon-ok.icon-white").length - document.getElementsByClassName("taskWE").length;
+							tasksRemaining = numEquacoesPlanoAtual - taskSolved;
 							/* alert("fim: "+tasksRemaining); */
 							if (tasksRemaining === 0) {
 								addProgressValue(numEquacoesPlanoAtual);
