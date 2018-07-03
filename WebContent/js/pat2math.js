@@ -1,4 +1,4 @@
-﻿var appContext = "/pat2math/";
+var appContext = "/pat2math/";
 var isPAT2Exam;
 // var currentIds = null; //Array original atual das equações
 // var currentIds2 = null; //Array ordenado atual das equações
@@ -11,6 +11,7 @@ var isPAT2Exam;
 // forma de corrigir neste caso.
 // (x+2*(2+x))/(2+5)=10
 function calculateLength(equation) {
+
 	var length = equation.length;
 	// Posição atual do símbolo de fração
 	var posFrac = equation.indexOf("/");
@@ -142,6 +143,7 @@ function enableContent(id) {
 }
 
 function loadTasks(id) {
+
 	var isUnlocked = unlockAllPlans;
 
 	if (isUnlocked === false) {
@@ -163,6 +165,7 @@ function loadTasks(id) {
 			verifyFreeErrors();
 			verifyFreeHints();
 		}
+
 
 		// if(id === 1 || id === 9 || id === 17 || id === 25 || id === 33){
 		// setBackgroundColor("#FFE1F8");
@@ -222,6 +225,7 @@ function loadTasks(id) {
 								data = replaceAll(data, "2+2", "4");
 								data = replaceAll(data, "10+3", "13");
 								data = replaceAll(data, "2+7", "9");
+
 							}
 
 							else
@@ -255,8 +259,10 @@ function loadTasks(id) {
 							resetProgressBar();
 							// here tasksremaining contains the number of
 							// equations
+							/* alert("inicio: "+tasksRemaining); */
 
 							var taskSolved = $(".icon-ok.icon-white").length - document.getElementsByClassName("taskWE").length;
+							/* alert("fim: "+taskSolved); */
 							tasksRemaining = numEquacoesPlanoAtual - taskSolved;
 							/* alert("fim: "+tasksRemaining); */
 							if (tasksRemaining === 0) {
@@ -326,13 +332,13 @@ function loadTasks(id) {
 										// a equação salva no cookie é a deste
 										// plano, e o aluno já viu a janela de
 										// confirmação do firstPlanAccess()
-										if (cookieEquation
-												.indexOf(stringIdPlan) !== 0)
-											firstPlanAccess();
+//										if (cookieEquation
+//												.indexOf(stringIdPlan) !== 0)
+//											firstPlanAccess();
 									}
 
-									else
-										firstPlanAccess();
+//									else
+//										firstPlanAccess();
 								}
 							}
 
@@ -380,6 +386,7 @@ function loadTasks(id) {
 
 		}
 
+
 	}
 
 	else {
@@ -387,7 +394,6 @@ function loadTasks(id) {
 	}
 
 }
-
 
 function getNumEquationsPlan() {
 	// if (levelGamification !== undefined) {
@@ -422,10 +428,7 @@ function getNumEquationsPlan() {
 			&& planoAtual !== 11 && planoAtual !== 16)
 		return 5;
 
-	else if (planoAtual === 6
-			|| planoAtual === 16
-			|| (planoAtual > 20 && planoAtual < 36 && planoAtual !== 25
-					&& planoAtual !== 26 && planoAtual !== 29 && planoAtual !== 33))
+	else if (planoAtual === 6 || planoAtual === 16 || (planoAtual > 20 && planoAtual < 36 && planoAtual !== 25 && planoAtual !== 26 && planoAtual !== 29 && planoAtual !== 33))
 		return 10;
 
 	else if (planoAtual === 11)
@@ -434,8 +437,7 @@ function getNumEquationsPlan() {
 	else if (planoAtual === 25 || planoAtual === 33) // || planoAtual === 29
 		return 20;
 
-	else if (planoAtual === 26) // foi removida uma equação desse plano que
-								// apresentava problemas
+	else if (planoAtual === 26) // foi removida uma equação desse plano que	apresentava problemas
 		return 9;
 
 	else if (planoAtual === 29) // idem
@@ -444,7 +446,8 @@ function getNumEquationsPlan() {
 	else if (planoAtual === 36)
 		return 15;
 
-	else if (planoAtual === 19)
+
+	else if (planoAtual === 19 || planoAtual === 20)
 		return 6;
 
 	else if (planoAtual === 0)
@@ -455,6 +458,7 @@ function getNumEquationsPlan() {
 }
 
 function getPontuacaoPlano() {
+
 	if (levelGamification !== undefined) {
 		if (planoAtual === 1001)
 			pontuacaoPlano = 20;
@@ -501,6 +505,7 @@ function getPontuacaoPlano() {
 	}
 
 	else {
+
 		if (planoAtual !== 11 && planoAtual !== 16 && planoAtual !== 21
 				&& planoAtual !== 25 && planoAtual !== 33 && planoAtual < 36) {
 			if (planoAtual <= 6)
@@ -548,6 +553,7 @@ function getPontuacaoPlano() {
 			else
 				pontuacaoPlano = 42;
 		}
+
 
 		else
 			pontuacaoPlano = null;
@@ -678,18 +684,19 @@ function showPadlockMessage(title, description) {
 
 	}).show();
 }
-
-function padlockClick ( ) {
-	showPadlockMessage (p2mTXT[1], p2mTXT[2]);
+function padlockClick() {
+	showPadlockMessage("Ops, você ainda não liberou este plano de aula",
+			"Para desbloqueá-lo, você deve resolver todas as equações do plano anterior");
 }
 
-function padlockClickStage ( ) {
-	showPadlockMessage (p2mTXT[3], p2mTXT[4]);
+function padlockClickStage() {
+	showPadlockMessage("Ops, você ainda não liberou esta fase",
+			"Para desbloqueá-la, você deve resolver todas as equações da fase anterior");
 }
 
-function padlockClickLevel ( ) {
-	showPadlockMessage (p2mTXT[5], p2mTXT[6]);
-
+function padlockClickLevel() {
+	showPadlockMessage("Ops, você ainda não liberou este nível",
+			"Para desbloqueá-lo, você deve completar todas as fases do nível anterior");
 }
 
 function loadExerciseWE(eq, points) {
@@ -707,7 +714,7 @@ function loadExerciseWE(eq, points) {
 function loadExercise(id) {
 	// setCurrentEquation (id);
 	loadingShow();
-	
+
 	var cookieName = "linesHeight" + id;
 
 	if (getCookie(cookieName) !== "")
@@ -741,6 +748,7 @@ function loadExercise(id) {
 
 				else
 					equation = new Equation(data.equation, 20);
+
 
 				equation.id = data.id;
 				for (var j = 0; j < data.steps.length; j++) {
@@ -778,8 +786,8 @@ function loadExercise(id) {
 			setCookieDays("currentEquation", idEquation, 1);
 			
 			//Experimentar executar por um siteTimeout de 3 segundos, ou ver um outro local para colocar
-			if (isPAT2Exam && getCookie("tourPAT2Exam") === "") 
-				tourPAT2Exam(); 
+			//if (isPAT2Exam && getCookie("tourPAT2Exam") === "") 
+				//tourPAT2Exam(); 
 
 			// cookieName = "numLines" + currentPos + idEquation;
 			//			
@@ -1024,7 +1032,9 @@ function nextEquation() {
 	}
 
 	else {
-		$("#hintText").html(p2mTXT[7]);
+		$("#hintText")
+				.html(
+						"Para desbloquear o próximo plano de aula, você deve resolver todas as equações do plano atual.");
 		$("#hintText").show('blind', 500);
 		$(".verticalTape").show('fold', 500);
 	}
@@ -1042,7 +1052,9 @@ function previousEquation() {
 	}
 
 	else {
-		$("#hintText").html(p2mTXT[8]);
+		$("#hintText")
+				.html(
+						"Você não pode mais voltar, já está na primeira equação do primeiro plano de aula.");
 		$("#hintText").show('blind', 500);
 		$(".verticalTape").show('fold', 500);
 	}

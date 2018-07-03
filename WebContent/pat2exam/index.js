@@ -67,9 +67,11 @@ var equationsExamString = "";
 var notasParciais = new Array();
 var notaGeral = 0;
 var currentQuestion = 0;
-var resolutions = new Array();
+var corrections = new Array();
 var testeFinalizado = false;
-var numEquations = 5; //Número de equações do teste
+var numEquations = 14; //Número de equações do teste
+var respostasFinais = new Array();
+var equacoesResolvidas = new Array();
 
 function getNotaTeste() {
 	$.ajax({
@@ -104,31 +106,6 @@ function saveNotaTeste() {
 	});
 }
 
-function calculaNotaParcial(steps) {
-	notasParciais[currentQuestion] = 0;
-	
-	for (var i = 0; i < steps.length; i++) {
-		var isCorrect = 10;
-		
-		if (!correctEquation(steps[i]))
-			isCorrect = 0;
-		
-		notasParciais[currentQuestion] += isCorrect;
-	}
-	
-	notasParciais[currentQuestion] /= steps.length;
-	
-	var newCookie = getCookie("notasParciais");
-	
-	if (newCookie !== "")
-		newCookie += "," + notasParciais[currentQuestion];
-	
-	else
-		newCookie += notasParciais[currentQuestion];
-	
-	setCookieDays("notasParciais", newCookie, 1);
-	calculaNotaGeral();
-}
 
 function orientacoesIniciais() {
 	$.guider({
@@ -168,7 +145,7 @@ function tourPAT2Exam() {
 	$.guider({
 		next: "PAT2Exam2",
 		title: "Equações iniciais",
-		description: "index As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
+		description: "As equações iniciais sempre estarão na primeira linha. Para resolvê-las, basta clicar nas caixas de texto nas linhas abaixo delas e digitar o próximo passo",    
 		alignButtons: "right",
 		onShow: function() {$("#topicsAux").show(); $("#topics").fadeOut();},
 		buttons: {
@@ -284,17 +261,31 @@ function contadorOrientacoes() {
 	setTimeout(function() {document.getElementById("contador").innerHTML = "1"}, "9000");
 	
 }
+
+function calculaNotaParcial() {
+	if (respostasFinais[idEquation] !== undefined)
+		notasParciais[idEquation] = 10;
+	
+	else {
+		var correction = corrections[idEquation];
+		var notaParcial = 0.5;
+		
+		for (var i = 0; i < correction.length && notaParcial > 0; i++) {
+			if (correction[i] === false)
+				notaParcial -= 0.25;
+		}
+		
+		notasParciais[idEquation] = notaParcial;
+	}
+	
+	calculaNotaGeral();
+}
+
 function calculaNotaGeral() {
-	notaGeral += notasParciais[currentQuestion] / idsExam.length;
+	notaGeral += notasParciais[idEquation] / idsExam.length;
 	var notaString = "" + notaGeral;
 	
 	setCookieDays("notaGeral", notaString, 1);
-	
-	currentQuestion++;
-	
-	var currentQuestionString = "" + currentQuestion;
-	
-	setCookieDays("currentQuestion", currentQuestionString, 1);
 	
 	saveNotaTeste();
 }
@@ -316,17 +307,18 @@ function finalizaTeste() {
 	var points = notaArredondada * 200;
 	updateScoreTotalDataBase(points);
 	var finalizarTesteSpan = document.getElementById("finalizarTeste");
-	finalizarTesteSpan.innerHTML = "Acessar o PAT2Math";
+	finalizarTesteSpan.innerHTML = "Fazer logout e Acessar o PAT2Math";
 	finalizarTesteSpan.setAttribute("onclick","redirectPAT2Math();");
 	
 	$.guider({
 		title: "Confira abaixo a sua nota:",
-		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal. Quando estiver pronto, clique no link \"Acessar o PAT2Math\" neste mesmo menu.</div>",    
+		//description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><div style='margin-top: 42px'>Você pode conferir a correção completa por equação através do menu principal. Quando estiver pronto, clique no link \"Acessar o PAT2Math\" neste mesmo menu.</div>",    
+		description: "<div style='font-size: 100px; margin-top: 26px'>" + notaArredondada + "</div><br>",    
 		alignButtons: "center",
 		width: 550,
 		buttons: {
-			OK: {
-				click: true,
+			"Fazer logout e acessar o PAT2Math": {
+				click: function() {redirectPAT2Math();},
 				className: "primary"
 			}
 		}
@@ -334,38 +326,41 @@ function finalizaTeste() {
 	
 
 }
+function deleteFinalStep() {
+	$.ajax({
+		type : 'GET',
+		url : "deleteFinalStep",
+		data : {
+			"exerciseId" : idEquation
+		},
+		success : function(data) {
+				window.location.reload();
+		}
+	});
+}
 
 function redirectPAT2Math() {
-	location.href="/pat2math/newpatequation";
+	location.href="/pat2math/login";
 }
 function finalizaQuestao() {
-	document.getElementById("finalizaQuestao").innerHTML = "Aguarde um momento...";
-	var pos = searchResolutions(idEquation);
-	var steps = resolutions[pos].steps;
-	var divBorracha = "borracha" + steps.length;
-	divBorracha = document.getElementById(divBorracha);
+	calculaNotaParcial();
+	equacoesResolvidas[idEquation] = "concluída";
 	
-	for (var i = steps.length - 1; divBorracha === null; i--) {
-		divBorracha = "borracha" + i;
-		divBorracha = document.getElementById(divBorracha);
+	var cookie = "";
+	
+	for (var i = 0; i < idsExam.length; i++) {
+		var id = idsExam[i];
+		if (equacoesResolvidas[id] !== undefined) {
+			if (cookie === "")
+				cookie += id;
+			
+			else
+				cookie += "," + id;
+		}
 	}
 	
-	divBorracha.style.visibility = "hidden";
-	
-//	var steps = resolutions[idEquation];
-	
-	requestServer('e', selectedEquation.initialEquation, steps[0], "OG");
-	
-	for (var i = 1; i < steps.length; i++) {
-		requestServer('e', steps[i-1], steps[i], "OG");
-	}
-	
-	calculaNotaParcial(steps);
-	
-	
-	
-	document.getElementById("finalizaQuestao").innerHTML = "Enviado para correção";
-		
+	setCookieDays("equacoesResolvidasExam", cookie, 1);
+	window.location.reload();
 }
 
 function verifyMultiplicationsInX(expression) {
@@ -427,47 +422,125 @@ function generateTest() {
 		}
 	}
 	
-	else {
-		if (numEquations > 15) {
-			alert ("O número de equações deve ser no máximo 15");
-		}
+	else 
+		getEquationsDataBase();
 	
-		else {
-			var idPlans = [30, 30, 27, 27, 24, 24, 23, 22, 22, 19, 17, 14, 12, 7, 2];
-			var numEquationsPlans = [10, 10, 10, 10, 10, 10, 10, 10, 10, 6, 5, 5, 5, 5, 5];
+	var html = '<span class="topic" style="width: 255px; margin-left: 5px; background: #82C785" onclick="loadTasksExam()"> Equações </span> <div id="tasks" class="tasks"></div><div id="tasksExam" class="tasks" style="display: none;"></div>';
+	document.getElementById("the_list").innerHTML = html;
+}
+
+function saveSelectedEquationsInDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "saveSelectedEquationsInDataBase",
+		data : {
+			"ids" : idsExamString,
+			"equations" : equationsExamString
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function getEquationsDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "getEquationsExam",
+		data : {
+			
+		},
+		success : function(data) {
+			equationsExamString = data;
+			
+			if (equationsExamString === "null") {
+				equationsExamString = "";
+				
+				var idPlans = [30, 30, 27, 27, 24, 24, 23, 22, 22, 19, 17, 14, 12, 7, 2];
+				var numEquationsPlans = [10, 10, 10, 10, 10, 10, 10, 10, 10, 6, 5, 5, 5, 5, 5];
+				
+				for (var i = 0; i < numEquations; i++) {
+					var id = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+					idsExam[i] = id;
+					idsExamString += id + ",";
+					getEquationById(id, i);			
+					
+					if (idPlans[i] >= 24 || idPlans[i] === 22) {
+						i++;
+						
+						if (i >= numEquations)
+							break;
+						
+						var id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+						
+						while (id2 === id)
+							id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
+						
+						
+						
+						idsExam[i] = id2;
+						idsExamString += id2 + ",";
+						getEquationById(id2, i);		
+					}
+				}
+				
+				setCookieDays("idsExam", idsExamString, 1);
+				setTimeout(function() {setCookieDays("equationsExam", equationsExamString, 1)}, "1000");
+				saveSelectedEquationsInDataBase();
+			}
+			
+			else {
+				getIdsDataBase();
+				
+			}
+			
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
+		}
+	});
+}
+
+function getIdsDataBase() {
+	$.ajax({
+		type : "GET",
+		url : "getIdsExam",
+		data : {
+			
+		},
+		success : function(data) {
+			idsExamString = data;
+			
+			var ids = idsExamString.split(",");
+			var equations = equationsExamString.split(",");
 			
 			for (var i = 0; i < numEquations; i++) {
-				var id = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
-				idsExam[i] = id;
-				idsExamString += id + ",";
-				getEquationById(id, i);			
+				idsExam[i] = parseInt(ids[i]);
+				equationsExam[i] = equations[i];
+			}
+			
+			var notaGeralCookie = getCookie("notaGeral");
+			
+			if (notaGeralCookie !== "") {
+				notaGeral = parseFloat(notaGeralCookie);
 				
-				if (idPlans[i] >= 24 || idPlans[i] === 22) {
-					i++;
-					
-					if (i >= numEquations)
-						break;
-					
-					var id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
-					
-					while (id2 === id)
-						id2 = Math.floor((Math.random() * (numEquationsPlans[i] - 1) + 0)) + idPlans[i] * 100;
-					
-					
-					
-					idsExam[i] = id2;
-					idsExamString += id2 + ",";
-					getEquationById(id2, i);		
-				}
+				var parciais = getCookie("notasParciais").split(",");
+				
+				for (var i = 0; i < parciais.length; i++)
+					notasParciais[i] = parseFloat(parciais[i]);		
 			}
 			
 			setCookieDays("idsExam", idsExamString, 1);
 			setTimeout(function() {setCookieDays("equationsExam", equationsExamString, 1)}, "10000");
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log("Ocorreu um erro inesperado");
 		}
-	}
-	
-	var html = '<span class="topic" style="width: 255px; margin-left: 5px; background: #82C785" onclick="loadTasksExam()"> Equações </span> <div id="tasks' + id + '" class="tasks"></div><div id="tasksExam" class="tasks" style="display: none;"></div>';
-	document.getElementById("the_list").innerHTML = html;
+	});
 }
 
 function loadTasksExam() {
@@ -1840,30 +1913,6 @@ function loadEquation(index) {
         centralizeCanCopy();
         line.removeClass("canCopy");
 
-        var pos = searchResolutions(idEquation);
-        
-        if (pos !== -1) {
-        	selectedEquation.steps = new Array();
-    	
-    		var steps = resolutions[pos].steps;
-    		var i = 0;
-    		
-    		for (; i < steps.length - 1; i++) 
-    			selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
-    		
-    		  var verification = steps[i].split("=");
-    		  var v1 = verification[0] === "x";
-    		  var v2 = $.isNumeric(verification[1]);
-    		  
-    		  if (!v1 || !v2) 
-    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_STEP));
-    		  
-    		  else
-    			  selectedEquation.steps.push(new Step(steps[i], NORMAL_SOLUTION));
-    	}
-        	
-        
-        requestFinalAnswer();
         // if the current equation contains steps, then they have to be loaded together with the equation
         if (selectedEquation.steps !== null && selectedEquation.steps.length > 0) {
         	calculateUsedLines();
@@ -1895,8 +1944,15 @@ function loadEquation(index) {
                 } else {
                     line = line.next();
                 }
+
+                
+                line.html(line.html() + elements);
+
+                line.find("li").css("opacity", "0.75");
                 
                 if (testeFinalizado) {
+                	requestFinalAnswer();
+                	
                 	var html = "</ul><div class='cool coolAlign'></div>";
                 	
                 	if (!correctEquation(selectedEquation.steps[i].step))
@@ -1904,19 +1960,9 @@ function loadEquation(index) {
                 	
                 	elements = elements + html;
                 }
-                
-                if (!selectedEquation.isAnswer() && levelGamification !== "without") {
-                	var totalPoints = 10 + selectedEquation.userPoints + selectedEquation.userErrorPoints;
-                    
-                    if (totalPoints <= selectedEquation.points - 5)
-                    	selectedEquation.addPoints(10);
-                }
-                line.html(line.html() + elements);
-
-                line.find("li").css("opacity", "0.75");
 
                 if (selectedEquation.lastStep.type === DELTA_SOLUTION || selectedEquation.lastStep.type === x1_SOLUTION) {
-                    line.find("li").css("color", "blue");
+                    //line.find("li").css("color", "blue");
                     if (selectedEquation.lastStep.type === DELTA_SOLUTION) {
                         selectedEquation.lastStep = selectedEquation.steps[0];
                     } else { //x1 solution
@@ -1957,7 +2003,6 @@ function loadEquation(index) {
 
                 line.addClass("canCopy");
                 centralizeCanCopy();
-                coolAlign();
                 line.removeClass("canCopy");
             }
         }
@@ -1974,9 +2019,11 @@ function loadEquation(index) {
         if ($(selectedSheet).html().indexOf("final") === -1) {
             
         	if (selectedEquation.isComplete || (selectedEquation.lastStep !== null && (selectedEquation.lastStep.type === x2_SOLUTION || selectedEquation.lastStep.type === NORMAL_SOLUTION))) {
+                //$(selectedSheet + " .canCopy li").css("color", "blue");
                 $(selectedSheet + " .canCopy").removeClass("canCopy");
                 //addProgressValue(10);
-                //selectedEquation.lastStep = selectedEquation;         
+                //selectedEquation.lastStep = selectedEquation;
+                nextLine.html("<div class='final'></div>");            
                 
                 var result = selectedEquation.points - selectedEquation.userPoints - selectedEquation.userErrorPoints;
                 selectedEquation.addPoints(result);
@@ -2008,8 +2055,30 @@ function loadEquation(index) {
     //$(".verticalTape").hide('blind', 500);
     $("#hintText").html("");
     
-    return selectedEquation.equation;
+    if (idEquation !== undefined && idEquation !== null) {
+    	if (corrections[idEquation] === undefined || corrections[idEquation] === null)
+    		corrections[idEquation] = new Array();
+    }
     
+    if (equacoesResolvidas[idEquation] !== undefined) {
+    	document.getElementById("inputMobile").style.display = "none";
+    	document.getElementById("enviarParaCorrecao").style.display = "none";
+    }
+    
+    if (testeFinalizado) {
+    	var elements = document.getElementsByClassName("cool");
+    	
+    	for (var i = 0; i < elements.length; i++) {
+    		elements[i].style.backgroundImage = "url('/pat2math/patequation/img/cool.png')";
+    	}
+    	
+    	elements = document.getElementsByClassName("bad");
+    	
+    	for (var i = 0; i < elements.length; i++) {
+    		elements[i].style.backgroundImage = "url('/pat2math/patequation/img/bad.png')";
+    	}
+    }
+    return selectedEquation.equation;
 }
 
 function calculatePoints(equation) {
@@ -2082,10 +2151,9 @@ function clearLine(option) {
             svg + "<ul>" +
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
-            "<div class='borracha' id='borracha" + selectedEquation.steps.length + "'title='Apagar passo' onclick='deleteStep()'></div>" +
+            "<div class='trash'><div id='enviarParaCorrecao'></div></div>" +
             "<button id='button'></button>");
 
-    $("#borracha").tooltip();
     
     centralizeCanMoveAndButton();
     sortable();
@@ -2095,11 +2163,12 @@ function clearLine(option) {
    // trashDroppable();
     buttonClick();
     focus();
+    
+    if(selectedEquation.steps !== null && selectedEquation.steps.length > 0)
+    	document.getElementById("enviarParaCorrecao").innerHTML = "<button onclick='finalizaQuestao()'>Enviar para correção</button><button onclick='deleteFinalStep()'>Apagar último passo</button>"
 
     $(".labelDefault input").focus();
     
-    if (selectedEquation.steps.length === 0)
-    	document.getElementById("borracha0").style.visibility = "hidden";
     
     
 }
@@ -2647,7 +2716,7 @@ function newEquation() {
 //}
 
 
-function checkEquation() { 
+function checkEquationOld() { 
 	if (isLoadEquation)
 		isLoadEquation = false;
 	
@@ -2830,10 +2899,120 @@ function checkEquation() {
 	  selectedEquation.currentStep = "";
   }
   
-  $("#borracha").tooltip();
 	}
 }
 
+function checkEquation() { 
+	if (isLoadEquation)
+		isLoadEquation = false;
+//	setTimeout ('resetNumClicks()', 3000);
+//	
+//	if (numClicks === undefined)
+//		numClicks = 1;
+//	
+//	else
+//		numClicks++;
+//	
+//	if (numClicks === 5)
+//		fiveClicksOnTheLoupe();
+	
+	//var display = document.getElementById('button').style.display;
+//	if (document.getElementById ('button') === null && idEquation >= 0) {
+//		//Verifica se o ID da equação atual não é o da última equação de um dos planos de aula
+//    	if (idEquation !== 26 && idEquation !== 49 && idEquation !== 63 && idEquation !== 120 && idEquation !== 143 && idEquation !== 162 && idEquation !== 178 && idEquation !== 200 && idEquation !== 201 && idEquation !== 219)       
+//		    nextEquationClick();
+//	}
+	
+//	else {
+	var button = document.getElementById('button');
+	if (button.style.width !== '16px') {
+	button.style.width = '16px';
+	button.style.height = '16px';
+	button.style.top = '4px';
+	button.style.right = '7px';
+	button.style.background = 'url("/pat2math/images/solve_loading.gif")';
+
+    
+	$(selectedSheet + " .canMove li input").blur();
+//  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
+//  passoAnterior = getEquation(passoAnterior);
+	
+  var equation = naturalToText(selectedEquation.currentStep);
+  
+  if (equation === "")
+	  equation = " ";
+  
+  else if (equation.indexOf (".") !== -1 || equation.indexOf (",") !== -1)
+	  alert ('Por enquanto o PAT2Math não trabalha com números decimais, somente com frações. Tente refazer este passo utilizando números fracionários com a barra /.');
+  
+  
+  
+  
+//  if (isTourInterativo) {
+//      if (cont === 0) {
+//      	resolutionPart1(equation);
+//      } else if (cont === 1) {
+//      	resolutionPart2(equation);
+//      } else if (cont === 2) {
+//      	resolutionPart3(equation);
+//      } else if (cont === 3) {
+//      	resolutionPart4(equation);
+//      } else if (cont === 4) {
+//      	resolutionPart5(equation);  
+//      } cont++;
+//  }
+  
+  
+  
+  var passoAnterior = selectedEquation.lastStep;
+  
+  if (passoAnterior !== null) {
+      passoAnterior = passoAnterior.step;         
+  } else {
+      passoAnterior = selectedEquation.initialEquation;       	  
+  }
+  
+  
+
+  //alert(passoAnterior + " -> " + selectedEquation.initialEquation);
+
+//  if (selectedEquation.initialEquation === "") {
+//      selectedEquation.initialEquation = passoAnterior;
+//  }
+
+  var equationServer = equation;
+  var mathml = getEquation($(selectedSheet + " .canMove li").toArray());
+  if (mathml.indexOf('a') !== -1 || mathml.indexOf('b') !== -1 || mathml.indexOf('c') !== -1) {
+      equation = mathml;
+  }
+  //alert(equation + "/n" + selectedEquation.currentStep);
+  //selectedEquation.currentStep = equation;
+
+  if (equation.indexOf('a') !== -1 || equation.indexOf('b') !== -1 || equation.indexOf('c') !== -1) {
+      //check if the a, b and c are corrects!!!
+      //selectedEquation.currentStep = equation;
+      equation = replaceAll(equation, ';', '&'); //split the equation to get the a, b and c value
+      passoAnterior = selectedEquation.initialEquation;
+  }
+
+
+  if (equation.indexOf("d") !== -1 && passoAnterior.indexOf("d") === -1 || passoAnterior === "" || passoAnterior === null) {
+      passoAnterior = selectedEquation.initialEquation;
+  } else if (passoAnterior.indexOf("±") !== -1 && equation.indexOf("±") === -1) {
+      selectedEquation.initialEquation = passoAnterior;
+      selectedEquation.twoAnswers = true;
+  }
+  
+//  if (window.location.href.indexOf("knowledgeTest") === -1)
+	  requestServer('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+
+//  else
+//	  requestServerKnowledgeTest('e', passoAnterior, equationServer, "OG", $(selectedSheet + " #button"));
+
+  //document.getElementById('button').style.display = 'inline';
+//}
+}
+}
 
 function identifyABC(step) {
     var a, b, c;
@@ -3284,6 +3463,16 @@ function insertInArray(array, element, pos) {
 $(document).ready(function() {	
 	isPAT2Exam = true;
 	
+	var cookieEquacoesResolvidas = getCookie("equacoesResolvidasExam");
+	
+	if (cookieEquacoesResolvidas !== "") {
+		var ids = cookieEquacoesResolvidas.split(",");
+		
+		for (var i = 0; i < ids.length; i++) {
+			var id = parseInt(ids[i]);
+			equacoesResolvidas[id] = "concluída";
+		}
+	}
 	loadEquation(0);
 
     centralizeCanMoveAndButton();
@@ -3354,9 +3543,7 @@ $(document).ready(function() {
 		loadTasksExam();
 		loadExerciseExam(idEquation);
 	}
-	
-	 $("#borracha").tooltip();
 	 
-	 if (getCookie("orientacoesIniciais") === "")
-		 orientacoesIniciais();
+	// if (getCookie("orientacoesIniciais") === "")
+		 //orientacoesIniciais();
 });

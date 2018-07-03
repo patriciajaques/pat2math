@@ -1,3 +1,4 @@
+
 package br.com.pat2math.studentModel;
 
 import java.io.Serializable;
@@ -54,8 +55,10 @@ public class Student extends User implements Serializable {
 	//Turma do estudante
 	private Integer turma;
 	
+	//Para o PAT2Exam
 	private Double notaTeste;
 	
+	private String idsExam, equationsExam;
 	
 	public static Student newStudent(Student student) {
 		student.defineRole();
@@ -300,8 +303,6 @@ public class Student extends User implements Serializable {
 		this.knowledgeTestWasRealized = knowledgeTestWasRealized;
 	}
 	
-	
-	
 	public void setNotaTeste (Double notaTeste) {
 		this.notaTeste = notaTeste;
 	}
@@ -309,11 +310,22 @@ public class Student extends User implements Serializable {
 	public Double getNotaTeste() {
 		return notaTeste;
 	}
-	
-	
-	
 
-	
+	public String getIdsExam() {
+		return idsExam;
+	}
+
+	public void setIdsExam(String idsExam) {
+		this.idsExam = idsExam;
+	}
+
+	public String getEquationsExam() {
+		return equationsExam;
+	}
+
+	public void setEquationsExam(String equationsExam) {
+		this.equationsExam = equationsExam;
+	}
 	
 	
 	

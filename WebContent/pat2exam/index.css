@@ -1,0 +1,983 @@
+
+/* Large desktop */
+@media (min-width: 1000px) { 
+
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+
+}
+
+#book {
+    background: #ddd;
+    box-shadow: 3px -3px 6px #888;
+    margin-top: 3%;
+    max-width: 1000px;
+    
+}
+
+#loadingImage{
+    width: 3%;
+    margin-top: 300px;
+}
+
+.systemHelp {
+    margin-left: 50px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.systemHelp .example {
+    width: 35%;
+    color: #009999;
+}
+
+.systemHelp .examplePoints {
+    width: 25%;
+    color: #00b10c;
+}
+
+/*#progressBar .progress-bar {
+    margin-left: 50px;
+    color: black;
+    text-align: center;
+}*/
+
+#help {
+    background: url("/pat2math/patequation/img/help.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    top: 464px;
+    cursor: pointer;
+    position: fixed;
+    z-index: 1;
+}
+
+/* #equationTour { */
+/*     width: 1px; */
+/*     height: 1px; */
+/*     margin-top: -345px; */
+/*     margin-left: -60px; */
+/*     position: fixed; */
+/* } */
+
+#tour{
+    background: url("/pat2math/patequation/img/tour.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    margin-top: -322px;
+    position: fixed;
+    cursor: pointer;
+    display: none;
+}
+
+#nextEquation {
+	background: url("/pat2math/patequation/img/next_equation.png") no-repeat center;
+	position: relative;
+	cursor: pointer;
+	height: 60px;
+	margin-top: 32px;
+}
+
+#ranking{
+    background: url("/pat2math/patequation/img/trofeu.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    margin-top: -273px;
+    position: fixed;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#reportBug {
+    background: url("/pat2math/patequation/img/reportar_bug.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 933px;
+    top:540px;
+    cursor: pointer;
+    position: fixed;
+    z-index: 1;
+}
+
+#rewardWorkedExamples {
+    background: url("/pat2math/patequation/img/lampada.png") no-repeat scroll center center transparent;
+    width: 70px;
+    height: 70px;
+    margin-left: 348px;
+    top: 390px;
+    cursor: pointer;
+    position: fixed;
+    display: none;
+    z-index: 1;
+}
+
+.jGuider {
+	z-index: 10000000000;
+}
+
+
+#calculatorAccess{
+    background: url("../img/calculatorIcon.png") no-repeat scroll center center transparent;
+    width: 40px;
+    height: 55px;
+    margin-left: 955px;
+    margin-top: 675px; //443px;
+    cursor: pointer;
+
+}
+
+#noteAccess{
+    background: url("../img/note.png") no-repeat scroll center center transparent;
+    width: 39px;
+    height: 39px;
+    margin-left: 956px;
+    margin-top: 450px;
+    cursor: pointer;
+}
+
+#canvasDiv{
+    display: inherit;
+    width: 190px;
+    height: 300px;
+    background-color: aquamarine;
+    box-shadow: -3px -3px 6px #222222;
+    position: static;
+}
+
+#clearCanvas{
+    float: right;
+    margin-left: 178px;
+    cursor: pointer;
+    position: absolute;
+}
+
+#noteBox{
+    float: right;
+    margin-top: -410px;
+    margin-right: 20px;
+}
+
+#calculator{
+	margin-top: -29px;
+	margin-left: -410px;
+	display: none;
+}
+
+#calculatorIcon{
+	margin-top: -344px;
+	margin-left: -622px;
+	cursor: pointer;
+}
+
+#progressBar .label{
+    color: #c3c3c3;
+    font-size: 18px;
+    background-color: transparent;
+    margin-left: 30px;
+    cursor: default;
+}
+
+#progressBar {
+    text-align: center;
+}
+
+#newPoints {
+    position: fixed;
+    display: inline-block;
+    font-size: 20px;
+    color: green;
+    font-weight: bold;
+    text-shadow: 0px 2px 2px #888;
+    display: none;
+}
+
+.locked {
+	position: absolute;
+	margin-left: 223px;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+.exclamation {
+	position: absolute;
+	margin-left: 12px;
+	margin-top: 5px;
+}
+
+#amountPoins{
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.toolsFont {
+    font-family: 'Iceland', cursive;
+    float: left;
+    color: #222;
+    font-size: 2em;
+    text-shadow: 0px 2px 3px #666;
+}
+
+.backCover {
+    border: 1px solid black;
+    border-style: dotted;
+    float: left;
+    height: 833px;
+    width: 35%;
+    margin: 5px;
+    box-shadow: 0px 0px 4px #888888;
+}
+
+#bars {
+    margin-top: 160px;
+    font-size: 10px;
+    height: 45px;    
+}
+
+#bars .label {
+    line-height: 17px;
+}
+
+.tape {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: rgba(200, 200, 200, 0.2);
+    border-color: rgba(220, 220, 220, 0.2);
+    border-image: none;
+    border-style: none dotted;
+    border-width: 1px;
+    color: #555555;
+    float: right;
+    height: 25px;
+    margin-left: 200px;
+    margin-top: 100px;
+    position: fixed;
+    transform: rotate(-55deg);
+    width: 150px;
+}
+
+#note {
+    /* background: #eee; */
+    background: #FFDD17;
+    box-shadow: 3px 3px 6px #888;
+    color: #888;
+    margin-left: 935px;
+    /*margin-top: -15px; */
+    overflow: visible !important;
+    padding: 1em 1.5em;
+    /*position: fixed;*/
+    transform: rotate(10deg);
+    width: 172px;
+    cursor: default;
+    font-size: 16px;
+    position: fixed;
+    z-index: 1;
+    /*
+    background: #FFDD17;
+    box-shadow: 3px 3px 6px #888;
+    color: #888;
+    margin-left: 800px;
+    margin-top: -15px;
+    overflow: hidden;
+    padding: 1em 1.5em;
+    position: fixed;
+    transform: rotate(10deg);
+    width: 160px;
+    cursor: default;
+    font-size: 16px;
+    */
+}
+
+.verticalTape{
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: rgba(200, 200, 200, 0.2);
+    border-color: rgba(220, 220, 220, 0.2);
+    border-image: none;
+    border-style: none dotted;
+    border-width: 1px;
+    color: #555555;
+    float: left;
+    height: 25px;
+    position: fixed;
+    top: 220px;
+    transform: rotate(-85deg);
+    width: 70px;
+    z-index: 1;
+}
+
+#hintText {
+    /* background: none repeat scroll 0 0 #00FF7F; */
+    background: none repeat scroll 0 0 #82C785;
+    box-shadow: 3px 3px 6px #222222;
+    color: #000;
+    height: auto;
+    max-height: 116px;
+    padding: 1em 1.5em;
+    position: fixed;
+    width: 187px;
+    overflow: auto;
+    display: none;
+    visibility: visible;
+    font-size: 13px;
+    margin-top: 197px;
+    margin-left: 935px;
+    z-index: 1;
+}
+
+#feedbackError {
+    /* background: none repeat scroll 0 0 #00FF7F; */
+    background: none repeat scroll 0 0 #82C785;
+    box-shadow: 3px 3px 6px #222222;
+    color: #000;
+    height: auto;
+    width: 300px;
+    max-height: 100px;
+    max-width: 300px;
+    padding: 1em 1.5em;
+    position: fixed;
+    overflow: auto;
+    display: none;
+    visibility: visible;
+    font-size: 13px;
+    top: 0px;
+    margin-left: 158px;
+}
+
+#imLegend {
+	position: fixed;
+	margin-left: 987px;
+	margin-top: -668px;
+	visibility: hidden;
+}
+
+#tourAux {
+	width: 1px;
+	height: 1px;
+	margin-top: -63px;
+	left: 323px;
+	position: fixed;
+}
+
+#next_equation {
+	background: url("/pat2math/patequation/img/next_equation.png") no-repeat scroll center center transparent;
+	height: 60px;
+	width: 60px;
+	cursor: pointer;
+	margin-top: 34px;
+    margin-left: 557px;
+	
+}
+
+span.kbd {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+    border-style: outset;
+    border: 1px solid #aaa;
+    background: #fafafa;
+    padding: 0px 3px 1px 3px;
+    margin: 0px 0px 0px 0px;
+    vertical-align: baseline;
+    line-height: 1em;
+    white-space: nowrap;
+}
+
+.modal-body {
+    max-height: 500px;
+}
+
+.cool {
+    width: 30px;
+    height: 28px;
+}
+
+.bad {
+    width: 30px;
+    height: 28px;
+}
+
+.coolExam {
+	width: 30px;
+    height: 28px;
+}
+
+.hole{
+    margin-left: -35px;
+    width: 30px;
+    float: left;
+}
+
+.ui-tabs-vertical {    
+    width: 55em; 
+}
+
+/* set vertical tabs */
+.ui-tabs-vertical .ui-tabs-nav {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    float: right;
+    height: 375px;
+    margin-left: -5px;
+    margin-top: 20px !important;
+    padding: 0.2em 0.2em 0.3em 0 !important;
+    width: 2.5em;
+}
+
+.ui-tabs-nav li:nth-child(1) {
+    background: #FFFFE0; /* cor fraca */
+    border-color: #EEE8AA; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(2) {
+    background: #e9fffd; /* cor fraca */
+    border-color: #61bdcd; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(3) {
+    background: #ffeebb; /* cor fraca */
+    border-color: #ffc97c; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(4) {
+    background: #e6ffe3; /* cor fraca */
+    border-color: #7dff86; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(5) {
+    background: #ffedf6; /* cor fraca */
+    border-color: #ff7dbd; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(6) {
+    background: #e5eaff; /* cor fraca */
+    border-color: #8199ff; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(7) {
+    background: #ffcfcf; /* cor fraca */
+    border-color: #ff8181; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(8) {
+    background: #fff4fc; /* cor fraca */
+    border-color: #ff82dd; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(9) {
+    background: #e7fff5; /* cor fraca */
+    border-color: #81ffcb; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(10) {
+    background: #ffecd9; /* cor fraca */
+    border-color: #ffbe7f; /* cor media */
+}
+
+.ui-tabs-nav li:nth-child(11) {
+    background: #ffffff; /* cor fraca */
+    border-color: #cccccc; /* cor media */
+}
+
+#liHelpSystem{
+    margin-top: 370px;
+}
+
+
+/* tab */ 
+.ui-tabs-vertical .ui-tabs-nav li {    
+    clear: right; 
+    width: 100%; 
+    border-bottom-width: 1px !important; 
+    border-left-width: 0 !important; 
+    margin: 0 0 .2em -1px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    left: 0px;
+}
+
+/* tab hover */
+.ui-tabs-vertical .ui-tabs-nav li:hover {
+    /*background: blue;*/
+}
+
+/* a */
+.ui-tabs-vertical .ui-tabs-nav li a { 
+    display:block;
+    color: #b8b8b8;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(10) a { 
+    margin-left: -7px;
+}
+
+/* a hover */
+.ui-tabs-vertical .ui-tabs-nav li a:hover {     
+    color: #888;
+    cursor: pointer;
+}
+
+/* a clicada */
+.ui-tabs-vertical .ui-tabs-nav li a:focus {     
+    border: 2px solid transparent;
+}
+
+
+/* tab ativa */
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+    color: #EEE8AA;
+    padding-bottom: 0;
+    padding-left: 2px; 
+    border-right-width: 1px;
+    z-index: 1;
+    border: 2px solid #EEE8AA;
+    border-left: 2px solid transparent;
+    left: -2px;
+    /*background: #FFFFE0;*/
+    margin-bottom: 0.2em;    
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(1).ui-tabs-active {
+    border-color: #EEE8AA !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(2).ui-tabs-active {
+    border-color: #61bdcd !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(3).ui-tabs-active {
+    border-color: #ffc97c !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(4).ui-tabs-active {
+    border-color: #7dff86 !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(5).ui-tabs-active {
+    border-color: #ff7dbd !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(6).ui-tabs-active {
+    border-color: #8199ff !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(7).ui-tabs-active {
+    border-color: #ff8181 !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(8).ui-tabs-active {
+    border-color: #ff82dd !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(9).ui-tabs-active {
+    border-color: #81ffcb !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(10).ui-tabs-active {
+    border-color: #ffbe7f !important; /* cor media  */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(11).ui-tabs-active {
+    border-color: #cccccc !important; /* cor media  */
+}
+
+
+/* a ativa */
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active a {
+    color: #000; /*red*/
+    border: 2px solid transparent;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(1).ui-tabs-active a {
+    color: #BDB76B !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(2).ui-tabs-active a {
+    color: #008B8B !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(3).ui-tabs-active a {
+    color: #dba000 !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(4).ui-tabs-active a {
+    color: #00b10c !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(5).ui-tabs-active a {
+    color: #b10057 !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(6).ui-tabs-active a {
+    color: #0026c8 !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(7).ui-tabs-active a {
+    color: #b10000 !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(8).ui-tabs-active a {
+    color: #ab007d !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(9).ui-tabs-active a {
+    color: #009b5b !important; /* cor forte */
+}
+
+.ui-tabs-vertical .ui-tabs-nav li:nth-child(10).ui-tabs-active a {
+    color: #9d4e00 !important; /* cor forte */
+}
+
+
+.ui-tabs-vertical .ui-tabs-panel { 
+    padding: 1em;  
+    float: left; 
+    width: 40em;
+}
+
+/*.hole {
+    position: fixed;
+}*/
+
+
+/* #show-menu { */
+/* 	position: absolute; */
+/* 	top: 10px; */
+/* 	left: 80%; */
+/* 	display: none; */
+/* } */
+
+.labelDefault {
+    min-width: 30px;
+    /*    max-width: 150px;*/ 
+    max-height: 26px;
+    height: 26px;
+    text-align:center;
+    vertical-align: middle;
+    /*    border: 2px solid;
+        border-radius:5px;*/
+    /*    background-color: #CCCCCC;
+        padding-top: 4px;*/
+}
+
+math {
+    /*font-family: 'Petit Formal Script', serif;*/
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#bodyPaper {
+    width: 100%; 
+    height: 100%; 
+    background-color: #d9edf7;
+}
+
+.trash{
+    float: left;
+    padding: 2px;
+    margin-left: -165px;
+    margin-top: 34px;
+    background-position: center center; 
+    background-repeat: no-repeat;
+    border: solid 1px transparent; 
+}
+
+.trashHover {
+    background-image: url('../img/trashOpen.png');
+    width: 10px;
+    height: 17px;
+    margin-top: 2px;
+    margin-left: 21px;
+    border-radius:5px;
+    border: solid 1px #CCCCCC;
+}
+
+.operation {
+    background: url('../img/ask silver.png') no-repeat;
+    width: 24px;
+    height: 24px;
+    float: left;
+    /*margin-top: 1px;*/
+    margin-left: 6px;
+    margin-top: 2px;
+    border: solid 1px transparent;
+}
+
+.operation:hover {
+    background: url('../img/ask black.png') no-repeat;
+    cursor: pointer;
+    border: solid 1px transparent;
+    border-radius: 25px;
+}
+
+.operation:active {
+    border: solid 1px transparent;
+    box-shadow: 0px 0px 6px crimson;
+}
+
+#boxOperations label{
+    /*    top: 225px;
+        left: 643px;
+        position: fixed;*/
+    /*visibility: hidden;*/
+    float: left;
+}
+
+#operations {
+    z-index: 10;    
+    position: relative;
+    left: 10px;
+    /*    width: 500px;
+        height: 70px;*/
+    border-radius:5px;
+    border: solid 1px #0480BE;
+    background-color: #bce8f1;
+    /*box-shadow: 2px 2px 5px #b8b8b8; inset 0 0 10px #000*/    
+}
+
+#operationsArrowLeft {
+    z-index: 1;    
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 0px;
+    height: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 13px solid #0480BE;
+}
+
+#operationsArrowInner {
+    z-index: 10;
+    position: absolute;
+    top: 26px;
+    left: 1px;    
+    width: 0px;
+    height: 0px;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 12px solid #bce8f1;
+}
+
+.hLine ul{ 
+    list-style-type: none; 
+    margin: 0; 
+    float: left; 
+    /*    margin-top: 5px; */
+    padding-left: 50%; 
+    text-align: center; 
+    cursor: default;
+    height: 30px;
+    display: inline-block;
+}
+
+.liHoverTrash{
+    color: red;
+}
+
+.hLine li { 
+    margin: 3px 3px 0 3px;
+    /*padding: 5px;*/ 
+/*     font-family: 'Petit Formal Script', cursive; */
+    font-style: normal;
+    font-size: 1.2em; 
+    color: #666;
+    width: auto; 
+    height: 30px;
+    float: left; 
+    cursor: default;
+    vertical-align: middle;
+    /*border: 2px solid #666;*/
+}
+
+.vLine ul { 
+    list-style-type: none;
+    margin: 0;
+    /*float: left;*/ 
+    /*    margin-top: 5px; */
+    padding-left: 10px;
+    text-align: center; 
+    height: 30px;
+}
+
+.vLine li:hover {
+    color: black;
+    text-shadow: 0 0 10px #888888;
+}
+
+.vLine li { 
+    list-style-type: none;
+    margin: 0 5px 2px 5px; 
+    /*padding: 5px;*/ 
+    font-family: 'Petit Formal Script', cursive;
+    font-size: 1.2em; 
+    color: #888;
+    width: 25px; 
+    height: 25px;
+    float: left; 
+    cursor: pointer;
+}
+
+.ui-draggable-helper {
+    list-style-type: none;
+    font-family: 'Petit Formal Script', cursive;
+    font-size: 1.2em; 
+    color: #888;
+    margin: 0 5px 2px 5px;
+    padding: 5px;
+    cursor: copy;
+}
+
+/*.vLine li:last-child {
+    height: 42px;
+    padding-top: 4px;
+}
+
+.vLine li:nth-last-child(2){
+    width: 35px;
+    margin-left: 2px;
+}*/
+
+/*.vLine li:last-child {
+    margin: 0 5px 2px 0px;
+    width: 40px;
+}*/
+
+.final {
+    /*width: 100%;*/
+    height: 60px;
+    background: url('../img/approve.png') no-repeat center;
+    position: relative;
+}
+
+.nextEquation {
+    margin-top: 34px;
+    margin-left: 557px;
+    cursor: pointer;
+}
+
+.nextEquation:hover {
+    text-shadow: 0 0 3px #61bdcd;
+    font-weight: bold;
+}
+
+legend {
+    alignment-adjust: text-after-edge;
+}
+
+mfrac{
+    /*padding-top: 10px;*/
+    font-size: 1.45em;
+}
+
+msqrt{
+    padding-top: 1px;
+}
+
+msqrt mfrac{
+    padding-top: 4px;
+}
+
+#tools mfrac{
+    padding-top: 1px;
+}
+
+#tools li {
+    border:1px solid transparent;
+}
+
+#tools li:hover {
+    border:1px solid #888;
+    border-radius:3px;
+    text-shadow: 0 0 10px #888888;
+}
+
+#tools p {
+    background-color: #CCCCCC;
+    cursor: move;
+    text-align: center;
+    margin: 3px 2px;
+    border:1px solid black; 
+    border-radius:3px;
+    text-shadow: 0 0 10px #888888;
+}
+
+#button{    
+    position: relative;
+    float: right;
+    border: none;
+    width: 40px;
+    height: 28px;
+    margin-top: 2px;
+    background: url('/pat2math/patequation/img/lupa cinza.png') no-repeat center;
+}
+
+#button:hover {
+    background: url('/pat2math/patequation/img/lupa.png') no-repeat center;
+    /*    border:1px solid #EEE8AA;
+        border-radius:3px;
+        box-shadow: 1px 1px 2px #555;
+        padding-right: 4px;*/
+}
+
+/*#button:active {
+    background: url('../img/lupa.png') no-repeat;
+    background-color: rgba(255, 0, 0, 0.8);
+    padding-right: 4px;
+    border:1px solid transparent;
+    border-radius:3px;
+    background-color: #EEE8AA;
+    box-shadow: inset 1px 1px 2px #555;
+}*/
+
+#newEquation{
+    width: auto;
+    height: 25px;
+    text-align: center;
+    font-size: 12px;
+    /*text-shadow: 0 0 2px #888888;*/
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+#hint{
+    text-align: center;
+    font-size: 15px;
+    background: #FFE087;
+}
+
+.text{
+    width: 25px;
+    height: 21px;    
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    border-radius:3px;
+    text-align: center;
+}
+
+.dropdown a {
+    cursor: pointer;
+}
