@@ -2,4 +2,5 @@ target
 build
 .classpath
 .project
+.settings
 WebContent/patequation/divalite
