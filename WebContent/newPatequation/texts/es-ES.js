@@ -115,7 +115,7 @@ html_esES[4] = "Reportar un problema en el PAT2Math";
 html_esES[5] = "He sido ayudado por PAT2Math: D ¿Qué hará ese botón?";
 html_esES[6] = "Tour Interactivo";
 html_esES[7] = "C o n s e j o";
-html_esES[8] = "Errores gratuitos disponibles";
+html_esES[8] = "Errores gratuitos disponibles: ";
 
 
 levels_esES[1] = "Básico";
@@ -195,6 +195,7 @@ stages_esES[31] = "...y más fracciones!";
 stages_esES[32] = "¡Felicitaciones, estás casi ahí!";
 stages_esES[33] = "¿Está preparado para el desafío final?";
 stages_esES[42] = "42";
+stages_esES[43] = "Fase";
 
 
 stagesWithoutGamification_esES[1] = "1. Recordando la base";

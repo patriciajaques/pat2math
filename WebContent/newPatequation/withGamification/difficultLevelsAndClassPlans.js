@@ -36,8 +36,7 @@ colorsStagesPerLevel[4] = "rgba(165, 0, 0, 0.7) none repeat scroll 0% 0%"; //Ver
 
 function getNameStage(number) {
 	if (number < stages.length -1) 
-		return "Fase " + number + ": " + stages[number];
-	
+		return stages[43] + " " + number + ": " + stages[number];
 	else
 		return stages[number];
 }

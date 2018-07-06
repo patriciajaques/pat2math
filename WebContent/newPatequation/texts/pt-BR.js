@@ -195,6 +195,7 @@ stages_ptBR[31] = "...e mais frações!";
 stages_ptBR[32] = "Parabéns! Você está quase lá!";
 stages_ptBR[33] = "Está preparado para o desafio final?";
 stages_ptBR[42] = "42";
+stages_ptBR[43] = "Fase";
 
 
 stagesWithoutGamification_ptBR[1] = "1. Relembrando o básico";

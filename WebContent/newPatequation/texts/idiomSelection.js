@@ -1,11 +1,11 @@
 var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
-var htmlTXT;						//	innerHTML de elementos variados
+var htmlTXT;						//	innerHTML de determinados elementos que contém texto
 var levels;							//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var p2mTXT;							//	pat2math/WebContent/js/pat2math.js
 var scoreTXT;						//	pat2math/WebContent/newPatequation/withGamification/score.js
 var srTXT;							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
-var stages;							//	pat2math/WebContent/newPatequation/index.js
+var stages;							//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var stagesWithoutGamification;		//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var tourTXT;						//	pat2math/WebContent/patequation/js/tour.js
 var weTXT;							//	pat2math/WebContent/patequation/js/workedExamples.js
@@ -20,6 +20,8 @@ var idioma = getCookie("idiomaEscolhido");
 			idioma = "es-ES";
 		else if (idioma == "en")
 			idioma = "en-UK";
+		else if (idioma == "pt")
+			idioma = "pt-BR";
 	}
 	
 switch(idioma) {
@@ -71,7 +73,6 @@ switch(idioma) {
 		weTXT = we_ptBR;
 		wecTXT = wec_ptBR;
 		weuTXT = weu_ptBR;
-		break;
 }
 
 document.getElementById("help").title = htmlTXT[0];

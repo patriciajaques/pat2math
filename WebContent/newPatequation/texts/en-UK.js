@@ -195,6 +195,7 @@ stages_enUK[31] = "...and more fractions!";
 stages_enUK[32] = "Congratulations! you're almost there!";
 stages_enUK[33] = "Are you ready for the final challenge?";
 stages_enUK[42] = "42";
+stages_enUK[43] = "Level";
 
 
 stagesWithoutGamification_enUK[1] = "1. Recalling the basics";
