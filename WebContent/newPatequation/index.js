@@ -907,8 +907,11 @@ function verifyTour() {
 
 			},
 			success : function(data) {
-				if (data === "true" && enableKnowledgeTest) {			
-					verifyKnowledgeTest();
+				if (data === "true") {
+					setCookieDays("tourViewed", "true", 1);
+					
+					if (enableKnowledgeTest)
+						verifyKnowledgeTest();
 				}
 				
 				else {   		 		
