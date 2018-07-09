@@ -28,7 +28,7 @@
     		<span id="idiomSelection" onclick="languageSelection()" title="htmlTXT-1"> 
 	    		<img src="/pat2math/images/globe.png" style="width: 12%; margin-left:10px; margin-bottom:2px"/> 
 			</span>
-    		<span id="currentFlag" title="Flag"> 
+    		<span id="currentFlag" onclick="languageSelection()" title="Flag"> 
 				<img src="/pat2math/images/pt-BR.png" style="width: 6%; margin-left:2px; margin-top:20px"> 
 			</span>
     	</div>

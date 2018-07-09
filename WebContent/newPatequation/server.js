@@ -1150,12 +1150,16 @@ function requestResolution ( ){
 
 //Passar os parâmetros pelo data na função de responder as questões
 function requestStep(equation){
+	var step = "";
+	
 	$.ajax({url: "/pat2math/getOneStep",
 			data: {"lastStep": equation},
+			async: false,
 			success: function(data){
 				var temp = data.split (";");
-				stepWE = temp[1];
-				regraWE = temp[0];
+				step = temp[1];
 			}
 	});
+	
+	return step;
 }

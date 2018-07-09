@@ -14,49 +14,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-/**
- * Resolução de todos os alunos de todas as questões
- * @author SAVANNAD
- *
- */
+
 @Entity
 @Table(name="resolution_step")
 public class ResolutionStep {
 	
-	//TEM NA TABELA NO BC: Id da linha desta tabela
 	@Id @GeneratedValue
 	private Long id;
 	
-	//TEM NA TABELA NO BC: Se foi correta ou não
 	private boolean correct;
 	
-	//TEM NA TABELA NO BC: É sempre zero 0
 	private boolean operationCorrect;
 	
-	//TEM NA TABELA NO BC: A resposta passada pelo aluno
+	private boolean isDeleted; //Verificador especial do PAT2Exam
+
 	private String answer;
 	
-	//TEM NA TABELA NO BC: Se está incorreta devolve feedback e a message dizendo que está incorreta 
 	private String feedback;
 	
-	//TEM NA TABELA NO BC: Se está correto devolve uma mensagem dizendo que está correto
 	private String message;
 	
-	//TEM NA TABELA NO BC: Horário e hora da resposta
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
 	
-	//1 lista Tip
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="step_tip", joinColumns = {@JoinColumn(name = "id_step")}, inverseJoinColumns={@JoinColumn(name="id_tip")})											 
 	private List<Tip> tips = new ArrayList<Tip>();
 	
-	//1 lista Operation
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="step_operation", joinColumns = {@JoinColumn(name = "id_step")}, inverseJoinColumns={@JoinColumn(name="id_operation")})												 
 	private List<Operation> operations = new ArrayList<Operation>();
 	
-	//TEM NA TABELA NO BC: ID que liga à tabela TaskPerformed
 	@ManyToOne
 	@JoinColumn(name="id_taskPerformed", referencedColumnName="id", nullable=true)
 	private TaskPerformed taskPerformed;
@@ -67,6 +55,14 @@ public class ResolutionStep {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public List<Tip> getTips() {

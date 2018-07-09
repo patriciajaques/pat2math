@@ -2,6 +2,7 @@ package br.com.pat2math.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,16 +13,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.pat2math.domainBase.Exercise;
 import br.com.pat2math.repository.ContentRepository;
 import br.com.pat2math.repository.ExerciseRepository;
+import br.com.pat2math.repository.ResolutionStepRepository;
 import br.com.pat2math.repository.TaskPerformedRepository;
 import br.com.pat2math.studentModel.ResolutionStep;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.TaskPerformed;
 import br.com.pat2math.studentModel.Tip;
+
 
 @Controller @Transactional
 public class LoadEquationsController {
@@ -29,7 +33,7 @@ public class LoadEquationsController {
 	@Autowired private ExerciseRepository exercises;
 	@Autowired private ContentRepository contents;
 	@Autowired private TaskPerformedRepository performedTasks;
-	
+	@Autowired private ResolutionStepRepository rs;
 		
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@RequestMapping(value="/student/loadExercise")
@@ -81,8 +85,10 @@ public class LoadEquationsController {
 		
 		if(taskPerformed.isFinished()) exercise.setPerformed(true);
 		
-		for(ResolutionStep step : taskPerformed.getSteps())
+		for(ResolutionStep step : taskPerformed.getSteps()) {
+			if (!step.isDeleted())
 				exercise.getSteps().add(step.getAnswer());
+		}
 		
 		// TODO: remove this check as soon as possible
 		// Http 1.0 request ?
@@ -90,6 +96,34 @@ public class LoadEquationsController {
 			response.setHeader("Connection", "close");
 		}
 		return exercise;
+	}
+	
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
+	@RequestMapping(method = RequestMethod.GET, value = "deleteFinalStep")
+	public @ResponseBody String deleteFinalStep(Long exerciseId, HttpSession session,
+			HttpServletResponse response, HttpServletRequest request) throws IOException {
+		Student student = (Student) session.getAttribute("user");
+		Exercise exercise = (Exercise) contents.get(exerciseId);
+		TaskPerformed taskPerformed = performedTasks.get(exercise, student);
+		if(taskPerformed == null) {
+			taskPerformed = exercise.perform(student);
+			performedTasks.add(taskPerformed);
+		}
+		
+		exercise = exercises.getRaw(exercise.getId());
+		
+		if(taskPerformed.isFinished()) exercise.setPerformed(true);
+		
+		ResolutionStep step = taskPerformed.deleteStepExam();
+		rs.alter(step);
+		
+		// TODO: remove this check as soon as possible
+		// Http 1.0 request ?
+		if(request.getProtocol().contains("1.0")) {
+			response.setHeader("Connection", "close");
+		}
+		
+		return "Passo deletado com sucesso";
 	}
 	
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
@@ -120,4 +154,5 @@ public class LoadEquationsController {
 		return echo;
 	}
 	
+
 }

@@ -3,12 +3,11 @@ package br.com.pat2math.action;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,10 +37,12 @@ import br.com.pat2math.repository.AllUsers;
 import br.com.pat2math.repository.HelpRepository;
 import br.com.pat2math.repository.KnowledgeRepository;
 import br.com.pat2math.repository.PlanRepository;
+import br.com.pat2math.repository.ResolutionStepRepository;
 import br.com.pat2math.repository.TaskPerformedRepository;
 import br.com.pat2math.service.GroupService;
 import br.com.pat2math.service.MailSenderService;
 import br.com.pat2math.studentModel.Group;
+import br.com.pat2math.studentModel.SignUpConfirmation;
 import br.com.pat2math.studentModel.Student;
 import br.com.pat2math.studentModel.TaskPerformed;
 
@@ -93,7 +94,7 @@ public class StudentController {
 	
 	// metodo para gerar o ranking
 		@RequestMapping(value = "newPatequation/top10", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
-		public @ResponseBody String topTotalScore(long id, boolean rankingGeral, String idioma, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		public @ResponseBody String topTotalScore(long id, boolean rankingGeral, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
 			List<Student> estudantes;
 			if(rankingGeral) {
 				estudantes= sd.obterRanking();
@@ -103,7 +104,7 @@ public class StudentController {
 			}
 			int posicao = 1;
 			String retorno = "<div align = 'center'><table align: center>";
-			retorno += "<tr align = 'center'> <th align = 'center'>" + getText("SudentControllerJavaTXT-0", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-1", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-2", idioma) + "</th> </tr>";
+			retorno += "<tr align = 'center'> <th align = 'center'> Posição </th> <th align = 'center'> Nome </th> <th align = 'center'> Pontuação </th> </tr>";
 			int cont = -5;
 			while(posicao<=estudantes.size()) {
 				if(posicao<=10) {
@@ -140,33 +141,11 @@ public class StudentController {
 			}
 			retorno += "</table></div><br>";
 			if(!rankingGeral) {
-				retorno += "<a href='#' onclick='rankingGeral()'>" + getText("SudentControllerJavaTXT-3", idioma) + "</a><br>";
+				retorno += "<a href='#' onclick='rankingGeral()'> Confira o ranking geral do PAT2Math </a><br>";
 			}
-			retorno += "<br>" + getText("SudentControllerJavaTXT-4", idioma) + ": <br>";
-		    retorno += "<a id='compartilhar_facebook' href='#' title='" + getText("SudentControllerJavaTXT-4", idioma) + "' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
+			retorno += "<br> Compartilhe sua pontuação no Facebook: <br>";
+		    retorno += "<a id='compartilhar_facebook' href='#' title='Compartilhe sua pontuação no Facebook' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
 			return retorno;
-		}
-		
-		// metodo para chamada de textos via ResourceBundle
-		@RequestMapping(value = "newPatequation/getText", method = RequestMethod.GET)
-		public @ResponseBody String getText(String key, String idioma){
-			try{
-				Locale locale;
-				if(idioma.length() == 5)
-					locale = new Locale(idioma.substring(0, 2), idioma.substring(3));
-				else locale = new Locale("pt", "BR");
-				ResourceBundle labels = ResourceBundle.getBundle("pat2math.i18n.IdiomBundle", locale);
-				return labels.getString(key);
-			} catch(Exception ex) {
-				String stackTrace = key + " not found\n";
-				StackTraceElement[] sT = ex.getStackTrace();
-				for(int i = 0; i < sT.length && i < 4; i++) {
-					stackTrace += sT[i].toString() + "\n";
-				}
-				if(sT.length > 4)
-					stackTrace += "...\n";
-				return stackTrace;
-			}
 		}
 	
 	@RequestMapping("signUp")
@@ -270,6 +249,24 @@ public class StudentController {
 		return "knowledgeTest";
 	}
 	
+	@RequestMapping(value = "newPatequation/knowledgeTestWasRealized", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String knowledgeTestWasRealized(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		if(!student.getKnowledgeTestWasRealized()) {
+			return "knowledgeTest";
+		}else {
+			return "newPatequation";
+		}
+	}
+	
+	@RequestMapping(value = "newPatequation/setKnowledgeTest", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String setKnowledgeTest(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setKnowledgeTestWasRealized(true);
+		sd.alter(student);		
+		return "Dados atualizados com sucesso!";
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/newpatequation")
 	public String newpatequation(Model model, HttpSession session) {
 		Student student = new CurrentUser(session).student();
@@ -311,6 +308,49 @@ public class StudentController {
 		model.addAttribute("topics", activeTopics);
 	//	model.addAttribute("student", student);
 		return "newpatequation";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/pat2exam")
+	public String pat2exam(Model model, HttpSession session) {
+		Student student = new CurrentUser(session).student();
+		if (student==null) return "user.login";
+		Tutor tutor = (Tutor)session.getAttribute("tutor");
+		if (tutor==null){
+			session.setAttribute("tutor", new Tutor("", "", allHelps.getActives()));
+		}
+		Group studentGroup = student.getGroup();
+		Plan plan;
+		if(studentGroup != null)
+			plan = allPlans.getWithTopics(student.getGroup().getPlan().getId());
+		else
+			plan = allPlans.getWithTopics(1L);
+		
+		Collections.sort(plan.getTopics());
+		List<Topic> topics = plan.getTopics();
+		
+		// TODO: puts this logic on outer loop API
+		// always add first
+		List<Topic> activeTopics = new ArrayList<Topic>();
+		activeTopics.add(topics.get(0));
+		
+		for(int i = 0; i < topics.size(); i++) {
+			SetOfTasks set = topics.get(i).getSet();
+			boolean finished = true;
+			for(Task task : set.getTasks()) {
+				TaskPerformed tp = tasksPerformed.get(task.getContent(), student);
+				if(tp == null || !tp.isFinished()) {
+					finished = false;
+				}
+			}
+			if(finished && i < (topics.size() -1)) {
+				activeTopics.add(topics.get(i+1));
+			} else {
+				break;
+			}
+		}
+		model.addAttribute("topics", activeTopics);
+	//	model.addAttribute("student", student);
+		return "pat2exam";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/student/patexpression")
@@ -490,6 +530,23 @@ public class StudentController {
 	
 	//level = 0 obtém a pontuação total
 	//level = 1 obtém as pontuações de cada um dos níveis
+	
+	@RequestMapping(value = "pat2exam/getNotaTeste", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getNotaTeste(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		String nota = "" + student.getNotaTeste();
+		
+		return nota;
+	}
+	
+	@RequestMapping(value = "pat2exam/updateNotaTeste", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String updateNotaTeste(double nota, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		student.setNotaTeste(nota);
+		sd.alter(student);
+	
+		return "Nota atualizada com sucesso";
+	}
 	@RequestMapping(value = "newPatequation/getScore", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String getScore(int level, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		Student student = sd.get(new CurrentUser(session).student().getId());	
@@ -515,6 +572,15 @@ public class StudentController {
 		sd.alter(student);
 	
 		return "Pontuação atualizada com sucesso";
+	}
+	
+	@RequestMapping(value = "newPatequation/updateScoreTotal", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String updateScoreTotal(int amount, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());
+		student.setTotalScore(amount);
+		sd.alter(student);
+	
+		return "Pontuação total atualizada com sucesso";
 	}
 	
 	@RequestMapping(value = "newPatequation/getLevelAndPlan", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
@@ -567,6 +633,41 @@ public class StudentController {
 		
 		return "Recompensa salva com sucesso";
 	}
+	
+	@RequestMapping(value = "saveSelectedEquationsInDataBase", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String saveSelectedEquationsInDataBase(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response, String ids, String equations) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		student.setIdsExam(ids);
+		student.setEquationsExam(equations);
+		sd.alter(student);
+		
+		return "Dados salvos com sucesso";
+	}
+	
+	@RequestMapping(value = "getEquationsExam", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getEquationsExam(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		
+		String equations = student.getEquationsExam();
+		
+		if (equations == null)
+			equations = "null";
+		
+		return equations;
+	}
+	
+	@RequestMapping(value = "getIdsExam", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+	public @ResponseBody String getIdsExam(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		Student student = sd.get(new CurrentUser(session).student().getId());	
+		
+		String ids = student.getIdsExam();
+		
+		if (ids == null)
+			ids = "null";
+		
+		return ids;
+	}
+	
 	
 	@RequestMapping(value = "newPatequation/saveRewardFinal", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
 	public @ResponseBody String saveRewardFinal(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
@@ -632,4 +733,5 @@ public class StudentController {
 		}
 	}
 	
+
 }

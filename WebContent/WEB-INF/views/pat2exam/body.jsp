@@ -105,12 +105,8 @@
 
 	<div id="newPoints">+10</div>
 	<div id="rewardWorkedExamples" title="Fui ajudado pelo PAT2Math :D O que será que esse botão faz?" onclick="changeColor()"></div>
-	<div id="help" title="Páginas de Ajuda" onclick="helpPage()"></div>
     <div id="mask" onclick="test56()"></div>
 <!--     <div id="equationTour"></div> -->
-    <div id="tour" title="Tour Interativo" onclick="tourTCC()"></div>
-    <div id="reportBug" title="Reportar um problema no PAT2Math" onclick="reportBug()"></div>
-    <div id="ranking" title="Veja o ranking do PAT2Math" onclick="ranking()"></div>
 	<div id="video-box"></div>
 	<div id="help-box"></div>
 	<div id="reportBug-box"></div>

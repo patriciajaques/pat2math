@@ -1,3 +1,5 @@
+// Variáveis que apontam para os Arrays do idioma selecionado
+
 var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
 var htmlTXT;						//	innerHTML de determinados elementos que contém texto
@@ -24,6 +26,7 @@ var idioma = getCookie("idiomaEscolhido");
 			idioma = "pt-BR";
 	}
 	
+// Seleciona os Arrays de texto corretos, dependendo do idioma selecionado
 switch(idioma) {
 	case ("en-UK"):
 		isTXT = "Select an idiom for PAT2Math";
@@ -75,6 +78,7 @@ switch(idioma) {
 		weuTXT = weu_ptBR;
 }
 
+// Texto de elementos HTML variados
 document.getElementById("help").title = htmlTXT[0];
 document.getElementById("idiomSelection").title = htmlTXT[1];
 document.getElementById("ranking").title = htmlTXT[2];
@@ -84,9 +88,11 @@ document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
 document.getElementById("tour").title = htmlTXT[6];
 document.getElementById("hint").innerHTML = htmlTXT[7];
 
+// Atualiza a bandeira do botão de alteração de idioma
 document.getElementById("currentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" style="width: 6%; margin-top:16px">';
 document.getElementById("currentFlag").title = idioma;
 
+// Pede ao usuário que selecione o idioma, clicando na bandeira correspondente
 function languageSelection() {
 	var button;
 	switch(idioma){
@@ -113,14 +119,14 @@ function languageSelection() {
 	}).show();
 }
 
+// Atualiza o cookie de idioma para "pt-BR"
 function change_ptBR() {
-	if (getCookie("idiomaEscolhido") == "pt-BR") {
+	if (getCookie("idiomaEscolhido") == "pt-BR")
 		$.guider({
 			alignButtons: "center",
 			title: "Idioma já definido como Português - Brasil",
 			buttons: {"Oops": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 		}).show();
-	}
 	else {
 		setCookieDays("idiomaEscolhido", "pt-BR", 5);
 		$.guider({
@@ -132,6 +138,7 @@ function change_ptBR() {
 	}
 }
 
+//Atualiza o cookie de idioma para "en-UK"
 function change_enUK() {
 	if (getCookie("idiomaEscolhido") == "en-UK")
 		$.guider({
@@ -150,9 +157,14 @@ function change_enUK() {
 	}
 }
 
+//Atualiza o cookie de idioma para "es-ES"
 function change_esES() {
 	if (getCookie("idiomaEscolhido") == "es-ES")
-		alert("Idioma ya está establecido en Español - España");
+			$.guider({
+				alignButtons: "center",
+				title: "Idioma ya está establecido en Español - España",
+				buttons: {"Oops": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
+			}).show();
 	else {
 		setCookieDays("idiomaEscolhido", "es-ES", 5);
 		$.guider({
@@ -164,6 +176,7 @@ function change_esES() {
 	}
 }
 
+// Função de teste para chamar os textos do servidor
 function getTextFromServer(key){
 	var retorno;
 	$.ajax({
