@@ -12,6 +12,7 @@ var tour_esES = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_esES = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_esES = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_esES = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
+//	SudentControllerJava_esES						//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
 
 
 guiderKeys_esES[0] = "no, gracias.";
@@ -622,8 +623,8 @@ weu_esES[14] = "¡Terminamos!";
 weu_esES[15] = "Conseguimos resolver la ecuación con éxito y usted aprendió sobre el juego de señales en la multiplicación.";
 
 
-SudentControllerJava_ptBR[0] = "Posición";
-SudentControllerJava_ptBR[1] = "Nombre";
-SudentControllerJava_ptBR[2] = "Puntuación";
-SudentControllerJava_ptBR[3] = "Compruebe el ranking general de PAT2Math";
-SudentControllerJava_ptBR[4] = "Comparta su puntuación en Facebook";
+//SudentControllerJava_esES[0] = "Posición";
+//SudentControllerJava_esES[1] = "Nombre";
+//SudentControllerJava_esES[2] = "Puntuación";
+//SudentControllerJava_esES[3] = "Compruebe el ranking general de PAT2Math";
+//SudentControllerJava_esES[4] = "Comparta su puntuación en Facebook";

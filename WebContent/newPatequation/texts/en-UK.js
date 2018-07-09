@@ -12,6 +12,7 @@ var tour_enUK = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_enUK = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_enUK = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
+//	SudentControllerJava_enUK						//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
 
 
 guiderKeys_enUK[0] = "no, thanks.";
@@ -609,11 +610,11 @@ weu_enUK[1] = "Plus times less is?";
 weu_enUK[2] = "less times plus is?";
 weu_enUK[3] = "less times less is?";
 weu_enUK[4] = "Oops!";
-weu_enUK[5] = "In fact, plus times plus is plus.";
+weu_enUK[5] = "Actually, plus times plus is plus.";
 weu_enUK[6] = "Oops!";
-weu_enUK[7] = "In fact, plus times less is less.";
+weu_enUK[7] = "Actually, plus times less is less.";
 weu_enUK[8] = "Oops!";
-weu_enUK[9] = "In fact, less times plus is less.";
+weu_enUK[9] = "Actually, less times plus is less.";
 weu_enUK[10] = "Oops!";
 weu_enUK[11] = "In fact, less times menos is plus.";
 weu_enUK[12] = "Summarizing";
@@ -622,8 +623,8 @@ weu_enUK[14] = "We're done!";
 weu_enUK[15] = "We succeeded in solving the equation successfully and you learned about the set of signals in multiplication";
 
 
-SudentControllerJava_ptBR[0] = "Position";
-SudentControllerJava_ptBR[1] = "Name";
-SudentControllerJava_ptBR[2] = "Score";
-SudentControllerJava_ptBR[3] = "Check out the overall ranking of PAT2Math";
-SudentControllerJava_ptBR[4] = "Share your score on Facebook";
+//SudentControllerJava_enUK[0] = "Position";
+//SudentControllerJava_enUK[1] = "Name";
+//SudentControllerJava_enUK[2] = "Score";
+//SudentControllerJava_enUK[3] = "Check out the overall ranking of PAT2Math";
+//SudentControllerJava_enUK[4] = "Share your score on Facebook";

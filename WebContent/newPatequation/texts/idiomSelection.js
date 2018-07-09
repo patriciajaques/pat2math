@@ -1,5 +1,4 @@
-// Variáveis que apontam para os Arrays do idioma selecionado
-
+// Variáveis que apontam para os Arrays contendo os textos do idioma selecionado
 var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
 var htmlTXT;						//	innerHTML de determinados elementos que contém texto
@@ -113,9 +112,10 @@ function languageSelection() {
 		description: '<div id="idiomas"> '+
 			'<span id="idiomSelection_ptBR" onclick="change_ptBR()" title="Português - Brasil"> <img src="/pat2math/images/pt-BR.png" style="width: 12%"/> </span>' + 
 			'<span id="idiomSelection_esES" onclick="change_esES()" title="Español - España"> <img src="/pat2math/images/es-ES.png" style="width: 12%"/> </span>' + 
-			'<span id="idiomSelection_esES" onclick="change_enUK()" title="English - United Kingdom"> <img src="/pat2math/images/en-UK.png" style="width: 12%"/> </span>' + 
+			'<span id="idiomSelection_enUK" onclick="change_enUK()" title="English - United Kingdom"> <img src="/pat2math/images/en-UK.png" style="width: 12%"/> </span>' + 
 			'</div>',
-		buttons: button 
+		buttons: button,
+		onShow: function() {$("#idiomSelection_ptBR").tooltip(); $("#idiomSelection_esES").tooltip(); $("#idiomSelection_enUK").tooltip();}
 	}).show();
 }
 
