@@ -1243,7 +1243,7 @@ function theRoadSoFar() {
 	var completedStages = [0, 11, 21, 29, 33];
 	
 	$.guider({
-		title : "O Caminho Até Aqui",
+		title : indexTXT[76],
 		description : '<div style="text-align: left;">' +
 					  indexTXT[45] + solvedEquations[currentLevel] + 
 					  '\n' + indexTXT[46] + completedStages[currentLevel] + 

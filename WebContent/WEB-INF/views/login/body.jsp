@@ -1,19 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${confirmed == true}">
-	<p class="msg">Conta confirmada com sucesso</p>
+	<p id="elem0" class="msg"></p>
 </c:if>
 <c:if test="${param.recovery == true}">
-	<p class="msg">Senha atualizada com sucesso</p>
+	<p id="elem1" class="msg"></p>
 </c:if>
 
 <form class="box" action="/pat2math/j_spring_security_check" method="post" accept-charset="utf-8">
 	<p>
 		<img src="/pat2math/images/Pat2MathBETA.png" />
 	</p>
-	<br><br>
+	<div id="currentFlag"></div>
+	
+	<br>
 	
 	<p>
-		<div id="loginWithFacebook" style="visibility: hidden; font-size: 25px">Entrando com o Facebook...</div>
+		<div id="loginWithFacebook" style="visibility: hidden; font-size: 25px"></div>
 		<input id="email" placeholder="email" type='text' class="focus" name='j_username' />
 	</p>
 	
@@ -24,30 +26,29 @@
 	<br>
 
 	<!-- 	<input type="checkbox" name="_spring_security_remember_me" /> Lembrar-me -->
-	<input class="btn btn-large" id="loginButton" value="Login" type="submit">
+	<input class="btn btn-large" id="loginButton" type="submit">
 	
 	<br><br>
 		
-	<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();" <span class="_4z_f fwb"> Entre com o Facebook </span>
+	<fb:login-button id="fbLoginButton" size="large" scope="public_profile,email" onlogin="checkLoginState();"<span class="_4z_f fwb"></span>
     </fb:login-button>
     <br>
-    <p style="color: black">
-    Se você teve algum problema para fazer o login com o Facebook, <a href="#" onclick="popupBlocked()"><font color="blue" size="2px">clique aqui</font></a>
-    	
+    <br>
+    <p id="elem2" style="color: black"></p>
 	<c:if test="${param.failed == true}">
-		<p class="error" style="font-size: 16px;margin-top: 15px"">Usuário ou senha inválidos</p>
+		<p id="elem3" class="error" style="font-size: 16px;margin-top: 15px""></p>
 	</c:if>
 	
-	<br><br>
+	<br>
 	
-	<p class="left"><a href="/pat2math/student/new">Cadastre-se</a></p> 
- 	<p class="left"><a href="user/forgotPassword">Esqueci minha senha</a></p>
+	<p class="left"><a id="elem4" href="/pat2math/student/new"></a></p> 
+ 	<p class="left"><a id="elem5" href="user/forgotPassword"></a></p>
  	
  	<br>
  	
  	<div id="facebookButtonLike" style="text-align: center" class="box">
  		<p>
- 			<h3 style="color: black"> Curta nossa página no Facebook </h3>
+ 			<h3 id="elem6" style="color: black"></h3>
  		</p>
  		<div style="text-align: center; width: 250px;" class="fb-like" data-href="https://www.facebook.com/Pat2Math" data-width="250" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
  	</div>
@@ -64,23 +65,23 @@
 	
 	function popupBlocked(){
 		if(navigator.userAgent.indexOf("Edge")!=-1){
-			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/edge.png border=0 width=98% height=90%>", "45%");
+			helpPopups(text[11], "<img src=/pat2math/img/edge.png border=0 width=98% height=90%>", "45%");
 		}
 		else if(navigator.userAgent.indexOf("OPR")!=-1){
-			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/opera.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/opera2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(text[11], "<img src=/pat2math/img/opera.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/opera2.png border=0 width=98% height=90%>", "45%");
 		}
 		else if(navigator.userAgent.indexOf("Firefox")!=-1){
-			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/firefox.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/firefox2.png border=0 width=98% height=90%>" ,"45%");
+			helpPopups(text[11], "<img src=/pat2math/img/firefox.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/firefox2.png border=0 width=98% height=90%>" ,"45%");
 		}
 		else if(navigator.userAgent.indexOf("Version")!=-1){
-			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/safari.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/safari2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(text[11], "<img src=/pat2math/img/safari.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/safari2.png border=0 width=98% height=90%>", "45%");
 		}
 		else if(navigator.userAgent.indexOf(".NET")!=-1){
 			document.getElementById("helpPopups-box").style.height = "50%";
-			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/ie.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/ie2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(text[11], "<img src=/pat2math/img/ie.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/ie2.png border=0 width=98% height=90%>", "45%");
 		}
 		else{
-			helpPopups("Você deve permitir pop-ups no seu navegador para fazer o login no Facebook ", "<img src=/pat2math/img/chrome.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/chrome2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(text[11], "<img src=/pat2math/img/chrome.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/chrome2.png border=0 width=98% height=90%>", "45%");
 		}
 				
 	}
@@ -108,9 +109,9 @@
 			usuarioConectado();
 			login();
 		}else if (response.status === 'not_authorized'){
-			document.getElementById('status').innerHTML = 'Faça login no app';
+			document.getElementById('status').innerHTML = text[12];
 		}else{
-			document.getElementById('status').innerHTML = 'Faça login no Facebook';
+			document.getElementById('status').innerHTML = text[13];
 		}
 	}
 	

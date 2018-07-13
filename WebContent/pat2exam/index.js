@@ -1577,11 +1577,11 @@ function createPlans() {
 }
 
 function createRevisionPlans() {
-	var plans = '<span class="topic" onclick="generateLevels()">Modo Campanha</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">Fase 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
+	var plans = '<span class="topic" onclick="generateLevels()">Modo Campanha</span> <span class="topic" onclick="loadTasks(' + (numPlanosAula+1) + ')">' + indexTXT[54] + ' 1</span> <div id="tasks' + (numPlanosAula+1) + '" class="tasks"></div>';
 	var numTotalPlanos = numPlanosAula + numPlanosRevisao;		
 	
 	for (var i = numPlanosAula + 2; i <= numTotalPlanos; i++) 
-		plans += '<span class="topic" onclick="loadTasks(' + i + ')">Fase ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
+		plans += '<span class="topic" onclick="loadTasks(' + i + ')">' + indexTXT[54] + ' ' + (i-numPlanosAula) + '</span> <div id="tasks' + i + '" class="tasks"></div>';	
 
 	
 	document.getElementById("the_list").innerHTML = plans;

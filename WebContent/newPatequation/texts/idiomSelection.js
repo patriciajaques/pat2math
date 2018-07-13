@@ -1,4 +1,5 @@
 // Variáveis que apontam para os Arrays contendo os textos do idioma selecionado
+var dlcpTXT;						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
 var htmlTXT;						//	innerHTML de determinados elementos que contém texto
@@ -29,6 +30,7 @@ var idioma = getCookie("idiomaEscolhido");
 switch(idioma) {
 	case ("en-UK"):
 		isTXT = "Select an idiom for PAT2Math";
+		dlcpTXT = dlcp_enUK;
 		guiderKeysTXT = guiderKeys_enUK;
 		indexTXT = index_enUK;
 		htmlTXT = html_enUK;
@@ -45,6 +47,7 @@ switch(idioma) {
 		break;
 	case ("es-ES"):
 		isTXT = "Seleccione un idioma para el pat2math";
+		dlcpTXT = dlcp_esES;
 		guiderKeysTXT = guiderKeys_esES;
 		indexTXT = index_esES;
 		htmlTXT = html_esES;
@@ -62,6 +65,7 @@ switch(idioma) {
 	default:
 	case ("pt-BR"):
 		isTXT = "Escolha um idioma para o pat2math";
+		dlcpTXT = dlcp_ptBR;
 		guiderKeysTXT = guiderKeys_ptBR;
 		indexTXT = index_ptBR;
 		htmlTXT = html_ptBR;

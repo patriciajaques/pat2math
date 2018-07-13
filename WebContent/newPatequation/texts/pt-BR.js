@@ -1,3 +1,4 @@
+var dlcp_ptBR = new Array();						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var guiderKeys_ptBR = new Array(); 					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var index_ptBR = new Array(); 	     				//	pat2math/WebContent/newPatequation/index.js
 var html_ptBR = new Array();						//	innerHTML de elementos variados
@@ -12,7 +13,11 @@ var tour_ptBR = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_ptBR = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_ptBR = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_ptBR = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
-//	SudentControllerJava_ptBR						//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
+//	SudentControllerJava							//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
+
+
+dlcp_ptBR[0] = "Modo Infinito";
+dlcp_ptBR[1] = "Pontuação no nível atual: ";
 
 
 guiderKeys_ptBR[0] = "não, obrigado.";
@@ -106,6 +111,7 @@ index_ptBR[72] = " dicas gratuitas disponíveis";
 index_ptBR[73] = " dica gratuíta disponível";
 index_ptBR[74] = "RANKING DA TURMA";
 index_ptBR[75] = "RANKING GERAL";
+index_ptBR[76] = "O Caminho Até Aqui";
 
 
 html_ptBR[0] = "Páginas de Ajuda";
@@ -170,7 +176,7 @@ stages_ptBR[5] = "(Quase) Tudo negativo";
 stages_ptBR[6] = "Um pouco de cada";
 stages_ptBR[7] = "Existem letras negativas?";
 stages_ptBR[8] = "Na matemática existe!";
-stages_ptBR[9] = "A incógnita e o resultado negativos";
+stages_ptBR[9] = "Incógnita e o resultado negativos";
 stages_ptBR[10] = "Tudo negativo!";
 stages_ptBR[11] = "Uma revisão de tudo o que você viu até agora";
 stages_ptBR[12] = "Coeficientes";
@@ -196,7 +202,6 @@ stages_ptBR[31] = "...e mais frações!";
 stages_ptBR[32] = "Parabéns! Você está quase lá!";
 stages_ptBR[33] = "Está preparado para o desafio final?";
 stages_ptBR[42] = "42";
-stages_ptBR[43] = "Fase";
 
 
 stagesWithoutGamification_ptBR[1] = "1. Relembrando o básico";

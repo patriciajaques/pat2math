@@ -36,7 +36,7 @@ colorsStagesPerLevel[4] = "rgba(165, 0, 0, 0.7) none repeat scroll 0% 0%"; //Ver
 
 function getNameStage(number) {
 	if (number < stages.length -1) 
-		return stages[43] + " " + number + ": " + stages[number];
+		return indexTXT[54] + " " + number + ": " + stages[number];
 	else
 		return stages[number];
 }
@@ -56,7 +56,7 @@ function generateLevels() {
 	
 	if (unlockedLevels === 6) {
 		unlockAllPlans = true;
-		html += '<span class="topic" onclick="createRevisionPlans()">Modo Infinito</span>';
+		html += '<span class="topic" onclick="createRevisionPlans()">' + dlcpTXT[0] + '</span>';
 	}
 	
 
@@ -166,7 +166,7 @@ function generateStages(level) {
 	}
 	
 	if (levelGamification === "full")
-		document.getElementById("levelScore").innerHTML = "Pontuação no nível atual: " + levelScore[level];
+		document.getElementById("levelScore").innerHTML = dlcpTXT[1] + levelScore[level];
 	
 	generateOthersLevels(level, html);
 }

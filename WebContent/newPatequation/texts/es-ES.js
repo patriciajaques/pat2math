@@ -1,3 +1,4 @@
+var dlcp_esES = new Array();						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var guiderKeys_esES = new Array(); 					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var index_esES = new Array(); 	     				//	pat2math/WebContent/newPatequation/index.js
 var html_esES = new Array();						//	innerHTML de elementos variados
@@ -12,7 +13,11 @@ var tour_esES = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_esES = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_esES = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_esES = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
-//	SudentControllerJava_esES						//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
+//	SudentControllerJava							//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
+
+
+dlcp_esES[0] = "Modo Infinito";
+dlcp_esES[1] = "Puntuación del nivel actual:";
 
 
 guiderKeys_esES[0] = "no, gracias.";
@@ -106,6 +111,7 @@ index_esES[72] = " consejos gratuitos disponibles";
 index_esES[73] = " consejo gratuito disponible";
 index_esES[74] = "RANKING DE LA TURMA";
 index_esES[75] = "RANKING GENERAL";
+index_esES[76] = "El Camino Hasta aquí";
 
 
 html_esES[0] = "Páginas de ayuda";
@@ -170,7 +176,7 @@ stages_esES[5] = "(Casi) Todo negativo";
 stages_esES[6] = "Un poco de cada";
 stages_esES[7] = "¿Hay letras negativas?";
 stages_esES[8] = "En las matemáticas existe!";
-stages_esES[9] = "La incógnita y el resultado negativos";
+stages_esES[9] = "Incógnita y el resultado negativos";
 stages_esES[10] = "¡Todo negativo!";
 stages_esES[11] = "Una revisión de todo lo que has visto hasta ahora";
 stages_esES[12] = "Coeficientes";
@@ -196,7 +202,6 @@ stages_esES[31] = "...y más fracciones!";
 stages_esES[32] = "¡Felicitaciones, estás casi ahí!";
 stages_esES[33] = "¿Está preparado para el desafío final?";
 stages_esES[42] = "42";
-stages_esES[43] = "Fase";
 
 
 stagesWithoutGamification_esES[1] = "1. Recordando la base";

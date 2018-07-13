@@ -35,3 +35,8 @@ function helpPopups(title, description, width) {
 	}).show();
 }
 </script>
+
+<script src="/pat2math/login/texts/en-UK.js"></script>
+<script src="/pat2math/login/texts/es-ES.js"></script>
+<script src="/pat2math/login/texts/pt-BR.js"></script>
+<script src="/pat2math/login/texts/idiomSelection.js"></script>
