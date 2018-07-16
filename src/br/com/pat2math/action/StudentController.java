@@ -123,15 +123,48 @@ public class StudentController {
 			if(rankingGeral) {
 				estudantes= sd.obterRanking();
 			}else {
-				Student s = sd.obterTurma(id);
 				estudantes= sd.obterRankingTurma(sd.obterTurma(id).getTurma());
 			}
 			int posicao = 1;
 			String retorno = "<div align = 'center'><table align: center>";
-			retorno += "<tr align = 'center'> <th align = 'center'>" + getText("SudentControllerJavaTXT-0", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-1", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-2", idioma) + "</th> </tr>";
+			retorno += "<tr align = 'center'> <th align = 'center'>" + getText("SudentControllerJavaTXT-0", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-1", idioma) + "</th> <th align = 'center'>" + getText("SudentControllerJavaTXT-2", idioma)  + "</th> <th align = 'center'> &nbsp;&nbsp;&nbsp;&nbsp;" + getText("SudentControllerJavaTXT-3", idioma) + "</th> </tr>";
 			int cont = -5;
+			int posicaoAluno = 0;
+			for(int i=0; i<estudantes.size(); i++) {
+				if(estudantes.get(i).getId()==id) {
+					posicaoAluno = i+1;
+				}
+			}
+			if(posicaoAluno<=15) {
+				while(posicao <=15 && posicao<=estudantes.size()) {
+					if(estudantes.get(posicao-1).getId()==id) {
+						retorno += "<tr><td align = 'center'><b>" + posicao +"</b><td align = 'center'><b>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getCurrentPlan() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getTotalScore() + "</b></td></tr>";
+					}else {
+						retorno += "<tr><td align = 'center'>" + posicao +"<td align = 'center'>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getCurrentPlan() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getTotalScore() + "</td></tr>";
+					}
+					posicao++;
+				}
+			}else if(posicaoAluno>15){
+				while(posicao <=10){
+					retorno += "<tr><td align = 'center'>" + posicao +"<td align = 'center'>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getCurrentPlan() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getTotalScore() + "</td></tr>";
+					posicao++;
+				}
+				retorno += "<tr><td align = 'center'> <td align = 'center'> ... </td><td align = 'center'> </td></tr>";
+				posicao = posicaoAluno+cont;
+				while(cont <= 5 && posicao<=estudantes.size()) {
+					if(estudantes.get(posicao-1).getId()==id) {
+						retorno += "<tr><td align = 'center'><b>" + posicao +"</b><td align = 'center'><b>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getCurrentPlan() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getTotalScore() + "</b></td></tr>";
+						posicao++;
+					}else {
+						retorno += "<tr><td align = 'center'>" + posicao +"<td align = 'center'>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getCurrentPlan() + "</td><td align = 'center'>" + estudantes.get(posicao-1).getTotalScore() + "</td></tr>";
+					}
+					posicao++;
+					cont++;
+				}
+			}
+			/*
 			while(posicao<=estudantes.size()) {
-				if(posicao<=10) {
+				if(posicaoAluno<=15) {
 					if(estudantes.get(posicao-1).getId()==id) {
 						retorno += "<tr><td align = 'center'><b>" + posicao +"</b><td align = 'center'><b>" + estudantes.get(posicao-1).getFirstName() + " " + estudantes.get(posicao-1).getLastName() + "</b></td><td align = 'center'><b>" + estudantes.get(posicao-1).getTotalScore() + "</b></td></tr>";
 						posicao++;
@@ -162,13 +195,13 @@ public class StudentController {
 					}
 				}
 				posicao++;
-			}
+			} */
 			retorno += "</table></div><br>";
 			if(!rankingGeral) {
-				retorno += "<a href='#' onclick='rankingGeral()'>" + getText("SudentControllerJavaTXT-3", idioma) + "</a><br>";
+				retorno += "<a href='#' onclick='rankingGeral()'>" + getText("SudentControllerJavaTXT-4", idioma) + "</a><br>";
 			}
-			retorno += "<br>" + getText("SudentControllerJavaTXT-4", idioma) + ": <br>";
-		    retorno += "<a id='compartilhar_facebook' href='#' title='" + getText("SudentControllerJavaTXT-4", idioma) + "' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
+			retorno += "<br>" + getText("SudentControllerJavaTXT-5", idioma) + ": <br>";
+		    retorno += "<a id='compartilhar_facebook' href='#' title='" + getText("SudentControllerJavaTXT-5", idioma) + "' onclick='compartilharFacebook()'><img src='/pat2math/patequation/img/compartilhar-facebook.png'/></a>";
 			return retorno;
 		}
 	

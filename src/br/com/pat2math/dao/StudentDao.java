@@ -24,7 +24,7 @@ public class StudentDao extends GenericDao<Student> implements AllStudents {
 	
 	@SuppressWarnings("unchecked")
 	public List<Student> obterRanking(){		
-		String jpql = "from Student where totalScore is not null order by totalScore desc";
+		String jpql = "from Student where totalScore is not null and isUserTest = 0 order by totalScore desc";
 		try {
 			return (List<Student>) em.createQuery(jpql)
 				.getResultList();

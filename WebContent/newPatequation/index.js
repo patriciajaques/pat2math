@@ -23,7 +23,7 @@ var playAudio;
 var unlockedPlans = 0;
 var unlockAllPlans = getCookie("unlockAllPlans") !== ""; //Alt + P habilita/desabilita
 var enableAgent = getCookie ("enableAgent") !== ""; //F2 habilita/desabilita
-var enableKnowledgeTest = false;
+var enableKnowledgeTest = true; // habilita/desabilita o testador de conhecimentos
 //var numClicks;
 
 // variables for the Step object

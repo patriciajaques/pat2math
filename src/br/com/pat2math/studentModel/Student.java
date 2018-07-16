@@ -60,6 +60,9 @@ public class Student extends User implements Serializable {
 	
 	private String idsExam, equationsExam;
 	
+	//Para verificar se é ou não usuário de teste
+	private Boolean isUserTest;
+
 	public static Student newStudent(Student student) {
 		student.defineRole();
 		student.defineScoresDefault();
@@ -327,6 +330,11 @@ public class Student extends User implements Serializable {
 		this.equationsExam = equationsExam;
 	}
 	
-	
-	
+	public Boolean getIsUserTest() {
+		return isUserTest;
+	}
+
+	public void setIsUserTest(Boolean isUserTest) {
+		this.isUserTest = isUserTest;
+	}
 }
