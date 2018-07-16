@@ -1,7 +1,7 @@
 // Variáveis que apontam para os Arrays contendo os textos do idioma selecionado
 var dlcpTXT;						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
-var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var forgotPasswordTXT;				//	pat2math/WebContent/WEB-INF/views/user/forgotPassword.jsp
+var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
 var htmlTXT;						//	innerHTML de determinados elementos que contém texto
 var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
 var levels;							//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
@@ -9,6 +9,7 @@ var loginTXT;						//	pat2math/WebContent/WEB-INF/views/login/body.jsp --> eleme
 var newTXT;							//	pat2math/WebContent/WEB-INF/views/student
 var p2mTXT;							//	pat2math/WebContent/js/pat2math.js
 var scoreTXT;						//	pat2math/WebContent/newPatequation/withGamification/score.js
+var serverTXT;						//	pat2Math/WebContent/newPatequation/server.js
 var srTXT;							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
 var stages;							//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var stagesWithoutGamification;		//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
@@ -43,6 +44,7 @@ switch(idioma) {
 		newTXT = new_enUK;
 		p2mTXT = p2m_enUK;
 		scoreTXT = score_enUK;
+		serverTXT = server_enUK;
 		srTXT = sr_enUK;
 		stages = stages_enUK;
 		stagesWithoutGamification = stagesWithoutGamification_enUK;
@@ -63,6 +65,7 @@ switch(idioma) {
 		newTXT = new_esES;
 		p2mTXT = p2m_esES;
 		scoreTXT = score_esES;
+		serverTXT = server_esES;
 		srTXT = sr_esES;
 		stages = stages_esES;
 		stagesWithoutGamification = stagesWithoutGamification_esES;
@@ -84,6 +87,7 @@ switch(idioma) {
 		newTXT = new_ptBR;
 		p2mTXT = p2m_ptBR;
 		scoreTXT = score_ptBR;
+		serverTXT = server_ptBR;
 		srTXT = sr_ptBR;
 		stages = stages_ptBR;
 		stagesWithoutGamification = stagesWithoutGamification_ptBR;

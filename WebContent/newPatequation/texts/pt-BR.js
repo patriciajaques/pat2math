@@ -1,3 +1,4 @@
+
 var dlcp_ptBR = new Array();						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var forgotPassword_ptBR = new Array();				//	pat2math/WebContent/WEB-INF/views/user/forgotPassword.jsp
 var guiderKeys_ptBR = new Array(); 					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
