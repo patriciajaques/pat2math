@@ -13,7 +13,6 @@ var tour_enUK = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_enUK = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_enUK = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
-//	SudentControllerJava							//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
 
 
 dlcp_enUK[0] = "Infinite Mode";
@@ -626,10 +625,3 @@ weu_enUK[12] = "Summarizing";
 weu_enUK[13] = "If we have a multiplication of equal signs, we have plus in the end;<br>If we have a multiplication of different signs, we have less in the end.";
 weu_enUK[14] = "We're done!";
 weu_enUK[15] = "We succeeded in solving the equation successfully and you learned about the set of signals in multiplication";
-
-
-//SudentControllerJava_enUK[0] = "Position";
-//SudentControllerJava_enUK[1] = "Name";
-//SudentControllerJava_enUK[2] = "Score";
-//SudentControllerJava_enUK[3] = "Check out the overall ranking of PAT2Math";
-//SudentControllerJava_enUK[4] = "Share your score on Facebook";

@@ -13,7 +13,6 @@ var tour_esES = new Array();						//	pat2math/WebContent/patequation/js/tour.js
 var we_esES = new Array(); 							//	pat2math/WebContent/patequation/js/workedExamples.js
 var wec_esES = new Array(); 						//	pat2math/WebContent/newPatequation/workedExamplesControlles.js
 var weu_esES = new Array(); 						//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
-//	SudentControllerJava							//	Textos utilizados na janela de ranking - pat2math/src/br/com/pat2math/action/StudentController.java
 
 
 dlcp_esES[0] = "Modo Infinito";
@@ -626,10 +625,3 @@ weu_esES[12] = "En pocas palabras";
 weu_esES[13] = "Si tenemos una multiplicación de señales iguales, tenemos más al final<br>Si tenemos una multiplicación de señales diferentes, tenemos menos al final.";
 weu_esES[14] = "¡Terminamos!";
 weu_esES[15] = "Conseguimos resolver la ecuación con éxito y usted aprendió sobre el juego de señales en la multiplicación.";
-
-
-//SudentControllerJava_esES[0] = "Posición";
-//SudentControllerJava_esES[1] = "Nombre";
-//SudentControllerJava_esES[2] = "Puntuación";
-//SudentControllerJava_esES[3] = "Compruebe el ranking general de PAT2Math";
-//SudentControllerJava_esES[4] = "Comparta su puntuación en Facebook";

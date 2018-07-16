@@ -82,18 +82,28 @@ switch(idioma) {
 }
 
 // Texto de elementos HTML variados
-document.getElementById("help").title = htmlTXT[0];
-document.getElementById("idiomSelection").title = htmlTXT[1];
-document.getElementById("ranking").title = htmlTXT[2];
-document.getElementById("refresh_page").title = htmlTXT[3];
-document.getElementById("reportBug").title = htmlTXT[4];
-document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
-document.getElementById("tour").title = htmlTXT[6];
-document.getElementById("hint").innerHTML = htmlTXT[7];
+if(document.getElementById("help") != null)
+	document.getElementById("help").title = htmlTXT[0];
+if(document.getElementById("idiomSelection") != null)
+	document.getElementById("idiomSelection").title = htmlTXT[1];
+if(document.getElementById("ranking") != null)
+	document.getElementById("ranking").title = htmlTXT[2];
+if(document.getElementById("refresh_page") != null)
+	document.getElementById("refresh_page").title = htmlTXT[3];
+if(document.getElementById("reportBug") != null)
+	document.getElementById("reportBug").title = htmlTXT[4];
+if(document.getElementById("rewardWorkedExamples") != null)
+	document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
+if(document.getElementById("tour") != null)
+	document.getElementById("tour").title = htmlTXT[6];
+if(document.getElementById("hint") != null)
+	document.getElementById("hint").innerHTML = htmlTXT[7];
 
 // Atualiza a bandeira do botão de alteração de idioma
-document.getElementById("currentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" style="width: 6%; margin-top:16px">';
-document.getElementById("currentFlag").title = idioma;
+if(document.getElementById("currentFlag") != null){
+	document.getElementById("currentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" style="width: 6%; margin-top:16px">';
+	document.getElementById("currentFlag").title = idioma;
+}
 
 // Pede ao usuário que selecione o idioma, clicando na bandeira correspondente
 function languageSelection() {
