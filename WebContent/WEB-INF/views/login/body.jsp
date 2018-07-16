@@ -1,16 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${confirmed == true}">
-	<p id="elem0" class="msg"></p>
+	<p id="loginElem0" class="msg"></p>
 </c:if>
 <c:if test="${param.recovery == true}">
-	<p id="elem1" class="msg"></p>
+	<p id="loginElem1" class="msg"></p>
 </c:if>
 
 <form class="box" action="/pat2math/j_spring_security_check" method="post" accept-charset="utf-8">
 	<p>
 		<img src="/pat2math/images/Pat2MathBETA.png" />
 	</p>
-	<div id="currentFlag"></div>
+	<div id="loginCurrentFlag"></div>
 	
 	<br>
 	
@@ -34,21 +34,21 @@
     </fb:login-button>
     <br>
     <br>
-    <p id="elem2" style="color: black"></p>
+    <p id="loginElem2" style="color: black"></p>
 	<c:if test="${param.failed == true}">
-		<p id="elem3" class="error" style="font-size: 16px;margin-top: 15px""></p>
+		<p id="loginElem3" class="error" style="font-size: 16px;margin-top: 15px""></p>
 	</c:if>
 	
 	<br>
 	
-	<p class="left"><a id="elem4" href="/pat2math/student/new"></a></p> 
- 	<p class="left"><a id="elem5" href="user/forgotPassword"></a></p>
+	<p class="left"><a id="loginElem4" href="/pat2math/student/new"></a></p> 
+ 	<p class="left"><a id="loginElem5" href="user/forgotPassword"></a></p>
  	
  	<br>
  	
  	<div id="facebookButtonLike" style="text-align: center" class="box">
  		<p>
- 			<h3 id="elem6" style="color: black"></h3>
+ 			<h3 id="loginElem6" style="color: black"></h3>
  		</p>
  		<div style="text-align: center; width: 250px;" class="fb-like" data-href="https://www.facebook.com/Pat2Math" data-width="250" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
  	</div>
@@ -65,23 +65,23 @@
 	
 	function popupBlocked(){
 		if(navigator.userAgent.indexOf("Edge")!=-1){
-			helpPopups(text[11], "<img src=/pat2math/img/edge.png border=0 width=98% height=90%>", "45%");
+			helpPopups(loginTXT[11], "<img src=/pat2math/img/edge.png border=0 width=98% height=90%>", "45%");
 		}
 		else if(navigator.userAgent.indexOf("OPR")!=-1){
-			helpPopups(text[11], "<img src=/pat2math/img/opera.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/opera2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(loginTXT[11], "<img src=/pat2math/img/opera.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/opera2.png border=0 width=98% height=90%>", "45%");
 		}
 		else if(navigator.userAgent.indexOf("Firefox")!=-1){
-			helpPopups(text[11], "<img src=/pat2math/img/firefox.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/firefox2.png border=0 width=98% height=90%>" ,"45%");
+			helpPopups(loginTXT[11], "<img src=/pat2math/img/firefox.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/firefox2.png border=0 width=98% height=90%>" ,"45%");
 		}
 		else if(navigator.userAgent.indexOf("Version")!=-1){
-			helpPopups(text[11], "<img src=/pat2math/img/safari.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/safari2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(loginTXT[11], "<img src=/pat2math/img/safari.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/safari2.png border=0 width=98% height=90%>", "45%");
 		}
 		else if(navigator.userAgent.indexOf(".NET")!=-1){
 			document.getElementById("helpPopups-box").style.height = "50%";
-			helpPopups(text[11], "<img src=/pat2math/img/ie.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/ie2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(loginTXT[11], "<img src=/pat2math/img/ie.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/ie2.png border=0 width=98% height=90%>", "45%");
 		}
 		else{
-			helpPopups(text[11], "<img src=/pat2math/img/chrome.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/chrome2.png border=0 width=98% height=90%>", "45%");
+			helpPopups(loginTXT[11], "<img src=/pat2math/img/chrome.png border=0 width=98% height=90%> <br><br> <img src=/pat2math/img/chrome2.png border=0 width=98% height=90%>", "45%");
 		}
 				
 	}
@@ -109,9 +109,9 @@
 			usuarioConectado();
 			login();
 		}else if (response.status === 'not_authorized'){
-			document.getElementById('status').innerHTML = text[12];
+			document.getElementById('status').innerHTML = loginTXT[12];
 		}else{
-			document.getElementById('status').innerHTML = text[13];
+			document.getElementById('status').innerHTML = loginTXT[13];
 		}
 	}
 	

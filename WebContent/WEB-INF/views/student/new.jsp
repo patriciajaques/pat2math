@@ -11,7 +11,7 @@
 		</form:errors>
 		<br>
 		<p>
-			<form:input path="firstName" placeholder="nome" />
+			<form:input id="newElem0" path="firstName"/>
 		</p>
 		<p>
 			<form:errors path="firstName">
@@ -20,7 +20,7 @@
 		</p>
 		
 		<p>
-			<form:input path="lastName" placeholder="sobrenome" />
+			<form:input id="newElem1" path="lastName"/>
 		</p>
 		<p>
 			<form:errors path="lastName">
@@ -29,7 +29,7 @@
 		</p>
 		
 		<p>
-			<form:input path="email" placeholder="email" />
+			<form:input id="newElem2" path="email"/>
 		</p>
 		<p>
 			<form:errors path="email">
@@ -38,7 +38,7 @@
 		</p>
 		
 		<p>
-			<form:password path="password" placeholder="senha" />
+			<form:password id="newElem3" path="password"/>
 		</p>
 		<p>
 			<form:errors path="password">
@@ -47,13 +47,10 @@
 		</p>
 		
 		<p>
-			<form:password path="passwordConfirm" placeholder="confirme a senha" />
+			<form:password id="newElem4" path="passwordConfirm"/>
 		</p>
 		<br>
-		<p>
-			<form:checkbox path="acceptTerms" />
-			Aceito os <a href="/pat2math/terms">termos de uso</a>
-		</p>
+		<p id="newElem5" ></p>
 		<p>
 			<form:errors path="acceptTerms">
 				<form:errors path="acceptTerms" htmlEscape="false" class="error" />
@@ -61,6 +58,23 @@
 		</p>
 		
 		<br>
-		<input type="submit" class="btn btn-large" value="cadastrar" /><a href="../login" class="btn btn-large" style="margin-left: 15px">voltar</a>
+		<input id="newElem6" type="submit" class="btn btn-large"/><a id="newElem7" href="../login" class="btn btn-large" style="margin-left: 15px"></a>
 	</form:form>
 </div>
+
+<script src="/pat2math/newPatequation/texts/en-UK.js"></script>
+<script src="/pat2math/newPatequation/texts/es-ES.js"></script>
+<script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
+<script src="/pat2math/newPatequation/texts/idiomSelection.js"></script>
+
+<script>
+//a	tualiza os textos dos elementos HTML
+document.getElementById("newElem0").placeholder = newTXT[0];
+document.getElementById("newElem1").placeholder = newTXT[1];
+document.getElementById("newElem2").placeholder = newTXT[2];
+document.getElementById("newElem3").placeholder = newTXT[3];
+document.getElementById("newElem4").placeholder = newTXT[4];
+document.getElementById("newElem5").innerHTML = newTXT[5];
+document.getElementById("newElem6").value = newTXT[6];
+document.getElementById("newElem7").innerHTML = newTXT[7];
+</script>

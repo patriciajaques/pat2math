@@ -1,8 +1,11 @@
 var dlcp_esES = new Array();						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var forgotPassword_esES = new Array();				//	pat2math/WebContent/WEB-INF/views/user/forgotPassword.jsp
 var guiderKeys_esES = new Array(); 					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
+var html_esES = new Array();						//	innerHTML de elementos variados do newPatequation
 var index_esES = new Array(); 	     				//	pat2math/WebContent/newPatequation/index.js
-var html_esES = new Array();						//	innerHTML de elementos variados
 var levels_esES = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var login_esES = new Array();						//	pat2math/WebContent/WEB-INF/views/login/body.jsp
+var new_esES = new Array();							//	pat2math/WebContent/WEB-INF/views/student
 var p2m_esES = new Array(); 						//	pat2math/WebContent/js/pat2math.js
 var score_esES = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/score.js
 var server_esES = new Array();						//	pat2Math/WebContent/newPatequation/server.js
@@ -19,6 +22,12 @@ dlcp_esES[0] = "Modo Infinito";
 dlcp_esES[1] = "Puntuación del nivel actual:";
 
 
+forgotPassword_esES[0] = "Informe su correo electrónico para que podamos redefinir su contraseña";
+forgotPassword_esES[1] = "email";
+forgotPassword_esES[2] = "enviar";
+forgotPassword_esES[3] = "volver";
+
+
 guiderKeys_esES[0] = "no, gracias.";
 guiderKeys_esES[1] = "cerrar";
 guiderKeys_esES[2] = "finalizar";
@@ -32,6 +41,17 @@ guiderKeys_esES[9] = "vamos a empezar!";
 guiderKeys_esES[10] = "sí, por favor.";
 guiderKeys_esES[11] = "deseo recomenzar el tour.";
 guiderKeys_esES[12] = "volver";
+
+
+html_esES[0] = "Páginas de ayuda";
+html_esES[1] = "Selección de idioma";
+html_esES[2] = "Vea el ranking del PAT2Math";
+html_esES[3] = "Actualizar la página";
+html_esES[4] = "Reportar un problema en el PAT2Math";
+html_esES[5] = "He sido ayudado por PAT2Math: D ¿Qué hará ese botón?";
+html_esES[6] = "Tour Interactivo";
+html_esES[7] = "C o n s e j o";
+html_esES[8] = "Errores gratuitos disponibles: ";
 
 
 index_esES[0] = "Escriba el número de la fase que desea desbloquear:";
@@ -113,22 +133,40 @@ index_esES[75] = "RANKING GENERAL";
 index_esES[76] = "El Camino Hasta aquí";
 
 
-html_esES[0] = "Páginas de ayuda";
-html_esES[1] = "Selección de idioma";
-html_esES[2] = "Vea el ranking del PAT2Math";
-html_esES[3] = "Actualizar la página";
-html_esES[4] = "Reportar un problema en el PAT2Math";
-html_esES[5] = "He sido ayudado por PAT2Math: D ¿Qué hará ese botón?";
-html_esES[6] = "Tour Interactivo";
-html_esES[7] = "C o n s e j o";
-html_esES[8] = "Errores gratuitos disponibles: ";
-
-
 levels_esES[1] = "Básico";
 levels_esES[2] = "Intermedio";
 levels_esES[3] = "Avanzado";
 levels_esES[4] = "Experto";
 levels_esES[5] = "Season Finale";
+
+
+login_esES[0] = "Cuenta confirmada con éxito";
+login_esES[1] = "Contraseña actualizada con éxito";
+login_esES[2] = "Entrando con Facebook";
+login_esES[3] = "email";
+login_esES[4] = "contraseña";
+login_esES[5] = "Entre con Facebook";
+login_esES[6] = 'Si usted ha tenido algún problema para iniciar sesión con Facebook, <a href="#" onclick="popupBlocked()"><font color="blue" size="2px">haga clic aquí</font></a>';
+login_esES[7] = "Usuario o contraseña no válida";
+login_esES[8] = "Regístrese";
+login_esES[9] = "Olvidé mi contraseña";
+login_esES[10] = "Corta nuestra página en Facebook";
+login_esES[11] = "Debe permitir pop-ups en su navegador para iniciar sesión en Facebook";
+login_esES[12] = "Inicie sesión en la aplicación";
+login_esES[13] = "Inicie sesión en Facebook";
+login_esES[14] = "Login";
+
+
+new_esES[0] = "nombre";
+new_esES[1] = "apellido";
+new_esES[2] = "email";
+new_esES[3] = "contraseña";
+new_esES[4] = "confirme la contraseña";
+new_esES[5] = '<input id="acceptTerms1" name="acceptTerms" type="checkbox" value="true"><input type="hidden" name="_acceptTerms" value="on"> Acepto los <a href="/pat2math/terms">terminos de uso</a>';
+new_esES[6] = "registrar";
+new_esES[7] = "volver";
+new_esES[8] = "Gracias!";
+new_esES[9] = 'Su cuenta se creó con éxito.<br><a href="http://pat2math.unisinos.br/pat2math/login"><font color="blue" size="2px">Haga clic aquí</font></a> para volver a la página de inicio de sesión.';
 
 
 p2m_esES[0] = "Perdón, obtuvimos un error al procesar esta acción.";

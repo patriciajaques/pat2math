@@ -1,9 +1,12 @@
 // Variáveis que apontam para os Arrays contendo os textos do idioma selecionado
 var dlcpTXT;						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
 var guiderKeysTXT;					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
-var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
+var forgotPasswordTXT;				//	pat2math/WebContent/WEB-INF/views/user/forgotPassword.jsp
 var htmlTXT;						//	innerHTML de determinados elementos que contém texto
+var indexTXT;						//	pat2math/WebContent/newPatequation/index.js
 var levels;							//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var loginTXT;						//	pat2math/WebContent/WEB-INF/views/login/body.jsp --> elementos HTML
+var newTXT;							//	pat2math/WebContent/WEB-INF/views/student
 var p2mTXT;							//	pat2math/WebContent/js/pat2math.js
 var scoreTXT;						//	pat2math/WebContent/newPatequation/withGamification/score.js
 var srTXT;							//	pat2math/WebContent/newPatequation/withGamification/fullGamification/specialReward.js
@@ -31,10 +34,13 @@ switch(idioma) {
 	case ("en-UK"):
 		isTXT = "Select an idiom for PAT2Math";
 		dlcpTXT = dlcp_enUK;
+		forgotPasswordTXT = forgotPassword_enUK;
 		guiderKeysTXT = guiderKeys_enUK;
-		indexTXT = index_enUK;
 		htmlTXT = html_enUK;
+		indexTXT = index_enUK;
 		levels = levels_enUK;
+		loginTXT = login_enUK;
+		newTXT = new_enUK;
 		p2mTXT = p2m_enUK;
 		scoreTXT = score_enUK;
 		srTXT = sr_enUK;
@@ -48,10 +54,13 @@ switch(idioma) {
 	case ("es-ES"):
 		isTXT = "Seleccione un idioma para el pat2math";
 		dlcpTXT = dlcp_esES;
+		forgotPasswordTXT = forgotPassword_esES;
 		guiderKeysTXT = guiderKeys_esES;
-		indexTXT = index_esES;
 		htmlTXT = html_esES;
+		indexTXT = index_esES;
 		levels = levels_esES;
+		loginTXT = login_esES;
+		newTXT = new_esES;
 		p2mTXT = p2m_esES;
 		scoreTXT = score_esES;
 		srTXT = sr_esES;
@@ -66,10 +75,13 @@ switch(idioma) {
 	case ("pt-BR"):
 		isTXT = "Escolha um idioma para o pat2math";
 		dlcpTXT = dlcp_ptBR;
+		forgotPasswordTXT = forgotPassword_ptBR;
 		guiderKeysTXT = guiderKeys_ptBR;
-		indexTXT = index_ptBR;
 		htmlTXT = html_ptBR;
+		indexTXT = index_ptBR;
 		levels = levels_ptBR;
+		loginTXT = login_ptBR;
+		newTXT = new_ptBR;
 		p2mTXT = p2m_ptBR;
 		scoreTXT = score_ptBR;
 		srTXT = sr_ptBR;
@@ -81,29 +93,6 @@ switch(idioma) {
 		weuTXT = weu_ptBR;
 }
 
-// Texto de elementos HTML variados
-if(document.getElementById("help") != null)
-	document.getElementById("help").title = htmlTXT[0];
-if(document.getElementById("idiomSelection") != null)
-	document.getElementById("idiomSelection").title = htmlTXT[1];
-if(document.getElementById("ranking") != null)
-	document.getElementById("ranking").title = htmlTXT[2];
-if(document.getElementById("refresh_page") != null)
-	document.getElementById("refresh_page").title = htmlTXT[3];
-if(document.getElementById("reportBug") != null)
-	document.getElementById("reportBug").title = htmlTXT[4];
-if(document.getElementById("rewardWorkedExamples") != null)
-	document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
-if(document.getElementById("tour") != null)
-	document.getElementById("tour").title = htmlTXT[6];
-if(document.getElementById("hint") != null)
-	document.getElementById("hint").innerHTML = htmlTXT[7];
-
-// Atualiza a bandeira do botão de alteração de idioma
-if(document.getElementById("currentFlag") != null){
-	document.getElementById("currentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" style="width: 6%; margin-top:16px">';
-	document.getElementById("currentFlag").title = idioma;
-}
 
 // Pede ao usuário que selecione o idioma, clicando na bandeira correspondente
 function languageSelection() {
@@ -208,4 +197,17 @@ function getTextFromServer(key){
 		 	}
 		});
 	return retorno;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

@@ -1,8 +1,11 @@
 var dlcp_enUK = new Array();						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var forgotPassword_enUK = new Array();				//	pat2math/WebContent/WEB-INF/views/user/forgotPassword.jsp
 var guiderKeys_enUK = new Array(); 					//	pat2math/WebContent/patequation/js/guider-2.1.0.min.js
+var html_enUK = new Array();						//	innerHTML de elementos variados do newPatequation
 var index_enUK = new Array(); 	     				//	pat2math/WebContent/newPatequation/index.js
-var html_enUK = new Array();						//	innerHTML de elementos variados
 var levels_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/difficultLevelsAndClassPlans.js
+var login_enUK = new Array();						//	pat2math/WebContent/WEB-INF/views/login/body.jsp
+var new_enUK = new Array();							//	pat2math/WebContent/WEB-INF/views/student
 var p2m_enUK = new Array(); 						//	pat2math/WebContent/js/pat2math.js
 var score_enUK = new Array(); 						//	pat2math/WebContent/newPatequation/withGamification/score.js
 var server_enUK = new Array();						//	pat2Math/WebContent/newPatequation/server.js
@@ -19,6 +22,12 @@ dlcp_enUK[0] = "Infinite Mode";
 dlcp_enUK[1] = "Score at current level:";
 
 
+forgotPassword_enUK[0] = "Enter your email so we can reset your password";
+forgotPassword_enUK[1] = "email";
+forgotPassword_enUK[2] = "submit";
+forgotPassword_enUK[3] = "back";
+
+
 guiderKeys_enUK[0] = "no, thanks.";
 guiderKeys_enUK[1] = "close";
 guiderKeys_enUK[2] = "finish";
@@ -32,6 +41,17 @@ guiderKeys_enUK[9] = "let's start!";
 guiderKeys_enUK[10] = "yes, please.";
 guiderKeys_enUK[11] = "I want to start the tour again.";
 guiderKeys_enUK[12] = "back";
+
+
+html_enUK[0] = "Help Pages";
+html_enUK[1] = "Language selection";
+html_enUK[2] = "See PAT2Math's ranking";
+html_enUK[3] = "Refresh page";
+html_enUK[4] = "Report a problem with PAT2Math";
+html_enUK[5] = "I was helped by PAT2Math :D What does this button do?";
+html_enUK[6] = "Interactive Tour";
+html_enUK[7] = "H i n t";
+html_enUK[8] = "Free errors available: ";
 
 
 index_enUK[0] = "Enter the level number you want to unlock:";
@@ -113,22 +133,40 @@ index_enUK[75] = "GENERAL RANKING";
 index_enUK[76] = "The Road So Far";
 
 
-html_enUK[0] = "Help Pages";
-html_enUK[1] = "Language selection";
-html_enUK[2] = "See PAT2Math's ranking";
-html_enUK[3] = "Refresh page";
-html_enUK[4] = "Report a problem with PAT2Math";
-html_enUK[5] = "I was helped by PAT2Math :D What does this button do?";
-html_enUK[6] = "Interactive Tour";
-html_enUK[7] = "H i n t";
-html_enUK[8] = "Free errors available: ";
-
-
 levels_enUK[1] = "Basic";
 levels_enUK[2] = "Intermediate";
 levels_enUK[3] = "Advanced";
 levels_enUK[4] = "Expert";
 levels_enUK[5] = "Season Finale";
+
+
+login_enUK[0] = "Account confirmed successfully";
+login_enUK[1] = "Password updated successfully";
+login_enUK[2] = "Entering with Facebook...";
+login_enUK[3] = "email";
+login_enUK[4] = "password";
+login_enUK[5] = "Enter with Facebook";
+login_enUK[6] = 'If you had a problem signing in with Facebook, please <a href="#" onclick="popupBlocked()"><font color="blue" size="2px">click here</font></a>';
+login_enUK[7] = "Invalid username or password";
+login_enUK[8] = "Create account";
+login_enUK[9] = "I forgot my password";
+login_enUK[10] = "Like our Facebook page";
+login_enUK[11] = "You must allow pop-ups in your browser to log in to Facebook";
+login_enUK[12] = "Sign in to the app";
+login_enUK[13] = "Sign in to Facebook";
+login_enUK[14] = "Login";
+
+
+new_enUK[0] = "name";
+new_enUK[1] = "last name";
+new_enUK[2] = "email";
+new_enUK[3] = "passwoer";
+new_enUK[4] = "confirm password";
+new_enUK[5] = '<input id="acceptTerms1" name="acceptTerms" type="checkbox" value="true"><input type="hidden" name="_acceptTerms" value="on"> I accept the <a href="/pat2math/terms">terms of use</a>';
+new_enUK[6] = "register";
+new_enUK[7] = "back";
+new_enUK[8] = "Thanks!";
+new_enUK[9] = 'Your account has been successfully created.<br><a href="http://pat2math.unisinos.br/pat2math/login"><font color="blue" size="2px">Click here</font></a> to return to the login page.';
 
 
 p2m_enUK[0] = "Sorry, we got an error while processing this action.";

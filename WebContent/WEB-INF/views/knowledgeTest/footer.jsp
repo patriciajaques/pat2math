@@ -21,9 +21,26 @@
 <!-- <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script> -->
 
 <script>
+var titl = "";
+var desc = "";
+switch(idioma) {
+	case("en-UK"):
+		titl = "Knowledge Test";
+		desc = "Before we begin, you must take a knowledge test for PAT2Math to evaluate the best lesson plan to get you started!";
+		break;
+	case("es-ES"):
+		titl = "Prueba de conocimientos";
+		desc = "Antes de empezar, usted debe realizar una prueba de conocimientos para el PAT2Math evaluar el mejor plan de clase para que usted comience!";
+		break;
+	default:
+	case("pt-BR"):
+		titl = "Teste de conhecimentos";
+		desc = "Antes de começarmos, você deve realizar um teste de conhecimentos para o PAT2Math avaliar o melhor plano de aula para você começar!"
+}
+
 $.guider({
-	title: "Teste de conhecimentos",
-	description: "Antes de comerçarmos, você deve realizar um teste de conhecimentos para o PAT2Math avaliar o melhor plano de aula para você começar!",    
+	title: titl,
+	description: desc,    
 	alignButtons: "center",
 	buttons: {
 		OK: {
