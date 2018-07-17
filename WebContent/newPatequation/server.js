@@ -1066,7 +1066,6 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                         focus();
                     }
                     
-                    
                     document.getElementById('inputMobile').style.border = "1px solid red";
                     errosDisponiveisKnowledgeTest--;
                     if(errosDisponiveisKnowledgeTest==0){
@@ -1080,7 +1079,7 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
         						},
         					error:
         						 function(XMLHttpRequest, textStatus, errorThrown) {
-        					     	//alert("Perdão, obtivemos um erro ao processar esta ação.");
+        					     	alert("Perdão, obtivemos um erro ao processar esta ação.");
         					 	}
         					});	
                     	$.guider({
@@ -1103,8 +1102,6 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                 	showHint(split[0]);
                 }
             }
-            
-            
             
         }});      	  
 }

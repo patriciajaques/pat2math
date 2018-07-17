@@ -330,7 +330,7 @@ $(document).ready(function() {
 	var widthResolution = screen.width;
 	var widthWindow = window.innerWidth;
 	
-	if (widthWindow < 1920) {
+	if (widthWindow < 1920 && document.getElementById("help") !== null) {
 		var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
 		document.getElementById("help").style.marginLeft = marginLeft;
 	}
@@ -342,7 +342,7 @@ $(document).ready(function() {
 	window.onresize = function(){
 		var widthWindow = window.innerWidth;
 		
-		if (widthWindow < 1920) {
+		if (widthWindow < 1920 && document.getElementById("help") !== null) {
 			var marginLeft = $("#paper-1").offset().left + document.getElementById("paper-1").style.width + 10;
 			document.getElementById("help").style.marginLeft = marginLeft;
 		}
@@ -707,7 +707,9 @@ function tourTCC() {
 
 
 function startNewPatequation() {
-	document.getElementById("topics").style.background = "silver";
+	if(document.getElementById("topics") !== null){
+		document.getElementById("topics").style.background = "silver";
+	}
 	
 
 	
