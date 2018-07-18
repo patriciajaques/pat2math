@@ -26,16 +26,16 @@ var desc = "";
 switch(idioma) {
 	case("en-UK"):
 		titl = "Knowledge Test";
-		desc = "Before we begin, you must take a knowledge test for PAT2Math to evaluate the best lesson plan to get you started!";
+		desc = "The test involves a set of equations that get more difficult as you solve them. In this way, PAT2Math will determine the best lesson plan to get you started!!";
 		break;
 	case("es-ES"):
 		titl = "Prueba de conocimientos";
-		desc = "Antes de empezar, usted debe realizar una prueba de conocimientos para el PAT2Math evaluar el mejor plan de clase para que usted comience!";
+		desc = "La prueba implica un conjunto de ecuaciones que van siendo más difíciles a medida que las resuelve. De esa manera, el PAT2Math determinará el mejor plan de clase para que usted comience!";
 		break;
 	default:
 	case("pt-BR"):
 		titl = "Teste de conhecimentos";
-		desc = "Antes de começarmos, você deve realizar um teste de conhecimentos para o PAT2Math avaliar o melhor plano de aula para você começar!"
+		desc = "O teste envolve um conjunto de equações que vão ficando mais difíceis conforme você as resolve. Dessa maneira, o PAT2Math determinará o melhor plano de aula para você começar!"
 }
 
 $.guider({

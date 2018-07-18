@@ -325,16 +325,20 @@ function alternativeFirstStepTour (nextStep) {
 			botao1 = {Próximo: {click: true, className: "primary"}}
 			botao2 = {Voltar: true, Próximo: {click: true, className: "primary"}}
 			botao3 = {Voltar: true, OK: {click: true, className: "primary"}}
+			botao4 = {Voltar: true, OK: {click: function(){exit();}, className: "primary"}}
+		
 			break;
 		case("es-ES"):
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
 			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
+			botao4 = {Volver: true, OK: {click: function(){exit();}, className: "primary"}}
 			break;
 		case("en-UK"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Back: true, OK: {click: true, className: "primary"}}
+			botao4 = {Back: true, OK: {click: function(){exit();}, className: "primary"}}
 			break;
 	}
 	
@@ -475,7 +479,7 @@ function alternativeFirstStepTour (nextStep) {
     			title: tourTXT[32],
     			description: tourTXT[33],     
     			alignButtons: "right",
-    			buttons: botao3
+    			buttons: botao4
     		}); 
 }
 
@@ -646,16 +650,19 @@ function mainMenu (nextStep) {
 			botao1 = {Próximo: {click: true, className: "primary"}}
 			botao2 = {Voltar: true, Próximo: {click: true, className: "primary"}}
 			botao3 = {Voltar: true, OK: {click: true, className: "primary"}}
+			botao4 = {Voltar: true, OK: {click: function(){exit();}, className: "primary"}}
 		break;
 		case("es-ES"):
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
 			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
+			botao4 = {Volver: true, OK: {click: function(){exit();}, className: "primary"}}
 			break;
 		case("en-UK"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Back: true, OK: {click: true, className: "primary"}}
+			botao4 = {Back: true, OK: {click: function(){exit();}, className: "primary"}}
 			break;
 	}
     
@@ -711,8 +718,7 @@ function mainMenu (nextStep) {
 		title: tourTXT[32],
 		description: tourTXT[36],     
 		alignButtons: "right",
-		onShow: function() {exit();},
-		buttons: botao3
+		buttons: botao4
 	}); 
 }
 

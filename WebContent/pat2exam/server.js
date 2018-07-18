@@ -837,12 +837,12 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                         		}
                         	}
                         	
-                        	else if (numUnlockedPlans == 2)
-                        		setTimeout('plan2Explanation("")', 2000);
-                        	
-                        	else {
-                        		setTimeout ("newPlan()", 2000);
-                        	}
+//                        	else if (numUnlockedPlans == 2)
+//                        		setTimeout('plan2Explanation("")', 2000);
+//                        	
+//                        	else {
+//                        		setTimeout ("newPlan()", 2000);
+//                        	}
                         	
                         	divName = "#lplan" + numUnlockedPlans;
                         	setTimeout (function() {$(divName).hide();}, 20000);
