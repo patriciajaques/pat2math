@@ -777,21 +777,6 @@ function startNewPatequation() {
 	    
 	}
 	
-	var planoAtualKnowledgeTest = getCookie("planoAtualKnowledgeTest");
-	
-	if (planoAtualKnowledgeTest !== "") {
-		planoAtualKnowledgeTest = parseInt(planoAtualKnowledgeTest);
-		setCookieDays("planoAtualKnowledgeTest", "", 0);
-		
-		if (unlockedPlans === undefined || unlockedPlans === null)
-    		unlockedPlans = 1;
-    	
-		if (planoAtualKnowledgeTest > unlockedPlans) {
-    		for (var i = unlockedPlans; i < planoAtualKnowledgeTest; i++)
-    			completePlan();
-		}
-	}
-	
 //	if (getCookie("noticeHint") === "") {
 //		setCookieDays("noticeHint", "false", 1);
 //		

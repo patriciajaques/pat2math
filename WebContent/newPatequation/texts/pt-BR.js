@@ -179,6 +179,9 @@ p2m_ptBR[5] = "Ops, você ainda não liberou este nível";
 p2m_ptBR[6] = "Para desbloqueá-lo, você deve completar todas as fases do nível anterior";
 p2m_ptBR[7] = "Para desbloquear o próximo plano de aula, você deve resolver todas as equações do plano atual.";
 p2m_ptBR[8] = "Você não pode mais voltar, já está na primeira equação do primeiro plano de aula.";
+p2m_ptBR[9] = "Teste finalizado";
+p2m_ptBR[10] = "O teste de conhecimentos foi concluído e você será redirecionado para o plano de aula da equação que estava sendo resolvida";
+
 
 
 score_ptBR[0] = "Pontuação total: ";

@@ -935,8 +935,35 @@ function loadExerciseExam(id) {
 
 function knowledgeTest(){
 	planoAtualKnowledgeTest++;
+	completePlan();
+	$.ajax({
+		type: "GET",
+		url: "newPatequation/setKnowledgeTest",
+		success:
+			function(data) {
+				console.log(data);
+			},
+		error:
+			 function(XMLHttpRequest, textStatus, errorThrown) {
+		     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+		 	}
+		});
+	if(planoAtualKnowledgeTest==33){
+		$.guider({
+			title: serverTXT[4],
+			description: serverTXT[5],    
+			alignButtons: "center",
+			buttons: {
+				OK: {
+					click: function() {location.href = "/pat2math/newpatequation"},
+					className: "primary"
+				}
+			}
+		}).show();
+	}
 	if(planoAtualKnowledgeTest==6 || planoAtualKnowledgeTest==11 || planoAtualKnowledgeTest==16 || planoAtualKnowledgeTest==21 || planoAtualKnowledgeTest==25 || planoAtualKnowledgeTest==29){
 		planoAtualKnowledgeTest++;
+		completePlan();
 	}
 	var planoAtual = planoAtualKnowledgeTest;
 	if(planoAtualKnowledgeTest<=20){

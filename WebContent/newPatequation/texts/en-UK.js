@@ -179,6 +179,8 @@ p2m_enUK[5] = "Oops, you have not yet unlocked this level";
 p2m_enUK[6] = "To unlock it, you must complete all stages of the previous level";
 p2m_enUK[7] = "To unlock the next class plan, you must solve all the equations in the current plan.";
 p2m_enUK[8] = "You can not go back, you are already in the first equation of the first class plan.";
+p2m_enUK[9] = "Test finished";
+p2m_enUK[10] = "The knowledge test has been completed, now you will be redirected to the class plan of the equation that you were solving";
 
 
 score_enUK[0] = "Total score: ";

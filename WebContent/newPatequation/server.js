@@ -1068,24 +1068,10 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
                     
                     document.getElementById('inputMobile').style.border = "1px solid red";
                     errosDisponiveisKnowledgeTest--;
-                    if(errosDisponiveisKnowledgeTest==0){
-                    	setCookieDays("planoAtualKnowledgeTest", planoAtualKnowledgeTest, 1);
-                    	$.ajax({
-        					type: "GET",
-        					url: "newPatequation/setKnowledgeTest",
-        					success:
-        						function(data) {
-        							console.log(data);
-        						},
-        					error:
-        						 function(XMLHttpRequest, textStatus, errorThrown) {
-        					     	alert(serverTXT[6]);
-        					 	}
-        					});	
+                    if(errosDisponiveisKnowledgeTest==0){   
                     	$.guider({
-
-                			title: serverTXT[4],
-                			description: serverTXT[5],    
+                			title: p2mTXT[9],
+                			description: p2mTXT[10],    
                 			alignButtons: "center",
                 			buttons: {
                 				OK: {
@@ -1107,8 +1093,6 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
 }
 
 function verifyIdEquationKnowledgeTest() {
-	//alert(idEquation);
-	//alert(idEquation2);
 	if(!equation2){
 		nextEquationKnowledgeTest(idEquation2);
 	}else{
