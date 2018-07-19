@@ -4,13 +4,13 @@ for(var i = 0; i < 19; i++)
 	terms_enUK[i] = new Array();
 
 
-terms_enUK[0][0] = "";
-terms_enUK[0][1] = "";
-terms_enUK[0][2] = "";
-terms_enUK[0][3] = "";
+terms_enUK[0][0] = "Terms of Use";
+terms_enUK[0][1] = "Please, read the terms of use carefully:";
+terms_enUK[0][2] = "PAT2Math's Srvice Terms:";
+terms_enUK[0][3] = "back";
 
-terms_enUK[1][0] = '';
-terms_enUK[1][1] = '';
+terms_enUK[1][0] = '1. User relationship with PAT2Math';
+terms_enUK[1][1] = '1.1 The use of PAT2Math\'s products, services, and web sites (collectively referred to as "Services" in this document and excluding any services provided to you by PAT2Math pursuant to a separate written agreement) by you is subject to the terms of a contract between the user and PAT2Math. "PAT2Math" stands for "Personal Affective Tutor to Math" and is being developed by a team of researchers in Artificial Intelligence applied to the Education of the Interdisciplinary Program of Applied Computation of UNISINOS in São Leopoldo, under the coordination of Prof. Patrícia A. Jaques Maillard. This document explains how the contract is made and presents its terms.';
 terms_enUK[1][2] = '';
 terms_enUK[1][3] = '';
 terms_enUK[1][4] = '';

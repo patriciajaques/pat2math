@@ -1179,7 +1179,7 @@ function completePlanDataBase() {
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log("Ocorreu um erro inesperado");
 		}
-	});
+	}); 
 }
 
 //color é uma String em hexadecimal com # na frente
