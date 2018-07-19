@@ -192,6 +192,7 @@ server_ptBR[2] = "Oops!";
 server_ptBR[3] = "Por errar este passo da equação, você perdeu 5 pontos e recebeu uma dica.";
 server_ptBR[4] = "Teste finalizado";
 server_ptBR[5] = "O teste de conhecimentos foi concluído e você será redirecionado para o plano de aula da equação que estava sendo resolvida";
+server_ptBR[6] = "Perdão, obtivemos um erro ao processar esta ação.";
 
 
 sr_ptBR[0] = "Recompensa adquirida com sucesso";

@@ -33,7 +33,6 @@ var idioma = getCookie("idiomaEscolhido");
 // Seleciona os Arrays de texto corretos, dependendo do idioma selecionado
 switch(idioma) {
 	case ("en-UK"):
-		isTXT = "Select an idiom for PAT2Math";
 		dlcpTXT = dlcp_enUK;
 		forgotPasswordTXT = forgotPassword_enUK;
 		guiderKeysTXT = guiderKeys_enUK;
@@ -54,7 +53,6 @@ switch(idioma) {
 		weuTXT = weu_enUK;
 		break;
 	case ("es-ES"):
-		isTXT = "Seleccione un idioma para el pat2math";
 		dlcpTXT = dlcp_esES;
 		forgotPasswordTXT = forgotPassword_esES;
 		guiderKeysTXT = guiderKeys_esES;
@@ -76,7 +74,6 @@ switch(idioma) {
 		break;
 	default:
 	case ("pt-BR"):
-		isTXT = "Escolha um idioma para o pat2math";
 		dlcpTXT = dlcp_ptBR;
 		forgotPasswordTXT = forgotPassword_ptBR;
 		guiderKeysTXT = guiderKeys_ptBR;
@@ -101,20 +98,24 @@ switch(idioma) {
 // Pede ao usuário que selecione o idioma, clicando na bandeira correspondente
 function languageSelection() {
 	var button;
+	var title;
 	switch(idioma){
 		default:
 		case("pt-BR"):
+			title = "Escolha um idioma para o PAT2Math";
 			button = {"Pronto": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 			break;
 		case("es-ES"):
+			title = "Seleccione un idioma para el PAT2Math";
 			button = {"Listo": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 			break;
 		case("en-UK"):
+			title = "Select an idiom for PAT2Math"
 			button = {"Done": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 			break;
 	}
 	$.guider({
-		title: isTXT,
+		title: title,
 		alignButtons: "center",
 		description: '<div id="idiomas"> '+
 			'<span id="idiomSelection_ptBR" onclick="change_ptBR()" title="Português - Brasil"> <img src="/pat2math/images/pt-BR.png" style="width: 12%"/> </span>' + 

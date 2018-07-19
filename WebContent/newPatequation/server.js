@@ -1079,7 +1079,7 @@ function requestServerKnowledgeTest (type, last, next, typeOperation, element) {
         						},
         					error:
         						 function(XMLHttpRequest, textStatus, errorThrown) {
-        					     	alert("Perdão, obtivemos um erro ao processar esta ação.");
+        					     	alert(serverTXT[6]);
         					 	}
         					});	
                     	$.guider({

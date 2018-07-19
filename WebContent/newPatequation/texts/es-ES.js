@@ -192,6 +192,7 @@ server_esES[2] = "¡Oops!";
 server_esES[3] = "Por errar este paso de la ecuación, usted perdió 5 puntos y recibió un consejo.";
 server_esES[4] = "Prueba finalizada";
 server_esES[5] = "La prueba de conocimientos se ha completado y se le redirige al plan de clases de la ecuación que se estaba resuelta";
+server_esES[6] = "Perdón, obtuvimos un error al procesar esta acción.";
 
 
 sr_esES[0] = "Recompensa adquirida con éxito";

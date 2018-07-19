@@ -192,6 +192,7 @@ server_enUK[2] = "Oops!";
 server_enUK[3] = "For not solving this step of the equation, you lost 5 points and gained a hint";
 server_enUK[4] = "Test finished";
 server_enUK[5] = "The knowledge test has been completed, now you will be redirected to the class plan of the equation that you were solving";
+server_enUK[6] = "Sorry, we got an error processing this action.";
 
 
 sr_enUK[0] = "Reward acquired successfully";
