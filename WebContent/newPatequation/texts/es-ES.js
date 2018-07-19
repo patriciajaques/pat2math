@@ -179,6 +179,8 @@ p2m_esES[5] = "Ops, usted todavía no ha lanzado este nivel";
 p2m_esES[6] = "Para desbloquearlo, debe completar todas las fases del nivel anterior";
 p2m_esES[7] = "Para desbloquear el siguiente plan de clase, debe resolver todas las ecuaciones del plan actual.";
 p2m_esES[8] = "Usted ya no puede volver, ya está en la primera ecuación del primer plan de clase.";
+p2m_esES[9] = "Prueba finalizada";
+p2m_esES[10] = "La prueba de conocimientos se ha completado y se le redirige al plan de clases de la ecuación que se estaba resuelta";
 
 
 score_esES[0] = "Puntuación total: ";
