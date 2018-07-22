@@ -263,7 +263,7 @@ function loadTasks(id) {
 
 							var taskSolved = $(".icon-ok.icon-white").length - document.getElementsByClassName("taskWE").length;
 							
-							if (taskSolved === 0)
+							if (taskSolved === 0 && id > 1)
 								firstPlanAccess();
 							
 							/* alert("fim: "+taskSolved); */
