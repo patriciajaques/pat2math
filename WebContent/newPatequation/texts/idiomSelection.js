@@ -22,35 +22,35 @@ var weuTXT;							//	pat2math/WebContent/patequation/js/workedExamplesUtil.js
 var idioma = getCookie("idiomaEscolhido");
 	if(idioma == "") {
 		idioma = navigator.language;
-		if (idioma == "es")
+		if (idioma.substring(0, 2) == "es")
 			idioma = "es-ES";
-		else if (idioma == "en")
-			idioma = "en-UK";
-		else if (idioma == "pt")
+		else if (idioma.substring(0, 2) == "en")
+			idioma = "en-GB";
+		else
 			idioma = "pt-BR";
 	}
 	
 // Seleciona os Arrays de texto corretos, dependendo do idioma selecionado
 switch(idioma) {
-	case ("en-UK"):
-		dlcpTXT = dlcp_enUK;
-		forgotPasswordTXT = forgotPassword_enUK;
-		guiderKeysTXT = guiderKeys_enUK;
-		htmlTXT = html_enUK;
-		indexTXT = index_enUK;
-		levels = levels_enUK;
-		loginTXT = login_enUK;
-		newTXT = new_enUK;
-		p2mTXT = p2m_enUK;
-		scoreTXT = score_enUK;
-		serverTXT = server_enUK;
-		srTXT = sr_enUK;
-		stages = stages_enUK;
-		stagesWithoutGamification = stagesWithoutGamification_enUK;
-		tourTXT = tour_enUK;
-		weTXT = we_enUK;
-		wecTXT = wec_enUK;
-		weuTXT = weu_enUK;
+	case ("en-GB"):
+		dlcpTXT = dlcp_enGB;
+		forgotPasswordTXT = forgotPassword_enGB;
+		guiderKeysTXT = guiderKeys_enGB;
+		htmlTXT = html_enGB;
+		indexTXT = index_enGB;
+		levels = levels_enGB;
+		loginTXT = login_enGB;
+		newTXT = new_enGB;
+		p2mTXT = p2m_enGB;
+		scoreTXT = score_enGB;
+		serverTXT = server_enGB;
+		srTXT = sr_enGB;
+		stages = stages_enGB;
+		stagesWithoutGamification = stagesWithoutGamification_enGB;
+		tourTXT = tour_enGB;
+		weTXT = we_enGB;
+		wecTXT = wec_enGB;
+		weuTXT = weu_enGB;
 		break;
 	case ("es-ES"):
 		dlcpTXT = dlcp_esES;
@@ -109,7 +109,7 @@ function languageSelection() {
 			title = "Seleccione un idioma para el PAT2Math";
 			button = {"Listo": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			title = "Select an idiom for PAT2Math"
 			button = {"Done": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 			break;
@@ -120,10 +120,10 @@ function languageSelection() {
 		description: '<div id="idiomas"> '+
 			'<span id="idiomSelection_ptBR" onclick="change_ptBR()" title="Português - Brasil"> <img src="/pat2math/images/pt-BR.png" style="width: 12%"/> </span>' + 
 			'<span id="idiomSelection_esES" onclick="change_esES()" title="Español - España"> <img src="/pat2math/images/es-ES.png" style="width: 12%"/> </span>' + 
-			'<span id="idiomSelection_enUK" onclick="change_enUK()" title="English - United Kingdom"> <img src="/pat2math/images/en-UK.png" style="width: 12%"/> </span>' + 
+			'<span id="idiomSelection_enGB" onclick="change_enGB()" title="English - United Kingdom"> <img src="/pat2math/images/en-GB.png" style="width: 12%"/> </span>' + 
 			'</div>',
 		buttons: button,
-		onShow: function() {$("#idiomSelection_ptBR").tooltip(); $("#idiomSelection_esES").tooltip(); $("#idiomSelection_enUK").tooltip();}
+		onShow: function() {$("#idiomSelection_ptBR").tooltip(); $("#idiomSelection_esES").tooltip(); $("#idiomSelection_enGB").tooltip();}
 	}).show();
 }
 
@@ -146,16 +146,16 @@ function change_ptBR() {
 	}
 }
 
-//Atualiza o cookie de idioma para "en-UK"
-function change_enUK() {
-	if (getCookie("idiomaEscolhido") == "en-UK")
+//Atualiza o cookie de idioma para "en-GB"
+function change_enGB() {
+	if (getCookie("idiomaEscolhido") == "en-GB")
 		$.guider({
 			alignButtons: "center",
 			title: "Idiom alreay defined as English - United Kingdom",
 			buttons: {"Oops": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
 		}).show();
 	else {
-		setCookieDays("idiomaEscolhido", "en-UK", 5);
+		setCookieDays("idiomaEscolhido", "en-GB", 5);
 		$.guider({
 			alignButtons: "center",
 			title: "Language updated successfully!",

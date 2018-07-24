@@ -53,7 +53,7 @@
     text-align: center;
 }*/
 
-#currentFlag {
+#newPatequationCurrentFlag {
 	cursor: pointer;
 }
 
@@ -61,7 +61,7 @@
 	cursor: pointer;
 }
 
-#idiomSelection_enUK {
+#idiomSelection_enGB {
 	cursor: pointer;
 }
 

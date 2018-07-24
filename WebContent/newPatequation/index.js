@@ -803,7 +803,7 @@ function ranking(){
 					case("es-ES"):
 						botao = {"Cerrar": {click : true, className : "primary",}}
 						break;
-					case("en-UK"):
+					case("en-GB"):
 						botao = {"Close": {click : true, className : "primary",}}
 						break;
 				}
@@ -839,7 +839,7 @@ function rankingGeral(){
 					case("es-ES"):
 						botao = {"Cerrar": {click : true, className : "primary",}}
 						break;
-					case("en-UK"):
+					case("en-GB"):
 						botao = {"Close": {click : true, className : "primary",}}
 						break;
 				}
@@ -870,7 +870,7 @@ function reasonAndProportionNotice() {
 		case("es-ES"):
 			botao = {"Entendi": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {"Got it": {click : true, className : "primary",}}
 			break;
 	}

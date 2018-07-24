@@ -10,7 +10,7 @@ function classPlan1() {
 		case("es-ES"):
 			botoes = {"Siguiente": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Next": {click : true, className : "primary",}}
 			break;
 	}
@@ -122,7 +122,7 @@ function classPlan1() {
 		case("es-ES"):
 			botoes = {"Iniciar el tour": {click : function() {introduction(""); isTourInterativo = true; loadTasks(0); loadExercise(0);}, className : "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Start Tour": {click : function() {introduction(""); isTourInterativo = true; loadTasks(0); loadExercise(0);}, className : "primary"}}
 			break;
 	}
@@ -149,7 +149,7 @@ function classPlan2() {
 		case("es-ES"):
 			botoes = {"Siguiente": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Next": {click : true, className : "primary",}}
 			break;
 	}
@@ -220,7 +220,7 @@ function classPlan2() {
 		case("es-ES"):
 			botoes = {"Finalizar": {click : true, className : "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Finish": {click : true, className : "primary"}}
 			break;
 	}
@@ -249,7 +249,7 @@ function classPlan3() {
 		case("es-ES"):
 			botoes = {"Siguiente": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Next": {click : true, className : "primary",}}
 			break;
 	}
@@ -330,7 +330,7 @@ function classPlan3() {
 		case("es-ES"):
 			botoes = {"Finalizar": {click : true, className : "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Finish": {click : true, className : "primary"}}
 			break;
 	}
@@ -360,7 +360,7 @@ function classPlan4() {
 		case("es-ES"):
 			botoes = {"Siguiente": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Next": {click : true, className : "primary",}}
 			break;
 	}
@@ -407,7 +407,7 @@ function classPlan4() {
 		case("es-ES"):
 			botoes = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Finish": {click : true, className : "primary",}}
 			break;
 	}
@@ -437,7 +437,7 @@ function classPlan5() {
 		case("es-ES"):
 			botoes = {"Siguiente": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Next": {click : true, className : "primary",}}
 			break;
 	}
@@ -472,7 +472,7 @@ function classPlan5() {
 		case("es-ES"):
 			botoes = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {"Finish": {click : true, className : "primary",}}
 			break;
 	}
@@ -504,7 +504,7 @@ function classPlan7() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Comenzar": {click : function(){showQuestionsMultiplication();}, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Begin": {click : function(){showQuestionsMultiplication();}, className : "primary",}}
 			break;
@@ -595,7 +595,7 @@ function classPlan8() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -675,7 +675,7 @@ function classPlan9() {
 				botao1 = {"Siguiente": {click : true, className : "primary",}}
 				botao2 = {"Finalizar": {click : true, className : "primary",}}
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botao1 = {"Next": {click : true, className : "primary",}}
 				botao2 = {"Finish": {click : true, className : "primary",}}
 				break;
@@ -756,7 +756,7 @@ function classPlan10() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -836,7 +836,7 @@ function classPlan12() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -934,7 +934,7 @@ function classPlan13() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1013,7 +1013,7 @@ function classPlan14() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1070,7 +1070,7 @@ function classPlan15() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1127,7 +1127,7 @@ function classPlan17() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1204,7 +1204,7 @@ function classPlan18() {
 				botao1 = {"Siguiente": {click : true, className : "primary",}}
 				botao2 = {"Finalizar": {click : true, className : "primary",}}
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botao1 = {"Next": {click : true, className : "primary",}}
 				botao2 = {"Finish": {click : true, className : "primary",}}
 				break;
@@ -1258,7 +1258,7 @@ function classPlan19() {
 				botao1 = {"Siguiente": {click : true, className : "primary",}}
 				botao2 = {"Finalizar": {click : true, className : "primary",}}
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botao1 = {"Next": {click : true, className : "primary",}}
 				botao2 = {"Finish": {click : true, className : "primary",}}
 				break;
@@ -1324,7 +1324,7 @@ function classPlan19a() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1410,7 +1410,7 @@ function classPlan20() {
 				"Pasar la señal negativa al otro lado": function() {classPlan20b();}
 			}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {
 				"Keep the negative sign in X": function() {classPlan20a();},				
@@ -1453,7 +1453,7 @@ function classPlan20a() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1529,7 +1529,7 @@ function classPlan20b() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1585,7 +1585,7 @@ function classPlan22() {
 				botao1 = {"Siguiente": {click : true, className : "primary",}}
 				botao2 = {"Finalizar": {click : true, className : "primary",}}
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botao1 = {"Next": {click : true, className : "primary",}}
 				botao2 = {"Finish": {click : true, className : "primary",}}
 				break;
@@ -1677,7 +1677,7 @@ function classPlan23() {
 				botao1 = {"Siguiente": {click : true, className : "primary",}}
 				botao2 = {"Finalizar": {click : true, className : "primary",}}
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botao1 = {"Next": {click : true, className : "primary",}}
 				botao2 = {"Finish": {click : true, className : "primary",}}
 				break;
@@ -1770,7 +1770,7 @@ function classPlan24() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -1904,7 +1904,7 @@ function classPlan27() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -2140,7 +2140,7 @@ function classPlan28() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;
@@ -2264,7 +2264,7 @@ function classPlan29() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;

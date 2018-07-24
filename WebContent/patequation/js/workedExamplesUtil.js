@@ -111,7 +111,7 @@ function showQuestion1() {
 				"Más": {click : function() {showQuestion2();}, className : "primary"}
 			}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {
 				"Less" : function() {showIncorrectMessage1();},
 				"Plus": {click : function() {showQuestion2();},	className : "primary"}
@@ -143,7 +143,7 @@ function showQuestion2() {
 				"Más": {click : function() {showIncorrectMessage2();}, className : "primary"}
 			}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {
 				"Less" : function() {showQuestion3();},
 				"Plus": {click : function() {showIncorrectMessage2();}, className : "primary"}
@@ -175,7 +175,7 @@ function showQuestion3() {
 				"Más": {click : function() {showIncorrectMessage3();}, className : "primary"}
 			}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {
 				"Less" : function() {showQuestion4();},
 				"Plus": {click : function() {showIncorrectMessage3();}, className : "primary"}
@@ -207,7 +207,7 @@ function showQuestion4() {
 				"Más": {click : function() {continueClassPlan7();}, className : "primary"}
 			}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {
 				"Less" : function() {showIncorrectMessage4();},
 				"Plus": {click : function() {continueClassPlan7();}, className : "primary"}
@@ -234,7 +234,7 @@ function showIncorrectMessage1() {
 		case("es-ES"):
 			botao = {"Siguiente": {click : function(){showQuestion2();}, className : "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {"Next": {click : function(){showQuestion2();}, className : "primary"}}
 			break;
 	}
@@ -257,7 +257,7 @@ function showIncorrectMessage2() {
 		case("es-ES"):
 			botao = {"Siguiente": {click : function(){showQuestion3();}, className : "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {"Next": {click : function(){showQuestion3();}, className : "primary"}}
 			break;
 	}
@@ -280,7 +280,7 @@ function showIncorrectMessage3() {
 		case("es-ES"):
 			botao = {"Siguiente": {click : function(){showQuestion4();}, className : "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {"Next": {click : function(){showQuestion4();}, className : "primary"}}
 			break;
 	}
@@ -303,7 +303,7 @@ function showIncorrectMessage4() {
 		case("es-ES"):
 			botao = {"Siguiente": {click : function(){continueClassPlan7();}, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao = {"Next": {click : function(){continueClassPlan7();}, className : "primary",}}
 			break;
 	}
@@ -328,7 +328,7 @@ function continueClassPlan7() {
 			botao1 = {"Siguiente": {click : true, className : "primary",}}
 			botao2 = {"Finalizar": {click : true, className : "primary",}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {"Next": {click : true, className : "primary",}}
 			botao2 = {"Finish": {click : true, className : "primary",}}
 			break;

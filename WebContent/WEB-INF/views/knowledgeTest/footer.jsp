@@ -1,4 +1,4 @@
-<script src="/pat2math/newPatequation/texts/en-UK.js"></script>
+<script src="/pat2math/newPatequation/texts/en-GB.js"></script>
 <script src="/pat2math/newPatequation/texts/es-ES.js"></script>
 <script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
 <script src="/pat2math/newPatequation/texts/idiomSelection.js"></script>
@@ -24,7 +24,7 @@
 var titl = "";
 var desc = "";
 switch(idioma) {
-	case("en-UK"):
+	case("en-GB"):
 		titl = "Knowledge Test";
 		desc = "The test involves a set of equations that get more difficult as you solve them. In this way, PAT2Math will determine the best lesson plan to get you started!!";
 		break;

@@ -15,7 +15,7 @@
 	<p id="newElem9" class="left"></p>
 </div>
 
-<script src="/pat2math/newPatequation/texts/en-UK.js"></script>
+<script src="/pat2math/newPatequation/texts/en-GB.js"></script>
 <script src="/pat2math/newPatequation/texts/es-ES.js"></script>
 <script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
 <script src="/pat2math/newPatequation/texts/idiomSelection.js"></script>

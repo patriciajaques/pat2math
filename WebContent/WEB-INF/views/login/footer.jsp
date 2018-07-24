@@ -36,7 +36,7 @@ function helpPopups(title, description, width) {
 }
 </script>
 
-<script src="/pat2math/newPatequation/texts/en-UK.js"></script>
+<script src="/pat2math/newPatequation/texts/en-GB.js"></script>
 <script src="/pat2math/newPatequation/texts/es-ES.js"></script>
 <script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
 <script src="/pat2math/newPatequation/texts/idiomSelection.js"></script>
@@ -61,6 +61,6 @@ document.getElementById("loginElem6").innerHTML = loginTXT[10];
 document.getElementById("loginButton").value = loginTXT[14];
 
 //	Atualiza a bandeira do botão de alteração de idioma
-document.getElementById("loginCurrentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" onclick="languageSelection()" style="width:6%; margin-right:-330px"/>';
+document.getElementById("loginCurrentFlag").innerHTML = '<img src="/pat2math/images/' + idioma + '.png" onclick="languageSelection()" style="width:8%; margin-right:-330px"/>';
 document.getElementById("loginCurrentFlag").title = idioma;
 </script>

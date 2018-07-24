@@ -13,7 +13,7 @@ function introduction (nextStep) {
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Volver: true, OK: {click: true, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, OK: {click: true, className: "primary"}}
 			break;
@@ -81,7 +81,7 @@ function introductionWithWelcome (nextStep) {
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Volver: true, OK: {click: true, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, OK: {click: true, className: "primary"}}
 			break;
@@ -177,7 +177,7 @@ function firstStepTour (nextStep, title, description) {
 			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
 			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Back: true, OK: {click: true, className: "primary"}}
@@ -334,7 +334,7 @@ function alternativeFirstStepTour (nextStep) {
 			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
 			botao4 = {Volver: true, OK: {click: function(){exit();}, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Back: true, OK: {click: true, className: "primary"}}
@@ -500,7 +500,7 @@ function alternativeFirstStepTourWithoutKnowledgeTest (nextStep) {
 			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
 			botao3 = {Finalizar: {click: function() {exit();}, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Finish: {click: function() {exit();}, className: "primary"}}
@@ -658,7 +658,7 @@ function mainMenu (nextStep) {
 			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
 			botao4 = {Volver: true, OK: {click: function(){exit();}, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Back: true, OK: {click: true, className: "primary"}}
@@ -737,7 +737,7 @@ function mainMenuWithoutKnowledgeTest (nextStep) {
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Finalizar: {click: function() {exit();}, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Finish: {click: function() {exit();}, className: "primary"}}
 			break;
@@ -809,7 +809,7 @@ function classPlan (nextStep) {
 			botao2 = {Volver: true, Siguiente: {click: true, className: "primary"}}
 			botao3 = {Volver: true, OK: {click: true, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: true, className: "primary"}}
 			botao3 = {Back: true, OK: {click: true, className: "primary"}}
@@ -874,7 +874,7 @@ function clickEquation (nextStep) {
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Volver: true, Entendi: {click: true, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, "Got it": {click: true, className: "primary"}}
 			break;
@@ -918,7 +918,7 @@ function plan2Explanation (nextStep) {
 			botao1 = {Siguiente: {click: true, className: "primary"}};
 			botao2 = {Volver: true, Siguiente: {click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)}, className: "primary"}}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Next: {click: true, className: "primary"}}
 			botao2 = {Back: true, Next: {click: function() {exit(); blockMenu = true; loadExerciseWE("x+4=10", 20); classPlan2(); setTimeout(function(){loadTasks(numUnlockedPlans);}, 2000)}, className: "primary"}}
 			break;
@@ -1046,7 +1046,7 @@ function newPlan ( ) {
 		case("es-ES"):
 			botao1 = {Legal: {click: function(){$.guider({}).hideAll(); resetProgressBar();}, className: "primary"}};
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botao1 = {Nice: {click: function(){$.guider({}).hideAll(); resetProgressBar();}, className: "primary"}}
 			break;
 	}

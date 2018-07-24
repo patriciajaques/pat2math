@@ -29,7 +29,7 @@ function accessWorkedExample(number) {
 					"No": function() {$.guider({}).hideAll();}
 				}
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botoes= {
 					"Yes": {click: function() {addOrRemoveScore(-8); loadExerciseWE(equationsWE[number], 0); setTimeout(functionName, 100);}, className: "primary" },
 					"No": function() {$.guider({}).hideAll();}
@@ -79,7 +79,7 @@ function firstPlanAccess() {
 			    	"No estoy seguro": function() {imNotSure(numberCurrentPlan);}
 			    }
 				break;
-			case("en-UK"):
+			case("en-GB"):
 				botoes = {
 			    	"No": function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);},
 			    	"Yes": function() {$.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();},
@@ -114,7 +114,7 @@ function imNotSure(plan) {
 				"Quiero intentar resolver solo": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
 		   	}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {
 				"I want to check a solved exercise": function() {loadExerciseWE(equationsWE[plan], 0); var functionName = "classPlan" + plan + "();"; setTimeout(functionName, 100);},
 				"I want to try to solve it by myself": function() {tryResolveByMyself = true; $.guider({}).hideAll(); $("#topics").fadeIn(); $("#topicsAux").hide(); if (planoAtual === 1013) reasonAndProportionNotice();}
@@ -152,7 +152,7 @@ function firstErrorOrHint() {
 		    	"No": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
 		    }
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {
 	    		"Yes": {click: function() {loadExerciseWE(equationsWE[numberCurrentPlan], 0); var functionName = "classPlan" + numberCurrentPlan + "();"; setTimeout(functionName, 100);}, className: "primary"},
 	    		"No": function() {if (levelGamification === "full" && alreadyReceivedSpecialReward === false) {questionSpecialReward(numberCurrentPlan);} else {$.guider({}).hideAll();}}
@@ -184,7 +184,7 @@ function questionSpecialReward(plan) {
 				"No, gracias.": function() {$.guider({}).hideAll();}
 			}
 			break;
-		case("en-UK"):
+		case("en-GB"):
 			botoes = {
 				"I want to check and win the reward! :D": {click: function() {getSpecialReward(plan);}, className: "primary"},
 				"No, thanks.": function() {$.guider({}).hideAll();}

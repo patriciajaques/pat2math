@@ -18,7 +18,7 @@
 	<input id="fPElem2" type="submit" class="btn btn-large"/><a id="fPElem3" href="/pat2math/login" class="btn btn-large" style="margin-left: 15px"></a>
 </form:form>
 
-<script src="/pat2math/newPatequation/texts/en-UK.js"></script>
+<script src="/pat2math/newPatequation/texts/en-GB.js"></script>
 <script src="/pat2math/newPatequation/texts/es-ES.js"></script>
 <script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
 <script src="/pat2math/newPatequation/texts/idiomSelection.js"></script>
