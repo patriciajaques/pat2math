@@ -262,6 +262,10 @@ function loadTasks(id) {
 							/* alert("inicio: "+tasksRemaining); */
 
 							var taskSolved = $(".icon-ok.icon-white").length - document.getElementsByClassName("taskWE").length;
+							
+							if (taskSolved === 0 && id > 1)
+								firstPlanAccess();
+							
 							/* alert("fim: "+taskSolved); */
 							tasksRemaining = numEquacoesPlanoAtual - taskSolved;
 							/* alert("fim: "+tasksRemaining); */
