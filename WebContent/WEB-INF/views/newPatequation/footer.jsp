@@ -13,8 +13,8 @@ document.getElementById("ranking").title = htmlTXT[2];
 document.getElementById("refresh_page").title = htmlTXT[3];
 document.getElementById("reportBug").title = htmlTXT[4];
 document.getElementById("rewardWorkedExamples").title = htmlTXT[5];
-if(document.getElementById("tour") "= null")
-	document.getElementById("tour").title = htmlTXT[6];
+//if(document.getElementById("tour") !== null)
+//	document.getElementById("tour").title = htmlTXT[6];
 document.getElementById("hint").innerHTML = htmlTXT[7];
 
 //	Atualiza a bandeira do botão de alteração de idioma
