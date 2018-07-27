@@ -29,9 +29,10 @@ var idioma = getCookie("idiomaEscolhido");
 		else
 			idioma = "pt-BR";
 	}
+//idioma = "exemplo";
 	
-// Seleciona os Arrays de texto corretos, dependendo do idioma selecionado
-switch(idioma) {
+	
+switch(idioma) {  				// Seleciona os Arrays de texto corretos, dependendo do idioma selecionado
 	case ("en-GB"):
 		dlcpTXT = dlcp_enGB;
 		forgotPasswordTXT = forgotPassword_enGB;
@@ -72,6 +73,26 @@ switch(idioma) {
 		wecTXT = wec_esES;
 		weuTXT = weu_esES;
 		break;
+	/* case ("exemplo"):
+		dlcpTXT = dlcp_exemplo;
+		forgotPasswordTXT = forgotPassword_exemplo;
+		guiderKeysTXT = guiderKeys_exemplo;
+		htmlTXT = html_exemplo;
+		indexTXT = index_exemplo;
+		levels = levels_exemplo;
+		loginTXT = login_exemplo;
+		newTXT = new_exemplo;
+		p2mTXT = p2m_exemplo;
+		scoreTXT = score_exemplo;
+		serverTXT = server_exemplo;
+		srTXT = sr_exemplo;
+		stages = stages_exemplo;
+		stagesWithoutGamification = stagesWithoutGamification_exemplo;
+		tourTXT = tour_exemplo;
+		weTXT = we_exemplo;
+		wecTXT = wec_exemplo;
+		weuTXT = weu_exemplo;
+		break; */
 	default:
 	case ("pt-BR"):
 		dlcpTXT = dlcp_ptBR;
@@ -93,6 +114,7 @@ switch(idioma) {
 		wecTXT = wec_ptBR;
 		weuTXT = weu_ptBR;
 }
+
 
 
 // Pede ao usuário que selecione o idioma, clicando na bandeira correspondente

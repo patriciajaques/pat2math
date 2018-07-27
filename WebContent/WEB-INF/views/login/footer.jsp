@@ -39,6 +39,7 @@ function helpPopups(title, description, width) {
 <script src="/pat2math/newPatequation/texts/en-GB.js"></script>
 <script src="/pat2math/newPatequation/texts/es-ES.js"></script>
 <script src="/pat2math/newPatequation/texts/pt-BR.js"></script>
+<!-- <script src="/pat2math/newPatequation/texts/exemplo.js"></script> -->
 <script src="/pat2math/newPatequation/texts/idiomSelection.js"></script>
 
 <script>

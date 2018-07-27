@@ -183,7 +183,6 @@ p2m_ptBR[9] = "Teste finalizado";
 p2m_ptBR[10] = "O teste de conhecimentos foi concluído e você será redirecionado para o plano de aula da equação que estava sendo resolvida";
 
 
-
 score_ptBR[0] = "Pontuação total: ";
 score_ptBR[1] = "Pontuação do nível atual: ";
 score_ptBR[2] = "Ocorreu um erro inesperado";
