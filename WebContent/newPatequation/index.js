@@ -6,7 +6,7 @@ var freeHints;
 var freeErrors;
 var numPlanosAula = 33;
 var numPlanosRevisao = 2;
-var numPlanosIntroducao = 0;
+var numPlanosIntroducao = 6;
 var selectedSheet = "#paper-1";
 var selectedEquation;
 //var currentStepsFirstEquation;
@@ -39,7 +39,7 @@ var stringEquation;
 var equationPlan;
 var concluded = 0;
 var nextLineServer;
-var enableIntroductionPlans = false;
+var enableIntroductionPlans = true;
 var enableWorkedExamples = getCookie ("enableWE") === "";
 var enableTourInterativo = getCookie ("enableTour") === "";
 var isWorkedExample = false;
@@ -1788,7 +1788,7 @@ function loadEquation(index) {
     }
 
     if (go) {
-        // get the firs valid line to put content
+        // get the first valid line to put content
         var line = $(selectedSheet + " .hLineAux").next();
 
         var stack = textToUserInterface(selectedEquation.equationToString);
@@ -1797,22 +1797,29 @@ function loadEquation(index) {
         
         //Verificação para as três primeiras equações que são da forma x=a+b. Dado que a+b=c, a interface gráfica deverá mostrar
         //__=c. Isso precisou ser feito porque o resolvedor não aceita digitar um passo igual à equação.
-//        if (idEquation <= 102) {
-//        	var expression = stack.pop();
-//        	expression = stack.pop() + expression;
-//        	expression = stack.pop() + expression;
-//        	
-//        	var result = eval(expression);
-//        	stack.push("" + result); //A stack deve ter elementos String
-//        }
+        if (idEquation <= 102) {
+        	var expression = stack.pop();
+        	expression = stack.pop() + expression;
+        	expression = stack.pop() + expression;
+        	
+        	var result = eval(expression);
+        	stack.push("" + result); //A stack deve ter elementos String
+        }
         
         for (var i = 0; i < stack.length; i++) {
         	if (isIntroductionToEquationPlan) {
-        		if (stack[i] === "x")
-        			stack[i] = "__";
+        		if (!selectedEquation.isComplete) {
+        			if (stack[i] === "x")
+        				stack[i] = '<li class="labelDefault"><input type="text" id="inputIntroduction" style="margin-top: -3px;"></li>';
         		
-        		else if (stack[i].indexOf("x</div>") !== -1)
-        			stack[i] = replaceAll(stack[i], "x</div>", "  </div>");
+        			else if (stack[i].indexOf("x</div>") !== -1)
+        				stack[i] = replaceAll(stack[i], "x</div>", '<input type="text" id="inputIntroduction" style="margin-top: -3px;"></div>');
+        		}
+        		
+        		else {
+        			if (stack[i] === "x")
+        				stack[i] = "__";
+        		}
         	}
         		
         	
@@ -2022,13 +2029,21 @@ function clearLine(option) {
         svg = html.substring(html.indexOf("<svg"), html.indexOf("</svg>") + 1);
     }
 
+    if(!isIntroductionToEquationPlan){
     $(selectedSheet + " .canMove").html(
             svg + "<ul>" +
             "<li class='labelDefault'><input type='text' id='inputMobile'></li>" +
             "</ul>" +
             "<div class='trash'></div>" +
             "<button id='button'></button><div id='feedbackError'></div>");
-
+	} else{
+		$(selectedSheet + " .canMove").html(
+	            svg + "<ul>" +
+	            "<li class='labelDefault'></li>" +
+	            "</ul>" +
+	            "<button id='button'></button><div id='feedbackError'></div>");
+	}
+    
     centralizeCanMoveAndButton();
     sortable();
     draggable();
@@ -2616,12 +2631,17 @@ function checkEquation() {
 	button.style.right = '7px';
 	button.style.background = 'url("/pat2math/images/solve_loading.gif")';
 
-    
-	$(selectedSheet + " .canMove li input").blur();
+	var equation;
+    if(!isIntroductionToEquationPlan) {
+    	$(selectedSheet + " .canMove li input").blur();
+    	equation = naturalToText(selectedEquation.currentStep);
+    }
 //  var passoAnterior = $(selectedSheet + " .canCopy li").toArray();
 //  passoAnterior = getEquation(passoAnterior);
-	
-  var equation = naturalToText(selectedEquation.currentStep);
+    else {
+    	var inputUser = "x=" + document.getElementById("inputIntroduction").value;  	
+        equation = inputUser;
+    }
   
   if (equation === "")
 	  equation = " ";

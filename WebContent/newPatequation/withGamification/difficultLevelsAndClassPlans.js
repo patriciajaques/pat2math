@@ -8,9 +8,9 @@ var stagesWithoutGamification;
 	
 var firstStagePerLevel = new Array();
 firstStagePerLevel[1] = 1;
-firstStagePerLevel[2] = 12;
-firstStagePerLevel[3] = 22;
-firstStagePerLevel[4] = 30;
+firstStagePerLevel[2] = 18;
+firstStagePerLevel[3] = 28;
+firstStagePerLevel[4] = 36;
 firstStagePerLevel[5] = 42;
 
 var colorsLevels = new Array();
@@ -133,7 +133,7 @@ function generateStages(level) {
 			finalStage = firstStagePerLevel[level+1] - 1;
 		
 		else 
-			finalStage = 33;	
+			finalStage = 39;	
 	}
 	
 	else {

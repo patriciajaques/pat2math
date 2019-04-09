@@ -4,9 +4,9 @@ var alreadyReceivedSpecialReward = false; // Aqui deverá ser a verificação se
 
 function addWorkedExampleInEquationsMenu() {
 	var idTasks = "tasks" + planoAtual;
-	var numWorkedExample = planoAtual;
-	
-	var html = '<span class="taskWE" onclick="accessWorkedExample(' + numWorkedExample + ');" id="taskWE"' + planoAtual + '>' + equationsWE[numWorkedExample] + '</span><i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>';
+	var numWorkedExample = planoAtual - 6;
+		
+	var html = '<span class="taskWE" onclick="accessWorkedExample(' + (numWorkedExample) + ');" id="taskWE"' + planoAtual + '>' + equationsWE[numWorkedExample] + '</span><i style="margin-right: 6px" class="icon-pencil icon-white"></i> <i class="icon-ok  icon-white"></i><br>';
 	document.getElementById(idTasks).innerHTML = html + document.getElementById(idTasks).innerHTML;
 }
 

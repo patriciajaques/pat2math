@@ -13,9 +13,9 @@ var isPAT2Exam;
 function calculateLength(equation) {
 
 	var length = equation.length;
-	// Posição atual do símbolo de fração
+	// Posição atual do símbolo de fração(/)
 	var posFrac = equation.indexOf("/");
-	// Array com todas as posições do símbolo de fração
+	// Array com todas as posições dos símbolos de fração
 	var posFracArray = new Array();
 
 	// posFrac é diferente de -1 se houverem uma ou mais frações na equação
@@ -144,15 +144,15 @@ function enableContent(id) {
 
 function loadTasks(id) {
 
-	var isUnlocked = unlockAllPlans;
+	var isUnlocked = unlockAllPlans; //var unlockAllPlans = getCookie("unlockAllPlans") !== "";
 
 	if (isUnlocked === false) {
-		isUnlocked = unlockedPlans >= id;
+		isUnlocked = unlockedPlans >= id; //var unlockedPlans = 0;
 	}
 
 	if (isUnlocked) {
-		if (planoAtual !== undefined) {
-			$("#tasks" + planoAtual).slideUp(700);
+		if (planoAtual !== undefined) { //var planoAtual; -- id do plano que está selecionado
+			$("#tasks" + planoAtual).slideUp(700); 
 			$("#tasks" + planoAtual).html("");
 			planoAtual = undefined;
 			setCookieDays("currentPlan", "", 0);
@@ -215,8 +215,7 @@ function loadTasks(id) {
 									&& enableIntroductionPlans) {
 								isIntroductionToEquationPlan = true;
 								data = replaceAll(data, "x", "__");
-								data = replaceAll(data, "loadE__ercise",
-										"loadExercise");
+								data = replaceAll(data, "loadE__ercise", "loadExercise");
 								// As três primeiras equações do primeiro plano
 								// são diretas, porém o sistema não aceita que a
 								// equação inicial
@@ -224,7 +223,8 @@ function loadTasks(id) {
 								// manipulação
 								data = replaceAll(data, "2+2", "4");
 								data = replaceAll(data, "10+3", "13");
-								data = replaceAll(data, "2+7", "9");
+								//data = replaceAll(data, "2+7", "9");
+								data = replaceAll(data, "5+5=", "5+8=5+");
 
 							}
 
@@ -235,11 +235,11 @@ function loadTasks(id) {
 									&& levelGamification !== "without") {
 								currentLevel = 1;
 
-								if (id > 11) {
-									if (id < 22)
+								if (id > 17) {
+									if (id < 28)
 										currentLevel = 2;
 
-									else if (id < 30)
+									else if (id < 36)
 										currentLevel = 3;
 
 									else if (id < 42)
@@ -249,7 +249,7 @@ function loadTasks(id) {
 										currentLevel = 5;
 								}
 
-								if (id !== 34 && id !== 35)
+								if (id !== 40 && id !== 41)
 									generateStages(currentLevel);
 							}
 							$("#tasks" + id).html(data);
@@ -263,7 +263,8 @@ function loadTasks(id) {
 
 							var taskSolved = $(".icon-ok.icon-white").length - document.getElementsByClassName("taskWE").length;
 							
-							if (taskSolved === 0 && id > 1)
+							if (taskSolved === 0 && (id > 7 && id !== 12 && id !== 17 && id !== 22
+									&& id !== 27 && id !== 31 && id < 32))
 								firstPlanAccess();
 							
 							/* alert("fim: "+taskSolved); */
@@ -318,9 +319,8 @@ function loadTasks(id) {
 
 							// Os planos 26, 31 e 32 ainda não possuem exemplos
 							// trabalhados
-							if (id !== 1 && id !== 6 && id !== 11 && id !== 16
-									&& id !== 21 && id !== 25 && id !== 26
-									&& id !== 29 && id <= 30) {
+							if (id > 7 && id !== 12 && id !== 17 && id !== 22
+									&& id !== 27 && id !== 31 && id < 32) {
 								addWorkedExampleInEquationsMenu();
 
 								if (taskSolved === 0) {
@@ -396,9 +396,18 @@ function loadTasks(id) {
 	else {
 		padlockClickStage();
 	}
-
+	
+	if(id === 7){
+		$.guider({
+	    	name: "equationChange",
+			title: "Checkpoint",
+			description: "A partir deste ponto, resolveremos as equações passo por passo, como fazemos no caderno.",
+	        alignButtons: "center",
+	        buttons: {"Entendi": {click: function() { $.guider({}).hideAll() }, className: "primary"}}
+	    	}).show();
+	}
 }
-
+ 
 function getNumEquationsPlan() {
 	// if (levelGamification !== undefined) {
 	// if (planoAtual === 1001 || planoAtual === 1006)
@@ -724,6 +733,7 @@ function loadExercise(id) {
 	if (isTourInterativo === false)
 		blockMenu = false;
 
+	
 	$.ajax({
 		type : 'GET',
 		url : appContext + "student/loadExercise",
@@ -766,9 +776,12 @@ function loadExercise(id) {
 							$("#topics").fadeIn();
 							blockMenu = true;
 						}, 2000);
+				 
 				}
-
+				
 				newEquations[0] = equation;
+				
+							
 			}
 			reloadPaper(1);
 			
@@ -785,6 +798,8 @@ function loadExercise(id) {
 			}
 
 			setCookieDays("currentEquation", idEquation, 1);
+			
+			 
 			
 			//Experimentar executar por um siteTimeout de 3 segundos, ou ver um outro local para colocar
 			//if (isPAT2Exam && getCookie("tourPAT2Exam") === "") 
@@ -808,6 +823,8 @@ function loadExercise(id) {
 			// currentEquation = eq;
 			// }
 
+			
+			
 		}
 	});
 
@@ -817,9 +834,10 @@ function loadExercise(id) {
 	else
 		blockMenu = false;
 
-	loadingHide();
+	loadingHide();	
+		
+} 
 
-}
 
 function getEquationById(id, pos) {
 	$.ajax({
@@ -833,10 +851,11 @@ function getEquationById(id, pos) {
 		success : function(data) {
 			if (data != null) {
 				equationsExam[pos] = data.equation;
-				equationsExamString += equationsExam[pos] + ",";			
+				equationsExamString += equationsExam[pos] + ",";
 			}
 		}
 	});
+	
 }
 
 function loadExerciseExam(id) {
@@ -935,6 +954,7 @@ function loadExerciseExam(id) {
 	   $("#topicsAux").show();
 	loadingHide();
 
+	
 }
 
 function knowledgeTest(){
@@ -1151,7 +1171,7 @@ function loadExerciseTest(id) {
 }
 
 function loadingShow() {
-	if (openAndBlockMenu !== "true") {
+	if (openAndBlockMenu !== "true") { //controlador que mantém o plano de aula aberto e fixo
 		$('#loading').fadeIn();
 		$("#topics").fadeOut();
 	}
