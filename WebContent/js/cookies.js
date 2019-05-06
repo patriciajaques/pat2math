@@ -37,8 +37,8 @@ function setCookieMinutes(cname,cvalue,exminutes) {
 }
 
 function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
+    var name = cname + "="; //String
+    var ca = document.cookie.split(';'); //array
     for(var i=0; i<ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1);
