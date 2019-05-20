@@ -389,8 +389,7 @@ function loadTasks(id) {
 			}
 
 		}
-
-
+	
 	}
 
 	else {
@@ -781,7 +780,6 @@ function loadExercise(id) {
 				
 				newEquations[0] = equation;
 				
-							
 			}
 			reloadPaper(1);
 			

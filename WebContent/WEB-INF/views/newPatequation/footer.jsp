@@ -38,4 +38,6 @@ document.getElementById("newPatequationCurrentFlag").title = idioma;
 <script src="/pat2math/newPatequation/index.js"></script>
 <script src="/pat2math/patequation/js/decimalNumbers.js"></script>
 <script src="/pat2math/patequation/js/paper.js"></script>
+
+<script type="text/javascript" async src="path-to-MathJax/MathJax.js?TeX-MML-AM_CHTML"></script>
 <!-- <script src="/pat2math/patequation/js/guider-2.1.0.min.js"></script> -->
