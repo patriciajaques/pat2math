@@ -1,5 +1,5 @@
 # PAT2Math
-![PAT2Math Logo](path/to/your/logo/image.png)
+
 
 **PAT2Math** (Personal Affective Tutor to Math) is an Intelligent Tutoring System dedicated to helping students solve 1st and 2nd degree algebraic equations with one unknown, providing an interactive and educational experience.
 
