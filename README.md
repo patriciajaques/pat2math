@@ -95,7 +95,7 @@ For more specific information about published articles and students supervised w
 
 Suggested citation:
 ```
-JAQUES, P. A. et al. PAT2Math: Intelligent Tutoring System to assist in solving algebraic equations. Available at: [Repository URL]. Accessed on: [access date].
+JAQUES, P. A. et al. PAT2Math: Intelligent Tutoring System to assist in solving algebraic equations. Available at: [(https://github.com/patriciajaques/pat2math)]. Accessed on: [access date].
 ```
 
 ## License
