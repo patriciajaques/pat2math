@@ -1,5 +1,6 @@
 # PAT2Math
 
+> **NOTE**: PAT2Math has been temporarily taken offline to incorporate generative AI and implement improvements. As soon as the new version becomes available, the link will be posted here.
 
 **PAT2Math** (Personal Affective Tutor to Math) is an Intelligent Tutoring System dedicated to helping students solve 1st and 2nd degree algebraic equations with one unknown, providing an interactive and educational experience.
 
