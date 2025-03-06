@@ -1,5 +1,6 @@
 # PAT2Math
-![PAT2Math Logo](caminho/para/sua/imagem/logo.png)
+
+> **NOTA**: O PAT2Math foi temporariamente tirado do ar para incluir IA generativa e implementar melhorias. Assim que disponibilizarmos a nova versão, o link será colocado aqui.
 
 O **PAT2Math** (Personal Affective Tutor to Math) é um Sistema Tutor Inteligente dedicado ao auxílio na resolução de equações algébricas de 1º e 2º graus com uma incógnita, proporcionando uma experiência interativa e educativa para estudantes.
 
