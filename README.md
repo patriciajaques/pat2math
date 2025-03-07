@@ -97,6 +97,9 @@ For more specific information about published articles and students supervised w
 Suggested citations:
 ```
 - JAQUES, P. A. et al. PAT2Math: Intelligent Tutoring System to assist in solving algebraic equations. Available at: (https://github.com/patriciajaques/pat2math). Accessed on: [access date].
+```
+
+```
 - JAQUES, PA; Seffrin, Henrique; RUBI, G.; MORAIS, F.; GUILLARDI, C.; BITTENCOURT, I.; ISOTANI, S. (2013). Rule-based expert systems to support step-by-step guidance in algebraic problem solving: The case of the tutor PAT2Math. Expert Systems with Applications, p.5456-5465. (https://doi.org/10.1016/j.eswa.2013.04.004)
 ```
 
