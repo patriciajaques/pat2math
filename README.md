@@ -1,6 +1,6 @@
 # PAT2Math
 
-> **NOTE**: PAT2Math has been temporarily taken offline to incorporate generative AI and implement improvements. As soon as the new version becomes available, the link will be posted here.
+> **Important note**: PAT2Math was developed at UNISINOS under the supervision of Prof. Dr. Patrícia Augustin Jaques Maillard, while she was part of the PPGC faculty at that university. The system is no longer available due to this institutional change. Currently, Prof. Patrícia is leading innovative research at PPGInf/UFPR, developing a new system that integrates generative AI for programming education. The professor welcomes Master's and PhD students interested in contributing to this promising line of research. Those interested can contact her via email at patricia@inf.ufpr.br to discuss supervision and collaboration opportunities in this expanding field.
 
 **PAT2Math** (Personal Affective Tutor to Math) is an Intelligent Tutoring System dedicated to helping students solve 1st and 2nd degree algebraic equations with one unknown, providing an interactive and educational experience.
 
