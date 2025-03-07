@@ -100,4 +100,16 @@ JAQUES, P. A. et al. PAT2Math: Intelligent Tutoring System to assist in solving 
 ```
 
 ## License
-Distributed under the MIT License. See `LICENSE` for more information.
+
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). This license allows non-commercial use, including academic research, with appropriate attribution. For commercial use, please contact the authors.
+
+For more details, see [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+
+## Permitted Use
+
+This software is freely available for:
+- Academic research
+- Teaching and education
+- Personal non-commercial use
+
+For any commercial or production use, please contact the authors to obtain a commercial license.
